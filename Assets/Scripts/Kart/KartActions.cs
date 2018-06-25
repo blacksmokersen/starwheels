@@ -70,6 +70,17 @@ namespace Kart
                     kartOrientation.QuickTurn();
                 }
             }
+            else if (kartStates.DrifState == KartStates.DriftStates.NotDrifting)
+            {
+                if (kartStates.TurningState == KartStates.TurningStates.Left)
+                {
+                    kartStates.DrifState = KartStates.DriftStates.DriftingLeft;
+                }
+                if (kartStates.TurningState == KartStates.TurningStates.Right)
+                {
+                    kartStates.DrifState = KartStates.DriftStates.DriftingRight;
+                }
+            }
         }
 
         public void StopDrift()
