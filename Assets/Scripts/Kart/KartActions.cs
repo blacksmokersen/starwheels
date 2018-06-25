@@ -17,10 +17,10 @@ namespace Kart
 
         public void Jump()
         {
-            if (kartStates.AirState == KartStates.AirStates.Grounded)
+            if (kartStates.AirState == AirStates.Grounded)
             {
                 kartPhysics.Jump();
-                kartStates.AirState = KartStates.AirStates.InAir;
+                kartStates.AirState = AirStates.InAir;
             }
         }
 
@@ -34,58 +34,58 @@ namespace Kart
             kartPhysics.Jump(0.5f);
             if(horizontal < 0)
             {
-                kartStates.DrifState = KartStates.DriftStates.DriftingLeft;
+                kartStates.DriftTurnState = DriftTurnStates.DriftingLeft;
             }
             if (horizontal > 0)
             {
-                kartStates.DrifState = KartStates.DriftStates.DriftingRight;
+                kartStates.DriftTurnState = DriftTurnStates.DriftingRight;
             }
         }
         
         public void Drift()
         {
-            if (kartStates.DrifState == KartStates.DriftStates.DriftingLeft)
+            if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
             {
-                if (kartStates.TurningState == KartStates.TurningStates.Left)
+                if (kartStates.TurningState == TurningStates.Left)
                 {
                     kartPhysics.Drift(Vector3.left, Vector3.down);
                     kartOrientation.QuickTurn();
                 }
-                if (kartStates.TurningState == KartStates.TurningStates.Right)
+                if (kartStates.TurningState == TurningStates.Right)
                 {
                     kartPhysics.Drift(Vector3.left,Vector3.up);
                     kartOrientation.SlowTurn();
                 }
             }
-            else if (kartStates.DrifState == KartStates.DriftStates.DriftingRight)
+            else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
             {
-                if (kartStates.TurningState == KartStates.TurningStates.Left)
+                if (kartStates.TurningState == TurningStates.Left)
                 {
                     kartPhysics.Drift(Vector3.right, Vector3.up);
                     kartOrientation.SlowTurn();
                 }
-                if (kartStates.TurningState == KartStates.TurningStates.Right)
+                if (kartStates.TurningState == TurningStates.Right)
                 {
                     kartPhysics.Drift(Vector3.right, Vector3.down);
                     kartOrientation.QuickTurn();
                 }
             }
-            else if (kartStates.DrifState == KartStates.DriftStates.NotDrifting)
+            else if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
             {
-                if (kartStates.TurningState == KartStates.TurningStates.Left)
+                if (kartStates.TurningState == TurningStates.Left)
                 {
-                    kartStates.DrifState = KartStates.DriftStates.DriftingLeft;
+                    kartStates.DriftTurnState = DriftTurnStates.DriftingLeft;
                 }
-                if (kartStates.TurningState == KartStates.TurningStates.Right)
+                if (kartStates.TurningState == TurningStates.Right)
                 {
-                    kartStates.DrifState = KartStates.DriftStates.DriftingRight;
+                    kartStates.DriftTurnState = DriftTurnStates.DriftingRight;
                 }
             }
         }
 
         public void StopDrift()
         {
-            kartStates.DrifState = KartStates.DriftStates.NotDrifting;
+            kartStates.DriftTurnState = DriftTurnStates.NotDrifting;
         }
 
         public void Accelerate(float value)
@@ -102,17 +102,17 @@ namespace Kart
         {
             if (value > 0)
             {
-                kartStates.TurningState = KartStates.TurningStates.Right;
+                kartStates.TurningState = TurningStates.Right;
             }
             else if (value < 0)
             {
-                kartStates.TurningState = KartStates.TurningStates.Left;
+                kartStates.TurningState = TurningStates.Left;
             }
             else
             {
-                kartStates.TurningState = KartStates.TurningStates.NotTurning;
+                kartStates.TurningState = TurningStates.NotTurning;
             }
-            if (kartStates.DrifState == KartStates.DriftStates.NotDrifting)
+            if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
             {
                 kartOrientation.Turn(value);
             }

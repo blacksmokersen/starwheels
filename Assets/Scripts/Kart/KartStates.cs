@@ -7,15 +7,17 @@ namespace Kart {
      * - Drift 
      * - Air
      * - Acceleration ?
-     */ 
-    public class KartStates : MonoBehaviour {
+     */
+    public enum TurningStates { NotTurning, Left, Right }
+    public enum DriftTurnStates { NotDrifting, DriftingLeft, DriftingRight }
+    public enum DriftBoostStates { NotDrifting, SimpleDrift, OrangeDrift, RedDrift, Turbo }
+    public enum AirStates { Grounded, Jumping, InAir }
 
-        public enum TurningStates { NotTurning, Left, Right }
-        public enum DriftStates { NotDrifting, DriftingLeft, DriftingRight, Turbo }
-        public enum AirStates { Grounded, Jumping, InAir }
+    public class KartStates : MonoBehaviour{
 
         public TurningStates TurningState = TurningStates.NotTurning;
-        public DriftStates DrifState = DriftStates.NotDrifting;
+        public DriftTurnStates DriftTurnState = DriftTurnStates.NotDrifting;
+        public DriftBoostStates DriftBoostState = DriftBoostStates.SimpleDrift;
         public AirStates AirState = AirStates.Grounded;
     }
 }
