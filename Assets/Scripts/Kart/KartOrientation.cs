@@ -10,6 +10,8 @@ namespace Kart
         private KartStates kartStates;
         public float TurningSpeed;
         public float DriftingTurningSpeed;
+        public float SlowTurnValue;
+        public float QuickTurnValue;
 
         private void Awake()
         {
@@ -27,5 +29,31 @@ namespace Kart
                 transform.Rotate(new Vector3(0, 0, value * DriftingTurningSpeed * Time.deltaTime));
             }
         }
+        
+        // Same behaviour as Turn() but with predefined value
+        public void SlowTurn()
+        {
+            if (kartStates.DrifState == KartStates.DriftStates.DriftingLeft)
+            {
+                transform.Rotate(new Vector3(0, 0, -SlowTurnValue * DriftingTurningSpeed * Time.deltaTime));
+            }
+            else if (kartStates.DrifState == KartStates.DriftStates.DriftingRight)
+            {
+                transform.Rotate(new Vector3(0, 0, SlowTurnValue * DriftingTurningSpeed * Time.deltaTime));
+            }
+        }
+
+        // Same behaviour as Turn() but with predefined value
+        public void QuickTurn()
+        {
+            if (kartStates.DrifState == KartStates.DriftStates.DriftingLeft)
+            {
+                transform.Rotate(new Vector3(0, 0, -QuickTurnValue * DriftingTurningSpeed * Time.deltaTime));
+            }
+            else if (kartStates.DrifState == KartStates.DriftStates.DriftingRight)
+            {
+                transform.Rotate(new Vector3(0, 0, QuickTurnValue * DriftingTurningSpeed * Time.deltaTime));
+            }
+        }        
     }
 }

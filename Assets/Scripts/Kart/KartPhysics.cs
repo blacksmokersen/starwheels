@@ -4,6 +4,11 @@ using UnityEngine;
 
 namespace Kart
 {
+    /* 
+     * Class for handling physics for the kart : 
+     * - Forces
+     * - Velocity
+     */
     [RequireComponent(typeof(Rigidbody))]
     public class KartPhysics : MonoBehaviour
     {

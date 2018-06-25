@@ -1,6 +1,13 @@
 ﻿using UnityEngine;
 
-namespace Kart { 
+namespace Kart {
+    /*
+     * States : 
+     * - Turning 
+     * - Drift 
+     * - Air
+     * - Acceleration ?
+     */ 
     public class KartStates : MonoBehaviour {
 
         public enum TurningStates { NotTurning, Left, Right }

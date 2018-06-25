@@ -48,12 +48,14 @@ namespace Kart
                 if (kartStates.TurningState == KartStates.TurningStates.Left)
                 {
                     kartPhysics.Drift(Vector3.left, Vector3.down);
-                    kartOrientation.Turn(-0.8f);
+                    //kartOrientation.Turn(-0.8f);
+                    kartOrientation.QuickTurn();
                 }
                 if (kartStates.TurningState == KartStates.TurningStates.Right)
                 {
                     kartPhysics.Drift(Vector3.left,Vector3.up);
-                    kartOrientation.Turn(-0.45f);
+                    //kartOrientation.Turn(-0.45f);
+                    kartOrientation.SlowTurn();
                 }
             }
             else if (kartStates.DrifState == KartStates.DriftStates.DriftingRight)
@@ -61,12 +63,14 @@ namespace Kart
                 if (kartStates.TurningState == KartStates.TurningStates.Left)
                 {
                     kartPhysics.Drift(Vector3.right, Vector3.up);
-                    kartOrientation.Turn(0.45f);
+                    //kartOrientation.Turn(0.45f);
+                    kartOrientation.SlowTurn();
                 }
                 if (kartStates.TurningState == KartStates.TurningStates.Right)
                 {
                     kartPhysics.Drift(Vector3.right, Vector3.down);
-                    kartOrientation.Turn(0.8f);
+                    //kartOrientation.Turn(0.8f);
+                    kartOrientation.QuickTurn();
                 }
             }
         }

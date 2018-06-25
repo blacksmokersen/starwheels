@@ -51,7 +51,6 @@ namespace Controls
         {
             if (Input.GetButton(Constants.DriftButton))
             {
-                Debug.Log("Drift");
                 kart.Drift();
             }
         }
