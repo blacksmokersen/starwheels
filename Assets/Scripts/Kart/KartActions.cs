@@ -7,12 +7,14 @@ namespace Kart
         private KartPhysics kartPhysics;
         private KartOrientation kartOrientation;
         private KartStates kartStates;
+        private KartDriftSystem kartDriftSystem;
 
         void Awake()
         {
             kartPhysics = GetComponentInChildren<KartPhysics>();
             kartOrientation = GetComponentInChildren<KartOrientation>();
             kartStates = GetComponentInChildren<KartStates>();
+            kartDriftSystem = GetComponentInChildren<KartDriftSystem>();
         }
 
         public void Jump()
@@ -40,9 +42,10 @@ namespace Kart
             {
                 kartStates.DriftTurnState = DriftTurnStates.DriftingRight;
             }
+            kartStates.DriftBoostState = DriftBoostStates.SimpleDrift;
         }
         
-        public void Drift()
+        public void DriftTurns()
         {
             if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
             {
@@ -56,6 +59,7 @@ namespace Kart
                     kartPhysics.Drift(Vector3.left,Vector3.up);
                     kartOrientation.SlowTurn();
                 }
+                kartDriftSystem.CheckNewTurnDirection();
             }
             else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
             {
@@ -69,6 +73,7 @@ namespace Kart
                     kartPhysics.Drift(Vector3.right, Vector3.down);
                     kartOrientation.QuickTurn();
                 }
+                kartDriftSystem.CheckNewTurnDirection();
             }
             else if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
             {
@@ -81,6 +86,7 @@ namespace Kart
                     kartStates.DriftTurnState = DriftTurnStates.DriftingRight;
                 }
             }
+            
         }
 
         public void StopDrift()

@@ -8,6 +8,7 @@ namespace Kart
     public class KartOrientation : MonoBehaviour
     {
         private KartStates kartStates;
+
         public float TurningSpeed;
         public float DriftingTurningSpeed;
         public float SlowTurnValue;
