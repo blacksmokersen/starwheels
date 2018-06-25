@@ -4,14 +4,12 @@ namespace Kart
 {
     public class KartActions : MonoBehaviour
     {
-        private KartCamera kartCamera;
         private KartPhysics kartPhysics;
         private KartOrientation kartOrientation;
         private KartStates kartStates;
 
         void Awake()
         {
-            kartCamera = FindObjectOfType<KartCamera>();
             kartPhysics = GetComponentInChildren<KartPhysics>();
             kartOrientation = GetComponentInChildren<KartOrientation>();
             kartStates = GetComponentInChildren<KartStates>();
@@ -50,12 +48,12 @@ namespace Kart
                 if (kartStates.TurningState == KartStates.TurningStates.Left)
                 {
                     kartPhysics.Drift(Vector3.left, Vector3.down);
-                    kartOrientation.Turn(-0.5f);
+                    kartOrientation.Turn(-0.8f);
                 }
                 if (kartStates.TurningState == KartStates.TurningStates.Right)
                 {
                     kartPhysics.Drift(Vector3.left,Vector3.up);
-                    kartOrientation.Turn(-0.2f);
+                    kartOrientation.Turn(-0.45f);
                 }
             }
             else if (kartStates.DrifState == KartStates.DriftStates.DriftingRight)
@@ -63,12 +61,12 @@ namespace Kart
                 if (kartStates.TurningState == KartStates.TurningStates.Left)
                 {
                     kartPhysics.Drift(Vector3.right, Vector3.up);
-                    kartOrientation.Turn(0.2f);
+                    kartOrientation.Turn(0.45f);
                 }
                 if (kartStates.TurningState == KartStates.TurningStates.Right)
                 {
                     kartPhysics.Drift(Vector3.right, Vector3.down);
-                    kartOrientation.Turn(0.5f);
+                    kartOrientation.Turn(0.8f);
                 }
             }
         }

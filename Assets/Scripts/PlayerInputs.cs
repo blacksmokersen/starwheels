@@ -20,6 +20,7 @@ namespace Controls
         {
             ButtonsDown();
             ButtonsUp();
+            ButtonsPressed();
             Axis();
         }
 
@@ -50,6 +51,7 @@ namespace Controls
         {
             if (Input.GetButton(Constants.DriftButton))
             {
+                Debug.Log("Drift");
                 kart.Drift();
             }
         }
