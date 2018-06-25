@@ -33,9 +33,9 @@ namespace Kart
             rb.AddRelativeForce(directionFront * DriftForwardSpeed, ForceMode.Force);
         }
 
-        public void Jump()
+        public void Jump(float percentage = 1f)
         {
-            rb.AddRelativeForce(Vector3.forward * JumpForce, ForceMode.Impulse);
+            rb.AddRelativeForce(Vector3.forward * JumpForce * percentage, ForceMode.Impulse);
         }
 
         public void Accelerate(float value)

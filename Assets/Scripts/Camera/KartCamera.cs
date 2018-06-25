@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
+using Kart;
 
-namespace Kart {
+namespace PlayerCamera {
+    [RequireComponent(typeof(Camera))]
     public class KartCamera : MonoBehaviour
     {
         private KartStates kartStates;

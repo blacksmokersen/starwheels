@@ -31,6 +31,7 @@ namespace Kart
 
         public void InitializeDrift(float horizontal)
         {
+            kartPhysics.Jump(0.5f);
             if(horizontal < 0)
             {
                 kartStates.DrifState = KartStates.DriftStates.DriftingLeft;
@@ -48,13 +49,11 @@ namespace Kart
                 if (kartStates.TurningState == KartStates.TurningStates.Left)
                 {
                     kartPhysics.Drift(Vector3.left, Vector3.down);
-                    //kartOrientation.Turn(-0.8f);
                     kartOrientation.QuickTurn();
                 }
                 if (kartStates.TurningState == KartStates.TurningStates.Right)
                 {
                     kartPhysics.Drift(Vector3.left,Vector3.up);
-                    //kartOrientation.Turn(-0.45f);
                     kartOrientation.SlowTurn();
                 }
             }
@@ -63,13 +62,11 @@ namespace Kart
                 if (kartStates.TurningState == KartStates.TurningStates.Left)
                 {
                     kartPhysics.Drift(Vector3.right, Vector3.up);
-                    //kartOrientation.Turn(0.45f);
                     kartOrientation.SlowTurn();
                 }
                 if (kartStates.TurningState == KartStates.TurningStates.Right)
                 {
                     kartPhysics.Drift(Vector3.right, Vector3.down);
-                    //kartOrientation.Turn(0.8f);
                     kartOrientation.QuickTurn();
                 }
             }
