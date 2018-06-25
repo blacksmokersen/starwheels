@@ -8,8 +8,10 @@ namespace PlayerCamera {
         private KartStates kartStates;
 
         public float RotationSpeed;
+        public float StabilizeRotationSpeed;
         public float ActualAngle;
-        public float MaxAngle;
+        public float MaxTurnAngle;
+        public float MaxDriftAngle;
         public GameObject Target;
 
         private void Awake()
@@ -19,13 +21,23 @@ namespace PlayerCamera {
 
         private void LateUpdate()
         {
-            IncreaseAngle();
-            Stabilize();
+            if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting && kartStates.TurningState != TurningStates.NotTurning)
+            {
+                IncreaseTurningAngle();
+            }
+            else if (kartStates.DriftTurnState != DriftTurnStates.NotDrifting)
+            {
+                IncreaseDriftingAngle();
+            }
+            else if (kartStates.TurningState == TurningStates.NotTurning && kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
+            {
+                Stabilize();
+            }
         }
 
-        private void IncreaseAngle()
+        private void IncreaseTurningAngle()
         {
-            if (Mathf.Abs(ActualAngle) < MaxAngle)
+            if (Mathf.Abs(ActualAngle) < MaxTurnAngle)
             {
                 if (kartStates.TurningState == TurningStates.Left)
                 {
@@ -41,20 +53,39 @@ namespace PlayerCamera {
             }
         }
 
-        private void Stabilize()
+        private void IncreaseDriftingAngle()
         {
-            if(kartStates.TurningState == TurningStates.NotTurning)
+            if (Mathf.Abs(ActualAngle) < MaxDriftAngle)
             {
-                if (ActualAngle > 0.5f)
-                {
-                    transform.RotateAround(Target.transform.position, Vector3.up, -RotationSpeed);
-                    ActualAngle -= RotationSpeed;
-                }
-                else if (ActualAngle < 0.5f)
+                if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
                 {
                     transform.RotateAround(Target.transform.position, Vector3.up, RotationSpeed);
                     ActualAngle += RotationSpeed;
                 }
+
+                if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
+                {
+                    transform.RotateAround(Target.transform.position, Vector3.up, -RotationSpeed);
+                    ActualAngle -= RotationSpeed;
+                }
+            }
+        }
+
+        private void Stabilize()
+        {
+            if (ActualAngle > 1f)
+            {
+                transform.RotateAround(Target.transform.position, Vector3.up, -StabilizeRotationSpeed);
+                ActualAngle -= StabilizeRotationSpeed;
+            }
+            else if (ActualAngle < -1f)
+            {
+                transform.RotateAround(Target.transform.position, Vector3.up, StabilizeRotationSpeed);
+                ActualAngle += StabilizeRotationSpeed;
+            }
+            else
+            {
+                ActualAngle = 0f;
             }
         }
     }
