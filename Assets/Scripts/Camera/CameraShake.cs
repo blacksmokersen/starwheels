@@ -30,7 +30,7 @@ namespace PlayerCamera
 
             while(timer < duration)
             {
-                float dx = Random.Range(-1f, 1f) * magnitude; // Utiliser perlin noise peut-être
+                float dx = Random.Range(-1f, 1f) * magnitude; // Trop violent : Utiliser perlin noise peut-être
                 float dy = Random.Range(-1f, 1f) * magnitude;
 
                 transform.localPosition = new Vector3(dx, dy, originalPosition.z);

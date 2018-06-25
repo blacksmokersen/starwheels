@@ -8,6 +8,7 @@ namespace Kart
     public class KartOrientation : MonoBehaviour
     {
         private KartStates kartStates;
+
         public float TurningSpeed;
         public float DriftingTurningSpeed;
         public float SlowTurnValue;
@@ -20,11 +21,11 @@ namespace Kart
 
         public void Turn(float value)
         {
-            if (kartStates.DrifState == KartStates.DriftStates.NotDrifting)
+            if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
             {
                 transform.Rotate(new Vector3(0, 0, value * TurningSpeed * Time.deltaTime));
             }
-            if (kartStates.DrifState == KartStates.DriftStates.DriftingRight || kartStates.DrifState == KartStates.DriftStates.DriftingLeft)
+            if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight || kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
             {
                 transform.Rotate(new Vector3(0, 0, value * DriftingTurningSpeed * Time.deltaTime));
             }
@@ -33,11 +34,11 @@ namespace Kart
         // Same behaviour as Turn() but with predefined value
         public void SlowTurn()
         {
-            if (kartStates.DrifState == KartStates.DriftStates.DriftingLeft)
+            if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
             {
                 transform.Rotate(new Vector3(0, 0, -SlowTurnValue * DriftingTurningSpeed * Time.deltaTime));
             }
-            else if (kartStates.DrifState == KartStates.DriftStates.DriftingRight)
+            else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
             {
                 transform.Rotate(new Vector3(0, 0, SlowTurnValue * DriftingTurningSpeed * Time.deltaTime));
             }
@@ -46,11 +47,11 @@ namespace Kart
         // Same behaviour as Turn() but with predefined value
         public void QuickTurn()
         {
-            if (kartStates.DrifState == KartStates.DriftStates.DriftingLeft)
+            if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
             {
                 transform.Rotate(new Vector3(0, 0, -QuickTurnValue * DriftingTurningSpeed * Time.deltaTime));
             }
-            else if (kartStates.DrifState == KartStates.DriftStates.DriftingRight)
+            else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
             {
                 transform.Rotate(new Vector3(0, 0, QuickTurnValue * DriftingTurningSpeed * Time.deltaTime));
             }

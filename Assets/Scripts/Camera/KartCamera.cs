@@ -27,13 +27,13 @@ namespace PlayerCamera {
         {
             if (Mathf.Abs(ActualAngle) < MaxAngle)
             {
-                if (kartStates.TurningState == KartStates.TurningStates.Left)
+                if (kartStates.TurningState == TurningStates.Left)
                 {
                     transform.RotateAround(Target.transform.position, Vector3.up, RotationSpeed);
                     ActualAngle += RotationSpeed;
                 }
 
-                if (kartStates.TurningState == KartStates.TurningStates.Right)
+                if (kartStates.TurningState == TurningStates.Right)
                 {
                     transform.RotateAround(Target.transform.position, Vector3.up, -RotationSpeed);
                     ActualAngle -= RotationSpeed;
@@ -43,7 +43,7 @@ namespace PlayerCamera {
 
         private void Stabilize()
         {
-            if(kartStates.TurningState == KartStates.TurningStates.NotTurning)
+            if(kartStates.TurningState == TurningStates.NotTurning)
             {
                 if (ActualAngle > 0.5f)
                 {
