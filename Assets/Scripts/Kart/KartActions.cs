@@ -92,6 +92,7 @@ namespace Kart
         public void StopDrift()
         {
             kartStates.DriftTurnState = DriftTurnStates.NotDrifting;
+            kartStates.DriftBoostState = DriftBoostStates.NotDrifting;
         }
 
         public void Accelerate(float value)

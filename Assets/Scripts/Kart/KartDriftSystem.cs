@@ -7,7 +7,8 @@ namespace Kart
     {
         private KartStates kartStates;
         private TrailSystem trailSystem;
-        private TurningStates lastTurnState;
+
+        private bool hasTurnedOtherSide;
 
         private void Awake()
         {
@@ -16,18 +17,31 @@ namespace Kart
             trailSystem.HideTrail();
         }
 
+        private void Update()
+        {
+            if (TurnSideDifferentFromDriftSide())
+            {
+                hasTurnedOtherSide = true;
+            }
+        }
+
         public void CheckNewTurnDirection()
         {           
-            if (lastTurnState != TurningStates.NotTurning && kartStates.TurningState != TurningStates.NotTurning 
-                && lastTurnState != kartStates.TurningState)
+            if (hasTurnedOtherSide && !TurnSideDifferentFromDriftSide())
             {
                 EnterNextState();
             }
-            lastTurnState = kartStates.TurningState;
+        }
+
+        public bool TurnSideDifferentFromDriftSide()
+        {
+            return ((kartStates.DriftTurnState == DriftTurnStates.DriftingLeft && kartStates.TurningState == TurningStates.Right)
+                || (kartStates.DriftTurnState == DriftTurnStates.DriftingRight && kartStates.TurningState == TurningStates.Left));
         }
 
         public void EnterNextState()
         {
+            hasTurnedOtherSide = false;
             switch (kartStates.DriftBoostState)
             {
                 case DriftBoostStates.NotDrifting:
@@ -71,7 +85,7 @@ namespace Kart
         {
             Debug.Log("Turbo drift");
             trailSystem.HideTrail();
-            kartStates.DriftBoostState = DriftBoostStates.Turbo;
+            StartCoroutine(FindObjectOfType<KartPhysics>().Boost());
         }
     }
 }

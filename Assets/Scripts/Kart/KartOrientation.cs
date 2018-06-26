@@ -70,7 +70,6 @@ namespace Kart
             {
                 var actualRotation = transform.localRotation;
                 actualRotation.x = Mathf.Lerp(actualRotation.x, 0, RotationStabilizationSpeed);
-                //actualRotation.y = Mathf.Lerp(actualRotation.y, 0, RotationStabilizationSpeed);
                 actualRotation.z = Mathf.Lerp(actualRotation.z, 0, RotationStabilizationSpeed);
                 transform.localRotation = actualRotation;
             }

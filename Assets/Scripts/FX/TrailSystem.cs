@@ -24,6 +24,8 @@ namespace FX
             var startColor = Trail.startColor;
             endColor.a = 0f;
             startColor.a = 0f;
+            Trail.endColor = endColor;
+            Trail.startColor = startColor;
         }
 
         public void ShowTrail()
@@ -32,6 +34,8 @@ namespace FX
             var startColor = Trail.startColor;
             endColor.a = 1f;
             startColor.a = 1f;
+            Trail.endColor = endColor;
+            Trail.startColor = startColor;
         }
     }
 }

@@ -332,8 +332,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1635821177687214}
-  m_LocalRotation: {x: -0, y: 0.8430161, z: -0, w: 0.5378884}
-  m_LocalPosition: {x: 0.8926048, y: 0.4000001, z: -55.081142}
+  m_LocalRotation: {x: 0.37395257, y: 0.80193037, z: -0.08368844, w: 0.4583268}
+  m_LocalPosition: {x: 0.6655059, y: 7.8627534, z: -55.225464}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4573595320997332}
@@ -343,7 +343,7 @@ Transform:
   - {fileID: 4764569813502170}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 28.490002, y: 130.078, z: 36.522003}
 --- !u!4 &4894564954052876
 Transform:
   m_ObjectHideFlags: 1
@@ -678,10 +678,10 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 5
   m_Drag: 1
-  m_AngularDrag: 4
+  m_AngularDrag: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 32
   m_CollisionDetection: 0
 --- !u!65 &65736143983231548
@@ -760,9 +760,9 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 1, g: 1, b: 1, a: 0}
       key1: {r: 1, g: 1, b: 1, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 0}
+      key2: {r: 0, g: 0, b: 0, a: 1}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -778,7 +778,7 @@ TrailRenderer:
       ctime7: 0
       atime0: 0
       atime1: 65535
-      atime2: 0
+      atime2: 65535
       atime3: 0
       atime4: 0
       atime5: 0
@@ -807,8 +807,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TurningSpeed: 130
   DriftingTurningSpeed: 170
-  SlowTurnValue: 0.4
+  SlowTurnValue: 0.2
   QuickTurnValue: 0.8
+  RotationStabilizationSpeed: 0.05
 --- !u!114 &114114973375222830
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -870,7 +871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 656cd85e284e8684fb3d4c6d400df108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Trail: {fileID: 0}
+  Trail: {fileID: 96687836283485756}
 --- !u!114 &114539070411028740
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -912,9 +913,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 300
   JumpForce: 40
-  DriftSideSpeed: 300
-  DriftForwardSpeed: 120
-  BoostSpeed: 0
+  DriftSideSpeed: 250
+  DriftForwardSpeed: 170
+  BoostSpeed: 75
 --- !u!124 &124828931147303236
 Behaviour:
   m_ObjectHideFlags: 1
