@@ -14,9 +14,16 @@ namespace Kart
         public float SlowTurnValue;
         public float QuickTurnValue;
 
+        public float RotationStabilizationSpeed;
+
         private void Awake()
         {
-            kartStates = GetComponentInParent<KartStates>();
+            kartStates = GetComponentInChildren<KartStates>();
+        }
+
+        private void FixedUpdate()
+        {
+            StabilizeRotation();
         }
 
         public void Turn(float value)
@@ -55,6 +62,18 @@ namespace Kart
             {
                 transform.Rotate(new Vector3(0, QuickTurnValue * DriftingTurningSpeed * Time.deltaTime, 0));
             }
-        }        
+        }
+        
+        public void StabilizeRotation()
+        {
+            if(kartStates.AirState == AirStates.InAir)
+            {
+                var actualRotation = transform.localRotation;
+                actualRotation.x = Mathf.Lerp(actualRotation.x, 0, RotationStabilizationSpeed);
+                //actualRotation.y = Mathf.Lerp(actualRotation.y, 0, RotationStabilizationSpeed);
+                actualRotation.z = Mathf.Lerp(actualRotation.z, 0, RotationStabilizationSpeed);
+                transform.localRotation = actualRotation;
+            }
+        }
     }
 }

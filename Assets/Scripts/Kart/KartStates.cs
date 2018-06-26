@@ -19,5 +19,25 @@ namespace Kart {
         public DriftTurnStates DriftTurnState = DriftTurnStates.NotDrifting;
         public DriftBoostStates DriftBoostState = DriftBoostStates.NotDrifting;
         public AirStates AirState = AirStates.Grounded;
+
+        public float DistanceForGrounded;
+
+        public void FixedUpdate()
+        {
+            CheckGrounded();
+        }
+
+        public void CheckGrounded()
+        {
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), DistanceForGrounded, 1 << LayerMask.NameToLayer(Constants.GroundLayer)))
+            {
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * DistanceForGrounded, Color.yellow);
+                AirState = AirStates.Grounded;
+            }
+            else
+            {
+                AirState = AirStates.InAir;
+            }
+        }
     }
 }

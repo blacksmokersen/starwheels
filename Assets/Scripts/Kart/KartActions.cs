@@ -11,10 +11,10 @@ namespace Kart
 
         void Awake()
         {
-            kartPhysics = GetComponentInChildren<KartPhysics>();
-            kartOrientation = GetComponentInChildren<KartOrientation>();
-            kartStates = GetComponentInChildren<KartStates>();
-            kartDriftSystem = GetComponentInChildren<KartDriftSystem>();
+            kartPhysics = GetComponentInParent<KartPhysics>();
+            kartOrientation = GetComponentInParent<KartOrientation>();
+            kartStates = GetComponentInParent<KartStates>();
+            kartDriftSystem = GetComponentInParent<KartDriftSystem>();
         }
 
         public void Jump(float value = 1f)
@@ -96,12 +96,18 @@ namespace Kart
 
         public void Accelerate(float value)
         {
-            kartPhysics.Accelerate(value);
+            if (kartStates.AirState != AirStates.InAir)
+            {
+                kartPhysics.Accelerate(value);
+            }
         }
 
         public void Decelerate(float value)
         {
-            kartPhysics.Decelerate(value);
+            if (kartStates.AirState != AirStates.InAir)
+            {
+                kartPhysics.Decelerate(value);
+            }
         }
 
         public void Turn(float value)

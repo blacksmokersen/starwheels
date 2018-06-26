@@ -11,7 +11,7 @@ namespace Kart
 
         private void Awake()
         {
-            kartStates = GetComponentInParent<KartStates>();
+            kartStates = GetComponentInChildren<KartStates>();
             trailSystem = GetComponentInChildren<TrailSystem>();
             trailSystem.HideTrail();
         }
