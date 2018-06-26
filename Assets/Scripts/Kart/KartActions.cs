@@ -17,11 +17,11 @@ namespace Kart
             kartDriftSystem = GetComponentInChildren<KartDriftSystem>();
         }
 
-        public void Jump()
+        public void Jump(float value = 1f)
         {
             if (kartStates.AirState == AirStates.Grounded)
             {
-                kartPhysics.Jump();
+                kartPhysics.Jump(value);
                 kartStates.AirState = AirStates.InAir;
             }
         }
@@ -33,7 +33,7 @@ namespace Kart
 
         public void InitializeDrift(float horizontal)
         {
-            kartPhysics.Jump(0.5f);
+            Jump(0.5f);
             if(horizontal < 0)
             {
                 kartStates.DriftTurnState = DriftTurnStates.DriftingLeft;
@@ -51,12 +51,12 @@ namespace Kart
             {
                 if (kartStates.TurningState == TurningStates.Left)
                 {
-                    kartPhysics.Drift(Vector3.left, Vector3.down);
+                    kartPhysics.Drift(Vector3.right, Vector3.back);
                     kartOrientation.QuickTurn();
                 }
                 if (kartStates.TurningState == TurningStates.Right)
                 {
-                    kartPhysics.Drift(Vector3.left,Vector3.up);
+                    kartPhysics.Drift(Vector3.right,Vector3.forward);
                     kartOrientation.SlowTurn();
                 }
                 kartDriftSystem.CheckNewTurnDirection();
@@ -65,12 +65,12 @@ namespace Kart
             {
                 if (kartStates.TurningState == TurningStates.Left)
                 {
-                    kartPhysics.Drift(Vector3.right, Vector3.up);
+                    kartPhysics.Drift(Vector3.left, Vector3.forward);
                     kartOrientation.SlowTurn();
                 }
                 if (kartStates.TurningState == TurningStates.Right)
                 {
-                    kartPhysics.Drift(Vector3.right, Vector3.down);
+                    kartPhysics.Drift(Vector3.left, Vector3.back);
                     kartOrientation.QuickTurn();
                 }
                 kartDriftSystem.CheckNewTurnDirection();

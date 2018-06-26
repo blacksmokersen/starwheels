@@ -23,11 +23,11 @@ namespace Kart
         {
             if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
             {
-                transform.Rotate(new Vector3(0, 0, value * TurningSpeed * Time.deltaTime));
+                transform.Rotate(new Vector3(0, value * TurningSpeed * Time.deltaTime, 0));
             }
             if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight || kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
             {
-                transform.Rotate(new Vector3(0, 0, value * DriftingTurningSpeed * Time.deltaTime));
+                transform.Rotate(new Vector3(0, value * DriftingTurningSpeed * Time.deltaTime, 0));
             }
         }
         
@@ -36,11 +36,11 @@ namespace Kart
         {
             if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
             {
-                transform.Rotate(new Vector3(0, 0, -SlowTurnValue * DriftingTurningSpeed * Time.deltaTime));
+                transform.Rotate(new Vector3(0, -SlowTurnValue * DriftingTurningSpeed * Time.deltaTime, 0));
             }
             else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
             {
-                transform.Rotate(new Vector3(0, 0, SlowTurnValue * DriftingTurningSpeed * Time.deltaTime));
+                transform.Rotate(new Vector3(0, SlowTurnValue * DriftingTurningSpeed * Time.deltaTime, 0));
             }
         }
 
@@ -49,11 +49,11 @@ namespace Kart
         {
             if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
             {
-                transform.Rotate(new Vector3(0, 0, -QuickTurnValue * DriftingTurningSpeed * Time.deltaTime));
+                transform.Rotate(new Vector3(0, -QuickTurnValue * DriftingTurningSpeed * Time.deltaTime, 0));
             }
             else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
             {
-                transform.Rotate(new Vector3(0, 0, QuickTurnValue * DriftingTurningSpeed * Time.deltaTime));
+                transform.Rotate(new Vector3(0, QuickTurnValue * DriftingTurningSpeed * Time.deltaTime, 0));
             }
         }        
     }

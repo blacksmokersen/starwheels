@@ -17,7 +17,7 @@ namespace Kart {
 
         public TurningStates TurningState = TurningStates.NotTurning;
         public DriftTurnStates DriftTurnState = DriftTurnStates.NotDrifting;
-        public DriftBoostStates DriftBoostState = DriftBoostStates.SimpleDrift;
+        public DriftBoostStates DriftBoostState = DriftBoostStates.NotDrifting;
         public AirStates AirState = AirStates.Grounded;
     }
 }

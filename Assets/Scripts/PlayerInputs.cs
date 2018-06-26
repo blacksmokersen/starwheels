@@ -18,10 +18,10 @@ namespace Controls
 
         void FixedUpdate()
         {
+            Axis();
             ButtonsDown();
             ButtonsUp();
             ButtonsPressed();
-            Axis();
         }
 
         void Axis()

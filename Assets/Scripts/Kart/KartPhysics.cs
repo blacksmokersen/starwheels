@@ -35,17 +35,17 @@ namespace Kart
 
         public void Jump(float percentage = 1f)
         {
-            rb.AddRelativeForce(Vector3.forward * JumpForce * percentage, ForceMode.Impulse);
+            rb.AddRelativeForce(Vector3.up * JumpForce * percentage, ForceMode.Impulse);
         }
 
         public void Accelerate(float value)
         {
-            rb.AddRelativeForce(Vector3.up * value * Speed, ForceMode.Force);
+            rb.AddRelativeForce(Vector3.forward * value * Speed, ForceMode.Force);
         }
 
         public void Decelerate(float value)
         {
-            rb.AddRelativeForce(Vector3.down * value * Speed, ForceMode.Force);
+            rb.AddRelativeForce(Vector3.back * value * Speed, ForceMode.Force);
         }
 
         public IEnumerator Boost()
