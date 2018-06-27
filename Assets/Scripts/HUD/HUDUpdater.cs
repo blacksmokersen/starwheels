@@ -13,7 +13,7 @@ namespace HUD
 
         private void Start()
         {
-            kartRigidBody = GameObject.FindGameObjectWithTag(Constants.KartTag).GetComponentInChildren<Rigidbody>();
+            kartRigidBody = GameObject.FindGameObjectWithTag(Constants.KartTag).GetComponent<Rigidbody>();
             StartCoroutine(UpdateRoutine());
         }
 

@@ -51,7 +51,7 @@ namespace Controls
         {
             if (Input.GetButton(Constants.DriftButton))
             {
-                kart.DriftTurns();
+                kart.DriftTurns(Input.GetAxis(Constants.TurnAxis));
             }
         }
 

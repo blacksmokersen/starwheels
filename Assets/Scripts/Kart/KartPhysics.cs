@@ -16,7 +16,10 @@ namespace Kart
         public float JumpForce;
         public float DriftSideSpeed;
         public float DriftForwardSpeed;
+        public float DriftTorqueSpeed;
         public float BoostSpeed;
+        public Vector3 TorqueDirection;
+        public float MaxMagnitude;
 
         private KartStates kartStates;
         private Rigidbody rb;
@@ -27,10 +30,20 @@ namespace Kart
             rb = GetComponent<Rigidbody>();
         }
 
-        public void Drift(Vector3 directionSide, Vector3 directionFront)
+        private void FixedUpdate()
+        {
+            rb.velocity = Vector3.ClampMagnitude(rb.velocity, MaxMagnitude);
+        }
+
+        public void DriftUsingForce(Vector3 directionSide, Vector3 directionFront)
         {
             rb.AddRelativeForce(directionSide * DriftSideSpeed, ForceMode.Force);
             rb.AddRelativeForce(directionFront * DriftForwardSpeed, ForceMode.Force);
+        }
+
+        public void DriftUsingTorque(Vector3 direction)
+        {
+            rb.AddRelativeTorque(direction * DriftTorqueSpeed, ForceMode.Force);
         }
 
         public void Jump(float percentage = 1f)

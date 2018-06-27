@@ -37,6 +37,18 @@ namespace Kart
                 transform.Rotate(new Vector3(0, value * DriftingTurningSpeed * Time.deltaTime, 0));
             }
         }
+
+        public void DriftTurn(float angle)
+        {
+            if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
+            {
+                transform.Rotate(new Vector3(0, Mathf.Clamp(angle, -0.75f, -0.1f) * DriftingTurningSpeed * Time.deltaTime, 0));
+            }
+            else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
+            {                
+                transform.Rotate(new Vector3(0, Mathf.Clamp(angle, 0.1f, 0.75f) * DriftingTurningSpeed * Time.deltaTime, 0));
+            }
+        }
         
         // Same behaviour as Turn() but with predefined value
         public void SlowTurn()

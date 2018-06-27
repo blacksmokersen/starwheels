@@ -6,15 +6,14 @@ namespace Kart
     public class KartDriftSystem : MonoBehaviour
     {
         private KartStates kartStates;
-        private TrailSystem trailSystem;
+        private ParticlesController particlesController;
 
         private bool hasTurnedOtherSide;
 
         private void Awake()
         {
             kartStates = GetComponentInChildren<KartStates>();
-            trailSystem = GetComponentInChildren<TrailSystem>();
-            trailSystem.HideTrail();
+            particlesController = GetComponentInChildren<ParticlesController>();
         }
 
         private void Update()
@@ -59,32 +58,51 @@ namespace Kart
             }
         }
 
+        public void InitializeDrift(float angle)
+        {
+            if (angle < 0)
+            {
+                kartStates.DriftTurnState = DriftTurnStates.DriftingLeft;
+            }
+            if (angle > 0)
+            {
+                kartStates.DriftTurnState = DriftTurnStates.DriftingRight;
+            }
+            EnterNormalDrift();
+            particlesController.Show();
+        }
+
+        public void StopDrift()
+        {
+            kartStates.DriftTurnState = DriftTurnStates.NotDrifting;
+            kartStates.DriftBoostState = DriftBoostStates.NotDrifting;
+            particlesController.SetColor(Color.white);
+        }
+
         private void EnterNormalDrift()
         {
+            particlesController.SetColor(Color.green);
             Debug.Log("Normal drift");
-            trailSystem.ShowTrail();
-            trailSystem.SetUniqueColor(Color.grey);
             kartStates.DriftBoostState = DriftBoostStates.SimpleDrift;
         }
 
         private void EnterOrangeDrift()
         {
             Debug.Log("Orange drift");
-            trailSystem.SetUniqueColor(Color.yellow);
+            particlesController.SetColor(Color.yellow);
             kartStates.DriftBoostState = DriftBoostStates.OrangeDrift;
         }
 
         private void EnterRedDrift()
         {
             Debug.Log("Red drift");
-            trailSystem.SetUniqueColor(Color.red);
+            particlesController.SetColor(Color.red);
             kartStates.DriftBoostState = DriftBoostStates.RedDrift;
         }
 
         private void EnterTurbo()
         {
             Debug.Log("Turbo drift");
-            trailSystem.HideTrail();
             StartCoroutine(FindObjectOfType<KartPhysics>().Boost());
         }
     }

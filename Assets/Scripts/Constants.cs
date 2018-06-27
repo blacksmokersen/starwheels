@@ -1,19 +1,19 @@
 ﻿public class Constants {
 
     // Layers
-    public static string GroundLayer = "Ground";
+    public const string GroundLayer = "Ground";
 
     // Tags
-    public static string KartTag = "Kart";
+    public const string KartTag = "Kart";
 
     // Object Names
-    public static string KartObjectName = "Kart";
+    public const string KartObjectName = "Kart";
 
     // Inputs    
-    public static string AccelerateButton = "Accelerate";
-    public static string DecelerateButton = "Decelerate";
-    public static string JumpButton = "Jump";
-    public static string FireButton = "Fire";
-    public static string TurnAxis = "Turn";
-    public static string DriftButton = "Drift";
+    public const string AccelerateButton = "Accelerate";
+    public const string DecelerateButton = "Decelerate";
+    public const string JumpButton = "Jump";
+    public const string FireButton = "Fire";
+    public const string TurnAxis = "Turn";
+    public const string DriftButton = "Drift";
 }
