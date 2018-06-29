@@ -49,13 +49,12 @@ namespace Kart
         private void FixedUpdate()
         {
             rb.velocity = Vector3.ClampMagnitude(rb.velocity, MaxMagnitude);
-            CompensateSlip();
         }
 
         public void CompensateSlip()
         {
-            var sideVelocity = new Vector3(-transform.InverseTransformPoint(rb.velocity).normalized.x,0,0);
-            rb.AddForce(sideVelocity * CompensationForce, ForceMode.Force);
+            var sideVelocity = new Vector3(transform.InverseTransformDirection(rb.velocity).x,0,0);            
+            rb.AddRelativeForce(-sideVelocity * CompensationForce, ForceMode.Force);
         }
 
         public void DriftUsingForce(Vector3 directionSide, Vector3 directionFront)

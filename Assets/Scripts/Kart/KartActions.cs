@@ -17,6 +17,14 @@ namespace Kart
             kartDriftSystem = GetComponentInParent<KartDriftSystem>();
         }
 
+        private void FixedUpdate()
+        {
+            if(kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
+            {
+                kartPhysics.CompensateSlip();
+            }
+        }
+
         public void Jump(float value = 1f)
         {
             if (kartStates.AirState == AirStates.Grounded)
