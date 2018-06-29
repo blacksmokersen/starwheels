@@ -12,14 +12,23 @@ namespace Kart
     [RequireComponent(typeof(Rigidbody))]
     public class KartPhysics : MonoBehaviour
     {
+        [Header("Driving")]
         public float Speed;
+        public float MaxMagnitude;
         public float JumpForce;
+        public Vector3 CenterOfMassOffset;
+
+
+        [Header("Drift")]
         public float DriftSideSpeed;
         public float DriftForwardSpeed;
         public float DriftTorqueSpeed;
         public float BoostSpeed;
+
+        [Header("Turn")]
         public Vector3 TorqueDirection;
-        public float MaxMagnitude;
+        public float TurnTorqueSpeed;
+        public float CompensationForce;
 
         private KartStates kartStates;
         private Rigidbody rb;
@@ -28,11 +37,25 @@ namespace Kart
         {
             kartStates = GetComponentInChildren<KartStates>();
             rb = GetComponent<Rigidbody>();
+            rb.centerOfMass = CenterOfMassOffset;
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(CenterOfMassOffset, 0.5f);
         }
 
         private void FixedUpdate()
         {
             rb.velocity = Vector3.ClampMagnitude(rb.velocity, MaxMagnitude);
+            CompensateSlip();
+        }
+
+        public void CompensateSlip()
+        {
+            var sideVelocity = new Vector3(-transform.InverseTransformPoint(rb.velocity).normalized.x,0,0);
+            rb.AddForce(sideVelocity * CompensationForce, ForceMode.Force);
         }
 
         public void DriftUsingForce(Vector3 directionSide, Vector3 directionFront)
@@ -41,7 +64,7 @@ namespace Kart
             rb.AddRelativeForce(directionFront * DriftForwardSpeed, ForceMode.Force);
         }
 
-        public void DriftUsingTorque(Vector3 direction)
+        public void TurnUsingTorque(Vector3 direction)
         {
             rb.AddRelativeTorque(direction * DriftTorqueSpeed, ForceMode.Force);
         }

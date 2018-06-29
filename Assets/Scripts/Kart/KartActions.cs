@@ -80,8 +80,7 @@ namespace Kart
                 {
                     kartStates.DriftTurnState = DriftTurnStates.DriftingRight;
                 }
-            }
-            
+            }            
         }
 
         public void Accelerate(float value)
@@ -116,7 +115,8 @@ namespace Kart
             }
             if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
             {
-                kartOrientation.Turn(value);
+                //kartOrientation.Turn(value);
+                kartPhysics.TurnUsingTorque(Vector3.up * value);
             }
         }
     }
