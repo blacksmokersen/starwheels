@@ -6,11 +6,16 @@ namespace Kart
 {
     public class KartDriftSystem : MonoBehaviour
     {
+        public float TimeBetweenDrifts;
+        public float BoostDuration;
+
         private KartStates kartStates;
         private KartPhysics kartPhysics;
         private ParticlesController particlesController;
 
         private bool hasTurnedOtherSide;
+        private bool driftedLongEnough;
+        private Coroutine driftTimer;
 
         private void Awake()
         {
@@ -30,7 +35,7 @@ namespace Kart
 
         public void CheckNewTurnDirection()
         {           
-            if (hasTurnedOtherSide && !TurnSideDifferentFromDriftSide())
+            if (hasTurnedOtherSide && !TurnSideDifferentFromDriftSide() && driftedLongEnough)
             {
                 EnterNextState();
             }
@@ -45,6 +50,7 @@ namespace Kart
         public void EnterNextState()
         {
             hasTurnedOtherSide = false;
+            driftedLongEnough = false;
             switch (kartStates.DriftBoostState)
             {
                 case DriftBoostStates.NotDrifting:
@@ -59,6 +65,7 @@ namespace Kart
                 case DriftBoostStates.RedDrift:
                     break;
             }
+            driftTimer = StartCoroutine(DriftTimer());
         }
 
         public void InitializeDrift(float angle)
@@ -71,7 +78,7 @@ namespace Kart
             {
                 kartStates.DriftTurnState = DriftTurnStates.DriftingRight;
             }
-            EnterNormalDrift();
+            EnterNextState();
             particlesController.Show();
         }
 
@@ -83,9 +90,20 @@ namespace Kart
             }
             else
             {
-                kartStates.DriftTurnState = DriftTurnStates.NotDrifting;
-                kartStates.DriftBoostState = DriftBoostStates.NotDrifting;
-                particlesController.Hide();
+                ResetDrift();
+            }
+        }
+
+        public void ResetDrift()
+        {
+            kartStates.DriftTurnState = DriftTurnStates.NotDrifting;
+            kartStates.DriftBoostState = DriftBoostStates.NotDrifting;
+            driftedLongEnough = false;
+            hasTurnedOtherSide = false;
+            particlesController.Hide();
+            if (driftTimer != null)
+            {
+                StopCoroutine(driftTimer);
             }
         }
 
@@ -114,12 +132,17 @@ namespace Kart
         {
             Debug.Log("Turbo drift");
             particlesController.SetColor(Color.green);
-            StartCoroutine(kartPhysics.Boost());
+            StartCoroutine(kartPhysics.Boost(BoostDuration));
             kartStates.DriftBoostState = DriftBoostStates.Turbo;
             kartStates.DriftTurnState = DriftTurnStates.NotDrifting;
-            yield return new WaitForSeconds(2.0f);
-            kartStates.DriftBoostState = DriftBoostStates.NotDrifting;
-            particlesController.Hide();
+            yield return new WaitForSeconds(BoostDuration);
+            ResetDrift();
+        }
+
+        private IEnumerator DriftTimer()
+        {
+            yield return new WaitForSeconds(TimeBetweenDrifts);
+            driftedLongEnough = true;
         }
 
 

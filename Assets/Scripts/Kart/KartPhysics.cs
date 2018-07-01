@@ -82,11 +82,11 @@ namespace Kart
             rb.AddRelativeForce(Vector3.back * value * Speed, ForceMode.Force);
         }
 
-        public IEnumerator Boost()
+        public IEnumerator Boost(float boostDuration)
         {
             MaxMagnitude += 10f;
             Speed += BoostSpeed;
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(boostDuration);
             Speed -= BoostSpeed;
             MaxMagnitude -= 10f;
         }
