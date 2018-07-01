@@ -123,8 +123,14 @@ namespace Kart
             }
             if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
             {
-                //kartOrientation.Turn(value);
-                kartPhysics.TurnUsingTorque(Vector3.up * value);
+                if (kartStates.AccelerationState == AccelerationStates.Forward)
+                {
+                    kartPhysics.TurnUsingTorque(Vector3.up * value);
+                }
+                else if(kartStates.AccelerationState == AccelerationStates.Back)
+                {
+                    kartPhysics.TurnUsingTorque(Vector3.down * value);
+                }
             }
         }
     }

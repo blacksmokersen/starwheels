@@ -8,6 +8,7 @@ namespace Kart {
      * - Air
      * - Acceleration ?
      */
+    public enum AccelerationStates { Forward, Back, None }
     public enum TurningStates { NotTurning, Left, Right }
     public enum DriftTurnStates { NotDrifting, DriftingLeft, DriftingRight }
     public enum DriftBoostStates { NotDrifting, SimpleDrift, OrangeDrift, RedDrift, Turbo }
@@ -15,6 +16,7 @@ namespace Kart {
 
     public class KartStates : MonoBehaviour{
 
+        public AccelerationStates AccelerationState = AccelerationStates.None;
         public TurningStates TurningState = TurningStates.NotTurning;
         public DriftTurnStates DriftTurnState = DriftTurnStates.NotDrifting;
         public DriftBoostStates DriftBoostState = DriftBoostStates.NotDrifting;
@@ -22,12 +24,20 @@ namespace Kart {
 
         public float DistanceForGrounded;
 
+        private Rigidbody rb;
+
+        private void Awake()
+        {
+            rb = GetComponentInParent<Rigidbody>();
+        }
+
         public void FixedUpdate()
         {
             CheckGrounded();
+            CheckAcceleration();
         }
 
-        public void CheckGrounded()
+        private void CheckGrounded()
         {
             if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), DistanceForGrounded, 1 << LayerMask.NameToLayer(Constants.GroundLayer)))
             {
@@ -37,6 +47,22 @@ namespace Kart {
             else
             {
                 AirState = AirStates.InAir;
+            }
+        }
+
+        private void CheckAcceleration()
+        {
+            if(transform.InverseTransformDirection(rb.velocity).z > 0)
+            {
+                AccelerationState = AccelerationStates.Forward;
+            }
+            else if(transform.InverseTransformDirection(rb.velocity).z < 0)
+            {
+                AccelerationState = AccelerationStates.Back;
+            }
+            else
+            {
+                AccelerationState = AccelerationStates.None;
             }
         }
     }

@@ -26,7 +26,6 @@ namespace Kart
         public float BoostSpeed;
 
         [Header("Turn")]
-        public Vector3 TorqueDirection;
         public float TurnTorqueSpeed;
         public float CompensationForce;
 
@@ -65,7 +64,7 @@ namespace Kart
 
         public void TurnUsingTorque(Vector3 direction)
         {
-            rb.AddRelativeTorque(direction * DriftTorqueSpeed, ForceMode.Force);
+            rb.AddRelativeTorque(direction * TurnTorqueSpeed, ForceMode.Force);
         }
 
         public void Jump(float percentage = 1f)

@@ -14,6 +14,7 @@ namespace Kart
         {
             kartStates = GetComponentInChildren<KartStates>();
             particlesController = GetComponentInChildren<ParticlesController>();
+            particlesController.Hide();
         }
 
         private void Update()
@@ -76,7 +77,7 @@ namespace Kart
         {
             kartStates.DriftTurnState = DriftTurnStates.NotDrifting;
             kartStates.DriftBoostState = DriftBoostStates.NotDrifting;
-            particlesController.SetColor(Color.white);
+            particlesController.Hide();
         }
 
         private void EnterNormalDrift()

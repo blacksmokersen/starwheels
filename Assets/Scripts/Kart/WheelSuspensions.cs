@@ -36,7 +36,7 @@ public class WheelSuspensions : MonoBehaviour {
 
     private void AdjustWheelPosition(float distance)
     {
-        rb.AddForceAtPosition(ComputeForceToAdd(distance), transform.position, ForceMode.Impulse);        
+        rb.AddForceAtPosition(ComputeForceToAdd(distance), transform.position, ForceMode.Force);        
     }
 
     private Vector3 ComputeForceToAdd(float distance)
