@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using FX;
+using System.Collections;
 
 namespace Kart
 {
     public class KartDriftSystem : MonoBehaviour
     {
         private KartStates kartStates;
+        private KartPhysics kartPhysics;
         private ParticlesController particlesController;
 
         private bool hasTurnedOtherSide;
@@ -13,6 +15,7 @@ namespace Kart
         private void Awake()
         {
             kartStates = GetComponentInChildren<KartStates>();
+            kartPhysics = GetComponent<KartPhysics>();
             particlesController = GetComponentInChildren<ParticlesController>();
             particlesController.Hide();
         }
@@ -54,7 +57,6 @@ namespace Kart
                     EnterRedDrift();
                     break;
                 case DriftBoostStates.RedDrift:
-                    EnterTurbo();
                     break;
             }
         }
@@ -75,14 +77,21 @@ namespace Kart
 
         public void StopDrift()
         {
-            kartStates.DriftTurnState = DriftTurnStates.NotDrifting;
-            kartStates.DriftBoostState = DriftBoostStates.NotDrifting;
-            particlesController.Hide();
+            if (kartStates.DriftBoostState == DriftBoostStates.RedDrift)
+            {
+                StartCoroutine(EnterTurbo());
+            }
+            else
+            {
+                kartStates.DriftTurnState = DriftTurnStates.NotDrifting;
+                kartStates.DriftBoostState = DriftBoostStates.NotDrifting;
+                particlesController.Hide();
+            }
         }
 
         private void EnterNormalDrift()
         {
-            particlesController.SetColor(Color.green);
+            particlesController.SetColor(Color.grey);
             Debug.Log("Normal drift");
             kartStates.DriftBoostState = DriftBoostStates.SimpleDrift;
         }
@@ -101,10 +110,18 @@ namespace Kart
             kartStates.DriftBoostState = DriftBoostStates.RedDrift;
         }
 
-        private void EnterTurbo()
+        private IEnumerator EnterTurbo()
         {
             Debug.Log("Turbo drift");
-            StartCoroutine(FindObjectOfType<KartPhysics>().Boost());
+            particlesController.SetColor(Color.green);
+            StartCoroutine(kartPhysics.Boost());
+            kartStates.DriftBoostState = DriftBoostStates.Turbo;
+            kartStates.DriftTurnState = DriftTurnStates.NotDrifting;
+            yield return new WaitForSeconds(2.0f);
+            kartStates.DriftBoostState = DriftBoostStates.NotDrifting;
+            particlesController.Hide();
         }
+
+
     }
 }

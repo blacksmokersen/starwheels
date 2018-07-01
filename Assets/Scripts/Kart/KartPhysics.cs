@@ -84,9 +84,11 @@ namespace Kart
 
         public IEnumerator Boost()
         {
+            MaxMagnitude += 10f;
             Speed += BoostSpeed;
             yield return new WaitForSeconds(2f);
             Speed -= BoostSpeed;
+            MaxMagnitude -= 10f;
         }
     }
 }
