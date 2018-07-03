@@ -9,10 +9,13 @@ namespace Kart
     {
         private KartStates kartStates;
 
+        [Header("Turn")]
         public float TurningSpeed;
+
+        [Header("Drift")]
         public float DriftingTurningSpeed;
-        public float SlowTurnValue;
-        public float QuickTurnValue;
+        [Range(0, 1)] public float DriftMaxAngle;
+        [Range(0, 1)] public float DriftMinAngle;
 
         public float RotationStabilizationSpeed;
 
@@ -42,37 +45,11 @@ namespace Kart
         {
             if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
             {
-                transform.Rotate(new Vector3(0, Mathf.Clamp(angle, -0.75f, -0.1f) * DriftingTurningSpeed * Time.deltaTime, 0));
+                transform.Rotate(new Vector3(0, Mathf.Clamp(angle, -DriftMaxAngle, -DriftMinAngle) * DriftingTurningSpeed * Time.deltaTime, 0));
             }
             else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
             {                
-                transform.Rotate(new Vector3(0, Mathf.Clamp(angle, 0.1f, 0.75f) * DriftingTurningSpeed * Time.deltaTime, 0));
-            }
-        }
-        
-        // Same behaviour as Turn() but with predefined value
-        public void SlowTurn()
-        {
-            if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
-            {
-                transform.Rotate(new Vector3(0, -SlowTurnValue * DriftingTurningSpeed * Time.deltaTime, 0));
-            }
-            else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
-            {
-                transform.Rotate(new Vector3(0, SlowTurnValue * DriftingTurningSpeed * Time.deltaTime, 0));
-            }
-        }
-
-        // Same behaviour as Turn() but with predefined value
-        public void QuickTurn()
-        {
-            if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
-            {
-                transform.Rotate(new Vector3(0, -QuickTurnValue * DriftingTurningSpeed * Time.deltaTime, 0));
-            }
-            else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
-            {
-                transform.Rotate(new Vector3(0, QuickTurnValue * DriftingTurningSpeed * Time.deltaTime, 0));
+                transform.Rotate(new Vector3(0, Mathf.Clamp(angle, DriftMinAngle, DriftMaxAngle) * DriftingTurningSpeed * Time.deltaTime, 0));
             }
         }
         
