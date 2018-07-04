@@ -19,7 +19,7 @@ public class WheelSuspensions : MonoBehaviour {
     private void FixedUpdate()
     {
         CheckGround();
-        Debug.Log(transform.InverseTransformDirection(rb.GetPointVelocity(transform.position)).y);
+        //Debug.Log(transform.InverseTransformDirection(rb.GetPointVelocity(transform.position)).y);
 
     }
 
@@ -30,7 +30,7 @@ public class WheelSuspensions : MonoBehaviour {
         {
             var distance = Mathf.Clamp(hit.distance, 0, MaxExtensionDistance);
             var compressionRatio = - distance + MaxExtensionDistance;
-            Debug.Log("Compression Ratio : " + compressionRatio);
+            //Debug.Log("Compression Ratio : " + compressionRatio);
             AdjustWheelPosition(compressionRatio);
         }
     }

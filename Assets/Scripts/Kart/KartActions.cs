@@ -41,8 +41,11 @@ namespace Kart
 
         public void InitializeDrift(float angle)
         {
-            Jump(0.5f);
-            kartDriftSystem.InitializeDrift(angle);
+            if (kartStates.AirState == AirStates.Grounded)
+            {
+                Jump(0.5f);
+                kartDriftSystem.InitializeDrift(angle);
+            }
         }
 
         public void StopDrift()
@@ -62,6 +65,8 @@ namespace Kart
 
         public void DriftTurns(float turnValue)
         {
+            if (kartStates.AirState == AirStates.InAir) return;
+            
             if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
             {
                 if (kartStates.TurningState == TurningStates.Left)
@@ -72,6 +77,7 @@ namespace Kart
                 {
                     kartPhysics.DriftUsingForce(ComputeForce2(turnValue), ComputeForce1(turnValue), Vector3.right,Vector3.forward);
                 }
+                kartPhysics.DriftUsingForce(turnValue);
                 kartOrientation.DriftTurn(turnValue);
                 kartDriftSystem.CheckNewTurnDirection();
             }
@@ -85,6 +91,7 @@ namespace Kart
                 {
                     kartPhysics.DriftUsingForce(ComputeForce1(turnValue), ComputeForce2(turnValue), Vector3.left, Vector3.back);
                 }
+                //kartPhysics.DriftUsingForce(turnValue);
                 kartOrientation.DriftTurn(turnValue);
                 kartDriftSystem.CheckNewTurnDirection();
             }
