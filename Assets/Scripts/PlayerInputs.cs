@@ -16,12 +16,12 @@ namespace Controls
             kart = FindObjectOfType<KartActions>();
         }
 
-        void FixedUpdate()
+        void Update()
         {
             Axis();
             ButtonsDown();
-            ButtonsUp();
             ButtonsPressed();
+            ButtonsUp();
         }
 
         void Axis()

@@ -8,22 +8,32 @@ namespace Kart
      * Class for handling physics for the kart : 
      * - Forces
      * - Velocity
+     * - Drag
+     * - Torques
      */
     [RequireComponent(typeof(Rigidbody))]
     public class KartPhysics : MonoBehaviour
     {
+
         [Header("Driving")]
         public float Speed;
         public float MaxMagnitude;
-        public float JumpForce;
-        public Vector3 CenterOfMassOffset;
 
+        [Header("Gravity")]
+        public float JumpForce;
+        public float GravityForce;
+        public Vector3 CenterOfMassOffset;
+        [Range(0, 1)] public float MinDrag;
+        [Range(0, 10)] public float MaxDrag;
+        [Range(0, 1)] public float ForwardDrag;
+        [Range(0, 1)] public float SideDrag;
 
         [Header("Drift")]
         public float DriftSideSpeed;
         public float DriftForwardSpeed;
-        public float DriftTorqueSpeed;
         public float BoostSpeed;
+        [Range(0, 90)] public float ForwardMaxAngle;
+        [Range(0, -90)] public float BackMaxAngle;
 
         [Header("Turn")]
         public float TurnTorqueSpeed;
@@ -48,6 +58,8 @@ namespace Kart
         private void FixedUpdate()
         {
             rb.velocity = Vector3.ClampMagnitude(rb.velocity, MaxMagnitude);
+            rb.AddForce(Vector3.down * GravityForce, ForceMode.Acceleration);
+            CheckDrag();
         }
 
         public void CompensateSlip()
@@ -56,10 +68,53 @@ namespace Kart
             rb.AddRelativeForce(-sideVelocity * CompensationForce, ForceMode.Force);
         }
 
-        public void DriftUsingForce(Vector3 directionSide, Vector3 directionFront)
+        private void CheckDrag()
         {
-            rb.AddRelativeForce(directionSide * DriftSideSpeed, ForceMode.Force);
-            rb.AddRelativeForce(directionFront * DriftForwardSpeed, ForceMode.Force);
+            if (kartStates.AirState == AirStates.InAir)
+            {
+                rb.drag = MinDrag;
+            }
+            else
+            {
+                rb.drag = MaxDrag;
+            }
+        }
+
+        private void CustomDrag()
+        {
+            var vel = transform.InverseTransformDirection(rb.velocity);
+            vel.x *= 1.0f - SideDrag; // reduce x component...
+            vel.z *= 1.0f - ForwardDrag; // and z component each cycle
+            rb.velocity = transform.TransformDirection(vel);
+        }
+
+        public void DriftUsingForce(float forwardRatio, float sideRatio, Vector3 directionSide, Vector3 directionFront)
+        {
+            rb.AddRelativeForce(forwardRatio * directionFront * DriftForwardSpeed, ForceMode.Force);
+            rb.AddRelativeForce(sideRatio * directionSide * DriftSideSpeed, ForceMode.Force);
+        }
+
+        public float RemapValue(float actualMin, float actualMax, float targetMin, float targetMax, float val)
+        {
+            return targetMin + (targetMax - targetMin) * ((val - actualMin) / (actualMax - actualMin));
+        }
+
+        public void DriftUsingForce(float turnValue)
+        {
+            float angle = 0f;
+            if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
+            {
+                angle = Mathf.PI - Mathf.Deg2Rad * RemapValue(-1, 1, ForwardMaxAngle, BackMaxAngle, turnValue);
+            }
+            else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
+            {
+                angle = Mathf.Deg2Rad * RemapValue(-1, 1, BackMaxAngle, ForwardMaxAngle, turnValue);
+            }
+            var direction = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)).normalized;
+            rb.AddRelativeForce(direction.z * Vector3.forward * DriftForwardSpeed, ForceMode.Force);
+            Debug.Log("Forward force : " + (direction.z * Vector3.forward * DriftForwardSpeed));
+            rb.AddRelativeForce(direction.x * Vector3.left * DriftSideSpeed, ForceMode.Force);
+            Debug.Log("Side force : " + (direction.x * Vector3.left * DriftSideSpeed));
         }
 
         public void TurnUsingTorque(Vector3 direction)

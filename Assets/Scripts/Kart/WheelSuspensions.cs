@@ -2,9 +2,9 @@
 
 public class WheelSuspensions : MonoBehaviour {
 
-    public float CompressionRatio;
+
     public float MaxExtensionDistance;
-    public float StayDistance;
+    public float SuspensionStiffness;
     public float ForceToApply;
 
     private Vector3 initialPosition;
@@ -18,29 +18,34 @@ public class WheelSuspensions : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        AdjustWheelPosition(DistanceFromGround());
+        CheckGround();
+        //Debug.Log(transform.InverseTransformDirection(rb.GetPointVelocity(transform.position)).y);
+
     }
 
-    private float DistanceFromGround()
+    private void CheckGround()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit,  MaxExtensionDistance, 1 << LayerMask.NameToLayer(Constants.GroundLayer)))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, MaxExtensionDistance, 1 << LayerMask.NameToLayer(Constants.GroundLayer)))
         {
-            return Mathf.Clamp(hit.distance, 0, MaxExtensionDistance);
-        }
-        else
-        {
-            return MaxExtensionDistance;
+            var distance = Mathf.Clamp(hit.distance, 0, MaxExtensionDistance);
+            var compressionRatio = - distance + MaxExtensionDistance;
+            //Debug.Log("Compression Ratio : " + compressionRatio);
+            AdjustWheelPosition(compressionRatio);
         }
     }
 
-    private void AdjustWheelPosition(float distance)
+    private void AdjustWheelPosition(float compressionRatio)
     {
-        rb.AddForceAtPosition(ComputeForceToAdd(distance), transform.position, ForceMode.Force);        
+        rb.AddForceAtPosition(ComputeForceToAdd(compressionRatio), transform.position, ForceMode.Acceleration);        
     }
 
-    private Vector3 ComputeForceToAdd(float distance)
+    private Vector3 ComputeForceToAdd(float compressionRatio)
     {
-        return new Vector3(0, (-distance + MaxExtensionDistance) * ForceToApply, 0);
+        //var velocityUpKart = new Vector3(0,transform.InverseTransformDirection(rb.GetPointVelocity(transform.position)).y,0);
+        var newSuspensionForce = transform.TransformVector(Vector3.up * compressionRatio * SuspensionStiffness);
+        //var deltaForce = newSuspensionForce - velocityUpKart;
+
+        return newSuspensionForce * ForceToApply;
     }
 }

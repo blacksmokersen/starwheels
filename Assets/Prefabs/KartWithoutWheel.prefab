@@ -25,7 +25,7 @@ GameObject:
   m_Layer: 0
   m_Name: FrontWheelLeft
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -166,7 +166,7 @@ GameObject:
   m_Layer: 0
   m_Name: BackWheelRight
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -215,7 +215,7 @@ GameObject:
   m_Layer: 0
   m_Name: FrontWheelRight
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -233,7 +233,7 @@ GameObject:
   m_Layer: 0
   m_Name: BackWheelLeft
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -876,6 +876,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53e2b588a92dea146a0a40783d2a81c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TimeBetweenDrifts: 0.5
+  BoostDuration: 2
 --- !u!114 &114259468849538766
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -923,10 +925,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 293a2cefac4fdb34ca0ee5a35c7c62b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CompressionRatio: 0
   MaxExtensionDistance: 0.5
-  StayDistance: 0.25
-  ForceToApply: 620
+  SuspensionStiffness: 0.5
+  ForceToApply: 10
 --- !u!114 &114283850416133944
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -941,10 +942,10 @@ MonoBehaviour:
   Speed: 2500
   MaxMagnitude: 40
   JumpForce: 400
+  GravityForce: 0
   CenterOfMassOffset: {x: 0, y: 0, z: 0}
   DriftSideSpeed: 1000
-  DriftForwardSpeed: 300
-  DriftTorqueSpeed: 2000
+  DriftForwardSpeed: 500
   BoostSpeed: 300
   TurnTorqueSpeed: 800
   CompensationForce: 150
@@ -959,10 +960,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 293a2cefac4fdb34ca0ee5a35c7c62b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CompressionRatio: 0
   MaxExtensionDistance: 0.5
-  StayDistance: 0.25
-  ForceToApply: 620
+  SuspensionStiffness: 0.5
+  ForceToApply: 10
 --- !u!114 &114438033274499072
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -976,8 +976,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TurningSpeed: 130
   DriftingTurningSpeed: 170
-  SlowTurnValue: 0.2
-  QuickTurnValue: 0.8
+  DriftMaxAngle: 0.85
+  DriftMinAngle: 0.09
   RotationStabilizationSpeed: 0.15
 --- !u!114 &114478006692657010
 MonoBehaviour:
@@ -1059,10 +1059,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 293a2cefac4fdb34ca0ee5a35c7c62b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CompressionRatio: 0
   MaxExtensionDistance: 0.5
-  StayDistance: 0.25
-  ForceToApply: 620
+  SuspensionStiffness: 0.5
+  ForceToApply: 10
 --- !u!114 &114733331385834166
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1088,7 +1087,7 @@ MonoBehaviour:
   AccelerationState: 2
   TurningState: 0
   DriftTurnState: 0
-  DriftBoostState: 1
+  DriftBoostState: 0
   AirState: 0
   DistanceForGrounded: 0.5
 --- !u!114 &114831171347928120
@@ -1138,10 +1137,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 293a2cefac4fdb34ca0ee5a35c7c62b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CompressionRatio: 0
   MaxExtensionDistance: 0.5
-  StayDistance: 0.25
-  ForceToApply: 620
+  SuspensionStiffness: 0.5
+  ForceToApply: 10
 --- !u!124 &124060697402852862
 Behaviour:
   m_ObjectHideFlags: 1
