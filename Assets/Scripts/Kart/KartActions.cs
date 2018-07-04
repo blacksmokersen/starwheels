@@ -71,11 +71,11 @@ namespace Kart
             {
                 if (kartStates.TurningState == TurningStates.Left)
                 {
-                    kartPhysics.DriftUsingForce(ComputeForce1(turnValue), ComputeForce2(turnValue), Vector3.right, Vector3.back);
+                    //kartPhysics.DriftUsingForce(ComputeForce1(turnValue), ComputeForce2(turnValue), Vector3.right, Vector3.back);
                 }
                 if (kartStates.TurningState == TurningStates.Right)
                 {
-                    kartPhysics.DriftUsingForce(ComputeForce2(turnValue), ComputeForce1(turnValue), Vector3.right,Vector3.forward);
+                    //kartPhysics.DriftUsingForce(ComputeForce2(turnValue), ComputeForce1(turnValue), Vector3.right,Vector3.forward);
                 }
                 kartPhysics.DriftUsingForce(turnValue);
                 kartOrientation.DriftTurn(turnValue);
@@ -85,13 +85,13 @@ namespace Kart
             {
                 if (kartStates.TurningState == TurningStates.Left)
                 {
-                    kartPhysics.DriftUsingForce(ComputeForce2(turnValue), ComputeForce1(turnValue), Vector3.left, Vector3.forward);
+                    //kartPhysics.DriftUsingForce(ComputeForce2(turnValue), ComputeForce1(turnValue), Vector3.left, Vector3.forward);
                 }
                 if (kartStates.TurningState == TurningStates.Right)
                 {
-                    kartPhysics.DriftUsingForce(ComputeForce1(turnValue), ComputeForce2(turnValue), Vector3.left, Vector3.back);
+                    //kartPhysics.DriftUsingForce(ComputeForce1(turnValue), ComputeForce2(turnValue), Vector3.left, Vector3.back);
                 }
-                //kartPhysics.DriftUsingForce(turnValue);
+                kartPhysics.DriftUsingForce(turnValue);
                 kartOrientation.DriftTurn(turnValue);
                 kartDriftSystem.CheckNewTurnDirection();
             }
