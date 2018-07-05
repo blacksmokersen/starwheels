@@ -1,16 +1,23 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using FX;
-using System.Collections;
+using Extensions;
 
 namespace Kart
 {
     public class KartDriftSystem : MonoBehaviour
     {
-        [Header("Drift")]
+        [Header("Time")]
         [Range(0, 2)] public float TimeBetweenDrifts;
         [Range(0, 5)] public float BoostDuration;
+
+        [Header("Speed")]
         [Range(0, 1000)] public float BoostSpeed;
         [Range(0, 30)] public float MagnitudeBoost;
+
+        [Header("Angles")]
+        [Range(0, 90)] public float ForwardMaxAngle;
+        [Range(0, -90)] public float BackMaxAngle;
 
         private KartStates kartStates;
         private KartPhysics kartPhysics;
@@ -34,6 +41,21 @@ namespace Kart
             {
                 hasTurnedOtherSide = true;
             }
+        }
+
+        public void DriftForces(float turnValue)
+        {
+            float angle = 0f;
+            if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
+            {
+                angle = Mathf.PI - Mathf.Deg2Rad * Functions.RemapValue(-1, 1, ForwardMaxAngle, BackMaxAngle, turnValue);
+            }
+            else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
+            {
+                angle = Mathf.Deg2Rad * Functions.RemapValue(-1, 1, BackMaxAngle, ForwardMaxAngle, turnValue);
+            }
+            var direction = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)).normalized;
+            kartPhysics.DriftUsingForce(direction);
         }
 
         public void CheckNewTurnDirection()

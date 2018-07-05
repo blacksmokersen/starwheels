@@ -30,8 +30,7 @@ namespace Kart
         [Header("Drift")]
         public float DriftSideSpeed;
         public float DriftForwardSpeed;
-        [Range(0, 90)] public float ForwardMaxAngle;
-        [Range(0, -90)] public float BackMaxAngle;
+
 
         [Header("Turn")]
         public float TurnTorqueSpeed;
@@ -82,23 +81,8 @@ namespace Kart
             rb.AddRelativeForce(sideRatio * directionSide * DriftSideSpeed, ForceMode.Force);
         }
 
-        public float RemapValue(float actualMin, float actualMax, float targetMin, float targetMax, float val)
+        public void DriftUsingForce(Vector3 direction)
         {
-            return targetMin + (targetMax - targetMin) * ((val - actualMin) / (actualMax - actualMin));
-        }
-
-        public void DriftUsingForce(float turnValue)
-        {
-            float angle = 0f;
-            if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
-            {
-                angle = Mathf.PI - Mathf.Deg2Rad * RemapValue(-1, 1, ForwardMaxAngle, BackMaxAngle, turnValue);
-            }
-            else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
-            {
-                angle = Mathf.Deg2Rad * RemapValue(-1, 1, BackMaxAngle, ForwardMaxAngle, turnValue);
-            }
-            var direction = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)).normalized;
             rb.AddRelativeForce(direction.z * Vector3.forward * DriftForwardSpeed, ForceMode.Force);
             rb.AddRelativeForce(direction.x * Vector3.left * DriftSideSpeed, ForceMode.Force);
         }
