@@ -8,6 +8,7 @@ namespace HUD
     {
         public Text SpeedText;
         public Text TimeText;
+        public Text FPSText;
 
         private Rigidbody kartRigidBody;
 
@@ -23,6 +24,7 @@ namespace HUD
             {
                 TimeText.text = "Time : " + Time.time;
                 SpeedText.text = "Speed : " + kartRigidBody.velocity.magnitude;
+                FPSText.text = "FPS : " + 1.0f / Time.deltaTime;
                 yield return new WaitForSeconds(0.5f);
             }
         }
