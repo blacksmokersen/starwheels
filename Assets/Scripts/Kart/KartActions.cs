@@ -65,7 +65,7 @@ namespace Kart
 
         public void DriftTurns(float turnValue)
         {
-            if (kartStates.AirState == AirStates.InAir) return;
+            //if (kartStates.AirState == AirStates.InAir) return;
             
             if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
             {

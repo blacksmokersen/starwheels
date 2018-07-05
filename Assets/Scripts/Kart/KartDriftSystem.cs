@@ -6,8 +6,11 @@ namespace Kart
 {
     public class KartDriftSystem : MonoBehaviour
     {
-        public float TimeBetweenDrifts;
-        public float BoostDuration;
+        [Header("Drift")]
+        [Range(0, 2)] public float TimeBetweenDrifts;
+        [Range(0, 5)] public float BoostDuration;
+        [Range(0, 1000)] public float BoostSpeed;
+        [Range(0, 30)] public float MagnitudeBoost;
 
         private KartStates kartStates;
         private KartPhysics kartPhysics;
@@ -110,29 +113,25 @@ namespace Kart
         private void EnterNormalDrift()
         {
             particlesController.SetColor(Color.grey);
-            Debug.Log("Normal drift");
             kartStates.DriftBoostState = DriftBoostStates.SimpleDrift;
         }
 
         private void EnterOrangeDrift()
         {
-            Debug.Log("Orange drift");
             particlesController.SetColor(Color.yellow);
             kartStates.DriftBoostState = DriftBoostStates.OrangeDrift;
         }
 
         private void EnterRedDrift()
         {
-            Debug.Log("Red drift");
             particlesController.SetColor(Color.red);
             kartStates.DriftBoostState = DriftBoostStates.RedDrift;
         }
 
         private IEnumerator EnterTurbo()
         {
-            Debug.Log("Turbo drift");
             particlesController.SetColor(Color.green);
-            StartCoroutine(kartPhysics.Boost(BoostDuration));
+            StartCoroutine(kartPhysics.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));
             kartStates.DriftBoostState = DriftBoostStates.Turbo;
             kartStates.DriftTurnState = DriftTurnStates.NotDrifting;
             yield return new WaitForSeconds(BoostDuration);
@@ -144,7 +143,5 @@ namespace Kart
             yield return new WaitForSeconds(TimeBetweenDrifts);
             driftedLongEnough = true;
         }
-
-
     }
 }

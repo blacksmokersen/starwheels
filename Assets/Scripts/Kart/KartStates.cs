@@ -23,6 +23,7 @@ namespace Kart {
         public AirStates AirState = AirStates.Grounded;
 
         public float DistanceForGrounded;
+        public float VelocityDetectionThreshold;
 
         private Rigidbody rb;
 
@@ -52,11 +53,11 @@ namespace Kart {
 
         private void CheckAcceleration()
         {
-            if(transform.InverseTransformDirection(rb.velocity).z > 0)
+            if(transform.InverseTransformDirection(rb.velocity).z > VelocityDetectionThreshold)
             {
                 AccelerationState = AccelerationStates.Forward;
             }
-            else if(transform.InverseTransformDirection(rb.velocity).z < 0)
+            else if(transform.InverseTransformDirection(rb.velocity).z < -VelocityDetectionThreshold)
             {
                 AccelerationState = AccelerationStates.Back;
             }
