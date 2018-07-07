@@ -95,16 +95,19 @@ namespace Kart
 
         public void InitializeDrift(float angle)
         {
-            if (angle < 0)
+            if (kartStates.DriftBoostState == DriftBoostStates.NotDrifting)
             {
-                kartStates.DriftTurnState = DriftTurnStates.DriftingLeft;
+                if (angle < 0)
+                {
+                    kartStates.DriftTurnState = DriftTurnStates.DriftingLeft;
+                }
+                if (angle > 0)
+                {
+                    kartStates.DriftTurnState = DriftTurnStates.DriftingRight;
+                }
+                EnterNextState();
+                particlesController.Show();
             }
-            if (angle > 0)
-            {
-                kartStates.DriftTurnState = DriftTurnStates.DriftingRight;
-            }
-            EnterNextState();
-            particlesController.Show();
         }
 
         public void StopDrift()

@@ -47,7 +47,7 @@ namespace Kart
             {
                 if (!hasJumped)
                 {
-                    Jump(0.5f);
+                    Jump(0.3f);
                     hasJumped = true;
                 }
                 if (angle != 0)
