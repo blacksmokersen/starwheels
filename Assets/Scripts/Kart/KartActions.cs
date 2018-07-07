@@ -61,6 +61,7 @@ namespace Kart
         public void StopDrift()
         {
             kartDriftSystem.StopDrift();
+            hasJumped = false;
         }
 
         public void DriftTurns(float turnValue)
