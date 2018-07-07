@@ -9,6 +9,8 @@ namespace Kart
         private KartStates kartStates;
         private KartDriftSystem kartDriftSystem;
 
+        private bool hasJumped = false;
+
         void Awake()
         {
             kartPhysics = GetComponentInParent<KartPhysics>();
@@ -43,8 +45,16 @@ namespace Kart
         {
             if (kartStates.AirState == AirStates.Grounded)
             {
-                Jump(0.5f);
-                kartDriftSystem.InitializeDrift(angle);
+                if (!hasJumped)
+                {
+                    Jump(0.5f);
+                    hasJumped = true;
+                }
+                if (angle != 0)
+                {
+                    kartDriftSystem.InitializeDrift(angle);
+                    hasJumped = false;
+                }
             }
         }
 
@@ -73,6 +83,7 @@ namespace Kart
                 {
                     kartStates.DriftTurnState = DriftTurnStates.DriftingRight;
                 }
+                InitializeDrift(turnValue);
             }            
         }
 
