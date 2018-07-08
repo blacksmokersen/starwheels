@@ -20,6 +20,7 @@ namespace Kart
 
         [Header("Gravity")]
         public float JumpForce;
+        public float DriftJumpForce;
         public float GravityForce;
         [HideInInspector] public Vector3 CenterOfMassOffset;
         [Range(0, 1)] public float MinDrag;
@@ -95,6 +96,11 @@ namespace Kart
         public void Jump(float percentage = 1f)
         {
             rb.AddRelativeForce(Vector3.up * JumpForce * percentage, ForceMode.Impulse);
+        }
+
+        public void DriftJump(float percentage = 1f)
+        {
+            rb.AddRelativeForce(Vector3.up * DriftJumpForce * percentage, ForceMode.Impulse);
         }
 
         public void Accelerate(float value)

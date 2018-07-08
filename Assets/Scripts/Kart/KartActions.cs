@@ -2,6 +2,11 @@
 
 namespace Kart
 {
+    /* 
+     * Main class to map the inputs to the different kart actions
+     * The states should handled and modified within this class
+     * 
+     */ 
     public class KartActions : MonoBehaviour
     {
         private KartPhysics kartPhysics;
@@ -36,6 +41,15 @@ namespace Kart
             }
         }
 
+        public void DriftJump(float value = 1f)
+        {
+            if (kartStates.AirState == AirStates.Grounded)
+            {
+                kartPhysics.DriftJump(value);
+                kartStates.AirState = AirStates.InAir;
+            }
+        }
+
         public void Fire()
         {
             Debug.Log("Firing");
@@ -47,7 +61,7 @@ namespace Kart
             {
                 if (!hasJumped)
                 {
-                    Jump(0.3f);
+                    DriftJump();
                     hasJumped = true;
                 }
                 if (angle != 0)
