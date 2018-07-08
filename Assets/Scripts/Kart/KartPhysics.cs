@@ -37,13 +37,21 @@ namespace Kart
         public float CompensationForce;
 
         private KartStates kartStates;
-        private Rigidbody rb;
+
+        public float PlayerVelocity;
+        public Rigidbody rb;
 
         private void Awake()
         {
             kartStates = GetComponentInChildren<KartStates>();
             rb = GetComponent<Rigidbody>();
             rb.centerOfMass = CenterOfMassOffset;
+        }
+
+        private void Update()
+        {
+            Vector3 localVelocity = transform.InverseTransformDirection(rb.velocity);
+            PlayerVelocity = localVelocity.z;
         }
 
         private void FixedUpdate()
