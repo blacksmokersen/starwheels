@@ -36,8 +36,8 @@ namespace Kart
         {
             kartStates = GetComponentInChildren<KartStates>();
             kartPhysics = GetComponent<KartPhysics>();
-            particlesController = GetComponentInChildren<ParticlesController>();
-            particlesController.Hide();
+          //  particlesController = GetComponentInChildren<ParticlesController>();
+          //  particlesController.Hide();
             rb = kartPhysics.rb;
         }
 
@@ -132,7 +132,7 @@ namespace Kart
                     kartStates.DriftTurnState = DriftTurnStates.DriftingRight;
                 }
                 EnterNextState();
-                particlesController.Show();
+              //  particlesController.Show();
             }
         }
 
@@ -153,8 +153,8 @@ namespace Kart
             kartStates.DriftTurnState = DriftTurnStates.NotDrifting;
             kartStates.DriftBoostState = DriftBoostStates.NotDrifting;
             driftedLongEnough = false;
-            hasTurnedOtherSide = false;
-            particlesController.Hide();
+          // hasTurnedOtherSide = false;
+          //  particlesController.Hide();
             if (driftTimer != null)
             {
                 StopCoroutine(driftTimer);
@@ -163,25 +163,25 @@ namespace Kart
 
         private void EnterNormalDrift()
         {
-            particlesController.SetColor(Color.grey);
+         //   particlesController.SetColor(Color.grey);
             kartStates.DriftBoostState = DriftBoostStates.SimpleDrift;
         }
 
         private void EnterOrangeDrift()
         {
-            particlesController.SetColor(Color.yellow);
+         //   particlesController.SetColor(Color.yellow);
             kartStates.DriftBoostState = DriftBoostStates.OrangeDrift;
         }
 
         private void EnterRedDrift()
         {
-            particlesController.SetColor(Color.red);
+         //  particlesController.SetColor(Color.red);
             kartStates.DriftBoostState = DriftBoostStates.RedDrift;
         }
 
         private IEnumerator EnterTurbo()
         {
-            particlesController.SetColor(Color.green);
+          //  particlesController.SetColor(Color.green);
             StartCoroutine(kartPhysics.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));
             kartStates.DriftBoostState = DriftBoostStates.Turbo;
             kartStates.DriftTurnState = DriftTurnStates.NotDrifting;
