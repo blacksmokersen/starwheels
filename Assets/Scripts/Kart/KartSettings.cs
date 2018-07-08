@@ -11,7 +11,7 @@ public class KartSettings : PunBehaviour
 
     private void Awake()
     {
-        if (!photonView.isMine)
+        if (PhotonNetwork.connected && !photonView.isMine)
         {
             SetName(GetPlayer(photonView).NickName);
             Destroy(backCamera);

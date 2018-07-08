@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Photon;
 using FX;
 using MyExtensions;
 
 namespace Kart
 {
-    public class KartDriftSystem : MonoBehaviour
+    public class KartDriftSystem : PunBehaviour
     {
         [Header("Time")]
         [Range(0, 2)] public float TimeBetweenDrifts;
@@ -31,6 +32,8 @@ namespace Kart
         public float DriftGlideOrientation = 500f;
         public float DriftGlideBack = 500f;
         private Rigidbody rb;
+
+        private Coroutine _turboCoroutine;
 
         private void Awake()
         {
@@ -121,15 +124,21 @@ namespace Kart
 
         public void InitializeDrift(float angle)
         {
+            if (_turboCoroutine != null)
+            {
+                StopCoroutine(_turboCoroutine);
+                SetKartBoostState(DriftBoostStates.NotDrifting);
+            }
+
             if (kartStates.DriftBoostState == DriftBoostStates.NotDrifting)
             {
                 if (angle < 0)
                 {
-                    kartStates.DriftTurnState = DriftTurnStates.DriftingLeft;
+                    SetKartTurnState(DriftTurnStates.DriftingLeft);
                 }
                 if (angle > 0)
                 {
-                    kartStates.DriftTurnState = DriftTurnStates.DriftingRight;
+                    SetKartTurnState(DriftTurnStates.DriftingRight);
                 }
                 EnterNextState();
               //  particlesController.Show();
@@ -140,7 +149,7 @@ namespace Kart
         {
             if (kartStates.DriftBoostState == DriftBoostStates.RedDrift)
             {
-                StartCoroutine(EnterTurbo());
+                _turboCoroutine = StartCoroutine(EnterTurbo());
             }
             else
             {
@@ -150,8 +159,8 @@ namespace Kart
 
         public void ResetDrift()
         {
-            kartStates.DriftTurnState = DriftTurnStates.NotDrifting;
-            kartStates.DriftBoostState = DriftBoostStates.NotDrifting;
+            SetKartTurnState(DriftTurnStates.NotDrifting);
+            SetKartBoostState(DriftBoostStates.NotDrifting);
             driftedLongEnough = false;
           // hasTurnedOtherSide = false;
           //  particlesController.Hide();
@@ -164,27 +173,27 @@ namespace Kart
         private void EnterNormalDrift()
         {
          //   particlesController.SetColor(Color.grey);
-            kartStates.DriftBoostState = DriftBoostStates.SimpleDrift;
+            SetKartBoostState(DriftBoostStates.SimpleDrift);
         }
 
         private void EnterOrangeDrift()
         {
          //   particlesController.SetColor(Color.yellow);
-            kartStates.DriftBoostState = DriftBoostStates.OrangeDrift;
+            SetKartBoostState(DriftBoostStates.OrangeDrift);
         }
 
         private void EnterRedDrift()
         {
          //  particlesController.SetColor(Color.red);
-            kartStates.DriftBoostState = DriftBoostStates.RedDrift;
+            SetKartBoostState(DriftBoostStates.RedDrift);
         }
 
         private IEnumerator EnterTurbo()
         {
           //  particlesController.SetColor(Color.green);
             StartCoroutine(kartPhysics.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));
-            kartStates.DriftBoostState = DriftBoostStates.Turbo;
-            kartStates.DriftTurnState = DriftTurnStates.NotDrifting;
+            SetKartBoostState(DriftBoostStates.Turbo);
+            SetKartTurnState(DriftTurnStates.NotDrifting);
             yield return new WaitForSeconds(BoostDuration);
             ResetDrift();
         }
@@ -193,6 +202,34 @@ namespace Kart
         {
             yield return new WaitForSeconds(TimeBetweenDrifts);
             driftedLongEnough = true;
+        }
+
+        private void SetKartBoostState(DriftBoostStates state)
+        {
+            if (PhotonNetwork.connected)
+                photonView.RPC("RPCSetKartBoostState", PhotonTargets.AllBuffered, state);
+            else
+                kartStates.DriftBoostState = state;
+        }
+
+        private void SetKartTurnState(DriftTurnStates state)
+        {
+            if (PhotonNetwork.connected)
+                photonView.RPC("RPCSetKartTurnState", PhotonTargets.AllBuffered, state);
+            else
+                kartStates.DriftTurnState = state;
+        }
+        
+        [PunRPC]
+        private void RPCSetKartBoostState(DriftBoostStates state)
+        {
+            kartStates.DriftBoostState = state;
+        }
+
+        [PunRPC]
+        private void RPCSetKartTurnState(DriftTurnStates state)
+        {
+            kartStates.DriftTurnState = state;
         }
     }
 }
