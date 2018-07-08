@@ -185,8 +185,9 @@ namespace Kart
             StartCoroutine(kartPhysics.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));
             kartStates.DriftBoostState = DriftBoostStates.Turbo;
             kartStates.DriftTurnState = DriftTurnStates.NotDrifting;
-            yield return new WaitForSeconds(BoostDuration);
+          //  yield return new WaitForSeconds(BoostDuration);
             ResetDrift();
+            yield break;
         }
 
         private IEnumerator DriftTimer()

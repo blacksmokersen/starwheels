@@ -23,6 +23,7 @@ namespace Kart
         // Drift Wydman
         public float DriftTurnSpeed = 10;
         public float DriftTurnContrainte = 30f;
+        public float MaxExteriorAngle = 0.05f;
         public bool BalancingDriftL = false;
         public bool BalancingDriftR = false;
         public bool IsCoroutineStarted = false;
@@ -72,7 +73,7 @@ namespace Kart
                 }
                 if (angle != 0)
                 {
-                    angle = Mathf.Clamp(angle, -0.8f, -0.05f + balanceDriftL);
+                    angle = Mathf.Clamp(angle, -0.8f, -MaxExteriorAngle + balanceDriftL);
                     transform.Rotate(Vector3.up * DriftTurnContrainte * angle / 2 * DriftTurnSpeed * Time.deltaTime);
                 }
                 else
@@ -97,7 +98,7 @@ namespace Kart
                 }
                 if (angle != 0)
                 {
-                    angle = Mathf.Clamp(angle, 0.05f + balanceDriftR, 0.8f);
+                    angle = Mathf.Clamp(angle, MaxExteriorAngle + balanceDriftR, 0.8f);
                     transform.Rotate(Vector3.up * DriftTurnContrainte * angle / 2 * DriftTurnSpeed * Time.deltaTime);
                 }
                 else
