@@ -37,7 +37,7 @@ namespace Kart
         public float CompensationForce;
 
         private KartStates kartStates;
-        private Rigidbody rb;
+        public Rigidbody rb;
 
         private void Awake()
         {

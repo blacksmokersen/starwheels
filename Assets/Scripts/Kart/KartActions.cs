@@ -24,6 +24,8 @@ namespace Kart
             if(kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
             {
                 kartPhysics.CompensateSlip();
+                kartOrientation.NotDrifting();
+              //  kartDriftSystem.NotDrifting();
             }
         }
 

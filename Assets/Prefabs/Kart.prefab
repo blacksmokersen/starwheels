@@ -360,8 +360,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1823457641694548}
-  m_LocalRotation: {x: -0.0011801178, y: -0.000000017703794, z: -2.0893112e-11, w: 0.99999934}
-  m_LocalPosition: {x: 0, y: 1.7299998, z: -7.5}
+  m_LocalRotation: {x: -0.0011801352, y: -0.00000001753148, z: -2.0690068e-11, w: 0.99999934}
+  m_LocalPosition: {x: 0, y: 1.7299993, z: -7.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4827428499475552}
@@ -374,8 +374,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1955890107233812}
-  m_LocalRotation: {x: -0.0011801178, y: -0.000000017703794, z: -2.0893112e-11, w: 0.99999934}
-  m_LocalPosition: {x: 0, y: 1.7299998, z: -7.5}
+  m_LocalRotation: {x: -0.0011801352, y: -0.00000001753148, z: -2.0690068e-11, w: 0.99999934}
+  m_LocalPosition: {x: 0, y: 1.7299993, z: -7.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4220489730161696}
@@ -432,7 +432,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1571014680455984}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.3922908, y: -1.2571542, z: -2.4868164}
+  m_LocalPosition: {x: -2.3922908, y: 1.72, z: -2.4868164}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4370267201499956}
@@ -820,7 +820,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &65573588756805430
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -882,6 +882,13 @@ MonoBehaviour:
   MagnitudeBoost: 12
   ForwardMaxAngle: 45
   BackMaxAngle: -30
+  DriftTurnSpeed: 10
+  DriftTurnContrainte: 30
+  DriftGlideOrientation: 700
+  DriftGlideBack: 700
+  BalancingDriftL: 0
+  BalancingDriftR: 0
+  IsCoroutineStarted: 0
 --- !u!114 &114259468849538766
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -956,6 +963,7 @@ MonoBehaviour:
   DriftForwardSpeed: 600
   TurnTorqueSpeed: 1250
   CompensationForce: 250
+  rb: {fileID: 0}
 --- !u!114 &114388644373576922
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -986,6 +994,11 @@ MonoBehaviour:
   DriftMaxAngle: 0.85
   DriftMinAngle: 0.09
   RotationStabilizationSpeed: 0.15
+  DriftTurnSpeed: 10
+  DriftTurnContrainte: 30
+  BalancingDriftL: 0
+  BalancingDriftR: 0
+  IsCoroutineStarted: 0
 --- !u!114 &114478006692657010
 MonoBehaviour:
   m_ObjectHideFlags: 1
