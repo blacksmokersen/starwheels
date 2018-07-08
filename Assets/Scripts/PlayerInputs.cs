@@ -8,22 +8,25 @@ namespace Controls
      */
     public class PlayerInputs : MonoBehaviour
     {
-
         KartActions kart;
 
-        void Awake()
+        public void SetKart(KartActions value)
         {
-            kart = FindObjectOfType<KartActions>();
+            kart = value;
         }
 
         void FixedUpdate()
         {
+            if (kart == null) return;
+
             Axis();
             ButtonsPressed();
         }
 
         private void Update()
         {
+            if (kart == null) return;
+
             ButtonsDown();
             ButtonsUp();
         }

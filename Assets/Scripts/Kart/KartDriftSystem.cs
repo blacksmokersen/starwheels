@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using FX;
-using Extensions;
+using MyExtensions;
 
 namespace Kart
 {
@@ -32,6 +32,10 @@ namespace Kart
             kartStates = GetComponentInChildren<KartStates>();
             kartPhysics = GetComponent<KartPhysics>();
             particlesController = GetComponentInChildren<ParticlesController>();
+        }
+
+        private void Start()
+        {
             particlesController.Hide();
         }
 
