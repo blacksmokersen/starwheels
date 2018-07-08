@@ -61,7 +61,24 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
+--- !u!1 &1258579697824552
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4419033070562260}
+  - component: {fileID: 23421521101002564}
+  - component: {fileID: 102444056976074078}
+  m_Layer: 0
+  m_Name: PlayerName
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1373310153574120
 GameObject:
   m_ObjectHideFlags: 1
@@ -123,6 +140,7 @@ GameObject:
   - component: {fileID: 114283850416133944}
   - component: {fileID: 114438033274499072}
   - component: {fileID: 114538010021096970}
+  - component: {fileID: 114121035409819446}
   - component: {fileID: 54115033852382540}
   - component: {fileID: 114098388412132924}
   - component: {fileID: 114550539497350264}
@@ -145,7 +163,7 @@ GameObject:
   - component: {fileID: 23173676331478404}
   - component: {fileID: 65573588756805430}
   m_Layer: 0
-  m_Name: Kart
+  m_Name: KartModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -369,7 +387,7 @@ Transform:
   - {fileID: 4446854616182560}
   - {fileID: 4759352761782908}
   m_Father: {fileID: 4611446738322668}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4128777764343606
 Transform:
@@ -422,7 +440,7 @@ Transform:
   m_Children:
   - {fileID: 4498066472489640}
   m_Father: {fileID: 4611446738322668}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4232946985269276
 Transform:
@@ -448,7 +466,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4611446738322668}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -90, y: 180, z: 0}
 --- !u!4 &4347895985457990
 Transform:
@@ -461,7 +479,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4611446738322668}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4370267201499956
 Transform:
@@ -474,7 +492,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4611446738322668}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 114.92, z: 0}
 --- !u!4 &4382562949132724
 Transform:
@@ -501,6 +519,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4604294373317258}
   m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4419033070562260
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1258579697824552}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: -0.1, y: 0.1, z: 0.1}
+  m_Children: []
+  m_Father: {fileID: 4611446738322668}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4446854616182560
 Transform:
@@ -572,7 +603,7 @@ Transform:
   - {fileID: 4143536783543300}
   - {fileID: 4383492034357240}
   m_Father: {fileID: 4611446738322668}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &4611446738322668
 Transform:
@@ -584,6 +615,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4419033070562260}
   - {fileID: 4370267201499956}
   - {fileID: 4341559214608950}
   - {fileID: 4347895985457990}
@@ -808,6 +840,41 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!23 &23421521101002564
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1258579697824552}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!23 &23603344417490804
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -934,7 +1001,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &65573588756805430
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -959,6 +1026,27 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.1675258, z: 0.3}
   m_Center: {x: 0, y: 0.107158944, z: 0.060000002}
+--- !u!102 &102444056976074078
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1258579697824552}
+  m_Text: 
+  m_OffsetZ: 0
+  m_CharacterSize: 1
+  m_LineSpacing: 1
+  m_Anchor: 4
+  m_Alignment: 1
+  m_TabSize: 4
+  m_FontSize: 50
+  m_FontStyle: 0
+  m_RichText: 1
+  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
 --- !u!114 &114011740737228018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1018,6 +1106,20 @@ MonoBehaviour:
   BackMaxAngle: -30
   DriftGlideOrientation: 700
   DriftGlideBack: 700
+--- !u!114 &114121035409819446
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1571014680455984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96b8f00f8ed4be6408197a50834e6320, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kartRenderer: {fileID: 23173676331478404}
+  nameText: {fileID: 102444056976074078}
+  backCamera: {fileID: 1212992180707834}
 --- !u!114 &114282821320006738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1043,8 +1145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159ba3461e76e6e49bcb83da3975463b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 3000
-  MaxMagnitude: 40
+  Speed: 4000
+  MaxMagnitude: 60
   JumpForce: 400
   GravityForce: 20
   CenterOfMassOffset: {x: 0, y: 0, z: 0}
@@ -1054,7 +1156,7 @@ MonoBehaviour:
   SideDrag: 0.31
   DriftSideSpeed: 2800
   DriftForwardSpeed: 600
-  TurnTorqueSpeed: 1250
+  TurnTorqueSpeed: 750
   CompensationForce: 250
   PlayerVelocity: 0
   rb: {fileID: 54115033852382540}
@@ -1117,11 +1219,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PositionModel:
     SynchronizeEnabled: 1
-    TeleportEnabled: 1
+    TeleportEnabled: 0
     TeleportIfDistanceGreaterThan: 20
     InterpolateOption: 4
     InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 25
+    InterpolateLerpSpeed: 10
     InterpolateMoveTowardsAcceleration: 2
     InterpolateMoveTowardsDeceleration: 2
     InterpolateSpeedCurve:

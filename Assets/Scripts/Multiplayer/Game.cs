@@ -10,6 +10,11 @@ using Kart;
 
 public class Game : PunBehaviour
 {
+    private Color[] _colors = new Color[]
+    {
+        Color.red, Color.blue, Color.black, Color.white, Color.green, Color.yellow, Color.gray, Color.cyan
+    };
+
     private void Start()
     {
         Vector3 initPos = Vector3.up;

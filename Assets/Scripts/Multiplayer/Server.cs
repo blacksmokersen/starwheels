@@ -126,6 +126,10 @@ namespace Multiplayer
         public void OnPhotonCustomRoomPropertiesChanged(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
         {
             Debug.Log("OnPhotonCustomRoomPropertiesChanged");
+            foreach (DictionaryEntry item in propertiesThatChanged)
+            {
+                Debug.Log(item.Key + ": " + item.Value);
+            }
         }
 
         public void OnPhotonPlayerPropertiesChanged(object[] playerAndUpdatedProps)
