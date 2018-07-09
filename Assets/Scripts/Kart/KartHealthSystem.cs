@@ -20,7 +20,7 @@ namespace Kart
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Joystick1Button4))
+            if (Input.GetKeyDown(KeyCode.Joystick1Button4) || Input.GetKeyDown(KeyCode.Keypad1))
             {
                 HealtLoss();
                 kartEffects.HealthParticlesManagement(Health);
