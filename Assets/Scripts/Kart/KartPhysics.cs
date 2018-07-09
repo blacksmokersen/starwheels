@@ -63,23 +63,23 @@ namespace Kart
 
         public void CompensateSlip()
         {
-            var sideVelocity = new Vector3(transform.InverseTransformDirection(rb.velocity).x,0,0);            
+            var sideVelocity = new Vector3(transform.InverseTransformDirection(rb.velocity).x, 0, 0);
             rb.AddRelativeForce(-sideVelocity * CompensationForce, ForceMode.Force);
         }
 
         private void CheckDrag()
         {
-            if (kartStates.AirState == AirStates.InAir)            
-                rb.drag = MinDrag;            
-            else            
-                rb.drag = MaxDrag;            
+            if (kartStates.AirState == AirStates.InAir)
+                rb.drag = MinDrag;
+            else
+                rb.drag = MaxDrag;
         }
 
         private void CustomDrag()
         {
             var vel = transform.InverseTransformDirection(rb.velocity);
-            vel.x *= 1.0f - SideDrag; 
-            vel.z *= 1.0f - ForwardDrag; 
+            vel.x *= 1.0f - SideDrag;
+            vel.z *= 1.0f - ForwardDrag;
             rb.velocity = transform.TransformDirection(vel);
         }
 

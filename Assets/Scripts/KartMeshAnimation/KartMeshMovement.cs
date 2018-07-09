@@ -11,25 +11,19 @@ public class KartMeshMovement : MonoBehaviour
     private float wheelsSpeed;
     private float currentAngle;
 
-    private GameObject frontWheelLeft;
-    private GameObject frontWheelRight;
-    private GameObject backWheelsL;
-    private GameObject backWheelsR;
-    private GameObject kartModel;
+    public GameObject frontWheelLeft;
+    public GameObject frontWheelRight;
+    public GameObject backWheelsL;
+    public GameObject backWheelsR;
+    public GameObject kartModel;
 
     private KartStates kartStates;
     private KartPhysics kartPhysics;
 
     private void Awake()
     {
-        frontWheelLeft = GameObject.Find("FrontWheelLeft");
-        frontWheelRight = GameObject.Find("FrontWheelRight");
-        backWheelsL = GameObject.Find("BackWheelLeft");
-        backWheelsR = GameObject.Find("BackWheelRight");
-        kartModel = GameObject.Find("KartPieces");
         kartStates = FindObjectOfType<KartStates>();
         kartPhysics = FindObjectOfType<KartPhysics>();
-
     }
 
     private void Update()
