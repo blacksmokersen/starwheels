@@ -6,5 +6,6 @@
         void UseBackward();
         void Stack();
         int Count { get; set; }
+        bool Instantiable { get; set; }
     }
 }

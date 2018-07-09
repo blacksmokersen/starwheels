@@ -1,16 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Collections;
 
 namespace Items
 {
     public class ItemsLottery : MonoBehaviour
     {
-        List<GameObject> Items;
-        
-        private GameObject PickRandomItem()
+        public static ItemsLottery Instance { get; private set; }
+        public List<GameObject> ItemsPrefabs;
+
+        private void Awake()
         {
-            return Items[Random.Range(0, Items.Count)];
+            if(Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                Instance = this;
+            }
+        }
+        
+        public GameObject PickRandomItem()
+        {
+            return ItemsPrefabs[Random.Range(0, ItemsPrefabs.Count - 1)];
+        }
+
+        private void OnApplicationQuit()
+        {
+            Destroy(gameObject);
         }
     }
 }

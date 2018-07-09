@@ -5,9 +5,11 @@
 
     // Tags
     public const string KartTag = "Kart";
+    public const string ItemBoxTag = "ItemBox";
 
     // Object Names
     public const string KartObjectName = "Kart";
+    public const string RuntimeObjectName = "_RUNTIME";
 
     // Inputs    
     public const string AccelerateButton = "Accelerate";
@@ -16,4 +18,5 @@
     public const string FireButton = "Fire";
     public const string TurnAxis = "Turn";
     public const string DriftButton = "Drift";
+    public const string UseItemButton = "Item";
 }
