@@ -92,7 +92,7 @@ namespace Kart
 
         public void Accelerate(float value)
         {
-            if (kartStates.AirState != AirStates.InAir)
+            if (kartStates.AirState != AirStates.InAir && !kartOrientation.Crash)
             {
                 kartPhysics.Accelerate(value);
             }
@@ -100,7 +100,7 @@ namespace Kart
 
         public void Decelerate(float value)
         {
-            if (kartStates.AirState != AirStates.InAir)
+            if (kartStates.AirState != AirStates.InAir && !kartOrientation.Crash)
             {
                 kartPhysics.Decelerate(value);
             }

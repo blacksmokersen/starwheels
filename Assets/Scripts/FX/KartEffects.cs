@@ -9,6 +9,13 @@ public class KartEffects : MonoBehaviour
     private KartStates kartStates;
     public ParticleSystem smokeLeftWheel;
     public ParticleSystem smokeRightWheel;
+    [Space(10)]
+    public ParticleSystem Life1;
+    public ParticleSystem LifeBurst1;
+    public ParticleSystem Life2;
+    public ParticleSystem LifeBurst2;
+    public ParticleSystem Life3;
+    public ParticleSystem LifeBurst3;
 
     private void Awake()
     {
@@ -55,6 +62,25 @@ public class KartEffects : MonoBehaviour
                 main.startColor = new Color(255, 255, 255, 255);
                 main2.startColor = new Color(255, 255, 255, 255);
             }
+        }
+    }
+
+    public void HealthParticlesManagement(int health)
+    {
+        if (health == 2)
+        {
+            Life1.Stop(true);
+            LifeBurst1.Emit(200);
+        }
+        if (health == 1)
+        {
+            Life2.Stop(true);
+            LifeBurst2.Emit(200);
+        }
+        if (health == 0)
+        {
+            Life3.Stop(true);
+            LifeBurst3.Emit(200);
         }
     }
 }
