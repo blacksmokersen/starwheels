@@ -10,5 +10,13 @@ namespace Kart {
                 FindObjectOfType<KartStates>().AirState = AirStates.Grounded;
             }
         }
+        private void OnTriggerEnter(Collider trigger)
+        {
+            FindObjectOfType<KartPhysics>().rb.constraints = RigidbodyConstraints.FreezeRotationY;
+        }
+        private void OnTriggerExit(Collider trigger)
+        {
+            FindObjectOfType<KartPhysics>().rb.constraints = RigidbodyConstraints.None;
+        }
     }
 }

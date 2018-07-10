@@ -37,13 +37,20 @@ namespace Kart
         public float CompensationForce;
 
         private KartStates kartStates;
+        private KartEffects karteffects;
 
         public float PlayerVelocity;
         public Rigidbody rb;
 
+        private float controlMagnitude;
+        private float controlSpeed;
+
         private void Awake()
         {
+            controlMagnitude = MaxMagnitude;
+            controlSpeed = Speed;
             kartStates = GetComponentInChildren<KartStates>();
+            karteffects = GetComponentInChildren<KartEffects>();
             rb = GetComponent<Rigidbody>();
             rb.centerOfMass = CenterOfMassOffset;
         }
@@ -97,12 +104,63 @@ namespace Kart
 
         public void TurnUsingTorque(Vector3 direction)
         {
-            rb.AddRelativeTorque(direction * TurnTorqueSpeed, ForceMode.Force);
+            if (kartStates.AirState != AirStates.InAir)
+            {
+                rb.AddRelativeTorque(direction * TurnTorqueSpeed, ForceMode.Force);
+            }
         }
 
         public void Jump(float percentage = 1f)
         {
             rb.AddRelativeForce(Vector3.up * JumpForce * percentage, ForceMode.Impulse);
+        }
+
+        public void DoubleJump(float value, float turnAxis, float accelerateAxis)
+        {
+            float upAndDownAxis = Input.GetAxis(Constants.UpAndDownAxis);
+
+            if (kartStates.TurningState == TurningStates.NotTurning)
+            {
+                if (upAndDownAxis >= 0.1f)
+                {
+                    Debug.Log("JumpBack");
+                    karteffects.BackJumpAnimation();
+                    rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
+                    rb.AddRelativeForce(Vector3.forward * -JumpForce * value*2, ForceMode.Impulse);
+                }
+                else if (upAndDownAxis <= -0.1f)
+                {
+                    Debug.Log("Jumpfront");
+                    karteffects.FrontJumpAnimation();
+                    rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
+                    rb.AddRelativeForce(Vector3.forward * JumpForce * value*2, ForceMode.Impulse);
+                }
+                else
+                {
+                    Debug.Log("JumpStraight");
+                    rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
+                }
+            }
+            else if (kartStates.TurningState == TurningStates.Left)
+            {
+                Debug.Log("JumpLeft");
+                karteffects.LeftJumpAnimation();
+                rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
+                rb.AddRelativeForce(Vector3.left * JumpForce * value*2, ForceMode.Impulse);
+            }
+            else if (kartStates.TurningState == TurningStates.Right)
+            {
+
+                Debug.Log("JumpRight");
+                karteffects.RightJumpAnimation();
+                rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
+                rb.AddRelativeForce(Vector3.left * -JumpForce * value*2, ForceMode.Impulse);
+            }
+            else
+            {
+                Debug.Log("JumpStraight");
+                rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
+            }
         }
 
         public void Accelerate(float value)
@@ -120,8 +178,13 @@ namespace Kart
             MaxMagnitude += magnitudeBoost;
             Speed += speedBoost;
             yield return new WaitForSeconds(boostDuration);
-            Speed -= speedBoost;
-            MaxMagnitude -= magnitudeBoost;
+            for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / 1f)
+            {
+                Debug.Log(Speed);
+                Speed = Mathf.Lerp(controlSpeed + speedBoost, controlSpeed, t);
+                MaxMagnitude = Mathf.Lerp(controlMagnitude + magnitudeBoost, controlMagnitude, t);
+                yield return null;
+            }
         }
     }
 }

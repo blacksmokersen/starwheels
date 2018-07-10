@@ -8,16 +8,16 @@ namespace Controls
      */
     public class PlayerInputs : MonoBehaviour
     {
-        KartActions kart;
+        KartActions kartAction;
 
         public void SetKart(KartActions value)
         {
-            kart = value;
+            kartAction = value;
         }
 
         void FixedUpdate()
         {
-            if (kart == null) return;
+            if (kartAction == null) return;
 
             Axis();
             ButtonsPressed();
@@ -25,7 +25,7 @@ namespace Controls
 
         private void Update()
         {
-            if (kart == null) return;
+            if (kartAction == null) return;
 
             ButtonsDown();
             ButtonsUp();
@@ -33,24 +33,24 @@ namespace Controls
 
         void Axis()
         {
-            kart.Accelerate(Input.GetAxis(Constants.AccelerateButton));
-            kart.Decelerate(Input.GetAxis(Constants.DecelerateButton));
-            kart.Turn(Input.GetAxis(Constants.TurnAxis));
+            kartAction.Accelerate(Input.GetAxis(Constants.AccelerateButton));
+            kartAction.Decelerate(Input.GetAxis(Constants.DecelerateButton));
+            kartAction.Turn(Input.GetAxis(Constants.TurnAxis));
         }
 
         void ButtonsDown()
         {
             if (Input.GetButtonDown(Constants.JumpButton))
             {
-                kart.Jump();
+                kartAction.Jump(3 , Input.GetAxis(Constants.TurnAxis), Input.GetAxis(Constants.AccelerateButton));
             }
             if (Input.GetButtonDown(Constants.FireButton))
             {
-                kart.Fire();
+                kartAction.Fire();
             }
             if (Input.GetButtonDown(Constants.DriftButton))
             {
-                kart.InitializeDrift(Input.GetAxis(Constants.TurnAxis));
+                kartAction.InitializeDrift(Input.GetAxis(Constants.TurnAxis));
             }
         }
 
@@ -58,7 +58,7 @@ namespace Controls
         {
             if (Input.GetButton(Constants.DriftButton))
             {
-                kart.DriftTurns(Input.GetAxis(Constants.TurnAxis));
+                kartAction.DriftTurns(Input.GetAxis(Constants.TurnAxis));
             }
         }
 
@@ -66,7 +66,7 @@ namespace Controls
         {
             if (Input.GetButtonUp(Constants.DriftButton))
             {
-                kart.StopDrift();
+                kartAction.StopDrift();
             }
         }
     }

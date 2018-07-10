@@ -6,7 +6,6 @@ using Kart;
 
 public class KartEffects : MonoBehaviour
 {
-    private KartStates kartStates;
     public ParticleSystem smokeLeftWheel;
     public ParticleSystem smokeRightWheel;
     [Space(10)]
@@ -16,18 +15,26 @@ public class KartEffects : MonoBehaviour
     public ParticleSystem LifeBurst2;
     public ParticleSystem Life3;
     public ParticleSystem LifeBurst3;
+    [Space(10)]
+    public Animator animator;
+
+    private KartStates kartStates;
+    
 
     private void Awake()
     {
         kartStates = FindObjectOfType<KartStates>();
-
         //   smokeLeftWheel = GameObject.Find("smoke1").GetComponent<ParticleSystem>();
         //   smokeRightWheel = GameObject.Find("smoke2").GetComponent<ParticleSystem>();
     }
 
     private void Update()
     {
+        animator = GameObject.Find("KartPieces").GetComponent<Animator>();
+
         DriftSmokeControl();
+     //   ResetAnimation();
+      //  animator.enabled = false;
     }
 
     void DriftSmokeControl()
@@ -82,6 +89,35 @@ public class KartEffects : MonoBehaviour
             Life3.Stop(true);
             LifeBurst3.Emit(200);
         }
+    }
+
+    public void LeftJumpAnimation()
+    {
+      //  animator.SetBool("LeftJump", true);
+        animator.SetTrigger("LeftJump");
+    }
+    public void RightJumpAnimation()
+    {
+      //  animator.SetBool("RightJump", true);
+        animator.SetTrigger("RightJump");
+    }
+    public void FrontJumpAnimation()
+    {
+      //  animator.SetBool("FrontJump", true);
+        animator.SetTrigger("FrontJump");
+    }
+    public void BackJumpAnimation()
+    {
+      //  animator.SetBool("BackJump", true);
+        animator.SetTrigger("BackJump");
+    }
+
+    public void ResetAnimation()
+    {
+        animator.SetBool("LeftJump", false);
+        animator.SetBool("RightJump", false);
+        animator.SetBool("FrontJump", false);
+        animator.SetBool("BackJump", false);
     }
 }
 

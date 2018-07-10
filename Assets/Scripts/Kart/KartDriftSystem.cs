@@ -8,8 +8,8 @@ namespace Kart
     public class KartDriftSystem : MonoBehaviour
     {
         [Header("Time")]
-        [Range(0, 2)] public float TimeBetweenDrifts;
-        [Range(0, 5)] public float BoostDuration;
+        [Range(0, 10)] public float TimeBetweenDrifts;
+        [Range(0, 10)] public float BoostDuration;
 
         [Header("Speed")]
         [Range(0, 1000)] public float BoostSpeed;
