@@ -17,9 +17,10 @@ namespace Items
             else
             {
                 Instance = this;
-                ItemsData.Add(new DiskData());
-                ItemsData.Add(new RocketData());
-                ItemsData.Add(new NitroData());
+                ItemsData = new List<ItemData>();
+                ItemsData.Add(ScriptableObject.CreateInstance<DiskData>());
+                ItemsData.Add(ScriptableObject.CreateInstance<RocketData>());
+                ItemsData.Add(ScriptableObject.CreateInstance<NitroData>());
             }
         }
         
