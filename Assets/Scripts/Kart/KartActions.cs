@@ -11,8 +11,9 @@ namespace Kart
 
         public bool hasJumped = false;
         public bool DoubleJump = true;
-
         public bool firstJump = false;
+
+        private float driftMinSpeedActivation = 10;
 
         void Awake()
         {
@@ -65,7 +66,7 @@ namespace Kart
 
         public void InitializeDrift(float angle)
         {
-            if (kartStates.AirState == AirStates.Grounded)
+            if (kartStates.AirState == AirStates.Grounded && kartPhysics.PlayerVelocity >= driftMinSpeedActivation)
             {
                 if (!hasJumped)
                 {
@@ -90,10 +91,10 @@ namespace Kart
         {
             if (kartStates.AirState == AirStates.InAir) return;
 
-            if (kartStates.DriftTurnState != DriftTurnStates.NotDrifting)
+            if (kartStates.DriftTurnState != DriftTurnStates.NotDrifting && kartPhysics.PlayerVelocity >= driftMinSpeedActivation)
             {
                 kartOrientation.DriftTurn(turnValue);
-                kartDriftSystem.DriftForces(turnValue);
+                kartDriftSystem.DriftForces();
                 kartDriftSystem.CheckNewTurnDirection();
             }
             else if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting)

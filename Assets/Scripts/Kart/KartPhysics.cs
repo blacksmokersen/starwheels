@@ -28,8 +28,9 @@ namespace Kart
         [Range(0, 1)] [HideInInspector] public float SideDrag;
 
         [Header("Drift")]
-        public float DriftSideSpeed;
-        public float DriftForwardSpeed;
+        public float DriftGlideOrientation = 500f;
+        public float DriftGlideBack = 500f;
+        [Range(0, 2)] public float DriftBoostImpulse = 0.5f;
 
 
         [Header("Turn")]
@@ -90,16 +91,18 @@ namespace Kart
             rb.velocity = transform.TransformDirection(vel);
         }
 
-        public void DriftUsingForce(float forwardRatio, float sideRatio, Vector3 directionSide, Vector3 directionFront)
+        public void DriftUsingForce()
         {
-            rb.AddRelativeForce(forwardRatio * directionFront * DriftForwardSpeed, ForceMode.Force);
-            rb.AddRelativeForce(sideRatio * directionSide * DriftSideSpeed, ForceMode.Force);
-        }
-
-        public void DriftUsingForce(Vector3 direction)
-        {
-            rb.AddRelativeForce(direction.z * Vector3.forward * DriftForwardSpeed, ForceMode.Force);
-            rb.AddRelativeForce(direction.x * Vector3.left * DriftSideSpeed, ForceMode.Force);
+            if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
+            {
+                rb.AddRelativeForce(Vector3.right * DriftGlideOrientation, ForceMode.Force);
+                rb.AddRelativeForce(Vector3.back * DriftGlideBack, ForceMode.Force);
+            }
+            else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
+            {
+                rb.AddRelativeForce(Vector3.left * DriftGlideOrientation, ForceMode.Force);
+                rb.AddRelativeForce(Vector3.back * DriftGlideBack, ForceMode.Force);
+            }
         }
 
         public void TurnUsingTorque(Vector3 direction)
@@ -115,25 +118,28 @@ namespace Kart
             rb.AddRelativeForce(Vector3.up * JumpForce * percentage, ForceMode.Impulse);
         }
 
+        // à optimiser on est d'accord :p mais il y a tellement de réglage possible que 
+        // je préfere laisser ça completement ouvert pour le moment
+        // mais si quelqu'un à la motive, faite vous plaisir ah ah
         public void DoubleJump(float value, float turnAxis, float accelerateAxis)
         {
             float upAndDownAxis = Input.GetAxis(Constants.UpAndDownAxis);
 
-            if (kartStates.TurningState == TurningStates.NotTurning)
+            if (Mathf.Abs(turnAxis) < 0.3f)
             {
-                if (upAndDownAxis >= 0.1f)
+                if (upAndDownAxis >= 0.2f)
                 {
                     Debug.Log("JumpBack");
                     karteffects.BackJumpAnimation();
                     rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
-                    rb.AddRelativeForce(Vector3.forward * -JumpForce * value*2, ForceMode.Impulse);
+                    rb.AddRelativeForce(Vector3.forward * -JumpForce / 2 * value * 2, ForceMode.Impulse);
                 }
-                else if (upAndDownAxis <= -0.1f)
+                else if (upAndDownAxis <= -0.2f)
                 {
                     Debug.Log("Jumpfront");
                     karteffects.FrontJumpAnimation();
                     rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
-                    rb.AddRelativeForce(Vector3.forward * JumpForce * value*2, ForceMode.Impulse);
+                    rb.AddRelativeForce(Vector3.forward * JumpForce / 2 * value * 2, ForceMode.Impulse);
                 }
                 else
                 {
@@ -141,25 +147,25 @@ namespace Kart
                     rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
                 }
             }
-            else if (kartStates.TurningState == TurningStates.Left)
+            else if (turnAxis <= -0.5f)
             {
                 Debug.Log("JumpLeft");
                 karteffects.LeftJumpAnimation();
                 rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
-                rb.AddRelativeForce(Vector3.left * JumpForce * value*2, ForceMode.Impulse);
+                rb.AddRelativeForce(Vector3.left * JumpForce * value * 2, ForceMode.Impulse);
             }
-            else if (kartStates.TurningState == TurningStates.Right)
+            else if (turnAxis >= 0.5f)
             {
 
                 Debug.Log("JumpRight");
                 karteffects.RightJumpAnimation();
                 rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
-                rb.AddRelativeForce(Vector3.left * -JumpForce * value*2, ForceMode.Impulse);
+                rb.AddRelativeForce(Vector3.left * -JumpForce * value * 2, ForceMode.Impulse);
             }
             else
             {
                 Debug.Log("JumpStraight");
-                rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
+                rb.AddRelativeForce(Vector3.up * JumpForce / 4 * value, ForceMode.Impulse);
             }
         }
 
@@ -173,14 +179,27 @@ namespace Kart
             rb.AddRelativeForce(Vector3.back * value * Speed, ForceMode.Force);
         }
 
+        public float SpeedCheck(float ComparValue)
+        {
+            return PlayerVelocity - ComparValue;
+        }
+
         public IEnumerator Boost(float boostDuration, float magnitudeBoost, float speedBoost)
         {
+            //SpeedCap Increase
             MaxMagnitude += magnitudeBoost;
             Speed += speedBoost;
+            // Boost Launch
+            for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / 0.5f)
+            {
+                float boost = Mathf.Lerp(1, 0, t);
+                rb.AddRelativeForce(Vector3.forward * boost, ForceMode.VelocityChange);
+                yield return null;
+            }
             yield return new WaitForSeconds(boostDuration);
+            //SpeedCap Decrease
             for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / 1f)
             {
-                Debug.Log(Speed);
                 Speed = Mathf.Lerp(controlSpeed + speedBoost, controlSpeed, t);
                 MaxMagnitude = Mathf.Lerp(controlMagnitude + magnitudeBoost, controlMagnitude, t);
                 yield return null;

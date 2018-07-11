@@ -56,7 +56,7 @@ public class KartMeshMovement : MonoBehaviour
         }
         else if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
         {
-            kartModel.transform.localEulerAngles = new Vector3(kartModel.transform.localEulerAngles.x, kartModel.transform.localEulerAngles.y, 0);
+           // kartModel.transform.localEulerAngles = new Vector3(kartModel.transform.localEulerAngles.x, kartModel.transform.localEulerAngles.y, 0);
         }
     }
 

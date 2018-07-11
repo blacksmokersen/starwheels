@@ -439,7 +439,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4604294373317258}
-  - component: {fileID: 114832171614548400}
   - component: {fileID: 114907998683179784}
   - component: {fileID: 95775265256644064}
   m_Layer: 0
@@ -1517,7 +1516,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &65573588756805430
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1629,8 +1628,7 @@ MonoBehaviour:
   MagnitudeBoost: 30
   ForwardMaxAngle: 45
   BackMaxAngle: -30
-  DriftGlideOrientation: 900
-  DriftGlideBack: 900
+  OnDrift: 0
 --- !u!114 &114282821320006738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1665,8 +1663,9 @@ MonoBehaviour:
   MaxDrag: 0.8
   ForwardDrag: 0.071
   SideDrag: 0.31
-  DriftSideSpeed: 2800
-  DriftForwardSpeed: 600
+  DriftGlideOrientation: 500
+  DriftGlideBack: 500
+  DriftBoostImpulse: 0.5
   TurnTorqueSpeed: 1000
   CompensationForce: 100
   PlayerVelocity: 0
@@ -1913,26 +1912,6 @@ MonoBehaviour:
   AirState: 0
   DistanceForGrounded: 0.5
   VelocityDetectionThreshold: 0.5
---- !u!114 &114832171614548400
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1718263794234376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa87f91f1ed08d04f906ccc12345cc2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  smokeLeftWheel: {fileID: 198194004802832196}
-  smokeRightWheel: {fileID: 198909204116145614}
-  Life1: {fileID: 0}
-  LifeBurst1: {fileID: 0}
-  Life2: {fileID: 0}
-  LifeBurst2: {fileID: 0}
-  Life3: {fileID: 0}
-  LifeBurst3: {fileID: 0}
-  animator: {fileID: 0}
 --- !u!114 &114884524970719342
 MonoBehaviour:
   m_ObjectHideFlags: 1

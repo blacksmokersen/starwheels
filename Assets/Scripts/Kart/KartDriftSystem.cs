@@ -28,8 +28,7 @@ namespace Kart
         private Coroutine driftTimer;
 
         // Drift Wydman
-        public float DriftGlideOrientation = 500f;
-        public float DriftGlideBack = 500f;
+        public float OnDrift;
         private Rigidbody rb;
 
         private void Awake()
@@ -49,39 +48,9 @@ namespace Kart
             }
         }
 
-        public void DriftForces(float turnValue)
+        public void DriftForces()
         {
-          //  float angle = 0f;
-            if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
-            {
-                if (turnValue != 0) //(Input.GetAxis(StaticsVariables.TurnAxis) > 0)
-                {
-                    rb.AddRelativeForce(Vector3.right * DriftGlideOrientation, ForceMode.Force);
-                    rb.AddRelativeForce(Vector3.back * DriftGlideBack, ForceMode.Force);
-                }
-                else
-                {
-                    rb.AddRelativeForce(Vector3.right * DriftGlideOrientation, ForceMode.Force);
-                    rb.AddRelativeForce(Vector3.back * DriftGlideBack, ForceMode.Force);
-                }
-                //  angle = Mathf.PI - Mathf.Deg2Rad * Functions.RemapValue(-1, 1, ForwardMaxAngle, BackMaxAngle, turnValue);
-            }
-            else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
-            {
-                if (turnValue != 0) //(Input.GetAxis(StaticsVariables.TurnAxis) > 0)
-                {
-                    rb.AddRelativeForce(Vector3.left * DriftGlideOrientation, ForceMode.Force);
-                    rb.AddRelativeForce(Vector3.back * DriftGlideBack, ForceMode.Force);
-                }
-                else
-                {
-                    rb.AddRelativeForce(Vector3.left * DriftGlideOrientation, ForceMode.Force);
-                    rb.AddRelativeForce(Vector3.back * DriftGlideBack, ForceMode.Force);
-                }
-                //  angle = Mathf.Deg2Rad * Functions.RemapValue(-1, 1, BackMaxAngle, ForwardMaxAngle, turnValue);
-            }
-          //  var direction = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)).normalized;
-          //  kartPhysics.DriftUsingForce(direction);
+            kartPhysics.DriftUsingForce();
         }
 
         public void CheckNewTurnDirection()
