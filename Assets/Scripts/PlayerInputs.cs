@@ -42,17 +42,13 @@ namespace Controls
             {
                 kart.Jump();
             }
-            if (Input.GetButtonDown(Constants.FireButton))
-            {
-                kart.Fire();
-            }
             if (Input.GetButtonDown(Constants.DriftButton))
             {
                 kart.InitializeDrift(Input.GetAxis(Constants.TurnAxis));
             }
             if (Input.GetButtonDown(Constants.UseItemButton))
             {
-
+                kart.UseItem(Input.GetAxis(Constants.VerticalAxis));
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Items;
 
 namespace Kart
 {
@@ -13,6 +14,7 @@ namespace Kart
         private KartOrientation kartOrientation;
         private KartStates kartStates;
         private KartDriftSystem kartDriftSystem;
+        private KartInventory kartInventory;
 
         private bool hasJumped = false;
 
@@ -22,6 +24,7 @@ namespace Kart
             kartOrientation = GetComponentInParent<KartOrientation>();
             kartStates = GetComponentInParent<KartStates>();
             kartDriftSystem = GetComponentInParent<KartDriftSystem>();
+            kartInventory = FindObjectOfType<KartInventory>();
         }
 
         private void FixedUpdate()
@@ -41,6 +44,13 @@ namespace Kart
             }
         }
 
+        public void UseItem(float verticalValue)
+        {
+            Debug.Log(verticalValue);
+            Directions direction = verticalValue >= 0 ? Directions.Foward : Directions.Backward;
+            kartInventory.ItemAction(direction);
+        }
+
         public void DriftJump(float value = 1f)
         {
             if (kartStates.AirState == AirStates.Grounded)
@@ -48,11 +58,6 @@ namespace Kart
                 kartPhysics.DriftJump(value);
                 kartStates.AirState = AirStates.InAir;
             }
-        }
-
-        public void Fire()
-        {
-            Debug.Log("Firing");
         }
 
         public void InitializeDrift(float angle)

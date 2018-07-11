@@ -17,6 +17,11 @@
     public const string JumpButton = "Jump";
     public const string FireButton = "Fire";
     public const string TurnAxis = "Turn";
+    public const string VerticalAxis = "Vertical";
     public const string DriftButton = "Drift";
     public const string UseItemButton = "Item";
+
+    // Assets
+    public const string DiskPrefabName = "Prefab/Disk";
+    public const string RocketPrefabName = "Prefabs/Rocket";
 }

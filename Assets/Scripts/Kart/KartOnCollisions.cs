@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Items;
 
 namespace Kart {
     /*
@@ -19,7 +20,8 @@ namespace Kart {
         {
             if (collision.gameObject.tag == Constants.ItemBoxTag)
             {
-                StartCoroutine(collision.gameObject.GetComponent<Items.ItemBox>().Activate());
+                StartCoroutine(collision.gameObject.GetComponent<ItemBox>().Activate());
+                GetComponentInChildren<KartInventory>().InventoryItem = FindObjectOfType<ItemsLottery>().PickRandomItem();
             }
         }
     }
