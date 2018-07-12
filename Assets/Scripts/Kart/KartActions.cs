@@ -8,9 +8,12 @@ namespace Kart
         private KartOrientation kartOrientation;
         private KartStates kartStates;
         private KartDriftSystem kartDriftSystem;
+        private KartEffects kartEffects;
+        private KartMeshMovement kartMeshMovement;
+
 
         public bool hasJumped = false;
-        public bool DoubleJump = true;
+        public bool DoubleJumpEnabled = true;
         public bool firstJump = false;
 
         private float driftMinSpeedActivation = 10;
@@ -21,6 +24,8 @@ namespace Kart
             kartOrientation = GetComponentInParent<KartOrientation>();
             kartStates = GetComponentInParent<KartStates>();
             kartDriftSystem = GetComponentInParent<KartDriftSystem>();
+            kartEffects = FindObjectOfType<KartEffects>();
+            kartMeshMovement = FindObjectOfType<KartMeshMovement>();
         }
 
         private void FixedUpdate()
@@ -29,22 +34,21 @@ namespace Kart
             {
                 kartPhysics.CompensateSlip();
                 kartOrientation.NotDrifting();
-                //  kartDriftSystem.NotDrifting();
             }
         }
 
-        public void Jump(float value, float turnAxis, float accelerateAxis)
+        public void Jump(float value, float turnAxis, float accelerateAxis, float upAndDownAxis)
         {
-            if (DoubleJump && firstJump == true && kartStates.AirState == AirStates.InAir)
+            if (DoubleJumpEnabled && firstJump == true && kartStates.AirState == AirStates.InAir)
             {
-                kartPhysics.DoubleJump(value, turnAxis, accelerateAxis);
+                DoubleJump(value, turnAxis, upAndDownAxis);
                 firstJump = false;
             }
             else
             {
                 if (kartStates.AirState == AirStates.Grounded)
                 {
-                    if (DoubleJump)
+                    if (DoubleJumpEnabled)
                     {
                         kartPhysics.Jump(value);
                         kartStates.AirState = AirStates.InAir;
@@ -151,6 +155,48 @@ namespace Kart
                 {
                     kartPhysics.TurnUsingTorque(Vector3.down * value);
                 }
+            }
+        }
+
+        public void KartMeshMovement(float turnAxis)
+        {
+            kartMeshMovement.FrontWheelsMovement(turnAxis, kartPhysics.PlayerVelocity);
+            kartMeshMovement.BackWheelsMovement(kartPhysics.PlayerVelocity);
+        }
+
+        public void DoubleJump(float value, float turnAxis, float upAndDownAxis)
+        {
+            // optimiser les methodes sur  karphysics avec un argument Vector3
+            if (Mathf.Abs(turnAxis) < 0.3f)
+            {
+                if (upAndDownAxis >= 0.2f)
+                {
+                    kartEffects.BackJumpAnimation();
+                    kartPhysics.BackJump(value);
+                }
+                else if (upAndDownAxis <= -0.2f)
+                {
+                    kartEffects.FrontJumpAnimation();
+                    kartPhysics.FrontJump(value);
+                }
+                else
+                {
+                    kartPhysics.StraightJump(value);
+                }
+            }
+            else if (turnAxis <= -0.5f)
+            {
+                kartEffects.LeftJumpAnimation();
+                kartPhysics.LeftJump(value);
+            }
+            else if (turnAxis >= 0.5f)
+            {
+                kartEffects.RightJumpAnimation();
+                kartPhysics.RightJump(value);
+            }
+            else
+            {
+                kartPhysics.StraightJump(value);
             }
         }
     }

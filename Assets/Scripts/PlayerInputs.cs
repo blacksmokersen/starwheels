@@ -36,13 +36,15 @@ namespace Controls
             kartAction.Accelerate(Input.GetAxis(Constants.AccelerateButton));
             kartAction.Decelerate(Input.GetAxis(Constants.DecelerateButton));
             kartAction.Turn(Input.GetAxis(Constants.TurnAxis));
+            kartAction.KartMeshMovement(Input.GetAxis(Constants.TurnAxis));
+            //Constants.UpAndDownAxis = (Input.GetAxis(Constants.AccelerateButton));
         }
 
         void ButtonsDown()
         {
             if (Input.GetButtonDown(Constants.JumpButton))
             {
-                kartAction.Jump(3 , Input.GetAxis(Constants.TurnAxis), Input.GetAxis(Constants.AccelerateButton));
+                kartAction.Jump(3 , Input.GetAxis(Constants.TurnAxis), Input.GetAxis(Constants.AccelerateButton), Input.GetAxis(Constants.UpAndDownAxis));
             }
             if (Input.GetButtonDown(Constants.FireButton))
             {

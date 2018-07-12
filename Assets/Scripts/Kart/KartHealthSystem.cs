@@ -18,19 +18,11 @@ namespace Kart
             KartOrientation = FindObjectOfType<KartOrientation>();
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Joystick1Button4) || Input.GetKeyDown(KeyCode.Keypad1))
-            {
-                HealtLoss();
-                kartEffects.HealthParticlesManagement(Health);
-            }
-        }
-
         public void HealtLoss()
         {
             Health--;
             KartOrientation.LooseHealth(2.5f);
+            kartEffects.HealthParticlesManagement(Health);
         }
     }
 }

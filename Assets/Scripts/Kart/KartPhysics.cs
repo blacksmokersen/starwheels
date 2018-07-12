@@ -118,55 +118,33 @@ namespace Kart
             rb.AddRelativeForce(Vector3.up * JumpForce * percentage, ForceMode.Impulse);
         }
 
-        // à optimiser on est d'accord :p mais il y a tellement de réglage possible que 
-        // je préfere laisser ça completement ouvert pour le moment
-        // mais si quelqu'un à la motive, faite vous plaisir ah ah
-        public void DoubleJump(float value, float turnAxis, float accelerateAxis)
+        public void LeftJump(float value)
         {
-            float upAndDownAxis = Input.GetAxis(Constants.UpAndDownAxis);
+            rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
+            rb.AddRelativeForce(Vector3.left * JumpForce * value * 2, ForceMode.Impulse);
+        }
 
-            if (Mathf.Abs(turnAxis) < 0.3f)
-            {
-                if (upAndDownAxis >= 0.2f)
-                {
-                    Debug.Log("JumpBack");
-                    karteffects.BackJumpAnimation();
-                    rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
-                    rb.AddRelativeForce(Vector3.forward * -JumpForce / 2 * value * 2, ForceMode.Impulse);
-                }
-                else if (upAndDownAxis <= -0.2f)
-                {
-                    Debug.Log("Jumpfront");
-                    karteffects.FrontJumpAnimation();
-                    rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
-                    rb.AddRelativeForce(Vector3.forward * JumpForce / 2 * value * 2, ForceMode.Impulse);
-                }
-                else
-                {
-                    Debug.Log("JumpStraight");
-                    rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
-                }
-            }
-            else if (turnAxis <= -0.5f)
-            {
-                Debug.Log("JumpLeft");
-                karteffects.LeftJumpAnimation();
-                rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
-                rb.AddRelativeForce(Vector3.left * JumpForce * value * 2, ForceMode.Impulse);
-            }
-            else if (turnAxis >= 0.5f)
-            {
+        public void RightJump(float value)
+        {
+            rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
+            rb.AddRelativeForce(Vector3.left * -JumpForce * value * 2, ForceMode.Impulse);
+        }
 
-                Debug.Log("JumpRight");
-                karteffects.RightJumpAnimation();
-                rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
-                rb.AddRelativeForce(Vector3.left * -JumpForce * value * 2, ForceMode.Impulse);
-            }
-            else
-            {
-                Debug.Log("JumpStraight");
-                rb.AddRelativeForce(Vector3.up * JumpForce / 4 * value, ForceMode.Impulse);
-            }
+        public void FrontJump(float value)
+        {
+            rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
+            rb.AddRelativeForce(Vector3.forward * JumpForce / 2 * value * 2, ForceMode.Impulse);
+        }
+
+        public void BackJump(float value)
+        {
+            rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
+            rb.AddRelativeForce(Vector3.forward * -JumpForce / 2 * value * 2, ForceMode.Impulse);
+        }
+
+        public void StraightJump(float value)
+        {
+            rb.AddRelativeForce(Vector3.up * JumpForce / 4 * value, ForceMode.Impulse);
         }
 
         public void Accelerate(float value)
