@@ -9,8 +9,8 @@ namespace Kart
     public class KartDriftSystem : PunBehaviour
     {
         [Header("Time")]
-        [Range(0, 2)] public float TimeBetweenDrifts;
-        [Range(0, 5)] public float BoostDuration;
+        [Range(0, 10)] public float TimeBetweenDrifts;
+        [Range(0, 10)] public float BoostDuration;
 
         [Header("Speed")]
         [Range(0, 1000)] public float BoostSpeed;
@@ -22,15 +22,14 @@ namespace Kart
 
         private KartStates kartStates;
         private KartPhysics kartPhysics;
-        private ParticlesController particlesController;
+        private KartEffects kartEffects;
 
         private bool hasTurnedOtherSide;
         private bool driftedLongEnough;
         private Coroutine driftTimer;
 
         // Drift Wydman
-        public float DriftGlideOrientation = 500f;
-        public float DriftGlideBack = 500f;
+        public float OnDrift;
         private Rigidbody rb;
 
         private Coroutine _turboCoroutine;
@@ -39,8 +38,8 @@ namespace Kart
         {
             kartStates = GetComponentInChildren<KartStates>();
             kartPhysics = GetComponent<KartPhysics>();
-          //  particlesController = GetComponentInChildren<ParticlesController>();
-          //  particlesController.Hide();
+            kartEffects = GetComponentInChildren<KartEffects>();
+            kartEffects.StopSmoke();
             rb = kartPhysics.rb;
         }
 
@@ -52,39 +51,9 @@ namespace Kart
             }
         }
 
-        public void DriftForces(float turnValue)
+        public void DriftForces()
         {
-          //  float angle = 0f;
-            if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
-            {
-                if (turnValue != 0) //(Input.GetAxis(StaticsVariables.TurnAxis) > 0)
-                {
-                    rb.AddRelativeForce(Vector3.right * DriftGlideOrientation, ForceMode.Force);
-                    rb.AddRelativeForce(Vector3.back * DriftGlideBack, ForceMode.Force);
-                }
-                else
-                {
-                    rb.AddRelativeForce(Vector3.right * DriftGlideOrientation, ForceMode.Force);
-                    rb.AddRelativeForce(Vector3.back * DriftGlideBack, ForceMode.Force);
-                }
-                //  angle = Mathf.PI - Mathf.Deg2Rad * Functions.RemapValue(-1, 1, ForwardMaxAngle, BackMaxAngle, turnValue);
-            }
-            else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
-            {
-                if (turnValue != 0) //(Input.GetAxis(StaticsVariables.TurnAxis) > 0)
-                {
-                    rb.AddRelativeForce(Vector3.left * DriftGlideOrientation, ForceMode.Force);
-                    rb.AddRelativeForce(Vector3.back * DriftGlideBack, ForceMode.Force);
-                }
-                else
-                {
-                    rb.AddRelativeForce(Vector3.left * DriftGlideOrientation, ForceMode.Force);
-                    rb.AddRelativeForce(Vector3.back * DriftGlideBack, ForceMode.Force);
-                }
-                //  angle = Mathf.Deg2Rad * Functions.RemapValue(-1, 1, BackMaxAngle, ForwardMaxAngle, turnValue);
-            }
-          //  var direction = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)).normalized;
-          //  kartPhysics.DriftUsingForce(direction);
+            kartPhysics.DriftUsingForce();
         }
 
         public void CheckNewTurnDirection()
@@ -141,7 +110,7 @@ namespace Kart
                     SetKartTurnState(DriftTurnStates.DriftingRight);
                 }
                 EnterNextState();
-              //  particlesController.Show();
+                kartEffects.StartSmoke();
             }
         }
 
@@ -162,8 +131,8 @@ namespace Kart
             SetKartTurnState(DriftTurnStates.NotDrifting);
             SetKartBoostState(DriftBoostStates.NotDrifting);
             driftedLongEnough = false;
-          // hasTurnedOtherSide = false;
-          //  particlesController.Hide();
+            // hasTurnedOtherSide = false;
+            kartEffects.StopSmoke();
             if (driftTimer != null)
             {
                 StopCoroutine(driftTimer);
@@ -172,30 +141,28 @@ namespace Kart
 
         private void EnterNormalDrift()
         {
-         //   particlesController.SetColor(Color.grey);
-            SetKartBoostState(DriftBoostStates.SimpleDrift);
+            SetKartBoostState(DriftBoostStates.SimpleDrift, Color.grey);
         }
 
         private void EnterOrangeDrift()
         {
-         //   particlesController.SetColor(Color.yellow);
-            SetKartBoostState(DriftBoostStates.OrangeDrift);
+            SetKartBoostState(DriftBoostStates.OrangeDrift, Color.yellow);
         }
 
         private void EnterRedDrift()
         {
-         //  particlesController.SetColor(Color.red);
-            SetKartBoostState(DriftBoostStates.RedDrift);
+            SetKartBoostState(DriftBoostStates.RedDrift, Color.red);
         }
 
         private IEnumerator EnterTurbo()
         {
-          //  particlesController.SetColor(Color.green);
+            kartEffects.SetColor(Color.green);
             StartCoroutine(kartPhysics.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));
             SetKartBoostState(DriftBoostStates.Turbo);
             SetKartTurnState(DriftTurnStates.NotDrifting);
             yield return new WaitForSeconds(BoostDuration);
             ResetDrift();
+            yield break;
         }
 
         private IEnumerator DriftTimer()
@@ -204,12 +171,15 @@ namespace Kart
             driftedLongEnough = true;
         }
 
-        private void SetKartBoostState(DriftBoostStates state)
+        private void SetKartBoostState(DriftBoostStates state, Color color)
         {
             if (PhotonNetwork.connected)
-                photonView.RPC("RPCSetKartBoostState", PhotonTargets.AllBuffered, state);
+                photonView.RPC("RPCSetKartBoostState", PhotonTargets.AllBuffered, state, color);
             else
+            {
                 kartStates.DriftBoostState = state;
+                kartEffects.SetColor(color);
+            }
         }
 
         private void SetKartTurnState(DriftTurnStates state)
@@ -221,9 +191,10 @@ namespace Kart
         }
         
         [PunRPC]
-        private void RPCSetKartBoostState(DriftBoostStates state)
+        private void RPCSetKartBoostState(DriftBoostStates state, Color color)
         {
             kartStates.DriftBoostState = state;
+            kartEffects.SetColor(color);
         }
 
         [PunRPC]

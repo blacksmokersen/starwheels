@@ -36,6 +36,7 @@ public class Game : PunBehaviour
             camera.LookAt = kart.transform;
 
             FindObjectOfType<PlayerInputs>().SetKart(kart.GetComponentInChildren<KartActions>());
+            FindObjectOfType<DebugInputs>().SetKart(kart.GetComponentInChildren<KartHealthSystem>());
             FindObjectOfType<HUDUpdater>().SetKart(kart.GetComponentInChildren<Rigidbody>());
         }
     }

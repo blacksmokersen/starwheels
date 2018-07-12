@@ -5,7 +5,7 @@ namespace Kart
 {
     /*
      * Class for handling the Kart orientation (drift, turn etc.)
-     */ 
+     */
     public class KartOrientation : MonoBehaviour
     {
         private KartStates kartStates;
@@ -23,9 +23,11 @@ namespace Kart
         // Drift Wydman
         public float DriftTurnSpeed = 10;
         public float DriftTurnContrainte = 30f;
+        public float MaxExteriorAngle = 0.05f;
         public bool BalancingDriftL = false;
         public bool BalancingDriftR = false;
         public bool IsCoroutineStarted = false;
+        public bool Crash;
 
         private float balanceDriftL = 0;
         private float balanceDriftR = 0;
@@ -46,17 +48,17 @@ namespace Kart
             Debug.Log("Turn dans Kart.Orientation");
             if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
             {
-             //   transform.Rotate(new Vector3(0, value * TurningSpeed * Time.deltaTime, 0));
+                //   transform.Rotate(new Vector3(0, value * TurningSpeed * Time.deltaTime, 0));
             }
             if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight || kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
             {
-             //   transform.Rotate(new Vector3(0, value * DriftingTurningSpeed * Time.deltaTime, 0));
+                //   transform.Rotate(new Vector3(0, value * DriftingTurningSpeed * Time.deltaTime, 0));
             }
         }
 
         public void DriftTurn(float angle)
         {
-            
+
             if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
             {
                 if (BalancingDriftL && kartStates.DriftBoostState == DriftBoostStates.SimpleDrift)
@@ -72,7 +74,7 @@ namespace Kart
                 }
                 if (angle != 0)
                 {
-                    angle = Mathf.Clamp(angle, -0.8f, -0.05f + balanceDriftL);
+                    angle = Mathf.Clamp(angle, -0.8f, -MaxExteriorAngle + balanceDriftL);
                     transform.Rotate(Vector3.up * DriftTurnContrainte * angle / 2 * DriftTurnSpeed * Time.deltaTime);
                 }
                 else
@@ -97,7 +99,7 @@ namespace Kart
                 }
                 if (angle != 0)
                 {
-                    angle = Mathf.Clamp(angle, 0.05f + balanceDriftR, 0.8f);
+                    angle = Mathf.Clamp(angle, MaxExteriorAngle + balanceDriftR, 0.8f);
                     transform.Rotate(Vector3.up * DriftTurnContrainte * angle / 2 * DriftTurnSpeed * Time.deltaTime);
                 }
                 else
@@ -107,6 +109,7 @@ namespace Kart
                 }
                 //  transform.Rotate(new Vector3(0, Mathf.Clamp(angle, DriftMinAngle, DriftMaxAngle) * DriftingTurningSpeed * Time.deltaTime, 0));
             }
+
         }
 
         public void NotDrifting()
@@ -120,12 +123,25 @@ namespace Kart
 
         public void StabilizeRotation()
         {
-            if(kartStates.AirState == AirStates.InAir)
+            if (kartStates.AirState == AirStates.InAir)
             {
                 var actualRotation = transform.localRotation;
                 actualRotation.x = Mathf.Lerp(actualRotation.x, 0, RotationStabilizationSpeed);
                 actualRotation.z = Mathf.Lerp(actualRotation.z, 0, RotationStabilizationSpeed);
                 transform.localRotation = actualRotation;
+            }
+        }
+
+        public void LooseHealth(float crashTimer)
+        {
+            float random = Random.Range(0, 1);
+            if (random >= 0.5f)
+            {
+                StartCoroutine(CrashBehaviour(crashTimer));
+            }
+            else
+            {
+                StartCoroutine(CrashBehaviour(crashTimer));
             }
         }
 
@@ -149,6 +165,13 @@ namespace Kart
                 yield return new WaitForSeconds(balanceTiming);
                 BalancingDriftR = true;
             }
+        }
+
+        IEnumerator CrashBehaviour(float crashTimer)
+        {
+            Crash = true;
+            yield return new WaitForSeconds(crashTimer);
+            Crash = false;
         }
     }
 }
