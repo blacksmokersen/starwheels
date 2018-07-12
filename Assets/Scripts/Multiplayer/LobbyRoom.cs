@@ -14,12 +14,10 @@ public class LobbyRoom : MonoBehaviour
     public void SetServerName(RoomInfo room, UnityAction callback)
     {
         _serverNameText.text = room.Name;
-        Debug.Log(room.CustomProperties.Count);
 
         object owner;
-        Debug.Log(room.CustomProperties.TryGetValue("owner", out owner));
-
-        _serverNameOwner.text = (string)owner;
+        if (room.CustomProperties.TryGetValue("owner", out owner))
+            _serverNameOwner.text = (string)owner;
         
         _joinServerBtn.onClick.AddListener(callback);
     }

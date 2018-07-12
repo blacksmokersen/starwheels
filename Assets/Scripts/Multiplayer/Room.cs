@@ -6,7 +6,7 @@ using Photon;
 
 namespace Multiplayer
 {
-    public class Room : UnityEngine.MonoBehaviour
+    public class Room : PunBehaviour
     {
         [SerializeField] private Text _roomTitleText;
         [SerializeField] private RoomPlayer _roomPlayerPrefab;
@@ -21,7 +21,20 @@ namespace Multiplayer
             _startButton.onClick.AddListener(StartGame);
             _roomPlayerList = new List<RoomPlayer>();
 
+            _mapDropdown.onValueChanged.AddListener(ChangeMap);
+
             Hide();
+        }
+
+        private void ChangeMap(int value)
+        {
+            photonView.RPC("RPCChangeMap", PhotonTargets.OthersBuffered, value);
+        }
+
+        [PunRPC]
+        private void RPCChangeMap(int value)
+        {
+            _mapDropdown.value = value;
         }
 
         private void Start()

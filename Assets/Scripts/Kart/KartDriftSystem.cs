@@ -110,7 +110,6 @@ namespace Kart
                     SetKartTurnState(DriftTurnStates.DriftingRight);
                 }
                 EnterNextState();
-                kartEffects.StartSmoke();
             }
         }
 
@@ -176,8 +175,7 @@ namespace Kart
                 photonView.RPC("RPCSetKartBoostState", PhotonTargets.AllBuffered, state, colorId);
             else
             {
-                kartStates.DriftBoostState = state;
-                kartEffects.SetColor(ColorIdToColor(colorId));
+                RPCSetKartBoostState(state, colorId);
             }
         }
 
@@ -193,6 +191,12 @@ namespace Kart
         private void RPCSetKartBoostState(DriftBoostStates state, ColorId colorId)
         {
             kartStates.DriftBoostState = state;
+
+            if (state != DriftBoostStates.NotDrifting)
+                kartEffects.StartSmoke();
+            else
+                kartEffects.StopSmoke();
+                
             kartEffects.SetColor(ColorIdToColor(colorId));
         }
 
