@@ -12,6 +12,7 @@ namespace Multiplayer
         [SerializeField] private RoomPlayer _roomPlayerPrefab;
         [SerializeField] private Button _startButton;
         [SerializeField] private Transform _playerList;
+        [SerializeField] private Dropdown _mapDropdown;
 
         private List<RoomPlayer> _roomPlayerList;
 
@@ -22,6 +23,11 @@ namespace Multiplayer
 
             Hide();
         }
+
+        private void Start()
+        {
+            _mapDropdown.AddOptions(new List<string>() { "FortBlock", "Race" });
+        }
         
         public void Show() { gameObject.SetActive(true); }
         public void Hide() { gameObject.SetActive(false); }
@@ -30,6 +36,7 @@ namespace Multiplayer
         {
             _roomTitleText.text = PhotonNetwork.room.Name;
             _startButton.enabled = PhotonNetwork.isMasterClient;
+            _mapDropdown.enabled = PhotonNetwork.isMasterClient;
 
             foreach (RoomPlayer item in _roomPlayerList)
             {
@@ -51,7 +58,7 @@ namespace Multiplayer
         {
             if (PhotonNetwork.isMasterClient)
             {
-                PhotonNetwork.LoadLevel(1);
+                PhotonNetwork.LoadLevel(_mapDropdown.value + 1);
             }
         }
     }

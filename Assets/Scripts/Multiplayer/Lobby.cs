@@ -43,10 +43,11 @@ namespace Multiplayer
                 options.MaxPlayers = 4;
 
                 options.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() {
-                    { "owner", PhotonNetwork.playerName }
+                    { "owner", PhotonNetwork.playerName },
+                    { "map", 0 }
                 };
-                options.CustomRoomPropertiesForLobby = new string[] { "owner" };
-
+                options.CustomRoomPropertiesForLobby = new string[] { "owner", "map"};
+                
                 PhotonNetwork.CreateRoom(roomName, options, null);
             }
         }
