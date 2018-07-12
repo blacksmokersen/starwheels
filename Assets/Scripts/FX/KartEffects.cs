@@ -17,6 +17,8 @@ namespace Kart
         public ParticleSystem Life3;
         public ParticleSystem LifeBurst3;
         [Space(10)]
+        public ParticleSystem MainJump;
+        [Space(10)]
         public Animator animator;
 
         public void StopSmoke()
@@ -49,6 +51,11 @@ namespace Kart
                 Life3.Stop(true);
                 LifeBurst3.Emit(200);
             }
+        }
+
+        public void MainJumpParticles()
+        {
+            MainJump.Emit(300);
         }
 
         public void LeftJumpAnimation()

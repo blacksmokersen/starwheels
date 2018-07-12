@@ -14,7 +14,7 @@ namespace Kart
 
         public bool hasJumped = false;
         public bool DoubleJumpEnabled = true;
-        public bool firstJump = false;
+        private bool firstJump = false;
 
         private float driftMinSpeedActivation = 10;
 
@@ -48,6 +48,7 @@ namespace Kart
             {
                 if (kartStates.AirState == AirStates.Grounded)
                 {
+                    kartEffects.MainJumpParticles();
                     if (DoubleJumpEnabled)
                     {
                         kartPhysics.Jump(value);
