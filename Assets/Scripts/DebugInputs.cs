@@ -7,6 +7,7 @@ namespace Controls
     public class DebugInputs : MonoBehaviour
     {
         KartHealthSystem kartHealthSystem;
+        GameObject kart;
 
         public void SetKart(KartHealthSystem value)
         {
@@ -22,6 +23,15 @@ namespace Controls
             if (Input.GetKeyDown(KeyCode.Joystick1Button4) || Input.GetKeyDown(KeyCode.Keypad1))
             {
                 kartHealthSystem.HealtLoss();
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                kart = GameObject.FindWithTag("Kart");
+                kart.transform.position = new Vector3(0,0.1f,0);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                kart.transform.position = new Vector3(-221, 3, 0);
             }
         }
     }
