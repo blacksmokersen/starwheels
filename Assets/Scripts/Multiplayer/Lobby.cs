@@ -40,7 +40,7 @@ namespace Multiplayer
             if (!string.IsNullOrEmpty(roomName))
             {
                 RoomOptions options = new RoomOptions();
-                options.MaxPlayers = 4;
+                options.MaxPlayers = 20;
 
                 options.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() {
                     { "owner", PhotonNetwork.playerName },
