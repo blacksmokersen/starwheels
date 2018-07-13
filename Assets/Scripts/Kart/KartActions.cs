@@ -46,7 +46,6 @@ namespace Kart
 
         public void UseItem(float verticalValue)
         {
-            Debug.Log(verticalValue);
             Directions direction = verticalValue >= 0 ? Directions.Foward : Directions.Backward;
             kartInventory.ItemAction(direction);
         }

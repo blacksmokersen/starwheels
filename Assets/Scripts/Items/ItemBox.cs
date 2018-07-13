@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-
 namespace Items
 {
     [RequireComponent(typeof(BoxCollider))]

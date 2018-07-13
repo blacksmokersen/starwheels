@@ -29,6 +29,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1040913152189848
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4201139575441426}
+  m_Layer: 0
+  m_Name: BackItemSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1212992180707834
 GameObject:
   m_ObjectHideFlags: 1
@@ -112,6 +127,7 @@ GameObject:
   - component: {fileID: 33692405947315120}
   - component: {fileID: 23173676331478404}
   - component: {fileID: 65573588756805430}
+  - component: {fileID: 65328338416742830}
   m_Layer: 0
   m_Name: Kart
   m_TagString: Untagged
@@ -145,6 +161,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4339588243756688}
+  - component: {fileID: 114424219447052526}
   m_Layer: 0
   m_Name: Inventory
   m_TagString: Untagged
@@ -162,6 +179,21 @@ GameObject:
   - component: {fileID: 4604294373317258}
   m_Layer: 0
   m_Name: KartPieces
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1739673109296874
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4701140495458932}
+  m_Layer: 0
+  m_Name: FrontItemSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -300,6 +332,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4604294373317258}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4201139575441426
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1040913152189848}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.00000023841858, z: 1.84}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4604294373317258}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4220489730161696
 Transform:
@@ -450,6 +495,8 @@ Transform:
   - {fileID: 4760988776897854}
   - {fileID: 4143536783543300}
   - {fileID: 4383492034357240}
+  - {fileID: 4701140495458932}
+  - {fileID: 4201139575441426}
   m_Father: {fileID: 4611446738322668}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -471,6 +518,19 @@ Transform:
   - {fileID: 4339588243756688}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4701140495458932
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1739673109296874}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -1.92}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4604294373317258}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4760988776897854
 Transform:
@@ -850,6 +910,18 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!65 &65328338416742830
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1589394355866904}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.33044, y: 1.8159568, z: 0.9202519}
+  m_Center: {x: 0, y: 0.013525212, z: 0.39702854}
 --- !u!65 &65573588756805430
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1000,6 +1072,24 @@ MonoBehaviour:
   MaxExtensionDistance: 0.5
   SuspensionStiffness: 1
   ForceToApply: 22
+--- !u!114 &114424219447052526
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1668325479087422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45565a10e6ce8ac46a015b064ebff0d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Count: 3
+  FrontItemPosition: {fileID: 4701140495458932}
+  BackItemPosition: {fileID: 4201139575441426}
+  MinePrefab: {fileID: 1838917612140702, guid: 4e57e80291c5266499162241fe8eaa6b, type: 2}
+  DiskPrefab: {fileID: 1507300503580378, guid: 9e314f7d90b437c40986af630281d853, type: 2}
+  RocketPrefab: {fileID: 1507300503580378, guid: 9e314f7d90b437c40986af630281d853,
+    type: 2}
 --- !u!114 &114438033274499072
 MonoBehaviour:
   m_ObjectHideFlags: 1

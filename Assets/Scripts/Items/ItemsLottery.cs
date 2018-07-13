@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 namespace Items
 {
     public class ItemsLottery : MonoBehaviour
     {
-        public static ItemsLottery Instance { get; private set; }
-        private List<ItemData> ItemsData;
+        public static ItemsLottery Instance { get; private set; } // Singleton Pattern
 
         private void Awake()
         {
@@ -17,16 +17,14 @@ namespace Items
             else
             {
                 Instance = this;
-                ItemsData = new List<ItemData>();
-                ItemsData.Add(ScriptableObject.CreateInstance<DiskData>());
-                ItemsData.Add(ScriptableObject.CreateInstance<RocketData>());
-                ItemsData.Add(ScriptableObject.CreateInstance<NitroData>());
             }
         }
-        
-        public ItemData PickRandomItem()
+
+        public ItemTypes PickRandomItemType()
         {
-            return ItemsData[Random.Range(0, ItemsData.Count - 1)];
+            var itemTypes = Enum.GetValues(typeof(ItemTypes));
+            UnityEngine.Random.InitState(DateTime.Now.Millisecond);            
+            return (ItemTypes)itemTypes.GetValue(UnityEngine.Random.Range(1, itemTypes.Length));
         }
 
         private void OnApplicationQuit()

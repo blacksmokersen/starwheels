@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
+using Items;
 
 namespace HUD
 {
@@ -9,6 +10,12 @@ namespace HUD
         public Text SpeedText;
         public Text TimeText;
         public Text FPSText;
+
+        public Texture MineImage;
+        public Texture RocketImage;
+        public Texture DiskImage;
+        public Texture NitroImage;
+
 
         private Rigidbody kartRigidBody;
 
@@ -27,6 +34,11 @@ namespace HUD
                 FPSText.text = "FPS : " + 1.0f / Time.deltaTime;
                 yield return new WaitForSeconds(0.5f);
             }
+        }
+
+        public void UpdateItems()
+        {
+            // To Do
         }
     }
 }
