@@ -16,6 +16,8 @@ namespace HUD
         public Texture DiskImage;
         public Texture NitroImage;
 
+        public RawImage InventoryItemTexture;
+        public RawImage StackedItemTexture;
 
         private Rigidbody kartRigidBody;
 
@@ -32,13 +34,52 @@ namespace HUD
                 TimeText.text = "Time : " + Time.time;
                 SpeedText.text = "Speed : " + kartRigidBody.velocity.magnitude;
                 FPSText.text = "FPS : " + 1.0f / Time.deltaTime;
+                UpdateItems();
                 yield return new WaitForSeconds(0.5f);
             }
         }
 
         public void UpdateItems()
         {
-            // To Do
+            var inventory = FindObjectOfType<KartInventory>();
+
+            switch (inventory.InventoryItem)
+            {
+                case ItemTypes.Disk:
+                    InventoryItemTexture.texture = DiskImage;
+                    break;
+                case ItemTypes.Nitro:
+                    InventoryItemTexture.texture = NitroImage;
+                    break;
+                case ItemTypes.Rocket:
+                    InventoryItemTexture.texture = RocketImage;
+                    break;
+                case ItemTypes.Mine:
+                    InventoryItemTexture.texture = MineImage;
+                    break;
+                case ItemTypes.None:
+                    InventoryItemTexture.texture = null;
+                    break;
+            }
+
+            switch (inventory.StackedItem)
+            {
+                case ItemTypes.Disk:
+                    StackedItemTexture.texture = DiskImage;
+                    break;
+                case ItemTypes.Nitro:
+                    StackedItemTexture.texture = NitroImage;
+                    break;
+                case ItemTypes.Rocket:
+                    StackedItemTexture.texture = RocketImage;
+                    break;
+                case ItemTypes.Mine:
+                    StackedItemTexture.texture = MineImage;
+                    break;
+                case ItemTypes.None:
+                    StackedItemTexture.texture = null;
+                    break;
+            }
         }
     }
 }
