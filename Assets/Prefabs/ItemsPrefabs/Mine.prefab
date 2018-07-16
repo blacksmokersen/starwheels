@@ -20,8 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4390881638899614}
   - component: {fileID: 135805788480509074}
+  - component: {fileID: 114758672781050578}
   m_Layer: 0
-  m_Name: MineTrigger
+  m_Name: ItemMineTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,6 +57,7 @@ GameObject:
   - component: {fileID: 23235623136107134}
   - component: {fileID: 54499978567493932}
   - component: {fileID: 65455728929240064}
+  - component: {fileID: 114270967424691506}
   m_Layer: 0
   m_Name: Mine
   m_TagString: Untagged
@@ -173,6 +175,30 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.65430075, y: 0.89666414, z: 0.70000005}
   m_Center: {x: 0.000000029802322, y: 0.0000002384186, z: 0.35000002}
+--- !u!114 &114270967424691506
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1838917612140702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fbf4fb8b7ab55d41a36e4002de70c73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ActivationTime: 2
+--- !u!114 &114758672781050578
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1398991700797754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af9782cfc60af2c4f9b9600e2b9f91b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Activated: 0
 --- !u!114 &114833513884414778
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -184,6 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26fd2251c1985554695b004ef4da39ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Activated: 0
 --- !u!135 &135771632487179650
 SphereCollider:
   m_ObjectHideFlags: 1
