@@ -4,9 +4,8 @@ using Kart;
 namespace Items
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class DiskBehaviour : MonoBehaviour
+    public class DiskBehaviour : ItemBehaviour
     {
-
         [Header("Disk parameters")]
         public float Speed;
         public int ReboundsBeforeEnd;
@@ -22,17 +21,18 @@ namespace Items
         {
             rb = GetComponent<Rigidbody>();
         }
+        
+        public override void SetOwner(KartInventory kart)
+        {
+            rb.velocity = kart.transform.forward * Speed;
+            transform.position = kart.ItemPositions.FrontPosition.position;
+        }
 
         private void FixedUpdate()
         {
             rb.velocity = rb.velocity.normalized * Speed;
             CheckGrounded();
             AddGravity();
-        }
-
-        public void SetDirection(Vector3 direction)
-        {
-            rb.velocity = direction * Speed;
         }
 
         private void CheckGrounded()

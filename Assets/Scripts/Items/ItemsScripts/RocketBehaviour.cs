@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Items
 {
-    public class RocketBehaviour : MonoBehaviour
+    public class RocketBehaviour : ItemBehaviour
     {
         [Header("Rocket parameters")]
         public float Speed;
@@ -30,11 +30,12 @@ namespace Items
             }
         }
 
-        public void SetDirection(Vector3 direction)
+        public override void SetOwner(KartInventory kart)
         {
-            rb.velocity = direction * Speed;
+            transform.position = kart.ItemPositions.FrontPosition.position;
+            rb.velocity = kart.transform.forward * Speed;
         }
-
+        
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.tag == Constants.KartTag)

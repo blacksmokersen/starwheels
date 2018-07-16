@@ -13,6 +13,7 @@ namespace Multiplayer
         [SerializeField] private Button _startButton;
         [SerializeField] private Transform _playerList;
         [SerializeField] private Dropdown _mapDropdown;
+        [SerializeField] private MapListData _mapList;
 
         private List<RoomPlayer> _roomPlayerList;
 
@@ -39,7 +40,10 @@ namespace Multiplayer
 
         private void Start()
         {
-            _mapDropdown.AddOptions(new List<string>() { "FortBlock", "Race" });
+            foreach (var map in _mapList.MapList)
+            {
+                _mapDropdown.AddOptions(new List<string>() { map.MapName });
+            }
         }
         
         public void Show() { gameObject.SetActive(true); }
@@ -71,7 +75,7 @@ namespace Multiplayer
         {
             if (PhotonNetwork.isMasterClient)
             {
-                PhotonNetwork.LoadLevel(_mapDropdown.value + 1);
+                PhotonNetwork.LoadLevel(_mapList.MapList[_mapDropdown.value].SceneName);
             }
         }
     }

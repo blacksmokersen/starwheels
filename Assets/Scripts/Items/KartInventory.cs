@@ -1,45 +1,17 @@
 ﻿using UnityEngine;
 using Kart;
 using System.Collections;
+using HUD;
 
 namespace Items {
     public class KartInventory : MonoBehaviour
-    {        
-        [SerializeField]
-        private ItemTypes _inventoryItem = ItemTypes.None;
-        public ItemTypes InventoryItem
-        {
-            get
-            {
-                return _inventoryItem;
-            }
-            set
-            {
-                if (_inventoryItem == ItemTypes.None || value == ItemTypes.None)
-                    _inventoryItem = value;
-            }
-        }
-
-        [SerializeField]
-        private ItemTypes _stackedItem = ItemTypes.None;
-        public ItemTypes StackedItem
-        {
-            get
-            {
-                return _stackedItem;
-            }
-            set
-            {
-                if (_stackedItem == ItemTypes.None || value == ItemTypes.None)
-                    _stackedItem = value;
-            }
-        }
+    {
+        public ItemData CurrentItem;
+        public ItemData Item;
 
         public int Count;
 
-        public Transform FrontItemPosition; // Where to instantiate if item thrown forwards
-        public Transform BackItemPosition; // Where to instantiate if item thrown backwards
-
+        public ItemPositions ItemPositions;
         public GameObject MinePrefab;
         public GameObject DiskPrefab;
         public GameObject RocketPrefab;
@@ -48,64 +20,62 @@ namespace Items {
 
         public void ItemAction(Directions direction)
         {
-            if (InventoryItem != ItemTypes.None && StackedItem == ItemTypes.None)
+            if (CurrentItem == null)
             {
-                StackedItem = InventoryItem;
-                InventoryItem = ItemTypes.None;
-                Count = 3; // To change
+                if (Item != null)
+                {
+                    CurrentItem = Item;
+                    Item = null;
+                    Count = 3;
+                }
             }
-            else if (StackedItem != ItemTypes.None)
+            else
             {
                 UseStack(direction);
             }
+            UpdateHUD();
         }
 
         public void UseStack(Directions direction)
         {
-            if (StackedItem != ItemTypes.None)
+            if (CurrentItem != null)
             {
                 if (Count > 0)
                 {
-                    UseItem(StackedItem, direction);
+                    UseItem(CurrentItem, direction);
                     Count--;
                 }
-                if(Count == 0)
+                else if(Count == 0)
                 {
-                    StackedItem = ItemTypes.None;
+                    CurrentItem = null;
                 }
             }
+            UpdateHUD();
         }
 
-        public void UseItem(ItemTypes item, Directions direction)
+        public void UseItem(ItemData item, Directions direction)
         {
-            switch (item)
-            {
-                case ItemTypes.Disk:
-                    var disk = Instantiate(DiskPrefab, FrontItemPosition.position, Quaternion.identity);
-                    disk.GetComponent<DiskBehaviour>().SetDirection(transform.forward);
-                    break;
-                case ItemTypes.Rocket:
-                    var rocket = Instantiate(RocketPrefab, FrontItemPosition.position, Quaternion.identity);
-                    rocket.GetComponent<RocketBehaviour>().SetDirection(transform.forward);
-                    break;
-                case ItemTypes.Mine:
-                    Instantiate(MinePrefab, BackItemPosition.position, Quaternion.identity);
-                    break;
-                case ItemTypes.Nitro:
-                    StartCoroutine(GetComponentInParent<KartPhysics>().Boost(2f,10f,500f));
-                    break;
-            }
+            var itemObj = Instantiate(item.ItemPrefab);
+            itemObj.SetOwner(this);
+        }
+
+        public void UpdateHUD()
+        {
+            FindObjectOfType<HUDUpdater>().SetItem(CurrentItem, Item);
         }
 
         public IEnumerator GetLotteryItem()
         {
+            if (Item != null) yield break;
+
             var lottery = FindObjectOfType<ItemsLottery>();
             while(lotteryTimer < ItemsLottery.LOTTERY_DURATION)
             {
                 lotteryTimer += Time.deltaTime;
                 yield return null;
             }
-            InventoryItem = lottery.PickRandomItemType();
+            Item = lottery.GetRandomItem();
+            UpdateHUD();
             lotteryTimer = 0f;
         }
     }

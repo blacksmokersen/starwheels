@@ -29,6 +29,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1023026943535066
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4504689071086558}
+  m_Layer: 0
+  m_Name: Front
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1055459919690106
 GameObject:
   m_ObjectHideFlags: 1
@@ -525,8 +540,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4983504529895522}
+  - component: {fileID: 114489574900648120}
   m_Layer: 0
-  m_Name: ItemPos
+  m_Name: ItemPositions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -542,6 +558,21 @@ GameObject:
   - component: {fileID: 4220489730161696}
   m_Layer: 0
   m_Name: Cameras
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1803801282260032
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4577455682778274}
+  m_Layer: 0
+  m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -993,6 +1024,19 @@ Transform:
   m_Father: {fileID: 4220489730161696}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 25, y: 180.00002, z: 0}
+--- !u!4 &4504689071086558
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1023026943535066}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4983504529895522}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4523519388811774
 Transform:
   m_ObjectHideFlags: 1
@@ -1048,6 +1092,19 @@ Transform:
   m_Father: {fileID: 4109333596748662}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: 180}
+--- !u!4 &4577455682778274
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1803801282260032}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4983504529895522}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4604294373317258
 Transform:
   m_ObjectHideFlags: 1
@@ -1206,7 +1263,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4504689071086558}
+  - {fileID: 4577455682778274}
   m_Father: {fileID: 4611446738322668}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1878,11 +1937,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45565a10e6ce8ac46a015b064ebff0d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventoryItem: 0
-  _stackedItem: 0
+  CurrentItem: {fileID: 0}
+  Item: {fileID: 0}
   Count: 0
-  FrontItemPosition: {fileID: 4983504529895522}
-  BackItemPosition: {fileID: 4983504529895522}
+  ItemPositions: {fileID: 114489574900648120}
   MinePrefab: {fileID: 1838917612140702, guid: 4e57e80291c5266499162241fe8eaa6b, type: 2}
   DiskPrefab: {fileID: 1507300503580378, guid: 9e314f7d90b437c40986af630281d853, type: 2}
   RocketPrefab: {fileID: 1507300503580378, guid: 87f98fb66441a914a9562ff63943dcf0,
@@ -1936,6 +1994,19 @@ MonoBehaviour:
   kartRenderer: {fileID: 23173676331478404}
   nameText: {fileID: 102579939263838714}
   backCamera: {fileID: 1212992180707834}
+--- !u!114 &114489574900648120
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1771845904122420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78fb8a74e2e90d649bdfa1b294b58c18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FrontPosition: {fileID: 4504689071086558}
+  BackPosition: {fileID: 4577455682778274}
 --- !u!114 &114534634932812642
 MonoBehaviour:
   m_ObjectHideFlags: 1

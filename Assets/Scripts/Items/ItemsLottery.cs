@@ -9,8 +9,9 @@ namespace Items
 
         public static float LOTTERY_DURATION = 3.0f;
 
-        private void Awake()
+        public ItemData[] Items;
 
+        private void Awake()
         {
             if(Instance != null && Instance != this)
             {
@@ -20,6 +21,11 @@ namespace Items
             {
                 Instance = this;
             }
+        }
+
+        public ItemData GetRandomItem()
+        {
+            return Items[UnityEngine.Random.Range(0, Items.Length)];
         }
 
         public ItemTypes PickRandomItemType()
