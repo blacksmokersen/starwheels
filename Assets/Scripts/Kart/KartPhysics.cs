@@ -20,6 +20,7 @@ namespace Kart
 
         [Header("Gravity")]
         public float JumpForce;
+        public float DriftJumpForce;
         public float GravityForce;
         [HideInInspector] public Vector3 CenterOfMassOffset;
         [Range(0, 1)] public float MinDrag;

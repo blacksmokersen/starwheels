@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Kart;
+using Items;
 
 namespace Controls
 {
@@ -46,13 +47,13 @@ namespace Controls
             {
                 kartAction.Jump(3 , Input.GetAxis(Constants.TurnAxis), Input.GetAxis(Constants.AccelerateButton), Input.GetAxis(Constants.UpAndDownAxis));
             }
-            if (Input.GetButtonDown(Constants.FireButton))
-            {
-                kartAction.Fire();
-            }
             if (Input.GetButtonDown(Constants.DriftButton))
             {
                 kartAction.InitializeDrift(Input.GetAxis(Constants.TurnAxis));
+            }
+            if (Input.GetButtonDown(Constants.UseItemButton))
+            {
+                kart.UseItem(Input.GetAxis(Constants.VerticalAxis));
             }
         }
 

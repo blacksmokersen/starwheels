@@ -1,7 +1,13 @@
 ﻿using UnityEngine;
+using Items;
 
 namespace Kart
 {
+    /* 
+     * Main class to map the inputs to the different kart actions
+     * The states should handled and modified within this class
+     * 
+     */ 
     public class KartActions : MonoBehaviour
     {
         private KartPhysics kartPhysics;
@@ -10,6 +16,7 @@ namespace Kart
         private KartDriftSystem kartDriftSystem;
         private KartEffects kartEffects;
         private KartMeshMovement kartMeshMovement;
+        private KartInventory kartInventory;
 
 
         public bool hasJumped = false;
@@ -24,6 +31,7 @@ namespace Kart
             kartOrientation = GetComponentInParent<KartOrientation>();
             kartStates = GetComponentInParent<KartStates>();
             kartDriftSystem = GetComponentInParent<KartDriftSystem>();
+            kartInventory = FindObjectOfType<KartInventory>();
             kartEffects = FindObjectOfType<KartEffects>();
             kartMeshMovement = FindObjectOfType<KartMeshMovement>();
         }
@@ -64,9 +72,19 @@ namespace Kart
             }
         }
 
-        public void Fire()
+        public void UseItem(float verticalValue)
         {
-            Debug.Log("Firing");
+            Directions direction = verticalValue >= 0 ? Directions.Foward : Directions.Backward;
+            kartInventory.ItemAction(direction);
+        }
+
+        public void DriftJump(float value = 1f)
+        {
+            if (kartStates.AirState == AirStates.Grounded)
+            {
+                kartPhysics.DriftJump(value);
+                kartStates.AirState = AirStates.InAir;
+            }
         }
 
         public void InitializeDrift(float angle)
