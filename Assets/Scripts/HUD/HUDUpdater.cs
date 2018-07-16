@@ -9,13 +9,17 @@ namespace HUD
         public Text SpeedText;
         public Text TimeText;
         public Text FPSText;
+        public GameObject Compteur;
 
+        private Compteur compteur;
         private Rigidbody kartRigidBody;
 
-        private void Start()
+        public void SetKart(Rigidbody body)
         {
-            kartRigidBody = GameObject.FindGameObjectWithTag(Constants.KartTag).GetComponent<Rigidbody>();
+            compteur = Compteur.GetComponent<Compteur>();
+            kartRigidBody = body;
             StartCoroutine(UpdateRoutine());
+            //   StartCoroutine(UpdateVelocityRoutine());
         }
 
         IEnumerator UpdateRoutine()
@@ -25,8 +29,19 @@ namespace HUD
                 TimeText.text = "Time : " + Time.time;
                 SpeedText.text = "Speed : " + kartRigidBody.velocity.magnitude;
                 FPSText.text = "FPS : " + 1.0f / Time.deltaTime;
-                yield return new WaitForSeconds(0.5f);
+                compteur.CompteurBehaviour(kartRigidBody.velocity.magnitude);
+                yield return new WaitForSeconds(0.05f);
             }
         }
+        /*
+        IEnumerator UpdateVelocityRoutine()
+        {
+            while (Application.isPlaying)
+            {
+                compteur.CompteurBehaviour(kartRigidBody.velocity.magnitude);
+                yield return new WaitForSeconds(0.05f);
+            }
+        }
+        */
     }
 }

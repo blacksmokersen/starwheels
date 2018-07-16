@@ -1,4 +1,4 @@
-﻿namespace Extensions
+﻿namespace MyExtensions
 {
     public class Functions
     {

@@ -8,46 +8,51 @@ namespace Controls
      */
     public class PlayerInputs : MonoBehaviour
     {
+        KartActions kartAction;
 
-        KartActions kart;
-
-        void Awake()
+        public void SetKart(KartActions value)
         {
-            kart = FindObjectOfType<KartActions>();
+            kartAction = value;
         }
 
         void FixedUpdate()
         {
+            if (kartAction == null) return;
+
             Axis();
             ButtonsPressed();
         }
 
         private void Update()
         {
+            if (kartAction == null) return;
+
             ButtonsDown();
             ButtonsUp();
         }
 
         void Axis()
         {
-            kart.Accelerate(Input.GetAxis(Constants.AccelerateButton));
-            kart.Decelerate(Input.GetAxis(Constants.DecelerateButton));
-            kart.Turn(Input.GetAxis(Constants.TurnAxis));
+            kartAction.Accelerate(Input.GetAxis(Constants.AccelerateButton));
+            kartAction.Decelerate(Input.GetAxis(Constants.DecelerateButton));
+            kartAction.Turn(Input.GetAxis(Constants.TurnAxis));
+            kartAction.KartMeshMovement(Input.GetAxis(Constants.TurnAxis));
+            //Constants.UpAndDownAxis = (Input.GetAxis(Constants.AccelerateButton));
         }
 
         void ButtonsDown()
         {
             if (Input.GetButtonDown(Constants.JumpButton))
             {
-                kart.Jump();
+                kartAction.Jump(3 , Input.GetAxis(Constants.TurnAxis), Input.GetAxis(Constants.AccelerateButton), Input.GetAxis(Constants.UpAndDownAxis));
             }
             if (Input.GetButtonDown(Constants.FireButton))
             {
-                kart.Fire();
+                kartAction.Fire();
             }
             if (Input.GetButtonDown(Constants.DriftButton))
             {
-                kart.InitializeDrift(Input.GetAxis(Constants.TurnAxis));
+                kartAction.InitializeDrift(Input.GetAxis(Constants.TurnAxis));
             }
         }
 
@@ -55,7 +60,7 @@ namespace Controls
         {
             if (Input.GetButton(Constants.DriftButton))
             {
-                kart.DriftTurns(Input.GetAxis(Constants.TurnAxis));
+                kartAction.DriftTurns(Input.GetAxis(Constants.TurnAxis));
             }
         }
 
@@ -63,7 +68,7 @@ namespace Controls
         {
             if (Input.GetButtonUp(Constants.DriftButton))
             {
-                kart.StopDrift();
+                kartAction.StopDrift();
             }
         }
     }

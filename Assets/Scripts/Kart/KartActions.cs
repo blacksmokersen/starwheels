@@ -8,8 +8,15 @@ namespace Kart
         private KartOrientation kartOrientation;
         private KartStates kartStates;
         private KartDriftSystem kartDriftSystem;
+        private KartEffects kartEffects;
+        private KartMeshMovement kartMeshMovement;
 
-        private bool hasJumped = false;
+
+        public bool hasJumped = false;
+        public bool DoubleJumpEnabled = true;
+        private bool firstJump = false;
+
+        private float driftMinSpeedActivation = 10;
 
         void Awake()
         {
@@ -17,22 +24,43 @@ namespace Kart
             kartOrientation = GetComponentInParent<KartOrientation>();
             kartStates = GetComponentInParent<KartStates>();
             kartDriftSystem = GetComponentInParent<KartDriftSystem>();
+            kartEffects = FindObjectOfType<KartEffects>();
+            kartMeshMovement = FindObjectOfType<KartMeshMovement>();
         }
 
         private void FixedUpdate()
         {
-            if(kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
+            if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
             {
                 kartPhysics.CompensateSlip();
+                kartOrientation.NotDrifting();
             }
         }
 
-        public void Jump(float value = 1f)
+        public void Jump(float value, float turnAxis, float accelerateAxis, float upAndDownAxis)
         {
-            if (kartStates.AirState == AirStates.Grounded)
+            if (DoubleJumpEnabled && firstJump == true && kartStates.AirState == AirStates.InAir)
             {
-                kartPhysics.Jump(value);
-                kartStates.AirState = AirStates.InAir;
+                DoubleJump(value, turnAxis, upAndDownAxis);
+                firstJump = false;
+            }
+            else
+            {
+                if (kartStates.AirState == AirStates.Grounded)
+                {
+                    kartEffects.MainJumpParticles();
+                    if (DoubleJumpEnabled)
+                    {
+                        kartPhysics.Jump(value);
+                        kartStates.AirState = AirStates.InAir;
+                        firstJump = true;
+                    }
+                    else
+                    {
+                        kartPhysics.Jump(value);
+                        kartStates.AirState = AirStates.InAir;
+                    }
+                }
             }
         }
 
@@ -43,11 +71,11 @@ namespace Kart
 
         public void InitializeDrift(float angle)
         {
-            if (kartStates.AirState == AirStates.Grounded)
+            if (kartStates.AirState == AirStates.Grounded && kartPhysics.PlayerVelocity >= driftMinSpeedActivation)
             {
                 if (!hasJumped)
                 {
-                    Jump(0.3f);
+                    kartPhysics.Jump(0.3f);
                     hasJumped = true;
                 }
                 if (angle != 0)
@@ -67,12 +95,12 @@ namespace Kart
         public void DriftTurns(float turnValue)
         {
             if (kartStates.AirState == AirStates.InAir) return;
-            
-            if (kartStates.DriftTurnState != DriftTurnStates.NotDrifting)
+
+            if (kartStates.DriftTurnState != DriftTurnStates.NotDrifting && kartPhysics.PlayerVelocity >= driftMinSpeedActivation)
             {
                 kartOrientation.DriftTurn(turnValue);
-                kartDriftSystem.DriftForces(turnValue);
-                kartDriftSystem.CheckNewTurnDirection();                
+                kartDriftSystem.DriftForces();
+                kartDriftSystem.CheckNewTurnDirection();
             }
             else if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
             {
@@ -85,12 +113,12 @@ namespace Kart
                     kartStates.DriftTurnState = DriftTurnStates.DriftingRight;
                 }
                 InitializeDrift(turnValue);
-            }            
+            }
         }
 
         public void Accelerate(float value)
         {
-            if (kartStates.AirState != AirStates.InAir)
+            if (kartStates.AirState != AirStates.InAir && !kartOrientation.Crash)
             {
                 kartPhysics.Accelerate(value);
             }
@@ -98,7 +126,7 @@ namespace Kart
 
         public void Decelerate(float value)
         {
-            if (kartStates.AirState != AirStates.InAir)
+            if (kartStates.AirState != AirStates.InAir && !kartOrientation.Crash)
             {
                 kartPhysics.Decelerate(value);
             }
@@ -124,10 +152,52 @@ namespace Kart
                 {
                     kartPhysics.TurnUsingTorque(Vector3.up * value);
                 }
-                else if(kartStates.AccelerationState == AccelerationStates.Back)
+                else if (kartStates.AccelerationState == AccelerationStates.Back)
                 {
                     kartPhysics.TurnUsingTorque(Vector3.down * value);
                 }
+            }
+        }
+
+        public void KartMeshMovement(float turnAxis)
+        {
+            kartMeshMovement.FrontWheelsMovement(turnAxis, kartPhysics.PlayerVelocity);
+            kartMeshMovement.BackWheelsMovement(kartPhysics.PlayerVelocity);
+        }
+
+        public void DoubleJump(float value, float turnAxis, float upAndDownAxis)
+        {
+            // optimiser les methodes sur  karphysics avec un argument Vector3
+            if (Mathf.Abs(turnAxis) < 0.3f)
+            {
+                if (upAndDownAxis >= 0.2f)
+                {
+                    kartEffects.BackJumpAnimation();
+                    kartPhysics.BackJump(value);
+                }
+                else if (upAndDownAxis <= -0.2f)
+                {
+                    kartEffects.FrontJumpAnimation();
+                    kartPhysics.FrontJump(value);
+                }
+                else
+                {
+                    kartPhysics.StraightJump(value);
+                }
+            }
+            else if (turnAxis <= -0.5f)
+            {
+                kartEffects.LeftJumpAnimation();
+                kartPhysics.LeftJump(value);
+            }
+            else if (turnAxis >= 0.5f)
+            {
+                kartEffects.RightJumpAnimation();
+                kartPhysics.RightJump(value);
+            }
+            else
+            {
+                kartPhysics.StraightJump(value);
             }
         }
     }
