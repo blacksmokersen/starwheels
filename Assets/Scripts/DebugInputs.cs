@@ -20,10 +20,6 @@ namespace Controls
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
-            if (Input.GetKeyDown(KeyCode.Joystick1Button4) || Input.GetKeyDown(KeyCode.Keypad1))
-            {
-                kartHealthSystem.HealtLoss();
-            }
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 kart = GameObject.FindWithTag("Kart");

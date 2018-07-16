@@ -147,6 +147,11 @@ namespace Kart
         {
             rb.AddRelativeForce(Vector3.up * JumpForce / 4 * value, ForceMode.Impulse);
         }
+        
+        public void DriftJump(float value)
+        {
+            rb.AddRelativeForce(Vector3.up * DriftJumpForce * value, ForceMode.Impulse);
+        }
 
         public void Accelerate(float value)
         {

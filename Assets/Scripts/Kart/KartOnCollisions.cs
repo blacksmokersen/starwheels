@@ -15,7 +15,7 @@ namespace Kart {
                 FindObjectOfType<KartStates>().AirState = AirStates.Grounded;
             }
         }
-        private void OnTriggerEnter(Collider trigger)
+        private void OnTriggerEnter(Collider collision)
         {
             if (collision.gameObject.tag == Constants.ItemBoxTag)
             {

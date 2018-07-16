@@ -53,7 +53,7 @@ namespace Controls
             }
             if (Input.GetButtonDown(Constants.UseItemButton))
             {
-                kart.UseItem(Input.GetAxis(Constants.VerticalAxis));
+                kartAction.UseItem(Input.GetAxis(Constants.UpAndDownAxis));
             }
         }
 

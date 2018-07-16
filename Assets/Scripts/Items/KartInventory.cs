@@ -89,7 +89,7 @@ namespace Items {
                     rocket.GetComponent<RocketBehaviour>().SetDirection(transform.forward);
                     break;
                 case ItemTypes.Mine:
-                    var mine = Instantiate(MinePrefab, BackItemPosition.position, Quaternion.identity);
+                    Instantiate(MinePrefab, BackItemPosition.position, Quaternion.identity);
                     break;
                 case ItemTypes.Nitro:
                     StartCoroutine(GetComponentInParent<KartPhysics>().Boost(2f,10f,500f));
