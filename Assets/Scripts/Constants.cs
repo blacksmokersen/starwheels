@@ -5,6 +5,7 @@
 
     // Tags
     public const string KartTag = "Kart";
+    public const string KartRigidBodyTag = "KartRB";
     public const string ItemBoxTag = "ItemBox";
 
     // Object Names

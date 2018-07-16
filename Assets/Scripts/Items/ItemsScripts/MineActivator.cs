@@ -14,9 +14,7 @@ namespace Items{
         IEnumerator MineActivationDelay()
         {
             yield return new WaitForSeconds(ActivationTime);
-            Debug.Log("Yolo");
-            var playerTrigger = GetComponentInChildren<PlayerMineTrigger>();
-            playerTrigger.Activated = true;
+            GetComponentInChildren<PlayerMineTrigger>().Activated = true;
             GetComponentInChildren<ItemMineTrigger>().Activated = true;
         }
     }

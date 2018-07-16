@@ -8,7 +8,7 @@ namespace Items
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == Constants.KartTag && Activated)
+            if (other.gameObject.tag == Constants.KartRigidBodyTag && Activated)
             {
                 Destroy(gameObject);
             }
@@ -16,7 +16,8 @@ namespace Items
 
         private void OnTriggerStay(Collider other)
         {
-            if (other.gameObject.tag == Constants.KartTag && Activated)
+            Debug.Log("LLOLOLOLO");
+            if (other.gameObject.tag == Constants.KartRigidBodyTag && Activated)
             {
                 Destroy(gameObject);
             }
