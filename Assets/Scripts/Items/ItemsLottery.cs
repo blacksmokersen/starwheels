@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 using System;
 
 namespace Items
@@ -8,7 +7,10 @@ namespace Items
     {
         public static ItemsLottery Instance { get; private set; } // Singleton Pattern
 
+        public static float LOTTERY_DURATION = 3.0f;
+
         private void Awake()
+
         {
             if(Instance != null && Instance != this)
             {

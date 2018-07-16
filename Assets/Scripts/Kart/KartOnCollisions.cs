@@ -21,7 +21,7 @@ namespace Kart {
             if (collision.gameObject.tag == Constants.ItemBoxTag)
             {
                 StartCoroutine(collision.gameObject.GetComponent<ItemBox>().Activate());
-                GetComponentInChildren<KartInventory>().InventoryItem = FindObjectOfType<ItemsLottery>().PickRandomItemType();
+                StartCoroutine(GetComponentInChildren<KartInventory>().GetLotteryItem());
             }
         }
     }

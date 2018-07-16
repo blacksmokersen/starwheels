@@ -21,11 +21,11 @@ GameObject:
   - component: {fileID: 4540307016684214}
   - component: {fileID: 33840610735471362}
   - component: {fileID: 23050492946266650}
+  - component: {fileID: 114423031125255274}
   - component: {fileID: 54666048211524458}
-  - component: {fileID: 114504760793043860}
   - component: {fileID: 135765547132418206}
   m_Layer: 0
-  m_Name: Disk
+  m_Name: Rocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,7 +103,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 48
   m_CollisionDetection: 2
---- !u!114 &114504760793043860
+--- !u!114 &114423031125255274
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,14 +111,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1507300503580378}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 328d0895e2097674da2fbf33d0935aae, type: 3}
+  m_Script: {fileID: 11500000, guid: 907d8704dddde5d468de47d654a43fac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 50
-  ReboundsBeforeEnd: 7
-  AirState: 0
-  DistanceForGrounded: 0.5
-  GravityForce: 40
+  MaxAngle: 30
+  Target: {fileID: 0}
 --- !u!135 &135765547132418206
 SphereCollider:
   m_ObjectHideFlags: 1

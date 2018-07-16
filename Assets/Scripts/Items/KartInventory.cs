@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using Kart;
+using System.Collections;
+
 namespace Items {
     public class KartInventory : MonoBehaviour
     {        
+        [SerializeField]
         private ItemTypes _inventoryItem = ItemTypes.None;
         public ItemTypes InventoryItem
         {
@@ -17,6 +20,7 @@ namespace Items {
             }
         }
 
+        [SerializeField]
         private ItemTypes _stackedItem = ItemTypes.None;
         public ItemTypes StackedItem
         {
@@ -39,6 +43,8 @@ namespace Items {
         public GameObject MinePrefab;
         public GameObject DiskPrefab;
         public GameObject RocketPrefab;
+
+        private float lotteryTimer = 0f;
 
         public void ItemAction(Directions direction)
         {
@@ -76,16 +82,31 @@ namespace Items {
             {
                 case ItemTypes.Disk:
                     var disk = Instantiate(DiskPrefab, FrontItemPosition.position, Quaternion.identity);
-                    disk.GetComponent<DiskBehaviour>().SetDirection(transform.TransformDirection(Vector3.forward));
+                    disk.GetComponent<DiskBehaviour>().SetDirection(transform.forward);
                     break;
                 case ItemTypes.Rocket:
-                    var rocket = Instantiate(DiskPrefab, FrontItemPosition.position, Quaternion.identity);
-                    rocket.GetComponent<RocketBehaviour>().SetDirection(transform.TransformDirection(Vector3.forward));
+                    var rocket = Instantiate(RocketPrefab, FrontItemPosition.position, Quaternion.identity);
+                    rocket.GetComponent<RocketBehaviour>().SetDirection(transform.forward);
+                    break;
+                case ItemTypes.Mine:
+                    var mine = Instantiate(MinePrefab, BackItemPosition.position, Quaternion.identity);
                     break;
                 case ItemTypes.Nitro:
                     StartCoroutine(GetComponentInParent<KartPhysics>().Boost(2f,10f,500f));
                     break;
             }
+        }
+
+        public IEnumerator GetLotteryItem()
+        {
+            var lottery = FindObjectOfType<ItemsLottery>();
+            while(lotteryTimer < ItemsLottery.LOTTERY_DURATION)
+            {
+                lotteryTimer += Time.deltaTime;
+                yield return null;
+            }
+            InventoryItem = lottery.PickRandomItemType();
+            lotteryTimer = 0f;
         }
     }
 }
