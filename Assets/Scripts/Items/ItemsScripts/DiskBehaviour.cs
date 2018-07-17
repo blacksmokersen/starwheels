@@ -30,6 +30,10 @@ namespace Items
         private void FixedUpdate()
         {
             rb.velocity = rb.velocity.normalized * Speed;
+        }
+
+        private void Update()
+        {
             CheckGrounded();
         }
 
