@@ -23,7 +23,7 @@ namespace Kart
         public bool DoubleJumpEnabled = true;
         private bool firstJump = false;
 
-        private float driftMinSpeedActivation = 10;
+        private float driftMinSpeedActivation = 20;
 
         void Awake()
         {

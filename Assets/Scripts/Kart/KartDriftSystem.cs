@@ -27,7 +27,7 @@ namespace Kart
         private bool hasTurnedOtherSide;
         private bool driftedLongEnough;
         private Coroutine driftTimer;
-
+        private Coroutine boostCoroutine;
         // Drift Wydman
         public float OnDrift;
         private Rigidbody rb;
@@ -57,7 +57,7 @@ namespace Kart
         }
 
         public void CheckNewTurnDirection()
-        {           
+        {
             if (hasTurnedOtherSide && !TurnSideDifferentFromDriftSide() && driftedLongEnough)
             {
                 EnterNextState();
@@ -155,7 +155,8 @@ namespace Kart
 
         private IEnumerator EnterTurbo()
         {
-            StartCoroutine(kartPhysics.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));
+            if (boostCoroutine != null) StopCoroutine(boostCoroutine);
+            boostCoroutine = StartCoroutine(kartPhysics.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));
             SetKartBoostState(DriftBoostStates.Turbo, ColorId.Green);
             SetKartTurnState(DriftTurnStates.NotDrifting);
             yield return new WaitForSeconds(BoostDuration);
@@ -186,7 +187,7 @@ namespace Kart
             else
                 kartStates.DriftTurnState = state;
         }
-        
+
         [PunRPC]
         private void RPCSetKartBoostState(DriftBoostStates state, ColorId colorId)
         {
@@ -196,7 +197,7 @@ namespace Kart
                 kartEffects.StartSmoke();
             else
                 kartEffects.StopSmoke();
-                
+
             kartEffects.SetColor(ColorIdToColor(colorId));
         }
 

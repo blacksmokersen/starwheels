@@ -41,7 +41,7 @@ namespace HUD
                 SpeedText.text = "Speed : " + kartRigidBody.velocity.magnitude;
                 FPSText.text = "FPS : " + 1.0f / Time.deltaTime;
                 compteur.CompteurBehaviour(kartRigidBody.velocity.magnitude);
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.05f);
             }
         }
 
