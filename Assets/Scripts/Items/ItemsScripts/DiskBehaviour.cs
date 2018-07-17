@@ -11,9 +11,8 @@ namespace Items
         public int ReboundsBeforeEnd;
 
         [Header("Ground parameters")]
-        public AirStates AirState;
+        public AirStates AirState = AirStates.InAir;
         public float DistanceForGrounded;
-        public float GravityForce;
 
         private Rigidbody rb;
 
@@ -32,29 +31,27 @@ namespace Items
         {
             rb.velocity = rb.velocity.normalized * Speed;
             CheckGrounded();
-            AddGravity();
         }
 
         private void CheckGrounded()
         {
-            if (Physics.Raycast(transform.position, Vector3.down, DistanceForGrounded, 1 << LayerMask.NameToLayer(Constants.GroundLayer)))
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, Vector3.down, out hit, DistanceForGrounded, 1 << LayerMask.NameToLayer(Constants.GroundLayer)))
             {
-                var v = rb.velocity;
-                v.y = 0;
-                rb.velocity = v;
-                AirState = AirStates.Grounded;
                 rb.useGravity = false;
+
+                var velocity = rb.velocity;
+                velocity.y = 0;
+                rb.velocity = velocity;
+
+                var position = transform.position;
+                position.y = hit.point.y + DistanceForGrounded - 0.1f;
+                transform.position = position;
             }
             else
             {
-                AirState = AirStates.InAir;
                 rb.useGravity = true;
             }
-        }
-
-        private void AddGravity()
-        {
-            //rb.AddForce(Vector3.down * GravityForce);
         }
 
         private void OnTriggerEnter(Collider other)
