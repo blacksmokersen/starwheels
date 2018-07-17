@@ -12,15 +12,25 @@ namespace Items {
         public int Count;
 
         public ItemPositions ItemPositions;
-        public GameObject MinePrefab;
-        public GameObject DiskPrefab;
-        public GameObject RocketPrefab;
+
 
         private float lotteryTimer = 0f;
+        private bool lotteryStarted = false;
+        private bool shortenLottery = false;
+
+        private void Update()
+        {
+            Debug.Log("Timer : " + lotteryTimer);
+        }
 
         public void ItemAction(Directions direction)
         {
-            if (CurrentItem == null)
+            if(lotteryStarted && !shortenLottery && lotteryTimer > 1f)
+            {
+                lotteryTimer += 0.5f;
+                shortenLottery = true;
+            }
+            else if (CurrentItem == null)
             {
                 if (Item != null)
                 {
@@ -67,7 +77,7 @@ namespace Items {
         public IEnumerator GetLotteryItem()
         {
             if (Item != null) yield break;
-
+            lotteryStarted = true;
             var lottery = FindObjectOfType<ItemsLottery>();
             while(lotteryTimer < ItemsLottery.LOTTERY_DURATION)
             {
@@ -77,6 +87,8 @@ namespace Items {
             Item = lottery.GetRandomItem();
             UpdateHUD();
             lotteryTimer = 0f;
+            lotteryStarted = false;
+            shortenLottery = false;
         }
     }
 }
