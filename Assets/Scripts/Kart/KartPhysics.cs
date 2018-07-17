@@ -147,7 +147,7 @@ namespace Kart
         {
             rb.AddRelativeForce(Vector3.up * JumpForce / 4 * value, ForceMode.Impulse);
         }
-        
+
         public void DriftJump(float value)
         {
             rb.AddRelativeForce(Vector3.up * DriftJumpForce * value, ForceMode.Impulse);
@@ -170,6 +170,9 @@ namespace Kart
 
         public IEnumerator Boost(float boostDuration, float magnitudeBoost, float speedBoost)
         {
+            // clamp pour ne pas qu'avec des drift enchainés rapide le cap s'incrémente
+            MaxMagnitude = Mathf.Clamp(MaxMagnitude, 0, controlMagnitude);
+            Speed = Mathf.Clamp(Speed, 0, controlSpeed);
             //SpeedCap Increase
             MaxMagnitude += magnitudeBoost;
             Speed += speedBoost;
@@ -182,6 +185,8 @@ namespace Kart
             }
             yield return new WaitForSeconds(boostDuration);
             //SpeedCap Decrease
+            //    MaxMagnitude -= magnitudeBoost;
+            //    Speed -= speedBoost;
             for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / 1f)
             {
                 Speed = Mathf.Lerp(controlSpeed + speedBoost, controlSpeed, t);

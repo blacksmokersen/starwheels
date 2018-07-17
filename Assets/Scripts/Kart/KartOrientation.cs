@@ -32,6 +32,10 @@ namespace Kart
         private float balanceDriftL = 0;
         private float balanceDriftR = 0;
 
+        private Coroutine c1;
+        private Coroutine c2;
+
+
         private void Awake()
         {
             kartStates = GetComponentInChildren<KartStates>();
@@ -42,23 +46,8 @@ namespace Kart
             StabilizeRotation();
         }
 
-        //  A VIRER  ? en parler à shashimee
-        public void Turn(float value)
-        {
-            Debug.Log("Turn dans Kart.Orientation");
-            if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
-            {
-                //   transform.Rotate(new Vector3(0, value * TurningSpeed * Time.deltaTime, 0));
-            }
-            if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight || kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
-            {
-                //   transform.Rotate(new Vector3(0, value * DriftingTurningSpeed * Time.deltaTime, 0));
-            }
-        }
-
         public void DriftTurn(float angle)
         {
-
             if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
             {
                 if (BalancingDriftL && kartStates.DriftBoostState == DriftBoostStates.SimpleDrift)
@@ -70,7 +59,7 @@ namespace Kart
                 }
                 if (!IsCoroutineStarted)
                 {
-                    StartCoroutine(BalanceDriftL(2f));
+                    c1 = StartCoroutine(BalanceDrift(2f, "Left"));
                 }
                 if (angle != 0)
                 {
@@ -95,7 +84,7 @@ namespace Kart
                 }
                 if (!IsCoroutineStarted)
                 {
-                    StartCoroutine(BalanceDriftR(2f));
+                    c2 = StartCoroutine(BalanceDrift(2f, "Right"));
                 }
                 if (angle != 0)
                 {
@@ -109,11 +98,12 @@ namespace Kart
                 }
                 //  transform.Rotate(new Vector3(0, Mathf.Clamp(angle, DriftMinAngle, DriftMaxAngle) * DriftingTurningSpeed * Time.deltaTime, 0));
             }
-
         }
 
         public void NotDrifting()
         {
+            if (c1 != null) StopCoroutine(c1);
+            if (c2 != null) StopCoroutine(c2);
             BalancingDriftR = false;
             BalancingDriftL = false;
             balanceDriftL = 0;
@@ -132,6 +122,9 @@ namespace Kart
             }
         }
 
+        // si on décide d'ajouter un effet sur l'orientation lorsque le joueur prends un dégat
+        // l'aspect random sera là pour donner une trajectoire semi aléatoire pour que le joueur ne puisse pas jouer avec l'effet de l'impact
+        // pas dit que ce soit utilisé un jour
         public void LooseHealth(float crashTimer)
         {
             float random = Random.Range(0, 1);
@@ -145,25 +138,26 @@ namespace Kart
             }
         }
 
-        IEnumerator BalanceDriftL(float balanceTiming)
+        IEnumerator BalanceDrift(float balanceTiming, string Direction)
         {
             IsCoroutineStarted = true;
-
-            if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
+            if (kartStates.DriftTurnState != DriftTurnStates.NotDrifting && kartStates.DriftBoostState == DriftBoostStates.SimpleDrift)
             {
                 yield return new WaitForSeconds(balanceTiming);
-                BalancingDriftL = true;
-            }
-        }
-
-        IEnumerator BalanceDriftR(float balanceTiming)
-        {
-            IsCoroutineStarted = true;
-
-            if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
-            {
-                yield return new WaitForSeconds(balanceTiming);
-                BalancingDriftR = true;
+                if (kartStates.DriftBoostState == DriftBoostStates.SimpleDrift && Direction == "Left")
+                {
+                    Debug.Log("balanceL");
+                    BalancingDriftL = true;
+                }
+                else if (kartStates.DriftBoostState == DriftBoostStates.SimpleDrift && Direction == "Right")
+                {
+                    BalancingDriftR = true;
+                }
+                else
+                {
+                    StopCoroutine(c1);
+                    StopCoroutine(c2);
+                }
             }
         }
 
