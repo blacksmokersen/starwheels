@@ -6,13 +6,11 @@ using HUD;
 namespace Items {
     public class KartInventory : MonoBehaviour
     {
-        public ItemData CurrentItem;
-        public ItemData Item;
+        public ItemData StackedItem;
+        public ItemData InventoryItem;
 
         public int Count;
-
         public ItemPositions ItemPositions;
-
 
         private float lotteryTimer = 0f;
         private bool lotteryStarted = false;
@@ -30,13 +28,13 @@ namespace Items {
                 lotteryTimer += 0.5f;
                 shortenLottery = true;
             }
-            else if (CurrentItem == null)
+            else if (StackedItem == null)
             {
-                if (Item != null)
+                if (InventoryItem != null)
                 {
-                    CurrentItem = Item;
-                    Item = null;
-                    Count = 3;
+                    StackedItem = InventoryItem;
+                    Count = InventoryItem.Count;
+                    InventoryItem = null;
                 }
             }
             else
@@ -48,16 +46,16 @@ namespace Items {
 
         public void UseStack(Directions direction)
         {
-            if (CurrentItem != null)
+            if (StackedItem != null)
             {
                 if (Count > 0)
                 {
-                    UseItem(CurrentItem, direction);
+                    UseItem(StackedItem, direction);
                     Count--;
                 }
                 else if(Count == 0)
                 {
-                    CurrentItem = null;
+                    StackedItem = null;
                 }
             }
             UpdateHUD();
@@ -71,12 +69,12 @@ namespace Items {
 
         public void UpdateHUD()
         {
-            FindObjectOfType<HUDUpdater>().SetItem(CurrentItem, Item);
+            FindObjectOfType<HUDUpdater>().SetItem(StackedItem, InventoryItem);
         }
 
         public IEnumerator GetLotteryItem()
         {
-            if (Item != null) yield break;
+            if (InventoryItem != null) yield break;
             lotteryStarted = true;
             var lottery = FindObjectOfType<ItemsLottery>();
             while(lotteryTimer < ItemsLottery.LOTTERY_DURATION)
@@ -84,7 +82,7 @@ namespace Items {
                 lotteryTimer += Time.deltaTime;
                 yield return null;
             }
-            Item = lottery.GetRandomItem();
+            InventoryItem = lottery.GetRandomItem();
             UpdateHUD();
             lotteryTimer = 0f;
             lotteryStarted = false;

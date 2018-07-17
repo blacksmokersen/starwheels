@@ -43,16 +43,18 @@ namespace Items
                 v.y = 0;
                 rb.velocity = v;
                 AirState = AirStates.Grounded;
+                rb.useGravity = false;
             }
             else
             {
                 AirState = AirStates.InAir;
+                rb.useGravity = true;
             }
         }
 
         private void AddGravity()
         {
-            rb.AddForce(Vector3.down * GravityForce);
+            //rb.AddForce(Vector3.down * GravityForce);
         }
 
         private void OnTriggerEnter(Collider other)
