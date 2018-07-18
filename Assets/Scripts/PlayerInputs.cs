@@ -43,7 +43,7 @@ namespace Controls
 
         void ButtonsDown()
         {
-            if (Input.GetButtonDown(Constants.JumpButton))
+            if (Input.GetButtonDown(Constants.SpecialCapacity))
             {
                 kartAction.Jump(3 , Input.GetAxis(Constants.TurnAxis), Input.GetAxis(Constants.AccelerateButton), Input.GetAxis(Constants.UpAndDownAxis));
             }
