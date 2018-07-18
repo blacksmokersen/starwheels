@@ -7,7 +7,7 @@ namespace Kart
      * Main class to map the inputs to the different kart actions
      * The states should handled and modified within this class
      * 
-     */ 
+     */
     public class KartActions : MonoBehaviour
     {
         private KartPhysics kartPhysics;
@@ -152,6 +152,16 @@ namespace Kart
 
         public void Turn(float value)
         {
+            float newTurnSensitivity;
+            if (Mathf.Abs(value) <= 0.9f)
+            {
+                newTurnSensitivity = value / kartOrientation.LowerTurnSensitivity;
+            }
+            else
+            {
+                newTurnSensitivity = value;
+            }
+
             if (value > 0)
             {
                 kartStates.TurningState = TurningStates.Right;
@@ -168,11 +178,11 @@ namespace Kart
             {
                 if (kartStates.AccelerationState == AccelerationStates.Forward)
                 {
-                    kartPhysics.TurnUsingTorque(Vector3.up * value);
+                    kartPhysics.TurnUsingTorque(Vector3.up * newTurnSensitivity);
                 }
                 else if (kartStates.AccelerationState == AccelerationStates.Back)
                 {
-                    kartPhysics.TurnUsingTorque(Vector3.down * value);
+                    kartPhysics.TurnUsingTorque(Vector3.down * newTurnSensitivity);
                 }
             }
         }

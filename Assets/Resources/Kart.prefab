@@ -1937,14 +1937,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45565a10e6ce8ac46a015b064ebff0d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentItem: {fileID: 0}
-  Item: {fileID: 0}
+  StackedItem: {fileID: 0}
+  InventoryItem: {fileID: 0}
   Count: 0
   ItemPositions: {fileID: 114489574900648120}
-  MinePrefab: {fileID: 1838917612140702, guid: 4e57e80291c5266499162241fe8eaa6b, type: 2}
-  DiskPrefab: {fileID: 1507300503580378, guid: 9e314f7d90b437c40986af630281d853, type: 2}
-  RocketPrefab: {fileID: 1507300503580378, guid: 87f98fb66441a914a9562ff63943dcf0,
-    type: 2}
 --- !u!114 &114427035933159616
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1969,6 +1965,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TurningSpeed: 130
+  LowerTurnSensitivity: 1.5
   DriftingTurningSpeed: 170
   DriftMaxAngle: 0.85
   DriftMinAngle: 0.09
@@ -48167,7 +48164,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 32cb6dfbeba5fd14aac8905a06ebb696, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0

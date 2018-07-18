@@ -16,7 +16,7 @@ namespace Items
 
         private void OnTriggerStay(Collider other)
         {
-            Debug.Log("LLOLOLOLO");
+         //   Debug.Log("LLOLOLOLO");
             if (other.gameObject.tag == Constants.KartRigidBodyTag && Activated)
             {
                 Destroy(gameObject);
