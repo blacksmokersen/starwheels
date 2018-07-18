@@ -23,6 +23,7 @@ namespace Kart
         private KartStates kartStates;
         private KartPhysics kartPhysics;
         private KartEffects kartEffects;
+        private CinemachineDynamicScript cinemachineDynamicScript;
 
         private bool hasTurnedOtherSide;
         private bool driftedLongEnough;
@@ -39,6 +40,7 @@ namespace Kart
             kartStates = GetComponentInChildren<KartStates>();
             kartPhysics = GetComponent<KartPhysics>();
             kartEffects = GetComponentInChildren<KartEffects>();
+            cinemachineDynamicScript = FindObjectOfType<CinemachineDynamicScript>();
             kartEffects.StopSmoke();
             rb = kartPhysics.rb;
         }
@@ -157,6 +159,7 @@ namespace Kart
         {
             if (boostCoroutine != null) StopCoroutine(boostCoroutine);
             boostCoroutine = StartCoroutine(kartPhysics.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));
+            cinemachineDynamicScript.BoostCameraBehaviour();
             SetKartBoostState(DriftBoostStates.Turbo, ColorId.Green);
             SetKartTurnState(DriftTurnStates.NotDrifting);
             yield return new WaitForSeconds(BoostDuration);
