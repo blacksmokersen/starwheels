@@ -37,6 +37,8 @@ namespace Kart
         [Header("Turn")]
         public float TurnTorqueSpeed;
         public float CompensationForce;
+        public float TurnSlowValue;
+        public float CapSpeedInTurn;
 
         private KartStates kartStates;
         private KartEffects karteffects;
@@ -106,13 +108,24 @@ namespace Kart
             }
         }
 
-        public void TurnUsingTorque(Vector3 direction)
+        public void TurnUsingTorque(Vector3 direction,float turnAxis)
         {
+            TurnSlowDown(turnAxis);
             if (kartStates.AirState != AirStates.InAir)
             {
                 rb.AddRelativeTorque(direction * TurnTorqueSpeed, ForceMode.Force);
             }
         }
+
+        public void TurnSlowDown(float turnAxis)
+        {
+            if (kartStates.TurningState != TurningStates.NotTurning && PlayerVelocity > CapSpeedInTurn)
+            {
+                float backwardForce = TurnSlowValue * -Mathf.Abs(turnAxis);
+                rb.AddForce(transform.forward * backwardForce);
+            }
+        }
+
 
         public void Jump(float percentage = 1f)
         {
@@ -160,7 +173,7 @@ namespace Kart
 
         public void Decelerate(float value)
         {
-            rb.AddRelativeForce(Vector3.back * value * Speed, ForceMode.Force);
+            rb.AddRelativeForce(Vector3.back * value * Speed/2, ForceMode.Force);
         }
 
         public float SpeedCheck(float ComparValue)

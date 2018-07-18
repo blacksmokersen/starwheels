@@ -178,11 +178,11 @@ namespace Kart
             {
                 if (kartStates.AccelerationState == AccelerationStates.Forward)
                 {
-                    kartPhysics.TurnUsingTorque(Vector3.up * newTurnSensitivity);
+                    kartPhysics.TurnUsingTorque(Vector3.up * newTurnSensitivity, value);
                 }
                 else if (kartStates.AccelerationState == AccelerationStates.Back)
                 {
-                    kartPhysics.TurnUsingTorque(Vector3.down * newTurnSensitivity);
+                    kartPhysics.TurnUsingTorque(Vector3.down * newTurnSensitivity, value);
                 }
             }
         }
