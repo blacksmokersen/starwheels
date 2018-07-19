@@ -24,6 +24,11 @@ namespace Controls
             {
                 kartHealthSystem.HealtLoss();
             }
+            if (Input.GetKeyDown(KeyCode.Keypad2))
+            {
+                kartHealthSystem.Health = 3;
+            }
+
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 kart = GameObject.FindWithTag("Kart");
