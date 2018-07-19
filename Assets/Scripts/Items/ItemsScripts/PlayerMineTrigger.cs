@@ -10,16 +10,8 @@ namespace Items
         {
             if (other.gameObject.tag == Constants.KartRigidBodyTag && Activated)
             {
-                Destroy(gameObject);
-            }
-        }
-
-        private void OnTriggerStay(Collider other)
-        {
-            Debug.Log("LLOLOLOLO");
-            if (other.gameObject.tag == Constants.KartRigidBodyTag && Activated)
-            {
-                Destroy(gameObject);
+                other.gameObject.GetComponentInParent<Kart.KartHealthSystem>().HealtLoss();
+                Destroy(transform.parent.gameObject); // Destroy the mine root item
             }
         }
     }

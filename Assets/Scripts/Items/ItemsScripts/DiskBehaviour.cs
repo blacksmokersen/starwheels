@@ -60,17 +60,19 @@ namespace Items
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == Constants.KartTag)
+            if (other.gameObject.tag == Constants.KartRigidBodyTag)
             {
                 Destroy(gameObject);
+                other.gameObject.GetComponentInParent<Kart.KartHealthSystem>().HealtLoss();
             }
-            else
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            ReboundsBeforeEnd--;
+            if (ReboundsBeforeEnd <= 0)
             {
-                ReboundsBeforeEnd--;
-                if (ReboundsBeforeEnd <= 0)
-                {
-                    Destroy(gameObject);
-                }
+                Destroy(gameObject);
             }
         }
     }

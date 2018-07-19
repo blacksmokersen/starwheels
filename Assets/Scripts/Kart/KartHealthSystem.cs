@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 namespace Kart
@@ -14,8 +12,8 @@ namespace Kart
 
         private void Awake()
         {
-            kartEffects = FindObjectOfType<KartEffects>();
-            KartOrientation = FindObjectOfType<KartOrientation>();
+            kartEffects = GetComponentInChildren<KartEffects>();
+            KartOrientation = GetComponent<KartOrientation>();
         }
 
         public void HealtLoss()

@@ -8,18 +8,10 @@ namespace Items
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == Constants.KartRigidBodyTag && Activated)
+            if (other.gameObject.tag == Constants.ProjectileTag && Activated)
             {
                 Destroy(other.gameObject);
-                Destroy(gameObject);
-            }
-        }
-
-        private void OnTriggerStay(Collider other)
-        {
-            if (other.gameObject.tag == Constants.KartRigidBodyTag && Activated)
-            {
-                Destroy(gameObject);
+                Destroy(transform.parent.gameObject); // Destroy the mine root item
             }
         }
     }

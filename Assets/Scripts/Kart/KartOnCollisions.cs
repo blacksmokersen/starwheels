@@ -21,13 +21,18 @@ namespace Kart {
             {
                 StartCoroutine(collision.gameObject.GetComponent<ItemBox>().Activate());
                 StartCoroutine(GetComponentInChildren<KartInventory>().GetLotteryItem());
-            } else {
+            }
+            else if(collision.gameObject.layer == LayerMask.NameToLayer(Constants.GroundLayer))
+            { 
                 FindObjectOfType<KartPhysics>().rb.constraints = RigidbodyConstraints.FreezeRotationY;
             }
         }
         private void OnTriggerExit(Collider trigger)
         {
-            FindObjectOfType<KartPhysics>().rb.constraints = RigidbodyConstraints.None;
+            if (trigger.gameObject.layer == LayerMask.NameToLayer(Constants.GroundLayer))
+            {
+                FindObjectOfType<KartPhysics>().rb.constraints = RigidbodyConstraints.None;
+            }
         }
     }
 }

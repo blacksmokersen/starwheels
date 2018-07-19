@@ -7,6 +7,7 @@
     public const string KartTag = "Kart";
     public const string KartRigidBodyTag = "KartRB";
     public const string ItemBoxTag = "ItemBox";
+    public const string ProjectileTag = "Projectile";
 
     // Object Names
     public const string KartObjectName = "Kart";
