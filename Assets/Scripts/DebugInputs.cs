@@ -22,7 +22,7 @@ namespace Controls
             }
             if (Input.GetKeyDown(KeyCode.Keypad1))
             {
-                kartHealthSystem.HealtLoss();
+                kartHealthSystem.HealthLoss();
             }
             if (Input.GetKeyDown(KeyCode.Keypad2))
             {

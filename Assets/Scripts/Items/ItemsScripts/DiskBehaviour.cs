@@ -64,8 +64,8 @@ namespace Items
         {
             if (other.gameObject.tag == Constants.KartRigidBodyTag)
             {
-                other.gameObject.GetComponentInParent<Kart.KartHealthSystem>().HealtLoss();
-                Destroy(gameObject);
+                other.gameObject.GetComponentInParent<Kart.KartHealthSystem>().HealthLoss();
+                DestroyObject();
             }
         }
 
@@ -76,6 +76,18 @@ namespace Items
             collisionParticles.Emit(600);
             ReboundsBeforeEnd--;
             if (ReboundsBeforeEnd <= 0)
+            {
+                DestroyObject();
+            }
+        }
+
+        private void DestroyObject()
+        {
+            if (PhotonNetwork.connected)
+            {
+                PhotonNetwork.Destroy(gameObject);
+            }
+            else
             {
                 Destroy(gameObject);
             }

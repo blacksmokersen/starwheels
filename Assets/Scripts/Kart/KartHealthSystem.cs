@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Photon;
+using MyExtensions;
 
 namespace Kart
 {
-    public class KartHealthSystem : MonoBehaviour
+    public class KartHealthSystem : PunBehaviour
     {
         public int Health = 3;
         public float SpamHitSecurity;
@@ -23,7 +25,13 @@ namespace Kart
             kartSoundsScript = FindObjectOfType<KartSoundsScript>();
         }
 
-        public void HealtLoss()
+        public void HealthLoss()
+        {
+            this.ExecuteRPC(PhotonTargets.All, "RPCHealthLoss");
+        }
+
+        [PunRPC]
+        public void RPCHealthLoss()
         {
             if (!invicibility)
             {

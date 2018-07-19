@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using Items;
+using Photon;
 
 namespace Kart {
     /*
      * Class for handling every trigger and collisions related to the kart
      * 
      */ 
-    public class KartOnCollisions : MonoBehaviour {
+    public class KartOnCollisions : PunBehaviour {
 
         private void OnCollisionEnter(Collision collision)
         {
@@ -20,7 +21,8 @@ namespace Kart {
             if (collision.gameObject.tag == Constants.ItemBoxTag)
             {
                 StartCoroutine(collision.gameObject.GetComponent<ItemBox>().Activate());
-                StartCoroutine(GetComponentInChildren<KartInventory>().GetLotteryItem());
+                if (!PhotonNetwork.connected || photonView.isMine)
+                    StartCoroutine(GetComponentInChildren<KartInventory>().GetLotteryItem());
             }
             else if(collision.gameObject.layer == LayerMask.NameToLayer(Constants.GroundLayer))
             { 
