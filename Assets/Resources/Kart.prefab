@@ -1893,6 +1893,8 @@ MonoBehaviour:
   DriftBoostImpulse: 0.5
   TurnTorqueSpeed: 1000
   CompensationForce: 100
+  TurnSlowValue: 3000
+  CapSpeedInTurn: 35
   PlayerVelocity: 0
   rb: {fileID: 54115033852382540}
 --- !u!114 &114388644373576922
@@ -1936,6 +1938,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TurningSpeed: 130
+  LowerTurnSensitivity: 1.5
   DriftingTurningSpeed: 170
   DriftMaxAngle: 0.85
   DriftMinAngle: 0.09
@@ -48134,7 +48137,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 32cb6dfbeba5fd14aac8905a06ebb696, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0

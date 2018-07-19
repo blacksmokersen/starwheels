@@ -12,6 +12,7 @@ namespace Kart
 
         [Header("Turn")]
         public float TurningSpeed;
+        [Range(1, 3)] public float LowerTurnSensitivity;
 
         [Header("Drift")]
         public float DriftingTurningSpeed;
@@ -146,7 +147,6 @@ namespace Kart
                 yield return new WaitForSeconds(balanceTiming);
                 if (kartStates.DriftBoostState == DriftBoostStates.SimpleDrift && Direction == "Left")
                 {
-                    Debug.Log("balanceL");
                     BalancingDriftL = true;
                 }
                 else if (kartStates.DriftBoostState == DriftBoostStates.SimpleDrift && Direction == "Right")
@@ -155,8 +155,8 @@ namespace Kart
                 }
                 else
                 {
-                    StopCoroutine(c1);
-                    StopCoroutine(c2);
+                    if (c1 != null) StopCoroutine(c1);
+                    if (c2 != null) StopCoroutine(c2);
                 }
             }
         }

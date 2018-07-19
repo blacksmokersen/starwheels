@@ -18,7 +18,7 @@ namespace Items {
 
         private void Update()
         {
-            Debug.Log("Timer : " + lotteryTimer);
+          //  Debug.Log("Timer : " + lotteryTimer);
         }
 
         public void ItemAction(Directions direction)

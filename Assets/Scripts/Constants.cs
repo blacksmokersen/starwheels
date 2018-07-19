@@ -16,7 +16,7 @@
     // Inputs    
     public const string AccelerateButton = "Accelerate";
     public const string DecelerateButton = "Decelerate";
-    public const string JumpButton = "Jump";
+    public const string SpecialCapacity = "SpecialCapacity";
     public const string FireButton = "Fire";
     public const string TurnAxis = "Turn";
     public const string UpAndDownAxis = "UpAndDown";
