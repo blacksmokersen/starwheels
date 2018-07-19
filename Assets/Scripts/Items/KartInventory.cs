@@ -52,10 +52,10 @@ namespace Items {
                 {
                     UseItem(StackedItem, direction);
                     Count--;
-                }
-                else if(Count == 0)
-                {
-                    StackedItem = null;
+                    if (Count == 0)
+                    {
+                        StackedItem = null;
+                    }
                 }
             }
             UpdateHUD();
