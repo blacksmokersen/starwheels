@@ -21,6 +21,11 @@ namespace Kart
             Health--;
             KartOrientation.LooseHealth(2.5f);
             kartEffects.HealthParticlesManagement(Health);
+            if(Health <= 0)
+            {
+
+                GetComponentInParent<Rigidbody>().transform.position = new Vector3(-221, 3, 0);
+            }
         }
     }
 }

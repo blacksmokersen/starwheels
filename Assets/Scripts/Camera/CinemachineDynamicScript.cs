@@ -34,7 +34,6 @@ public class CinemachineDynamicScript : MonoBehaviour
             transposer.m_FollowOffset.z = cameraZ;
             yield return null;
         }
-        yield return new WaitForSeconds(1);
         for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / (aTime*2))
         {
             float cameraZ = Mathf.Lerp(bValue, aValue, t);

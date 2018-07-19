@@ -20,6 +20,10 @@ namespace Controls
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
+            if (Input.GetKeyDown(KeyCode.Keypad1))
+            {
+                kartHealthSystem.HealtLoss();
+            }
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 kart = GameObject.FindWithTag("Kart");
@@ -27,6 +31,7 @@ namespace Controls
             }
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
+                kart = GameObject.FindWithTag("Kart");
                 kart.transform.position = new Vector3(-221, 3, 0);
             }
         }
