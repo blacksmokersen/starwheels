@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using Items;
 
 namespace Kart
@@ -17,11 +18,13 @@ namespace Kart
         private KartEffects kartEffects;
         private KartMeshMovement kartMeshMovement;
         private KartInventory kartInventory;
+        private KartSoundsScript kartSoundsScript;
 
 
         public bool hasJumped = false;
         public bool DoubleJumpEnabled = true;
         private bool firstJump = false;
+        private bool cdDoubleJump = false;
 
         private float driftMinSpeedActivation = 10f;
 
@@ -34,6 +37,7 @@ namespace Kart
             kartInventory = FindObjectOfType<KartInventory>();
             kartEffects = FindObjectOfType<KartEffects>();
             kartMeshMovement = FindObjectOfType<KartMeshMovement>();
+            kartSoundsScript = FindObjectOfType<KartSoundsScript>();
         }
 
         private void FixedUpdate()
@@ -49,16 +53,20 @@ namespace Kart
         {
             if (DoubleJumpEnabled && firstJump == true && kartStates.AirState == AirStates.InAir)
             {
+                kartSoundsScript.PlaySecondJump();
+                kartEffects.MainJumpParticles(150);
                 DoubleJump(value, turnAxis, upAndDownAxis);
                 firstJump = false;
             }
             else
             {
-                if (kartStates.AirState == AirStates.Grounded)
+                if (kartStates.AirState == AirStates.Grounded && !cdDoubleJump)
                 {
-                    kartEffects.MainJumpParticles();
+                    StartCoroutine(CdDoubleJump());
+                    kartEffects.MainJumpParticles(300);
                     if (DoubleJumpEnabled)
                     {
+                        kartSoundsScript.PlayFirstJump();
                         kartPhysics.Jump(value);
                         kartStates.AirState = AirStates.InAir;
                         firstJump = true;
@@ -91,6 +99,7 @@ namespace Kart
         {
             if (kartStates.AirState == AirStates.Grounded && kartPhysics.PlayerVelocity >= driftMinSpeedActivation)
             {
+              //  kartSoundsScript.PlayDriftStart();
                 if (!hasJumped)
                 {
                     kartPhysics.Jump(0.3f);
@@ -106,12 +115,14 @@ namespace Kart
 
         public void StopDrift()
         {
+          //  kartSoundsScript.PlayDriftEnd();
             kartDriftSystem.StopDrift();
             hasJumped = false;
         }
 
         public void DriftTurns(float turnValue)
         {
+           // kartSoundsScript.PlayDrift();
             if (kartStates.AirState == AirStates.InAir) return;
 
             if (kartStates.DriftTurnState != DriftTurnStates.NotDrifting && kartPhysics.PlayerVelocity >= driftMinSpeedActivation)
@@ -139,6 +150,16 @@ namespace Kart
             if (kartStates.AirState != AirStates.InAir && !kartOrientation.Crash)
             {
                 kartPhysics.Accelerate(value);
+                /*
+                if (value > 0.1f && value < 0.5f)
+                {
+                    kartSoundsScript.PlayMotorAccel();
+                }
+                else if( value > 0.5f)
+                {
+                    kartSoundsScript.PlayMotor();
+                }
+                */
             }
         }
 
@@ -147,6 +168,7 @@ namespace Kart
             if (kartStates.AirState != AirStates.InAir && !kartOrientation.Crash)
             {
                 kartPhysics.Decelerate(value);
+              //  kartSoundsScript.PlayMotorDecel();
             }
         }
 
@@ -227,6 +249,13 @@ namespace Kart
             {
                 kartPhysics.StraightJump(value);
             }
+        }
+        IEnumerator CdDoubleJump()
+        {
+            cdDoubleJump = true;
+            yield return new WaitForSeconds(8);
+            kartEffects.ReloadJump();
+            cdDoubleJump = false;
         }
     }
 }

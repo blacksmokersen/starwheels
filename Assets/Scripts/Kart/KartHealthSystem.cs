@@ -12,12 +12,14 @@ namespace Kart
 
         private KartEffects kartEffects;
         private KartOrientation KartOrientation;
+        private KartSoundsScript kartSoundsScript;
         private bool invicibility = false;
 
         private void Awake()
         {
             kartEffects = GetComponentInChildren<KartEffects>();
             KartOrientation = GetComponent<KartOrientation>();
+            kartSoundsScript = FindObjectOfType<KartSoundsScript>();
         }
 
         public void HealtLoss()
@@ -25,6 +27,7 @@ namespace Kart
             if (!invicibility)
             {
                 Health--;
+                kartSoundsScript.Playerhit();
                 KartOrientation.LooseHealth(HitStopKartDuration);
                 kartEffects.HealthParticlesManagement(Health);
                 StartCoroutine(Invicibility(SpamHitSecurity));
