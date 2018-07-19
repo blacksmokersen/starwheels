@@ -27,6 +27,7 @@ namespace Controls
             if (Input.GetKeyDown(KeyCode.Keypad2))
             {
                 kartHealthSystem.Health = 3;
+                kartHealthSystem.dead = false;
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha1))

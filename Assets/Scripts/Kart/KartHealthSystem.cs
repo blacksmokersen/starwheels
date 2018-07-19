@@ -14,6 +14,7 @@ namespace Kart
         private KartOrientation KartOrientation;
         private KartSoundsScript kartSoundsScript;
         private bool invicibility = false;
+        public bool dead;
 
         private void Awake()
         {
@@ -34,8 +35,11 @@ namespace Kart
             }
             if(Health <= 0)
             {
-
-                GetComponentInParent<Rigidbody>().transform.position = new Vector3(-221, 3, 0);
+                if (!dead)
+                {
+                    GetComponentInParent<Rigidbody>().transform.position = new Vector3(-221, 3, 0);
+                    dead = true;
+                }
             }
         }
         IEnumerator Invicibility(float invicibilityTimer)
