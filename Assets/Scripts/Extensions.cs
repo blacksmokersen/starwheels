@@ -25,7 +25,6 @@ namespace MyExtensions
             {
                 Type thisType = pun.GetType();
                 MethodInfo theMethod = thisType.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance);
-                Debug.Log(theMethod);
                 theMethod.Invoke(pun, parameters);
             }
             

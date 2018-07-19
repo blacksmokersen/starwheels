@@ -130,7 +130,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &1212992180707834
 GameObject:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
@@ -549,21 +549,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1787953343706038
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4220489730161696}
-  m_Layer: 0
-  m_Name: Cameras
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1803801282260032
 GameObject:
   m_ObjectHideFlags: 1
@@ -827,20 +812,6 @@ Transform:
   m_Father: {fileID: 4823784381013706}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!4 &4220489730161696
-Transform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1787953343706038}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 4498066472489640}
-  m_Father: {fileID: 4611446738322668}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4232946985269276
 Transform:
   m_ObjectHideFlags: 1
@@ -943,7 +914,7 @@ Transform:
   m_LocalScale: {x: -0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 4611446738322668}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4382562949132724
 Transform:
@@ -1025,7 +996,7 @@ Transform:
   - {fileID: 4823784381013706}
   - {fileID: 4266511990405708}
   m_Father: {fileID: 4611446738322668}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4498066472489640
 Transform:
@@ -1033,13 +1004,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1212992180707834}
-  m_LocalRotation: {x: -0.000000040529073, y: 0.97629607, z: -0.2164396, w: -0.00000018281486}
-  m_LocalPosition: {x: -0, y: 5.49, z: -2.35}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: -0.0000001872535}
+  m_LocalPosition: {x: 0, y: 0.45, z: -0.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4220489730161696}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 25, y: 180.00002, z: 0}
+  m_Father: {fileID: 4611446738322668}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
 --- !u!4 &4504689071086558
 Transform:
   m_ObjectHideFlags: 1
@@ -1157,11 +1128,11 @@ Transform:
   - {fileID: 4347895985457990}
   - {fileID: 4109333596748662}
   - {fileID: 4604294373317258}
-  - {fileID: 4220489730161696}
   - {fileID: 4484706468446620}
   - {fileID: 4377913200807232}
   - {fileID: 4983504529895522}
   - {fileID: 4805589219236552}
+  - {fileID: 4498066472489640}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1257,7 +1228,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4611446738322668}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4823784381013706
 Transform:
@@ -1299,7 +1270,7 @@ Transform:
   - {fileID: 4504689071086558}
   - {fileID: 4577455682778274}
   m_Father: {fileID: 4611446738322668}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &20940314251518198
 Camera:
@@ -1310,20 +1281,20 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.38990876, g: 0.4745098, b: 0.19215688, a: 0}
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
+    x: 0.35
+    y: 0.85
+    width: 0.3
+    height: 0.15
+  near clip plane: 0.01
   far clip plane: 1000
-  field of view: 90
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -1331,7 +1302,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8600000, guid: 7943b3b9cdf902e4f8d683bd1d02579e, type: 2}
+  m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1

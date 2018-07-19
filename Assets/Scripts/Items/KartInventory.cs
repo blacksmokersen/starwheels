@@ -90,7 +90,6 @@ namespace Items {
             var lotteryIndex = 0;
             while(lotteryTimer < ItemsLottery.LOTTERY_DURATION)
             {
-                Debug.Log(lotteryTimer + " - " + ItemsLottery.LOTTERY_DURATION);
                 var items = ItemsLottery.Instance.Items;
                 FindObjectOfType<HUDUpdater>().SetItem(StackedItem, items[(lotteryIndex++)%items.Length]);
                 lotteryTimer += Time.deltaTime;
