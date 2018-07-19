@@ -193,7 +193,7 @@ namespace Kart
             for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / 0.5f)
             {
                 float boost = Mathf.Lerp(1, 0, t);
-                rb.AddRelativeForce(Vector3.forward * boost, ForceMode.VelocityChange);
+                rb.AddRelativeForce(Vector3.forward * boost);
                 yield return null;
             }
             yield return new WaitForSeconds(boostDuration);
