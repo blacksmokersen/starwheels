@@ -16,6 +16,7 @@ namespace Kart
         public AudioClip FirstJump;
         public AudioClip SecondJump;
         public AudioClip PlayerHit;
+        public AudioClip Boost;
 
         public AudioSource soundManager;
 
@@ -70,6 +71,10 @@ namespace Kart
         public void Playerhit()
         {
             soundManager.PlayOneShot(PlayerHit);
+        }
+        public void BoostSound()
+        {
+            soundManager.PlayOneShot(Boost);
         }
     }
 }

@@ -23,6 +23,7 @@ namespace Kart
         private KartStates kartStates;
         private KartPhysics kartPhysics;
         private KartEffects kartEffects;
+        private KartSoundsScript kartSoundsScript;
         private CinemachineDynamicScript cinemachineDynamicScript;
 
         private bool hasTurnedOtherSide;
@@ -40,6 +41,7 @@ namespace Kart
             kartStates = GetComponentInChildren<KartStates>();
             kartPhysics = GetComponent<KartPhysics>();
             kartEffects = GetComponentInChildren<KartEffects>();
+            kartSoundsScript = FindObjectOfType<KartSoundsScript>();
             cinemachineDynamicScript = FindObjectOfType<CinemachineDynamicScript>();
             kartEffects.StopSmoke();
             rb = kartPhysics.rb;
@@ -157,6 +159,7 @@ namespace Kart
 
         private IEnumerator EnterTurbo()
         {
+            kartSoundsScript.BoostSound();
             if (boostCoroutine != null) StopCoroutine(boostCoroutine);
             boostCoroutine = StartCoroutine(kartPhysics.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));
             cinemachineDynamicScript.BoostCameraBehaviour();
