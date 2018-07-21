@@ -41,6 +41,7 @@ namespace Kart
         public float CapSpeedInTurn;
 
         private KartStates kartStates;
+        private KartSoundsScript kartSounds;
 
         public float PlayerVelocity;
         public Rigidbody rb;
@@ -53,6 +54,7 @@ namespace Kart
             controlMagnitude = MaxMagnitude;
             controlSpeed = Speed;
             kartStates = GetComponentInChildren<KartStates>();
+            kartSounds = GetComponentInChildren<KartSoundsScript>();
             rb = GetComponent<Rigidbody>();
             rb.centerOfMass = CenterOfMassOffset;
         }
@@ -61,6 +63,8 @@ namespace Kart
         {
             Vector3 localVelocity = transform.InverseTransformDirection(rb.velocity);
             PlayerVelocity = localVelocity.z;
+
+            kartSounds.SetMotorPitch(0.5f + 1.0f * (localVelocity.magnitude/MaxMagnitude));
         }
 
         private void FixedUpdate()

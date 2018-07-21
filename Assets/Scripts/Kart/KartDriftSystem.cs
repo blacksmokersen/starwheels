@@ -103,6 +103,7 @@ namespace Kart
 
             if (kartStates.DriftBoostState == DriftBoostStates.NotDrifting)
             {
+                kartSoundsScript.StartDrift();
                 if (angle < 0)
                 {
                     SetKartTurnState(DriftTurnStates.DriftingLeft);
@@ -117,6 +118,7 @@ namespace Kart
 
         public void StopDrift()
         {
+            kartSoundsScript.EndDrift();
             if (kartStates.DriftBoostState == DriftBoostStates.RedDrift)
             {
                 _turboCoroutine = StartCoroutine(EnterTurbo());

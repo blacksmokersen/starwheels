@@ -20,9 +20,25 @@ namespace Kart
 
         public AudioSource soundManager;
 
+        public AudioSource motorSource;
+        public AudioSource driftSource;
+
         private void Awake()
         {
-          soundManager = GameObject.Find("SoundManager").GetComponent<AudioSource>();
+            soundManager = gameObject.AddComponent<AudioSource>();
+            soundManager.spatialBlend = 1f;
+
+            motorSource = gameObject.AddComponent<AudioSource>();
+            motorSource.spatialBlend = 1f;
+            motorSource.loop = true;
+            motorSource.clip = Motor;
+
+            driftSource = gameObject.AddComponent<AudioSource>();
+            driftSource.spatialBlend = 1f;
+            driftSource.loop = true;
+            driftSource.clip = Drift;
+
+            PlayMotor();
         }
 
         public void PlayMotorAccel()
@@ -32,13 +48,15 @@ namespace Kart
                 soundManager.PlayOneShot(MotorAccel);
             }
         }
+
+        public void SetMotorPitch(float pitch)
+        {
+            motorSource.pitch = pitch;
+        }
+
         public void PlayMotor()
         {
-            if (!soundManager.isPlaying)
-            {
-                soundManager.clip = Motor;
-                soundManager.Play();
-            }
+            motorSource.Play();
         }
         public void PlayMotorDecel()
         {
@@ -47,6 +65,18 @@ namespace Kart
                 soundManager.PlayOneShot(MotorDecel);
             }
         }
+
+        public void StartDrift()
+        {
+            // AudioSource.PlayClipAtPoint(DriftStart, transform.position);
+            driftSource.Play();
+        }
+        public void EndDrift()
+        {
+            driftSource.Stop();
+            // AudioSource.PlayClipAtPoint(DriftEnd, transform.position);
+        }
+
         public void PlayDriftStart()
         {
             soundManager.PlayOneShot(DriftStart);
@@ -60,6 +90,7 @@ namespace Kart
         {
             soundManager.PlayOneShot(DriftEnd);
         }
+
         public void PlayFirstJump()
         {
             soundManager.PlayOneShot(FirstJump);
