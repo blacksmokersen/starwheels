@@ -52,10 +52,10 @@ namespace Items {
                 {
                     UseItem(StackedItem, direction);
                     Count--;
-                }
-                else if(Count == 0)
-                {
-                    StackedItem = null;
+                    if (Count == 0)
+                    {
+                        StackedItem = null;
+                    }
                 }
             }
             UpdateHUD();
@@ -63,7 +63,17 @@ namespace Items {
 
         public void UseItem(ItemData item, Directions direction)
         {
-            var itemObj = Instantiate(item.ItemPrefab);
+            ItemBehaviour itemObj;
+            if (PhotonNetwork.connected)
+            {
+                var obj = PhotonNetwork.Instantiate(item.ItemPrefab.name, new Vector3(1500,1500,1500), Quaternion.identity, 0);
+                itemObj = obj.GetComponent<ItemBehaviour>();
+            }
+            else
+            {
+                itemObj = Instantiate(item.ItemPrefab);
+            }
+            
             itemObj.SetOwner(this);
         }
 
@@ -74,13 +84,17 @@ namespace Items {
 
         public IEnumerator GetLotteryItem()
         {
-            if (InventoryItem != null) yield break;
+            if (InventoryItem != null || lotteryStarted) yield break;
             lotteryStarted = true;
             var lottery = FindObjectOfType<ItemsLottery>();
+            var lotteryIndex = 0;
             while(lotteryTimer < ItemsLottery.LOTTERY_DURATION)
             {
+                var items = ItemsLottery.Instance.Items;
+                FindObjectOfType<HUDUpdater>().SetItem(StackedItem, items[(lotteryIndex++)%items.Length]);
                 lotteryTimer += Time.deltaTime;
-                yield return null;
+                yield return new WaitForSeconds(0.1f);
+                lotteryTimer+=0.1f;
             }
             InventoryItem = lottery.GetRandomItem();
             UpdateHUD();

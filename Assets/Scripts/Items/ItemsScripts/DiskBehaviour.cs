@@ -15,11 +15,13 @@ namespace Items
         public float DistanceForGrounded;
 
         private Rigidbody rb;
+        public ParticleSystem collisionParticles;
 
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();
         }
+
         
         public override void SetOwner(KartInventory kart)
         {
@@ -62,15 +64,30 @@ namespace Items
         {
             if (other.gameObject.tag == Constants.KartRigidBodyTag)
             {
-                Destroy(gameObject);
-                other.gameObject.GetComponentInParent<Kart.KartHealthSystem>().HealtLoss();
+                other.gameObject.GetComponentInParent<Kart.KartHealthSystem>().HealthLoss();
+                DestroyObject();
             }
         }
 
         private void OnCollisionEnter(Collision collision)
         {
+            Vector3 contactPoint = collision.contacts[0].point;
+            collisionParticles.transform.position = contactPoint;
+            collisionParticles.Emit(600);
             ReboundsBeforeEnd--;
             if (ReboundsBeforeEnd <= 0)
+            {
+                DestroyObject();
+            }
+        }
+
+        private void DestroyObject()
+        {
+            if (PhotonNetwork.connected)
+            {
+                PhotonNetwork.Destroy(gameObject);
+            }
+            else
             {
                 Destroy(gameObject);
             }

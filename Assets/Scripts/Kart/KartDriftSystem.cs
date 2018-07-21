@@ -23,6 +23,7 @@ namespace Kart
         private KartStates kartStates;
         private KartPhysics kartPhysics;
         private KartEffects kartEffects;
+        private KartSoundsScript kartSoundsScript;
         private CinemachineDynamicScript cinemachineDynamicScript;
 
         private bool hasTurnedOtherSide;
@@ -31,7 +32,6 @@ namespace Kart
         private Coroutine boostCoroutine;
         // Drift Wydman
         public float OnDrift;
-        private Rigidbody rb;
 
         private Coroutine _turboCoroutine;
 
@@ -40,9 +40,9 @@ namespace Kart
             kartStates = GetComponentInChildren<KartStates>();
             kartPhysics = GetComponent<KartPhysics>();
             kartEffects = GetComponentInChildren<KartEffects>();
+            kartSoundsScript = FindObjectOfType<KartSoundsScript>();
             cinemachineDynamicScript = FindObjectOfType<CinemachineDynamicScript>();
             kartEffects.StopSmoke();
-            rb = kartPhysics.rb;
         }
 
         private void Update()
@@ -103,6 +103,7 @@ namespace Kart
 
             if (kartStates.DriftBoostState == DriftBoostStates.NotDrifting)
             {
+                kartSoundsScript.StartDrift();
                 if (angle < 0)
                 {
                     SetKartTurnState(DriftTurnStates.DriftingLeft);
@@ -117,6 +118,7 @@ namespace Kart
 
         public void StopDrift()
         {
+            kartSoundsScript.EndDrift();
             if (kartStates.DriftBoostState == DriftBoostStates.RedDrift)
             {
                 _turboCoroutine = StartCoroutine(EnterTurbo());
@@ -157,6 +159,7 @@ namespace Kart
 
         private IEnumerator EnterTurbo()
         {
+            kartSoundsScript.BoostSound();
             if (boostCoroutine != null) StopCoroutine(boostCoroutine);
             boostCoroutine = StartCoroutine(kartPhysics.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));
             cinemachineDynamicScript.BoostCameraBehaviour();
@@ -175,20 +178,12 @@ namespace Kart
 
         private void SetKartBoostState(DriftBoostStates state, ColorId colorId)
         {
-            if (PhotonNetwork.connected)
-                photonView.RPC("RPCSetKartBoostState", PhotonTargets.AllBuffered, state, colorId);
-            else
-            {
-                RPCSetKartBoostState(state, colorId);
-            }
+            this.ExecuteRPC(PhotonTargets.All, "RPCSetKartBoostState", state, colorId);
         }
 
         private void SetKartTurnState(DriftTurnStates state)
         {
-            if (PhotonNetwork.connected)
-                photonView.RPC("RPCSetKartTurnState", PhotonTargets.AllBuffered, state);
-            else
-                kartStates.DriftTurnState = state;
+            this.ExecuteRPC(PhotonTargets.All, "RPCSetKartTurnState", state);
         }
 
         [PunRPC]

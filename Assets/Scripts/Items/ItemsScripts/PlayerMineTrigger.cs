@@ -10,7 +10,7 @@ namespace Items
         {
             if (other.gameObject.tag == Constants.KartRigidBodyTag && Activated)
             {
-                other.gameObject.GetComponentInParent<Kart.KartHealthSystem>().HealtLoss();
+                other.gameObject.GetComponentInParent<Kart.KartHealthSystem>().HealthLoss();
                 Destroy(transform.parent.gameObject); // Destroy the mine root item
             }
         }
