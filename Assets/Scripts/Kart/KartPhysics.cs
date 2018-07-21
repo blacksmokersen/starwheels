@@ -41,7 +41,6 @@ namespace Kart
         public float CapSpeedInTurn;
 
         private KartStates kartStates;
-        private KartEffects karteffects;
 
         public float PlayerVelocity;
         public Rigidbody rb;
@@ -54,7 +53,6 @@ namespace Kart
             controlMagnitude = MaxMagnitude;
             controlSpeed = Speed;
             kartStates = GetComponentInChildren<KartStates>();
-            karteffects = GetComponentInChildren<KartEffects>();
             rb = GetComponent<Rigidbody>();
             rb.centerOfMass = CenterOfMassOffset;
         }

@@ -32,7 +32,6 @@ namespace Kart
         private Coroutine boostCoroutine;
         // Drift Wydman
         public float OnDrift;
-        private Rigidbody rb;
 
         private Coroutine _turboCoroutine;
 
@@ -44,7 +43,6 @@ namespace Kart
             kartSoundsScript = FindObjectOfType<KartSoundsScript>();
             cinemachineDynamicScript = FindObjectOfType<CinemachineDynamicScript>();
             kartEffects.StopSmoke();
-            rb = kartPhysics.rb;
         }
 
         private void Update()

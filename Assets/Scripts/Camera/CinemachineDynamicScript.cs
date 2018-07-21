@@ -9,8 +9,6 @@ public class CinemachineDynamicScript : MonoBehaviour
     private Coroutine cameraBoostCoroutine;
     private CinemachineTransposer transposer;
 
-    private bool isrunning = false;
-
     private void Awake()
     {
         cinemachine = GetComponent<CinemachineVirtualCamera>();
@@ -19,7 +17,7 @@ public class CinemachineDynamicScript : MonoBehaviour
 
     public void BoostCameraBehaviour()
     {
-        if (isrunning == false)
+        if (cameraBoostCoroutine == null)
         {
             cameraBoostCoroutine = StartCoroutine(CameraBoostBehaviour(-7.5f, -8.5f, 1));
         }
@@ -27,7 +25,6 @@ public class CinemachineDynamicScript : MonoBehaviour
 
     IEnumerator CameraBoostBehaviour(float aValue, float bValue, float aTime)
     {
-        isrunning = true;
         for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / aTime)
         {
             float cameraZ = Mathf.Lerp(aValue, bValue, t);
@@ -40,6 +37,6 @@ public class CinemachineDynamicScript : MonoBehaviour
             transposer.m_FollowOffset.z = cameraZ;
             yield return null;
         }
-        isrunning = false;
+        cameraBoostCoroutine = null;
     }
 }
