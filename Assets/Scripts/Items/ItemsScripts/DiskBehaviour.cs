@@ -13,6 +13,7 @@ namespace Items
         [Header("Ground parameters")]
         public AirStates AirState = AirStates.InAir;
         public float DistanceForGrounded;
+        public float LocalGravity;
 
         private Rigidbody rb;
         public ParticleSystem collisionParticles;
@@ -21,7 +22,6 @@ namespace Items
         {
             rb = GetComponent<Rigidbody>();
         }
-
         
         public override void SetOwner(KartInventory kart)
         {
@@ -57,7 +57,13 @@ namespace Items
             else
             {
                 rb.useGravity = true;
+                ApplyLocalGravity();
             }
+        }
+
+        public void ApplyLocalGravity()
+        {
+            rb.AddForce(Vector3.down * LocalGravity);
         }
 
         private void OnTriggerEnter(Collider other)
