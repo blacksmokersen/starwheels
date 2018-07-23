@@ -13,8 +13,10 @@ namespace Items
         [Header("Ground parameters")]
         public AirStates AirState = AirStates.InAir;
         public float DistanceForGrounded;
+        public float LocalGravity;
 
         private Rigidbody rb;
+        public ParticleSystem collisionParticles;
 
         private void Awake()
         {
@@ -55,22 +57,43 @@ namespace Items
             else
             {
                 rb.useGravity = true;
+                ApplyLocalGravity();
             }
+        }
+
+        public void ApplyLocalGravity()
+        {
+            rb.AddForce(Vector3.down * LocalGravity);
         }
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.tag == Constants.KartRigidBodyTag)
             {
-                Destroy(gameObject);
-                other.gameObject.GetComponentInParent<Kart.KartHealthSystem>().HealtLoss();
+                other.gameObject.GetComponentInParent<Kart.KartHealthSystem>().HealthLoss();
+                DestroyObject();
             }
         }
 
         private void OnCollisionEnter(Collision collision)
         {
+            Vector3 contactPoint = collision.contacts[0].point;
+            collisionParticles.transform.position = contactPoint;
+            collisionParticles.Emit(600);
             ReboundsBeforeEnd--;
             if (ReboundsBeforeEnd <= 0)
+            {
+                DestroyObject();
+            }
+        }
+
+        private void DestroyObject()
+        {
+            if (PhotonNetwork.connected)
+            {
+                PhotonNetwork.Destroy(gameObject);
+            }
+            else
             {
                 Destroy(gameObject);
             }

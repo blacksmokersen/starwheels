@@ -18,6 +18,7 @@ namespace Kart
         public ParticleSystem LifeBurst3;
         [Space(10)]
         public ParticleSystem MainJump;
+        public ParticleSystem JumpReload;
         [Space(10)]
         public Animator animator;
 
@@ -39,23 +40,31 @@ namespace Kart
             if (health == 2)
             {
                 Life1.Stop(true);
-                LifeBurst1.Emit(200);
+               // LifeBurst1.Emit(200);
+                LifeBurst1.Play();
             }
             if (health == 1)
             {
                 Life2.Stop(true);
-                LifeBurst2.Emit(200);
+                //  LifeBurst2.Emit(200);
+                LifeBurst2.Play();
             }
             if (health == 0)
             {
                 Life3.Stop(true);
-                LifeBurst3.Emit(200);
+                //  LifeBurst3.Emit(200);
+                LifeBurst3.Play();
             }
         }
 
-        public void MainJumpParticles()
+        public void MainJumpParticles(int number)
         {
-            MainJump.Emit(300);
+            MainJump.Emit(number);
+        }
+
+        public void ReloadJump()
+        {
+            JumpReload.Emit(300);
         }
 
         public void LeftJumpAnimation()
