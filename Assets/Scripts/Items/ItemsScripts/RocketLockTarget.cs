@@ -30,7 +30,7 @@ namespace Items
                     closestDistance = distanceToKart;
                 }
             }
-            GetComponentInParent<RocketBehaviour>().Target = other.gameObject;
+            GetComponentInParent<RocketBehaviour>().Target = closestKart.gameObject;
         }
     }
 }
