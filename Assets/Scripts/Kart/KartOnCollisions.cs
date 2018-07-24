@@ -12,6 +12,7 @@ namespace Kart {
         {
             if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.GroundLayer))
             {
+                // Kart.SetState(Grounded)
                 FindObjectOfType<KartStates>().AirState = AirStates.Grounded;
             }
         }

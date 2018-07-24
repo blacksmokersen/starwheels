@@ -4,6 +4,8 @@ using System.Collections;
 using HUD;
 
 namespace Items {
+    public enum Directions { Forward, Backward  }
+
     public class KartInventory : MonoBehaviour
     {
         public ItemData StackedItem;
@@ -15,6 +17,7 @@ namespace Items {
         private float lotteryTimer = 0f;
         private bool lotteryStarted = false;
         private bool shortenLottery = false;
+
 
         private void Update()
         {
@@ -86,17 +89,16 @@ namespace Items {
         {
             if (InventoryItem != null || lotteryStarted) yield break;
             lotteryStarted = true;
-            var lottery = FindObjectOfType<ItemsLottery>();
             var lotteryIndex = 0;
+            InventoryItem = ItemsLottery.GetRandomItem();
             while(lotteryTimer < ItemsLottery.LOTTERY_DURATION)
             {
-                var items = ItemsLottery.Instance.Items;
+                var items = ItemsLottery.Items;
                 FindObjectOfType<HUDUpdater>().SetItem(StackedItem, items[(lotteryIndex++)%items.Length]);
                 lotteryTimer += Time.deltaTime;
                 yield return new WaitForSeconds(0.1f);
                 lotteryTimer+=0.1f;
             }
-            InventoryItem = lottery.GetRandomItem();
             UpdateHUD();
             lotteryTimer = 0f;
             lotteryStarted = false;

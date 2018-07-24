@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using HUD;
 
 
 namespace Kart
@@ -63,6 +64,9 @@ namespace Kart
         {
             Vector3 localVelocity = transform.InverseTransformDirection(rb.velocity);
             PlayerVelocity = localVelocity.z;
+        
+            if (KartEvents.OnAccelerate != null)
+                KartEvents.OnAccelerate(rb.velocity.magnitude);
 
             kartSounds.SetMotorPitch(0.5f + 1.0f * (localVelocity.magnitude/MaxMagnitude));
         }

@@ -9,6 +9,8 @@ public class CinemachineDynamicScript : MonoBehaviour
     private Coroutine cameraBoostCoroutine;
     private CinemachineTransposer transposer;
 
+    private float currentTimer;
+
     private void Awake()
     {
         cinemachine = GetComponent<CinemachineVirtualCamera>();
@@ -18,25 +20,31 @@ public class CinemachineDynamicScript : MonoBehaviour
     public void BoostCameraBehaviour()
     {
         if (cameraBoostCoroutine == null)
-        {
-            cameraBoostCoroutine = StartCoroutine(CameraBoostBehaviour(-7.5f, -8.5f, 1));
-        }
+            cameraBoostCoroutine = StartCoroutine(CameraBoostBehaviour(-8.5f, 1f));
+        currentTimer = 0f;
     }
 
-    IEnumerator CameraBoostBehaviour(float aValue, float bValue, float aTime)
+    IEnumerator CameraBoostBehaviour(float endValue, float boostDuration)
     {
-        for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / aTime)
+        float startValue = transposer.m_FollowOffset.z;
+        float effectDuration = boostDuration / 2f;
+
+        currentTimer = 0f;
+        while (currentTimer < effectDuration)
         {
-            float cameraZ = Mathf.Lerp(aValue, bValue, t);
-            transposer.m_FollowOffset.z = cameraZ;
+            transposer.m_FollowOffset.z = Mathf.Lerp(startValue, endValue, currentTimer / effectDuration);
+
+            currentTimer += Time.deltaTime;
             yield return null;
         }
-        for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / (aTime*2))
+
+        currentTimer = 0f;
+        while (currentTimer < effectDuration)
         {
-            float cameraZ = Mathf.Lerp(bValue, aValue, t);
-            transposer.m_FollowOffset.z = cameraZ;
+            transposer.m_FollowOffset.z = Mathf.Lerp(endValue, startValue, currentTimer / effectDuration);
+            
+            currentTimer += Time.deltaTime;
             yield return null;
         }
-        cameraBoostCoroutine = null;
     }
 }

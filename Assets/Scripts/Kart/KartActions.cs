@@ -20,11 +20,10 @@ namespace Kart
         private KartInventory kartInventory;
         private KartSoundsScript kartSoundsScript;
 
-
-        public bool hasJumped = false;
+        public bool HasDriftJump = false;
         public bool DoubleJumpEnabled = true;
-        private bool firstJump = false;
-        private bool cdDoubleJump = false;
+        private bool hasFirstJump = false;
+        private bool canDoubleJump = true;
 
         private float driftMinSpeedActivation = 10f;
 
@@ -51,16 +50,16 @@ namespace Kart
 
         public void Jump(float value, float turnAxis, float accelerateAxis, float upAndDownAxis)
         {
-            if (DoubleJumpEnabled && firstJump == true && kartStates.AirState == AirStates.InAir)
+            if (DoubleJumpEnabled && hasFirstJump == true && kartStates.AirState == AirStates.InAir)
             {
                 kartSoundsScript.PlaySecondJump();
                 kartEffects.MainJumpParticles(150);
                 DoubleJump(value, turnAxis, upAndDownAxis);
-                firstJump = false;
+                hasFirstJump = false;
             }
             else
             {
-                if (kartStates.AirState == AirStates.Grounded && !cdDoubleJump)
+                if (kartStates.AirState == AirStates.Grounded && canDoubleJump)
                 {
                     StartCoroutine(CdDoubleJump());
                     kartEffects.MainJumpParticles(300);
@@ -69,7 +68,7 @@ namespace Kart
                         kartSoundsScript.PlayFirstJump();
                         kartPhysics.Jump(value);
                         kartStates.AirState = AirStates.InAir;
-                        firstJump = true;
+                        hasFirstJump = true;
                     }
                     else
                     {
@@ -82,7 +81,7 @@ namespace Kart
 
         public void UseItem(float verticalValue)
         {
-            Directions direction = verticalValue >= 0 ? Directions.Foward : Directions.Backward;
+            Directions direction = verticalValue >= 0 ? Directions.Forward : Directions.Backward;
             kartInventory.ItemAction(direction);
         }
 
@@ -97,18 +96,18 @@ namespace Kart
 
         public void InitializeDrift(float angle)
         {
-            if (kartStates.AirState == AirStates.Grounded && kartPhysics.PlayerVelocity >= driftMinSpeedActivation)
+            if (kartStates.IsGrounded() && kartPhysics.PlayerVelocity >= driftMinSpeedActivation)
             {
-              //  kartSoundsScript.PlayDriftStart();
-                if (!hasJumped)
+                //kartSoundsScript.PlayDriftStart();
+                if (!HasDriftJump)
                 {
                     kartPhysics.Jump(0.3f);
-                    hasJumped = true;
+                    HasDriftJump = true;
                 }
                 if (angle != 0)
                 {
                     kartDriftSystem.InitializeDrift(angle);
-                    hasJumped = false;
+                    HasDriftJump = false;
                 }
             }
         }
@@ -117,13 +116,13 @@ namespace Kart
         {
           //  kartSoundsScript.PlayDriftEnd();
             kartDriftSystem.StopDrift();
-            hasJumped = false;
+            HasDriftJump = false;
         }
 
         public void DriftTurns(float turnValue)
         {
            // kartSoundsScript.PlayDrift();
-            if (kartStates.AirState == AirStates.InAir) return;
+            if (!kartStates.IsGrounded()) return;
 
             if (kartStates.DriftTurnState != DriftTurnStates.NotDrifting && kartPhysics.PlayerVelocity >= driftMinSpeedActivation)
             {
@@ -134,13 +133,11 @@ namespace Kart
             else if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
             {
                 if (kartStates.TurningState == TurningStates.Left)
-                {
                     kartStates.DriftTurnState = DriftTurnStates.DriftingLeft;
-                }
+
                 if (kartStates.TurningState == TurningStates.Right)
-                {
                     kartStates.DriftTurnState = DriftTurnStates.DriftingRight;
-                }
+
                 InitializeDrift(turnValue);
             }
         }
@@ -150,16 +147,6 @@ namespace Kart
             if (kartStates.AirState != AirStates.InAir && !kartOrientation.Crash)
             {
                 kartPhysics.Accelerate(value);
-                /*
-                if (value > 0.1f && value < 0.5f)
-                {
-                    kartSoundsScript.PlayMotorAccel();
-                }
-                else if( value > 0.5f)
-                {
-                    kartSoundsScript.PlayMotor();
-                }
-                */
             }
         }
 
@@ -168,7 +155,6 @@ namespace Kart
             if (kartStates.AirState != AirStates.InAir && !kartOrientation.Crash)
             {
                 kartPhysics.Decelerate(value);
-              //  kartSoundsScript.PlayMotorDecel();
             }
         }
 
@@ -196,6 +182,7 @@ namespace Kart
             {
                 kartStates.TurningState = TurningStates.NotTurning;
             }
+            
             if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
             {
                 if (kartStates.AccelerationState == AccelerationStates.Forward)
@@ -250,12 +237,13 @@ namespace Kart
                 kartPhysics.StraightJump(value);
             }
         }
+        
         IEnumerator CdDoubleJump()
         {
-            cdDoubleJump = true;
+            canDoubleJump = false;
             yield return new WaitForSeconds(8);
             kartEffects.ReloadJump();
-            cdDoubleJump = false;
+            canDoubleJump = true;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Kart {
     /*
@@ -12,7 +13,7 @@ namespace Kart {
     public enum TurningStates { NotTurning, Left, Right }
     public enum DriftTurnStates { NotDrifting, DriftingLeft, DriftingRight }
     public enum DriftBoostStates { NotDrifting, SimpleDrift, OrangeDrift, RedDrift, Turbo }
-    public enum AirStates { Grounded, Jumping, InAir, DoubleJump }
+    public enum AirStates { Grounded, InAir }
 
     public class KartStates : MonoBehaviour{
 
@@ -65,6 +66,11 @@ namespace Kart {
             {
                 AccelerationState = AccelerationStates.None;
             }
+        }
+
+        public bool IsGrounded()
+        {
+            return AirState == AirStates.Grounded;
         }
     }
 }

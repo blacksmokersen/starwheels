@@ -10,12 +10,11 @@ namespace Kart
         public ParticleSystem smokeLeftWheel;
         public ParticleSystem smokeRightWheel;
         [Space(10)]
-        public ParticleSystem Life1;
-        public ParticleSystem LifeBurst1;
-        public ParticleSystem Life2;
-        public ParticleSystem LifeBurst2;
-        public ParticleSystem Life3;
-        public ParticleSystem LifeBurst3;
+        // TODO: 
+        // public LifeCapsule[] capsules;
+        // public void SetLife(int value) { value * capules; }
+        public ParticleSystem[] Lifes;
+        public ParticleSystem[] LifeBursts;
         [Space(10)]
         public ParticleSystem MainJump;
         public ParticleSystem JumpReload;
@@ -37,23 +36,15 @@ namespace Kart
 
         public void HealthParticlesManagement(int health)
         {
-            if (health == 2)
+            Lifes[health].Stop(true);
+            LifeBursts[health].Play();
+        }
+
+        public void ResetLife()
+        {
+            foreach (ParticleSystem ps in Lifes)
             {
-                Life1.Stop(true);
-               // LifeBurst1.Emit(200);
-                LifeBurst1.Play();
-            }
-            if (health == 1)
-            {
-                Life2.Stop(true);
-                //  LifeBurst2.Emit(200);
-                LifeBurst2.Play();
-            }
-            if (health == 0)
-            {
-                Life3.Stop(true);
-                //  LifeBurst3.Emit(200);
-                LifeBurst3.Play();
+                ps.Play();
             }
         }
 
@@ -67,6 +58,7 @@ namespace Kart
             JumpReload.Emit(300);
         }
 
+        // TODO: Move to KartAnimations.cs
         public void LeftJumpAnimation()
         {
             animator.SetTrigger("LeftJump");
