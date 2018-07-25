@@ -21,6 +21,8 @@ namespace Kart
 
         [Header("Gravity")]
         public float JumpForce;
+        public float DoubleJumpUpForce;
+        public float DoubleJumpDirectionalForce;
         public float DriftJumpForce;
         public float GravityForce;
         [HideInInspector] public Vector3 CenterOfMassOffset;
@@ -49,6 +51,7 @@ namespace Kart
 
         private float controlMagnitude;
         private float controlSpeed;
+        private float currentTimer;
 
         private void Awake()
         {
@@ -64,11 +67,11 @@ namespace Kart
         {
             Vector3 localVelocity = transform.InverseTransformDirection(rb.velocity);
             PlayerVelocity = localVelocity.z;
-        
+
             if (KartEvents.OnAccelerate != null)
                 KartEvents.OnAccelerate(rb.velocity.magnitude);
 
-            kartSounds.SetMotorPitch(0.5f + 1.0f * (localVelocity.magnitude/MaxMagnitude));
+            kartSounds.SetMotorPitch(0.5f + 1.0f * (localVelocity.magnitude / MaxMagnitude));
         }
 
         private void FixedUpdate()
@@ -114,7 +117,7 @@ namespace Kart
             }
         }
 
-        public void TurnUsingTorque(Vector3 direction,float turnAxis)
+        public void TurnUsingTorque(Vector3 direction, float turnAxis)
         {
             TurnSlowDown(turnAxis);
             if (kartStates.AirState != AirStates.InAir)
@@ -138,33 +141,11 @@ namespace Kart
             rb.AddRelativeForce(Vector3.up * JumpForce * percentage, ForceMode.Impulse);
         }
 
-        public void LeftJump(float value)
+        public void DoubleJump(Vector3 doubleJumpDirectionVector, float directionalForceMultiplier)
         {
-            rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
-            rb.AddRelativeForce(Vector3.left * JumpForce * value * 2, ForceMode.Impulse);
-        }
-
-        public void RightJump(float value)
-        {
-            rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
-            rb.AddRelativeForce(Vector3.left * -JumpForce * value * 2, ForceMode.Impulse);
-        }
-
-        public void FrontJump(float value)
-        {
-            rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
-            rb.AddRelativeForce(Vector3.forward * JumpForce / 2 * value * 2, ForceMode.Impulse);
-        }
-
-        public void BackJump(float value)
-        {
-            rb.AddRelativeForce(Vector3.up * JumpForce / 5 * value, ForceMode.Impulse);
-            rb.AddRelativeForce(Vector3.forward * -JumpForce / 2 * value * 2, ForceMode.Impulse);
-        }
-
-        public void StraightJump(float value)
-        {
-            rb.AddRelativeForce(Vector3.up * JumpForce / 4 * value, ForceMode.Impulse);
+            var forceUp = Vector3.up * DoubleJumpUpForce;
+            var forceDirectional = doubleJumpDirectionVector * DoubleJumpDirectionalForce * directionalForceMultiplier;
+            rb.AddRelativeForce(forceUp + forceDirectional, ForceMode.Impulse);
         }
 
         public void DriftJump(float value)
@@ -179,7 +160,7 @@ namespace Kart
 
         public void Decelerate(float value)
         {
-            rb.AddRelativeForce(Vector3.back * value * Speed/2, ForceMode.Force);
+            rb.AddRelativeForce(Vector3.back * value * Speed / 2, ForceMode.Force);
         }
 
         public float SpeedCheck(float ComparValue)
@@ -196,22 +177,26 @@ namespace Kart
             MaxMagnitude += magnitudeBoost;
             Speed += speedBoost;
             // Boost Launch
-            for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / 0.5f)
+            float effectDuration = boostDuration;
+
+            currentTimer = 0f;
+            while (currentTimer < effectDuration)
             {
-                float boost = Mathf.Lerp(1, 0, t);
+                float boost = Mathf.Lerp(3000, 0, currentTimer / effectDuration);
                 rb.AddRelativeForce(Vector3.forward * boost);
+                currentTimer += Time.deltaTime;
                 yield return null;
             }
-            yield return new WaitForSeconds(boostDuration);
-            //SpeedCap Decrease
-            //    MaxMagnitude -= magnitudeBoost;
-            //    Speed -= speedBoost;
-            for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / 1f)
+
+            currentTimer = 0f;
+            while (currentTimer < effectDuration)
             {
-                Speed = Mathf.Lerp(controlSpeed + speedBoost, controlSpeed, t);
-                MaxMagnitude = Mathf.Lerp(controlMagnitude + magnitudeBoost, controlMagnitude, t);
+                Speed = Mathf.Lerp(controlSpeed + speedBoost, controlSpeed, currentTimer / effectDuration);
+                MaxMagnitude = Mathf.Lerp(controlMagnitude + magnitudeBoost, controlMagnitude, currentTimer / effectDuration);
+                currentTimer += Time.deltaTime;
                 yield return null;
             }
         }
+
     }
 }

@@ -114,14 +114,14 @@ namespace Kart
 
         public void StopDrift()
         {
-          //  kartSoundsScript.PlayDriftEnd();
+            //  kartSoundsScript.PlayDriftEnd();
             kartDriftSystem.StopDrift();
             HasDriftJump = false;
         }
 
         public void DriftTurns(float turnValue)
         {
-           // kartSoundsScript.PlayDrift();
+            // kartSoundsScript.PlayDrift();
             if (!kartStates.IsGrounded()) return;
 
             if (kartStates.DriftTurnState != DriftTurnStates.NotDrifting && kartPhysics.PlayerVelocity >= driftMinSpeedActivation)
@@ -182,7 +182,7 @@ namespace Kart
             {
                 kartStates.TurningState = TurningStates.NotTurning;
             }
-            
+
             if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
             {
                 if (kartStates.AccelerationState == AccelerationStates.Forward)
@@ -204,44 +204,43 @@ namespace Kart
 
         public void DoubleJump(float value, float turnAxis, float upAndDownAxis)
         {
-            // optimiser les methodes sur  karphysics avec un argument Vector3
             if (Mathf.Abs(turnAxis) < 0.3f)
             {
                 if (upAndDownAxis >= 0.2f)
                 {
                     kartEffects.BackJumpAnimation();
-                    kartPhysics.BackJump(value);
+                    kartPhysics.DoubleJump(Vector3.back, 0.5f);
                 }
                 else if (upAndDownAxis <= -0.2f)
                 {
                     kartEffects.FrontJumpAnimation();
-                    kartPhysics.FrontJump(value);
+                    kartPhysics.DoubleJump(Vector3.forward, 0.5f);
                 }
                 else
                 {
-                    kartPhysics.StraightJump(value);
+                    kartPhysics.DoubleJump(Vector3.forward, 0f);
                 }
             }
             else if (turnAxis <= -0.5f)
             {
                 kartEffects.LeftJumpAnimation();
-                kartPhysics.LeftJump(value);
+                kartPhysics.DoubleJump(Vector3.left, 1f);
             }
             else if (turnAxis >= 0.5f)
             {
                 kartEffects.RightJumpAnimation();
-                kartPhysics.RightJump(value);
+                kartPhysics.DoubleJump(Vector3.right, 1f);
             }
             else
             {
-                kartPhysics.StraightJump(value);
+                kartPhysics.DoubleJump(Vector3.forward, 0f);
             }
         }
-        
+
         IEnumerator CdDoubleJump()
         {
             canDoubleJump = false;
-            yield return new WaitForSeconds(8);
+            yield return new WaitForSeconds(1);
             kartEffects.ReloadJump();
             canDoubleJump = true;
         }

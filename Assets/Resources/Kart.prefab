@@ -1908,6 +1908,8 @@ MonoBehaviour:
   Speed: 3000
   MaxMagnitude: 40
   JumpForce: 400
+  DoubleJumpUpForce: 240
+  DoubleJumpDirectionalForce: 2400
   DriftJumpForce: 0
   GravityForce: 20
   CenterOfMassOffset: {x: 0, y: 0, z: 0}
@@ -1920,7 +1922,7 @@ MonoBehaviour:
   DriftBoostImpulse: 0.5
   TurnTorqueSpeed: 1000
   CompensationForce: 100
-  TurnSlowValue: 3000
+  TurnSlowValue: 1000
   CapSpeedInTurn: 35
   PlayerVelocity: 0
   rb: {fileID: 54115033852382540}
@@ -2141,7 +2143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9d5705602b23e644a3b40af7344fbd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasJumped: 0
+  HasDriftJump: 0
   DoubleJumpEnabled: 1
 --- !u!114 &114707467249074162
 MonoBehaviour:
