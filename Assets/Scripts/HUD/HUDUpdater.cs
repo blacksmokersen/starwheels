@@ -14,14 +14,14 @@ namespace HUD
         private Rigidbody kartRigidBody;
         
         public RawImage InventoryItemTexture;
-        public RawImage StackedItemTexture;
+        public RawImage ItemTexture;
 
         public void SetKart(Rigidbody body)
         {
             kartRigidBody = body;
             StartCoroutine(UpdateRoutine());
 
-            SetItem(null, null);
+            SetItem(null);
             
             KartEvents.OnAccelerate += (vel) => SpeedText.text = "Speed : " + vel;
         }
@@ -36,10 +36,10 @@ namespace HUD
             }
         }
 
-        public void SetItem(ItemData stacked, ItemData item)
+        public void SetItem(ItemData item)
         {
-            InventoryItemTexture.texture = item != null ? item.InventoryTexture : null;
-            StackedItemTexture.texture = stacked != null ? stacked.InventoryTexture : null;
+            ItemTexture.texture 
+                = item != null ? item.InventoryTexture : null;
         }
     }
 }

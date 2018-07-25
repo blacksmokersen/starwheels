@@ -81,7 +81,8 @@ namespace Kart
 
         public void UseItem(float verticalValue)
         {
-            Directions direction = verticalValue >= 0 ? Directions.Forward : Directions.Backward;
+            Directions direction = verticalValue >= -0.3f ? Directions.Forward : Directions.Backward;
+            Debug.Log("Direction : " + verticalValue);
             kartInventory.ItemAction(direction);
         }
 
@@ -206,12 +207,12 @@ namespace Kart
         {
             if (Mathf.Abs(turnAxis) < 0.3f)
             {
-                if (upAndDownAxis >= 0.2f)
+                if (upAndDownAxis <= -0.2f)
                 {
                     kartEffects.BackJumpAnimation();
                     kartPhysics.DoubleJump(Vector3.back, 0.5f);
                 }
-                else if (upAndDownAxis <= -0.2f)
+                else if (upAndDownAxis >= 0.2f)
                 {
                     kartEffects.FrontJumpAnimation();
                     kartPhysics.DoubleJump(Vector3.forward, 0.5f);

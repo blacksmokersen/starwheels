@@ -8,8 +8,7 @@ namespace Items {
 
     public class KartInventory : MonoBehaviour
     {
-        public ItemData StackedItem;
-        public ItemData InventoryItem;
+        public ItemData Item;
 
         public int Count;
         public ItemPositions ItemPositions;
@@ -18,27 +17,12 @@ namespace Items {
         private bool lotteryStarted = false;
         private bool shortenLottery = false;
 
-
-        private void Update()
-        {
-          //  Debug.Log("Timer : " + lotteryTimer);
-        }
-
         public void ItemAction(Directions direction)
         {
             if(lotteryStarted && !shortenLottery && lotteryTimer > 1f)
             {
                 lotteryTimer += 0.5f;
                 shortenLottery = true;
-            }
-            else if (StackedItem == null)
-            {
-                if (InventoryItem != null)
-                {
-                    StackedItem = InventoryItem;
-                    Count = InventoryItem.Count;
-                    InventoryItem = null;
-                }
             }
             else
             {
@@ -49,15 +33,15 @@ namespace Items {
 
         public void UseStack(Directions direction)
         {
-            if (StackedItem != null)
+            if (Item != null)
             {
                 if (Count > 0)
                 {
-                    UseItem(StackedItem, direction);
+                    UseItem(Item, direction);
                     Count--;
                     if (Count == 0)
                     {
-                        StackedItem = null;
+                        Item = null;
                     }
                 }
             }
@@ -77,28 +61,30 @@ namespace Items {
                 itemObj = Instantiate(item.ItemPrefab);
             }
             
-            itemObj.SetOwner(this);
+            itemObj.Spawn(this,direction);
         }
 
         public void UpdateHUD()
         {
-            FindObjectOfType<HUDUpdater>().SetItem(StackedItem, InventoryItem);
+            FindObjectOfType<HUDUpdater>().SetItem(Item);
         }
 
         public IEnumerator GetLotteryItem()
         {
-            if (InventoryItem != null || lotteryStarted) yield break;
+            if (Item != null || lotteryStarted) yield break;
             lotteryStarted = true;
             var lotteryIndex = 0;
-            InventoryItem = ItemsLottery.GetRandomItem();
-            while(lotteryTimer < ItemsLottery.LOTTERY_DURATION)
+            var items = ItemsLottery.Items;
+            Debug.Log(items);
+            while (lotteryTimer < ItemsLottery.LOTTERY_DURATION)
             {
-                var items = ItemsLottery.Items;
-                FindObjectOfType<HUDUpdater>().SetItem(StackedItem, items[(lotteryIndex++)%items.Length]);
+                FindObjectOfType<HUDUpdater>().SetItem(items[(lotteryIndex++)%items.Length]);
                 lotteryTimer += Time.deltaTime;
                 yield return new WaitForSeconds(0.1f);
                 lotteryTimer+=0.1f;
             }
+            Item = ItemsLottery.GetRandomItem();
+            Count = Item.Count;
             UpdateHUD();
             lotteryTimer = 0f;
             lotteryStarted = false;

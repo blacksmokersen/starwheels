@@ -5,5 +5,5 @@ using Items;
 
 public class ItemBehaviour : MonoBehaviour
 {
-    public virtual void SetOwner(KartInventory kart){}
+    public virtual void Spawn(KartInventory kart, Directions direction){}
 }

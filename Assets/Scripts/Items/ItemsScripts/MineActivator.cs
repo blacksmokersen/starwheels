@@ -2,18 +2,30 @@
 using UnityEngine;
 
 namespace Items{
+    [RequireComponent(typeof(Rigidbody))]
     public class MineActivator : ItemBehaviour
     {
+        [Header("Mine parameters")]
         public float ActivationTime;
+        public float ForwardThrowingForce;
+        public float TimesLongerThanHighThrow;
 
         private void Start()
         {
             StartCoroutine(MineActivationDelay());
         }
 
-        public override void SetOwner(KartInventory kart)
+        public override void Spawn(KartInventory kart, Directions direction)
         {
-            transform.position = kart.ItemPositions.BackPosition.position;
+            if (direction == Directions.Forward)
+            {
+                transform.position = kart.ItemPositions.FrontPosition.position;
+                GetComponent<Rigidbody>().AddForce((kart.transform.forward + kart.transform.up/TimesLongerThanHighThrow) * ForwardThrowingForce, ForceMode.Impulse);
+            }
+            else if (direction == Directions.Backward)
+            {
+                transform.position = kart.ItemPositions.BackPosition.position;
+            }
         }
 
         IEnumerator MineActivationDelay()
@@ -21,6 +33,14 @@ namespace Items{
             yield return new WaitForSeconds(ActivationTime);
             GetComponentInChildren<PlayerMineTrigger>().Activated = true;
             GetComponentInChildren<ItemMineTrigger>().Activated = true;
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.GroundLayer))
+            {
+                GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+            }
         }
     }
 }

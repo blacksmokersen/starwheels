@@ -8,17 +8,5 @@ namespace Items
         public float MaxAngle;
         public GameObject Target;
 
-        private void LateUpdate()
-        {
-            if(Target != null)
-            {
-
-            }
-        }
-
-        public override void SetOwner(KartInventory kart)
-        {
-            transform.position = kart.ItemPositions.FrontPosition.position;
-        }
     }
 }

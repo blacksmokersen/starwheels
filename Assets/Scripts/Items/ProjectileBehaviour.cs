@@ -30,10 +30,18 @@ namespace Items
             rb = GetComponent<Rigidbody>();
         }
 
-        public override void SetOwner(KartInventory kart)
+        public override void Spawn(KartInventory kart, Directions direction)
         {
-            rb.velocity = kart.transform.forward * Speed;
-            transform.position = kart.ItemPositions.FrontPosition.position;
+            if(direction == Directions.Forward)
+            {
+                rb.velocity = kart.transform.forward * Speed;
+                transform.position = kart.ItemPositions.FrontPosition.position;
+            }
+            else if(direction == Directions.Backward)
+            {
+                rb.velocity = -kart.transform.forward * Speed;
+                transform.position = kart.ItemPositions.BackPosition.position;
+            }
         }
 
         private void CheckGrounded()
