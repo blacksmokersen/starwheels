@@ -21,13 +21,16 @@ namespace Items
 
         private void OnCollisionEnter(Collision collision)
         {
-            Vector3 contactPoint = collision.contacts[0].point;
-            collisionParticles.transform.position = contactPoint;
-            collisionParticles.Emit(600);
-            ReboundsBeforeEnd--;
-            if (ReboundsBeforeEnd <= 0)
+            if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.GroundLayer))
             {
-                DestroyObject();
+                Vector3 contactPoint = collision.contacts[0].point;
+                collisionParticles.transform.position = contactPoint;
+                collisionParticles.Emit(600);
+                ReboundsBeforeEnd--;
+                if (ReboundsBeforeEnd <= 0)
+                {
+                    DestroyObject();
+                }
             }
         }
     }

@@ -6,31 +6,44 @@ namespace Items
     [RequireComponent(typeof(Collider))]
     public class RocketLockTarget : MonoBehaviour
     {
-        private void OnTriggerEnter(Collider other)
+        private GameObject ActualTarget;
+        private float ActualTargetDistance;
+
+        private void Start()
+        {
+            StartCoroutine(LookForTarget());
+        }
+
+        private void OnTriggerStay(Collider other)
         {
             if (other.gameObject.tag == Constants.KartTag)
             {
-                GetComponentInParent<RocketBehaviour>().Target = other.gameObject;
+                if (IsKartIsCloserThanActualTarget(other.gameObject))
+                {
+                    ActualTarget = other.gameObject;
+                    ActualTargetDistance = Vector3.Distance(transform.position, ActualTarget.transform.position);
+                }
             }
         }
 
         IEnumerator LookForTarget()
         {
-            yield return new WaitForSeconds(1f);
-            var karts = GameObject.FindGameObjectsWithTag(Constants.KartTag);
-            GameObject closestKart = karts[0];
-            float closestDistance = Vector3.Distance(transform.position, karts[0].transform.position);
-            foreach (var kart in karts)
+            yield return new WaitForSeconds(1f); // For 1s the rocket goes straight forward
+            while (ActualTarget != null)
             {
-                var distanceToKart = Vector3.Distance(transform.position, kart.transform.position);
-
-                if (distanceToKart < closestDistance)
-                {
-                    closestKart = kart;
-                    closestDistance = distanceToKart;
-                }
+                yield return new WaitForSeconds(0.5f);
             }
-            GetComponentInParent<RocketBehaviour>().Target = closestKart.gameObject;
+            SetRocketTarget(ActualTarget);
+        }
+
+        public bool IsKartIsCloserThanActualTarget(GameObject kart)
+        {
+            return Vector3.Distance(transform.position, kart.transform.position) < ActualTargetDistance;
+        }
+
+        private void SetRocketTarget(GameObject target)
+        {
+            GetComponentInParent<RocketBehaviour>().Target = target;
         }
     }
 }

@@ -13,14 +13,14 @@ namespace Items
         public float DistanceForGrounded;
         public float LocalGravity;
 
-        private Rigidbody rb;
+        protected Rigidbody rb;
 
-        private void Update()
+        protected void Update()
         {
             CheckGrounded();
         }
 
-        private void FixedUpdate()
+        protected void FixedUpdate()
         {
             rb.velocity = rb.velocity.normalized * Speed;
         }
@@ -69,18 +69,6 @@ namespace Items
         public void ApplyLocalGravity()
         {
             rb.AddForce(Vector3.down * LocalGravity);
-        }
-
-        protected void DestroyObject()
-        {
-            if (PhotonNetwork.connected)
-            {
-                PhotonNetwork.Destroy(gameObject);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
         }
     }
 }

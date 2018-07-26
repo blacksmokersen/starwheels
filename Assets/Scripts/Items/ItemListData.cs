@@ -1,9 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu]
-public class ItemListData : ScriptableObject
+namespace Items
 {
-    public ItemData[] Items;
+    [CreateAssetMenu]
+    public class ItemListData : ScriptableObject
+    {
+        public ItemData[] Items;
+    }
 }

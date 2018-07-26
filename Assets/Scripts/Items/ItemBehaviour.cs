@@ -1,9 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Items;
+﻿using UnityEngine;
 
-public class ItemBehaviour : MonoBehaviour
+namespace Items
 {
-    public virtual void Spawn(KartInventory kart, Directions direction){}
+    public class ItemBehaviour : MonoBehaviour
+    {
+        public virtual void Spawn(KartInventory kart, Directions direction) { }
+
+        protected void DestroyObject()
+        {
+            if (PhotonNetwork.connected)
+            {
+                PhotonNetwork.Destroy(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
 }

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using Kart;
-using Items;
 
 namespace Controls
 {
@@ -38,7 +37,6 @@ namespace Controls
             kartAction.Decelerate(Input.GetAxis(Constants.DecelerateButton));
             kartAction.Turn(Input.GetAxis(Constants.TurnAxis));
             kartAction.KartMeshMovement(Input.GetAxis(Constants.TurnAxis));
-            //Constants.UpAndDownAxis = (Input.GetAxis(Constants.AccelerateButton));
         }
 
         void ButtonsDown()

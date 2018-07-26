@@ -38,8 +38,7 @@ namespace HUD
 
         public void SetItem(ItemData item)
         {
-            ItemTexture.texture 
-                = item != null ? item.InventoryTexture : null;
+            ItemTexture.texture = item != null ? item.InventoryTexture : null;
         }
     }
 }
