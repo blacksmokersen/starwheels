@@ -15,7 +15,7 @@ namespace Items
             TurnTowardTarget();
         }
 
-        void TurnTowardTarget()
+        public void TurnTowardTarget()
         {
             if(Target != null)
             {
