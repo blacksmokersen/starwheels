@@ -5,6 +5,8 @@ using Cinemachine;
 
 public class CinemachineDynamicScript : MonoBehaviour
 {
+    [Range(7.5f, 15)] public float MaxDistanceCamInBoost;
+
     private CinemachineVirtualCamera cinemachine;
     private Coroutine cameraBoostCoroutine;
     private CinemachineTransposer transposer;
@@ -19,31 +21,30 @@ public class CinemachineDynamicScript : MonoBehaviour
 
     public void BoostCameraBehaviour()
     {
-        if (cameraBoostCoroutine == null)
-            cameraBoostCoroutine = StartCoroutine(CameraBoostBehaviour(-8.5f, 1f));
+        if(cameraBoostCoroutine !=null)
+        StopCoroutine(cameraBoostCoroutine);
+        cameraBoostCoroutine = StartCoroutine(CameraBoostBehaviour(-7.5f, -MaxDistanceCamInBoost, 1f));
         currentTimer = 0f;
     }
 
-    IEnumerator CameraBoostBehaviour(float endValue, float boostDuration)
+    IEnumerator CameraBoostBehaviour(float startValue, float endValue, float boostDuration)
     {
-        float startValue = transposer.m_FollowOffset.z;
+        float startDynamicCamValue = transposer.m_FollowOffset.z;
         float effectDuration = boostDuration / 2f;
 
         currentTimer = 0f;
         while (currentTimer < effectDuration)
         {
-            transposer.m_FollowOffset.z = Mathf.Lerp(startValue, endValue, currentTimer / effectDuration);
-
-            currentTimer += Time.deltaTime;
+            transposer.m_FollowOffset.z = Mathf.Lerp(startDynamicCamValue, endValue, currentTimer / effectDuration);
+            currentTimer += 0.02f;
             yield return null;
         }
-
+        yield return new WaitForSeconds(1);
         currentTimer = 0f;
         while (currentTimer < effectDuration)
         {
             transposer.m_FollowOffset.z = Mathf.Lerp(endValue, startValue, currentTimer / effectDuration);
-            
-            currentTimer += Time.deltaTime;
+            currentTimer += 0.005f;
             yield return null;
         }
     }
