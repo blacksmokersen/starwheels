@@ -82,7 +82,7 @@ namespace Kart
         public void UseItem(float verticalValue)
         {
             Directions direction = verticalValue >= -0.3f ? Directions.Forward : Directions.Backward;
-            Debug.Log("Direction : " + verticalValue);
+            //Debug.Log("Direction : " + verticalValue);
             kartInventory.ItemAction(direction);
         }
 

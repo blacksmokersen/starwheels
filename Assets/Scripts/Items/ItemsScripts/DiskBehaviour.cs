@@ -15,11 +15,11 @@ namespace Items
             if (other.gameObject.tag == Constants.KartRigidBodyTag)
             {
                 other.gameObject.GetComponentInParent<Kart.KartHealthSystem>().HealthLoss();
-                collisionParticles.Emit(600);
+                collisionParticles.Emit(2000);
                 DestroyObject();
             }
         }
-
+        
         private void OnCollisionEnter(Collision collision)
         {
             if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.GroundLayer))
