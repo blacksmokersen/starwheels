@@ -7,7 +7,7 @@ namespace Items
     {
         [Header("Disk parameters")]
         public int ReboundsBeforeEnd;
-               
+        
         public ParticleSystem collisionParticles;
 
         private void OnTriggerEnter(Collider other)
@@ -15,6 +15,7 @@ namespace Items
             if (other.gameObject.tag == Constants.KartRigidBodyTag)
             {
                 other.gameObject.GetComponentInParent<Kart.KartHealthSystem>().HealthLoss();
+                collisionParticles.Emit(600);
                 DestroyObject();
             }
         }

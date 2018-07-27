@@ -71,7 +71,7 @@ namespace Kart
             if (KartEvents.OnAccelerate != null)
                 KartEvents.OnAccelerate(rb.velocity.magnitude);
 
-            kartSounds.SetMotorPitch(0.5f + 1.0f * (localVelocity.magnitude / MaxMagnitude));
+            kartSounds.SetMotorPitch(0.5f + 0.5f * (localVelocity.magnitude / MaxMagnitude));
         }
 
         private void FixedUpdate()
@@ -182,9 +182,10 @@ namespace Kart
             currentTimer = 0f;
             while (currentTimer < effectDuration)
             {
-                float boost = Mathf.Lerp(3000, 0, currentTimer / effectDuration);
-                rb.AddRelativeForce(Vector3.forward * boost);
-                currentTimer += Time.deltaTime;
+                float boost = Mathf.Lerp(5, 0, currentTimer / effectDuration);
+                rb.AddRelativeForce(Vector3.forward * boost, ForceMode.VelocityChange);
+                yield return new WaitForSeconds(0.1f);
+                currentTimer += 0.1f;
                 yield return null;
             }
 
@@ -193,7 +194,9 @@ namespace Kart
             {
                 Speed = Mathf.Lerp(controlSpeed + speedBoost, controlSpeed, currentTimer / effectDuration);
                 MaxMagnitude = Mathf.Lerp(controlMagnitude + magnitudeBoost, controlMagnitude, currentTimer / effectDuration);
-                currentTimer += Time.deltaTime;
+                yield return new WaitForSeconds(0.1f);
+                currentTimer += 0.1f;
+             //   currentTimer += Time.fixedDeltaTime;
                 yield return null;
             }
         }
