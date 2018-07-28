@@ -6,29 +6,50 @@ namespace Items
     {
         [Header("Rocket parameters")]
         public float MaxAngle;
-        public GameObject Target;
-        public float TurningTorque;
+        public float TurnSpeed;
+
+        private RocketLockTarget rocketLock;
+
+        private new void Awake()
+        {
+            base.Awake();
+            rocketLock = GetComponentInChildren<RocketLockTarget>();
+        }
+
+        private void Start()
+        {
+            rocketLock.Owner = owner;
+        }
 
         private new void FixedUpdate()
         {
+            SetVelocityForward();
             base.FixedUpdate();
             TurnTowardTarget();
         }
 
-        public void TurnTowardTarget()
+        private void SetVelocityForward()
         {
-            if(Target != null)
+            rb.velocity = transform.forward;
+        }
+
+        private void TurnTowardTarget()
+        {
+            if(rocketLock.ActualTarget != null)
             {
-                if (Target.transform.position.x < 0) // If the target is on the left we turn to the left
+                if(transform.InverseTransformPoint(rocketLock.ActualTarget.transform.position).x < 0) // If the target is on the left we turn to the left
                 {
-                    rb.AddRelativeTorque(Vector3.up * TurningTorque);
+                    transform.Rotate(Vector3.down * TurnSpeed * Time.deltaTime);
                 }
                 else // If the target is on the right we turn to the right
                 {
-                    rb.AddRelativeTorque(Vector3.down * TurningTorque);
+                    transform.Rotate(Vector3.up * TurnSpeed * Time.deltaTime);
                 }
             }
         }
+
+        // We override it beacause we don't need the default behaviour of the trigger
+        private new void OnTriggerEnter(Collider other) { }
 
         private void OnCollisionEnter(Collision collision)
         {
@@ -37,6 +58,5 @@ namespace Items
                 DestroyObject();
             }
         }
-
     }
 }

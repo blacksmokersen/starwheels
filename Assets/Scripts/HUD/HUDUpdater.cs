@@ -10,15 +10,12 @@ namespace HUD
         public Text SpeedText;
         public Text TimeText;
         public Text FPSText;
-
-        private Rigidbody kartRigidBody;
+        public Text ItemCountText;
         
-        public RawImage InventoryItemTexture;
         public RawImage ItemTexture;
 
         public void SetKart(Rigidbody body)
         {
-            kartRigidBody = body;
             StartCoroutine(UpdateRoutine());
 
             SetItem(null);
@@ -38,7 +35,12 @@ namespace HUD
 
         public void SetItem(ItemData item)
         {
-            ItemTexture.texture = item != null ? item.InventoryTexture : null;
+            ItemTexture.texture = item != null ? item.InventoryTexture : null;            
+        }
+
+        public void UpdateItemCount(int count)
+        {
+            ItemCountText.text = ""+count;
         }
     }
 }

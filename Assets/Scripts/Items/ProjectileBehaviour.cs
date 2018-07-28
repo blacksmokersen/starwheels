@@ -1,19 +1,32 @@
 ﻿using UnityEngine;
 using Kart;
+using System.Collections;
 
 namespace Items
 {
     public class ProjectileBehaviour : ItemBehaviour
     {
         [Header("Projectile parameters")]
-        public float Speed;
+        public float Speed;        
 
         [Header("Ground parameters")]
         public AirStates AirState = AirStates.InAir;
         public float DistanceForGrounded;
         public float LocalGravity;
 
+        [Header("Particles Effects")]
+        public ParticleSystem CollisionParticles;
+
         protected Rigidbody rb;
+        protected KartInventory owner;
+
+        private const float ownerImmunityDuration = 0.5f;
+        private bool ownerImmuned = true;
+
+        protected void Awake()
+        {
+            rb = GetComponent<Rigidbody>();
+        }
 
         protected void Update()
         {
@@ -25,13 +38,9 @@ namespace Items
             rb.velocity = rb.velocity.normalized * Speed;
         }
 
-        private void Awake()
-        {
-            rb = GetComponent<Rigidbody>();
-        }
-
         public override void Spawn(KartInventory kart, Directions direction)
         {
+            transform.rotation = kart.transform.rotation;
             if(direction == Directions.Forward)
             {
                 rb.velocity = kart.transform.forward * Speed;
@@ -42,6 +51,7 @@ namespace Items
                 rb.velocity = -kart.transform.forward * Speed;
                 transform.position = kart.ItemPositions.BackPosition.position;
             }
+            owner = kart;
         }
 
         private void CheckGrounded()
@@ -69,6 +79,31 @@ namespace Items
         public void ApplyLocalGravity()
         {
             rb.AddForce(Vector3.down * LocalGravity);
+        }
+
+        protected void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.tag == Constants.KartRigidBodyTag)
+            {
+                CheckCollision(other);
+            }
+        }
+
+        public void CheckCollision(Collider other)
+        {
+            if (!(other.gameObject == owner && ownerImmuned))
+            { 
+                other.gameObject.GetComponentInParent<KartHealthSystem>().HealthLoss();
+                CollisionParticles.Emit(2000);
+                DestroyObject();
+            }
+        }
+
+        IEnumerator OwnerImmunity()
+        {
+            ownerImmuned = true;
+            yield return new WaitForSeconds(ownerImmunityDuration);
+            ownerImmuned = false;
         }
     }
 }

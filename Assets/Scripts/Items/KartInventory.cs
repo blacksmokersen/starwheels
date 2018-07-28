@@ -39,6 +39,7 @@ namespace Items {
                 {
                     UseItem(Item, direction);
                     Count--;
+                    FindObjectOfType<HUDUpdater>().UpdateItemCount(Count);
                     if (Count == 0)
                     {
                         Item = null;

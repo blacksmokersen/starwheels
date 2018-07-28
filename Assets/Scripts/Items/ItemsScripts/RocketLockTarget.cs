@@ -6,44 +6,55 @@ namespace Items
     [RequireComponent(typeof(Collider))]
     public class RocketLockTarget : MonoBehaviour
     {
-        private GameObject ActualTarget;
-        private float ActualTargetDistance;
+        [Header("Targeting system")]
+        public float SecondsBeforeSearchingTarget;
+        public KartInventory Owner;
+        public GameObject ActualTarget;
+
+        private float actualTargetDistance;
+        private bool activated;
 
         private void Start()
         {
             StartCoroutine(LookForTarget());
         }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.tag == Constants.KartRigidBodyTag && activated && ActualTarget == null)
+            {
+                if (other.GetComponentInParent<KartInventory>() != Owner)
+                {
+                    Debug.Log("Entered new target");
+                    ActualTarget = other.gameObject;
+                }            
+            }
+        }
+
         private void OnTriggerStay(Collider other)
         {
-            if (other.gameObject.tag == Constants.KartTag)
+            if (other.gameObject.tag == Constants.KartRigidBodyTag && activated)
             {
+                if (other.GetComponentInParent<KartInventory>() == Owner) return;
                 if (IsKartIsCloserThanActualTarget(other.gameObject))
                 {
+                    Debug.Log("Found new target");
                     ActualTarget = other.gameObject;
-                    ActualTargetDistance = Vector3.Distance(transform.position, ActualTarget.transform.position);
+                    actualTargetDistance = Vector3.Distance(transform.position, ActualTarget.transform.position);
                 }
             }
         }
 
         IEnumerator LookForTarget()
         {
-            yield return new WaitForSeconds(1f); // For 1s the rocket goes straight forward
-            while (ActualTarget != null)
-            {
-                yield return new WaitForSeconds(0.5f);
-            }
-            SetRocketTarget(ActualTarget);
+            activated = false;
+            yield return new WaitForSeconds(SecondsBeforeSearchingTarget); // For X seconds the rocket goes straight forward       
+            activated = true;
         }
 
         public bool IsKartIsCloserThanActualTarget(GameObject kart)
         {
-            return Vector3.Distance(transform.position, kart.transform.position) < ActualTargetDistance;
-        }
-
-        private void SetRocketTarget(GameObject target)
-        {
-            GetComponentInParent<RocketBehaviour>().Target = target;
+            return Vector3.Distance(transform.position, kart.transform.position) < actualTargetDistance;
         }
     }
 }
