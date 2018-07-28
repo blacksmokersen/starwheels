@@ -13,7 +13,7 @@ namespace Kart
      * - Torques
      */
     [RequireComponent(typeof(Rigidbody))]
-    public class KartPhysics : MonoBehaviour
+    public class KartEngine : MonoBehaviour
     {
         [Header("Driving")]
         public float Speed;
@@ -42,6 +42,17 @@ namespace Kart
         public float CompensationForce;
         public float TurnSlowValue;
         public float CapSpeedInTurn;
+        [Range(1, 3)] public float LowerTurnSensitivity;
+
+
+        [Header("Drift")]
+        public float DriftTurnSpeed = 150;
+        public float MaxExteriorAngle = 0.05f;
+
+        [Header("Stabilization")]
+        public float RotationStabilizationSpeed;
+
+        public bool Crash;
 
         private KartStates kartStates;
         private KartSoundsScript kartSounds;
@@ -79,6 +90,7 @@ namespace Kart
             rb.velocity = Vector3.ClampMagnitude(rb.velocity, MaxMagnitude);
             rb.AddForce(Vector3.down * GravityForce, ForceMode.Acceleration);
             CheckDrag();
+            StabilizeRotation();
         }
 
         public void CompensateSlip()
@@ -168,15 +180,54 @@ namespace Kart
             return PlayerVelocity - ComparValue;
         }
 
+        public void DriftTurn(float angle)
+        {
+            if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
+            {
+                if (angle != 0)
+                    angle = Mathf.Clamp(angle, -0.8f, -MaxExteriorAngle);
+                else
+                    angle = Mathf.Clamp(angle, -0.8f, -0.2f);
+            }
+            else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
+            {
+                if (angle != 0)
+                    angle = Mathf.Clamp(angle, MaxExteriorAngle, 0.8f);
+                else
+                    angle = Mathf.Clamp(angle, 0.2f, 0.8f);
+            }
+            transform.Rotate(Vector3.up * angle * DriftTurnSpeed * Time.deltaTime);
+        }
+
+        public void StabilizeRotation()
+        {
+            if (kartStates.AirState == AirStates.InAir)
+            {
+                var actualRotation = transform.localRotation;
+                actualRotation.x = Mathf.Lerp(actualRotation.x, 0, RotationStabilizationSpeed);
+                actualRotation.z = Mathf.Lerp(actualRotation.z, 0, RotationStabilizationSpeed);
+                transform.localRotation = actualRotation;
+            }
+        }
+
+        public void LooseHealth(float crashTimer)
+        {
+            StartCoroutine(CrashBehaviour(crashTimer));
+        }
+
+        IEnumerator CrashBehaviour(float crashTimer)
+        {
+            Crash = true;
+            yield return new WaitForSeconds(crashTimer);
+            Crash = false;
+        }
+
         public IEnumerator Boost(float boostDuration, float magnitudeBoost, float speedBoost)
         {
-            // clamp pour ne pas qu'avec des drift enchainés rapide le cap s'incrémente
             MaxMagnitude = Mathf.Clamp(MaxMagnitude, 0, controlMagnitude);
             Speed = Mathf.Clamp(Speed, 0, controlSpeed);
-            //SpeedCap Increase
             MaxMagnitude += magnitudeBoost;
             Speed += speedBoost;
-            // Boost Launch
             float effectDuration = boostDuration;
 
             currentTimer = 0f;

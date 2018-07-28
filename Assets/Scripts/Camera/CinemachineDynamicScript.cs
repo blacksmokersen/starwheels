@@ -27,6 +27,11 @@ public class CinemachineDynamicScript : MonoBehaviour
         currentTimer = 0f;
     }
 
+    public void speedOnCamBehaviour()
+    {
+        //TODO  effet de la vitesse du kart sur l'eloignement de la cam
+    }
+
     IEnumerator CameraBoostBehaviour(float startValue, float endValue, float boostDuration)
     {
         float startDynamicCamValue = transposer.m_FollowOffset.z;

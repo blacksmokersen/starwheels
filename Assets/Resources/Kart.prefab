@@ -2550,7 +2550,6 @@ MonoBehaviour:
   MagnitudeBoost: 10
   ForwardMaxAngle: 45
   BackMaxAngle: -30
-  OnDrift: 0
 --- !u!114 &114178399261278432
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2562,6 +2561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d9590cd067ce94ba77a159abd6378f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxHealth: 3
   Health: 3
   SpamHitSecurity: 3
   HitStopKartDuration: 2
@@ -2610,6 +2610,11 @@ MonoBehaviour:
   CompensationForce: 100
   TurnSlowValue: 1000
   CapSpeedInTurn: 35
+  LowerTurnSensitivity: 1.5
+  DriftTurnSpeed: 150
+  MaxExteriorAngle: 0.05
+  RotationStabilizationSpeed: 0.15
+  Crash: 0
   PlayerVelocity: 0
   rb: {fileID: 54115033852382540}
 --- !u!114 &114388644373576922
@@ -2651,19 +2656,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 144e9474dd840fc45847444f91315383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TurningSpeed: 130
-  LowerTurnSensitivity: 1.5
-  DriftingTurningSpeed: 170
-  DriftMaxAngle: 0.85
-  DriftMinAngle: 0.09
-  RotationStabilizationSpeed: 0.15
-  DriftTurnSpeed: 10
-  DriftTurnContrainte: 30
-  MaxExteriorAngle: 0.1
-  BalancingDriftL: 0
-  BalancingDriftR: 0
-  IsCoroutineStarted: 0
-  Crash: 0
 --- !u!114 &114479776169810722
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2828,6 +2820,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9d5705602b23e644a3b40af7344fbd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  kartPhysics: {fileID: 0}
+  kartOrientation: {fileID: 0}
+  kartStates: {fileID: 0}
+  kartDriftSystem: {fileID: 0}
+  kartEffects: {fileID: 0}
+  kartMeshMovement: {fileID: 0}
+  kartInventory: {fileID: 0}
+  kartSoundsScript: {fileID: 0}
+  kartHealthSystem: {fileID: 0}
   HasDriftJump: 0
   DoubleJumpEnabled: 1
 --- !u!114 &114707467249074162
