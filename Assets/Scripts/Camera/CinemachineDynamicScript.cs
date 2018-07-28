@@ -21,8 +21,8 @@ public class CinemachineDynamicScript : MonoBehaviour
 
     public void BoostCameraBehaviour()
     {
-        if(cameraBoostCoroutine !=null)
-        StopCoroutine(cameraBoostCoroutine);
+        if (cameraBoostCoroutine != null)
+            StopCoroutine(cameraBoostCoroutine);
         cameraBoostCoroutine = StartCoroutine(CameraBoostBehaviour(-7.5f, -MaxDistanceCamInBoost, 1f));
         currentTimer = 0f;
     }
@@ -36,7 +36,7 @@ public class CinemachineDynamicScript : MonoBehaviour
         while (currentTimer < effectDuration)
         {
             transposer.m_FollowOffset.z = Mathf.Lerp(startDynamicCamValue, endValue, currentTimer / effectDuration);
-            currentTimer += 0.02f;
+            currentTimer += Time.deltaTime;
             yield return null;
         }
         yield return new WaitForSeconds(1);
@@ -44,7 +44,7 @@ public class CinemachineDynamicScript : MonoBehaviour
         while (currentTimer < effectDuration)
         {
             transposer.m_FollowOffset.z = Mathf.Lerp(endValue, startValue, currentTimer / effectDuration);
-            currentTimer += 0.005f;
+            currentTimer += Time.deltaTime;
             yield return null;
         }
     }

@@ -184,9 +184,8 @@ namespace Kart
             {
                 float boost = Mathf.Lerp(5, 0, currentTimer / effectDuration);
                 rb.AddRelativeForce(Vector3.forward * boost, ForceMode.VelocityChange);
-                yield return new WaitForSeconds(0.1f);
-                currentTimer += 0.1f;
-                yield return null;
+                currentTimer += Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
             }
 
             currentTimer = 0f;
@@ -194,10 +193,8 @@ namespace Kart
             {
                 Speed = Mathf.Lerp(controlSpeed + speedBoost, controlSpeed, currentTimer / effectDuration);
                 MaxMagnitude = Mathf.Lerp(controlMagnitude + magnitudeBoost, controlMagnitude, currentTimer / effectDuration);
-                yield return new WaitForSeconds(0.1f);
-                currentTimer += 0.1f;
-             //   currentTimer += Time.fixedDeltaTime;
-                yield return null;
+                currentTimer += Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
             }
         }
 
