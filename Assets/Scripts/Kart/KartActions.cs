@@ -11,14 +11,15 @@ namespace Kart
      */
     public class KartActions : MonoBehaviour
     {
-        private KartPhysics kartPhysics;
-        private KartOrientation kartOrientation;
-        private KartStates kartStates;
-        private KartDriftSystem kartDriftSystem;
-        private KartEffects kartEffects;
-        private KartMeshMovement kartMeshMovement;
-        private KartInventory kartInventory;
-        private KartSoundsScript kartSoundsScript;
+        public KartPhysics kartPhysics;
+        public KartOrientation kartOrientation;
+        public KartStates kartStates;
+        public KartDriftSystem kartDriftSystem;
+        public KartEffects kartEffects;
+        public KartMeshMovement kartMeshMovement;
+        public KartInventory kartInventory;
+        public KartSoundsScript kartSoundsScript;
+        public KartHealthSystem kartHealthSystem;
 
         public bool HasDriftJump = false;
         public bool DoubleJumpEnabled = true;
@@ -37,6 +38,7 @@ namespace Kart
             kartEffects = FindObjectOfType<KartEffects>();
             kartMeshMovement = FindObjectOfType<KartMeshMovement>();
             kartSoundsScript = FindObjectOfType<KartSoundsScript>();
+            kartHealthSystem = GetComponentInParent<KartHealthSystem>();
         }
 
         private void FixedUpdate()

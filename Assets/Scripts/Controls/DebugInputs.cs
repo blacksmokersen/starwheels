@@ -20,27 +20,16 @@ namespace Controls
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
-            if (Input.GetKeyDown(KeyCode.Keypad1))
-            {
-                kartHealthSystem.HealthLoss();
-            }
-            if (Input.GetKeyDown(KeyCode.Keypad2))
-            {
-                kartHealthSystem.Health = 3;
-                kartHealthSystem.dead = false;
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha1))
+            if (Input.GetKeyDown(KeyCode.Alpha6))
             {
                 kart = GameObject.FindWithTag("Kart");
                 kart.transform.position = new Vector3(0,0.1f,0);
             }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
+            if (Input.GetKeyDown(KeyCode.Alpha7))
             {
                 kart = GameObject.FindWithTag("Kart");
                 kart.transform.position = new Vector3(-221, 3, 0);
             }
-
             if (Input.GetButtonDown(Constants.SpecialCapacity))
             {
                 StartCoroutine(GetComponent<GamepadVibrations>().Vibrate(0.2f, 0.5f));

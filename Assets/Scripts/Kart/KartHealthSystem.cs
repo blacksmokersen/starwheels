@@ -7,10 +7,10 @@ namespace Kart
 {
     public class KartHealthSystem : PunBehaviour
     {
-        public int Health = 3;
+        public int MaxHealth = 3;
+        public int Health;
         public float SpamHitSecurity;
         public float HitStopKartDuration;
-
 
         private KartEffects kartEffects;
         private KartOrientation KartOrientation;
@@ -23,6 +23,8 @@ namespace Kart
             kartEffects = GetComponentInChildren<KartEffects>();
             KartOrientation = GetComponent<KartOrientation>();
             kartSoundsScript = FindObjectOfType<KartSoundsScript>();
+
+            Health = MaxHealth;
         }
 
         public void HealthLoss()
@@ -41,19 +43,23 @@ namespace Kart
                 kartEffects.HealthParticlesManagement(Health);
                 StartCoroutine(Invicibility(SpamHitSecurity));
             }
-            if(Health <= 0)
+            if(Health <= 0 && !dead)
             {
-                if (!dead)
-                {
-                    GetComponentInParent<Rigidbody>().transform.position = new Vector3(-221, 3, 0);
-                    dead = true;
-                }
+                GetComponentInParent<Rigidbody>().transform.position = new Vector3(-221, 3, 0);
+                dead = true;                
             }
         }
-        IEnumerator Invicibility(float invicibilityTimer)
+
+        public void ResetLives()
+        {
+            Health = MaxHealth;
+            kartEffects.ResetLife();
+        }
+
+        IEnumerator Invicibility(float invicibilityDuration)
         {
             invicibility = true;
-            yield return new WaitForSeconds(invicibilityTimer);
+            yield return new WaitForSeconds(invicibilityDuration);
             invicibility = false;
         }
     }

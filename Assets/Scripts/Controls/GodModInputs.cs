@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 using Kart;
 using Items;
+using HUD;
 
 namespace Controls
 {
     public class GodModInputs : MonoBehaviour
     {
         public bool Enabled = true;
+
         private KartActions kartAction;
+        private int ActualItemIndex = 0;
 
         public void Update()
         {
@@ -43,13 +46,18 @@ namespace Controls
         public void SetUnlimitedItems()
         {
             Debug.Log("Set Unlimited Items");
-            kartAction.gameObject.GetComponent<KartInventory>().Count = 1000;
+            kartAction.kartInventory.Count = 1000;
         }
 
         public void SwitchToNextItem()
         {
             Debug.Log("Switched to Next Item");
-            var kartInventory = kartAction.gameObject.GetComponent<KartInventory>();
+            var kartInventory = kartAction.kartInventory;
+            var items = ItemsLottery.Items;
+            var itemIndex = (ActualItemIndex++) % items.Length;
+            kartInventory.Item = items[itemIndex];
+            FindObjectOfType<HUDUpdater>().SetItem(kartInventory.Item);
+            SetUnlimitedItems();
         }
 
         public void SpawnEnemyKart()
@@ -62,11 +70,13 @@ namespace Controls
         public void LoseOneLife()
         {
             Debug.Log("Lost One Life");
+            kartAction.kartHealthSystem.HealthLoss();
         }
 
         public void ResetLives()
         {
             Debug.Log("Reset Lives");
+            kartAction.kartHealthSystem.ResetLives();
         }
     }
 }
