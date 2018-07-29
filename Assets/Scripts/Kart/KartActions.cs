@@ -21,11 +21,6 @@ namespace Kart
         public KartSoundsScript kartSoundsScript;
         public KartHealthSystem kartHealthSystem;
 
-        public bool HasDriftJump = false;
-        public bool DoubleJumpEnabled = true;
-        private bool hasFirstJump = false;
-        private bool canDoubleJump = true;
-
         private float driftMinSpeedActivation = 10f;
 
         void Awake()
@@ -47,37 +42,6 @@ namespace Kart
             {
                 kartPhysics.CompensateSlip();
                 kartOrientation.NotDrifting();
-            }
-        }
-
-        public void Jump(float value, float turnAxis, float accelerateAxis, float upAndDownAxis)
-        {
-            if (DoubleJumpEnabled && hasFirstJump == true && kartStates.AirState == AirStates.InAir)
-            {
-                kartSoundsScript.PlaySecondJump();
-                kartEffects.MainJumpParticles(150);
-                DoubleJump(value, turnAxis, upAndDownAxis);
-                hasFirstJump = false;
-            }
-            else
-            {
-                if (kartStates.AirState == AirStates.Grounded && canDoubleJump)
-                {
-                    StartCoroutine(CdDoubleJump());
-                    kartEffects.MainJumpParticles(300);
-                    if (DoubleJumpEnabled)
-                    {
-                        kartSoundsScript.PlayFirstJump();
-                        kartPhysics.Jump(value);
-                        kartStates.AirState = AirStates.InAir;
-                        hasFirstJump = true;
-                    }
-                    else
-                    {
-                        kartPhysics.Jump(value);
-                        kartStates.AirState = AirStates.InAir;
-                    }
-                }
             }
         }
 
@@ -105,7 +69,7 @@ namespace Kart
                 //kartSoundsScript.PlayDriftStart();
                 if (!HasDriftJump)
                 {
-                    kartPhysics.Jump(0.3f);
+                    kartPhysics.DriftJump();
                     HasDriftJump = true;
                 }
                 if (angle != 0)
@@ -204,49 +168,6 @@ namespace Kart
         {
             kartMeshMovement.FrontWheelsMovement(turnAxis, kartPhysics.PlayerVelocity);
             kartMeshMovement.BackWheelsMovement(kartPhysics.PlayerVelocity);
-        }
-
-        public void DoubleJump(float value, float turnAxis, float upAndDownAxis)
-        {
-            if (Mathf.Abs(turnAxis) < 0.3f)
-            {
-                if (upAndDownAxis <= -0.2f)
-                {
-                    kartEffects.BackJumpAnimation();
-                    kartPhysics.DoubleJump(Vector3.back, 0.5f);
-                }
-                else if (upAndDownAxis >= 0.2f)
-                {
-                    kartEffects.FrontJumpAnimation();
-                    kartPhysics.DoubleJump(Vector3.forward, 0.5f);
-                }
-                else
-                {
-                    kartPhysics.DoubleJump(Vector3.forward, 0f);
-                }
-            }
-            else if (turnAxis <= -0.5f)
-            {
-                kartEffects.LeftJumpAnimation();
-                kartPhysics.DoubleJump(Vector3.left, 1f);
-            }
-            else if (turnAxis >= 0.5f)
-            {
-                kartEffects.RightJumpAnimation();
-                kartPhysics.DoubleJump(Vector3.right, 1f);
-            }
-            else
-            {
-                kartPhysics.DoubleJump(Vector3.forward, 0f);
-            }
-        }
-
-        IEnumerator CdDoubleJump()
-        {
-            canDoubleJump = false;
-            yield return new WaitForSeconds(8);
-            kartEffects.ReloadJump();
-            canDoubleJump = true;
         }
     }
 }

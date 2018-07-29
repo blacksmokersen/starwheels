@@ -54,7 +54,7 @@ namespace Controls
             var items = ItemsLottery.Items;
             var itemIndex = (ActualItemIndex++) % items.Length;
             kartInventory.Item = items[itemIndex];
-            FindObjectOfType<HUDUpdater>().SetItem(kartInventory.Item);
+            FindObjectOfType<HUDUpdater>().UpdateItem(kartInventory.Item);
             SetUnlimitedItems();
         }
 

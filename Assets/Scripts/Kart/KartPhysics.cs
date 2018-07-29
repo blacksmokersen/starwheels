@@ -68,8 +68,8 @@ namespace Kart
             Vector3 localVelocity = transform.InverseTransformDirection(rb.velocity);
             PlayerVelocity = localVelocity.z;
 
-            if (KartEvents.OnAccelerate != null)
-                KartEvents.OnAccelerate(rb.velocity.magnitude);
+            if (KartEvents.OnVelocityChange != null)
+                KartEvents.OnVelocityChange(rb.velocity.magnitude);
 
             kartSounds.SetMotorPitch(0.5f + 0.5f * (localVelocity.magnitude / MaxMagnitude));
         }
@@ -135,10 +135,14 @@ namespace Kart
             }
         }
 
-
-        public void Jump(float percentage = 1f)
+        public void Jump()
         {
-            rb.AddRelativeForce(Vector3.up * JumpForce * percentage, ForceMode.Impulse);
+            rb.AddRelativeForce(Vector3.up * JumpForce, ForceMode.Impulse);
+        }
+
+        public void DriftJump()
+        {
+            rb.AddRelativeForce(Vector3.up * JumpForce / 3f, ForceMode.Impulse);
         }
 
         public void DoubleJump(Vector3 doubleJumpDirectionVector, float directionalForceMultiplier)

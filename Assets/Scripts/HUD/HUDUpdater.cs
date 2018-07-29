@@ -17,10 +17,9 @@ namespace HUD
         public void SetKart(Rigidbody body)
         {
             StartCoroutine(UpdateRoutine());
-
-            SetItem(null);
             
-            KartEvents.OnAccelerate += (vel) => SpeedText.text = "Speed : " + vel;
+            KartEvents.OnVelocityChange += (vel) => SpeedText.text = "Speed : " + vel;
+            KartEvents.OnItemUsed += UpdateItem;
         }
         
         IEnumerator UpdateRoutine()
@@ -33,14 +32,10 @@ namespace HUD
             }
         }
 
-        public void SetItem(ItemData item)
+        public void UpdateItem(ItemData item, int count)
         {
-            ItemTexture.texture = item != null ? item.InventoryTexture : null;            
-        }
-
-        public void UpdateItemCount(int count)
-        {
-            ItemCountText.text = ""+count;
+            ItemTexture.texture = item != null ? item.InventoryTexture : null;
+            ItemCountText.text = "" + count;
         }
     }
 }

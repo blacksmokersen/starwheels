@@ -196,7 +196,7 @@ namespace Kart
             else
                 kartEffects.StopSmoke();
 
-            kartEffects.SetColor(ColorIdToColor(colorId));
+            kartEffects.SetWheelsColor(ColorIdToColor(colorId));
         }
 
         [PunRPC]

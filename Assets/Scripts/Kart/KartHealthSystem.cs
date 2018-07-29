@@ -53,7 +53,7 @@ namespace Kart
         public void ResetLives()
         {
             Health = MaxHealth;
-            kartEffects.ResetLife();
+            kartEffects.ResetLives();
         }
 
         IEnumerator Invicibility(float invicibilityDuration)

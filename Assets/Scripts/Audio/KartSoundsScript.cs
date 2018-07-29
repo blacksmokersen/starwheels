@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Kart
+namespace Audio
 {
     public class KartSoundsScript : MonoBehaviour
     {
-
+        // Clips
         public AudioClip MotorAccel;
         public AudioClip Motor;
         public AudioClip MotorDecel;
@@ -18,10 +16,10 @@ namespace Kart
         public AudioClip PlayerHit;
         public AudioClip Boost;
 
-        public AudioSource soundManager;
-
-        public AudioSource motorSource;
-        public AudioSource driftSource;
+        // Audio sources
+        private AudioSource soundManager;
+        private AudioSource motorSource;
+        private AudioSource driftSource;
 
         private void Awake()
         {
@@ -39,6 +37,9 @@ namespace Kart
             driftSource.clip = Drift;
 
             PlayMotor();
+
+            KartEvents.OnJump += PlayFirstJump;
+            //KartEvents.OnDoubleJump += PlaySecondJump;
         }
 
         public void PlayMotorAccel()

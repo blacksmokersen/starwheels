@@ -3,7 +3,7 @@ using System.Collections;
 using HUD;
 
 namespace Items {
-    public enum Directions { Default, Forward, Backward  }
+    public enum Directions { Default, Forward, Backward, Left, Right }
 
     public class KartInventory : MonoBehaviour
     {
@@ -66,7 +66,7 @@ namespace Items {
 
         public void UpdateHUD()
         {
-            FindObjectOfType<HUDUpdater>().SetItem(Item);
+            FindObjectOfType<HUDUpdater>().UpdateItem(Item);
         }
 
         public IEnumerator GetLotteryItem()
@@ -78,7 +78,7 @@ namespace Items {
             Debug.Log(items);
             while (lotteryTimer < ItemsLottery.LOTTERY_DURATION)
             {
-                FindObjectOfType<HUDUpdater>().SetItem(items[(lotteryIndex++)%items.Length]);
+                FindObjectOfType<HUDUpdater>().UpdateItem(items[(lotteryIndex++)%items.Length]);
                 lotteryTimer += Time.deltaTime;
                 yield return new WaitForSeconds(0.1f);
                 lotteryTimer+=0.1f;

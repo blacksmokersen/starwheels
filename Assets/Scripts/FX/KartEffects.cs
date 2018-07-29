@@ -1,25 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
-namespace Kart
+namespace FX
 {
     public class KartEffects : MonoBehaviour
     {
-        public ParticleSystem smokeLeftWheel;
-        public ParticleSystem smokeRightWheel;
-        [Space(10)]
-        // TODO: 
-        // public LifeCapsule[] capsules;
-        // public void SetLife(int value) { value * capules; }
+        [HideInInspector] public ParticleSystem smokeLeftWheel;
+        [HideInInspector] public ParticleSystem smokeRightWheel;
+
         public ParticleSystem[] Lifes;
         public ParticleSystem[] LifeBursts;
         [Space(10)]
-        public ParticleSystem MainJump;
-        public ParticleSystem JumpReload;
-        [Space(10)]
-        public Animator animator;
+        public ParticleSystem MainJumpParticles;
+        public ParticleSystem JumpReloadParticles;
+        public int NumberOfParticles = 300;
+
+        private void Awake()
+        {
+            KartEvents.OnJump += MainJumpParticlesEmit;
+            KartEvents.OnDoubleJumpReset += ReloadJumpParticlesEmit;
+        }
 
         public void StopSmoke()
         {
@@ -40,7 +40,7 @@ namespace Kart
             LifeBursts[health].Play();
         }
 
-        public void ResetLife()
+        public void ResetLives()
         {
             foreach (ParticleSystem ps in Lifes)
             {
@@ -48,35 +48,17 @@ namespace Kart
             }
         }
 
-        public void MainJumpParticles(int number)
+        public void MainJumpParticlesEmit()
         {
-            MainJump.Emit(number);
+            MainJumpParticles.Emit(NumberOfParticles);
         }
 
-        public void ReloadJump()
+        public void ReloadJumpParticlesEmit()
         {
-            JumpReload.Emit(300);
-        }
+            JumpReloadParticles.Emit(NumberOfParticles);
+        }       
 
-        // TODO: Move to KartAnimations.cs
-        public void LeftJumpAnimation()
-        {
-            animator.SetTrigger("LeftJump");
-        }
-        public void RightJumpAnimation()
-        {
-            animator.SetTrigger("RightJump");
-        }
-        public void FrontJumpAnimation()
-        {
-            animator.SetTrigger("FrontJump");
-        }
-        public void BackJumpAnimation()
-        {
-            animator.SetTrigger("BackJump");
-        }
-
-        public void SetColor(Color color)
+        public void SetWheelsColor(Color color)
         {
             var main = smokeLeftWheel.main;
             var main2 = smokeRightWheel.main;
