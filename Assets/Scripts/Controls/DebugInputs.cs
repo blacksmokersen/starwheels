@@ -8,6 +8,7 @@ namespace Controls
     {
         KartHealthSystem kartHealthSystem;
         GameObject kart;
+        public CinemachineDynamicScript Cam;
 
         public void SetKart(KartHealthSystem value)
         {
@@ -30,9 +31,22 @@ namespace Controls
                 kart = GameObject.FindWithTag("Kart");
                 kart.transform.position = new Vector3(-221, 3, 0);
             }
+            if (Input.GetKeyDown(KeyCode.Alpha8))
+            {
+                kart = GameObject.FindWithTag("Kart");
+                kart.transform.position = new Vector3(411, 0, 0);
+            }
             if (Input.GetButtonDown(Constants.SpecialCapacity))
             {
                 StartCoroutine(GetComponent<GamepadVibrations>().Vibrate(0.2f, 0.5f));
+            }
+            if (Input.GetKey(KeyCode.O))
+            {
+                Cam.IonBeamCameraBehaviour(true);
+            }
+            if (Input.GetKey(KeyCode.P))
+            {
+                Cam.IonBeamCameraBehaviour(false);
             }
         }
     }
