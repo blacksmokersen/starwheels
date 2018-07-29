@@ -16,21 +16,24 @@ namespace Items
             rocketLock = GetComponentInChildren<RocketLockTarget>();
         }
 
-        private void Start()
+        private new void Start()
         {
+            base.Start();
             rocketLock.Owner = owner;
         }
 
         private new void FixedUpdate()
         {
-            SetVelocityForward();
-            base.FixedUpdate();
             TurnTowardTarget();
+            SetVelocityForward();
+            NormalizeSpeed();
         }
 
         private void SetVelocityForward()
         {
-            rb.velocity = transform.forward;
+            var newVelocity = transform.forward;
+            newVelocity.y = rb.velocity.y;
+            rb.velocity = newVelocity;
         }
 
         private void TurnTowardTarget()

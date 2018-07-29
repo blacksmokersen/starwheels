@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using Kart;
 using System.Collections;
 using HUD;
 
 namespace Items {
-    public enum Directions { Forward, Backward  }
+    public enum Directions { Default, Forward, Backward  }
 
     public class KartInventory : MonoBehaviour
     {

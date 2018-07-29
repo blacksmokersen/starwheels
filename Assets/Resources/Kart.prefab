@@ -678,7 +678,7 @@ GameObject:
   m_Layer: 0
   m_Name: Back
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -1194,7 +1194,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1023026943535066}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.55, z: 3}
+  m_LocalPosition: {x: 0, y: 0.55, z: 1.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4983504529895522}
@@ -1262,7 +1262,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1803801282260032}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.55, z: -3}
+  m_LocalPosition: {x: 0, y: 0.55, z: -1.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4983504529895522}
@@ -1298,7 +1298,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1571014680455984}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.225804, y: 0.26893663, z: 7.422078}
+  m_LocalPosition: {x: -1.6644855, y: 0.03090661, z: -5.492341}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4370267201499956}
@@ -2562,6 +2562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d9590cd067ce94ba77a159abd6378f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxHealth: 3
   Health: 3
   SpamHitSecurity: 3
   HitStopKartDuration: 2
@@ -2828,6 +2829,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9d5705602b23e644a3b40af7344fbd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  kartPhysics: {fileID: 0}
+  kartOrientation: {fileID: 0}
+  kartStates: {fileID: 0}
+  kartDriftSystem: {fileID: 0}
+  kartEffects: {fileID: 0}
+  kartMeshMovement: {fileID: 0}
+  kartInventory: {fileID: 0}
+  kartSoundsScript: {fileID: 0}
+  kartHealthSystem: {fileID: 0}
   HasDriftJump: 0
   DoubleJumpEnabled: 1
 --- !u!114 &114707467249074162

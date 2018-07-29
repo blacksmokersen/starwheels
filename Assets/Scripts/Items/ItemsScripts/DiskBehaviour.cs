@@ -6,8 +6,7 @@ namespace Items
     public class DiskBehaviour : ProjectileBehaviour
     {
         [Header("Disk parameters")]
-        public int ReboundsBeforeEnd;
-        
+        public int ReboundsBeforeEnd;        
        
         private void OnCollisionEnter(Collision collision)
         {

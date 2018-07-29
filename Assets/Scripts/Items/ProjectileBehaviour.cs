@@ -20,12 +20,17 @@ namespace Items
         protected Rigidbody rb;
         protected KartInventory owner;
 
-        private const float ownerImmunityDuration = 0.5f;
+        private const float ownerImmunityDuration = 1f;
         private bool ownerImmuned = true;
 
         protected void Awake()
         {
             rb = GetComponent<Rigidbody>();
+        }
+
+        protected void Start()
+        {
+            StartCoroutine(OwnerImmunity());
         }
 
         protected void Update()
@@ -35,23 +40,18 @@ namespace Items
 
         protected void FixedUpdate()
         {
-            rb.velocity = rb.velocity.normalized * Speed;
+            NormalizeSpeed();
+            if (rb.useGravity == true)
+                ApplyLocalGravity();
         }
 
-        public override void Spawn(KartInventory kart, Directions direction)
+        protected void NormalizeSpeed()
         {
-            transform.rotation = kart.transform.rotation;
-            if(direction == Directions.Forward)
-            {
-                rb.velocity = kart.transform.forward * Speed;
-                transform.position = kart.ItemPositions.FrontPosition.position;
-            }
-            else if(direction == Directions.Backward)
-            {
-                rb.velocity = -kart.transform.forward * Speed;
-                transform.position = kart.ItemPositions.BackPosition.position;
-            }
-            owner = kart;
+            var newVelocity = rb.velocity;
+            newVelocity.y = 0;
+            newVelocity = newVelocity.normalized * Speed;
+            newVelocity.y = rb.velocity.y;
+            rb.velocity = newVelocity;
         }
 
         private void CheckGrounded()
@@ -60,19 +60,12 @@ namespace Items
             if (Physics.Raycast(transform.position, Vector3.down, out hit, DistanceForGrounded, 1 << LayerMask.NameToLayer(Constants.GroundLayer)))
             {
                 rb.useGravity = false;
-
-                var velocity = rb.velocity;
-                velocity.y = 0;
-                rb.velocity = velocity;
-
-                var position = transform.position;
-                position.y = hit.point.y + DistanceForGrounded - 0.1f;
-                transform.position = position;
+                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+                transform.position = new Vector3(transform.position.x, hit.point.y + DistanceForGrounded - 0.1f, transform.position.z);
             }
             else
             {
                 rb.useGravity = true;
-                ApplyLocalGravity();
             }
         }
 
@@ -81,22 +74,23 @@ namespace Items
             rb.AddForce(Vector3.down * LocalGravity);
         }
 
-        protected void OnTriggerEnter(Collider other)
+        public override void Spawn(KartInventory kart, Directions direction)
         {
-            if (other.gameObject.tag == Constants.KartRigidBodyTag)
+            if (direction == Directions.Forward || direction == Directions.Default)
             {
-                CheckCollision(other);
+                transform.rotation = kart.transform.rotation;
+                rb.velocity = kart.transform.forward * Speed;
+                transform.position = kart.ItemPositions.FrontPosition.position;
             }
-        }
-
-        public void CheckCollision(Collider other)
-        {
-            if (!(other.gameObject == owner && ownerImmuned))
-            { 
-                other.gameObject.GetComponentInParent<KartHealthSystem>().HealthLoss();
-                CollisionParticles.Emit(2000);
-                DestroyObject();
+            else if (direction == Directions.Backward)
+            {
+                var rot = kart.transform.rotation.eulerAngles;
+                rot = new Vector3(rot.x, rot.y + 180, rot.z); // Apply 180° turn
+                transform.rotation = Quaternion.Euler(rot);
+                rb.velocity = -kart.transform.forward * Speed;
+                transform.position = kart.ItemPositions.BackPosition.position;
             }
+            owner = kart;
         }
 
         IEnumerator OwnerImmunity()
@@ -104,6 +98,23 @@ namespace Items
             ownerImmuned = true;
             yield return new WaitForSeconds(ownerImmunityDuration);
             ownerImmuned = false;
+        }
+
+        public void CheckCollision(Collider other)
+        {
+            if (other.gameObject.GetComponentInParent<KartInventory>() == owner && ownerImmuned) return;
+
+            other.gameObject.GetComponentInParent<KartHealthSystem>().HealthLoss();
+            CollisionParticles.Emit(2000);
+            DestroyObject();
+        }
+
+        protected void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.tag == Constants.KartRigidBodyTag)
+            {
+                CheckCollision(other);
+            }
         }
     }
 }

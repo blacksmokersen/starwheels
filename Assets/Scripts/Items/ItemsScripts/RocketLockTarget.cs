@@ -25,7 +25,6 @@ namespace Items
             {
                 if (other.GetComponentInParent<KartInventory>() != Owner)
                 {
-                    Debug.Log("Entered new target");
                     ActualTarget = other.gameObject;
                 }            
             }
@@ -38,7 +37,6 @@ namespace Items
                 if (other.GetComponentInParent<KartInventory>() == Owner) return;
                 if (IsKartIsCloserThanActualTarget(other.gameObject))
                 {
-                    Debug.Log("Found new target");
                     ActualTarget = other.gameObject;
                     actualTargetDistance = Vector3.Distance(transform.position, ActualTarget.transform.position);
                 }
