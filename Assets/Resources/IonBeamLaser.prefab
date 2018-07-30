@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 114239382402133140}
   - component: {fileID: 199494214417755938}
   - component: {fileID: 198961571802855014}
+  - component: {fileID: 136808278217480694}
   m_Layer: 0
   m_Name: IonBeamLaser
   m_TagString: Untagged
@@ -49,7 +50,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &1679332852279774
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
@@ -87,12 +88,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1679332852279774}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -140.6, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4101407064482938}
-  m_RootOrder: 2
+  m_Father: {fileID: 4342119840772452}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4101407064482938
 Transform:
@@ -106,7 +107,6 @@ Transform:
   m_Children:
   - {fileID: 4342119840772452}
   - {fileID: 4150225392842368}
-  - {fileID: 4021873982789570}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -132,7 +132,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 50, y: 200, z: 50}
-  m_Children: []
+  m_Children:
+  - {fileID: 4021873982789570}
   m_Father: {fileID: 4101407064482938}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -179,8 +180,8 @@ MeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1715620537510334}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -234,9 +235,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 1
   SpeedOffset: 0.1
-  GrowingWarningSpeed: 15
+  GrowingWarningSpeed: 30
   MaxWarningScale: 0
   onExplode: 0
+  DamagePlayer: 0
   EffectiveAOE: {fileID: 1061952050393796}
   WarningPosition: {fileID: 1715620537510334}
 --- !u!136 &136621452132597412
@@ -252,6 +254,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!136 &136808278217480694
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1039182035529638}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 25
+  m_Height: 400
+  m_Direction: 1
+  m_Center: {x: -2.2155457, y: 1.8450184, z: 1.2173672}
 --- !u!198 &198961571802855014
 ParticleSystem:
   m_ObjectHideFlags: 1
