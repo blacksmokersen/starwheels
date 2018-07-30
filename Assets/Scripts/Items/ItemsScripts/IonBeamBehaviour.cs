@@ -14,6 +14,10 @@ namespace Items
             ionBeamInputs = GetComponent<IonBeamInputs>();
         }
 
+        private void Update()
+        {
+            transform.position = cam.transposer.transform.position;
+        }
 
         void Start()
         {
@@ -24,7 +28,10 @@ namespace Items
 
         public void FireIonBeam()
         {
-            Debug.Log("FIRE");
+            Vector3 camPosition = cam.transposer.transform.position;
+            GameObject IonBeam = Instantiate(Resources.Load("IonBeamLaser"), new Vector3 (camPosition.x, 0, camPosition.z), Quaternion.identity) as GameObject;
+           // IonBeam.transform.position = cam.transposer.transform.position;
+
             cam.IonBeamCameraBehaviour(false);
         }
 
