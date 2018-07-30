@@ -75,7 +75,7 @@ public class CinemachineDynamicScript : MonoBehaviour
             AimAndFollow(true);
             if (cameraIonBeamBehaviour != null)
                 StopCoroutine(cameraIonBeamBehaviour);
-            cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(-7.5f, 3, 1.5f));
+            cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(-7.5f, 3, 0.5f));
         }
     }
 
