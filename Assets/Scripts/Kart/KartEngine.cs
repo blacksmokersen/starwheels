@@ -25,17 +25,16 @@ namespace Kart
         public float DoubleJumpDirectionalForce;
         public float DriftJumpForce;
         public float GravityForce;
-        [HideInInspector] public Vector3 CenterOfMassOffset;
         [Range(0, 1)] public float MinDrag;
         [Range(0, 10)] public float MaxDrag;
-        [Range(0, 1)] [HideInInspector] public float ForwardDrag;
-        [Range(0, 1)] [HideInInspector] public float SideDrag;
 
         [Header("Drift")]
         public float DriftGlideOrientation = 500f;
         public float DriftGlideBack = 500f;
         [Range(0, 2)] public float DriftBoostImpulse = 0.5f;
-
+        public float DriftTurnSpeed = 150;
+        public float MaxExteriorAngle = 0.05f;
+        public float BoostPowerImpulse;
 
         [Header("Turn")]
         public float TurnTorqueSpeed;
@@ -43,11 +42,6 @@ namespace Kart
         public float TurnSlowValue;
         public float CapSpeedInTurn;
         [Range(1, 3)] public float LowerTurnSensitivity;
-
-
-        [Header("Drift")]
-        public float DriftTurnSpeed = 150;
-        public float MaxExteriorAngle = 0.05f;
 
         [Header("Stabilization")]
         public float RotationStabilizationSpeed;
@@ -71,7 +65,6 @@ namespace Kart
             kartStates = GetComponentInChildren<KartStates>();
             kartSounds = GetComponentInChildren<KartSoundsScript>();
             rb = GetComponent<Rigidbody>();
-            rb.centerOfMass = CenterOfMassOffset;
         }
 
         private void Update()
@@ -105,14 +98,6 @@ namespace Kart
                 rb.drag = MinDrag;
             else
                 rb.drag = MaxDrag;
-        }
-
-        private void CustomDrag()
-        {
-            var vel = transform.InverseTransformDirection(rb.velocity);
-            vel.x *= 1.0f - SideDrag;
-            vel.z *= 1.0f - ForwardDrag;
-            rb.velocity = transform.TransformDirection(vel);
         }
 
         public void DriftUsingForce()
@@ -175,11 +160,6 @@ namespace Kart
             rb.AddRelativeForce(Vector3.back * value * Speed / 2, ForceMode.Force);
         }
 
-        public float SpeedCheck(float ComparValue)
-        {
-            return PlayerVelocity - ComparValue;
-        }
-
         public void DriftTurn(float angle)
         {
             if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
@@ -228,22 +208,20 @@ namespace Kart
             Speed = Mathf.Clamp(Speed, 0, controlSpeed);
             MaxMagnitude += magnitudeBoost;
             Speed += speedBoost;
-            float effectDuration = boostDuration;
 
             currentTimer = 0f;
-            while (currentTimer < effectDuration)
+            while (currentTimer < boostDuration)
             {
-                float boost = Mathf.Lerp(5, 0, currentTimer / effectDuration);
-                rb.AddRelativeForce(Vector3.forward * boost, ForceMode.VelocityChange);
+                rb.AddRelativeForce(Vector3.forward * BoostPowerImpulse, ForceMode.VelocityChange);
                 currentTimer += Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
             }
 
             currentTimer = 0f;
-            while (currentTimer < effectDuration)
+            while (currentTimer < boostDuration)
             {
-                Speed = Mathf.Lerp(controlSpeed + speedBoost, controlSpeed, currentTimer / effectDuration);
-                MaxMagnitude = Mathf.Lerp(controlMagnitude + magnitudeBoost, controlMagnitude, currentTimer / effectDuration);
+                Speed = Mathf.Lerp(controlSpeed + speedBoost, controlSpeed, currentTimer / boostDuration);
+                MaxMagnitude = Mathf.Lerp(controlMagnitude + magnitudeBoost, controlMagnitude, currentTimer / boostDuration);
                 currentTimer += Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
             }

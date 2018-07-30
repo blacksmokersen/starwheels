@@ -236,7 +236,7 @@ namespace Kart
         IEnumerator CdDoubleJump()
         {
             canDoubleJump = false;
-            yield return new WaitForSeconds(8);
+            yield return new WaitForSeconds(1);
             kartEffects.ReloadJump();
             canDoubleJump = true;
         }

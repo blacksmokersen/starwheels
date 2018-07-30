@@ -1,16 +1,66 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using Controls;
 
-public class IonBeamBehaviour : MonoBehaviour {
+namespace Items
+{
+    public class IonBeamBehaviour : ItemBehaviour
+    {
+        private IonBeamInputs ionBeamInputs;
+        private CinemachineDynamicScript cam;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        private void Awake()
+        {
+            cam = GameObject.Find("CM vcam1").GetComponent<CinemachineDynamicScript>();
+            ionBeamInputs = GetComponent<IonBeamInputs>();
+        }
+
+
+        void Start()
+        {
+            ionBeamInputs.DisableKartInputs(true);
+            cam.IonBeamCameraBehaviour(true);
+        }
+
+
+        public void FireIonBeam()
+        {
+            Debug.Log("FIRE");
+            cam.IonBeamCameraBehaviour(false);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*
+        public override void Spawn(KartInventory kart, Directions direction)
+        {
+
+        }
+        */
+
+    }
 }

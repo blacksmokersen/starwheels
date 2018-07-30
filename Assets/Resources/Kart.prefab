@@ -2598,21 +2598,19 @@ MonoBehaviour:
   DoubleJumpDirectionalForce: 2400
   DriftJumpForce: 0
   GravityForce: 20
-  CenterOfMassOffset: {x: 0, y: 0, z: 0}
   MinDrag: 0.1
   MaxDrag: 0.8
-  ForwardDrag: 0.071
-  SideDrag: 0.31
   DriftGlideOrientation: 500
   DriftGlideBack: 500
   DriftBoostImpulse: 0.5
+  DriftTurnSpeed: 150
+  MaxExteriorAngle: 0.05
+  BoostPowerImpulse: 2
   TurnTorqueSpeed: 1000
   CompensationForce: 100
   TurnSlowValue: 1000
   CapSpeedInTurn: 35
   LowerTurnSensitivity: 1.5
-  DriftTurnSpeed: 150
-  MaxExteriorAngle: 0.05
   RotationStabilizationSpeed: 0.15
   Crash: 0
   PlayerVelocity: 0
@@ -2820,7 +2818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9d5705602b23e644a3b40af7344fbd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kartPhysics: {fileID: 0}
+  kartEngine: {fileID: 0}
   kartOrientation: {fileID: 0}
   kartStates: {fileID: 0}
   kartDriftSystem: {fileID: 0}
