@@ -2550,7 +2550,6 @@ MonoBehaviour:
   MagnitudeBoost: 10
   ForwardMaxAngle: 45
   BackMaxAngle: -30
-  OnDrift: 0
 --- !u!114 &114178399261278432
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2599,18 +2598,21 @@ MonoBehaviour:
   DoubleJumpDirectionalForce: 2400
   DriftJumpForce: 0
   GravityForce: 20
-  CenterOfMassOffset: {x: 0, y: 0, z: 0}
   MinDrag: 0.1
   MaxDrag: 0.8
-  ForwardDrag: 0.071
-  SideDrag: 0.31
   DriftGlideOrientation: 500
   DriftGlideBack: 500
   DriftBoostImpulse: 0.5
+  DriftTurnSpeed: 150
+  MaxExteriorAngle: 0.05
+  BoostPowerImpulse: 2
   TurnTorqueSpeed: 1000
   CompensationForce: 100
   TurnSlowValue: 1000
   CapSpeedInTurn: 35
+  LowerTurnSensitivity: 1.5
+  RotationStabilizationSpeed: 0.15
+  Crash: 0
   PlayerVelocity: 0
   rb: {fileID: 54115033852382540}
 --- !u!114 &114388644373576922
@@ -2652,19 +2654,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 144e9474dd840fc45847444f91315383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TurningSpeed: 130
-  LowerTurnSensitivity: 1.5
-  DriftingTurningSpeed: 170
-  DriftMaxAngle: 0.85
-  DriftMinAngle: 0.09
-  RotationStabilizationSpeed: 0.15
-  DriftTurnSpeed: 10
-  DriftTurnContrainte: 30
-  MaxExteriorAngle: 0.1
-  BalancingDriftL: 0
-  BalancingDriftR: 0
-  IsCoroutineStarted: 0
-  Crash: 0
 --- !u!114 &114479776169810722
 MonoBehaviour:
   m_ObjectHideFlags: 1

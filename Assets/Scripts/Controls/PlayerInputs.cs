@@ -10,6 +10,9 @@ namespace Controls
     {
         KartActions kartAction;
 
+        public bool disableMovements;
+        public bool disableUseItem;
+
         public void SetKart(KartActions value)
         {
             kartAction = value;
@@ -33,17 +36,20 @@ namespace Controls
 
         void Axis()
         {
-            kartAction.Accelerate(Input.GetAxis(Constants.AccelerateButton));
-            kartAction.Decelerate(Input.GetAxis(Constants.DecelerateButton));
-            kartAction.Turn(Input.GetAxis(Constants.TurnAxis));
-            kartAction.KartMeshMovement(Input.GetAxis(Constants.TurnAxis));
+            if (!disableMovements)
+            {
+                kartAction.Accelerate(Input.GetAxis(Constants.AccelerateButton));
+                kartAction.Decelerate(Input.GetAxis(Constants.DecelerateButton));
+                kartAction.Turn(Input.GetAxis(Constants.TurnAxis));
+                kartAction.KartMeshMovement(Input.GetAxis(Constants.TurnAxis));
+            }
         }
 
         void ButtonsDown()
         {
             if (Input.GetButtonDown(Constants.SpecialCapacity))
             {
-                kartAction.Jump(3 , Input.GetAxis(Constants.TurnAxis), Input.GetAxis(Constants.AccelerateButton), Input.GetAxis(Constants.UpAndDownAxis));
+                kartAction.Jump(3, Input.GetAxis(Constants.TurnAxis), Input.GetAxis(Constants.AccelerateButton), Input.GetAxis(Constants.UpAndDownAxis));
             }
             if (Input.GetButtonDown(Constants.DriftButton))
             {
@@ -51,7 +57,10 @@ namespace Controls
             }
             if (Input.GetButtonDown(Constants.UseItemButton))
             {
-                kartAction.UseItem(Input.GetAxis(Constants.UpAndDownAxis));
+                if (!disableUseItem)
+                {
+                    kartAction.UseItem(Input.GetAxis(Constants.UpAndDownAxis));
+                }
             }
         }
 

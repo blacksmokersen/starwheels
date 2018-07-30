@@ -13,7 +13,7 @@ namespace Kart
         public float HitStopKartDuration;
 
         private KartEffects kartEffects;
-        private KartOrientation KartOrientation;
+        private KartEngine kartPhysics;
         private KartSoundsScript kartSoundsScript;
         private bool invicibility = false;
         public bool dead;
@@ -21,7 +21,7 @@ namespace Kart
         private void Awake()
         {
             kartEffects = GetComponentInChildren<KartEffects>();
-            KartOrientation = GetComponent<KartOrientation>();
+            kartPhysics = GetComponent<KartEngine>();
             kartSoundsScript = FindObjectOfType<KartSoundsScript>();
 
             Health = MaxHealth;
@@ -39,7 +39,7 @@ namespace Kart
             {
                 Health--;
                 kartSoundsScript.Playerhit();
-                KartOrientation.LooseHealth(HitStopKartDuration);
+                kartPhysics.LooseHealth(HitStopKartDuration);
                 kartEffects.HealthParticlesManagement(Health);
                 StartCoroutine(Invicibility(SpamHitSecurity));
             }

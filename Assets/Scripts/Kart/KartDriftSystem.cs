@@ -21,7 +21,7 @@ namespace Kart
         [Range(0, -90)] public float BackMaxAngle;
 
         private KartStates kartStates;
-        private KartPhysics kartPhysics;
+        private KartEngine kartPhysics;
         private KartEffects kartEffects;
         private KartSoundsScript kartSoundsScript;
         private CinemachineDynamicScript cinemachineDynamicScript;
@@ -30,15 +30,12 @@ namespace Kart
         private bool driftedLongEnough;
         private Coroutine driftTimer;
         private Coroutine boostCoroutine;
-        // Drift Wydman
-        public float OnDrift;
-
         private Coroutine _turboCoroutine;
 
         private void Awake()
         {
             kartStates = GetComponentInChildren<KartStates>();
-            kartPhysics = GetComponent<KartPhysics>();
+            kartPhysics = GetComponent<KartEngine>();
             kartEffects = GetComponentInChildren<KartEffects>();
             kartSoundsScript = FindObjectOfType<KartSoundsScript>();
             cinemachineDynamicScript = FindObjectOfType<CinemachineDynamicScript>();
