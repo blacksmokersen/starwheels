@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-namespace FX {
+namespace FX
+{
     [RequireComponent(typeof(ParticleSystem))]
     public class ParticlesController : MonoBehaviour
     {

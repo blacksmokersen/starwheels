@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using Capacities;
 using Items;
 
 namespace Kart
@@ -11,29 +11,29 @@ namespace Kart
      */
     public class KartActions : MonoBehaviour
     {
+        public KartStates kartStates;
         public KartPhysics kartPhysics;
         public KartOrientation kartOrientation;
-        public KartStates kartStates;
         public KartDriftSystem kartDriftSystem;
-        public KartEffects kartEffects;
         public KartMeshMovement kartMeshMovement;
         public KartInventory kartInventory;
-        public KartSoundsScript kartSoundsScript;
         public KartHealthSystem kartHealthSystem;
+        public ICapacity kartCapacity;
 
         private float driftMinSpeedActivation = 10f;
+        private bool hasDoneDriftJump = false;
 
         void Awake()
         {
-            kartPhysics = GetComponentInParent<KartPhysics>();
-            kartOrientation = GetComponentInParent<KartOrientation>();
-            kartStates = GetComponentInParent<KartStates>();
-            kartDriftSystem = GetComponentInParent<KartDriftSystem>();
-            kartInventory = FindObjectOfType<KartInventory>();
-            kartEffects = FindObjectOfType<KartEffects>();
-            kartMeshMovement = FindObjectOfType<KartMeshMovement>();
-            kartSoundsScript = FindObjectOfType<KartSoundsScript>();
-            kartHealthSystem = GetComponentInParent<KartHealthSystem>();
+            kartStates = GetComponent<KartStates>();
+
+            kartPhysics = GetComponentInChildren<KartPhysics>();
+            kartOrientation = GetComponentInChildren<KartOrientation>();
+            kartDriftSystem = GetComponentInChildren<KartDriftSystem>();
+            kartInventory = GetComponentInChildren<KartInventory>();
+            kartMeshMovement = GetComponentInChildren<KartMeshMovement>();
+            kartHealthSystem = GetComponentInChildren<KartHealthSystem>();
+            kartCapacity = GetComponentInChildren<ICapacity>();
         }
 
         private void FixedUpdate()
@@ -53,6 +53,11 @@ namespace Kart
             kartInventory.ItemAction(direction);
         }
 
+        public void UseCapacity(float xAxis, float yAxis)
+        {
+            kartCapacity.Use(xAxis, yAxis);
+        }
+
         public void DriftJump(float value = 1f)
         {
             if (kartStates.AirState == AirStates.Grounded)
@@ -67,15 +72,15 @@ namespace Kart
             if (kartStates.IsGrounded() && kartPhysics.PlayerVelocity >= driftMinSpeedActivation)
             {
                 //kartSoundsScript.PlayDriftStart();
-                if (!HasDriftJump)
+                if (!hasDoneDriftJump)
                 {
                     kartPhysics.DriftJump();
-                    HasDriftJump = true;
+                    hasDoneDriftJump = true;
                 }
                 if (angle != 0)
                 {
                     kartDriftSystem.InitializeDrift(angle);
-                    HasDriftJump = false;
+                    hasDoneDriftJump = false;
                 }
             }
         }
@@ -84,7 +89,7 @@ namespace Kart
         {
             //  kartSoundsScript.PlayDriftEnd();
             kartDriftSystem.StopDrift();
-            HasDriftJump = false;
+            hasDoneDriftJump = false;
         }
 
         public void DriftTurns(float turnValue)

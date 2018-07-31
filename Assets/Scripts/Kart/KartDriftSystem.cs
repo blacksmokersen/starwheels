@@ -22,27 +22,20 @@ namespace Kart
 
         private KartStates kartStates;
         private KartPhysics kartPhysics;
-        private KartEffects kartEffects;
-        private KartSoundsScript kartSoundsScript;
-        private CinemachineDynamicScript cinemachineDynamicScript;
+        private KartEvents kartEvents;
 
         private bool hasTurnedOtherSide;
         private bool driftedLongEnough;
         private Coroutine driftTimer;
         private Coroutine boostCoroutine;
-        // Drift Wydman
-        public float OnDrift;
 
         private Coroutine _turboCoroutine;
 
         private void Awake()
         {
-            kartStates = GetComponentInChildren<KartStates>();
             kartPhysics = GetComponent<KartPhysics>();
-            kartEffects = GetComponentInChildren<KartEffects>();
-            kartSoundsScript = FindObjectOfType<KartSoundsScript>();
-            cinemachineDynamicScript = FindObjectOfType<CinemachineDynamicScript>();
-            kartEffects.StopSmoke();
+            kartStates = GetComponentInParent<KartStates>();
+            kartEvents = GetComponentInParent<KartEvents>();
         }
 
         private void Update()
@@ -103,7 +96,6 @@ namespace Kart
 
             if (kartStates.DriftBoostState == DriftBoostStates.NotDrifting)
             {
-                kartSoundsScript.StartDrift();
                 if (angle < 0)
                 {
                     SetKartTurnState(DriftTurnStates.DriftingLeft);
@@ -118,7 +110,6 @@ namespace Kart
 
         public void StopDrift()
         {
-            kartSoundsScript.EndDrift();
             if (kartStates.DriftBoostState == DriftBoostStates.RedDrift)
             {
                 _turboCoroutine = StartCoroutine(EnterTurbo());
@@ -134,8 +125,6 @@ namespace Kart
             SetKartTurnState(DriftTurnStates.NotDrifting);
             SetKartBoostState(DriftBoostStates.NotDrifting, ColorId.Gray);
             driftedLongEnough = false;
-            // hasTurnedOtherSide = false;
-            kartEffects.StopSmoke();
             if (driftTimer != null)
             {
                 StopCoroutine(driftTimer);
@@ -159,10 +148,9 @@ namespace Kart
 
         private IEnumerator EnterTurbo()
         {
-            kartSoundsScript.BoostSound();
             if (boostCoroutine != null) StopCoroutine(boostCoroutine);
-            boostCoroutine = StartCoroutine(kartPhysics.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));
-            cinemachineDynamicScript.BoostCameraBehaviour();
+            kartEvents.OnDriftBoost();
+            boostCoroutine = StartCoroutine(kartPhysics.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));            
             SetKartBoostState(DriftBoostStates.Turbo, ColorId.Green);
             SetKartTurnState(DriftTurnStates.NotDrifting);
             yield return new WaitForSeconds(BoostDuration);
@@ -190,13 +178,14 @@ namespace Kart
         private void RPCSetKartBoostState(DriftBoostStates state, ColorId colorId)
         {
             kartStates.DriftBoostState = state;
-
+            /*
             if (state != DriftBoostStates.NotDrifting)
                 kartEffects.StartSmoke();
             else
                 kartEffects.StopSmoke();
 
             kartEffects.SetWheelsColor(ColorIdToColor(colorId));
+            */
         }
 
         [PunRPC]

@@ -27,10 +27,14 @@ namespace Kart {
         public float VelocityDetectionThreshold;
 
         private Rigidbody rb;
+        private KartEvents kartEvents;
 
         private void Awake()
         {
-            rb = GetComponentInParent<Rigidbody>();
+            kartEvents = GetComponent<KartEvents>();
+            rb = GetComponentInChildren<Rigidbody>();
+
+            kartEvents.OnCollisionEnterGround += () => AirState = AirStates.Grounded;
         }
 
         public void FixedUpdate()
@@ -43,7 +47,6 @@ namespace Kart {
         {
             if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), DistanceForGrounded, 1 << LayerMask.NameToLayer(Constants.GroundLayer)))
             {
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * DistanceForGrounded, Color.yellow);
                 AirState = AirStates.Grounded;
             }
             else

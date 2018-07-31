@@ -1,14 +1,31 @@
-﻿using System;
+﻿using UnityEngine;
+using System;
 using Items;
 
-public static class KartEvents
+namespace Kart
 {
-	public static Action<float> OnVelocityChange;
-    public static Action<ItemData,int> OnItemUsed;
-    public static Action OnHit;
+    public class KartEvents : MonoBehaviour
+    {
+        public Action<float> OnVelocityChange;
+        public Action<ItemData, int> OnItemUsed;
+        public Action OnHit;
 
-    // Jumping Capacity
-    public static Action OnJump;
-    public static Action<Directions> OnDoubleJump;
-    public static Action OnDoubleJumpReset;
+        // Collisions
+        public Action OnCollisionEnterGround;
+        public Action OnCollisionEnterItemBox;
+        public Action OnCollisionItemBox;
+
+        // Jumping Capacity
+        public Action OnJump;
+        public Action<Directions> OnDoubleJump;
+        public Action OnDoubleJumpReset;
+
+        // Drifting
+        public Action OnDriftStart;
+        public Action OnDrifting;
+        public Action OnDriftEnd;
+        public Action OnDriftBoost;
+        public Action OnDriftReset;
+        public Action OnDriftNextState;
+    }
 }

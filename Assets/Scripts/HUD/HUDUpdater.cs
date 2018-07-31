@@ -18,8 +18,8 @@ namespace HUD
         {
             StartCoroutine(UpdateRoutine());
             
-            KartEvents.OnVelocityChange += (vel) => SpeedText.text = "Speed : " + vel;
-            KartEvents.OnItemUsed += UpdateItem;
+            //KartEvents.OnVelocityChange += (vel) => SpeedText.text = "Speed : " + vel;
+            //KartEvents.OnItemUsed += UpdateItem;
         }
         
         IEnumerator UpdateRoutine()

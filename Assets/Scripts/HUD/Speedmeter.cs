@@ -17,7 +17,7 @@ namespace HUD
 
         private void Awake()
         {
-            KartEvents.OnVelocityChange += SpeedmeterBehaviour;
+            //KartEvents.OnVelocityChange += SpeedmeterBehaviour;
         }
 
         public void SpeedmeterBehaviour(float kartVelocity)

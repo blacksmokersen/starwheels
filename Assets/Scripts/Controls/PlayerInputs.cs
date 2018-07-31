@@ -6,7 +6,7 @@ namespace Controls
     /* 
      * Class for handling player inputs
      */
-    public class PlayerInputs : MonoBehaviour
+    public class PlayerInputs : BaseKartComponent
     {
         KartActions kartAction;
 
@@ -43,7 +43,7 @@ namespace Controls
         {
             if (Input.GetButtonDown(Constants.SpecialCapacity))
             {
-                kartAction.Jump(3 , Input.GetAxis(Constants.TurnAxis), Input.GetAxis(Constants.AccelerateButton), Input.GetAxis(Constants.UpAndDownAxis));
+                kartAction.UseCapacity(Input.GetAxis(Constants.TurnAxis), Input.GetAxis(Constants.UpAndDownAxis));
             }
             if (Input.GetButtonDown(Constants.DriftButton))
             {

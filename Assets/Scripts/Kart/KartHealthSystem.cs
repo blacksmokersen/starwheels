@@ -12,18 +12,12 @@ namespace Kart
         public float SpamHitSecurity;
         public float HitStopKartDuration;
 
-        private KartEffects kartEffects;
         private KartOrientation KartOrientation;
-        private KartSoundsScript kartSoundsScript;
-        private bool invicibility = false;
-        public bool dead;
+        private bool isInvincible = false;
+        private bool isDead = false;
 
         private void Awake()
         {
-            kartEffects = GetComponentInChildren<KartEffects>();
-            KartOrientation = GetComponent<KartOrientation>();
-            kartSoundsScript = FindObjectOfType<KartSoundsScript>();
-
             Health = MaxHealth;
         }
 
@@ -35,32 +29,28 @@ namespace Kart
         [PunRPC]
         public void RPCHealthLoss()
         {
-            if (!invicibility)
+            if (!isInvincible)
             {
                 Health--;
-                kartSoundsScript.Playerhit();
-                KartOrientation.LooseHealth(HitStopKartDuration);
-                kartEffects.HealthParticlesManagement(Health);
                 StartCoroutine(Invicibility(SpamHitSecurity));
             }
-            if(Health <= 0 && !dead)
+            if(Health <= 0 && !isDead)
             {
                 GetComponentInParent<Rigidbody>().transform.position = new Vector3(-221, 3, 0);
-                dead = true;                
+                isDead = true;                
             }
         }
 
         public void ResetLives()
         {
             Health = MaxHealth;
-            kartEffects.ResetLives();
         }
 
         IEnumerator Invicibility(float invicibilityDuration)
         {
-            invicibility = true;
+            isInvincible = true;
             yield return new WaitForSeconds(invicibilityDuration);
-            invicibility = false;
+            isInvincible = false;
         }
     }
 }

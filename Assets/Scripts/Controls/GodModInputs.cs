@@ -5,7 +5,7 @@ using HUD;
 
 namespace Controls
 {
-    public class GodModInputs : MonoBehaviour
+    public class GodModInputs : BaseKartComponent
     {
         public bool Enabled = true;
 
@@ -54,7 +54,7 @@ namespace Controls
             var items = ItemsLottery.Items;
             var itemIndex = (ActualItemIndex++) % items.Length;
             kartInventory.Item = items[itemIndex];
-            FindObjectOfType<HUDUpdater>().UpdateItem(kartInventory.Item);
+            FindObjectOfType<HUDUpdater>().UpdateItem(kartInventory.Item,kartInventory.Count);
             SetUnlimitedItems();
         }
 

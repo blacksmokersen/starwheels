@@ -4,7 +4,7 @@ using Kart;
 
 namespace Controls
 {
-    public class DebugInputs : MonoBehaviour
+    public class DebugInputs : BaseKartComponent
     {
         KartHealthSystem kartHealthSystem;
         GameObject kart;

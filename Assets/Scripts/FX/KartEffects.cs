@@ -3,7 +3,7 @@
 
 namespace FX
 {
-    public class KartEffects : MonoBehaviour
+    public class KartEffects : BaseKartComponent
     {
         [HideInInspector] public ParticleSystem smokeLeftWheel;
         [HideInInspector] public ParticleSystem smokeRightWheel;
@@ -15,10 +15,13 @@ namespace FX
         public ParticleSystem JumpReloadParticles;
         public int NumberOfParticles = 300;
 
-        private void Awake()
+        private new void Awake()
         {
-            KartEvents.OnJump += MainJumpParticlesEmit;
-            KartEvents.OnDoubleJumpReset += ReloadJumpParticlesEmit;
+            base.Awake();
+            kartEvents.OnJump += MainJumpParticlesEmit;
+            kartEvents.OnDoubleJumpReset += ReloadJumpParticlesEmit;
+            kartEvents.OnDriftBoost += StartSmoke;
+            kartEvents.OnDriftReset += StopSmoke;
         }
 
         public void StopSmoke()

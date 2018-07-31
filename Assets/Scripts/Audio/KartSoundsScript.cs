@@ -2,7 +2,7 @@
 
 namespace Audio
 {
-    public class KartSoundsScript : MonoBehaviour
+    public class KartSoundsScript : BaseKartComponent
     {
         // Clips
         public AudioClip MotorAccel;
@@ -21,8 +21,9 @@ namespace Audio
         private AudioSource motorSource;
         private AudioSource driftSource;
 
-        private void Awake()
+        private new void Awake()
         {
+            base.Awake();
             soundManager = gameObject.AddComponent<AudioSource>();
             soundManager.spatialBlend = 1f;
 
@@ -38,7 +39,7 @@ namespace Audio
 
             PlayMotor();
 
-            KartEvents.OnJump += PlayFirstJump;
+            //KartEvents.OnJump += PlayFirstJump;
             //KartEvents.OnDoubleJump += PlaySecondJump;
         }
 

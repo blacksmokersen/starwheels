@@ -6,7 +6,7 @@ namespace Kart
     /*
      * Class for handling the Kart orientation (drift, turn etc.)
      */
-    public class KartOrientation : MonoBehaviour
+    public class KartOrientation : BaseKartComponent
     {
         private KartStates kartStates;
 
@@ -37,9 +37,9 @@ namespace Kart
         private Coroutine c2;
 
 
-        private void Awake()
+        private new void Awake()
         {
-            kartStates = GetComponentInChildren<KartStates>();
+            kartStates = GetComponentInParent<KartStates>();
         }
 
         private void FixedUpdate()

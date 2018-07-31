@@ -12,8 +12,7 @@ namespace Kart
      * - Drag
      * - Torques
      */
-    [RequireComponent(typeof(Rigidbody))]
-    public class KartPhysics : MonoBehaviour
+    public class KartPhysics : BaseKartComponent
     {
         [Header("Driving")]
         public float Speed;
@@ -44,7 +43,6 @@ namespace Kart
         public float CapSpeedInTurn;
 
         private KartStates kartStates;
-        private KartSoundsScript kartSounds;
 
         public float PlayerVelocity;
         public Rigidbody rb;
@@ -53,13 +51,12 @@ namespace Kart
         private float controlSpeed;
         private float currentTimer;
 
-        private void Awake()
+        private new void Awake()
         {
             controlMagnitude = MaxMagnitude;
             controlSpeed = Speed;
-            kartStates = GetComponentInChildren<KartStates>();
-            kartSounds = GetComponentInChildren<KartSoundsScript>();
-            rb = GetComponent<Rigidbody>();
+            kartStates = GetComponentInParent<KartStates>();
+            rb = GetComponentInParent<Rigidbody>();
             rb.centerOfMass = CenterOfMassOffset;
         }
 
@@ -68,10 +65,10 @@ namespace Kart
             Vector3 localVelocity = transform.InverseTransformDirection(rb.velocity);
             PlayerVelocity = localVelocity.z;
 
-            if (KartEvents.OnVelocityChange != null)
-                KartEvents.OnVelocityChange(rb.velocity.magnitude);
+            //if (KartEvents.OnVelocityChange != null)
+                //KartEvents.OnVelocityChange(rb.velocity.magnitude);
 
-            kartSounds.SetMotorPitch(0.5f + 0.5f * (localVelocity.magnitude / MaxMagnitude));
+            //kartSounds.SetMotorPitch(0.5f + 0.5f * (localVelocity.magnitude / MaxMagnitude));
         }
 
         private void FixedUpdate()
