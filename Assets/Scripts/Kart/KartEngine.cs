@@ -13,7 +13,7 @@ namespace Kart
      * - Torques
      */
     [RequireComponent(typeof(Rigidbody))]
-    public class KartEngine : MonoBehaviour
+    public class KartEngine : BaseKartComponent
     {
         [Header("Driving")]
         public float Speed;
@@ -49,7 +49,7 @@ namespace Kart
         public bool Crash;
 
         private KartStates kartStates;
-        private KartSoundsScript kartSounds;
+       // private KartSoundsScript kartSounds;
 
         public float PlayerVelocity;
         public Rigidbody rb;
@@ -63,7 +63,7 @@ namespace Kart
             controlMagnitude = MaxMagnitude;
             controlSpeed = Speed;
             kartStates = GetComponentInChildren<KartStates>();
-            kartSounds = GetComponentInChildren<KartSoundsScript>();
+          //  kartSounds = GetComponentInChildren<KartSoundsScript>();
             rb = GetComponent<Rigidbody>();
         }
 

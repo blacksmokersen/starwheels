@@ -21,7 +21,7 @@ namespace Kart
         [Range(0, -90)] public float BackMaxAngle;
 
         private KartStates kartStates;
-        private KartPhysics kartPhysics;
+        private KartEngine kartEngine;
         private KartEvents kartEvents;
 
         private bool hasTurnedOtherSide;
@@ -33,7 +33,7 @@ namespace Kart
 
         private void Awake()
         {
-            kartPhysics = GetComponent<KartPhysics>();
+            kartEngine = GetComponent<KartEngine>();
             kartStates = GetComponentInParent<KartStates>();
             kartEvents = GetComponentInParent<KartEvents>();
             kartEvents.OnDriftWhite += EnterNormalDrift;
@@ -51,7 +51,7 @@ namespace Kart
 
         public void DriftForces()
         {
-            kartPhysics.DriftUsingForce();
+            kartEngine.DriftUsingForce();
         }
 
         public void CheckNewTurnDirection()
@@ -153,7 +153,7 @@ namespace Kart
         {
             if (boostCoroutine != null) StopCoroutine(boostCoroutine);
             kartEvents.OnDriftBoost();
-            boostCoroutine = StartCoroutine(kartPhysics.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));            
+            boostCoroutine = StartCoroutine(kartEngine.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));            
             SetKartBoostState(DriftBoostStates.Turbo, ColorId.Green);
             SetKartTurnState(DriftTurnStates.NotDrifting);
             yield return new WaitForSeconds(BoostDuration);
