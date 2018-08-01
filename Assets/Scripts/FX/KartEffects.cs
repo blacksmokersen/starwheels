@@ -20,8 +20,9 @@ namespace FX
             base.Awake();
             kartEvents.OnJump += MainJumpParticlesEmit;
             kartEvents.OnDoubleJumpReset += ReloadJumpParticlesEmit;
-            kartEvents.OnDriftBoost += StartSmoke;
+            kartEvents.OnDrifting += StartSmoke;
             kartEvents.OnDriftReset += StopSmoke;
+            kartEvents.OnDriftReset();
         }
 
         public void StopSmoke()

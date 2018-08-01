@@ -91,6 +91,7 @@ namespace Kart
 
         public void InitializeDrift(float angle)
         {
+            kartEvents.OnDrifting();
             if (_turboCoroutine != null)
             {
                 StopCoroutine(_turboCoroutine);
@@ -125,6 +126,7 @@ namespace Kart
 
         public void ResetDrift()
         {
+            kartEvents.OnDriftReset();
             SetKartTurnState(DriftTurnStates.NotDrifting);
             SetKartBoostState(DriftBoostStates.NotDrifting, ColorId.Gray);
             driftedLongEnough = false;
@@ -169,7 +171,6 @@ namespace Kart
 
         private void SetKartBoostState(DriftBoostStates state, ColorId colorId)
         {
-            Debug.Log(colorId);
             this.ExecuteRPC(PhotonTargets.All, "RPCSetKartBoostState", state, colorId);
         }
 
