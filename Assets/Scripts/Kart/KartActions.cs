@@ -12,8 +12,7 @@ namespace Kart
     public class KartActions : MonoBehaviour
     {
         public KartStates kartStates;
-        public KartPhysics kartPhysics;
-        public KartOrientation kartOrientation;
+        public KartEngine kartEngine;
         public KartDriftSystem kartDriftSystem;
         public KartMeshMovement kartMeshMovement;
         public KartInventory kartInventory;
@@ -27,8 +26,7 @@ namespace Kart
         {
             kartStates = GetComponent<KartStates>();
 
-            kartPhysics = GetComponentInChildren<KartPhysics>();
-            kartOrientation = GetComponentInChildren<KartOrientation>();
+            kartEngine = GetComponentInChildren<KartEngine>();
             kartDriftSystem = GetComponentInChildren<KartDriftSystem>();
             kartInventory = GetComponentInChildren<KartInventory>();
             kartMeshMovement = GetComponentInChildren<KartMeshMovement>();
@@ -40,8 +38,8 @@ namespace Kart
         {
             if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
             {
-                kartPhysics.CompensateSlip();
-                kartOrientation.NotDrifting();
+                kartEngine.CompensateSlip();
+              //  kartOrientation.NotDrifting();
             }
         }
 
@@ -62,14 +60,14 @@ namespace Kart
         {
             if (kartStates.AirState == AirStates.Grounded)
             {
-                kartPhysics.DriftJump(value);
+                kartEngine.DriftJump(value);
                 kartStates.AirState = AirStates.InAir;
             }
         }
 
         public void InitializeDrift(float angle)
         {
-            if (kartStates.IsGrounded() && kartPhysics.PlayerVelocity >= driftMinSpeedActivation)
+            if (kartStates.IsGrounded() && kartEngine.PlayerVelocity >= driftMinSpeedActivation)
             {
                 //kartSoundsScript.PlayDriftStart();
                 if (!hasDoneDriftJump)

@@ -18,13 +18,13 @@ namespace Capacities
         private bool canDoubleJump = true;
 
         private KartStates kartStates;
-        private KartPhysics kartPhysics;
+        private KartEngine kartEngine;
 
         private new void Awake()
         {
             base.Awake();
             kartStates = GetComponentInParent<KartStates>();
-            kartPhysics = GetComponent<KartPhysics>();
+            kartEngine = GetComponent<KartEngine>();
         }
 
         public void Use(float xAxis, float yAxis)
@@ -45,7 +45,7 @@ namespace Capacities
                 {
                     hasDoneFirstJump = true;
                     StartCoroutine(StartCooldownDoubleJump());
-                    kartPhysics.Jump();
+                    kartEngine.Jump();
                 }
             }
         }
@@ -56,28 +56,28 @@ namespace Capacities
             {
                 if (yAxis <= -0.2f)
                 {
-                    kartPhysics.DoubleJump(Vector3.back, 0.5f);
+                    kartEngine.DoubleJump(Vector3.back, 0.5f);
                 }
                 else if (yAxis >= 0.2f)
                 {
-                    kartPhysics.DoubleJump(Vector3.forward, 0.5f);
+                    kartEngine.DoubleJump(Vector3.forward, 0.5f);
                 }
                 else
                 {
-                    kartPhysics.DoubleJump(Vector3.forward, 0f);
+                    kartEngine.DoubleJump(Vector3.forward, 0f);
                 }
             }
             else if (xAxis <= -0.5f)
             {
-                kartPhysics.DoubleJump(Vector3.left, 1f);
+                kartEngine.DoubleJump(Vector3.left, 1f);
             }
             else if (xAxis >= 0.5f)
             {
-                kartPhysics.DoubleJump(Vector3.right, 1f);
+                kartEngine.DoubleJump(Vector3.right, 1f);
             }
             else
             {
-                kartPhysics.DoubleJump(Vector3.forward, 0f);
+                kartEngine.DoubleJump(Vector3.forward, 0f);
             }
             if (kartEvents.OnDoubleJump != null)
             {
