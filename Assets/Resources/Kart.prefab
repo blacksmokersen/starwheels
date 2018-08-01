@@ -2855,10 +2855,16 @@ MonoBehaviour:
   DriftGlideOrientation: 500
   DriftGlideBack: 500
   DriftBoostImpulse: 0.5
+  DriftTurnSpeed: 150
+  MaxExteriorAngle: 0.05
+  BoostPowerImpulse: 2
   TurnTorqueSpeed: 1000
   CompensationForce: 100
   TurnSlowValue: 1000
   CapSpeedInTurn: 35
+  LowerTurnSensitivity: 1.5
+  RotationStabilizationSpeed: 0.15
+  Crash: 0
   PlayerVelocity: 0
   rb: {fileID: 54115033852382540}
 --- !u!114 &114154857888813766
@@ -2995,8 +3001,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kartStates: {fileID: 0}
-  kartPhysics: {fileID: 0}
-  kartOrientation: {fileID: 0}
+  kartEngine: {fileID: 0}
   kartDriftSystem: {fileID: 0}
   kartMeshMovement: {fileID: 0}
   kartInventory: {fileID: 0}

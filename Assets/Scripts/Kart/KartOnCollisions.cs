@@ -25,14 +25,14 @@ namespace Kart {
             }
             else if(collision.gameObject.layer == LayerMask.NameToLayer(Constants.GroundLayer))
             {
-                GetComponent<KartPhysics>().rb.constraints = RigidbodyConstraints.FreezeRotationY;
+                GetComponent<KartEngine>().rb.constraints = RigidbodyConstraints.FreezeRotationY;
             }
         }
         private void OnTriggerExit(Collider trigger)
         {
             if (trigger.gameObject.layer == LayerMask.NameToLayer(Constants.GroundLayer))
             {
-                GetComponent<KartPhysics>().rb.constraints = RigidbodyConstraints.None;
+                GetComponent<KartEngine>().rb.constraints = RigidbodyConstraints.None;
             }
         }
     }

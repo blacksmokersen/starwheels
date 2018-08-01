@@ -12,7 +12,6 @@ namespace Kart
         public float SpamHitSecurity;
         public float HitStopKartDuration;
 
-        private KartOrientation KartOrientation;
         private bool isInvincible = false;
         private bool isDead = false;
 
