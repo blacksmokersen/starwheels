@@ -19,14 +19,17 @@ namespace Kart
         public float Speed;
         public float MaxMagnitude;
 
-        [Header("Gravity")]
+                [Header("Gravity")]
         public float JumpForce;
         public float DoubleJumpUpForce;
         public float DoubleJumpDirectionalForce;
         public float DriftJumpForce;
         public float GravityForce;
+        [HideInInspector] public Vector3 CenterOfMassOffset;
         [Range(0, 1)] public float MinDrag;
         [Range(0, 10)] public float MaxDrag;
+        [Range(0, 1)] [HideInInspector] public float ForwardDrag;
+        [Range(0, 1)] [HideInInspector] public float SideDrag;
 
         [Header("Drift")]
         public float DriftGlideOrientation = 500f;
@@ -58,13 +61,13 @@ namespace Kart
         private float controlSpeed;
         private float currentTimer;
 
-        private void Awake()
+        private new void Awake()
         {
             controlMagnitude = MaxMagnitude;
             controlSpeed = Speed;
-            kartStates = GetComponentInChildren<KartStates>();
-          //  kartSounds = GetComponentInChildren<KartSoundsScript>();
-            rb = GetComponent<Rigidbody>();
+            kartStates = GetComponentInParent<KartStates>();
+            rb = GetComponentInParent<Rigidbody>();
+            rb.centerOfMass = CenterOfMassOffset;
         }
 
         private void Update()
@@ -72,10 +75,10 @@ namespace Kart
             Vector3 localVelocity = transform.InverseTransformDirection(rb.velocity);
             PlayerVelocity = localVelocity.z;
 
-            if (KartEvents.OnAccelerate != null)
-                KartEvents.OnAccelerate(rb.velocity.magnitude);
+         //   if (KartEvents.OnAccelerate != null)
+          //      KartEvents.OnAccelerate(rb.velocity.magnitude);
 
-            kartSounds.SetMotorPitch(0.5f + 0.5f * (localVelocity.magnitude / MaxMagnitude));
+          //  kartSounds.SetMotorPitch(0.5f + 0.5f * (localVelocity.magnitude / MaxMagnitude));
         }
 
         private void FixedUpdate()
