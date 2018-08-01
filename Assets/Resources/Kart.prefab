@@ -135,6 +135,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4128777764343606}
+  - component: {fileID: 114720366856625552}
   m_Layer: 0
   m_Name: SuspFrontWheelLeft
   m_TagString: Untagged
@@ -296,6 +297,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4210291990689344}
+  - component: {fileID: 114263361945398766}
   m_Layer: 0
   m_Name: SuspFrontWheelRight
   m_TagString: Untagged
@@ -565,6 +567,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4759352761782908}
+  - component: {fileID: 114437552106793634}
   m_Layer: 0
   m_Name: SuspBackWheelRight
   m_TagString: Untagged
@@ -666,7 +669,6 @@ GameObject:
   - component: {fileID: 114692228242510426}
   - component: {fileID: 114036712901225322}
   - component: {fileID: 114652410024878400}
-  - component: {fileID: 114719977995497674}
   - component: {fileID: 114856262253480868}
   m_Layer: 0
   m_Name: Physics
@@ -962,6 +964,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4446854616182560}
+  - component: {fileID: 114734951961975512}
   m_Layer: 0
   m_Name: SuspBackWheelLeft
   m_TagString: Untagged
@@ -2825,8 +2828,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 114550539497350264}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 1
+  instantiationId: 1
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114112653764666390
@@ -2878,6 +2881,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3a5f180be8605649898fe4bee32abe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114263361945398766
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1373310153574120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 293a2cefac4fdb34ca0ee5a35c7c62b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxExtensionDistance: 0.5
+  SuspensionStiffness: 1
+  ForceToApply: 40
 --- !u!114 &114312923405342584
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2925,6 +2942,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaddb6dc064490b4c9461bc9664ef0f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114437552106793634
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1638164680151698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 293a2cefac4fdb34ca0ee5a35c7c62b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxExtensionDistance: 0.5
+  SuspensionStiffness: 1
+  ForceToApply: 40
 --- !u!114 &114440973840230504
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3205,30 +3236,20 @@ MonoBehaviour:
   MaxExtensionDistance: 0.5
   SuspensionStiffness: 1
   ForceToApply: 40
---- !u!114 &114719977995497674
+--- !u!114 &114720366856625552
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1677194719357208}
+  m_GameObject: {fileID: 1140266490728188}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 144e9474dd840fc45847444f91315383, type: 3}
+  m_Script: {fileID: 11500000, guid: 293a2cefac4fdb34ca0ee5a35c7c62b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TurningSpeed: 130
-  LowerTurnSensitivity: 1.5
-  DriftingTurningSpeed: 170
-  DriftMaxAngle: 0.85
-  DriftMinAngle: 0.09
-  RotationStabilizationSpeed: 0.15
-  DriftTurnSpeed: 10
-  DriftTurnContrainte: 30
-  MaxExteriorAngle: 0.1
-  BalancingDriftL: 0
-  BalancingDriftR: 0
-  IsCoroutineStarted: 0
-  Crash: 0
+  MaxExtensionDistance: 0.5
+  SuspensionStiffness: 1
+  ForceToApply: 40
 --- !u!114 &114734285404761398
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3254,6 +3275,20 @@ MonoBehaviour:
   m_SoftZoneHeight: 0
   m_BiasX: 0
   m_BiasY: 0
+--- !u!114 &114734951961975512
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1941726866644896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 293a2cefac4fdb34ca0ee5a35c7c62b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxExtensionDistance: 0.5
+  SuspensionStiffness: 1
+  ForceToApply: 40
 --- !u!114 &114738576795421352
 MonoBehaviour:
   m_ObjectHideFlags: 1
