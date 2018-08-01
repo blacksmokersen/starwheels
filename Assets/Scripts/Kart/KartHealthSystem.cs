@@ -14,10 +14,13 @@ namespace Kart
 
         private bool isInvincible = false;
         private bool isDead = false;
+        private KartEvents kartEvents;
 
         private void Awake()
         {
             Health = MaxHealth;
+            kartEvents = GetComponentInParent<KartEvents>();
+            kartEvents.OnHit += HealthLoss;
         }
 
         public void HealthLoss()

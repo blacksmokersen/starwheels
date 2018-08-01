@@ -24,6 +24,7 @@ namespace Audio
         private new void Awake()
         {
             base.Awake();
+            kartEvents.OnHit += Playerhit;
             soundManager = gameObject.AddComponent<AudioSource>();
             soundManager.spatialBlend = 1f;
 
