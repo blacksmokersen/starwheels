@@ -22,6 +22,9 @@ namespace Kart
 
         // Drifting
         public Action OnDriftStart;
+        public Action OnDriftWhite;
+        public Action OnDriftOrange;
+        public Action OnDriftRed;
         public Action OnDrifting;
         public Action OnDriftEnd;
         public Action OnDriftBoost;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class CinemachineDynamicScript : MonoBehaviour
+public class CinemachineDynamicScript : BaseKartComponent
 {
     [Range(7.5f, 15)] public float MaxDistanceCamInBoost;
 
@@ -13,8 +13,11 @@ public class CinemachineDynamicScript : MonoBehaviour
 
     private float currentTimer;
 
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
+        kartEvents.OnDriftBoost += BoostCameraBehaviour;
+
         cinemachine = GetComponent<CinemachineVirtualCamera>();
         transposer = cinemachine.GetCinemachineComponent<CinemachineTransposer>();
     }

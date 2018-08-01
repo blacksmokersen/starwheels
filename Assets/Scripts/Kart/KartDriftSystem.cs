@@ -36,6 +36,9 @@ namespace Kart
             kartPhysics = GetComponent<KartPhysics>();
             kartStates = GetComponentInParent<KartStates>();
             kartEvents = GetComponentInParent<KartEvents>();
+            kartEvents.OnDriftWhite += EnterNormalDrift;
+            kartEvents.OnDriftOrange += EnterOrangeDrift;
+            kartEvents.OnDriftRed += EnterRedDrift;
         }
 
         private void Update()
@@ -72,13 +75,13 @@ namespace Kart
             switch (kartStates.DriftBoostState)
             {
                 case DriftBoostStates.NotDrifting:
-                    EnterNormalDrift();
+                    kartEvents.OnDriftWhite();
                     break;
                 case DriftBoostStates.SimpleDrift:
-                    EnterOrangeDrift();
+                    kartEvents.OnDriftOrange();
                     break;
                 case DriftBoostStates.OrangeDrift:
-                    EnterRedDrift();
+                    kartEvents.OnDriftRed();
                     break;
                 case DriftBoostStates.RedDrift:
                     break;
@@ -166,6 +169,7 @@ namespace Kart
 
         private void SetKartBoostState(DriftBoostStates state, ColorId colorId)
         {
+            Debug.Log(colorId);
             this.ExecuteRPC(PhotonTargets.All, "RPCSetKartBoostState", state, colorId);
         }
 
