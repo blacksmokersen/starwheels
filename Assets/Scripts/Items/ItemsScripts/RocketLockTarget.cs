@@ -31,11 +31,11 @@ namespace Items
         }
 
         private void OnTriggerStay(Collider other)
-        {
+        {            
             if (other.gameObject.tag == Constants.KartRigidBodyTag && activated)
             {
                 if (other.GetComponentInParent<KartInventory>() == Owner) return;
-                if (IsKartIsCloserThanActualTarget(other.gameObject))
+                if (IsKartIsCloserThanActualTarget(other.gameObject) || ActualTarget == null)
                 {
                     ActualTarget = other.gameObject;
                     actualTargetDistance = Vector3.Distance(transform.position, ActualTarget.transform.position);
@@ -51,7 +51,7 @@ namespace Items
         }
 
         public bool IsKartIsCloserThanActualTarget(GameObject kart)
-        {
+        {            
             return Vector3.Distance(transform.position, kart.transform.position) < actualTargetDistance;
         }
     }
