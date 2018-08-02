@@ -33,8 +33,11 @@ namespace Kart
         public float DriftGlideBack = 500f;
         [Range(0, 2)] public float DriftBoostImpulse = 0.5f;
         public float DriftTurnSpeed = 150;
-        public float MaxExteriorAngle = 0.05f;
+        public float MaxInteriorAngle = 400;
+        public float MaxExteriorAngle = 40;
         public float BoostPowerImpulse;
+        public const float JoystickDeadZone1 = 0.1f;
+        public const float JoystickDeadZone2 = 0.2f;
 
         [Header("Turn")]
         public float TurnTorqueSpeed;
@@ -162,6 +165,25 @@ namespace Kart
 
         public void DriftTurn(float angle)
         {
+            float angleRestrain = angle;
+            if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
+            {
+                angleRestrain = angle <= -JoystickDeadZone2 ? MaxInteriorAngle : angle >= JoystickDeadZone1 ? MaxExteriorAngle : 100;
+                angle = angle <= -JoystickDeadZone2 ? angle : angle >= JoystickDeadZone1 ? angle : 1;
+
+                rb.AddTorque(Vector3.up * (-angleRestrain * Mathf.Abs(angle)) * DriftTurnSpeed * Time.deltaTime);
+            }
+            else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
+            {
+                angleRestrain = angle <= -JoystickDeadZone2 ? MaxExteriorAngle : angle >= JoystickDeadZone1 ? MaxInteriorAngle : 100;
+                angle = angle <= -JoystickDeadZone2 ? angle : angle >= JoystickDeadZone1 ? angle : 1;
+
+                rb.AddTorque(Vector3.up * (angleRestrain * Mathf.Abs(angle)) * DriftTurnSpeed * Time.deltaTime);
+            }
+        }
+        /*
+        public void DriftTurn(float angle)
+        {
             if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
             {
                 if (angle != 0)
@@ -178,7 +200,7 @@ namespace Kart
             }
             transform.Rotate(Vector3.up * angle * DriftTurnSpeed * Time.deltaTime);
         }
-
+        */
         public void StabilizeRotation()
         {
             if (kartStates.AirState == AirStates.InAir)
