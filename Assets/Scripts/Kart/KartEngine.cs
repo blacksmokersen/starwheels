@@ -39,6 +39,8 @@ namespace Kart
         public float MaxInteriorAngle = 400;
         public float MaxExteriorAngle = 40;
         public float BoostPowerImpulse;
+        public const float JoystickDeadZone1 = 0.1f;
+        public const float JoystickDeadZone2 = 0.2f;
 
         [Header("Turn")]
         public float TurnTorqueSpeed;
@@ -136,7 +138,6 @@ namespace Kart
             }
         }
 
-
         public void Jump(float percentage = 1f)
         {
             rb.AddRelativeForce(Vector3.up * JumpForce * percentage, ForceMode.Impulse);
@@ -166,67 +167,20 @@ namespace Kart
 
         public void DriftTurn(float angle)
         {
-            //TODO refaire tout le systeme d'angle en drift compatible avec le torque
-            /*
-            if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
-            {
-                if (angle != 0)
-                    angle = Mathf.Clamp(angle, -0.8f, -MaxExteriorAngle);
-                else
-                    angle = Mathf.Clamp(angle, -0.8f, -0.2f);
-            }
-            else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
-            {
-                if (angle != 0)
-                    angle = Mathf.Clamp(angle, MaxExteriorAngle, 0.8f);
-                else
-                    angle = Mathf.Clamp(angle, 0.2f, 0.8f);
-            }
-            */
-
             float angleRestrain = angle;
             if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
             {
-                
-                if (angle <= -0.2)
-                {
-                    angleRestrain = MaxInteriorAngle;
-                }
-                else if (angle >= 0.1)
-                {
-                    angleRestrain = MaxExteriorAngle;
-                }
-                else
-                {
-                    angle = 1;
-                    angleRestrain = 100f;
-                }
-                
-               // angleRestrain = angle <= -0.2 ? 200 : angle >= 0.1 ? 40 : 100;
-                // quand on relache  ça donne 0 car 100 * 0
-                //quand on driftLeft avec le joystick un tout pti peu a gauche ça donne une valeur minimale de environ 1
-                // on veut que ce soit bloqué au minimim plus que l'angle exterieur
+                angleRestrain = angle <= -JoystickDeadZone2 ? MaxInteriorAngle : angle >= JoystickDeadZone1 ? MaxExteriorAngle : 100;
+                angle = angle <= -JoystickDeadZone2 ? angle : angle >= JoystickDeadZone1 ? angle : 1;
 
                 rb.AddTorque(Vector3.up * (-angleRestrain * Mathf.Abs(angle)) * DriftTurnSpeed * Time.deltaTime);
-                Debug.Log(-angleRestrain * Mathf.Abs(angle));
             }
             else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
             {
-                if (angle <= -0.1)
-                {
-                    angleRestrain = MaxExteriorAngle;
-                }
-                else if (angle >= 0.2)
-                {
-                    angleRestrain = MaxInteriorAngle;
-                }
-                else
-                {
-                    angle = 1;
-                    angleRestrain = 100f;
-                }
+                angleRestrain = angle <= -JoystickDeadZone2 ? MaxExteriorAngle : angle >= JoystickDeadZone1 ? MaxInteriorAngle : 100;
+                angle = angle <= -JoystickDeadZone2 ? angle : angle >= JoystickDeadZone1 ? angle : 1;
+
                 rb.AddTorque(Vector3.up * (angleRestrain * Mathf.Abs(angle)) * DriftTurnSpeed * Time.deltaTime);
-                Debug.Log(angleRestrain * Mathf.Abs(angle));
             }
         }
 

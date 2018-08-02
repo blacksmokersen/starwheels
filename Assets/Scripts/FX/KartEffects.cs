@@ -22,7 +22,7 @@ namespace FX
             kartEvents.OnDoubleJumpReset += ReloadJumpParticlesEmit;
             kartEvents.OnDrifting += StartSmoke;
             kartEvents.OnDriftReset += StopSmoke;
-           // kartEvents.OnHit += HealthParticlesManagement;
+            kartEvents.OnHit += HealthParticlesManagement;
             kartEvents.OnDriftReset();
         }
 

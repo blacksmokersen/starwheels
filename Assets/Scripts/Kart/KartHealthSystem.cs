@@ -20,7 +20,7 @@ namespace Kart
         {
             Health = MaxHealth;
             kartEvents = GetComponentInParent<KartEvents>();
-            kartEvents.OnHit += HealthLoss;
+            kartEvents.OnHit +=(a) => HealthLoss();
         }
 
         public void HealthLoss()

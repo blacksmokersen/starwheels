@@ -8,7 +8,7 @@ namespace Kart
     {
         public Action<float> OnVelocityChange;
         public Action<ItemData, int> OnItemUsed;
-        public Action OnHit;
+        public Action<int> OnHit;
 
         // Collisions
         public Action OnCollisionEnterGround;
