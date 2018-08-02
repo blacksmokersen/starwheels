@@ -8,6 +8,7 @@ public class CinemachineDynamicScript : MonoBehaviour
 {
     [Range(7.5f, 15)] public float MaxDistanceCamInBoost;
     public float SpeedCamMovements;
+    public bool BackCamActivated;
 
     private CinemachineVirtualCamera cinemachine;
     private Coroutine cameraBoostCoroutine;
@@ -77,6 +78,21 @@ public class CinemachineDynamicScript : MonoBehaviour
                 StopCoroutine(cameraIonBeamBehaviour);
             cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(-7.5f, 3, 0.5f));
         }
+    }
+
+    public void TurnCamera(float value)
+    {
+        if (value != 0 && Mathf.Abs(transposer.m_FollowOffset.x) <= 8)
+            transposer.m_FollowOffset.x += value * 20 * Time.deltaTime;
+        else if(value == 0)
+            transposer.m_FollowOffset.x = Mathf.Lerp(transposer.m_FollowOffset.x, 0, Time.deltaTime * 20);
+    }
+    public void BackCamera(bool activate)
+    {
+        if (activate)
+            transposer.m_FollowOffset.z = 9;
+        else
+            transposer.m_FollowOffset.z = -7.5f;
     }
 
     IEnumerator CameraIonBeamExpand(float endValueZ, float endValueY, float boostDuration)

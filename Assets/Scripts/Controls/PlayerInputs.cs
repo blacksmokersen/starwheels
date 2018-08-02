@@ -9,6 +9,7 @@ namespace Controls
     public class PlayerInputs : MonoBehaviour
     {
         KartActions kartAction;
+        public CinemachineDynamicScript cinemachineDynamicScript;
 
         public bool disableMovements;
         public bool disableUseItem;
@@ -42,6 +43,7 @@ namespace Controls
                 kartAction.Decelerate(Input.GetAxis(Constants.DecelerateButton));
                 kartAction.Turn(Input.GetAxis(Constants.TurnAxis));
                 kartAction.KartMeshMovement(Input.GetAxis(Constants.TurnAxis));
+                cinemachineDynamicScript.TurnCamera(Input.GetAxis(Constants.TurnCamera));
             }
         }
 
@@ -70,6 +72,12 @@ namespace Controls
             {
                 kartAction.DriftTurns(Input.GetAxis(Constants.TurnAxis));
             }
+            if (Input.GetButton(Constants.BackCamera))
+            {
+                cinemachineDynamicScript.BackCamera(true);
+            }
+            else
+                cinemachineDynamicScript.BackCamera(false);
         }
 
         void ButtonsUp()
