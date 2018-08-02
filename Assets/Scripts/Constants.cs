@@ -22,6 +22,9 @@
     public const string UpAndDownAxis = "UpAndDown";
     public const string DriftButton = "Drift";
     public const string UseItemButton = "Item";
+    public const string TurnCamera = "RightJoystick";
+    public const string BackCamera = "ClickRightJoystick";
+
 
     // Assets
     public const string DiskPrefabName = "Prefab/Disk";
