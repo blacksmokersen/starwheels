@@ -19,7 +19,7 @@ namespace Kart
         public float Speed;
         public float MaxMagnitude;
 
-                [Header("Gravity")]
+        [Header("Gravity")]
         public float JumpForce;
         public float DoubleJumpUpForce;
         public float DoubleJumpDirectionalForce;
@@ -52,7 +52,7 @@ namespace Kart
         public bool Crash;
 
         private KartStates kartStates;
-       // private KartSoundsScript kartSounds;
+        // private KartSoundsScript kartSounds;
 
         public float PlayerVelocity;
         public Rigidbody rb;
@@ -75,10 +75,10 @@ namespace Kart
             Vector3 localVelocity = transform.InverseTransformDirection(rb.velocity);
             PlayerVelocity = localVelocity.z;
 
-         //   if (KartEvents.OnAccelerate != null)
-          //      KartEvents.OnAccelerate(rb.velocity.magnitude);
+            //   if (KartEvents.OnAccelerate != null)
+            //      KartEvents.OnAccelerate(rb.velocity.magnitude);
 
-          //  kartSounds.SetMotorPitch(0.5f + 0.5f * (localVelocity.magnitude / MaxMagnitude));
+            //  kartSounds.SetMotorPitch(0.5f + 0.5f * (localVelocity.magnitude / MaxMagnitude));
         }
 
         private void FixedUpdate()
@@ -165,6 +165,8 @@ namespace Kart
 
         public void DriftTurn(float angle)
         {
+            //TODO refaire tout le systeme d'angle en drift compatible avec le torque
+            /*
             if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
             {
                 if (angle != 0)
@@ -179,7 +181,37 @@ namespace Kart
                 else
                     angle = Mathf.Clamp(angle, 0.2f, 0.8f);
             }
-            transform.Rotate(Vector3.up * angle * DriftTurnSpeed * Time.deltaTime);
+            */
+
+            if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
+            {
+                if (angle <= -0.1)
+                {
+                    angle = -200;
+                }
+                else if (angle >= 0.1)
+                {
+                    angle = -40;
+                }
+                else
+                    angle = -100f;
+            }
+
+            else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
+            {
+                if (angle <= -0.1)
+                {
+                    angle = 40;
+                }
+                else if (angle >= 0.1)
+                {
+                    angle = 200;
+                }
+                else
+                    angle = 100f;
+            }
+            Debug.Log(angle);
+            rb.AddTorque(Vector3.up * angle* DriftTurnSpeed * Time.deltaTime);
         }
 
         public void StabilizeRotation()
