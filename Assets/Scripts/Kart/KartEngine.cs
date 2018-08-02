@@ -36,7 +36,8 @@ namespace Kart
         public float DriftGlideBack = 500f;
         [Range(0, 2)] public float DriftBoostImpulse = 0.5f;
         public float DriftTurnSpeed = 150;
-        public float MaxExteriorAngle = 0.05f;
+        public float MaxInteriorAngle = 400;
+        public float MaxExteriorAngle = 40;
         public float BoostPowerImpulse;
 
         [Header("Turn")]
@@ -183,35 +184,50 @@ namespace Kart
             }
             */
 
+            float angleRestrain = angle;
             if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
             {
-                if (angle <= -0.1)
+                
+                if (angle <= -0.2)
                 {
-                    angle = -200;
+                    angleRestrain = MaxInteriorAngle;
                 }
                 else if (angle >= 0.1)
                 {
-                    angle = -40;
+                    angleRestrain = MaxExteriorAngle;
                 }
                 else
-                    angle = -100f;
-            }
+                {
+                    angle = 1;
+                    angleRestrain = 100f;
+                }
+                
+               // angleRestrain = angle <= -0.2 ? 200 : angle >= 0.1 ? 40 : 100;
+                // quand on relache  ça donne 0 car 100 * 0
+                //quand on driftLeft avec le joystick un tout pti peu a gauche ça donne une valeur minimale de environ 1
+                // on veut que ce soit bloqué au minimim plus que l'angle exterieur
 
+                rb.AddTorque(Vector3.up * (-angleRestrain * Mathf.Abs(angle)) * DriftTurnSpeed * Time.deltaTime);
+                Debug.Log(-angleRestrain * Mathf.Abs(angle));
+            }
             else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
             {
                 if (angle <= -0.1)
                 {
-                    angle = 40;
+                    angleRestrain = MaxExteriorAngle;
                 }
-                else if (angle >= 0.1)
+                else if (angle >= 0.2)
                 {
-                    angle = 200;
+                    angleRestrain = MaxInteriorAngle;
                 }
                 else
-                    angle = 100f;
+                {
+                    angle = 1;
+                    angleRestrain = 100f;
+                }
+                rb.AddTorque(Vector3.up * (angleRestrain * Mathf.Abs(angle)) * DriftTurnSpeed * Time.deltaTime);
+                Debug.Log(angleRestrain * Mathf.Abs(angle));
             }
-            Debug.Log(angle);
-            rb.AddTorque(Vector3.up * angle* DriftTurnSpeed * Time.deltaTime);
         }
 
         public void StabilizeRotation()

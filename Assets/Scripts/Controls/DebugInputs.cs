@@ -30,6 +30,11 @@ namespace Controls
                 kart = GameObject.FindWithTag("Kart");
                 kart.transform.position = new Vector3(-221, 3, 0);
             }
+            if (Input.GetKeyDown(KeyCode.Alpha8))
+            {
+                kart = GameObject.FindWithTag("Kart");
+                kart.transform.position = new Vector3(400, 3, 0);
+            }
             if (Input.GetButtonDown(Constants.SpecialCapacity))
             {
                 StartCoroutine(GetComponent<GamepadVibrations>().Vibrate(0.2f, 0.5f));
