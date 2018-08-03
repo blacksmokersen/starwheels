@@ -18,12 +18,21 @@ namespace FX
         private new void Awake()
         {
             base.Awake();
+            StopSmoke();
+
+            // Events
             kartEvents.OnJump += MainJumpParticlesEmit;
             kartEvents.OnDoubleJumpReset += ReloadJumpParticlesEmit;
-            kartEvents.OnDrifting += StartSmoke;
-            kartEvents.OnDriftReset += StopSmoke;
+
             kartEvents.OnHit += HealthParticlesManagement;
-            kartEvents.OnDriftReset();
+
+            kartEvents.OnDriftStart += StartSmoke;
+            kartEvents.OnDriftReset += StopSmoke;
+            kartEvents.OnDriftReset += () => SetWheelsColor(Color.white);
+
+            kartEvents.OnDriftOrange += () => SetWheelsColor(Color.yellow);
+            kartEvents.OnDriftRed += () => SetWheelsColor(Color.red);
+            kartEvents.OnDriftBoost += () => SetWheelsColor(Color.green);
         }
 
         public void StopSmoke()

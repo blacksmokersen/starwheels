@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+﻿using Photon;
 using Kart;
 
-public class BaseKartComponent : MonoBehaviour
-{
+public class PunBaseKartComponent : PunBehaviour {
+
     protected KartEvents kartEvents;
     protected KartActions kartActions;
     protected void Awake()
