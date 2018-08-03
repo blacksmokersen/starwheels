@@ -57,30 +57,32 @@ namespace Capacities
                 if (yAxis <= -0.2f)
                 {
                     kartEngine.DoubleJump(Vector3.back, 0.5f);
+                    kartEvents.OnDoubleJump(Items.Directions.Backward);
                 }
                 else if (yAxis >= 0.2f)
                 {
                     kartEngine.DoubleJump(Vector3.forward, 0.5f);
+                    kartEvents.OnDoubleJump(Items.Directions.Forward);
                 }
                 else
                 {
                     kartEngine.DoubleJump(Vector3.forward, 0f);
+                    kartEvents.OnDoubleJump(Items.Directions.Forward);
                 }
             }
             else if (xAxis <= -0.5f)
             {
                 kartEngine.DoubleJump(Vector3.left, 1f);
+                kartEvents.OnDoubleJump(Items.Directions.Left);
             }
             else if (xAxis >= 0.5f)
             {
                 kartEngine.DoubleJump(Vector3.right, 1f);
+                kartEvents.OnDoubleJump(Items.Directions.Right);
             }
             else
             {
                 kartEngine.DoubleJump(Vector3.forward, 0f);
-            }
-            if (kartEvents.OnDoubleJump != null)
-            {
                 kartEvents.OnDoubleJump(Items.Directions.Forward);
             }
         }

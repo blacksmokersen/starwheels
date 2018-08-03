@@ -6,18 +6,16 @@ using UnityEngine;
 namespace Animations
 {
     [RequireComponent(typeof(Animator))]
-    public class KartAnimations : MonoBehaviour
+    public class KartAnimations : BaseKartComponent
     {
         Animator animator;
 
-        private void Awake()
+        private new void Awake()
         {
+            base.Awake();
             animator = GetComponent<Animator>();
-        }
 
-        void Start()
-        {
-
+            kartEvents.OnDoubleJump += DoubleJumpAnimation;
         }
 
         public void DoubleJumpAnimation(Directions direction)
