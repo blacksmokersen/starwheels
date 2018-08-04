@@ -8,9 +8,9 @@ namespace Controls
      */
     public class PlayerInputs : BaseKartComponent
     {
-        KartActions kartAction;
+        KartHub kartAction;
 
-        public void SetKart(KartActions value)
+        public void SetKart(KartHub value)
         {
             kartAction = value;
         }

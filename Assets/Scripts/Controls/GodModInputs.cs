@@ -9,7 +9,7 @@ namespace Controls
     {
         public bool Enabled = true;
 
-        private KartActions kartAction;
+        private KartHub kartAction;
         private int ActualItemIndex = 0;
 
         public void Update()
@@ -38,7 +38,7 @@ namespace Controls
             }
         }
 
-        public void SetKart(KartActions value)
+        public void SetKart(KartHub value)
         {
             kartAction = value;
         }

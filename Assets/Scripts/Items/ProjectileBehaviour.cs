@@ -102,7 +102,7 @@ namespace Items
 
         public void CheckCollision(Collider other)
         {
-            if (other.gameObject.GetComponentInParent<KartActions>().kartInventory == owner && ownerImmuned) return;
+            if (other.gameObject.GetComponentInParent<KartHub>().kartInventory == owner && ownerImmuned) return;
 
             other.gameObject.GetComponentInParent<KartEvents>().OnHit();
             CollisionParticles.Emit(2000);

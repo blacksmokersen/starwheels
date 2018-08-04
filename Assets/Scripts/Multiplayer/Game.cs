@@ -19,8 +19,8 @@ public class Game : PunBehaviour
             camera.Follow = kart.transform;
             camera.LookAt = kart.transform;
 
-            FindObjectOfType<PlayerInputs>().SetKart(kart.GetComponentInChildren<KartActions>());
-            FindObjectOfType<GodModInputs>().SetKart(kart.GetComponentInChildren<KartActions>());
+            FindObjectOfType<PlayerInputs>().SetKart(kart.GetComponentInChildren<KartHub>());
+            FindObjectOfType<GodModInputs>().SetKart(kart.GetComponentInChildren<KartHub>());
             FindObjectOfType<DebugInputs>().SetKart(kart.GetComponentInChildren<KartHealthSystem>());
             FindObjectOfType<HUDUpdater>().SetKart(kart.GetComponentInChildren<Rigidbody>());
         }
