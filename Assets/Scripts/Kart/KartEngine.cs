@@ -16,6 +16,7 @@ namespace Kart
         public float Speed;
         public float MaxMagnitude;
         public bool Crashed;
+        public float PlayerVelocity;
 
         [Header("Gravity")]
         public float JumpForce;
@@ -49,8 +50,7 @@ namespace Kart
         [Header("Stabilization")]
         public float RotationStabilizationSpeed;
 
-        private KartStates kartStates;
-        private float playerVelocity;
+        private KartStates kartStates;        
         private Rigidbody rb;
         private float controlMagnitude;
         private float controlSpeed;
@@ -64,12 +64,14 @@ namespace Kart
             kartStates = GetComponentInParent<KartStates>();
             rb = GetComponentInParent<Rigidbody>();
             rb.centerOfMass = CenterOfMassOffset;
+
+            kartEvents.OnHit += () => StartCoroutine(CrashBehaviour(1f));
         }
 
         private void Update()
         {
             var localVelocity = transform.InverseTransformDirection(rb.velocity);
-            playerVelocity = localVelocity.z;            
+            PlayerVelocity = localVelocity.z;            
             kartEvents.OnVelocityChange(rb.velocity.magnitude);
         }
 
@@ -79,6 +81,7 @@ namespace Kart
             rb.AddForce(Vector3.down * GravityForce, ForceMode.Acceleration);
             CheckDrag();
             StabilizeRotation();
+            CompensateSlip();
         }
 
         public void CompensateSlip()
@@ -120,7 +123,7 @@ namespace Kart
 
         public void TurnSlowDown(float turnAxis)
         {
-            if (kartStates.TurningState != TurningStates.NotTurning && playerVelocity > CapSpeedInTurn)
+            if (kartStates.TurningState != TurningStates.NotTurning && PlayerVelocity > CapSpeedInTurn)
             {
                 float backwardForce = TurnSlowValue * -Mathf.Abs(turnAxis);
                 rb.AddForce(transform.forward * backwardForce);
@@ -175,10 +178,10 @@ namespace Kart
         {
             if (kartStates.AirState == AirStates.InAir)
             {
-                var actualRotation = transform.localRotation;
+                var actualRotation = transform.parent.localRotation;
                 actualRotation.x = Mathf.Lerp(actualRotation.x, 0, RotationStabilizationSpeed);
                 actualRotation.z = Mathf.Lerp(actualRotation.z, 0, RotationStabilizationSpeed);
-                transform.localRotation = actualRotation;
+                transform.parent.localRotation = actualRotation;
             }
         }
 
@@ -213,6 +216,5 @@ namespace Kart
                 yield return new WaitForFixedUpdate();
             }
         }
-
     }
 }

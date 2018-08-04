@@ -1756,7 +1756,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1571014680455984}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 355.36514, y: 266.28275, z: -1205.7848}
+  m_LocalPosition: {x: 515.73413, y: 0.5, z: 97.55266}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4109333596748662}
@@ -1856,7 +1856,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1974531125071142}
   m_LocalRotation: {x: -0.001180102, y: -0.000000017703794, z: -2.0892833e-11, w: 0.99999934}
-  m_LocalPosition: {x: 95.36749, y: -174.46396, z: -17.124512}
+  m_LocalPosition: {x: 95.36749, y: -174.46396, z: -17.124474}
   m_LocalScale: {x: 1.0449219, y: 1.0449216, z: 1.0449216}
   m_Children: []
   m_Father: {fileID: 4047341886786088}
@@ -3062,6 +3062,7 @@ MonoBehaviour:
   Item: {fileID: 0}
   Count: 0
   ItemPositions: {fileID: 114489574900648120}
+  ShorteningSeconds: 0
 --- !u!114 &114041383115227930
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3117,8 +3118,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 114550539497350264}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 1
+  instantiationId: 1
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114112653764666390
@@ -3134,6 +3135,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 3000
   MaxMagnitude: 40
+  Crashed: 0
+  PlayerVelocity: 0
   JumpForce: 1000
   DoubleJumpUpForce: 240
   DoubleJumpDirectionalForce: 2400
@@ -3142,8 +3145,6 @@ MonoBehaviour:
   CenterOfMassOffset: {x: 0, y: 0, z: 0}
   MinDrag: 0.1
   MaxDrag: 0.8
-  ForwardDrag: 0.071
-  SideDrag: 0.31
   DriftGlideOrientation: 500
   DriftGlideBack: 500
   DriftBoostImpulse: 0.5
@@ -3152,14 +3153,11 @@ MonoBehaviour:
   MaxExteriorAngle: 40
   BoostPowerImpulse: 2
   TurnTorqueSpeed: 1000
-  CompensationForce: 100
+  SlipCompensationForce: 100
   TurnSlowValue: 1000
   CapSpeedInTurn: 35
   LowerTurnSensitivity: 1.5
   RotationStabilizationSpeed: 0.15
-  Crash: 0
-  PlayerVelocity: 0
-  rb: {fileID: 54115033852382540}
 --- !u!114 &114132661954891388
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3786,7 +3784,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CooldownDoubleJump: 1
-  HasDriftJump: 0
 --- !u!114 &114868983341945258
 MonoBehaviour:
   m_ObjectHideFlags: 1

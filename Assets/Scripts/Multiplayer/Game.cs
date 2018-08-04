@@ -21,7 +21,6 @@ public class Game : PunBehaviour
 
             FindObjectOfType<PlayerInputs>().SetKart(kart.GetComponentInChildren<KartHub>());
             FindObjectOfType<GodModInputs>().SetKart(kart.GetComponentInChildren<KartHub>());
-            FindObjectOfType<DebugInputs>().SetKart(kart.GetComponentInChildren<KartHealthSystem>());
             FindObjectOfType<HUDUpdater>().SetKart(kart.GetComponentInChildren<Rigidbody>());
         }
     }

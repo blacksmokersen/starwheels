@@ -66,7 +66,7 @@ namespace Kart
 
         public void InitializeDrift(float angle)
         {
-            if (kartStates.IsGrounded() && kartEngine.playerVelocity >= driftMinSpeedActivation)
+            if (kartStates.IsGrounded() && kartEngine.PlayerVelocity >= driftMinSpeedActivation)
             {
                 if (!hasDoneDriftJump)
                 {
@@ -91,7 +91,7 @@ namespace Kart
         {
             if (!kartStates.IsGrounded()) return;
 
-            if (kartStates.DriftTurnState != DriftTurnStates.NotDrifting && kartEngine.playerVelocity >= driftMinSpeedActivation)
+            if (kartStates.DriftTurnState != DriftTurnStates.NotDrifting && kartEngine.PlayerVelocity >= driftMinSpeedActivation)
             {
                 kartEngine.DriftTurn(turnValue);
                 kartDriftSystem.DriftForces();
