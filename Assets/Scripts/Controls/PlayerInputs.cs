@@ -36,7 +36,6 @@ namespace Controls
             kartAction.Accelerate(Input.GetAxis(Constants.AccelerateButton));
             kartAction.Decelerate(Input.GetAxis(Constants.DecelerateButton));
             kartAction.Turn(Input.GetAxis(Constants.TurnAxis));
-            kartAction.KartMeshMovement(Input.GetAxis(Constants.TurnAxis));
         }
 
         void ButtonsDown()

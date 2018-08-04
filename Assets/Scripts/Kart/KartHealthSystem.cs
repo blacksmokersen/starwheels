@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Photon;
 using MyExtensions;
 
 namespace Kart
 {
-    public class KartHealthSystem : PunBehaviour
+    public class KartHealthSystem : PunBaseKartComponent
     {
         public int MaxHealth = 3;
         public int Health;
@@ -14,13 +13,12 @@ namespace Kart
 
         private bool isInvincible = false;
         private bool isDead = false;
-        private KartEvents kartEvents;
 
-        private void Awake()
-        {
+        private new void Awake()
+        {            
+            base.Awake();
             Health = MaxHealth;
-            kartEvents = GetComponentInParent<KartEvents>();
-            kartEvents.OnHit +=(a) => HealthLoss();
+            kartEvents.OnHit += HealthLoss;
         }
 
         public void HealthLoss()
@@ -35,6 +33,7 @@ namespace Kart
             {
                 Health--;
                 StartCoroutine(Invicibility(SpamHitSecurity));
+                kartEvents.OnHealthLoss(Health);
             }
             if(Health <= 0 && !isDead)
             {

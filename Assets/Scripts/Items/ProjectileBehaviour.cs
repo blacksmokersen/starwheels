@@ -30,7 +30,7 @@ namespace Items
 
         protected void Start()
         {
-            StartCoroutine(OwnerImmunity());
+            StartCoroutine(StartOwnerImmunity());
         }
 
         protected void Update()
@@ -93,7 +93,7 @@ namespace Items
             owner = kart;
         }
 
-        IEnumerator OwnerImmunity()
+        IEnumerator StartOwnerImmunity()
         {
             ownerImmuned = true;
             yield return new WaitForSeconds(ownerImmunityDuration);
@@ -102,9 +102,9 @@ namespace Items
 
         public void CheckCollision(Collider other)
         {
-            if (other.gameObject.GetComponentInParent<KartInventory>() == owner && ownerImmuned) return;
+            if (other.gameObject.GetComponentInParent<KartActions>().kartInventory == owner && ownerImmuned) return;
 
-            other.gameObject.GetComponentInParent<KartHealthSystem>().HealthLoss();
+            other.gameObject.GetComponentInParent<KartEvents>().OnHit();
             CollisionParticles.Emit(2000);
             DestroyObject();
         }

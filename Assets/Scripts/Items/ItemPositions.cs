@@ -1,9 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ItemPositions : MonoBehaviour
+namespace Items
 {
-    public Transform FrontPosition;
-    public Transform BackPosition;
+    public class ItemPositions : MonoBehaviour
+    {
+        public Transform FrontPosition;
+        public Transform BackPosition;
+    }
 }

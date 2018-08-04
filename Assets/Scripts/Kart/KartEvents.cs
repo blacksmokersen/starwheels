@@ -7,13 +7,14 @@ namespace Kart
     public class KartEvents : MonoBehaviour
     {
         public Action<float> OnVelocityChange;
+        public Action<float> OnTurn;
         public Action<ItemData, int> OnItemUsed;
-        public Action<int> OnHit;
+        public Action OnHit;
+        public Action<int> OnHealthLoss;
 
         // Collisions
         public Action OnCollisionEnterGround;
         public Action OnCollisionEnterItemBox;
-        public Action OnCollisionItemBox;
 
         // Jumping Capacity
         public Action OnJump;

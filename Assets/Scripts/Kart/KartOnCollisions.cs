@@ -6,7 +6,14 @@ namespace Kart {
      * Class for handling every trigger and collisions related to the kart
      * 
      */ 
-    public class KartOnCollisions : BaseKartComponent {
+    public class KartOnCollisions : MonoBehaviour {
+
+        private KartEvents kartEvents;
+
+        private void Awake()
+        {
+            kartEvents = GetComponent<KartEvents>();
+        }
 
         private void OnCollisionEnter(Collision collision)
         {
@@ -20,19 +27,18 @@ namespace Kart {
             if (collision.gameObject.tag == Constants.ItemBoxTag)
             {
                 StartCoroutine(collision.gameObject.GetComponent<ItemBox>().Activate());
-                if(kartEvents.OnCollisionEnterItemBox != null)
-                    kartEvents.OnCollisionEnterItemBox();
+                kartEvents.OnCollisionEnterItemBox();
             }
             else if(collision.gameObject.layer == LayerMask.NameToLayer(Constants.GroundLayer))
             {
-                GetComponent<KartEngine>().rb.constraints = RigidbodyConstraints.FreezeRotationY;
+                //GetComponent<KartEngine>().rb.constraints = RigidbodyConstraints.FreezeRotationY;
             }
         }
         private void OnTriggerExit(Collider trigger)
         {
             if (trigger.gameObject.layer == LayerMask.NameToLayer(Constants.GroundLayer))
             {
-                GetComponent<KartEngine>().rb.constraints = RigidbodyConstraints.None;
+                //GetComponent<KartEngine>().rb.constraints = RigidbodyConstraints.None;
             }
         }
     }

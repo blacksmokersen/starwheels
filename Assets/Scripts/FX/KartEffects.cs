@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-
 namespace FX
 {
     public class KartEffects : BaseKartComponent
@@ -11,6 +10,7 @@ namespace FX
         public ParticleSystem[] Lifes;
         public ParticleSystem[] LifeBursts;
         [Space(10)]
+        [Header("Particles")]
         public ParticleSystem MainJumpParticles;
         public ParticleSystem JumpReloadParticles;
         public int NumberOfParticles = 300;
@@ -24,7 +24,7 @@ namespace FX
             kartEvents.OnJump += MainJumpParticlesEmit;
             kartEvents.OnDoubleJumpReset += ReloadJumpParticlesEmit;
 
-            kartEvents.OnHit += HealthParticlesManagement;
+            kartEvents.OnHealthLoss += HealthParticlesManagement;
 
             kartEvents.OnDriftStart += StartSmoke;
             kartEvents.OnDriftReset += StopSmoke;
@@ -74,11 +74,11 @@ namespace FX
 
         public void SetWheelsColor(Color color)
         {
-            var main = smokeLeftWheel.main;
-            var main2 = smokeRightWheel.main;
+            var leftWheelMain = smokeLeftWheel.main;
+            var rightWheelMain = smokeRightWheel.main;
 
-            main.startColor = color;
-            main2.startColor = color;
+            leftWheelMain.startColor = color;
+            rightWheelMain.startColor = color;
         }
     }
 }

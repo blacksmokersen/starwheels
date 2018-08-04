@@ -186,7 +186,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4128777764343606}
-  - component: {fileID: 114720366856625552}
   m_Layer: 0
   m_Name: SuspFrontWheelLeft
   m_TagString: Untagged
@@ -417,7 +416,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4210291990689344}
-  - component: {fileID: 114263361945398766}
   m_Layer: 0
   m_Name: SuspFrontWheelRight
   m_TagString: Untagged
@@ -557,6 +555,7 @@ GameObject:
   - component: {fileID: 114509890867450628}
   - component: {fileID: 114604252966182538}
   - component: {fileID: 54115033852382540}
+  - component: {fileID: 114485541274518430}
   m_Layer: 0
   m_Name: Kart
   m_TagString: Kart
@@ -737,7 +736,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4759352761782908}
-  - component: {fileID: 114437552106793634}
   m_Layer: 0
   m_Name: SuspBackWheelRight
   m_TagString: Untagged
@@ -837,7 +835,6 @@ GameObject:
   - component: {fileID: 4109333596748662}
   - component: {fileID: 114112653764666390}
   - component: {fileID: 114692228242510426}
-  - component: {fileID: 114036712901225322}
   - component: {fileID: 114652410024878400}
   - component: {fileID: 114856262253480868}
   m_Layer: 0
@@ -1168,7 +1165,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4446854616182560}
-  - component: {fileID: 114734951961975512}
   m_Layer: 0
   m_Name: SuspBackWheelLeft
   m_TagString: Untagged
@@ -1760,7 +1756,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1571014680455984}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -115.63156, y: 0.31893656, z: 7.7136474}
+  m_LocalPosition: {x: 355.36514, y: 266.28275, z: -1205.7848}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4109333596748662}
@@ -1860,7 +1856,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1974531125071142}
   m_LocalRotation: {x: -0.001180102, y: -0.000000017703794, z: -2.0892833e-11, w: 0.99999934}
-  m_LocalPosition: {x: 95.3675, y: -174.46396, z: -17.124472}
+  m_LocalPosition: {x: 95.36749, y: -174.46396, z: -17.124512}
   m_LocalScale: {x: 1.0449219, y: 1.0449216, z: 1.0449216}
   m_Children: []
   m_Father: {fileID: 4047341886786088}
@@ -3052,17 +3048,6 @@ MonoBehaviour:
   SecondJump: {fileID: 8300000, guid: 87c338f8d2531954ebfddbd81837cd28, type: 3}
   PlayerHit: {fileID: 8300000, guid: 3516b939fc5799b499beb17d46221a29, type: 3}
   Boost: {fileID: 8300000, guid: 738f879fa6529b34bae7c14561ab4d8f, type: 3}
---- !u!114 &114036712901225322
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1677194719357208}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c12eb7178fad17240b22ac043ffb1198, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114039894908767896
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3273,20 +3258,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedBar: {fileID: 114954889833949444}
   textSpeed: {fileID: 114028573569330606}
---- !u!114 &114263361945398766
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1373310153574120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 293a2cefac4fdb34ca0ee5a35c7c62b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxExtensionDistance: 0.5
-  SuspensionStiffness: 1
-  ForceToApply: 40
 --- !u!114 &114312923405342584
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3375,20 +3346,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaddb6dc064490b4c9461bc9664ef0f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114437552106793634
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1638164680151698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 293a2cefac4fdb34ca0ee5a35c7c62b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxExtensionDistance: 0.5
-  SuspensionStiffness: 1
-  ForceToApply: 40
 --- !u!114 &114440973840230504
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3464,6 +3421,17 @@ MonoBehaviour:
     Jump : A
 
     Drift : X'
+--- !u!114 &114485541274518430
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1571014680455984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c12eb7178fad17240b22ac043ffb1198, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114486830910212294
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3506,7 +3474,6 @@ MonoBehaviour:
   kartStates: {fileID: 0}
   kartEngine: {fileID: 0}
   kartDriftSystem: {fileID: 0}
-  kartMeshMovement: {fileID: 0}
   kartInventory: {fileID: 0}
   kartHealthSystem: {fileID: 0}
 --- !u!114 &114534634932812642
@@ -3747,20 +3714,11 @@ MonoBehaviour:
   MaxExtensionDistance: 0.5
   SuspensionStiffness: 1
   ForceToApply: 40
---- !u!114 &114720366856625552
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1140266490728188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 293a2cefac4fdb34ca0ee5a35c7c62b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxExtensionDistance: 0.5
-  SuspensionStiffness: 1
-  ForceToApply: 40
+  wheelsTransforms:
+  - {fileID: 4128777764343606}
+  - {fileID: 4210291990689344}
+  - {fileID: 4446854616182560}
+  - {fileID: 4759352761782908}
 --- !u!114 &114734285404761398
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3786,20 +3744,6 @@ MonoBehaviour:
   m_SoftZoneHeight: 0
   m_BiasX: 0
   m_BiasY: 0
---- !u!114 &114734951961975512
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1941726866644896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 293a2cefac4fdb34ca0ee5a35c7c62b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxExtensionDistance: 0.5
-  SuspensionStiffness: 1
-  ForceToApply: 40
 --- !u!114 &114738576795421352
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3898,7 +3842,6 @@ MonoBehaviour:
   frontWheelRight: {fileID: 1833054424590906}
   backWheelsL: {fileID: 1893751479534162}
   backWheelsR: {fileID: 1767074648873224}
-  kartModel: {fileID: 1718263794234376}
 --- !u!114 &114954889833949444
 MonoBehaviour:
   m_ObjectHideFlags: 1

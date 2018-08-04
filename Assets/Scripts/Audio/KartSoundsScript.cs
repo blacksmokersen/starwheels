@@ -24,7 +24,7 @@ namespace Audio
         private new void Awake()
         {
             base.Awake();
-            kartEvents.OnHit += (a) => Playerhit();
+            kartEvents.OnHit += Playerhit;
             soundManager = gameObject.AddComponent<AudioSource>();
             soundManager.spatialBlend = 1f;
 
@@ -40,8 +40,9 @@ namespace Audio
 
             PlayMotor();
 
-            //KartEvents.OnJump += PlayFirstJump;
-            //KartEvents.OnDoubleJump += PlaySecondJump;
+            kartEvents.OnJump += PlayFirstJump;
+            kartEvents.OnDoubleJump += (a) => PlaySecondJump();
+            kartEvents.OnVelocityChange += (magnitude) => SetMotorPitch(0.5f + 0.5f * magnitude);//(localVelocity.magnitude / MaxMagnitude));
         }
 
         public void PlayMotorAccel()

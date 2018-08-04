@@ -7,6 +7,9 @@ public class WheelSuspensions : MonoBehaviour {
     public float SuspensionStiffness;
     public float ForceToApply;
 
+    [Header("Wheels transforms")]
+    public Transform[] wheelsTransforms;
+
     private Rigidbody rb;
 
     private void Awake()
@@ -16,23 +19,21 @@ public class WheelSuspensions : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        CheckGround();
-    }
-
-    private void CheckGround()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, MaxExtensionDistance, 1 << LayerMask.NameToLayer(Constants.GroundLayer)))
+        foreach (var wheelTransform in wheelsTransforms)
         {
-            var distance = Mathf.Clamp(hit.distance, 0, MaxExtensionDistance);
-            var compressionRatio = - distance + MaxExtensionDistance;
-            AdjustWheelPosition(compressionRatio);
+            AdjustWheelPosition(wheelTransform);
         }
     }
 
-    private void AdjustWheelPosition(float compressionRatio)
+    private void AdjustWheelPosition(Transform wheelTransform)
     {
-        rb.AddForceAtPosition(ComputeForceToAdd(compressionRatio), transform.position, ForceMode.Acceleration);        
+        RaycastHit hit;
+        if (Physics.Raycast(wheelTransform.position, Vector3.down, out hit, MaxExtensionDistance, 1 << LayerMask.NameToLayer(Constants.GroundLayer)))
+        {
+            var distance = Mathf.Clamp(hit.distance, 0, MaxExtensionDistance);
+            var compressionRatio = - distance + MaxExtensionDistance;
+            rb.AddForceAtPosition(ComputeForceToAdd(compressionRatio), wheelTransform.position, ForceMode.Acceleration);
+        }
     }
 
     private Vector3 ComputeForceToAdd(float compressionRatio)

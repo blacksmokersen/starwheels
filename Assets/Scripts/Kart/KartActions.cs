@@ -14,24 +14,25 @@ namespace Kart
         public KartStates kartStates;
         public KartEngine kartEngine;
         public KartDriftSystem kartDriftSystem;
-        public KartMeshMovement kartMeshMovement;
         public KartInventory kartInventory;
         public KartHealthSystem kartHealthSystem;
         public ICapacity kartCapacity;
 
+        private KartEvents kartEvents;
         private float driftMinSpeedActivation = 10f;
         private bool hasDoneDriftJump = false;
 
         void Awake()
         {
             kartStates = GetComponent<KartStates>();
+            kartEvents = GetComponent<KartEvents>();
 
             kartEngine = GetComponentInChildren<KartEngine>();
             kartDriftSystem = GetComponentInChildren<KartDriftSystem>();
             kartInventory = GetComponentInChildren<KartInventory>();
-            kartMeshMovement = GetComponentInChildren<KartMeshMovement>();
             kartHealthSystem = GetComponentInChildren<KartHealthSystem>();
             kartCapacity = GetComponentInChildren<ICapacity>();
+            
         }
 
         private void FixedUpdate()
@@ -39,7 +40,6 @@ namespace Kart
             if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
             {
                 kartEngine.CompensateSlip();
-              //  kartOrientation.NotDrifting();
             }
         }
 
@@ -60,8 +60,7 @@ namespace Kart
         {
             if (kartStates.AirState == AirStates.Grounded)
             {
-                kartEngine.DriftJump(value);
-                kartStates.AirState = AirStates.InAir;
+                kartEngine.DriftJump();
             }
         }
 
@@ -69,10 +68,9 @@ namespace Kart
         {
             if (kartStates.IsGrounded() && kartEngine.PlayerVelocity >= driftMinSpeedActivation)
             {
-                //kartSoundsScript.PlayDriftStart();
                 if (!hasDoneDriftJump)
                 {
-                    kartEngine.DriftJump(1);
+                    kartEngine.DriftJump();
                     hasDoneDriftJump = true;
                 }
                 if (angle != 0)
@@ -85,14 +83,12 @@ namespace Kart
 
         public void StopDrift()
         {
-            //  kartSoundsScript.PlayDriftEnd();
             kartDriftSystem.StopDrift();
             hasDoneDriftJump = false;
         }
 
         public void DriftTurns(float turnValue)
         {
-            // kartSoundsScript.PlayDrift();
             if (!kartStates.IsGrounded()) return;
 
             if (kartStates.DriftTurnState != DriftTurnStates.NotDrifting && kartEngine.PlayerVelocity >= driftMinSpeedActivation)
@@ -131,14 +127,11 @@ namespace Kart
 
         public void Turn(float value)
         {
-            float newTurnSensitivity;
+            float newTurnSensitivity = value;
+            kartEvents.OnTurn(value);
             if (Mathf.Abs(value) <= 0.9f)
             {
                 newTurnSensitivity = value / kartEngine.LowerTurnSensitivity;
-            }
-            else
-            {
-                newTurnSensitivity = value;
             }
 
             if (value > 0)
@@ -165,12 +158,6 @@ namespace Kart
                     kartEngine.TurnUsingTorque(Vector3.down * newTurnSensitivity, value);
                 }
             }
-        }
-
-        public void KartMeshMovement(float turnAxis)
-        {
-            kartMeshMovement.FrontWheelsMovement(turnAxis, kartEngine.PlayerVelocity);
-            kartMeshMovement.BackWheelsMovement(kartEngine.PlayerVelocity);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Items {
         private new void Awake()
         {
             base.Awake();
-            kartEvents.OnCollisionItemBox += () => StartCoroutine(GetLotteryItem());
+            kartEvents.OnCollisionEnterItemBox += () => StartCoroutine(GetLotteryItem());
         }
 
         public void ItemAction(Directions direction)

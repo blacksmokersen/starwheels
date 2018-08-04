@@ -1,7 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using HUD;
-
 
 namespace Kart
 {
@@ -12,7 +10,6 @@ namespace Kart
      * - Drag
      * - Torques
      */
-    [RequireComponent(typeof(Rigidbody))]
     public class KartEngine : BaseKartComponent
     {
         [Header("Driving")]
@@ -55,7 +52,6 @@ namespace Kart
         public bool Crash;
 
         private KartStates kartStates;
-        // private KartSoundsScript kartSounds;
 
         public float PlayerVelocity;
         public Rigidbody rb;
@@ -66,6 +62,7 @@ namespace Kart
 
         private new void Awake()
         {
+            base.Awake();
             controlMagnitude = MaxMagnitude;
             controlSpeed = Speed;
             kartStates = GetComponentInParent<KartStates>();
@@ -76,12 +73,8 @@ namespace Kart
         private void Update()
         {
             Vector3 localVelocity = transform.InverseTransformDirection(rb.velocity);
-            PlayerVelocity = localVelocity.z;
-
-            //   if (KartEvents.OnAccelerate != null)
-            //      KartEvents.OnAccelerate(rb.velocity.magnitude);
-
-            //  kartSounds.SetMotorPitch(0.5f + 0.5f * (localVelocity.magnitude / MaxMagnitude));
+            PlayerVelocity = localVelocity.z;            
+            kartEvents.OnVelocityChange(rb.velocity.magnitude);
         }
 
         private void FixedUpdate()
@@ -150,9 +143,9 @@ namespace Kart
             rb.AddRelativeForce(forceUp + forceDirectional, ForceMode.Impulse);
         }
 
-        public void DriftJump(float value)
+        public void DriftJump()
         {
-            rb.AddRelativeForce(Vector3.up * DriftJumpForce * value, ForceMode.Impulse);
+            rb.AddRelativeForce(Vector3.up * DriftJumpForce, ForceMode.Impulse);
         }
 
         public void Accelerate(float value)

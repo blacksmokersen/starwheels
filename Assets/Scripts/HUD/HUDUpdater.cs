@@ -5,7 +5,7 @@ using Items;
 
 namespace HUD
 {
-    public class HUDUpdater : MonoBehaviour
+    public class HUDUpdater : BaseKartComponent
     {
         /*
         public Text SpeedText;
@@ -15,6 +15,12 @@ namespace HUD
         public Text ItemCountText;
         
         public RawImage ItemTexture;
+
+        private new void Awake()
+        {
+            base.Awake();
+            kartEvents.OnItemUsed += UpdateItem;
+        }
 
         public void SetKart(Rigidbody body)
         {

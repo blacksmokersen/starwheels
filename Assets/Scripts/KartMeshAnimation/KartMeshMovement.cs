@@ -1,42 +1,50 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Kart;
+﻿using UnityEngine;
 
-
-public class KartMeshMovement : MonoBehaviour
+namespace Animations
 {
-    private float MaxMeshAngleDrift;
-
-    private float wheelsSpeed;
-
-    public GameObject frontWheelLeft;
-    public GameObject frontWheelRight;
-    public GameObject backWheelsL;
-    public GameObject backWheelsR;
-    public GameObject kartModel;
-
-    public void FrontWheelsMovement(float currentAngle,float playerVelocity)
+    public class KartMeshMovement : BaseKartComponent
     {
-        wheelsSpeed = -playerVelocity;
-        if (playerVelocity > 0.01f)
+        [Header("Meshes")]
+        public GameObject frontWheelLeft;
+        public GameObject frontWheelRight;
+        public GameObject backWheelsL;
+        public GameObject backWheelsR;
+
+        private float MaxMeshAngleDrift;
+        private float wheelsSpeed;
+
+        private new void Awake()
         {
-            // n'est pas pris en compte car le transform en dessous force la rotation à revoir
-            frontWheelLeft.transform.Rotate(Vector3.right * wheelsSpeed);
-            frontWheelRight.transform.Rotate(Vector3.right * wheelsSpeed);
+            base.Awake();
+            kartEvents.OnVelocityChange += FrontWheelsRotation;
+            kartEvents.OnVelocityChange += BackWheelsRotation;
+            kartEvents.OnTurn += FrontWheelsTurn;
         }
-        frontWheelLeft.transform.localEulerAngles = new Vector3(0, currentAngle * 30, 0);
-        frontWheelRight.transform.localEulerAngles = new Vector3(0, currentAngle * 30, 0);
-    }
 
-    public void BackWheelsMovement(float playerVelocity)
-    {
-        wheelsSpeed = playerVelocity;
-        if (playerVelocity > 0.01f)
+        private void FrontWheelsTurn(float currentAngle)
         {
-            backWheelsL.transform.Rotate(Vector3.right * wheelsSpeed);
-            backWheelsR.transform.Rotate(Vector3.right * wheelsSpeed);
+            frontWheelLeft.transform.localEulerAngles = new Vector3(0, currentAngle * 30, 0);
+            frontWheelRight.transform.localEulerAngles = new Vector3(0, currentAngle * 30, 0);
+        }
+
+        public void FrontWheelsRotation(float playerVelocity)
+        {
+            wheelsSpeed = -playerVelocity;
+            if (playerVelocity > 0.01f)
+            {
+                frontWheelLeft.transform.Rotate(Vector3.right * wheelsSpeed);
+                frontWheelRight.transform.Rotate(Vector3.right * wheelsSpeed);
+            }
+        }
+
+        public void BackWheelsRotation(float playerVelocity)
+        {
+            wheelsSpeed = playerVelocity;
+            if (playerVelocity > 0.01f)
+            {
+                backWheelsL.transform.Rotate(Vector3.right * wheelsSpeed);
+                backWheelsR.transform.Rotate(Vector3.right * wheelsSpeed);
+            }
         }
     }
 }
-
