@@ -32,14 +32,6 @@ namespace Controls
             {
                 StartCoroutine(GetComponent<GamepadVibrations>().Vibrate(0.2f, 0.5f));
             }
-            if (Input.GetKey(KeyCode.O))
-            {
-                Cam.IonBeamCameraBehaviour(true);
-            }
-            if (Input.GetKey(KeyCode.P))
-            {
-                Cam.IonBeamCameraBehaviour(false);
-            }
         }
     }
 }

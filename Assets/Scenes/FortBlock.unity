@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1113,7 +1113,7 @@ Prefab:
         type: 2}
       propertyPath: Cam
       value: 
-      objectReference: {fileID: 656786922}
+      objectReference: {fileID: 0}
     - target: {fileID: 114378822973055794, guid: 2dbcb40a18099104fbfc7002d03b8262,
         type: 2}
       propertyPath: m_Enabled
@@ -1128,7 +1128,7 @@ Prefab:
         type: 2}
       propertyPath: cinemachineDynamicScript
       value: 
-      objectReference: {fileID: 656786922}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2dbcb40a18099104fbfc7002d03b8262, type: 2}
   m_IsPrefabAsset: 0
@@ -1189,6 +1189,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1176491359}
+  - {fileID: 1274845267}
   - {fileID: 507056566}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1334,7 +1336,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 315504436}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &507056567
 MonoBehaviour:
@@ -1594,12 +1596,6 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d66200db4ce3e624da16166f1383d323, type: 2}
   m_IsPrefabAsset: 0
---- !u!114 &656786922 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114946945254510376, guid: d66200db4ce3e624da16166f1383d323,
-    type: 2}
-  m_PrefabInternal: {fileID: 656786921}
-  m_Script: {fileID: 11500000, guid: 33b871421be7e004289002feef3104e9, type: 3}
 --- !u!1001 &664338508
 Prefab:
   m_ObjectHideFlags: 0
@@ -1781,7 +1777,7 @@ Transform:
   - {fileID: 1217013958}
   - {fileID: 1210010791}
   m_Father: {fileID: 1610034690}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &831137422
 Prefab:
@@ -2523,7 +2519,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3a5f180be8605649898fe4bee32abe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cam: {fileID: 656786922}
 --- !u!114 &1176491363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2536,9 +2531,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43ed66d406bea6743ad367f1243f4645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cinemachineDynamicScript: {fileID: 656786922}
-  disableMovements: 0
-  disableUseItem: 0
+  DisableUseItem: 0
+  DisableMovement: 0
 --- !u!1001 &1183167739
 Prefab:
   m_ObjectHideFlags: 0
@@ -2829,10 +2823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 601ffd5655f7a3b4cab869b7cace7237, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpeedText: {fileID: 1261534350}
-  TimeText: {fileID: 464563943}
-  FPSText: {fileID: 771850337}
-  ItemCountText: {fileID: 1733474955}
+  ItemCountText: {fileID: 0}
   ItemTexture: {fileID: 1505494125}
 --- !u!1001 &1276232225
 Prefab:
@@ -3349,8 +3340,8 @@ Transform:
   - {fileID: 1735153374}
   - {fileID: 2006057700}
   - {fileID: 315391906}
-  - {fileID: 794932136}
   - {fileID: 329861602}
+  - {fileID: 794932136}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

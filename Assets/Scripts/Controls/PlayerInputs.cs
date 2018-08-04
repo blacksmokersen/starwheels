@@ -8,16 +8,25 @@ namespace Controls
      */
     public class PlayerInputs : BaseKartComponent
     {
-        private KartHub kartAction;
+        public bool DisableUseItem;
+        public bool DisableMovement;
+
+        private CinemachineDynamicScript cinemachineDynamicScript;
 
         public void SetKart(KartHub value)
         {
-            kartAction = value;
+            kartHub = value;
+        }
+
+        private new void Awake()
+        {
+            base.Awake();
+            cinemachineDynamicScript = kartHub.cinemachineDynamicScript;
         }
 
         void FixedUpdate()
         {
-            if (kartAction == null) return;
+            if (kartHub == null) return;
 
             Axis();
             ButtonsPressed();
@@ -25,7 +34,7 @@ namespace Controls
 
         private void Update()
         {
-            if (kartAction == null) return;
+            if (kartHub == null) return;
 
             ButtonsDown();
             ButtonsUp();
@@ -33,27 +42,27 @@ namespace Controls
 
         void Axis()
         {
-            kartAction.Accelerate(Input.GetAxis(Constants.AccelerateButton));
-            kartAction.Decelerate(Input.GetAxis(Constants.DecelerateButton));
-            kartAction.Turn(Input.GetAxis(Constants.TurnAxis));
+            if (!DisableMovement)
+            {
+                kartHub.Accelerate(Input.GetAxis(Constants.AccelerateButton));
+                kartHub.Decelerate(Input.GetAxis(Constants.DecelerateButton));
+                kartHub.Turn(Input.GetAxis(Constants.TurnAxis));
+            }
         }
 
         void ButtonsDown()
         {
             if (Input.GetButtonDown(Constants.SpecialCapacity))
             {
-                kartAction.UseCapacity(Input.GetAxis(Constants.TurnAxis), Input.GetAxis(Constants.UpAndDownAxis));
+                kartHub.UseCapacity(Input.GetAxis(Constants.TurnAxis), Input.GetAxis(Constants.UpAndDownAxis));
             }
             if (Input.GetButtonDown(Constants.DriftButton))
             {
-                kartAction.InitializeDrift(Input.GetAxis(Constants.TurnAxis));
+                kartHub.InitializeDrift(Input.GetAxis(Constants.TurnAxis));
             }
-            if (Input.GetButtonDown(Constants.UseItemButton))
+            if (Input.GetButtonDown(Constants.UseItemButton) && !DisableUseItem)
             {
-                if (!disableUseItem)
-                {
-                    kartAction.UseItem(Input.GetAxis(Constants.UpAndDownAxis));
-                }
+                kartHub.UseItem(Input.GetAxis(Constants.UpAndDownAxis));                
             }
         }
 
@@ -61,7 +70,7 @@ namespace Controls
         {
             if (Input.GetButton(Constants.DriftButton))
             {
-                kartAction.DriftTurns(Input.GetAxis(Constants.TurnAxis));
+                kartHub.DriftTurns(Input.GetAxis(Constants.TurnAxis));
             }
             if (Input.GetButton(Constants.BackCamera))
             {
@@ -75,7 +84,7 @@ namespace Controls
         {
             if (Input.GetButtonUp(Constants.DriftButton))
             {
-                kartAction.StopDrift();
+                kartHub.StopDrift();
             }
         }
     }

@@ -4,10 +4,10 @@ using Kart;
 public class BaseKartComponent : MonoBehaviour
 {
     protected KartEvents kartEvents;
-    protected KartHub kartActions;
+    protected KartHub kartHub;
     protected void Awake()
     {
         kartEvents = GetComponentInParent<KartEvents>();
-        kartActions = GetComponentInParent<KartHub>();
+        kartHub = GetComponentInParent<KartHub>();
     }
 }

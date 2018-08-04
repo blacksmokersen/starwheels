@@ -50,7 +50,7 @@ namespace FX
 
         public void HealthParticlesManagement(int health)
         {
-            Lifes[kartActions.kartHealthSystem.Health].Stop(true);
+            Lifes[kartHub.kartHealthSystem.Health].Stop(true);
             LifeBursts[health].Play();
         }
 

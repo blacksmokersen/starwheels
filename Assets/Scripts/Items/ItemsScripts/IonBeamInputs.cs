@@ -1,24 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Items;
 
 namespace Controls
 {
-    public class IonBeamInputs : MonoBehaviour
+    public class IonBeamInputs : BaseKartComponent
     {
         public static bool IonBeamControlMode;
         private float horizontalAxis;
         private float verticalAxis;
         private PlayerInputs playerinputs;
         private IonBeamBehaviour ionBeamBehaviour;
-        private CinemachineDynamicScript cam;
+        private CinemachineDynamicScript cinemachineDynamicScript;
 
-        private void Awake()
+        private new void Awake()
         {
-            //TODO Implementation apres refactoring
-            cam = GameObject.Find("CM vcam1").GetComponent<CinemachineDynamicScript>();
-            playerinputs = GameObject.Find("Inputs").GetComponent<PlayerInputs>();
+            base.Awake();
+            cinemachineDynamicScript = kartHub.GetComponent<CinemachineDynamicScript>();
+            playerinputs = GetComponent<PlayerInputs>();
             ionBeamBehaviour = GetComponent<IonBeamBehaviour>();
         }
 
@@ -34,7 +32,7 @@ namespace Controls
             verticalAxis = Input.GetAxis(Constants.TurnAxis);
             if (IonBeamControlMode)
             {
-                cam.IonBeamCameraControls(horizontalAxis, verticalAxis);
+                cinemachineDynamicScript.IonBeamCameraControls(horizontalAxis, verticalAxis);
             }
         }
 
@@ -52,17 +50,9 @@ namespace Controls
 
         public void DisableKartInputs(bool value)
         {
-            if (value)
-            {
-                playerinputs.disableMovements = true;
-                playerinputs.disableUseItem = true;
-            }
-            else
-            {
-                IonBeamControlMode = false;
-                playerinputs.disableMovements = false;
-                playerinputs.disableUseItem = false;
-            }
+            IonBeamControlMode = false;
+            playerinputs.DisableMovement = value;
+            playerinputs.DisableUseItem = value;
         }
     }
 }

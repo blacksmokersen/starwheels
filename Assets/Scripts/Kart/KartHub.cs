@@ -17,6 +17,7 @@ namespace Kart
         [HideInInspector] public KartInventory kartInventory;
         [HideInInspector] public KartHealthSystem kartHealthSystem;
         [HideInInspector] public ICapacity kartCapacity;
+        [HideInInspector] public CinemachineDynamicScript cinemachineDynamicScript;
 
         private KartEvents kartEvents;
         private float driftMinSpeedActivation = 10f;
@@ -32,6 +33,7 @@ namespace Kart
             kartInventory = GetComponentInChildren<KartInventory>();
             kartHealthSystem = GetComponentInChildren<KartHealthSystem>();
             kartCapacity = GetComponentInChildren<ICapacity>();
+            cinemachineDynamicScript = GetComponentInChildren<CinemachineDynamicScript>();
             
         }
 
