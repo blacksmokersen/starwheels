@@ -25,9 +25,6 @@ namespace HUD
         public void SetKart(Rigidbody body)
         {
             StartCoroutine(UpdateRoutine());
-            
-            //KartEvents.OnVelocityChange += (vel) => SpeedText.text = "Speed : " + vel;
-            //KartEvents.OnItemUsed += UpdateItem;
         }
         
         IEnumerator UpdateRoutine()

@@ -4,10 +4,10 @@ namespace Audio
 {
     public class MusicScript : MonoBehaviour
     {
-
-        bool mute = false;
-
         static MusicScript instance = null;
+
+        private bool muted = false;
+
         private void Awake()
         {
             if (instance == null)
@@ -23,15 +23,15 @@ namespace Audio
 
         public void Mute()
         {
-            if (mute == false)
+            if (muted == false)
             {
                 GetComponent<AudioSource>().Pause();
-                mute = true;
+                muted = true;
             }
             else
             {
                 GetComponent<AudioSource>().UnPause();
-                mute = false;
+                muted = false;
             }
         }
     }

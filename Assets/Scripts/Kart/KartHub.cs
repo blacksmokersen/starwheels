@@ -11,12 +11,12 @@ namespace Kart
      */
     public class KartHub : MonoBehaviour
     {
-        public KartStates kartStates;
-        public KartEngine kartEngine;
-        public KartDriftSystem kartDriftSystem;
-        public KartInventory kartInventory;
-        public KartHealthSystem kartHealthSystem;
-        public ICapacity kartCapacity;
+        [HideInInspector] public KartStates kartStates;
+        [HideInInspector] public KartEngine kartEngine;
+        [HideInInspector] public KartDriftSystem kartDriftSystem;
+        [HideInInspector] public KartInventory kartInventory;
+        [HideInInspector] public KartHealthSystem kartHealthSystem;
+        [HideInInspector] public ICapacity kartCapacity;
 
         private KartEvents kartEvents;
         private float driftMinSpeedActivation = 10f;
@@ -66,7 +66,7 @@ namespace Kart
 
         public void InitializeDrift(float angle)
         {
-            if (kartStates.IsGrounded() && kartEngine.PlayerVelocity >= driftMinSpeedActivation)
+            if (kartStates.IsGrounded() && kartEngine.playerVelocity >= driftMinSpeedActivation)
             {
                 if (!hasDoneDriftJump)
                 {
@@ -91,7 +91,7 @@ namespace Kart
         {
             if (!kartStates.IsGrounded()) return;
 
-            if (kartStates.DriftTurnState != DriftTurnStates.NotDrifting && kartEngine.PlayerVelocity >= driftMinSpeedActivation)
+            if (kartStates.DriftTurnState != DriftTurnStates.NotDrifting && kartEngine.playerVelocity >= driftMinSpeedActivation)
             {
                 kartEngine.DriftTurn(turnValue);
                 kartDriftSystem.DriftForces();
@@ -111,7 +111,7 @@ namespace Kart
 
         public void Accelerate(float value)
         {
-            if (kartStates.AirState != AirStates.InAir && !kartEngine.Crash)
+            if (kartStates.AirState != AirStates.InAir && !kartEngine.Crashed)
             {
                 kartEngine.Accelerate(value);
             }
@@ -119,44 +119,49 @@ namespace Kart
 
         public void Decelerate(float value)
         {
-            if (kartStates.AirState != AirStates.InAir && !kartEngine.Crash)
+            if (kartStates.AirState != AirStates.InAir && !kartEngine.Crashed)
             {
                 kartEngine.Decelerate(value);
             }
         }
 
-        public void Turn(float value)
+        public void Turn(float turnValue)
         {
-            float newTurnSensitivity = value;
-            kartEvents.OnTurn(value);
-            if (Mathf.Abs(value) <= 0.9f)
+            float newTurnSensitivity = turnValue;
+            kartEvents.OnTurn(turnValue);
+            if (Mathf.Abs(turnValue) <= 0.9f)
             {
-                newTurnSensitivity = value / kartEngine.LowerTurnSensitivity;
+                newTurnSensitivity = turnValue / kartEngine.LowerTurnSensitivity;
             }
 
-            if (value > 0)
+            SetTurnState(turnValue);
+
+            if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
+            {
+                if (kartStates.AccelerationState == AccelerationStates.Forward)
+                {
+                    kartEngine.TurnUsingTorque(Vector3.up * newTurnSensitivity, turnValue);
+                }
+                else if (kartStates.AccelerationState == AccelerationStates.Back)
+                {
+                    kartEngine.TurnUsingTorque(Vector3.down * newTurnSensitivity, turnValue);
+                }
+            }
+        }
+
+        private void SetTurnState(float turnValue)
+        {
+            if (turnValue > 0)
             {
                 kartStates.TurningState = TurningStates.Right;
             }
-            else if (value < 0)
+            else if (turnValue < 0)
             {
                 kartStates.TurningState = TurningStates.Left;
             }
             else
             {
                 kartStates.TurningState = TurningStates.NotTurning;
-            }
-
-            if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
-            {
-                if (kartStates.AccelerationState == AccelerationStates.Forward)
-                {
-                    kartEngine.TurnUsingTorque(Vector3.up * newTurnSensitivity, value);
-                }
-                else if (kartStates.AccelerationState == AccelerationStates.Back)
-                {
-                    kartEngine.TurnUsingTorque(Vector3.down * newTurnSensitivity, value);
-                }
             }
         }
     }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using UnityEngine;
 using Photon;
 
 namespace MyExtensions
@@ -26,8 +25,7 @@ namespace MyExtensions
                 Type thisType = pun.GetType();
                 MethodInfo theMethod = thisType.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance);
                 theMethod.Invoke(pun, parameters);
-            }
-            
+            }            
         }
     }
 }

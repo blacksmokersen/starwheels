@@ -1,18 +1,11 @@
 ﻿using UnityEngine.SceneManagement;
 using UnityEngine;
-using Kart;
 
 namespace Controls
 {
     public class DebugInputs : BaseKartComponent
     {
-        KartHealthSystem kartHealthSystem;
-        GameObject kart;
-
-        public void SetKart(KartHealthSystem value)
-        {
-            kartHealthSystem = value;
-        }
+        private GameObject kart;
 
         void Update()
         {

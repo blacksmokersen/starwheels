@@ -1,11 +1,10 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
 public class CinemachineDynamicScript : BaseKartComponent
 {
-    [Range(7.5f, 15)] public float MaxDistanceCamInBoost;
+    [Range(7.5f, 15f)] public float MaxDistanceCamInBoost;
 
     private CinemachineVirtualCamera cinemachine;
     private Coroutine cameraBoostCoroutine;
@@ -42,7 +41,8 @@ public class CinemachineDynamicScript : BaseKartComponent
             currentTimer += Time.deltaTime;
             yield return null;
         }
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1f);
+
         currentTimer = 0f;
         while (currentTimer < effectDuration)
         {

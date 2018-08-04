@@ -1,14 +1,11 @@
-﻿using Items;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Animations
 {
     [RequireComponent(typeof(Animator))]
     public class KartAnimations : BaseKartComponent
     {
-        Animator animator;
+        private Animator animator;
 
         private new void Awake()
         {

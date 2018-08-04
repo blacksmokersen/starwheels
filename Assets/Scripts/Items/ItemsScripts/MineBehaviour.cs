@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Items{
+namespace Items
+{
     [RequireComponent(typeof(Rigidbody))]
     public class MineBehaviour : ItemBehaviour
     {

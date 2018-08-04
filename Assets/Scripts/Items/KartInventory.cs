@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
-using HUD;
 
-namespace Items {
-    public enum Directions { Default, Forward, Backward, Left, Right }
-
+namespace Items
+{
     public class KartInventory : BaseKartComponent
     {
+        [Header("Inventory")]
         public ItemData Item;
         public int Count;
         public ItemPositions ItemPositions;
+
+        [Header("Lottery")]
+        public float ShorteningSeconds;
 
         private float lotteryTimer = 0f;
         private bool lotteryStarted = false;
@@ -25,14 +27,13 @@ namespace Items {
         {
             if(lotteryStarted && !shortenLottery && lotteryTimer > 1f)
             {
-                lotteryTimer += 0.5f;
+                lotteryTimer += ShorteningSeconds;
                 shortenLottery = true;
             }
             else
             {
                 UseStack(direction);
             }
-            UpdateHUD();
         }
 
         public void UseStack(Directions direction)
@@ -43,14 +44,13 @@ namespace Items {
                 {
                     UseItem(Item, direction);
                     Count--;
-                    FindObjectOfType<HUDUpdater>().UpdateItem(Item,Count);
                     if (Count == 0)
                     {
                         Item = null;
                     }
                 }
             }
-            UpdateHUD();
+            kartEvents.OnItemUsed(Item,Count);
         }
 
         public void UseItem(ItemData item, Directions direction)
@@ -64,14 +64,8 @@ namespace Items {
             else
             {
                 itemObj = Instantiate(item.ItemPrefab);
-            }
-            
+            }            
             itemObj.Spawn(this,direction);
-        }
-
-        public void UpdateHUD()
-        {
-            FindObjectOfType<HUDUpdater>().UpdateItem(Item,Count);
         }
 
         public IEnumerator GetLotteryItem()
@@ -80,15 +74,15 @@ namespace Items {
             lotteryStarted = true;
             var lotteryIndex = 0;
             var items = ItemsLottery.Items;
-            while (lotteryTimer < ItemsLottery.LOTTERY_DURATION)
+            while (lotteryTimer < ItemsLottery.LotteryDuration)
             {
-                FindObjectOfType<HUDUpdater>().UpdateItem(items[(lotteryIndex++)%items.Length],0);
+                kartEvents.OnItemUsed(items[(lotteryIndex++)%items.Length],0);
                 yield return new WaitForSeconds(0.1f);
                 lotteryTimer+=0.1f;
             }
             Item = ItemsLottery.GetRandomItem();
             Count = Item.Count;
-            UpdateHUD();
+            kartEvents.OnItemUsed(Item, Count);
             ResetLottery();
         }
 

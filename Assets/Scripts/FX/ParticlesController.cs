@@ -5,7 +5,7 @@ namespace FX
     [RequireComponent(typeof(ParticleSystem))]
     public class ParticlesController : MonoBehaviour
     {
-        ParticleSystem.MainModule myParticleSystem;
+        private ParticleSystem.MainModule myParticleSystem;
 
         private void Awake()
         {

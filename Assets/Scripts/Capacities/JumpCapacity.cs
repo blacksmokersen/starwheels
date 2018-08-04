@@ -13,7 +13,6 @@ namespace Capacities
         [Header("Jump Capacity")]
         public float CooldownDoubleJump;
 
-        [HideInInspector] public bool HasDriftJump = false;
         private bool hasDoneFirstJump = false;
         private bool canDoubleJump = true;
 
@@ -57,33 +56,33 @@ namespace Capacities
                 if (yAxis <= -0.2f)
                 {
                     kartEngine.DoubleJump(Vector3.back, 0.5f);
-                    kartEvents.OnDoubleJump(Items.Directions.Backward);
+                    kartEvents.OnDoubleJump(Directions.Backward);
                 }
                 else if (yAxis >= 0.2f)
                 {
                     kartEngine.DoubleJump(Vector3.forward, 0.5f);
-                    kartEvents.OnDoubleJump(Items.Directions.Forward);
+                    kartEvents.OnDoubleJump(Directions.Forward);
                 }
                 else
                 {
                     kartEngine.DoubleJump(Vector3.forward, 0f);
-                    kartEvents.OnDoubleJump(Items.Directions.Forward);
+                    kartEvents.OnDoubleJump(Directions.Forward);
                 }
             }
-            else if (xAxis <= -0.5f)
+            else if (xAxis < -0.5f)
             {
                 kartEngine.DoubleJump(Vector3.left, 1f);
-                kartEvents.OnDoubleJump(Items.Directions.Left);
+                kartEvents.OnDoubleJump(Directions.Left);
             }
             else if (xAxis >= 0.5f)
             {
                 kartEngine.DoubleJump(Vector3.right, 1f);
-                kartEvents.OnDoubleJump(Items.Directions.Right);
+                kartEvents.OnDoubleJump(Directions.Right);
             }
             else
             {
                 kartEngine.DoubleJump(Vector3.forward, 0f);
-                kartEvents.OnDoubleJump(Items.Directions.Forward);
+                kartEvents.OnDoubleJump(Directions.Forward);
             }
         }
 
