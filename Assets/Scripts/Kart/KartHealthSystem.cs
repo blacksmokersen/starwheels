@@ -1,30 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Photon;
 using MyExtensions;
 
 namespace Kart
 {
-    public class KartHealthSystem : PunBehaviour
+    public class KartHealthSystem : PunBaseKartComponent
     {
         public int MaxHealth = 3;
         public int Health;
         public float SpamHitSecurity;
         public float HitStopKartDuration;
 
-        private KartEffects kartEffects;
-        private KartEngine kartPhysics;
-        private KartSoundsScript kartSoundsScript;
-        private bool invicibility = false;
-        public bool dead;
+        private bool isInvincible = false;
+        private bool isDead = false;
 
-        private void Awake()
-        {
-            kartEffects = GetComponentInChildren<KartEffects>();
-            kartPhysics = GetComponent<KartEngine>();
-            kartSoundsScript = FindObjectOfType<KartSoundsScript>();
-
+        private new void Awake()
+        {            
+            base.Awake();
             Health = MaxHealth;
+            kartEvents.OnHit += HealthLoss;
         }
 
         public void HealthLoss()
@@ -35,32 +29,29 @@ namespace Kart
         [PunRPC]
         public void RPCHealthLoss()
         {
-            if (!invicibility)
+            if (!isInvincible)
             {
                 Health--;
-                kartSoundsScript.Playerhit();
-                kartPhysics.LooseHealth(HitStopKartDuration);
-                kartEffects.HealthParticlesManagement(Health);
                 StartCoroutine(Invicibility(SpamHitSecurity));
+                kartEvents.OnHealthLoss(Health);
             }
-            if(Health <= 0 && !dead)
+            if(Health <= 0 && !isDead)
             {
                 GetComponentInParent<Rigidbody>().transform.position = new Vector3(-221, 3, 0);
-                dead = true;                
+                isDead = true;                
             }
         }
 
         public void ResetLives()
         {
             Health = MaxHealth;
-            kartEffects.ResetLife();
         }
 
         IEnumerator Invicibility(float invicibilityDuration)
         {
-            invicibility = true;
+            isInvincible = true;
             yield return new WaitForSeconds(invicibilityDuration);
-            invicibility = false;
+            isInvincible = false;
         }
     }
 }

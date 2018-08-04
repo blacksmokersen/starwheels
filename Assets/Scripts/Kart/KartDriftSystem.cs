@@ -1,12 +1,10 @@
 ﻿using System.Collections;
 using UnityEngine;
-using Photon;
-using FX;
 using MyExtensions;
 
 namespace Kart
 {
-    public class KartDriftSystem : PunBehaviour
+    public class KartDriftSystem : PunBaseKartComponent
     {
         [Header("Time")]
         [Range(0, 10)] public float TimeBetweenDrifts;
@@ -22,24 +20,20 @@ namespace Kart
 
         private KartStates kartStates;
         private KartEngine kartPhysics;
-        private KartEffects kartEffects;
-        private KartSoundsScript kartSoundsScript;
         private CinemachineDynamicScript cinemachineDynamicScript;
+        private KartEngine kartEngine;
 
         private bool hasTurnedOtherSide;
         private bool driftedLongEnough;
-        private Coroutine driftTimer;
-        private Coroutine boostCoroutine;
-        private Coroutine _turboCoroutine;
+        private Coroutine driftedLongEnoughTimer;
+        private Coroutine physicsBoostCoroutine;
+        private Coroutine turboCoroutine;
 
-        private void Awake()
+        private new void Awake()
         {
-            kartStates = GetComponentInChildren<KartStates>();
-            kartPhysics = GetComponent<KartEngine>();
-            kartEffects = GetComponentInChildren<KartEffects>();
-            kartSoundsScript = FindObjectOfType<KartSoundsScript>();
-            cinemachineDynamicScript = FindObjectOfType<CinemachineDynamicScript>();
-            kartEffects.StopSmoke();
+            base.Awake();
+            kartEngine = GetComponent<KartEngine>();
+            kartStates = GetComponentInParent<KartStates>();
         }
 
         private void Update()
@@ -52,7 +46,7 @@ namespace Kart
 
         public void DriftForces()
         {
-            kartPhysics.DriftUsingForce();
+            kartEngine.DriftUsingForce();
         }
 
         public void CheckNewTurnDirection()
@@ -87,20 +81,19 @@ namespace Kart
                 case DriftBoostStates.RedDrift:
                     break;
             }
-            driftTimer = StartCoroutine(DriftTimer());
+            driftedLongEnoughTimer = StartCoroutine(DriftTimer());
         }
 
         public void InitializeDrift(float angle)
         {
-            if (_turboCoroutine != null)
+            if (turboCoroutine != null)
             {
-                StopCoroutine(_turboCoroutine);
+                StopCoroutine(turboCoroutine);
                 SetKartBoostState(DriftBoostStates.NotDrifting, ColorId.Gray);
             }
 
             if (kartStates.DriftBoostState == DriftBoostStates.NotDrifting)
             {
-                kartSoundsScript.StartDrift();
                 if (angle < 0)
                 {
                     SetKartTurnState(DriftTurnStates.DriftingLeft);
@@ -115,10 +108,9 @@ namespace Kart
 
         public void StopDrift()
         {
-            kartSoundsScript.EndDrift();
             if (kartStates.DriftBoostState == DriftBoostStates.RedDrift)
             {
-                _turboCoroutine = StartCoroutine(EnterTurbo());
+                turboCoroutine = StartCoroutine(EnterTurbo());
             }
             else
             {
@@ -126,45 +118,46 @@ namespace Kart
             }
         }
 
-        public void ResetDrift()
-        {
-            SetKartTurnState(DriftTurnStates.NotDrifting);
-            SetKartBoostState(DriftBoostStates.NotDrifting, ColorId.Gray);
-            driftedLongEnough = false;
-            // hasTurnedOtherSide = false;
-            kartEffects.StopSmoke();
-            if (driftTimer != null)
-            {
-                StopCoroutine(driftTimer);
-            }
-        }
-
         private void EnterNormalDrift()
         {
             SetKartBoostState(DriftBoostStates.SimpleDrift, ColorId.Gray);
+            kartEvents.OnDriftStart();
         }
 
         private void EnterOrangeDrift()
         {
             SetKartBoostState(DriftBoostStates.OrangeDrift, ColorId.Yellow);
+            kartEvents.OnDriftOrange();
         }
 
         private void EnterRedDrift()
         {
             SetKartBoostState(DriftBoostStates.RedDrift, ColorId.Red);
+            kartEvents.OnDriftRed();
         }
 
         private IEnumerator EnterTurbo()
         {
-            kartSoundsScript.BoostSound();
-            if (boostCoroutine != null) StopCoroutine(boostCoroutine);
-            boostCoroutine = StartCoroutine(kartPhysics.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));
-            cinemachineDynamicScript.BoostCameraBehaviour();
+            if (physicsBoostCoroutine != null) StopCoroutine(physicsBoostCoroutine);
+            kartEvents.OnDriftBoost();
+            physicsBoostCoroutine = StartCoroutine(kartEngine.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));            
             SetKartBoostState(DriftBoostStates.Turbo, ColorId.Green);
             SetKartTurnState(DriftTurnStates.NotDrifting);
             yield return new WaitForSeconds(BoostDuration);
             ResetDrift();
             yield break;
+        }
+
+        public void ResetDrift()
+        {
+            kartEvents.OnDriftReset();
+            SetKartTurnState(DriftTurnStates.NotDrifting);
+            SetKartBoostState(DriftBoostStates.NotDrifting, ColorId.Gray);
+            driftedLongEnough = false;
+            if (driftedLongEnoughTimer != null)
+            {
+                StopCoroutine(driftedLongEnoughTimer);
+            }
         }
 
         private IEnumerator DriftTimer()
@@ -181,25 +174,6 @@ namespace Kart
         private void SetKartTurnState(DriftTurnStates state)
         {
             this.ExecuteRPC(PhotonTargets.All, "RPCSetKartTurnState", state);
-        }
-
-        [PunRPC]
-        private void RPCSetKartBoostState(DriftBoostStates state, ColorId colorId)
-        {
-            kartStates.DriftBoostState = state;
-
-            if (state != DriftBoostStates.NotDrifting)
-                kartEffects.StartSmoke();
-            else
-                kartEffects.StopSmoke();
-
-            kartEffects.SetColor(ColorIdToColor(colorId));
-        }
-
-        [PunRPC]
-        private void RPCSetKartTurnState(DriftTurnStates state)
-        {
-            kartStates.DriftTurnState = state;
         }
 
         private enum ColorId
@@ -221,6 +195,18 @@ namespace Kart
                     return Color.yellow;
             }
             return Color.white;
+        }
+
+        [PunRPC]
+        private void RPCSetKartBoostState(DriftBoostStates state, ColorId colorId)
+        {
+            kartStates.DriftBoostState = state;
+        }
+
+        [PunRPC]
+        private void RPCSetKartTurnState(DriftTurnStates state)
+        {
+            kartStates.DriftTurnState = state;
         }
     }
 }

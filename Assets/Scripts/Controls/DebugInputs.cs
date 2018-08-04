@@ -1,19 +1,11 @@
 ﻿using UnityEngine.SceneManagement;
 using UnityEngine;
-using Kart;
 
 namespace Controls
 {
-    public class DebugInputs : MonoBehaviour
+    public class DebugInputs : BaseKartComponent
     {
-        KartHealthSystem kartHealthSystem;
-        GameObject kart;
-        public CinemachineDynamicScript Cam;
-
-        public void SetKart(KartHealthSystem value)
-        {
-            kartHealthSystem = value;
-        }
+        private GameObject kart;
 
         void Update()
         {
@@ -34,7 +26,7 @@ namespace Controls
             if (Input.GetKeyDown(KeyCode.Alpha8))
             {
                 kart = GameObject.FindWithTag("Kart");
-                kart.transform.position = new Vector3(411, 0, 0);
+                kart.transform.position = new Vector3(400, 3, 0);
             }
             if (Input.GetButtonDown(Constants.SpecialCapacity))
             {

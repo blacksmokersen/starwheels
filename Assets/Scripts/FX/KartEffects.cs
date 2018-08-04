@@ -1,25 +1,39 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-
-namespace Kart
+namespace FX
 {
-    public class KartEffects : MonoBehaviour
+    public class KartEffects : BaseKartComponent
     {
-        public ParticleSystem smokeLeftWheel;
-        public ParticleSystem smokeRightWheel;
-        [Space(10)]
-        // TODO: 
-        // public LifeCapsule[] capsules;
-        // public void SetLife(int value) { value * capules; }
+        [HideInInspector] public ParticleSystem smokeLeftWheel;
+        [HideInInspector] public ParticleSystem smokeRightWheel;
+
         public ParticleSystem[] Lifes;
         public ParticleSystem[] LifeBursts;
         [Space(10)]
-        public ParticleSystem MainJump;
-        public ParticleSystem JumpReload;
-        [Space(10)]
-        public Animator animator;
+        [Header("Particles")]
+        public ParticleSystem MainJumpParticles;
+        public ParticleSystem JumpReloadParticles;
+        public int NumberOfParticles = 300;
+
+        private new void Awake()
+        {
+            base.Awake();
+            StopSmoke();
+
+            // Events
+            kartEvents.OnJump += MainJumpParticlesEmit;
+            kartEvents.OnDoubleJumpReset += ReloadJumpParticlesEmit;
+
+            kartEvents.OnHealthLoss += HealthParticlesManagement;
+
+            kartEvents.OnDriftStart += StartSmoke;
+            kartEvents.OnDriftReset += StopSmoke;
+            kartEvents.OnDriftReset += () => SetWheelsColor(Color.white);
+
+            kartEvents.OnDriftOrange += () => SetWheelsColor(Color.yellow);
+            kartEvents.OnDriftRed += () => SetWheelsColor(Color.red);
+            kartEvents.OnDriftBoost += () => SetWheelsColor(Color.green);
+        }
 
         public void StopSmoke()
         {
@@ -36,11 +50,11 @@ namespace Kart
 
         public void HealthParticlesManagement(int health)
         {
-            Lifes[health].Stop(true);
+            Lifes[kartActions.kartHealthSystem.Health].Stop(true);
             LifeBursts[health].Play();
         }
 
-        public void ResetLife()
+        public void ResetLives()
         {
             foreach (ParticleSystem ps in Lifes)
             {
@@ -48,41 +62,23 @@ namespace Kart
             }
         }
 
-        public void MainJumpParticles(int number)
+        public void MainJumpParticlesEmit()
         {
-            MainJump.Emit(number);
+            MainJumpParticles.Emit(NumberOfParticles);
         }
 
-        public void ReloadJump()
+        public void ReloadJumpParticlesEmit()
         {
-            JumpReload.Emit(300);
-        }
+            JumpReloadParticles.Emit(NumberOfParticles);
+        }       
 
-        // TODO: Move to KartAnimations.cs
-        public void LeftJumpAnimation()
+        public void SetWheelsColor(Color color)
         {
-            animator.SetTrigger("LeftJump");
-        }
-        public void RightJumpAnimation()
-        {
-            animator.SetTrigger("RightJump");
-        }
-        public void FrontJumpAnimation()
-        {
-            animator.SetTrigger("FrontJump");
-        }
-        public void BackJumpAnimation()
-        {
-            animator.SetTrigger("BackJump");
-        }
+            var leftWheelMain = smokeLeftWheel.main;
+            var rightWheelMain = smokeRightWheel.main;
 
-        public void SetColor(Color color)
-        {
-            var main = smokeLeftWheel.main;
-            var main2 = smokeRightWheel.main;
-
-            main.startColor = color;
-            main2.startColor = color;
+            leftWheelMain.startColor = color;
+            rightWheelMain.startColor = color;
         }
     }
 }

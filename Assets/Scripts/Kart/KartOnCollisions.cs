@@ -8,12 +8,18 @@ namespace Kart {
      */ 
     public class KartOnCollisions : MonoBehaviour {
 
+        private KartEvents kartEvents;
+
+        private void Awake()
+        {
+            kartEvents = GetComponent<KartEvents>();
+        }
+
         private void OnCollisionEnter(Collision collision)
         {
             if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.GroundLayer))
             {
-                // Kart.SetState(Grounded)
-                FindObjectOfType<KartStates>().AirState = AirStates.Grounded;
+                kartEvents.OnCollisionEnterGround();
             }
         }
         private void OnTriggerEnter(Collider collision)
@@ -21,18 +27,18 @@ namespace Kart {
             if (collision.gameObject.tag == Constants.ItemBoxTag)
             {
                 StartCoroutine(collision.gameObject.GetComponent<ItemBox>().Activate());
-                StartCoroutine(GetComponentInChildren<KartInventory>().GetLotteryItem());
+                kartEvents.OnCollisionEnterItemBox();
             }
             else if(collision.gameObject.layer == LayerMask.NameToLayer(Constants.GroundLayer))
-            { 
-                FindObjectOfType<KartEngine>().rb.constraints = RigidbodyConstraints.FreezeRotationY;
+            {
+                //GetComponent<KartEngine>().rb.constraints = RigidbodyConstraints.FreezeRotationY;
             }
         }
         private void OnTriggerExit(Collider trigger)
         {
             if (trigger.gameObject.layer == LayerMask.NameToLayer(Constants.GroundLayer))
             {
-                FindObjectOfType<KartEngine>().rb.constraints = RigidbodyConstraints.None;
+                //GetComponent<KartEngine>().rb.constraints = RigidbodyConstraints.None;
             }
         }
     }

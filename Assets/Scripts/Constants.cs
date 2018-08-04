@@ -1,4 +1,5 @@
-﻿public class Constants {
+﻿public class Constants
+{
 
     // Layers
     public const string GroundLayer = "Ground";

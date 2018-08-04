@@ -5,11 +5,11 @@ using HUD;
 
 namespace Controls
 {
-    public class GodModInputs : MonoBehaviour
+    public class GodModInputs : BaseKartComponent
     {
         public bool Enabled = true;
 
-        private KartActions kartAction;
+        private KartHub kartAction;
         private int ActualItemIndex = 0;
 
         public void Update()
@@ -38,7 +38,7 @@ namespace Controls
             }
         }
 
-        public void SetKart(KartActions value)
+        public void SetKart(KartHub value)
         {
             kartAction = value;
         }
@@ -54,7 +54,7 @@ namespace Controls
             var items = ItemsLottery.Items;
             var itemIndex = (ActualItemIndex++) % items.Length;
             kartInventory.Item = items[itemIndex];
-            FindObjectOfType<HUDUpdater>().SetItem(kartInventory.Item);
+            kartEvents.OnItemUsed(kartInventory.Item, kartInventory.Count);
             SetUnlimitedItems();
         }
 

@@ -6,7 +6,8 @@ namespace Items
     public class DiskBehaviour : ProjectileBehaviour
     {
         [Header("Disk parameters")]
-        public int ReboundsBeforeEnd;        
+        public int ReboundsBeforeEnd;
+        public int ParticlesToEmit;
        
         private void OnCollisionEnter(Collision collision)
         {
@@ -14,7 +15,7 @@ namespace Items
             {
                 Vector3 contactPoint = collision.contacts[0].point;
                 CollisionParticles.transform.position = contactPoint;
-                CollisionParticles.Emit(600);
+                CollisionParticles.Emit(ParticlesToEmit);
                 ReboundsBeforeEnd--;
                 if (ReboundsBeforeEnd <= 0)
                 {

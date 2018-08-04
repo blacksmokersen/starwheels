@@ -1,7 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using HUD;
-
 
 namespace Kart
 {
@@ -12,12 +10,13 @@ namespace Kart
      * - Drag
      * - Torques
      */
-    [RequireComponent(typeof(Rigidbody))]
-    public class KartEngine : MonoBehaviour
+    public class KartEngine : BaseKartComponent
     {
         [Header("Driving")]
         public float Speed;
         public float MaxMagnitude;
+        public bool Crashed;
+        public float PlayerVelocity;
 
         [Header("Gravity")]
         public float JumpForce;
@@ -25,23 +24,25 @@ namespace Kart
         public float DoubleJumpDirectionalForce;
         public float DriftJumpForce;
         public float GravityForce;
+        public Vector3 CenterOfMassOffset;
         [Range(0, 1)] public float MinDrag;
         [Range(0, 10)] public float MaxDrag;
+
 
         [Header("Drift")]
         public float DriftGlideOrientation = 500f;
         public float DriftGlideBack = 500f;
         [Range(0, 2)] public float DriftBoostImpulse = 0.5f;
-        public float DriftTurnSpeed = 150;
-        public float MaxInteriorAngle = 400;
-        public float MaxExteriorAngle = 40;
+        public float DriftTurnSpeed = 150f;
+        public float MaxInteriorAngle = 400f;
+        public float MaxExteriorAngle = 40f;
         public float BoostPowerImpulse;
         public const float JoystickDeadZone1 = 0.1f;
         public const float JoystickDeadZone2 = 0.2f;
 
         [Header("Turn")]
         public float TurnTorqueSpeed;
-        public float CompensationForce;
+        public float SlipCompensationForce;
         public float TurnSlowValue;
         public float CapSpeedInTurn;
         [Range(1, 3)] public float LowerTurnSensitivity;
@@ -49,36 +50,29 @@ namespace Kart
         [Header("Stabilization")]
         public float RotationStabilizationSpeed;
 
-        public bool Crash;
-
-        private KartStates kartStates;
-        private KartSoundsScript kartSounds;
-
-        public float PlayerVelocity;
-        public Rigidbody rb;
-
+        private KartStates kartStates;        
+        private Rigidbody rb;
         private float controlMagnitude;
         private float controlSpeed;
         private float currentTimer;
 
-        private void Awake()
+        private new void Awake()
         {
+            base.Awake();
             controlMagnitude = MaxMagnitude;
             controlSpeed = Speed;
-            kartStates = GetComponentInChildren<KartStates>();
-            kartSounds = GetComponentInChildren<KartSoundsScript>();
-            rb = GetComponent<Rigidbody>();
+            kartStates = GetComponentInParent<KartStates>();
+            rb = GetComponentInParent<Rigidbody>();
+            rb.centerOfMass = CenterOfMassOffset;
+
+            kartEvents.OnHit += () => StartCoroutine(CrashBehaviour(1f));
         }
 
         private void Update()
         {
-            Vector3 localVelocity = transform.InverseTransformDirection(rb.velocity);
-            PlayerVelocity = localVelocity.z;
-
-            if (KartEvents.OnAccelerate != null)
-                KartEvents.OnAccelerate(rb.velocity.magnitude);
-
-            kartSounds.SetMotorPitch(0.5f + 0.5f * (localVelocity.magnitude / MaxMagnitude));
+            var localVelocity = transform.InverseTransformDirection(rb.velocity);
+            PlayerVelocity = localVelocity.z;            
+            kartEvents.OnVelocityChange(rb.velocity.magnitude);
         }
 
         private void FixedUpdate()
@@ -87,12 +81,13 @@ namespace Kart
             rb.AddForce(Vector3.down * GravityForce, ForceMode.Acceleration);
             CheckDrag();
             StabilizeRotation();
+            CompensateSlip();
         }
 
         public void CompensateSlip()
         {
             var sideVelocity = new Vector3(transform.InverseTransformDirection(rb.velocity).x, 0, 0);
-            rb.AddRelativeForce(-sideVelocity * CompensationForce, ForceMode.Force);
+            rb.AddRelativeForce(-sideVelocity * SlipCompensationForce, ForceMode.Force);
         }
 
         private void CheckDrag()
@@ -135,7 +130,6 @@ namespace Kart
             }
         }
 
-
         public void Jump(float percentage = 1f)
         {
             rb.AddRelativeForce(Vector3.up * JumpForce * percentage, ForceMode.Impulse);
@@ -148,9 +142,9 @@ namespace Kart
             rb.AddRelativeForce(forceUp + forceDirectional, ForceMode.Impulse);
         }
 
-        public void DriftJump(float value)
+        public void DriftJump()
         {
-            rb.AddRelativeForce(Vector3.up * DriftJumpForce * value, ForceMode.Impulse);
+            rb.AddRelativeForce(Vector3.up * DriftJumpForce, ForceMode.Impulse);
         }
 
         public void Accelerate(float value)
@@ -170,58 +164,32 @@ namespace Kart
             {
                 angleRestrain = angle <= -JoystickDeadZone2 ? MaxInteriorAngle : angle >= JoystickDeadZone1 ? MaxExteriorAngle : 100;
                 angle = angle <= -JoystickDeadZone2 ? angle : angle >= JoystickDeadZone1 ? angle : 1;
-
                 rb.AddTorque(Vector3.up * (-angleRestrain * Mathf.Abs(angle)) * DriftTurnSpeed * Time.deltaTime);
             }
             else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
             {
                 angleRestrain = angle <= -JoystickDeadZone2 ? MaxExteriorAngle : angle >= JoystickDeadZone1 ? MaxInteriorAngle : 100;
                 angle = angle <= -JoystickDeadZone2 ? angle : angle >= JoystickDeadZone1 ? angle : 1;
-
                 rb.AddTorque(Vector3.up * (angleRestrain * Mathf.Abs(angle)) * DriftTurnSpeed * Time.deltaTime);
             }
         }
-        /*
-        public void DriftTurn(float angle)
-        {
-            if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
-            {
-                if (angle != 0)
-                    angle = Mathf.Clamp(angle, -0.8f, -MaxExteriorAngle);
-                else
-                    angle = Mathf.Clamp(angle, -0.8f, -0.2f);
-            }
-            else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
-            {
-                if (angle != 0)
-                    angle = Mathf.Clamp(angle, MaxExteriorAngle, 0.8f);
-                else
-                    angle = Mathf.Clamp(angle, 0.2f, 0.8f);
-            }
-            transform.Rotate(Vector3.up * angle * DriftTurnSpeed * Time.deltaTime);
-        }
-        */
+
         public void StabilizeRotation()
         {
             if (kartStates.AirState == AirStates.InAir)
             {
-                var actualRotation = transform.localRotation;
+                var actualRotation = transform.parent.localRotation;
                 actualRotation.x = Mathf.Lerp(actualRotation.x, 0, RotationStabilizationSpeed);
                 actualRotation.z = Mathf.Lerp(actualRotation.z, 0, RotationStabilizationSpeed);
-                transform.localRotation = actualRotation;
+                transform.parent.localRotation = actualRotation;
             }
-        }
-
-        public void LooseHealth(float crashTimer)
-        {
-            StartCoroutine(CrashBehaviour(crashTimer));
         }
 
         IEnumerator CrashBehaviour(float crashTimer)
         {
-            Crash = true;
+            Crashed = true;
             yield return new WaitForSeconds(crashTimer);
-            Crash = false;
+            Crashed = false;
         }
 
         public IEnumerator Boost(float boostDuration, float magnitudeBoost, float speedBoost)
@@ -248,6 +216,5 @@ namespace Kart
                 yield return new WaitForFixedUpdate();
             }
         }
-
     }
 }

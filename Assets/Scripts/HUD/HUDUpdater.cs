@@ -5,42 +5,42 @@ using Items;
 
 namespace HUD
 {
-    public class HUDUpdater : MonoBehaviour
+    public class HUDUpdater : BaseKartComponent
     {
+        /*
         public Text SpeedText;
         public Text TimeText;
         public Text FPSText;
+        */
         public Text ItemCountText;
         
         public RawImage ItemTexture;
 
+        private new void Awake()
+        {
+            base.Awake();
+            kartEvents.OnItemUsed += UpdateItem;
+        }
+
         public void SetKart(Rigidbody body)
         {
             StartCoroutine(UpdateRoutine());
-
-            SetItem(null);
-            
-            KartEvents.OnAccelerate += (vel) => SpeedText.text = "Speed : " + vel;
         }
         
         IEnumerator UpdateRoutine()
         {
             while (Application.isPlaying)
             {
-                TimeText.text = "Time : " + Time.time;
-                FPSText.text = "FPS : " + 1.0f / Time.deltaTime;
+                //TimeText.text = "Time : " + Time.time;
+                //FPSText.text = "FPS : " + 1.0f / Time.deltaTime;
                 yield return new WaitForSeconds(0.05f);
             }
         }
 
-        public void SetItem(ItemData item)
+        public void UpdateItem(ItemData item, int count)
         {
-            ItemTexture.texture = item != null ? item.InventoryTexture : null;            
-        }
-
-        public void UpdateItemCount(int count)
-        {
-            ItemCountText.text = ""+count;
+            ItemTexture.texture = item != null ? item.InventoryTexture : null;
+            ItemCountText.text = "" + count;
         }
     }
 }

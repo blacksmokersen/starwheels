@@ -6,15 +6,11 @@ namespace Controls
     /* 
      * Class for handling player inputs
      */
-    public class PlayerInputs : MonoBehaviour
+    public class PlayerInputs : BaseKartComponent
     {
-        KartActions kartAction;
-        public CinemachineDynamicScript cinemachineDynamicScript;
+        private KartHub kartAction;
 
-        public bool disableMovements;
-        public bool disableUseItem;
-
-        public void SetKart(KartActions value)
+        public void SetKart(KartHub value)
         {
             kartAction = value;
         }
@@ -37,21 +33,16 @@ namespace Controls
 
         void Axis()
         {
-            if (!disableMovements)
-            {
-                kartAction.Accelerate(Input.GetAxis(Constants.AccelerateButton));
-                kartAction.Decelerate(Input.GetAxis(Constants.DecelerateButton));
-                kartAction.Turn(Input.GetAxis(Constants.TurnAxis));
-                kartAction.KartMeshMovement(Input.GetAxis(Constants.TurnAxis));
-                cinemachineDynamicScript.TurnCamera(Input.GetAxis(Constants.TurnCamera));
-            }
+            kartAction.Accelerate(Input.GetAxis(Constants.AccelerateButton));
+            kartAction.Decelerate(Input.GetAxis(Constants.DecelerateButton));
+            kartAction.Turn(Input.GetAxis(Constants.TurnAxis));
         }
 
         void ButtonsDown()
         {
             if (Input.GetButtonDown(Constants.SpecialCapacity))
             {
-                kartAction.Jump(3, Input.GetAxis(Constants.TurnAxis), Input.GetAxis(Constants.AccelerateButton), Input.GetAxis(Constants.UpAndDownAxis));
+                kartAction.UseCapacity(Input.GetAxis(Constants.TurnAxis), Input.GetAxis(Constants.UpAndDownAxis));
             }
             if (Input.GetButtonDown(Constants.DriftButton))
             {
