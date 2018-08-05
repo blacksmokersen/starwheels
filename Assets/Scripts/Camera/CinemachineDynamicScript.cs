@@ -7,13 +7,13 @@ public class CinemachineDynamicScript : BaseKartComponent
 {
     [Range(7.5f, 15)] public float MaxDistanceCamInBoost;
     public float SpeedCamMovements;
-    public bool BackCamActivated;
 
     private CinemachineVirtualCamera cinemachine;
     private Coroutine cameraBoostCoroutine;
     private Coroutine cameraIonBeamBehaviour;
     public CinemachineTransposer transposer;
     private CinemachineComposer composer;
+    private bool backCamActivated = false;
 
     private float currentTimer;
 
@@ -86,15 +86,21 @@ public class CinemachineDynamicScript : BaseKartComponent
     {
         if (value != 0 && Mathf.Abs(transposer.m_FollowOffset.x) <= 8)
             transposer.m_FollowOffset.x += value * 20 * Time.deltaTime;
-        else if(value == 0)
+        else if (value == 0)
             transposer.m_FollowOffset.x = Mathf.Lerp(transposer.m_FollowOffset.x, 0, Time.deltaTime * 20);
     }
     public void BackCamera(bool activate)
     {
         if (activate)
+        {
             transposer.m_FollowOffset.z = 9;
+            backCamActivated = true;
+        }
         else
+        {
             transposer.m_FollowOffset.z = -7.5f;
+            backCamActivated = false;
+        }
     }
 
     IEnumerator CameraIonBeamExpand(float endValueZ, float endValueY, float boostDuration)
@@ -143,18 +149,28 @@ public class CinemachineDynamicScript : BaseKartComponent
         currentTimer = 0f;
         while (currentTimer < boostDuration)
         {
-            transposer.m_FollowOffset.z = Mathf.Lerp(startDynamicCamValue, endValue, currentTimer / boostDuration);
-            currentTimer += Time.deltaTime;
-            yield return null;
+            if (!backCamActivated)
+            {
+                transposer.m_FollowOffset.z = Mathf.Lerp(startDynamicCamValue, endValue, currentTimer / boostDuration);
+                currentTimer += Time.deltaTime;
+                yield return null;
+            }
+            else
+                break;
         }
         yield return new WaitForSeconds(1f);
 
         currentTimer = 0f;
         while (currentTimer < (boostDuration * 5))
         {
-            transposer.m_FollowOffset.z = Mathf.Lerp(endValue, startValue, currentTimer / (boostDuration * 5));
-            currentTimer += Time.deltaTime;
-            yield return null;
+            if (!backCamActivated)
+            {
+                transposer.m_FollowOffset.z = Mathf.Lerp(endValue, startValue, currentTimer / (boostDuration * 5));
+                currentTimer += Time.deltaTime;
+                yield return null;
+            }
+            else
+                break;
         }
     }
 }

@@ -63,6 +63,10 @@ namespace Controls
             {
                 kartHub.UseItem(Input.GetAxis(Constants.UpAndDownAxis));                
             }
+            if (Input.GetButtonDown(Constants.BackCamera))
+            {
+                cinemachineDynamicScript.BackCamera(true);
+            }
         }
 
         void ButtonsPressed()
@@ -71,12 +75,6 @@ namespace Controls
             {
                 kartHub.DriftTurns(Input.GetAxis(Constants.TurnAxis));
             }
-            if (Input.GetButton(Constants.BackCamera))
-            {
-                cinemachineDynamicScript.BackCamera(true);
-            }
-            else
-                cinemachineDynamicScript.BackCamera(false);
         }
 
         void ButtonsUp()
@@ -84,6 +82,10 @@ namespace Controls
             if (Input.GetButtonUp(Constants.DriftButton))
             {
                 kartHub.StopDrift();
+            }
+            if (Input.GetButtonUp(Constants.BackCamera))
+            {
+                cinemachineDynamicScript.BackCamera(false);
             }
         }
     }
