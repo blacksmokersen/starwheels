@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
 using Cinemachine;
 using Photon;
-using Controls;
-using HUD;
-using Kart;
 
 public class Game : PunBehaviour
 {
@@ -18,10 +15,6 @@ public class Game : PunBehaviour
             CinemachineVirtualCamera camera = FindObjectOfType<CinemachineVirtualCamera>();
             camera.Follow = kart.transform;
             camera.LookAt = kart.transform;
-
-            FindObjectOfType<PlayerInputs>().SetKart(kart.GetComponentInChildren<KartHub>());
-            FindObjectOfType<GodModInputs>().SetKart(kart.GetComponentInChildren<KartHub>());
-            FindObjectOfType<HUDUpdater>().SetKart(kart.GetComponentInChildren<Rigidbody>());
         }
     }
 

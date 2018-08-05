@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using Kart;
 using Items;
-using HUD;
 
 namespace Controls
 {
@@ -9,7 +7,6 @@ namespace Controls
     {
         public bool Enabled = true;
 
-        private KartHub kartAction;
         private int ActualItemIndex = 0;
 
         public void Update()
@@ -38,19 +35,14 @@ namespace Controls
             }
         }
 
-        public void SetKart(KartHub value)
-        {
-            kartAction = value;
-        }
-
         public void SetUnlimitedItems()
         {
-            kartAction.kartInventory.Count = 1000;
+            kartHub.kartInventory.Count = 1000;
         }
 
         public void SwitchToNextItem()
         {
-            var kartInventory = kartAction.kartInventory;
+            var kartInventory = kartHub.kartInventory;
             var items = ItemsLottery.Items;
             var itemIndex = (ActualItemIndex++) % items.Length;
             kartInventory.Item = items[itemIndex];
@@ -61,17 +53,17 @@ namespace Controls
         public void SpawnEnemyKart()
         {
             var game = FindObjectOfType<Game>();
-            game.SpawnKart(kartAction.gameObject.transform.position + Vector3.forward);
+            game.SpawnKart(kartHub.gameObject.transform.position + Vector3.forward);
         }
 
         public void LoseOneLife()
         {
-            kartAction.kartHealthSystem.HealthLoss();
+            kartHub.kartHealthSystem.HealthLoss();
         }
 
         public void ResetLives()
         {
-            kartAction.kartHealthSystem.ResetLives();
+            kartHub.kartHealthSystem.ResetLives();
         }
     }
 }

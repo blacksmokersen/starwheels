@@ -24,7 +24,6 @@ namespace Items
         {
             base.Start();
             rocketLock.Owner = owner;
-            StartCoroutine(StartQuickTurn());
         }
 
         private new void FixedUpdate()
@@ -67,7 +66,7 @@ namespace Items
             }
         }
 
-        IEnumerator StartQuickTurn()
+        public IEnumerator StartQuickTurn()
         {
             actualTurnSpeed = QuickTurnSpeed;
             yield return new WaitForSeconds(QuickTurnDuration);

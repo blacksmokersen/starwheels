@@ -26,6 +26,7 @@ namespace Items
                 if (other.GetComponentInParent<KartInventory>() != Owner)
                 {
                     ActualTarget = other.gameObject;
+                    StartCoroutine(GetComponentInParent<RocketBehaviour>().StartQuickTurn());
                 }            
             }
         }
@@ -39,6 +40,7 @@ namespace Items
                 {
                     ActualTarget = other.gameObject;
                     actualTargetDistance = Vector3.Distance(transform.position, ActualTarget.transform.position);
+                    StartCoroutine(GetComponentInParent<RocketBehaviour>().StartQuickTurn());
                 }
             }
         }
