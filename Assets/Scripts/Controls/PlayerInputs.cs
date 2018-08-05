@@ -18,9 +18,8 @@ namespace Controls
             kartHub = value;
         }
 
-        private new void Awake()
+        private void Start()
         {
-            base.Awake();
             cinemachineDynamicScript = kartHub.cinemachineDynamicScript;
         }
 

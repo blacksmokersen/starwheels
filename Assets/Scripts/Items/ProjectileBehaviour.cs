@@ -111,7 +111,6 @@ namespace Items
 
         protected void OnTriggerEnter(Collider other)
         {
-            Debug.Log(other.name);
             if (other.gameObject.tag == Constants.KartRigidBodyTag)
             {
                 CheckCollision(other);

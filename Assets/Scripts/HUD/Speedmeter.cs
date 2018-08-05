@@ -8,9 +8,8 @@ namespace HUD
         public Image speedBar;
         public Text textSpeed;
 
-        private new void Awake()
+        private void Start()
         {
-            base.Awake();
             kartEvents.OnVelocityChange += SpeedmeterBehaviour;
         }
 
