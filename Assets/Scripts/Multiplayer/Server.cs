@@ -13,7 +13,6 @@ namespace Multiplayer
         {
             PhotonNetwork.autoJoinLobby = true;
             PhotonNetwork.automaticallySyncScene  = true;
-
             PhotonNetwork.ConnectUsingSettings("v1");
         }
 

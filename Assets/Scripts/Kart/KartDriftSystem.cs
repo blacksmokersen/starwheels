@@ -23,7 +23,7 @@ namespace Kart
         private CinemachineDynamicScript cinemachineDynamicScript;
         private KartEngine kartEngine;
 
-        private bool hasTurnedOtherSide;
+        private bool hasTurnedOtherSide = false;
         private bool driftedLongEnough;
         private Coroutine driftedLongEnoughTimer;
         private Coroutine physicsBoostCoroutine;
@@ -59,8 +59,7 @@ namespace Kart
 
         public bool TurnSideDifferentFromDriftSide()
         {
-            return ((kartStates.DriftTurnState == DriftTurnStates.DriftingLeft && kartStates.TurningState == TurningStates.Right)
-                || (kartStates.DriftTurnState == DriftTurnStates.DriftingRight && kartStates.TurningState == TurningStates.Left));
+            return kartStates.TurningState != kartStates.DriftTurnState;
         }
 
         public void EnterNextState()
@@ -96,11 +95,11 @@ namespace Kart
             {
                 if (angle < 0)
                 {
-                    SetKartTurnState(DriftTurnStates.DriftingLeft);
+                    SetKartTurnState(TurningStates.Left);
                 }
                 if (angle > 0)
                 {
-                    SetKartTurnState(DriftTurnStates.DriftingRight);
+                    SetKartTurnState(TurningStates.Right);
                 }
                 EnterNextState();
             }
@@ -142,7 +141,7 @@ namespace Kart
             kartEvents.OnDriftBoost();
             physicsBoostCoroutine = StartCoroutine(kartEngine.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));            
             SetKartBoostState(DriftBoostStates.Turbo, ColorId.Green);
-            SetKartTurnState(DriftTurnStates.NotDrifting);
+            SetKartTurnState(TurningStates.NotTurning);
             yield return new WaitForSeconds(BoostDuration);
             ResetDrift();
             yield break;
@@ -151,7 +150,7 @@ namespace Kart
         public void ResetDrift()
         {
             kartEvents.OnDriftReset();
-            SetKartTurnState(DriftTurnStates.NotDrifting);
+            SetKartTurnState(TurningStates.NotTurning);
             SetKartBoostState(DriftBoostStates.NotDrifting, ColorId.Gray);
             driftedLongEnough = false;
             if (driftedLongEnoughTimer != null)
@@ -171,7 +170,7 @@ namespace Kart
             this.ExecuteRPC(PhotonTargets.All, "RPCSetKartBoostState", state, colorId);
         }
 
-        private void SetKartTurnState(DriftTurnStates state)
+        private void SetKartTurnState(TurningStates state)
         {
             this.ExecuteRPC(PhotonTargets.All, "RPCSetKartTurnState", state);
         }
@@ -204,7 +203,7 @@ namespace Kart
         }
 
         [PunRPC]
-        private void RPCSetKartTurnState(DriftTurnStates state)
+        private void RPCSetKartTurnState(TurningStates state)
         {
             kartStates.DriftTurnState = state;
         }

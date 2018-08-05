@@ -100,12 +100,12 @@ namespace Kart
 
         public void DriftUsingForce()
         {
-            if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
+            if (kartStates.DriftTurnState == TurningStates.Left)
             {
                 rb.AddRelativeForce(Vector3.right * DriftGlideOrientation, ForceMode.Force);
                 rb.AddRelativeForce(Vector3.back * DriftGlideBack, ForceMode.Force);
             }
-            else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
+            else if (kartStates.DriftTurnState == TurningStates.Right)
             {
                 rb.AddRelativeForce(Vector3.left * DriftGlideOrientation, ForceMode.Force);
                 rb.AddRelativeForce(Vector3.back * DriftGlideBack, ForceMode.Force);
@@ -160,13 +160,13 @@ namespace Kart
         public void DriftTurn(float angle)
         {
             float angleRestrain = angle;
-            if (kartStates.DriftTurnState == DriftTurnStates.DriftingLeft)
+            if (kartStates.DriftTurnState == TurningStates.Left)
             {
                 angleRestrain = angle <= -JoystickDeadZone2 ? MaxInteriorAngle : angle >= JoystickDeadZone1 ? MaxExteriorAngle : 100;
                 angle = angle <= -JoystickDeadZone2 ? angle : angle >= JoystickDeadZone1 ? angle : 1;
                 rb.AddTorque(Vector3.up * (-angleRestrain * Mathf.Abs(angle)) * DriftTurnSpeed * Time.deltaTime);
             }
-            else if (kartStates.DriftTurnState == DriftTurnStates.DriftingRight)
+            else if (kartStates.DriftTurnState == TurningStates.Right)
             {
                 angleRestrain = angle <= -JoystickDeadZone2 ? MaxExteriorAngle : angle >= JoystickDeadZone1 ? MaxInteriorAngle : 100;
                 angle = angle <= -JoystickDeadZone2 ? angle : angle >= JoystickDeadZone1 ? angle : 1;

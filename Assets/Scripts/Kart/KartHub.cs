@@ -33,13 +33,12 @@ namespace Kart
             kartInventory = GetComponentInChildren<KartInventory>();
             kartHealthSystem = GetComponentInChildren<KartHealthSystem>();
             kartCapacity = GetComponentInChildren<ICapacity>();
-            cinemachineDynamicScript = GetComponentInChildren<CinemachineDynamicScript>();
-            
+            cinemachineDynamicScript = GetComponentInChildren<CinemachineDynamicScript>();            
         }
 
         private void FixedUpdate()
         {
-            if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
+            if (kartStates.DriftTurnState == TurningStates.NotTurning)
             {
                 kartEngine.CompensateSlip();
             }
@@ -93,19 +92,19 @@ namespace Kart
         {
             if (!kartStates.IsGrounded()) return;
 
-            if (kartStates.DriftTurnState != DriftTurnStates.NotDrifting && kartEngine.PlayerVelocity >= driftMinSpeedActivation)
+            if (kartStates.DriftTurnState != TurningStates.NotTurning && kartEngine.PlayerVelocity >= driftMinSpeedActivation)
             {
                 kartEngine.DriftTurn(turnValue);
                 kartDriftSystem.DriftForces();
                 kartDriftSystem.CheckNewTurnDirection();
             }
-            else if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
+            else if (kartStates.DriftTurnState == TurningStates.NotTurning)
             {
                 if (kartStates.TurningState == TurningStates.Left)
-                    kartStates.DriftTurnState = DriftTurnStates.DriftingLeft;
+                    kartStates.DriftTurnState = TurningStates.Left;
 
                 if (kartStates.TurningState == TurningStates.Right)
-                    kartStates.DriftTurnState = DriftTurnStates.DriftingRight;
+                    kartStates.DriftTurnState = TurningStates.Right;
 
                 InitializeDrift(turnValue);
             }
@@ -138,7 +137,7 @@ namespace Kart
 
             SetTurnState(turnValue);
 
-            if (kartStates.DriftTurnState == DriftTurnStates.NotDrifting)
+            if (kartStates.DriftTurnState == TurningStates.NotTurning)
             {
                 if (kartStates.AccelerationState == AccelerationStates.Forward)
                 {
