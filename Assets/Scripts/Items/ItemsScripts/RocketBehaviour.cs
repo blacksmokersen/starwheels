@@ -10,6 +10,7 @@ namespace Items
         public float NormalTurnSpeed;
         public float QuickTurnSpeed;
         public float QuickTurnDuration;
+        public float AntiShakingThreshold;
 
         private float actualTurnSpeed;
         private RocketLockTarget rocketLock;
@@ -30,7 +31,7 @@ namespace Items
         {
             TurnTowardTarget();
             SetVelocityForward();
-            NormalizeSpeed();
+            base.FixedUpdate();
         }
 
         private void SetVelocityForward()
@@ -44,14 +45,16 @@ namespace Items
         {
             if(rocketLock.ActualTarget != null)
             {
-                if(transform.InverseTransformPoint(rocketLock.ActualTarget.transform.position).x < 0) // If the target is on the left we turn to the left
+                if(transform.InverseTransformPoint(rocketLock.ActualTarget.transform.position).x < -AntiShakingThreshold) // If the target is on the left we turn to the left
                 {
                     transform.Rotate(Vector3.down * actualTurnSpeed * Time.deltaTime);
                 }
-                else // If the target is on the right we turn to the right
+                else if (transform.InverseTransformPoint(rocketLock.ActualTarget.transform.position).x > AntiShakingThreshold)  // If the target is on the right we turn to the right
                 {
                     transform.Rotate(Vector3.up * actualTurnSpeed * Time.deltaTime);
                 }
+                else
+                { }
             }
         }
 

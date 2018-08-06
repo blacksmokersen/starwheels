@@ -52,8 +52,7 @@ namespace Controls
 
         public void SpawnEnemyKart()
         {
-            var game = FindObjectOfType<Game>();
-            game.SpawnKart(kartHub.gameObject.transform.position + Vector3.forward);
+            Instantiate(Resources.Load("KartDummy"), transform.position + Vector3.forward, Quaternion.identity);
         }
 
         public void LoseOneLife()

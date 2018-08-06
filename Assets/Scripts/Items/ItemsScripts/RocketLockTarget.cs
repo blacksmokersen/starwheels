@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Kart;
 
 namespace Items
 {
@@ -23,7 +24,7 @@ namespace Items
         {
             if (other.gameObject.tag == Constants.KartRigidBodyTag && activated && ActualTarget == null)
             {
-                if (other.GetComponentInParent<KartInventory>() != Owner)
+                if (other.GetComponentInParent<KartHub>().kartInventory != Owner)
                 {
                     ActualTarget = other.gameObject;
                     StartCoroutine(GetComponentInParent<RocketBehaviour>().StartQuickTurn());
@@ -35,7 +36,7 @@ namespace Items
         {            
             if (other.gameObject.tag == Constants.KartRigidBodyTag && activated)
             {
-                if (other.GetComponentInParent<KartInventory>() == Owner) return;
+                if (other.GetComponentInParent<KartHub>().kartInventory == Owner) return;
                 if (IsKartIsCloserThanActualTarget(other.gameObject) || ActualTarget == null)
                 {
                     ActualTarget = other.gameObject;
