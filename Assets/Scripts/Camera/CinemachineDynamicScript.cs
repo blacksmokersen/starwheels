@@ -17,7 +17,6 @@ public class CinemachineDynamicScript : BaseKartComponent
 
     private float currentTimer;
 
-
     private void Update()
     {
         SpeedOnCamBehaviour();
