@@ -158,6 +158,7 @@ namespace Kart
             kartEvents.OnDriftReset();
             SetKartTurnState(TurningStates.NotTurning);
             SetKartBoostState(DriftBoostStates.NotDrifting, ColorId.Gray);
+            
             driftedLongEnough = false;
             if (driftedLongEnoughTimer != null)
             {
