@@ -1,14 +1,27 @@
-﻿using UnityEngine;
+﻿using Items;
+using UnityEngine;
 
 namespace Capacities
 {
-    public class NitroCapacity : MonoBehaviour, ICapacity
+    public class NitroCapacity : Capacity
     {
-        [Range(0,1)] public float Energy;
+        public float EnergyConsumptionSpeed;
 
-        public void Use(float xAxis, float yAxis)
+        private KartInventory kartInventory;
+
+        private new void Awake()
         {
-            throw new System.NotImplementedException();
+            base.Awake();
+            kartInventory = GetComponent<KartInventory>();
+        }
+
+        public override void Use(float xAxis, float yAxis)
+        {
+            if(Energy > 1 / kartInventory.Item.Count && kartInventory.Count > 1)
+            {
+                Energy = EnergyConsumptionSpeed * Time.deltaTime;
+                kartEvents.OnEnergyConsumption(Energy);
+            }
         }
     }
 }

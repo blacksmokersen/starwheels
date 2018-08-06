@@ -7,6 +7,7 @@ namespace Kart
     public class KartEvents : MonoBehaviour
     {
         public Action<float> OnVelocityChange;
+        public Action<float> OnEnergyConsumption;
         public Action<float> OnTurn;
         public Action<ItemData, int> OnItemUsed;
         public Action OnHit;

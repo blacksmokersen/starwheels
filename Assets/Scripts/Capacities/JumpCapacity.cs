@@ -8,10 +8,11 @@ namespace Capacities
      * Jump / Double Jump Capacity
      * 
      */ 
-    public class JumpCapacity : BaseKartComponent, ICapacity
+    public class JumpCapacity : Capacity
     {
         [Header("Jump Capacity")]
         public float CooldownDoubleJump;
+        public float EnergyConsummedOnJump;
 
         private bool hasDoneFirstJump = false;
         private bool canDoubleJump = true;
@@ -26,9 +27,16 @@ namespace Capacities
             kartEngine = GetComponent<KartEngine>();
         }
 
-        public void Use(float xAxis, float yAxis)
+        public override void Use(float xAxis, float yAxis)
         {
-            Jump(xAxis, yAxis);
+            Debug.Log("Hello");
+            if (Energy >= EnergyConsummedOnJump)
+            {
+                Debug.Log("Friend");
+                Jump(xAxis, yAxis);
+                Energy -= 0.5f;
+                kartEvents.OnEnergyConsumption(Energy);
+            }
         }
 
         public void Jump(float xAxis, float yAxis)
