@@ -78,7 +78,7 @@ namespace Items
         {
             if (direction == Directions.Forward || direction == Directions.Default)
             {
-                transform.rotation = kart.transform.rotation;
+                transform.rotation = kart.transform.rotation;         
                 rb.velocity = kart.transform.forward * Speed;
                 transform.position = kart.ItemPositions.FrontPosition.position;
             }
