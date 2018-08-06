@@ -38,7 +38,7 @@ namespace Kart
 
         private void Update()
         {
-            if (TurnSideDifferentFromDriftSide())
+            if (DriftSideDifferentFromTurnSide())
             {
                 hasTurnedOtherSide = true;
             }
@@ -51,15 +51,21 @@ namespace Kart
 
         public void CheckNewTurnDirection()
         {
-            if (hasTurnedOtherSide && !TurnSideDifferentFromDriftSide() && driftedLongEnough)
+            if (hasTurnedOtherSide && DriftSideEqualsTurnSide() && driftedLongEnough)
             {
                 EnterNextState();
             }
         }
 
-        public bool TurnSideDifferentFromDriftSide()
+        public bool DriftSideEqualsTurnSide()
         {
-            return kartStates.TurningState != kartStates.DriftTurnState;
+            return kartStates.TurningState == kartStates.DriftTurnState;
+        }
+
+        public bool DriftSideDifferentFromTurnSide()
+        {
+            return (kartStates.TurningState == TurningStates.Left && kartStates.DriftTurnState == TurningStates.Right) ||
+                (kartStates.TurningState == TurningStates.Right && kartStates.DriftTurnState == TurningStates.Left);
         }
 
         public void EnterNextState()
