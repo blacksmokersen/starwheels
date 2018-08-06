@@ -17,6 +17,12 @@ public class CinemachineDynamicScript : BaseKartComponent
 
     private float currentTimer;
 
+
+    private void Update()
+    {
+      //  SpeedOnCamBehaviour();
+    }
+
     private new void Awake()
     {
         base.Awake();
@@ -44,7 +50,10 @@ public class CinemachineDynamicScript : BaseKartComponent
 
     public void SpeedOnCamBehaviour()
     {
-        //TODO  effet de la vitesse du kart sur l'eloignement de la cam
+        float clampCam = 0;
+        clampCam = Mathf.Clamp(kartHub.kartEngine.PlayerVelocity /30, 0,1.5f);
+        transposer.m_FollowOffset.z = -7.5f + -clampCam ;
+        Debug.Log(clampCam);
     }
 
     public void AimAndFollow(bool value)
@@ -60,8 +69,11 @@ public class CinemachineDynamicScript : BaseKartComponent
         }
         else
         {
-            cinemachine.DestroyCinemachineComponent<CinemachineComposer>();
-            IonBeamInputs.IonBeamControlMode = true;
+            if (!backCamActivated || cameraBoostCoroutine != null)
+            {
+                cinemachine.DestroyCinemachineComponent<CinemachineComposer>();
+                IonBeamInputs.IonBeamControlMode = true;
+            }
         }
     }
 
