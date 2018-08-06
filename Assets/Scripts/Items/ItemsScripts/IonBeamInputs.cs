@@ -9,15 +9,14 @@ namespace Controls
         private float horizontalAxis;
         private float verticalAxis;
         private PlayerInputs playerinputs;
-        private IonBeamBehaviour ionBeamBehaviour;
+        public IonBeamBehaviour ionBeamBehaviour;
         private CinemachineDynamicScript cinemachineDynamicScript;
 
         private new void Awake()
         {
             base.Awake();
             cinemachineDynamicScript = kartHub.GetComponent<CinemachineDynamicScript>();
-            playerinputs = GetComponent<PlayerInputs>();
-            ionBeamBehaviour = GetComponent<IonBeamBehaviour>();
+            playerinputs =  kartHub.GetComponent<PlayerInputs>();
         }
 
         private void Update()

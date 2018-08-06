@@ -603,6 +603,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4047341886786088}
+  - component: {fileID: 114430947591731104}
   m_Layer: 0
   m_Name: Cameras
   m_TagString: Untagged
@@ -622,6 +623,7 @@ GameObject:
   - component: {fileID: 114154857888813766}
   - component: {fileID: 114885263671542672}
   - component: {fileID: 114410132016351836}
+  - component: {fileID: 114194676683252406}
   m_Layer: 0
   m_Name: Inputs
   m_TagString: Untagged
@@ -1081,7 +1083,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4322087572835300}
   - component: {fileID: 114647993160900032}
-  - component: {fileID: 114868983341945258}
   m_Layer: 0
   m_Name: PlayerCamera
   m_TagString: Untagged
@@ -3242,6 +3243,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114194676683252406
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1589234044636570}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dadcbddcdd072e4caa827b3c6aa84e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ionBeamBehaviour: {fileID: 114011170284891586, guid: 0fff704dd3d8724469268f864374a5f8,
+    type: 2}
 --- !u!114 &114212806462563176
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3345,6 +3359,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaddb6dc064490b4c9461bc9664ef0f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114430947591731104
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1581214069656840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33b871421be7e004289002feef3104e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxDistanceCamInBoost: 9.5
+  SpeedCamMovements: 5
+  transposer: {fileID: 0}
 --- !u!114 &114440973840230504
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3786,20 +3814,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CooldownDoubleJump: 1
---- !u!114 &114868983341945258
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1847374825850702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33b871421be7e004289002feef3104e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxDistanceCamInBoost: 9.5
-  SpeedCamMovements: 5
-  transposer: {fileID: 0}
 --- !u!114 &114885263671542672
 MonoBehaviour:
   m_ObjectHideFlags: 1

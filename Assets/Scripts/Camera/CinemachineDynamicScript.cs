@@ -27,8 +27,9 @@ public class CinemachineDynamicScript : BaseKartComponent
         base.Awake();
         kartEvents.OnDriftBoost += BoostCameraBehaviour;
 
-        cinemachine = GetComponent<CinemachineVirtualCamera>();
+        cinemachine = GetComponentInChildren<CinemachineVirtualCamera>();
         transposer = cinemachine.GetCinemachineComponent<CinemachineTransposer>();
+
         composer = cinemachine.GetCinemachineComponent<CinemachineComposer>();
     }
 
