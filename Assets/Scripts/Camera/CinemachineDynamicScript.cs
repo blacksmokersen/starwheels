@@ -20,7 +20,7 @@ public class CinemachineDynamicScript : BaseKartComponent
 
     private void Update()
     {
-      //  SpeedOnCamBehaviour();
+        SpeedOnCamBehaviour();
     }
 
     private new void Awake()
@@ -51,9 +51,8 @@ public class CinemachineDynamicScript : BaseKartComponent
     public void SpeedOnCamBehaviour()
     {
         float clampCam = 0;
-        clampCam = Mathf.Clamp(kartHub.kartEngine.PlayerVelocity /30, 0,1.5f);
-        transposer.m_FollowOffset.z = -7.5f + -clampCam ;
-        Debug.Log(clampCam);
+        clampCam = Mathf.Clamp(kartHub.kartEngine.PlayerVelocity/5, 0, 20);
+        cinemachine.m_Lens.FieldOfView = 50 + clampCam;
     }
 
     public void AimAndFollow(bool value)
