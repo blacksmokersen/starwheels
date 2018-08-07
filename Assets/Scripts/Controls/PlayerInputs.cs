@@ -37,6 +37,7 @@ namespace Controls
 
             ButtonsDown();
             ButtonsUp();
+            cinemachineDynamicScript.TurnCamera(Input.GetAxis(Constants.TurnCamera));
         }
 
         void Axis()

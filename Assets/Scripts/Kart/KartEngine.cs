@@ -54,6 +54,7 @@ namespace Kart
         private float controlMagnitude;
         private float controlSpeed;
         private float currentTimer;
+        private float pitchMotorMagnitudeDiviser = 27;
 
         private new void Awake()
         {
@@ -70,8 +71,8 @@ namespace Kart
         private void Update()
         {
             var localVelocity = transform.InverseTransformDirection(rb.velocity);
-            PlayerVelocity = localVelocity.z;            
-            kartEvents.OnVelocityChange(rb.velocity.magnitude);
+            PlayerVelocity = localVelocity.z;
+            kartEvents.OnVelocityChange(rb.velocity.magnitude / pitchMotorMagnitudeDiviser);
         }
 
         private void FixedUpdate()

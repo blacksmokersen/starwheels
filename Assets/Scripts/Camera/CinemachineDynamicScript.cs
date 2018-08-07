@@ -95,10 +95,13 @@ public class CinemachineDynamicScript : BaseKartComponent
 
     public void TurnCamera(float value)
     {
-        if (value != 0 && Mathf.Abs(transposer.m_FollowOffset.x) <= 8)
-            transposer.m_FollowOffset.x += value * 20 * Time.deltaTime;
-        else if (value == 0)
-            transposer.m_FollowOffset.x = Mathf.Lerp(transposer.m_FollowOffset.x, 0, Time.deltaTime * 20);
+        if (!backCamActivated)
+        {
+            if (value != 0 && Mathf.Abs(transposer.m_FollowOffset.x) <= 8)
+                transposer.m_FollowOffset.x += value * 20 * Time.deltaTime;
+            else if (value == 0)
+                transposer.m_FollowOffset.x = Mathf.Lerp(transposer.m_FollowOffset.x, 0, Time.deltaTime * 20);
+        }
     }
     public void BackCamera(bool activate)
     {
