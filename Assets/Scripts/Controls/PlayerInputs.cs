@@ -37,7 +37,7 @@ namespace Controls
 
             ButtonsDown();
             ButtonsUp();
-            cinemachineDynamicScript.TurnCamera(Input.GetAxis(Constants.TurnCamera));
+            AxisOnUse();
         }
 
         void Axis()
@@ -62,7 +62,7 @@ namespace Controls
             }
             if (Input.GetButtonDown(Constants.UseItemButton) && !DisableUseItem)
             {
-                kartHub.UseItem(Input.GetAxis(Constants.UpAndDownAxis));                
+                kartHub.UseItem(Input.GetAxis(Constants.UpAndDownAxis));
             }
             if (Input.GetButtonDown(Constants.BackCamera))
             {
@@ -88,6 +88,10 @@ namespace Controls
             {
                 cinemachineDynamicScript.BackCamera(false);
             }
+        }
+        void AxisOnUse()
+        {
+          //  cinemachineDynamicScript.TurnCamera(Input.GetAxis(Constants.TurnCamera));
         }
     }
 }
