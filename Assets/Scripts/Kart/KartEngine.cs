@@ -32,11 +32,10 @@ namespace Kart
         [Header("Drift")]
         public float DriftGlideOrientation = 500f;
         public float DriftGlideBack = 500f;
-        [Range(0, 2)] public float DriftBoostImpulse = 0.5f;
         public float DriftTurnSpeed = 150f;
         public float MaxInteriorAngle = 400f;
         public float MaxExteriorAngle = 40f;
-        public float BoostPowerImpulse;
+        [Range(0, 2)] public float BoostPowerImpulse;
         public const float JoystickDeadZone1 = 0.1f;
         public const float JoystickDeadZone2 = 0.2f;
 

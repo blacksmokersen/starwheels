@@ -17,13 +17,19 @@ public class CinemachineDynamicScript : BaseKartComponent
 
     private float currentTimer;
 
+    private void Update()
+    {
+        SpeedOnCamBehaviour();
+    }
+
     private new void Awake()
     {
         base.Awake();
         kartEvents.OnDriftBoost += BoostCameraBehaviour;
 
-        cinemachine = GetComponent<CinemachineVirtualCamera>();
+        cinemachine = GetComponentInChildren<CinemachineVirtualCamera>();
         transposer = cinemachine.GetCinemachineComponent<CinemachineTransposer>();
+
         composer = cinemachine.GetCinemachineComponent<CinemachineComposer>();
     }
 
@@ -44,7 +50,9 @@ public class CinemachineDynamicScript : BaseKartComponent
 
     public void SpeedOnCamBehaviour()
     {
-        //TODO  effet de la vitesse du kart sur l'eloignement de la cam
+        float clampCam = 0;
+        clampCam = Mathf.Clamp(kartHub.kartEngine.PlayerVelocity/5, 0, 20);
+        cinemachine.m_Lens.FieldOfView = 50 + clampCam;
     }
 
     public void AimAndFollow(bool value)
@@ -60,8 +68,11 @@ public class CinemachineDynamicScript : BaseKartComponent
         }
         else
         {
-            cinemachine.DestroyCinemachineComponent<CinemachineComposer>();
-            IonBeamInputs.IonBeamControlMode = true;
+            if (!backCamActivated || cameraBoostCoroutine != null)
+            {
+                cinemachine.DestroyCinemachineComponent<CinemachineComposer>();
+                IonBeamInputs.IonBeamControlMode = true;
+            }
         }
     }
 
