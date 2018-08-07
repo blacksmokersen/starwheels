@@ -7,7 +7,9 @@ namespace Items
     {
         public int Count;
         public string ItemName;
-        public Texture2D InventoryTexture;
+        public Sprite InventoryTexture;
         public ItemBehaviour ItemPrefab;
+        public float Chances;
+        public Color ItemColor;
     }
 }

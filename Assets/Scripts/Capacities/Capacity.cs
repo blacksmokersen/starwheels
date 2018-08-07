@@ -20,7 +20,7 @@ namespace Capacities
         protected new void Awake()
         {
             base.Awake();
-            kartEvents.OnCollisionEnterItemBox += () => Energy = 1f;
+            //kartEvents.OnCollisionEnterItemBox += () => Energy = 1f;
         }
 
         public virtual void Use(float xAxis, float yAxis) { }

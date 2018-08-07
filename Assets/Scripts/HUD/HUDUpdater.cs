@@ -12,14 +12,15 @@ namespace HUD
         public Text TimeText;
         public Text FPSText;
         */
-        public Text ItemCountText;
-        
-        public RawImage ItemTexture;
+        public Text ItemCountText;        
+        public Image ItemTexture;
+        public Image ItemFrame;
 
         private new void Awake()
         {
             base.Awake();
             kartEvents.OnItemUsed += UpdateItem;
+            UpdateItem(null, 0);
         }
 
         public void SetKart(Rigidbody body)
@@ -39,7 +40,8 @@ namespace HUD
 
         public void UpdateItem(ItemData item, int count)
         {
-            ItemTexture.texture = item != null ? item.InventoryTexture : null;
+            ItemTexture.sprite = item != null ? item.InventoryTexture : null;
+            ItemFrame.color = item != null ? item.ItemColor : Color.white ;
             ItemCountText.text = "" + count;
         }
     }

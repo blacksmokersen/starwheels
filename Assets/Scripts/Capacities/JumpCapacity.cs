@@ -29,6 +29,8 @@ namespace Capacities
 
         public override void Use(float xAxis, float yAxis)
         {
+            Jump(xAxis, yAxis);
+            /*
             Debug.Log("Hello");
             if (Energy >= EnergyConsummedOnJump)
             {
@@ -37,6 +39,7 @@ namespace Capacities
                 Energy -= 0.5f;
                 kartEvents.OnEnergyConsumption(Energy);
             }
+            */
         }
 
         public void Jump(float xAxis, float yAxis)
