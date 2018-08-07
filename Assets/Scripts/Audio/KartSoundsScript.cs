@@ -46,7 +46,6 @@ namespace Audio
             kartEvents.OnJump += PlayFirstJump;
             kartEvents.OnDriftBoost += BoostSound;
             kartEvents.OnDriftStart += PlayDriftStart;
-            //kartEvents.OnDriftStart += PlayOnDrift;
             kartEvents.OnDriftEnd += PlayDriftEnd;
             kartEvents.OnDoubleJump += (a) => PlaySecondJump();
             kartEvents.OnVelocityChange += (magnitude) => SetMotorPitch(0.5f + 0.35f * magnitude / pitchMotorMagnitudeDiviser);//(localVelocity.magnitude / MaxMagnitude));
@@ -93,6 +92,7 @@ namespace Audio
         public void PlayDriftStart()
         {
             driftSource.PlayOneShot(DriftStart);
+            if (DelayDriftStartRoutine != null) StopCoroutine(DelayDriftStartRoutine);
             DelayDriftStartRoutine = StartCoroutine(DelayDriftStart());
         }
 
@@ -105,6 +105,7 @@ namespace Audio
 
         public void PlayDriftEnd()
         {
+
             StopCoroutine(DelayDriftStartRoutine);
             driftSource.Stop();
             driftSource.PlayOneShot(DriftEnd);
