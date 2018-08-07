@@ -20,6 +20,7 @@ namespace Audio
         private AudioSource soundManager;
         private AudioSource motorSource;
         private AudioSource driftSource;
+        private float pitchMotorMagnitudeDiviser = 27;
 
         private new void Awake()
         {
@@ -42,7 +43,7 @@ namespace Audio
 
             kartEvents.OnJump += PlayFirstJump;
             kartEvents.OnDoubleJump += (a) => PlaySecondJump();
-            kartEvents.OnVelocityChange += (magnitude) => SetMotorPitch(0.5f + 0.5f * magnitude);//(localVelocity.magnitude / MaxMagnitude));
+            kartEvents.OnVelocityChange += (magnitude) => SetMotorPitch(0.5f + 0.5f * magnitude/pitchMotorMagnitudeDiviser);//(localVelocity.magnitude / MaxMagnitude));
         }
 
         public void PlayMotorAccel()
