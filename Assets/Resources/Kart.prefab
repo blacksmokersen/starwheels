@@ -1816,7 +1816,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1212992180707834}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: -0.0000001872535}
-  m_LocalPosition: {x: 0, y: 0.45, z: -0.5500002}
+  m_LocalPosition: {x: 0, y: 0.45, z: -0.91}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4047341886786088}
@@ -3528,16 +3528,15 @@ MonoBehaviour:
   MaxDrag: 0.8
   DriftGlideOrientation: 500
   DriftGlideBack: 500
-  DriftBoostImpulse: 0.5
   DriftTurnSpeed: 150
   MaxInteriorAngle: 400
   MaxExteriorAngle: 40
-  BoostPowerImpulse: 2
+  BoostPowerImpulse: 0.5
   TurnTorqueSpeed: 1000
   SlipCompensationForce: 100
   TurnSlowValue: 1000
   CapSpeedInTurn: 35
-  LowerTurnSensitivity: 1.5
+  LowerTurnSensitivity: 2
   RotationStabilizationSpeed: 0.15
 --- !u!114 &114132661954891388
 MonoBehaviour:
@@ -4112,7 +4111,7 @@ MonoBehaviour:
   TimeBetweenDrifts: 0.5
   BoostDuration: 1
   BoostSpeed: 300
-  MagnitudeBoost: 10
+  MagnitudeBoost: 5
   ForwardMaxAngle: 45
   BackMaxAngle: -30
 --- !u!114 &114655913041541998

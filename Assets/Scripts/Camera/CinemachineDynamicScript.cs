@@ -14,16 +14,23 @@ public class CinemachineDynamicScript : BaseKartComponent
     public CinemachineTransposer transposer;
     private CinemachineComposer composer;
     private bool backCamActivated = false;
+    private bool CameraNeedReset = false;
 
     private float currentTimer;
+
+    private void Update()
+    {
+        SpeedOnCamBehaviour();
+    }
 
     private new void Awake()
     {
         base.Awake();
         kartEvents.OnDriftBoost += BoostCameraBehaviour;
 
-        cinemachine = GetComponent<CinemachineVirtualCamera>();
+        cinemachine = GetComponentInChildren<CinemachineVirtualCamera>();
         transposer = cinemachine.GetCinemachineComponent<CinemachineTransposer>();
+
         composer = cinemachine.GetCinemachineComponent<CinemachineComposer>();
     }
 
@@ -44,7 +51,9 @@ public class CinemachineDynamicScript : BaseKartComponent
 
     public void SpeedOnCamBehaviour()
     {
-        //TODO  effet de la vitesse du kart sur l'eloignement de la cam
+        float clampCam = 0;
+        clampCam = Mathf.Clamp(kartHub.kartEngine.PlayerVelocity / 5, 0, 20);
+        cinemachine.m_Lens.FieldOfView = 50 + clampCam;
     }
 
     public void AimAndFollow(bool value)
@@ -60,8 +69,11 @@ public class CinemachineDynamicScript : BaseKartComponent
         }
         else
         {
-            cinemachine.DestroyCinemachineComponent<CinemachineComposer>();
-            IonBeamInputs.IonBeamControlMode = true;
+            if (!backCamActivated || cameraBoostCoroutine != null)
+            {
+                cinemachine.DestroyCinemachineComponent<CinemachineComposer>();
+                IonBeamInputs.IonBeamControlMode = true;
+            }
         }
     }
 
@@ -84,10 +96,25 @@ public class CinemachineDynamicScript : BaseKartComponent
 
     public void TurnCamera(float value)
     {
-        if (value != 0 && Mathf.Abs(transposer.m_FollowOffset.x) <= 8)
-            transposer.m_FollowOffset.x += value * 20 * Time.deltaTime;
-        else if (value == 0)
-            transposer.m_FollowOffset.x = Mathf.Lerp(transposer.m_FollowOffset.x, 0, Time.deltaTime * 20);
+        if (!backCamActivated)
+        {
+            if (value != 0 && Mathf.Abs(transposer.m_FollowOffset.x) <= 8)
+            {
+                //   transposer.m_FollowOffset.x += value * 20 * Time.deltaTime;
+                transposer.m_FollowOffset += new Vector3(value * 20 * Time.deltaTime,
+                    0,
+                    Mathf.Abs(value) * 20 * Time.deltaTime);
+                CameraNeedReset = true;
+            }
+            else if (CameraNeedReset)
+            {
+                Debug.Log("grsfy");
+                transposer.m_FollowOffset.x = Mathf.Lerp(transposer.m_FollowOffset.x, 0, Time.deltaTime * 20);
+                transposer.m_FollowOffset.z = Mathf.Lerp(transposer.m_FollowOffset.z, -7.5f, Time.deltaTime * 20);
+
+                CameraNeedReset = false;
+            }
+        }
     }
     public void BackCamera(bool activate)
     {

@@ -27,6 +27,7 @@ namespace FX
             kartEvents.OnHealthLoss += HealthParticlesManagement;
 
             kartEvents.OnDriftStart += StartSmoke;
+            kartEvents.OnDriftStart += () => SetWheelsColor(Color.white);
             kartEvents.OnDriftReset += StopSmoke;
             kartEvents.OnDriftReset += () => SetWheelsColor(Color.white);
 
