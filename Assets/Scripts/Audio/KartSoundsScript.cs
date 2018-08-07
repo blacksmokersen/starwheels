@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 namespace Audio
 {
@@ -42,8 +43,12 @@ namespace Audio
             PlayMotor();
 
             kartEvents.OnJump += PlayFirstJump;
+            kartEvents.OnDriftBoost += BoostSound;
+            kartEvents.OnDriftStart += PlayDriftStart;
+            kartEvents.OnDriftStart += PlayOnDrift;
+            kartEvents.OnDriftEnd += PlayDriftEnd;
             kartEvents.OnDoubleJump += (a) => PlaySecondJump();
-            kartEvents.OnVelocityChange += (magnitude) => SetMotorPitch(0.5f + 0.35f * magnitude/pitchMotorMagnitudeDiviser);//(localVelocity.magnitude / MaxMagnitude));
+            kartEvents.OnVelocityChange += (magnitude) => SetMotorPitch(0.5f + 0.35f * magnitude / pitchMotorMagnitudeDiviser);//(localVelocity.magnitude / MaxMagnitude));
         }
 
         public void PlayMotorAccel()
@@ -84,16 +89,19 @@ namespace Audio
 
         public void PlayDriftStart()
         {
-            soundManager.PlayOneShot(DriftStart);
+            driftSource.PlayOneShot(DriftStart);
+          //  StartCoroutine(DelayDriftStart());
         }
-        public void PlayDrift()
+        public void PlayOnDrift()
         {
-                soundManager.clip = Drift;
-                soundManager.Play();
+            driftSource.clip = Drift;
+            driftSource.loop = true;
+            driftSource.Play();
         }
         public void PlayDriftEnd()
         {
-            soundManager.PlayOneShot(DriftEnd);
+            driftSource.Stop();
+            driftSource.PlayOneShot(DriftEnd);
         }
 
         public void PlayFirstJump()
@@ -111,6 +119,11 @@ namespace Audio
         public void BoostSound()
         {
             soundManager.PlayOneShot(Boost);
+        }
+        IEnumerator DelayDriftStart()
+        {
+            yield return new WaitForSeconds(Drift.length);
+            PlayOnDrift();
         }
     }
 }

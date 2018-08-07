@@ -155,6 +155,7 @@ namespace Kart
 
         public void ResetDrift()
         {
+            kartEvents.OnDriftEnd();
             kartEvents.OnDriftReset();
             SetKartTurnState(TurningStates.NotTurning);
             SetKartBoostState(DriftBoostStates.NotDrifting, ColorId.Gray);
