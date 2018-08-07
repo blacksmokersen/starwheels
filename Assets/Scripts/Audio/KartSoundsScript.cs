@@ -43,7 +43,7 @@ namespace Audio
 
             kartEvents.OnJump += PlayFirstJump;
             kartEvents.OnDoubleJump += (a) => PlaySecondJump();
-            kartEvents.OnVelocityChange += (magnitude) => SetMotorPitch(0.5f + 0.5f * magnitude/pitchMotorMagnitudeDiviser);//(localVelocity.magnitude / MaxMagnitude));
+            kartEvents.OnVelocityChange += (magnitude) => SetMotorPitch(0.5f + 0.35f * magnitude/pitchMotorMagnitudeDiviser);//(localVelocity.magnitude / MaxMagnitude));
         }
 
         public void PlayMotorAccel()
