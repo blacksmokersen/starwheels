@@ -11,6 +11,19 @@ namespace Items
         public float ForwardThrowingForce;
         public float TimesLongerThanHighThrow;
 
+        [Header("Sounds")]
+        public AudioClip LaunchSound;
+        public AudioClip IdleSound;
+        public AudioClip ExplosionSound;
+
+        private AudioSource audioSource;
+        
+        #region Behaviour
+        private void Awake()
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
+
         private void Start()
         {
             StartCoroutine(MineActivationDelay());
@@ -27,6 +40,7 @@ namespace Items
             {
                 transform.position = kart.ItemPositions.BackPosition.position;
             }
+            PlayLaunchSound();
         }
 
         IEnumerator MineActivationDelay()
@@ -41,7 +55,29 @@ namespace Items
             if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.GroundLayer))
             {
                 GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                PlayIdleSound();
             }
         }
+
+        #endregion
+
+        #region Audio
+        public void PlayLaunchSound()
+        {
+            audioSource.PlayOneShot(LaunchSound);
+        }
+
+        public void PlayIdleSound()
+        {
+            audioSource.clip = IdleSound;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+
+        public void PlayExplosion()
+        {
+            AudioSource.PlayClipAtPoint(ExplosionSound, transform.position);
+        }
+        #endregion
     }
 }

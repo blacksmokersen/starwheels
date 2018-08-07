@@ -11,6 +11,7 @@ namespace Items
             if (other.gameObject.tag == Constants.ProjectileTag && Activated)
             {
                 Destroy(other.gameObject);
+                GetComponentInParent<MineBehaviour>().PlayExplosion();
                 Destroy(transform.parent.gameObject); // Destroy the mine root item
             }
         }

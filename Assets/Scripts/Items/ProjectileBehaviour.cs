@@ -4,6 +4,7 @@ using System.Collections;
 
 namespace Items
 {
+    [RequireComponent(typeof(AudioSource))]
     public class ProjectileBehaviour : ItemBehaviour
     {
         [Header("Projectile parameters")]
@@ -17,15 +18,23 @@ namespace Items
         [Header("Particles Effects")]
         public ParticleSystem CollisionParticles;
 
+        [Header("Sounds")]
+        public AudioClip LaunchSound;
+        public AudioClip FlySound;
+        public AudioClip PlayerHitSound;
+        public AudioClip CollisionSound;       
+
         protected Rigidbody rb;
         protected KartInventory owner;
 
+        private AudioSource audioSource;
         private const float ownerImmunityDuration = 1f;
         private bool ownerImmuned = true;
 
         protected void Awake()
         {
             rb = GetComponent<Rigidbody>();
+            audioSource = GetComponent<AudioSource>();
         }
 
         protected void Start()
@@ -44,6 +53,8 @@ namespace Items
             if (rb.useGravity == true)
                 ApplyLocalGravity();
         }
+
+        #region ItemLogic
 
         protected void NormalizeSpeed()
         {
@@ -91,6 +102,8 @@ namespace Items
                 transform.position = kart.ItemPositions.BackPosition.position;
             }
             owner = kart;
+            PlayLaunchSound();
+            PlayFlySound();
         }
 
         IEnumerator StartOwnerImmunity()
@@ -106,7 +119,8 @@ namespace Items
 
             other.gameObject.GetComponentInParent<KartEvents>().OnHit();
             CollisionParticles.Emit(2000);
-            DestroyObject();
+            PlayPlayerHitSound();
+            DestroyObject();    
         }
 
         protected void OnTriggerEnter(Collider other)
@@ -116,5 +130,31 @@ namespace Items
                 CheckCollision(other);
             }
         }
+
+        #endregion
+
+        #region Audio
+        public void PlayLaunchSound()
+        {
+            audioSource.PlayOneShot(PlayerHitSound);
+        }
+
+        public void PlayFlySound()
+        {
+            audioSource.clip = FlySound;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+
+        public void PlayPlayerHitSound()
+        {
+            AudioSource.PlayClipAtPoint(PlayerHitSound, transform.position);
+        }
+
+        public void PlayCollisionSound()
+        {
+            AudioSource.PlayClipAtPoint(CollisionSound, transform.position);
+        }
+        #endregion
     }
 }

@@ -65,6 +65,7 @@ namespace Items
         {
             if(collision.gameObject.layer == LayerMask.NameToLayer(Constants.GroundLayer))
             {
+                PlayCollisionSound();
                 DestroyObject();
             }
         }

@@ -11,6 +11,7 @@ namespace Items
             if (other.gameObject.tag == Constants.KartRigidBodyTag && Activated)
             {
                 other.gameObject.GetComponentInParent<Kart.KartEvents>().OnHit();
+                GetComponentInParent<MineBehaviour>().PlayExplosion();
                 Destroy(transform.parent.gameObject); // Destroy the mine root item
             }
         }

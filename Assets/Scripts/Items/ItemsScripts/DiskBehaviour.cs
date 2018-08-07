@@ -17,6 +17,7 @@ namespace Items
                 CollisionParticles.transform.position = contactPoint;
                 CollisionParticles.Emit(ParticlesToEmit);
                 ReboundsBeforeEnd--;
+                PlayCollisionSound();
                 if (ReboundsBeforeEnd <= 0)
                 {
                     DestroyObject();
