@@ -22,6 +22,7 @@ namespace Audio
         private AudioSource motorSource;
         private AudioSource driftSource;
         private float pitchMotorMagnitudeDiviser = 27;
+        private Coroutine DelayDriftStartRoutine;
 
         private new void Awake()
         {
@@ -45,7 +46,7 @@ namespace Audio
             kartEvents.OnJump += PlayFirstJump;
             kartEvents.OnDriftBoost += BoostSound;
             kartEvents.OnDriftStart += PlayDriftStart;
-            kartEvents.OnDriftStart += PlayOnDrift;
+            //kartEvents.OnDriftStart += PlayOnDrift;
             kartEvents.OnDriftEnd += PlayDriftEnd;
             kartEvents.OnDoubleJump += (a) => PlaySecondJump();
             kartEvents.OnVelocityChange += (magnitude) => SetMotorPitch(0.5f + 0.35f * magnitude / pitchMotorMagnitudeDiviser);//(localVelocity.magnitude / MaxMagnitude));
@@ -68,6 +69,7 @@ namespace Audio
         {
             motorSource.Play();
         }
+
         public void PlayMotorDecel()
         {
             if (!soundManager.isPlaying)
@@ -81,6 +83,7 @@ namespace Audio
             // AudioSource.PlayClipAtPoint(DriftStart, transform.position);
             driftSource.Play();
         }
+
         public void EndDrift()
         {
             driftSource.Stop();
@@ -90,16 +93,19 @@ namespace Audio
         public void PlayDriftStart()
         {
             driftSource.PlayOneShot(DriftStart);
-          //  StartCoroutine(DelayDriftStart());
+            DelayDriftStartRoutine = StartCoroutine(DelayDriftStart());
         }
+
         public void PlayOnDrift()
         {
             driftSource.clip = Drift;
             driftSource.loop = true;
             driftSource.Play();
         }
+
         public void PlayDriftEnd()
         {
+            StopCoroutine(DelayDriftStartRoutine);
             driftSource.Stop();
             driftSource.PlayOneShot(DriftEnd);
         }
@@ -108,21 +114,25 @@ namespace Audio
         {
             soundManager.PlayOneShot(FirstJump);
         }
+
         public void PlaySecondJump()
         {
             soundManager.PlayOneShot(SecondJump);
         }
+
         public void Playerhit()
         {
             soundManager.PlayOneShot(PlayerHit);
         }
+
         public void BoostSound()
         {
             soundManager.PlayOneShot(Boost);
         }
+
         IEnumerator DelayDriftStart()
         {
-            yield return new WaitForSeconds(Drift.length);
+            yield return new WaitForSeconds(DriftStart.length);
             PlayOnDrift();
         }
     }
