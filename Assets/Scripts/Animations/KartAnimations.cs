@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Kart;
 
 namespace Animations
 {
@@ -12,12 +13,12 @@ namespace Animations
             base.Awake();
             animator = GetComponent<Animator>();
 
-            kartEvents.OnDoubleJump += DoubleJumpAnimation;
-            kartEvents.OnHealthLoss += (a) => PlayerHitAnimation();
-            kartEvents.OnDriftLeft += LeftDriftAnimation;
-            kartEvents.OnDriftRight += RightDriftAnimation;
-            kartEvents.OnDriftEnd += NoDriftAnimation;
-            kartEvents.OnDriftBoost += NoDriftAnimation;
+            KartEvents.Instance.OnDoubleJump += DoubleJumpAnimation;
+            KartEvents.Instance.OnHealthLoss += (a) => PlayerHitAnimation();
+            KartEvents.Instance.OnDriftLeft += LeftDriftAnimation;
+            KartEvents.Instance.OnDriftRight += RightDriftAnimation;
+            KartEvents.Instance.OnDriftEnd += NoDriftAnimation;
+            KartEvents.Instance.OnDriftBoost += NoDriftAnimation;
         }
 
         public void DoubleJumpAnimation(Directions direction)
