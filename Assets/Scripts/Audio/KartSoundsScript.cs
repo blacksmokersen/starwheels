@@ -45,6 +45,7 @@ namespace Audio
 
             kartEvents.OnJump += PlayFirstJump;
             kartEvents.OnDriftBoost += BoostSound;
+            kartEvents.OnDriftBoost += PlayDriftEnd;
             kartEvents.OnDriftStart += PlayDriftStart;
             kartEvents.OnDriftEnd += PlayDriftEnd;
             kartEvents.OnDoubleJump += (a) => PlaySecondJump();
@@ -105,7 +106,6 @@ namespace Audio
 
         public void PlayDriftEnd()
         {
-
             StopCoroutine(DelayDriftStartRoutine);
             driftSource.Stop();
             driftSource.PlayOneShot(DriftEnd);

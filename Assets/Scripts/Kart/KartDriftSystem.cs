@@ -102,10 +102,13 @@ namespace Kart
                 if (angle < 0)
                 {
                     SetKartTurnState(TurningStates.Left);
+                    kartEvents.OnDriftLeft();
+                    Debug.Log("erqzt");
                 }
                 if (angle > 0)
                 {
                     SetKartTurnState(TurningStates.Right);
+                    kartEvents.OnDriftRight();
                 }
                 EnterNextState();
             }
@@ -119,6 +122,7 @@ namespace Kart
             }
             else
             {
+                kartEvents.OnDriftEnd();
                 ResetDrift();
             }
         }
@@ -145,6 +149,7 @@ namespace Kart
         {
             if (physicsBoostCoroutine != null) StopCoroutine(physicsBoostCoroutine);
             kartEvents.OnDriftBoost();
+            kartEvents.OnDriftEnd();
             physicsBoostCoroutine = StartCoroutine(kartEngine.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));            
             SetKartBoostState(DriftBoostStates.Turbo, ColorId.Green);
             SetKartTurnState(TurningStates.NotTurning);
@@ -155,7 +160,6 @@ namespace Kart
 
         public void ResetDrift()
         {
-            kartEvents.OnDriftEnd();
             kartEvents.OnDriftReset();
             SetKartTurnState(TurningStates.NotTurning);
             SetKartBoostState(DriftBoostStates.NotDrifting, ColorId.Gray);

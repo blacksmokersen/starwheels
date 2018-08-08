@@ -13,6 +13,11 @@ namespace Animations
             animator = GetComponent<Animator>();
 
             kartEvents.OnDoubleJump += DoubleJumpAnimation;
+            kartEvents.OnHealthLoss += (a) => HitOnHighSpeedAnimation();
+            kartEvents.OnDriftLeft += LeftDriftAnimation;
+            kartEvents.OnDriftRight += RightDriftAnimation;
+            kartEvents.OnDriftEnd += NoDriftAnimation;
+            kartEvents.OnDriftBoost += NoDriftAnimation;
         }
 
         public void DoubleJumpAnimation(Directions direction)
@@ -46,9 +51,26 @@ namespace Animations
         {
             animator.SetTrigger("FrontJump");
         }
+        public void LeftDriftAnimation()
+        {
+            animator.SetBool("DriftLeft", true);
+        }
+        public void RightDriftAnimation()
+        {
+            animator.SetBool("DriftRight", true);
+        }
+        public void NoDriftAnimation()
+        {
+            animator.SetBool("DriftLeft", false);
+            animator.SetBool("DriftRight", false);
+        }
         public void BackJumpAnimation()
         {
             animator.SetTrigger("BackJump");
+        }
+        public void HitOnHighSpeedAnimation()
+        {
+            animator.SetTrigger("HitHighSpeed");
         }
     }
 }
