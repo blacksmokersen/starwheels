@@ -13,7 +13,7 @@ namespace Animations
             animator = GetComponent<Animator>();
 
             kartEvents.OnDoubleJump += DoubleJumpAnimation;
-            kartEvents.OnHealthLoss += (a) => HitOnHighSpeedAnimation();
+            kartEvents.OnHealthLoss += (a) => PlayerHitAnimation();
             kartEvents.OnDriftLeft += LeftDriftAnimation;
             kartEvents.OnDriftRight += RightDriftAnimation;
             kartEvents.OnDriftEnd += NoDriftAnimation;
@@ -68,9 +68,12 @@ namespace Animations
         {
             animator.SetTrigger("BackJump");
         }
-        public void HitOnHighSpeedAnimation()
+        public void PlayerHitAnimation()
         {
-            animator.SetTrigger("HitHighSpeed");
+            if (kartHub.kartEngine.PlayerVelocity >= 10)
+                animator.SetTrigger("HitHighSpeed");
+            else
+                animator.SetTrigger("HitLowSpeed");
         }
     }
 }
