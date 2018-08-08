@@ -89,14 +89,14 @@ namespace Items
         {
             if (direction == Directions.Forward || direction == Directions.Default)
             {
-                transform.rotation = kart.transform.rotation;         
+                var rot = new Vector3(0,kart.transform.rotation.eulerAngles.y,0);
+                transform.rotation = Quaternion.Euler(rot);
                 rb.velocity = kart.transform.forward * Speed;
                 transform.position = kart.ItemPositions.FrontPosition.position;
             }
             else if (direction == Directions.Backward)
             {
-                var rot = kart.transform.rotation.eulerAngles;
-                rot = new Vector3(rot.x, rot.y + 180, rot.z); // Apply 180° turn
+                var rot = new Vector3(0, kart.transform.rotation.eulerAngles.y + 180, 0); // Apply 180° turn
                 transform.rotation = Quaternion.Euler(rot);
                 rb.velocity = -kart.transform.forward * Speed;
                 transform.position = kart.ItemPositions.BackPosition.position;
