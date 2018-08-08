@@ -4,7 +4,7 @@ using MyExtensions;
 
 namespace Kart
 {
-    public class KartHealthSystem : PunBaseKartComponent
+    public class KartHealthSystem : BaseKartComponent
     {
         public int MaxHealth = 3;
         public int Health;
@@ -23,7 +23,7 @@ namespace Kart
 
         public void HealthLoss()
         {
-            this.ExecuteRPC(PhotonTargets.All, "RPCHealthLoss");
+            photonView.ExecuteRPC(this, PhotonTargets.All, "RPCHealthLoss");
         }
 
         [PunRPC]

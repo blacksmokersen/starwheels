@@ -2,10 +2,11 @@
 using UnityEngine.UI;
 using UnityEngine;
 using Items;
+using Kart;
 
 namespace HUD
 {
-    public class HUDUpdater : BaseKartComponent
+    public class HUDUpdater : MonoBehaviour
     {
         /*
         public Text SpeedText;
@@ -16,10 +17,9 @@ namespace HUD
         public Image ItemTexture;
         public Image ItemFrame;
 
-        private new void Awake()
+        private void Start()
         {
-            base.Awake();
-            kartEvents.OnItemUsed += UpdateItem;
+            KartEvents.Instance.OnItemUsed += UpdateItem;
             UpdateItem(null, 0);
         }
 

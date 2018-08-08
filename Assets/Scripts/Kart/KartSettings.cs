@@ -3,7 +3,7 @@ using Photon;
 
 namespace Kart
 {
-    public class KartSettings : PunBehaviour
+    public class KartSettings : UnityEngine.MonoBehaviour
     {
         [SerializeField] private MeshRenderer kartRenderer;
         [SerializeField] private TextMesh nameText;
@@ -11,6 +11,7 @@ namespace Kart
 
         private void Awake()
         {
+            PhotonView photonView = GetComponentInParent<PhotonView>();
             if (PhotonNetwork.connected && !photonView.isMine)
             {
                 SetName(GetPlayer(photonView).NickName);

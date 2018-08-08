@@ -14,7 +14,7 @@ namespace MyExtensions
 
     public static class Extensions
     {
-        public static void ExecuteRPC(this PunBehaviour pun, PhotonTargets targets, string methodName, params object[] parameters)
+        public static void ExecuteRPC(this PhotonView pun, object obj, PhotonTargets targets, string methodName, params object[] parameters)
         {
             if (PhotonNetwork.connected)
             {

@@ -4,7 +4,7 @@ using MyExtensions;
 
 namespace Kart
 {
-    public class KartDriftSystem : PunBaseKartComponent
+    public class KartDriftSystem : BaseKartComponent
     {
         [Header("Time")]
         [Range(0, 10)] public float TimeBetweenDrifts;
@@ -32,7 +32,7 @@ namespace Kart
         private new void Awake()
         {
             base.Awake();
-            kartEngine = GetComponent<KartEngine>();
+            kartEngine = GetComponentInChildren<KartEngine>();
             kartStates = GetComponentInParent<KartStates>();
         }
 
@@ -178,12 +178,12 @@ namespace Kart
 
         private void SetKartBoostState(DriftBoostStates state, ColorId colorId)
         {
-            this.ExecuteRPC(PhotonTargets.All, "RPCSetKartBoostState", state, colorId);
+            photonView.ExecuteRPC(this, PhotonTargets.All, "RPCSetKartBoostState", state, colorId);
         }
 
         private void SetKartTurnState(TurningStates state)
         {
-            this.ExecuteRPC(PhotonTargets.All, "RPCSetKartTurnState", state);
+            photonView.ExecuteRPC(this, PhotonTargets.All, "RPCSetKartTurnState", state);
         }
 
         private enum ColorId
