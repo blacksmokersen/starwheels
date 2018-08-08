@@ -106,7 +106,7 @@ namespace Audio
 
         public void PlayDriftEnd()
         {
-            StopCoroutine(DelayDriftStartRoutine);
+            if (DelayDriftStartRoutine != null) StopCoroutine(DelayDriftStartRoutine);
             driftSource.Stop();
             driftSource.PlayOneShot(DriftEnd);
         }
