@@ -102,12 +102,12 @@ namespace Kart
                 if (angle < 0)
                 {
                     SetKartTurnState(TurningStates.Left);
-                    kartEvents.OnDriftLeft();
+                    KartEvents.Instance.OnDriftLeft();
                 }
                 if (angle > 0)
                 {
                     SetKartTurnState(TurningStates.Right);
-                    kartEvents.OnDriftRight();
+                    KartEvents.Instance.OnDriftRight();
                 }
                 EnterNextState();
             }
@@ -121,7 +121,7 @@ namespace Kart
             }
             else
             {
-                kartEvents.OnDriftEnd();
+                KartEvents.Instance.OnDriftEnd();
                 ResetDrift();
             }
         }
@@ -129,26 +129,26 @@ namespace Kart
         private void EnterNormalDrift()
         {
             SetKartBoostState(DriftBoostStates.SimpleDrift, ColorId.Gray);
-            kartEvents.OnDriftStart();
+            KartEvents.Instance.OnDriftStart();
         }
 
         private void EnterOrangeDrift()
         {
             SetKartBoostState(DriftBoostStates.OrangeDrift, ColorId.Yellow);
-            kartEvents.OnDriftOrange();
+            KartEvents.Instance.OnDriftOrange();
         }
 
         private void EnterRedDrift()
         {
             SetKartBoostState(DriftBoostStates.RedDrift, ColorId.Red);
-            kartEvents.OnDriftRed();
+            KartEvents.Instance.OnDriftRed();
         }
 
         private IEnumerator EnterTurbo()
         {
             if (physicsBoostCoroutine != null) StopCoroutine(physicsBoostCoroutine);
-            kartEvents.OnDriftBoost();
-            kartEvents.OnDriftEnd();
+            KartEvents.Instance.OnDriftBoost();
+            KartEvents.Instance.OnDriftEnd();
             physicsBoostCoroutine = StartCoroutine(kartEngine.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));            
             SetKartBoostState(DriftBoostStates.Turbo, ColorId.Green);
             SetKartTurnState(TurningStates.NotTurning);
@@ -159,7 +159,7 @@ namespace Kart
 
         public void ResetDrift()
         {
-            kartEvents.OnDriftReset();
+            KartEvents.Instance.OnDriftReset();
             SetKartTurnState(TurningStates.NotTurning);
             SetKartBoostState(DriftBoostStates.NotDrifting, ColorId.Gray);
             
