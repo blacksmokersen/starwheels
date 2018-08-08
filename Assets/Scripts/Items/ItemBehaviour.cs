@@ -9,9 +9,11 @@ namespace Items
 
         public void DestroyObject()
         {
+            PhotonView view = GetComponent<PhotonView>();
             if (PhotonNetwork.connected)
             {
-                PhotonNetwork.Destroy(gameObject);
+                if (view.isMine)
+                    PhotonNetwork.Destroy(gameObject);
             }
             else
             {
