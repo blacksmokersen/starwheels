@@ -785,6 +785,8 @@ GameObject:
   - component: {fileID: 114907998683179784}
   - component: {fileID: 114655913041541998}
   - component: {fileID: 95775265256644064}
+  - component: {fileID: 114158448969131078}
+  - component: {fileID: 114539492184620100}
   m_Layer: 0
   m_Name: Meshes
   m_TagString: Untagged
@@ -2999,6 +3001,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3a5f180be8605649898fe4bee32abe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114158448969131078
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1718263794234376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 3
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 114539492184620100}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!114 &114335135306814078
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3120,6 +3148,47 @@ MonoBehaviour:
   JumpReloadParticles: {fileID: 198258525634490310, guid: d67b1b8f048e34743b46b7244223ca2b,
     type: 2}
   NumberOfParticles: 300
+--- !u!114 &114539492184620100
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1718263794234376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 9
+    SynchronizeType: 1
+    Name: RightJump
+  - Type: 9
+    SynchronizeType: 1
+    Name: FrontJump
+  - Type: 9
+    SynchronizeType: 1
+    Name: BackJump
+  - Type: 9
+    SynchronizeType: 1
+    Name: LeftJump
+  - Type: 9
+    SynchronizeType: 1
+    Name: HitHighSpeed
+  - Type: 9
+    SynchronizeType: 1
+    Name: HitLowSpeed
+  - Type: 4
+    SynchronizeType: 1
+    Name: DriftLeft
+  - Type: 4
+    SynchronizeType: 1
+    Name: DriftRight
+  m_SynchronizeLayers:
+  - SynchronizeType: 1
+    LayerIndex: 0
 --- !u!114 &114550539497350264
 MonoBehaviour:
   m_ObjectHideFlags: 1
