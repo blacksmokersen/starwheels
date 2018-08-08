@@ -7,7 +7,7 @@ namespace Items
         public virtual void Spawn(KartInventory kart, Directions direction)
         { }
 
-        protected void DestroyObject()
+        public void DestroyObject()
         {
             if (PhotonNetwork.connected)
             {

@@ -13,5 +13,15 @@
         {
 
         }
+
+        private new void OnTriggerEnter(UnityEngine.Collider other)
+        {
+            base.OnTriggerEnter(other);
+            if(other.gameObject.CompareTag(Constants.GroundItemTag) ||
+                other.gameObject.CompareTag(Constants.ProjectileTag))
+            {
+                other.gameObject.GetComponentInParent<ItemBehaviour>().DestroyObject();
+            }
+        }
     }
 }
