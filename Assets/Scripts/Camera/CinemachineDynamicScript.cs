@@ -2,8 +2,9 @@
 using UnityEngine;
 using Cinemachine;
 using Controls;
+using Kart;
 
-public class CinemachineDynamicScript : BaseKartComponent
+public class CinemachineDynamicScript : MonoBehaviour
 {
     [Range(7.5f, 15)] public float MaxDistanceCamInBoost;
     public float SpeedCamMovements;
@@ -23,10 +24,9 @@ public class CinemachineDynamicScript : BaseKartComponent
         SpeedOnCamBehaviour();
     }
 
-    private new void Awake()
+    private void Start()
     {
-        base.Awake();
-        kartEvents.OnDriftBoost += BoostCameraBehaviour;
+        KartEvents.Instance.OnDriftBoost += BoostCameraBehaviour;
 
         cinemachine = GetComponentInChildren<CinemachineVirtualCamera>();
         transposer = cinemachine.GetCinemachineComponent<CinemachineTransposer>();
@@ -52,8 +52,8 @@ public class CinemachineDynamicScript : BaseKartComponent
     public void SpeedOnCamBehaviour()
     {
         float clampCam = 0;
-        clampCam = Mathf.Clamp(kartHub.kartEngine.PlayerVelocity / 5, 0, 20);
-        cinemachine.m_Lens.FieldOfView = 50 + clampCam;
+        /*clampCam = Mathf.Clamp(kartHub.kartEngine.PlayerVelocity / 5, 0, 20);
+        cinemachine.m_Lens.FieldOfView = 50 + clampCam;*/
     }
 
     public void AimAndFollow(bool value)

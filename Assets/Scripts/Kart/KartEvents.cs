@@ -6,6 +6,16 @@ namespace Kart
 {
     public class KartEvents : MonoBehaviour
     {
+        public static KartEvents Instance;
+        private void Awake()
+        {
+            PhotonView view = GetComponent<PhotonView>();
+            if (view.isMine || !PhotonNetwork.connected)
+            {
+                Instance = this;
+            }
+        }
+
         public Action<float> OnVelocityChange;
         public Action<float> OnEnergyConsumption;
         public Action<float> OnTurn;

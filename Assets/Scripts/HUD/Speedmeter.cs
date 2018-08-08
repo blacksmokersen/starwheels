@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using Kart;
 
 namespace HUD
 {
-    public class Speedmeter : BaseKartComponent
+    public class Speedmeter : MonoBehaviour
     {
         public Image speedBar;
         public Text textSpeed;
 
         private void Start()
         {
-            kartEvents.OnVelocityChange += SpeedmeterBehaviour;
+            KartEvents.Instance.OnVelocityChange += SpeedmeterBehaviour;
         }
 
         public void SpeedmeterBehaviour(float kartVelocity)
