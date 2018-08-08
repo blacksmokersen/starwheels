@@ -103,7 +103,6 @@ namespace Kart
                 {
                     SetKartTurnState(TurningStates.Left);
                     kartEvents.OnDriftLeft();
-                    Debug.Log("erqzt");
                 }
                 if (angle > 0)
                 {
