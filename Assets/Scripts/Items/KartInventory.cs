@@ -20,7 +20,10 @@ namespace Items
         private new void Awake()
         {
             base.Awake();
-            kartEvents.OnCollisionEnterItemBox += () => StartCoroutine(GetLotteryItem());
+            kartEvents.OnCollisionEnterItemBox += () => {
+                if (photonView.isMine || !PhotonNetwork.connected)
+                    StartCoroutine(GetLotteryItem());
+            };
         }
 
         public void ItemAction(Directions direction)

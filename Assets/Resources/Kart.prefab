@@ -466,6 +466,7 @@ GameObject:
   - component: {fileID: 54115033852382540}
   - component: {fileID: 114485541274518430}
   - component: {fileID: 114979250873304534}
+  - component: {fileID: 114475196102562330}
   m_Layer: 0
   m_Name: Kart
   m_TagString: Kart
@@ -830,7 +831,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4422502987046830}
-  - component: {fileID: 114486830910212294}
   - component: {fileID: 114335135306814078}
   m_Layer: 0
   m_Name: Multiplayer
@@ -3037,6 +3037,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaddb6dc064490b4c9461bc9664ef0f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114475196102562330
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1571014680455984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5d9590cd067ce94ba77a159abd6378f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 3
+  Health: 3
+  SpamHitSecurity: 3
+  HitStopKartDuration: 2
 --- !u!114 &114485541274518430
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3048,21 +3063,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c12eb7178fad17240b22ac043ffb1198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114486830910212294
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1787294567586586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5d9590cd067ce94ba77a159abd6378f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxHealth: 3
-  Health: 3
-  SpamHitSecurity: 3
-  HitStopKartDuration: 2
 --- !u!114 &114489574900648120
 MonoBehaviour:
   m_ObjectHideFlags: 1
