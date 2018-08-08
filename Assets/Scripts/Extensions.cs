@@ -22,10 +22,10 @@ namespace MyExtensions
             }
             else
             {
-                Type thisType = pun.GetType();
+                Type thisType = obj.GetType();
                 MethodInfo theMethod = thisType.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance);
-                theMethod.Invoke(pun, parameters);
-            }            
+                theMethod.Invoke(obj, parameters);
+            }
         }
     }
 }
