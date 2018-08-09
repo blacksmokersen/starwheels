@@ -91,7 +91,9 @@ namespace Items
             {
                 var rot = new Vector3(0,kart.transform.rotation.eulerAngles.y,0);
                 transform.rotation = Quaternion.Euler(rot);
-                rb.velocity = kart.transform.forward * Speed;
+                var vel = kart.transform.forward * Speed;
+                vel.y = 0;
+                rb.velocity = vel;
                 transform.position = kart.ItemPositions.FrontPosition.position;
             }
             else if (direction == Directions.Backward)
