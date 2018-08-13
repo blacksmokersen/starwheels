@@ -59,15 +59,8 @@ namespace Items
         public void UseItem(ItemData item, Directions direction)
         {
             ItemBehaviour itemObj;
-            if (PhotonNetwork.connected)
-            {
-                var obj = PhotonNetwork.Instantiate(item.ItemPrefab.name, new Vector3(1500,1500,1500), Quaternion.identity, 0);
-                itemObj = obj.GetComponent<ItemBehaviour>();
-            }
-            else
-            {
-                itemObj = Instantiate(item.ItemPrefab);
-            }            
+            var obj = PhotonNetwork.Instantiate(item.ItemPrefab.name, new Vector3(1500,1500,1500), Quaternion.identity, 0);
+            itemObj = obj.GetComponent<ItemBehaviour>();
             itemObj.Spawn(this,direction);
         }
 

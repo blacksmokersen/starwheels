@@ -9,8 +9,9 @@ namespace Multiplayer
         [SerializeField] private Room _room;
         [SerializeField] private Lobby _lobby;
 
-        private void Start()
+        private void Awake()
         {
+            PhotonNetwork.offlineMode = false;
             PhotonNetwork.autoJoinLobby = true;
             PhotonNetwork.automaticallySyncScene  = true;
             PhotonNetwork.ConnectUsingSettings("v1");

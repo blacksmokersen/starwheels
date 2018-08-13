@@ -6,11 +6,16 @@ public class Game : PunBehaviour
 {
     private void Start()
     {
+        if (!PhotonNetwork.connected)
+        {
+            PhotonNetwork.offlineMode = true;
+            PhotonNetwork.CreateRoom("Solo");
+        }
         Vector3 initPos = Vector3.up;
 
         GameObject kart = SpawnKart(initPos);        
 
-        if (!PhotonNetwork.connected || kart.GetComponent<PhotonView>().isMine)
+        if (kart.GetComponent<PhotonView>().isMine)
         {
             CinemachineVirtualCamera camera = FindObjectOfType<CinemachineVirtualCamera>();
             camera.Follow = kart.transform;
@@ -20,13 +25,6 @@ public class Game : PunBehaviour
 
     public GameObject SpawnKart(Vector3 initPos)
     {
-        if (PhotonNetwork.connected)
-        {
-            return PhotonNetwork.Instantiate("Kart", initPos, Quaternion.identity, 0);
-        }
-        else
-        {
-            return Instantiate(Resources.Load<GameObject>("Kart"), initPos, Quaternion.identity);
-        }
+        return PhotonNetwork.Instantiate("Kart", initPos, Quaternion.identity, 0);
     }
 }

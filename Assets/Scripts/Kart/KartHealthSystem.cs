@@ -23,7 +23,7 @@ namespace Kart
 
         public void HealthLoss()
         {
-            photonView.ExecuteRPC(this, PhotonTargets.All, "RPCHealthLoss");
+            photonView.RPC("RPCHealthLoss", PhotonTargets.All);
         }
 
         [PunRPC]

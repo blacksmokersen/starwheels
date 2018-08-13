@@ -11,21 +11,4 @@ namespace MyExtensions
             return targetMin + (targetMax - targetMin) * ((val - actualMin) / (actualMax - actualMin));
         }
     }
-
-    public static class Extensions
-    {
-        public static void ExecuteRPC(this PhotonView pun, object obj, PhotonTargets targets, string methodName, params object[] parameters)
-        {
-            if (PhotonNetwork.connected)
-            {
-                pun.photonView.RPC(methodName, targets, parameters);
-            }
-            else
-            {
-                Type thisType = obj.GetType();
-                MethodInfo theMethod = thisType.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance);
-                theMethod.Invoke(obj, parameters);
-            }
-        }
-    }
 }

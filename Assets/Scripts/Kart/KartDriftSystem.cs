@@ -178,12 +178,12 @@ namespace Kart
 
         private void SetKartBoostState(DriftBoostStates state, ColorId colorId)
         {
-            photonView.ExecuteRPC(this, PhotonTargets.All, "RPCSetKartBoostState", state, colorId);
+            photonView.RPC("RPCSetKartBoostState", PhotonTargets.All, state, colorId);
         }
 
         private void SetKartTurnState(TurningStates state)
         {
-            photonView.ExecuteRPC(this, PhotonTargets.All, "RPCSetKartTurnState", state);
+            photonView.RPC("RPCSetKartTurnState", PhotonTargets.All, state);
         }
 
         private enum ColorId
