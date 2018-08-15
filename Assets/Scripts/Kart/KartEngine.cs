@@ -131,6 +131,7 @@ namespace Kart
 
         public void Jump(float percentage = 1f)
         {
+            kartEvents.OnJump();
             rb.AddRelativeForce(Vector3.up * JumpForce * percentage, ForceMode.Impulse);
         }
 
