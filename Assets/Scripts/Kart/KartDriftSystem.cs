@@ -70,23 +70,26 @@ namespace Kart
 
         public void EnterNextState()
         {
-            hasTurnedOtherSide = false;
-            driftedLongEnough = false;
-            switch (kartStates.DriftBoostState)
+            if (photonView.isMine)
             {
-                case DriftBoostStates.NotDrifting:
-                    EnterNormalDrift();
-                    break;
-                case DriftBoostStates.SimpleDrift:
-                    EnterOrangeDrift();
-                    break;
-                case DriftBoostStates.OrangeDrift:
-                    EnterRedDrift();
-                    break;
-                case DriftBoostStates.RedDrift:
-                    break;
+                hasTurnedOtherSide = false;
+                driftedLongEnough = false;
+                switch (kartStates.DriftBoostState)
+                {
+                    case DriftBoostStates.NotDrifting:
+                        EnterNormalDrift();
+                        break;
+                    case DriftBoostStates.SimpleDrift:
+                        EnterOrangeDrift();
+                        break;
+                    case DriftBoostStates.OrangeDrift:
+                        EnterRedDrift();
+                        break;
+                    case DriftBoostStates.RedDrift:
+                        break;
+                }
+                driftedLongEnoughTimer = StartCoroutine(DriftTimer());
             }
-            driftedLongEnoughTimer = StartCoroutine(DriftTimer());
         }
 
         public void InitializeDrift(float angle)
