@@ -13,25 +13,28 @@ namespace Controls
         {
             if (!enabled) return;
 
-            if (Input.GetKeyDown(KeyCode.Alpha1))
+            if (photonView.isMine)
             {
-                SetUnlimitedItems();
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                SwitchToNextItem();
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                SpawnEnemyKart();
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                LoseOneLife();
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha5))
-            {
-                ResetLives();
+                if (Input.GetKeyDown(KeyCode.Alpha1))
+                {
+                    SetUnlimitedItems();
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha2))
+                {
+                    SwitchToNextItem();
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha3))
+                {
+                    SpawnEnemyKart();
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha4))
+                {
+                    LoseOneLife();
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha5))
+                {
+                    ResetLives();
+                }
             }
         }
 
