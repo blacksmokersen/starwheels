@@ -70,8 +70,6 @@ namespace Kart
 
         public void EnterNextState()
         {
-            if (photonView.isMine)
-            {
                 hasTurnedOtherSide = false;
                 driftedLongEnough = false;
                 switch (kartStates.DriftBoostState)
@@ -89,7 +87,6 @@ namespace Kart
                         break;
                 }
                 driftedLongEnoughTimer = StartCoroutine(DriftTimer());
-            }
         }
 
         public void InitializeDrift(float angle)
