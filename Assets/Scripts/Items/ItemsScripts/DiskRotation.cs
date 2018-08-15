@@ -6,7 +6,7 @@ namespace Items
     {
         void Update()
         {
-            transform.Rotate(new Vector3(0, 5, 0));
+            transform.Rotate(new Vector3(0, 0, 5));
         }
     }
 }

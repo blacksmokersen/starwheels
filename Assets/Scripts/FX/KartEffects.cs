@@ -13,7 +13,7 @@ namespace FX
         [Header("Particles")]
         public ParticleSystem MainJumpParticles;
         public ParticleSystem JumpReloadParticles;
-        public int NumberOfParticles = 300;
+        private int numberOfParticles = 300;
 
         private new void Awake()
         {
@@ -65,12 +65,12 @@ namespace FX
 
         public void MainJumpParticlesEmit()
         {
-            MainJumpParticles.Emit(NumberOfParticles);
+            MainJumpParticles.Emit(numberOfParticles);
         }
 
         public void ReloadJumpParticlesEmit()
         {
-            JumpReloadParticles.Emit(NumberOfParticles);
+          //  JumpReloadParticles.Emit(numberOfParticles);
         }       
 
         public void SetWheelsColor(Color color)
