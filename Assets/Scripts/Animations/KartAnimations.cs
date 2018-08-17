@@ -26,6 +26,13 @@ namespace Animations
 
         public void DoubleJumpAnimation(Directions direction)
         {
+            photonView.RPC("RPCDoubleJumpAnimation", PhotonTargets.All,direction);
+        }
+
+
+        [PunRPC]
+        public void RPCDoubleJumpAnimation(Directions direction)
+        {
             switch (direction)
             {
                 case Directions.Forward:
