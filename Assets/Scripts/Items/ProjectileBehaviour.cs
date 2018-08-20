@@ -139,7 +139,7 @@ namespace Items
         #region Audio
         public void PlayLaunchSound()
         {
-            audioSource.PlayOneShot(PlayerHitSound);
+            audioSource.PlayOneShot(LaunchSound);
         }
 
         public void PlayFlySound()
