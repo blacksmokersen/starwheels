@@ -12,7 +12,7 @@ public class CinemachineDynamicScript : MonoBehaviour
     private CinemachineVirtualCamera cinemachine;
     private Coroutine cameraBoostCoroutine;
     private Coroutine cameraIonBeamBehaviour;
-    private CinemachineTransposer transposer;
+    public CinemachineTransposer transposer;
     private CinemachineComposer composer;
     private bool backCamActivated = false;
     private bool cameraNeedReset = false;

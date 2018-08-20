@@ -9,7 +9,6 @@ namespace Kart
         public int MaxHealth = 3;
         public int Health;
         public float SpamHitSecurity;
-        public float HitStopKartDuration;
 
         private bool isInvincible = false;
         private bool isDead = false;
