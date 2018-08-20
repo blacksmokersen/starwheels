@@ -116,14 +116,21 @@ namespace Items
             ownerImmuned = false;
         }
 
+        #endregion
+
+        #region Collisions
+
         public void CheckCollision(Collider other)
         {
             if (owner == null || (other.gameObject.GetComponentInParent<KartHub>().kartInventory == owner && ownerImmuned)) return;
 
             other.gameObject.GetComponentInParent<KartEvents>().OnHit();
-            CollisionParticles.Emit(2000);
+            CollisionParticles.Emit(2000);            
             PlayPlayerHitSound();
-            DestroyObject();    
+            if (GetType().Name != "GuileBehaviour")
+            {
+                DestroyObject();
+            }
         }
 
         protected void OnTriggerEnter(Collider other)
