@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using MyExtensions;
 
 namespace Kart
 {
@@ -178,13 +177,11 @@ namespace Kart
 
         private void SetKartBoostState(DriftBoostStates state, ColorId colorId)
         {
-          //  photonView.RPC("RPCSetKartBoostState", PhotonTargets.All, state, colorId);
             kartStates.DriftBoostState = state;
         }
 
         private void SetKartTurnState(TurningStates state)
         {
-          //  photonView.RPC("RPCSetKartTurnState", PhotonTargets.All, state);
             kartStates.DriftTurnState = state;
         }
 
@@ -208,18 +205,5 @@ namespace Kart
             }
             return Color.white;
         }
-        /*
-        [PunRPC]
-        private void RPCSetKartBoostState(DriftBoostStates state, ColorId colorId)
-        {
-            kartStates.DriftBoostState = state;
-        }
-
-        [PunRPC]
-        private void RPCSetKartTurnState(TurningStates state)
-        {
-            kartStates.DriftTurnState = state;
-        }
-        */
     }
 }

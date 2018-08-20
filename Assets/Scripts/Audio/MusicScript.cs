@@ -13,7 +13,7 @@ namespace Audio
             if (instance == null)
             {
                 instance = this;
-                GameObject.DontDestroyOnLoad(gameObject);
+                DontDestroyOnLoad(gameObject);
             }
             else
             {

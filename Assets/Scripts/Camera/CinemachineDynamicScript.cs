@@ -12,11 +12,10 @@ public class CinemachineDynamicScript : MonoBehaviour
     private CinemachineVirtualCamera cinemachine;
     private Coroutine cameraBoostCoroutine;
     private Coroutine cameraIonBeamBehaviour;
-    public CinemachineTransposer transposer;
+    private CinemachineTransposer transposer;
     private CinemachineComposer composer;
     private bool backCamActivated = false;
-    private bool CameraNeedReset = false;
-
+    private bool cameraNeedReset = false;
     private float currentTimer;
 
     private void Update()
@@ -26,12 +25,11 @@ public class CinemachineDynamicScript : MonoBehaviour
 
     private void Start()
     {
-        KartEvents.Instance.OnDriftBoost += BoostCameraBehaviour;
-
         cinemachine = GetComponentInChildren<CinemachineVirtualCamera>();
         transposer = cinemachine.GetCinemachineComponent<CinemachineTransposer>();
-
         composer = cinemachine.GetCinemachineComponent<CinemachineComposer>();
+
+        KartEvents.Instance.OnDriftBoost += BoostCameraBehaviour;
     }
 
     public void IonBeamCameraControls(float horizontal, float vertical)
@@ -51,7 +49,6 @@ public class CinemachineDynamicScript : MonoBehaviour
 
     public void SpeedOnCamBehaviour()
     {
-        float clampCam = 0;
         /*clampCam = Mathf.Clamp(kartHub.kartEngine.PlayerVelocity / 5, 0, 20);
         cinemachine.m_Lens.FieldOfView = 50 + clampCam;*/
     }
@@ -104,15 +101,14 @@ public class CinemachineDynamicScript : MonoBehaviour
                 transposer.m_FollowOffset += new Vector3(value * 20 * Time.deltaTime,
                     0,
                     Mathf.Abs(value) * 20 * Time.deltaTime);
-                CameraNeedReset = true;
+                cameraNeedReset = true;
             }
-            else if (CameraNeedReset)
+            else if (cameraNeedReset)
             {
-                Debug.Log("grsfy");
                 transposer.m_FollowOffset.x = Mathf.Lerp(transposer.m_FollowOffset.x, 0, Time.deltaTime * 20);
                 transposer.m_FollowOffset.z = Mathf.Lerp(transposer.m_FollowOffset.z, -7.5f, Time.deltaTime * 20);
 
-                CameraNeedReset = false;
+                cameraNeedReset = false;
             }
         }
     }

@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using Photon;
 
 namespace Kart
 {
-    public class KartSettings : UnityEngine.MonoBehaviour
+    public class KartSettings : MonoBehaviour
     {
         [SerializeField] private MeshRenderer kartRenderer;
         [SerializeField] private TextMesh nameText;
