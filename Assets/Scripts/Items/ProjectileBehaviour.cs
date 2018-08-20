@@ -39,7 +39,7 @@ namespace Items
 
         protected void Start()
         {
-            StartCoroutine(StartOwnerImmunity());
+            
         }
 
         protected void Update()
@@ -104,6 +104,7 @@ namespace Items
                 transform.position = kart.ItemPositions.BackPosition.position;
             }
             owner = kart;
+            StartCoroutine(StartOwnerImmunity());
             PlayLaunchSound();
             PlayFlySound();
         }
@@ -117,7 +118,7 @@ namespace Items
 
         public void CheckCollision(Collider other)
         {
-            if (other.gameObject.GetComponentInParent<KartHub>().kartInventory == owner && ownerImmuned) return;
+            if (owner == null || (other.gameObject.GetComponentInParent<KartHub>().kartInventory == owner && ownerImmuned)) return;
 
             other.gameObject.GetComponentInParent<KartEvents>().OnHit();
             CollisionParticles.Emit(2000);
