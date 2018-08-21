@@ -26,6 +26,7 @@
     public const string UseItemButton = "Item";
     public const string TurnCamera = "RightJoystick";
     public const string BackCamera = "ClickRightJoystick";
+    public const string EscapeMenu = "Escape";
 
 
     // Assets

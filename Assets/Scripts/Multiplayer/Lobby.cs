@@ -10,8 +10,11 @@ namespace Multiplayer
         [SerializeField] private InputField _nicknameInput;
         [SerializeField] private Button _createRoomBtn;
         [SerializeField] private Button _refreshRoomsBtn;
+        [SerializeField] private Button _BackToMenu;
         [SerializeField] private LobbyRoom _lobbyRoomPrefab;
         [SerializeField] private Transform _roomList;
+
+        [SerializeField] private GameObject multiplayer;
 
         private List<LobbyRoom> _lobbyRooms;
 
@@ -19,6 +22,7 @@ namespace Multiplayer
         {
             _refreshRoomsBtn.onClick.AddListener(RefreshLobby);
             _createRoomBtn.onClick.AddListener(CreateRoom);
+            _BackToMenu.onClick.AddListener(BackToMenu);
             
             _nicknameInput.onValueChanged.AddListener((value) => {
                 PhotonNetwork.playerName = value;
@@ -69,6 +73,11 @@ namespace Multiplayer
                 });
                 _lobbyRooms.Add(item);
             }
+        }
+
+        public void BackToMenu()
+        {
+            multiplayer.SetActive(false);
         }
     }
 }

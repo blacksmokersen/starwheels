@@ -10,6 +10,7 @@ namespace Controls
     {
         public bool DisableUseItem;
         public bool DisableMovement;
+        public GameObject EscapeMEnu;
 
         private CinemachineDynamicScript cinemachineDynamicScript;
 
