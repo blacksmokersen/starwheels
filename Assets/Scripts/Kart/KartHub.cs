@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Capacities;
 using Items;
+using HUD;
 
 namespace Kart
 {
@@ -22,6 +23,7 @@ namespace Kart
         private KartEvents kartEvents;
         private float driftMinSpeedActivation = 10f;
         private bool hasDoneDriftJump = false;
+        private int score= 0;
 
         void Awake()
         {
@@ -33,7 +35,8 @@ namespace Kart
             kartInventory = GetComponentInChildren<KartInventory>();
             kartHealthSystem = GetComponentInChildren<KartHealthSystem>();
             kartCapacity = GetComponentInChildren<Capacity>();
-            cinemachineDynamicScript = GetComponentInChildren<CinemachineDynamicScript>();            
+            cinemachineDynamicScript = GetComponentInChildren<CinemachineDynamicScript>();
+            KartEvents.Instance.HitSomeoneElse += SetScore;
         }
 
         private void FixedUpdate()
@@ -164,6 +167,20 @@ namespace Kart
             {
                 kartStates.TurningState = TurningStates.NotTurning;
             }
+        }
+
+        public void SetScore()
+        {
+            score++;
+            PhotonNetwork.player.SetScore(score);
+            PhotonView view = GetComponent<PhotonView>();
+            view.RPC("UpdateScore", PhotonTargets.AllBuffered);
+        }
+
+        [PunRPC]
+        void UpdateScore()
+        {
+            GameObject.Find("HUD").GetComponent<HUDUpdater>().UpdatePlayerList();
         }
     }
 }

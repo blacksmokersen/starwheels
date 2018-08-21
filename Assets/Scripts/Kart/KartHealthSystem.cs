@@ -10,7 +10,7 @@ namespace Kart
         public int Health;
         public float SpamHitSecurity;
 
-        private bool isInvincible = false;
+        public bool isInvincible = false;
         private bool isDead = false;
 
         private new void Awake()
