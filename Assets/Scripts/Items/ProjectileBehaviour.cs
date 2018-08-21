@@ -124,12 +124,11 @@ namespace Items
         {
             if (owner == null || (other.gameObject.GetComponentInParent<KartHub>().kartInventory == owner && ownerImmuned)) return;
 
-            other.gameObject.GetComponentInParent<KartEvents>().OnHit();
-            if (other.gameObject.GetComponentInParent<KartHealthSystem>().isInvincible)
+            if (!other.gameObject.GetComponentInParent<KartHealthSystem>().isInvincible)
             {
-                Debug.Log(other.gameObject.GetComponentInParent<KartHealthSystem>().isInvincible);
                 owner.gameObject.GetComponentInParent<KartEvents>().HitSomeoneElse();
             }
+            other.gameObject.GetComponentInParent<KartEvents>().OnHit();
             CollisionParticles.Emit(2000);            
             PlayPlayerHitSound();
             if (GetType().Name != "GuileBehaviour")
@@ -142,7 +141,6 @@ namespace Items
         {
             if (other.gameObject.tag == Constants.KartRigidBodyTag)
             {
-                Debug.Log("test");
                 CheckCollision(other);
             }
         }
