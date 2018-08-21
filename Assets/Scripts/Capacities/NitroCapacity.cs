@@ -6,14 +6,6 @@ namespace Capacities
     {
         public float EnergyConsumptionSpeed;
 
-        private KartInventory kartInventory;
-
-        private new void Awake()
-        {
-            base.Awake();
-            kartInventory = GetComponent<KartInventory>();
-        }
-
         public override void Use(float xAxis, float yAxis)
         {
             /*

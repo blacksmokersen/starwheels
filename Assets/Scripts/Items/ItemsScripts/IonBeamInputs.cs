@@ -51,8 +51,7 @@ namespace Controls
         public void DisableKartInputs(bool value)
         {
             IonBeamControlMode = false;
-            playerinputs.DisableMovement = value;
-            playerinputs.DisableUseItem = value;
+            playerinputs.Enabled = value;
         }
     }
 }

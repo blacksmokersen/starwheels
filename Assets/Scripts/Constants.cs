@@ -24,6 +24,8 @@
     public const string UpAndDownAxis = "UpAndDown";
     public const string DriftButton = "Drift";
     public const string UseItemButton = "Item";
+    public const string UseItemForwardButton = "ItemForward";
+    public const string UseItemBackwardButton = "ItemBackward";
     public const string TurnCamera = "RightJoystick";
     public const string BackCamera = "ClickRightJoystick";
     public const string EscapeMenu = "Escape";

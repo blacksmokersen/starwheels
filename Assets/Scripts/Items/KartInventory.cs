@@ -63,6 +63,7 @@ namespace Items
             itemObj = obj.GetComponent<ItemBehaviour>();
             itemObj.Spawn(this,direction);
         }
+        
 
         public IEnumerator GetLotteryItem()
         {

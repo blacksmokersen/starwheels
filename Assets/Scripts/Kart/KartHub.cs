@@ -49,10 +49,20 @@ namespace Kart
 
         public void UseItem(float verticalValue)
         {
-            Directions direction = Directions.Default;
-            if (verticalValue > 0.3f) direction = Directions.Forward;
-            else if (verticalValue < -0.3f) direction = Directions.Backward;
-            kartInventory.ItemAction(direction);
+            if (verticalValue > 0.3f)
+                UseItemForward();
+            else if (verticalValue < -0.3f)
+                UseItemBackward();
+        }
+
+        public void UseItemForward()
+        {
+            kartInventory.ItemAction(Directions.Forward);
+        }
+
+        public void UseItemBackward()
+        {
+            kartInventory.ItemAction(Directions.Backward);
         }
 
         public void UseCapacity(float xAxis, float yAxis)

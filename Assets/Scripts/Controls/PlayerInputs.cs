@@ -48,16 +48,14 @@ namespace Controls
 
         void Axis()
         {
-            if (!DisableMovement)
-            {
-                kartHub.Accelerate(Input.GetAxis(Constants.AccelerateButton));
-                kartHub.Decelerate(Input.GetAxis(Constants.DecelerateButton));
-                kartHub.Turn(Input.GetAxis(Constants.TurnAxis));
-            }
+            kartHub.Accelerate(Input.GetAxis(Constants.AccelerateButton));
+            kartHub.Decelerate(Input.GetAxis(Constants.DecelerateButton));
+            kartHub.Turn(Input.GetAxis(Constants.TurnAxis));            
         }
 
         void ButtonsDown()
         {
+            // Keyboard & GamePad
             if (Input.GetButtonDown(Constants.SpecialCapacity))
             {
                 kartHub.UseCapacity(Input.GetAxis(Constants.TurnAxis), Input.GetAxis(Constants.UpAndDownAxis));
@@ -66,13 +64,23 @@ namespace Controls
             {
                 kartHub.InitializeDrift(Input.GetAxis(Constants.TurnAxis));
             }
-            if (Input.GetButtonDown(Constants.UseItemButton) && !DisableUseItem)
+            if (Input.GetButtonDown(Constants.UseItemButton))
             {
                 kartHub.UseItem(Input.GetAxis(Constants.UpAndDownAxis));
             }
             if (Input.GetButtonDown(Constants.BackCamera))
             {
                 cinemachineDynamicScript.BackCamera(true);
+            }
+
+            // Mouse
+            if (Input.GetButtonDown(Constants.UseItemForwardButton))
+            {
+                kartHub.UseItemForward();
+            }
+            if (Input.GetButtonDown(Constants.UseItemBackwardButton))
+            {
+                kartHub.UseItemBackward();
             }
         }
 
