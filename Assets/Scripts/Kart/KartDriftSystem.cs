@@ -17,7 +17,6 @@ namespace Kart
         [Range(0, 90)] public float ForwardMaxAngle;
         [Range(0, -90)] public float BackMaxAngle;
 
-        private KartStates kartStates;
         private KartEngine kartPhysics;
         private CinemachineDynamicScript cinemachineDynamicScript;
         private KartEngine kartEngine;

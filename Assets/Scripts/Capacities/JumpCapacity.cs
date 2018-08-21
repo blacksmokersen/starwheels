@@ -16,8 +16,6 @@ namespace Capacities
 
         private bool hasDoneFirstJump = false;
         private bool canDoubleJump = true;
-
-        private KartStates kartStates;
         private KartEngine kartEngine;
 
         private new void Awake()

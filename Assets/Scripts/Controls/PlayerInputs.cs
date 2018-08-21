@@ -8,15 +8,18 @@ namespace Controls
      */
     public class PlayerInputs : BaseKartComponent
     {
+        public bool Enabled = true;
         public bool DisableUseItem;
         public bool DisableMovement;
         public GameObject EscapeMEnu;
 
         private CinemachineDynamicScript cinemachineDynamicScript;
 
-        public void SetKart(KartHub value)
+        private new void Awake()
         {
-            kartHub = value;
+            base.Awake();
+            kartEvents.OnHit += () => Enabled = false;
+            kartEvents.OnHitRecover += () => Enabled = true;
         }
 
         private void Start()
@@ -26,19 +29,21 @@ namespace Controls
 
         void FixedUpdate()
         {
-            if (kartHub == null) return;
-
-            Axis();
-            ButtonsPressed();
+            if (Enabled && kartHub != null)
+            {
+                Axis();
+                ButtonsPressed();
+            }
         }
 
         private void Update()
         {
-            if (kartHub == null) return;
-
-            ButtonsDown();
-            ButtonsUp();
-            AxisOnUse();
+            if (Enabled && kartHub != null)
+            {
+                ButtonsDown();
+                ButtonsUp();
+                AxisOnUse();
+            }
         }
 
         void Axis()

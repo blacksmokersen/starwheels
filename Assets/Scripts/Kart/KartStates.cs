@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Kart {
@@ -13,6 +14,7 @@ namespace Kart {
     public enum TurningStates { NotTurning, Left, Right }
     public enum DriftBoostStates { NotDrifting, SimpleDrift, OrangeDrift, RedDrift, Turbo }
     public enum AirStates { Grounded, InAir }
+    public enum CrashedStates { NotCrashed, Crashed }
 
     public class KartStates : MonoBehaviour{
 
@@ -21,9 +23,11 @@ namespace Kart {
         public TurningStates DriftTurnState = TurningStates.NotTurning;
         public DriftBoostStates DriftBoostState = DriftBoostStates.NotDrifting;
         public AirStates AirState = AirStates.Grounded;
+        public CrashedStates CrashedState = CrashedStates.NotCrashed;
 
         public float DistanceForGrounded;
         public float VelocityDetectionThreshold;
+        public float CrashDuration;
 
         private Rigidbody rb;
         private KartEvents kartEvents;
@@ -34,6 +38,7 @@ namespace Kart {
             rb = GetComponentInChildren<Rigidbody>();
 
             kartEvents.OnCollisionEnterGround += () => AirState = AirStates.Grounded;
+            kartEvents.OnHit += () => StartCoroutine(CrashBehaviour());
         }
 
         public void FixedUpdate()
@@ -73,6 +78,14 @@ namespace Kart {
         public bool IsGrounded()
         {
             return AirState == AirStates.Grounded;
+        }
+
+        IEnumerator CrashBehaviour()
+        {
+            CrashedState = CrashedStates.Crashed;
+            yield return new WaitForSeconds(CrashDuration);
+            CrashedState = CrashedStates.NotCrashed;
+            kartEvents.OnHitRecover();
         }
     }
 }

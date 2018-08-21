@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using MyExtensions;
 
 namespace Kart
 {
@@ -8,36 +7,38 @@ namespace Kart
     {
         public int MaxHealth = 3;
         public int Health;
-        public float SpamHitSecurity;
-
-        public bool isInvincible = false;
-        private bool isDead = false;
+        public float CrashInvincibilityDuration = 3f;
+        public bool IsInvincible = false;        
+        public bool IsDead = false;
 
         private new void Awake()
         {            
             base.Awake();
             Health = MaxHealth;
-            kartEvents.OnHit += HealthLoss;
+            kartEvents.OnHit += () => 
+            {                
+                HealthLoss();
+                StartCoroutine(InvicibilityTime());
+            };
         }
 
         public void HealthLoss()
-        {
+        {            
             photonView.RPC("RPCHealthLoss", PhotonTargets.All);
         }
 
         [PunRPC]
         public void RPCHealthLoss()
         {
-            if (!isInvincible)
-            {
+            if (!IsInvincible)
+            {                
                 Health--;
-                StartCoroutine(Invicibility(SpamHitSecurity));
                 kartEvents.OnHealthLoss(Health);
             }
-            if(Health <= 0 && !isDead)
+            if(Health <= 0 && !IsDead)
             {
                 GetComponentInParent<Rigidbody>().transform.position = new Vector3(-221, 3, 0);
-                isDead = true;                
+                IsDead = true;                
             }
         }
 
@@ -46,11 +47,11 @@ namespace Kart
             Health = MaxHealth;
         }
 
-        IEnumerator Invicibility(float invicibilityDuration)
+        IEnumerator InvicibilityTime()
         {
-            isInvincible = true;
-            yield return new WaitForSeconds(invicibilityDuration);
-            isInvincible = false;
+            IsInvincible = true;
+            yield return new WaitForSeconds(CrashInvincibilityDuration);
+            IsInvincible = false;
         }
     }
 }

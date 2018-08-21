@@ -841,16 +841,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4611446738322668}
+  - component: {fileID: 54115033852382540}
   - component: {fileID: 114098388412132924}
   - component: {fileID: 114550539497350264}
+  - component: {fileID: 114240422477425770}
   - component: {fileID: 114738576795421352}
   - component: {fileID: 114509890867450628}
   - component: {fileID: 114604252966182538}
-  - component: {fileID: 54115033852382540}
   - component: {fileID: 114485541274518430}
   - component: {fileID: 114979250873304534}
   - component: {fileID: 114475196102562330}
-  - component: {fileID: 114240422477425770}
   m_Layer: 0
   m_Name: Kart
   m_TagString: Kart
@@ -2744,7 +2744,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1571014680455984}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 280.5446, y: 6.967984, z: 2578.6726}
+  m_LocalPosition: {x: -191.87985, y: -91.540344, z: 2578.6726}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4109333596748662}
@@ -4218,8 +4218,8 @@ MonoBehaviour:
   - {fileID: 114550539497350264}
   - {fileID: 114240422477425770}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 3
+  instantiationId: 3
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114112653764666390
@@ -4235,9 +4235,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 3000
   MaxMagnitude: 40
-  Crashed: 0
-  CrashDuration: 2
-  CrashBackwardForce: 2000
   PlayerVelocity: 0
   JumpForce: 1100
   DoubleJumpUpForce: 500
@@ -4292,8 +4289,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 114539492184620100}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 2
+  instantiationId: 2
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114240422477425770
@@ -4334,6 +4331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43ed66d406bea6743ad367f1243f4645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Enabled: 1
   DisableUseItem: 0
   DisableMovement: 0
   EscapeMEnu: {fileID: 0}
@@ -4361,8 +4359,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 3
   Health: 3
-  SpamHitSecurity: 3
-  isInvincible: 0
+  IsInvincible: 0
+  IsDead: 0
 --- !u!114 &114485541274518430
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4562,8 +4560,10 @@ MonoBehaviour:
   DriftTurnState: 0
   DriftBoostState: 0
   AirState: 0
+  CrashedState: 0
   DistanceForGrounded: 0.5
   VelocityDetectionThreshold: 0.5
+  CrashDuration: 2
 --- !u!114 &114655913041541998
 MonoBehaviour:
   m_ObjectHideFlags: 1

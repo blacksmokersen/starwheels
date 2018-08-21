@@ -15,9 +15,6 @@ namespace Kart
         [Header("Driving")]
         public float Speed;
         public float MaxMagnitude;
-        public bool Crashed;
-        public float CrashDuration;
-        public float CrashBackwardForce;
         public float PlayerVelocity;
 
         [Header("Gravity")]
@@ -51,7 +48,6 @@ namespace Kart
         [Header("Stabilization")]
         public float RotationStabilizationSpeed;
 
-        private KartStates kartStates;        
         private Rigidbody rb;
         private float controlMagnitude;
         private float controlSpeed;
@@ -66,7 +62,6 @@ namespace Kart
             rb = GetComponentInParent<Rigidbody>();
             rb.centerOfMass = CenterOfMassOffset;
 
-            kartEvents.OnHit += () => StartCoroutine(CrashBehaviour(CrashDuration));
         }
 
         private void Update()
@@ -185,22 +180,6 @@ namespace Kart
                 actualRotation.z = Mathf.Lerp(actualRotation.z, 0, RotationStabilizationSpeed);
                 transform.parent.localRotation = actualRotation;
             }
-        }
-
-        IEnumerator CrashBehaviour(float crashTimer)
-        {
-            Crashed = true;
-            while (currentTimer < 0.5f)
-            {
-                if(PlayerVelocity >= 0)
-                {
-                    rb.AddRelativeForce(Vector3.back * CrashBackwardForce);
-                }
-                currentTimer += Time.fixedDeltaTime;
-                yield return new WaitForFixedUpdate();
-            }
-            yield return new WaitForSeconds(crashTimer);
-            Crashed = false;
         }
 
         public IEnumerator Boost(float boostDuration, float magnitudeBoost, float speedBoost)

@@ -21,6 +21,7 @@ namespace Kart
         public Action<float> OnTurn;
         public Action<ItemData, int> OnItemUsed;
         public Action OnHit;
+        public Action OnHitRecover;
         public Action HitSomeoneElse;
         public Action<int> OnHealthLoss;
 
