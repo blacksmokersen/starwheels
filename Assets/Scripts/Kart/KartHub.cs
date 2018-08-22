@@ -53,6 +53,8 @@ namespace Kart
                 UseItemForward();
             else if (verticalValue < -0.3f)
                 UseItemBackward();
+            else
+                kartInventory.ItemAction(Directions.Default);
         }
 
         public void UseItemForward()
