@@ -2,20 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using HUD;
 
 public class LevelManager : MonoBehaviour
 {
 
     [SerializeField] private GameObject escapeMenu;
     [SerializeField] private Button quitLevel;
-    [SerializeField] private Button option;
+    [SerializeField] private Button resetLevel;
+
+    private PhotonView test;
 
     private bool menuActivated;
 
     private void Awake()
     {
         quitLevel.onClick.AddListener(ReturnToMenu);
-        option.onClick.AddListener(ShowOptions);
+        resetLevel.onClick.AddListener(ResetLevel);
+        test = GetComponent<PhotonView>();
     }
 
     private void Update()
@@ -34,8 +39,22 @@ public class LevelManager : MonoBehaviour
         PhotonNetwork.LoadLevel("Menu");
     }
 
-    void ShowOptions()
+    void ResetLevel()
     {
-
+        if (PhotonNetwork.isMasterClient)
+        {
+            foreach (PhotonPlayer player in PhotonNetwork.playerList)
+            {
+                PhotonNetwork.player.SetScore(0);
+                GameObject.Find("HUD").GetComponent<HUDUpdater>().UpdatePlayerList();
+            }
+            test.RPC("RPCResetLevel", PhotonTargets.All);
+        }
+    }
+    [PunRPC]
+    void RPCResetLevel()
+    {
+        Scene activeScene = SceneManager.GetActiveScene();
+        PhotonNetwork.LoadLevel(activeScene.name);
     }
 }

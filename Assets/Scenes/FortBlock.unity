@@ -4567,7 +4567,7 @@ GameObject:
   - component: {fileID: 1449914493}
   - component: {fileID: 1449914492}
   m_Layer: 0
-  m_Name: Options
+  m_Name: Reset Game
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4826,7 +4826,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: f76026b82a6a7cb47a32c9bc63c24364, type: 3}
-    m_FontSize: 15
+    m_FontSize: 11
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -4837,7 +4837,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Options
+  m_Text: Reset Game
 --- !u!222 &1556616559
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5592,6 +5592,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1929271547}
   - component: {fileID: 1929271548}
+  - component: {fileID: 1929271549}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -5625,7 +5626,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   escapeMenu: {fileID: 516433026}
   quitLevel: {fileID: 822821806}
-  option: {fileID: 1449914492}
+  resetLevel: {fileID: 1449914492}
+--- !u!114 &1929271549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1929271546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 1
+  instantiationId: 1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!1001 &1935180880
 Prefab:
   m_ObjectHideFlags: 0
