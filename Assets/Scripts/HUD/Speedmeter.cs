@@ -14,9 +14,9 @@ namespace HUD
             KartEvents.Instance.OnVelocityChange += SpeedmeterBehaviour;
         }
 
-        public void SpeedmeterBehaviour(float kartVelocity)
+        public void SpeedmeterBehaviour(Vector3 kartVelocity)
         {
-            var speed = Mathf.Round(kartVelocity);            
+            var speed = Mathf.Round(kartVelocity.magnitude);            
             speedBar.fillAmount = speed / 70;
             SpeedOnScreen(speed);
         }

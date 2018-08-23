@@ -68,7 +68,7 @@ namespace Kart
         {
             var localVelocity = transform.InverseTransformDirection(rb.velocity);
             PlayerVelocity = localVelocity.z;
-            kartEvents.OnVelocityChange(rb.velocity.magnitude);
+            kartEvents.OnVelocityChange(rb.velocity);
         }
 
         private void FixedUpdate()

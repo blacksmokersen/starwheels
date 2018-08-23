@@ -49,7 +49,11 @@ namespace Audio
             kartEvents.OnDriftStart += PlayDriftStart;
             kartEvents.OnDriftEnd += PlayDriftEnd;
             kartEvents.OnDoubleJump += (a) => PlaySecondJump();
-            kartEvents.OnVelocityChange += (magnitude) => SetMotorPitch(0.5f + 0.35f * magnitude / pitchMotorMagnitudeDiviser);//(localVelocity.magnitude / MaxMagnitude));
+            kartEvents.OnVelocityChange += (velocity) =>
+            {
+                Vector3 newVelocity = new Vector3(velocity.x, 0, velocity.z);
+                SetMotorPitch(0.5f + 0.35f * newVelocity.magnitude / pitchMotorMagnitudeDiviser);
+            };
         }
 
         public void PlayMotorAccel()

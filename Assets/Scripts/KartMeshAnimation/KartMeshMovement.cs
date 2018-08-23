@@ -27,20 +27,20 @@ namespace Animations
             frontWheelRight.transform.localEulerAngles = new Vector3(0, currentAngle * 30, 0);
         }
 
-        public void FrontWheelsRotation(float playerVelocity)
+        public void FrontWheelsRotation(Vector3 playerVelocity)
         {
-            wheelsSpeed = -playerVelocity;
-            if (playerVelocity > 0.01f)
+            wheelsSpeed = -playerVelocity.magnitude;
+            if (playerVelocity.magnitude > 0.01f)
             {
                 frontWheelLeft.transform.Rotate(Vector3.right * wheelsSpeed);
                 frontWheelRight.transform.Rotate(Vector3.right * wheelsSpeed);
             }
         }
 
-        public void BackWheelsRotation(float playerVelocity)
+        public void BackWheelsRotation(Vector3 playerVelocity)
         {
-            wheelsSpeed = playerVelocity;
-            if (playerVelocity > 0.01f)
+            wheelsSpeed = playerVelocity.magnitude;
+            if (playerVelocity.magnitude > 0.01f)
             {
                 backWheelsL.transform.Rotate(Vector3.right * wheelsSpeed);
                 backWheelsR.transform.Rotate(Vector3.right * wheelsSpeed);

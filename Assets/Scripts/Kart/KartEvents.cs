@@ -16,7 +16,7 @@ namespace Kart
             }
         }
 
-        public Action<float> OnVelocityChange;
+        public Action<Vector3> OnVelocityChange;
         public Action<float> OnEnergyConsumption;
         public Action<float> OnTurn;
         public Action<ItemData, int> OnItemUsed;
