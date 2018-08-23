@@ -15,11 +15,8 @@ namespace Kart
         {            
             base.Awake();
             Health = MaxHealth;
-            kartEvents.OnHit += () => 
-            {                
-                HealthLoss();
-                StartCoroutine(InvicibilityTime());
-            };
+            kartEvents.OnHit += HealthLoss;
+            kartEvents.OnHealthLoss += (a) => StartCoroutine(InvicibilityTime());
         }
 
         public void HealthLoss()
