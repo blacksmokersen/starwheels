@@ -35,8 +35,9 @@ public class LevelManager : MonoBehaviour
 
     void ReturnToMenu()
     {
-        PhotonNetwork.Disconnect();
+        PhotonNetwork.player.SetScore(0);
         PhotonNetwork.LoadLevel("Menu");
+        PhotonNetwork.Disconnect();
     }
 
     void ResetLevel()
