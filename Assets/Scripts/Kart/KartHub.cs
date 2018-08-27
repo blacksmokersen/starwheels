@@ -22,8 +22,7 @@ namespace Kart
 
         private KartEvents kartEvents;
         private float driftMinSpeedActivation = 10f;
-        private bool hasDoneDriftJump = false;
-        private int score= 0;
+        private int score = 0;
 
         void Awake()
         {
@@ -72,35 +71,17 @@ namespace Kart
             kartCapacity.Use(xAxis, yAxis);
         }
 
-        public void DriftJump(float value = 1f)
-        {
-            if (kartStates.AirState == AirStates.Grounded)
-            {
-                kartEngine.DriftJump();
-            }
-        }
-
         public void InitializeDrift(float angle)
         {
-            if (kartStates.IsGrounded() && kartEngine.PlayerVelocity >= driftMinSpeedActivation)
+            if (kartStates.IsGrounded() && kartEngine.PlayerVelocity >= driftMinSpeedActivation && angle != 0)
             {
-                if (!hasDoneDriftJump)
-                {
-                    kartEngine.DriftJump();
-                    hasDoneDriftJump = true;
-                }
-                if (angle != 0)
-                {
-                    kartDriftSystem.InitializeDrift(angle);
-                    hasDoneDriftJump = false;
-                }
+                kartDriftSystem.InitializeDrift(angle);
             }
         }
 
         public void StopDrift()
         {
             kartDriftSystem.StopDrift();
-            hasDoneDriftJump = false;
         }
 
         public void DriftTurns(float turnValue)
