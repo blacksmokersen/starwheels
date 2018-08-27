@@ -4,40 +4,49 @@ namespace Kart
 {
     public class KartSettings : MonoBehaviour
     {
-        [SerializeField] private MeshRenderer kartRenderer;
-        [SerializeField] private TextMesh nameText;
-        [SerializeField] private GameObject backCamera;
+        [SerializeField] private MeshRenderer _kartRenderer;
+        [SerializeField] private TextMesh _nameText;
+        [SerializeField] private GameObject _backCamera;
+
+        // CORE
 
         private void Awake()
         {
             PhotonView photonView = GetComponentInParent<PhotonView>();
+
             if (PhotonNetwork.connected && !photonView.isMine)
             {
                 SetName(GetPlayer(photonView).NickName);
-                Destroy(backCamera);
+                Destroy(_backCamera);
             }
-        }
-
-        public void SetColor(Color color)
-        {
-            kartRenderer.material.color = color;
-        }
-
-        public void SetName(string name)
-        {
-            nameText.text = name;
         }
 
         private void Update()
         {
-            nameText.transform.LookAt(Camera.main.transform);
+            _nameText.transform.LookAt(Camera.main.transform);
         }
+
+        // PUBLIC
+
+        public void SetColor(Color color)
+        {
+            _kartRenderer.material.color = color;
+        }
+
+        public void SetName(string name)
+        {
+            _nameText.text = name;
+        }
+
+        // PRIVATE
 
         private PhotonPlayer GetPlayer(PhotonView view)
         {
             foreach (PhotonPlayer player in PhotonNetwork.playerList)
-                if (player.ID == view.ownerId)
-                    return player;
+            {
+                if (player.ID == view.ownerId) return player;
+            }
+
             return null;
         }
     }

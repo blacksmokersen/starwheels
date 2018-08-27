@@ -8,7 +8,6 @@ namespace Kart
     /*
      * Main class to map the inputs to the different kart actions
      * The states should handled and modified within this class
-     *
      */
     public class KartHub : BaseKartComponent
     {
@@ -19,7 +18,9 @@ namespace Kart
         [HideInInspector] public Capacity kartCapacity;
         [HideInInspector] public CinemachineDynamicScript cinemachineDynamicScript;
 
-        private int score = 0;
+        private int _score = 0;
+
+        // CORE
 
         private new void Awake()
         {
@@ -42,6 +43,8 @@ namespace Kart
                 kartEngine.CompensateSlip();
             }
         }
+
+        // PUBLIC
 
         public void UseItem(float verticalValue)
         {
@@ -146,6 +149,23 @@ namespace Kart
             }
         }
 
+        public void IncreaseScore()
+        {
+            _score++;
+            PhotonNetwork.player.SetScore(_score);
+            PhotonView view = GetComponent<PhotonView>();
+            // TODO: Use RaiseEvent instead?
+            view.RPC("UpdateScore", PhotonTargets.AllBuffered);
+        }
+
+        // PRIVATE
+
+        [PunRPC]
+        private void UpdateScore()
+        {
+            KartEvents.Instance.OnScoreChange();
+        }
+
         private void SetTurnState(float turnValue)
         {
             if (turnValue > 0)
@@ -160,21 +180,6 @@ namespace Kart
             {
                 kartStates.TurningState = TurnState.NotTurning;
             }
-        }
-
-        public void IncreaseScore()
-        {
-            score++;
-            PhotonNetwork.player.SetScore(score);
-            PhotonView view = GetComponent<PhotonView>();
-            // TODO: Use RaiseEvent instead?
-            view.RPC("UpdateScore", PhotonTargets.AllBuffered);
-        }
-
-        [PunRPC]
-        void UpdateScore()
-        {
-            KartEvents.Instance.OnScoreChange();
         }
     }
 }

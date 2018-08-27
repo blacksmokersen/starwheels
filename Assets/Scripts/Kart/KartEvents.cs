@@ -10,9 +10,7 @@ namespace Kart
 
         private void Awake()
         {
-            PhotonView view = GetComponent<PhotonView>();
-
-            if (view.isMine || !PhotonNetwork.connected)
+            if (!PhotonNetwork.connected || GetComponent<PhotonView>().isMine)
             {
                 Instance = this;
             }

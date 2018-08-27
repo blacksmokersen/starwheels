@@ -59,10 +59,10 @@ namespace Kart
         {
             base.Awake();
 
-            _controlMagnitude = MaxMagnitude;
-            _controlSpeed = Speed;
             _rb = GetComponentInParent<Rigidbody>();
             _rb.centerOfMass = CenterOfMassOffset;
+            _controlMagnitude = MaxMagnitude;
+            _controlSpeed = Speed;
         }
 
         private void Update()

@@ -2,7 +2,6 @@
 
 public class WheelSuspensions : MonoBehaviour {
 
-
     public float MaxExtensionDistance;
     public float SuspensionStiffness;
     public float ForceToApply;
@@ -10,11 +9,13 @@ public class WheelSuspensions : MonoBehaviour {
     [Header("Wheels transforms")]
     public Transform[] wheelsTransforms;
 
-    private Rigidbody rb;
+    private Rigidbody _rb;
+
+    // CORE
 
     private void Awake()
     {
-        rb = GetComponentInParent<Rigidbody>();
+        _rb = GetComponentInParent<Rigidbody>();
     }
 
     private void FixedUpdate()
@@ -25,14 +26,19 @@ public class WheelSuspensions : MonoBehaviour {
         }
     }
 
+    // PUBLIC
+
+    // PRIVATE
+
     private void AdjustWheelPosition(Transform wheelTransform)
     {
         RaycastHit hit;
+
         if (Physics.Raycast(wheelTransform.position, Vector3.down, out hit, MaxExtensionDistance, 1 << LayerMask.NameToLayer(Constants.GroundLayer)))
         {
             var distance = Mathf.Clamp(hit.distance, 0, MaxExtensionDistance);
             var compressionRatio = - distance + MaxExtensionDistance;
-            rb.AddForceAtPosition(ComputeForceToAdd(compressionRatio), wheelTransform.position, ForceMode.Acceleration);
+            _rb.AddForceAtPosition(ComputeForceToAdd(compressionRatio), wheelTransform.position, ForceMode.Acceleration);
         }
     }
 

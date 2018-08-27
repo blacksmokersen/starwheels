@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Kart
 {
-
     public enum AccelerationState { None, Forward, Back }
     public enum TurnState { NotTurning, Left, Right }
     public enum DriftBoostState { NotDrifting, Simple, Orange, Red, Turbo }
@@ -12,7 +11,6 @@ namespace Kart
 
     public class KartStates : MonoBehaviour
     {
-
         public AccelerationState AccelerationState = AccelerationState.None;
         public TurnState TurningState = TurnState.NotTurning;
         public TurnState DriftTurnState = TurnState.NotTurning;
@@ -27,20 +25,31 @@ namespace Kart
         private Rigidbody _rb;
         private KartEvents _kartEvents;
 
+        // CORE
+
         private void Awake()
         {
-            _kartEvents = GetComponent<KartEvents>();
             _rb = GetComponentInChildren<Rigidbody>();
+            _kartEvents = GetComponent<KartEvents>();
 
             _kartEvents.OnCollisionEnterGround += () => AirState = AirState.Ground;
             _kartEvents.OnHit += () => StartCoroutine(CrashBehaviour());
         }
 
-        public void FixedUpdate()
+        private void FixedUpdate()
         {
             CheckGrounded();
             CheckAcceleration();
         }
+
+        // PUBLIC
+
+        public bool IsGrounded()
+        {
+            return AirState == AirState.Ground;
+        }
+
+        // PRIVATE
 
         private void CheckGrounded()
         {
@@ -70,12 +79,7 @@ namespace Kart
             }
         }
 
-        public bool IsGrounded()
-        {
-            return AirState == AirState.Ground;
-        }
-
-        IEnumerator CrashBehaviour()
+        private IEnumerator CrashBehaviour()
         {
             CrashedState = CrashState.Crashed;
             yield return new WaitForSeconds(CrashDuration);
