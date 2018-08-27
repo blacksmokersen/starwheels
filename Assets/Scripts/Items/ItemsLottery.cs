@@ -20,12 +20,12 @@ namespace Items
 
         public static ItemData GetRandomItem()
         {
-            var count = 0f;
+            var chancesCount = 0f;
             var randomChance = Random.Range(0, TotalItemChances);
             foreach (var item in Items)
             {
-                count += item.Chances;
-                if (count > randomChance)
+                chancesCount += item.Chances;
+                if (chancesCount > randomChance)
                 {
                     return item;
                 }

@@ -3,6 +3,11 @@ using UnityEngine;
 
 namespace Kart
 {
+    public enum ColorId
+    {
+        Red, Yellow, Gray, Green
+    }
+
     public class KartDriftSystem : BaseKartComponent
     {
         [Header("Time")]
@@ -182,11 +187,6 @@ namespace Kart
         private void SetKartTurnState(TurningStates state)
         {
             kartStates.DriftTurnState = state;
-        }
-
-        private enum ColorId
-        {
-            Red, Yellow, Gray, Green
         }
 
         private Color ColorIdToColor(ColorId colorId)
