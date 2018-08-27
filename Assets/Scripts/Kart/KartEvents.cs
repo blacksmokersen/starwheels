@@ -7,23 +7,29 @@ namespace Kart
     public class KartEvents : MonoBehaviour
     {
         public static KartEvents Instance;
+
         private void Awake()
         {
             PhotonView view = GetComponent<PhotonView>();
+
             if (view.isMine || !PhotonNetwork.connected)
             {
                 Instance = this;
             }
         }
 
+        // Movements
         public Action<Vector3> OnVelocityChange;
-        public Action<float> OnEnergyConsumption;
         public Action<float> OnTurn;
+
+        // Game
+        public Action<float> OnEnergyConsumption;
         public Action<ItemData, int> OnItemUsed;
         public Action OnHit;
         public Action OnHitRecover;
         public Action HitSomeoneElse;
         public Action<int> OnHealthLoss;
+        public Action OnScoreChange;
 
         // Collisions
         public Action OnCollisionEnterGround;
@@ -31,7 +37,7 @@ namespace Kart
 
         // Jumping Capacity
         public Action OnJump;
-        public Action<Directions> OnDoubleJump;
+        public Action<Direction> OnDoubleJump;
         public Action OnDoubleJumpReset;
 
         // Drifting
@@ -46,6 +52,5 @@ namespace Kart
         public Action OnDriftBoost;
         public Action OnDriftReset;
         public Action OnDriftNextState;
-        public Action OnScoreChange;
     }
 }

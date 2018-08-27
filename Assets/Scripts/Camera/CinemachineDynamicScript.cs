@@ -36,7 +36,6 @@ public class CinemachineDynamicScript : MonoBehaviour
     {
         transposer.m_FollowOffset.z += horizontal * SpeedCamMovements * Time.deltaTime;
         transposer.m_FollowOffset.x += vertical * SpeedCamMovements * Time.deltaTime;
-
     }
 
     public void BoostCameraBehaviour()

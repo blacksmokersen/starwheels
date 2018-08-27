@@ -49,7 +49,7 @@ namespace Capacities
             }
             else
             {
-                if (kartStates.AirState == AirStates.Grounded && canDoubleJump)
+                if (kartStates.AirState == AirState.Ground && canDoubleJump)
                 {
                     hasDoneFirstJump = true;
                     StartCoroutine(StartCooldownDoubleJump());
@@ -65,33 +65,33 @@ namespace Capacities
                 if (yAxis <= -0.2f)
                 {
                     kartEngine.DoubleJump(Vector3.back, 0.5f);
-                    kartEvents.OnDoubleJump(Directions.Backward);
+                    kartEvents.OnDoubleJump(Direction.Backward);
                 }
                 else if (yAxis >= 0.2f)
                 {
                     kartEngine.DoubleJump(Vector3.forward, 0.5f);
-                    kartEvents.OnDoubleJump(Directions.Forward);
+                    kartEvents.OnDoubleJump(Direction.Forward);
                 }
                 else
                 {
                     kartEngine.DoubleJump(Vector3.forward, 0f);
-                    kartEvents.OnDoubleJump(Directions.Forward);
+                    kartEvents.OnDoubleJump(Direction.Forward);
                 }
             }
             else if (xAxis < -0.5f)
             {
                 kartEngine.DoubleJump(Vector3.left, 1f);
-                kartEvents.OnDoubleJump(Directions.Left);
+                kartEvents.OnDoubleJump(Direction.Left);
             }
             else if (xAxis >= 0.5f)
             {
                 kartEngine.DoubleJump(Vector3.right, 1f);
-                kartEvents.OnDoubleJump(Directions.Right);
+                kartEvents.OnDoubleJump(Direction.Right);
             }
             else
             {
                 kartEngine.DoubleJump(Vector3.forward, 0f);
-                kartEvents.OnDoubleJump(Directions.Forward);
+                kartEvents.OnDoubleJump(Direction.Forward);
             }
         }
 
@@ -105,7 +105,7 @@ namespace Capacities
 
         private bool CanDoubleJump()
         {
-            return hasDoneFirstJump && kartStates.AirState == AirStates.InAir;
+            return hasDoneFirstJump && kartStates.AirState == AirState.Air;
         }
     }
 }

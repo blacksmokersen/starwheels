@@ -12,7 +12,7 @@ namespace Items
         public float Speed;
 
         [Header("Ground parameters")]
-        public AirStates AirState = AirStates.InAir;
+        public AirState AirState = AirState.Air;
         public float DistanceForGrounded;
         public float LocalGravity;
 
@@ -89,9 +89,9 @@ namespace Items
             }
         }
 
-        public override void Spawn(KartInventory kart, Directions direction)
+        public override void Spawn(KartInventory kart, Direction direction)
         {
-            if (direction == Directions.Forward || direction == Directions.Default)
+            if (direction == Direction.Forward || direction == Direction.Default)
             {
                 var rot = new Vector3(0,kart.transform.rotation.eulerAngles.y,0);
                 transform.rotation = Quaternion.Euler(rot);
@@ -100,7 +100,7 @@ namespace Items
                 rb.velocity = vel;
                 transform.position = kart.ItemPositions.FrontPosition.position;
             }
-            else if (direction == Directions.Backward)
+            else if (direction == Direction.Backward)
             {
                 var rot = new Vector3(0, kart.transform.rotation.eulerAngles.y + 180, 0); // Apply 180° turn
                 transform.rotation = Quaternion.Euler(rot);
