@@ -7,6 +7,7 @@ namespace Items
     [RequireComponent(typeof(AudioSource))]
     public class ProjectileBehaviour : ItemBehaviour
     {
+        #region Variable
         [Header("Projectile parameters")]
         public float Speed;        
 
@@ -30,6 +31,7 @@ namespace Items
         private AudioSource audioSource;
         private const float ownerImmunityDuration = 1f;
         private bool ownerImmuned = true;
+        #endregion
 
         protected void Awake()
         {
@@ -49,9 +51,8 @@ namespace Items
 
         protected void FixedUpdate()
         {
-            NormalizeSpeed();
-            if (rb.useGravity == true)
-                ApplyLocalGravity();
+            NormalizeSpeed();            
+            ApplyLocalGravity();
         }
 
         #region ItemLogic
@@ -82,7 +83,10 @@ namespace Items
 
         public void ApplyLocalGravity()
         {
-            rb.AddForce(Vector3.down * LocalGravity);
+            if (rb.useGravity == true)
+            {
+                rb.AddForce(Vector3.down * LocalGravity);
+            }
         }
 
         public override void Spawn(KartInventory kart, Directions direction)
@@ -115,7 +119,6 @@ namespace Items
             yield return new WaitForSeconds(ownerImmunityDuration);
             ownerImmuned = false;
         }
-
         #endregion
 
         #region Collisions
