@@ -30,7 +30,7 @@ namespace Items
 
         private AudioSource audioSource;
         private const float ownerImmunityDuration = 1f;
-        private bool ownerImmuned = true;
+        private bool ownerImmune = true;
         #endregion
 
         protected void Awake()
@@ -51,7 +51,7 @@ namespace Items
 
         protected void FixedUpdate()
         {
-            NormalizeSpeed();            
+            NormalizeSpeed();
             ApplyLocalGravity();
         }
 
@@ -115,9 +115,9 @@ namespace Items
 
         IEnumerator StartOwnerImmunity()
         {
-            ownerImmuned = true;
+            ownerImmune = true;
             yield return new WaitForSeconds(ownerImmunityDuration);
-            ownerImmuned = false;
+            ownerImmune = false;
         }
         #endregion
 
@@ -125,7 +125,7 @@ namespace Items
 
         public void CheckCollision(Collider other)
         {
-            if (owner == null || (other.gameObject.GetComponentInParent<KartHub>().kartInventory == owner && ownerImmuned)) return;
+            if (owner == null || (other.gameObject.GetComponentInParent<KartHub>().kartInventory == owner && ownerImmune)) return;
             if (!other.gameObject.GetComponentInParent<KartHealthSystem>().IsInvincible && other == owner)
             {
                 owner.gameObject.GetComponentInParent<KartEvents>().HitSomeoneElse();

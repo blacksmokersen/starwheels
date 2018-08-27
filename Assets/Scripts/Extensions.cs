@@ -1,8 +1,4 @@
-﻿using System;
-using System.Reflection;
-using Photon;
-
-namespace MyExtensions
+﻿namespace MyExtensions
 {
     public class Functions
     {

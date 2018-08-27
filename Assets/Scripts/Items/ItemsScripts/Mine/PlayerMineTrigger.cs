@@ -12,7 +12,7 @@ namespace Items
             {
                 other.gameObject.GetComponentInParent<Kart.KartEvents>().OnHit();
                 GetComponentInParent<MineBehaviour>().PlayExplosion();
-                Destroy(transform.parent.gameObject); // Destroy the mine root item
+                GetComponentInParent<MineBehaviour>().DestroyObject(); // Destroy the mine root item
             }
         }
     }
