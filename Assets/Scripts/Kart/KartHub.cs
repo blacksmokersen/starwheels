@@ -36,7 +36,7 @@ namespace Kart
             kartHealthSystem = GetComponentInChildren<KartHealthSystem>();
             kartCapacity = GetComponentInChildren<Capacity>();
             cinemachineDynamicScript = GetComponentInChildren<CinemachineDynamicScript>();
-            KartEvents.Instance.HitSomeoneElse += SetScore;
+            KartEvents.Instance.HitSomeoneElse += IncreaseScore;
         }
 
         private void FixedUpdate()
@@ -181,11 +181,12 @@ namespace Kart
             }
         }
 
-        public void SetScore()
+        public void IncreaseScore()
         {
             score++;
             PhotonNetwork.player.SetScore(score);
             PhotonView view = GetComponent<PhotonView>();
+            // TODO: Use RaiseEvent instead?
             view.RPC("UpdateScore", PhotonTargets.AllBuffered);
         }
 

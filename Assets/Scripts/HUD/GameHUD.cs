@@ -18,6 +18,8 @@ namespace HUD
             KartEvents.Instance.OnItemUsed += UpdateItem;
             KartEvents.Instance.OnScoreChange += UpdatePlayerList;
 
+            // TODO: Add UpdatePlayerList to OnPhotonConnected and Disconnect events
+
             UpdateItem(null, 0);
             UpdatePlayerList();
         }
@@ -36,16 +38,6 @@ namespace HUD
             {
                 PlayerList.text += player.NickName + "\t Score: " + player.GetScore() + "\n";
             }
-        }
-
-        void OnPhotonPlayerConnected()
-        {
-            UpdatePlayerList();
-        }
-        
-        void OnPhotonPlayerDisconnected()
-        {
-            UpdatePlayerList();
         }
     }
 }
