@@ -4,29 +4,31 @@ using UnityEngine;
 
 namespace Multiplayer
 {
-    public class Server : UnityEngine.MonoBehaviour, IPunCallbacks
+    public class Server : MonoBehaviour, IPunCallbacks
     {
-        [SerializeField] private Room _room;
-        [SerializeField] private Lobby _lobby;
+        public string GameVersion;
+
+        [SerializeField] private RoomMenu roomMenu;
+        [SerializeField] private LobbyMenu lobbyMenu;
 
         private void Awake()
         {
             PhotonNetwork.offlineMode = false;
             PhotonNetwork.autoJoinLobby = true;
             PhotonNetwork.automaticallySyncScene  = true;
-            PhotonNetwork.ConnectUsingSettings("v1");
+            PhotonNetwork.ConnectUsingSettings(GameVersion);
         }
 
         public void OnConnectedToPhoton()
         {
             Debug.Log("OnConnectedToPhoton");
-            _lobby.Show();
+            lobbyMenu.ShowLobbyMenu();
         }
         
         public void OnJoinedLobby()
         {
             Debug.Log("OnJoinedLobby");
-            _lobby.RefreshLobby();
+            lobbyMenu.RefreshLobby();
         }
 
         public void OnConnectedToMaster()
@@ -37,27 +39,27 @@ namespace Multiplayer
         public void OnReceivedRoomListUpdate()
         {
             Debug.Log("OnReceivedRoomListUpdate");
-            _lobby.RefreshLobby();
+            lobbyMenu.RefreshLobby();
         }
         
         public void OnJoinedRoom()
         {
             Debug.Log("OnJoinedRoom");
-            _lobby.Hide();
-            _room.Show();
-            _room.RefreshRoom();
+            lobbyMenu.HideLobbyMenu();
+            roomMenu.ShowRoomMenu();
+            roomMenu.RefreshRoom();
         }
 
         public void OnPhotonPlayerConnected(PhotonPlayer newPlayer)
         {
             Debug.Log("OnPhotonPlayerConnected: " + newPlayer);
-            _room.RefreshRoom();
+            roomMenu.RefreshRoom();
         }
         
         public void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
         {
             Debug.Log("OnPhotonPlayerDisconnected: " + otherPlayer);
-            _room.RefreshRoom();
+            roomMenu.RefreshRoom();
         }
 
         public void OnLeftRoom()

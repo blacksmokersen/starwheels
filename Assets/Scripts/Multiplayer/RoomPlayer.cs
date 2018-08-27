@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class RoomPlayer : UnityEngine.MonoBehaviour
+public class RoomPlayer : MonoBehaviour
 {
-    [SerializeField] private Text _playerNameText;
+    [SerializeField] private Text playerNameText;
 
     public void SetPlayer(PhotonPlayer player)
     {
-        _playerNameText.text = player.NickName;
+        playerNameText.text = player.NickName;
     }
 }

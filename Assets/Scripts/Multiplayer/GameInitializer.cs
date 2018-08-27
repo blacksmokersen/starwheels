@@ -2,23 +2,19 @@
 using Cinemachine;
 using Photon;
 
-public class Game : PunBehaviour
+public class GameInitializer : PunBehaviour
 {
     public GameObject[] Spawns;
-    Vector3 initPos;
 
     private void Start()
     {
-        Debug.Log("start");
         if (!PhotonNetwork.connected)
         {
             PhotonNetwork.offlineMode = true;
             PhotonNetwork.CreateRoom("Solo");
         }
-       // Vector3 initPos = Vector3.up;
        
-        GameObject kart = SpawnKart(initPos);
-
+        GameObject kart = SpawnKart();
         if (kart.GetComponent<PhotonView>().isMine)
         {
             CinemachineVirtualCamera camera = FindObjectOfType<CinemachineVirtualCamera>();
@@ -27,10 +23,10 @@ public class Game : PunBehaviour
         }
     }
 
-    public GameObject SpawnKart(Vector3 initPos)
+    public GameObject SpawnKart()
     {
         int numberOfPlayers = PhotonNetwork.countOfPlayers;
-        initPos = Spawns[numberOfPlayers].transform.position;
+        var initPos = Spawns[numberOfPlayers].transform.position;
         return PhotonNetwork.Instantiate("Kart", initPos, Spawns[numberOfPlayers].transform.rotation, 0);
     }
 }
