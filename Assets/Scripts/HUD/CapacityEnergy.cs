@@ -1,14 +1,16 @@
-﻿using UnityEngine.UI;
+﻿using Kart;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace HUD
 {
-    public class CapacityEnergy : BaseKartComponent
+    public class CapacityEnergy : MonoBehaviour
     {
         public Image Energy;
 
         private void Start()
         {
-            kartEvents.OnEnergyConsumption += UpdateFillAmount;
+            KartEvents.Instance.OnEnergyConsumption += UpdateFillAmount;
         }
 
         public void UpdateFillAmount(float energy)
