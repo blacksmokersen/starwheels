@@ -49,7 +49,7 @@ namespace Capacities
             }
             else
             {
-                if (kartStates.AirState == AirState.Ground && canDoubleJump)
+                if (kartStates.IsGrounded() && canDoubleJump)
                 {
                     hasDoneFirstJump = true;
                     StartCoroutine(StartCooldownDoubleJump());
@@ -105,7 +105,7 @@ namespace Capacities
 
         private bool CanDoubleJump()
         {
-            return hasDoneFirstJump && kartStates.AirState == AirState.Air;
+            return hasDoneFirstJump && kartStates.IsGrounded();
         }
     }
 }

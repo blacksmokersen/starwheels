@@ -6,7 +6,7 @@ namespace Kart
     {
         [SerializeField] private MeshRenderer _kartRenderer;
         [SerializeField] private TextMesh _nameText;
-        [SerializeField] private GameObject _backCamera;
+        //[SerializeField] private GameObject _backCamera;
 
         // CORE
 
@@ -17,7 +17,7 @@ namespace Kart
             if (PhotonNetwork.connected && !photonView.isMine)
             {
                 SetName(GetPlayer(photonView).NickName);
-                Destroy(_backCamera);
+                //Destroy(_backCamera);
             }
         }
 

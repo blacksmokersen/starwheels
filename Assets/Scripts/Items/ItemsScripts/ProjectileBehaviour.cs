@@ -12,7 +12,6 @@ namespace Items
         public float Speed;
 
         [Header("Ground parameters")]
-        public AirState AirState = AirState.Air;
         public float DistanceForGrounded;
         public float LocalGravity;
 

@@ -97,13 +97,9 @@ namespace Kart
                 kartDriftSystem.DriftForces();
                 kartDriftSystem.CheckNewTurnDirection();
             }
-            else if (kartStates.DriftTurnState == TurnState.NotTurning)
+            else if (kartStates.DriftTurnState == TurnState.NotTurning && kartStates.TurningState != TurnState.NotTurning)
             {
-                if (kartStates.TurningState == TurnState.Left)
-                    kartStates.DriftTurnState = TurnState.Left;
-
-                if (kartStates.TurningState == TurnState.Right)
-                    kartStates.DriftTurnState = TurnState.Right;
+                kartStates.SetDriftTurnState(kartStates.TurningState);
 
                 InitializeDrift(turnValue);
             }
@@ -111,42 +107,35 @@ namespace Kart
 
         public void Accelerate(float value)
         {
-            if (kartStates.AirState != AirState.Air)
-            {
-                kartEngine.Accelerate(value);
-            }
+            if (!kartStates.IsGrounded()) return;
+
+            kartEngine.Accelerate(value);
         }
 
         public void Decelerate(float value)
         {
-            if (kartStates.AirState != AirState.Air)
-            {
-                kartEngine.Decelerate(value);
-            }
+            if (!kartStates.IsGrounded()) return;
+
+            kartEngine.Decelerate(value);
         }
 
         public void Turn(float turnValue)
         {
             float newTurnSensitivity = turnValue;
+
+            kartStates.SetTurnState(turnValue);
             kartEvents.OnTurn(turnValue);
+
             if (Mathf.Abs(turnValue) <= 0.9f)
             {
                 newTurnSensitivity = turnValue / kartEngine.LowerTurnSensitivity;
             }
 
-            SetTurnState(turnValue);
+            if (kartStates.DriftTurnState != TurnState.NotTurning) return;
+            if (kartStates.AccelerationState == AccelerationState.None) return;
 
-            if (kartStates.DriftTurnState == TurnState.NotTurning)
-            {
-                if (kartStates.AccelerationState == AccelerationState.Forward)
-                {
-                    kartEngine.TurnUsingTorque(Vector3.up * newTurnSensitivity, turnValue);
-                }
-                else if (kartStates.AccelerationState == AccelerationState.Back)
-                {
-                    kartEngine.TurnUsingTorque(Vector3.down * newTurnSensitivity, turnValue);
-                }
-            }
+            var direction = kartStates.AccelerationState == AccelerationState.Forward ? Vector3.up : Vector3.down;
+            kartEngine.TurnUsingTorque(direction * newTurnSensitivity, turnValue);
         }
 
         public void IncreaseScore()
@@ -164,22 +153,6 @@ namespace Kart
         private void UpdateScore()
         {
             KartEvents.Instance.OnScoreChange();
-        }
-
-        private void SetTurnState(float turnValue)
-        {
-            if (turnValue > 0)
-            {
-                kartStates.TurningState = TurnState.Right;
-            }
-            else if (turnValue < 0)
-            {
-                kartStates.TurningState = TurnState.Left;
-            }
-            else
-            {
-                kartStates.TurningState = TurnState.NotTurning;
-            }
         }
     }
 }

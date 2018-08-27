@@ -38,13 +38,39 @@ namespace Kart
 
         private void Update()
         {
-            if (DriftSideDifferentFromTurnSide())
+            if (kartStates.IsDriftSideDifferentFromTurnSide())
             {
                 _hasTurnedOtherSide = true;
             }
         }
 
         // PUBLIC
+
+        public void InitializeDrift(float angle)
+        {
+            if (CheckRequiredSpeed() && kartStates.IsGrounded() && angle > 0) return;
+
+            if (_turboCoroutine != null)
+            {
+                StopCoroutine(_turboCoroutine);
+                kartStates.SetDriftBoostState(DriftBoostState.NotDrifting);
+            }
+
+            if (kartStates.DriftBoostState == DriftBoostState.NotDrifting)
+            {
+                if (angle < 0)
+                {
+                    kartStates.SetDriftTurnState(TurnState.Left);
+                    KartEvents.Instance.OnDriftLeft();
+                }
+                if (angle > 0)
+                {
+                    kartStates.SetDriftTurnState(TurnState.Right);
+                    KartEvents.Instance.OnDriftRight();
+                }
+                EnterNextState();
+            }
+        }
 
         public void DriftForces()
         {
@@ -53,25 +79,10 @@ namespace Kart
 
         public void CheckNewTurnDirection()
         {
-            if (_hasTurnedOtherSide && DriftSideEqualsTurnSide() && _driftedLongEnough)
+            if (_hasTurnedOtherSide && kartStates.IsDriftSideEqualsTurnSide() && _driftedLongEnough)
             {
                 EnterNextState();
             }
-        }
-
-        public bool DriftSideEqualsTurnSide()
-        {
-            return kartStates.TurningState == kartStates.DriftTurnState;
-        }
-
-        public bool DriftSideDifferentFromTurnSide()
-        {
-            if (kartStates.TurningState == TurnState.NotTurning || kartStates.DriftTurnState == TurnState.NotTurning)
-            {
-                return false;
-            }
-
-            return kartStates.TurningState != kartStates.DriftTurnState;
         }
 
         public void EnterNextState()
@@ -97,32 +108,6 @@ namespace Kart
             _driftedLongEnoughTimer = StartCoroutine(DriftTimer());
         }
 
-        public void InitializeDrift(float angle)
-        {
-            if (CheckRequiredSpeed() && kartStates.IsGrounded() && angle > 0) return;
-
-            if (_turboCoroutine != null)
-            {
-                StopCoroutine(_turboCoroutine);
-                SetBoostState(DriftBoostState.NotDrifting);
-            }
-
-            if (kartStates.DriftBoostState == DriftBoostState.NotDrifting)
-            {
-                if (angle < 0)
-                {
-                    SetTurnState(TurnState.Left);
-                    KartEvents.Instance.OnDriftLeft();
-                }
-                if (angle > 0)
-                {
-                    SetTurnState(TurnState.Right);
-                    KartEvents.Instance.OnDriftRight();
-                }
-                EnterNextState();
-            }
-        }
-
         public bool CheckRequiredSpeed()
         {
             return _kartEngine.PlayerVelocity >= requiredSpeed;
@@ -144,8 +129,8 @@ namespace Kart
         public void ResetDrift()
         {
             KartEvents.Instance.OnDriftReset();
-            SetTurnState(TurnState.NotTurning);
-            SetBoostState(DriftBoostState.NotDrifting);
+            kartStates.SetDriftTurnState(TurnState.NotTurning);
+            kartStates.SetDriftBoostState(DriftBoostState.NotDrifting);
 
             _driftedLongEnough = false;
             if (_driftedLongEnoughTimer != null)
@@ -158,19 +143,19 @@ namespace Kart
 
         private void EnterNormalDrift()
         {
-            SetBoostState(DriftBoostState.Simple);
+            kartStates.SetDriftBoostState(DriftBoostState.Simple);
             KartEvents.Instance.OnDriftStart();
         }
 
         private void EnterOrangeDrift()
         {
-            SetBoostState(DriftBoostState.Orange);
+            kartStates.SetDriftBoostState(DriftBoostState.Orange);
             KartEvents.Instance.OnDriftOrange();
         }
 
         private void EnterRedDrift()
         {
-            SetBoostState(DriftBoostState.Red);
+            kartStates.SetDriftBoostState(DriftBoostState.Red);
             KartEvents.Instance.OnDriftRed();
         }
 
@@ -180,8 +165,8 @@ namespace Kart
             KartEvents.Instance.OnDriftBoost();
             KartEvents.Instance.OnDriftEnd();
             _physicsBoostCoroutine = StartCoroutine(_kartEngine.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));
-            SetBoostState(DriftBoostState.Turbo);
-            SetTurnState(TurnState.NotTurning);
+            kartStates.SetDriftBoostState(DriftBoostState.Turbo);
+            kartStates.SetDriftTurnState(TurnState.NotTurning);
             yield return new WaitForSeconds(BoostDuration);
             ResetDrift();
             yield break;
@@ -191,16 +176,6 @@ namespace Kart
         {
             yield return new WaitForSeconds(TimeBetweenDrifts);
             _driftedLongEnough = true;
-        }
-
-        private void SetBoostState(DriftBoostState state)
-        {
-            kartStates.DriftBoostState = state;
-        }
-
-        private void SetTurnState(TurnState state)
-        {
-            kartStates.DriftTurnState = state;
         }
     }
 }
