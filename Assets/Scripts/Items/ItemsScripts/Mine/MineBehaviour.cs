@@ -17,7 +17,7 @@ namespace Items
         public AudioClip ExplosionSound;
 
         private AudioSource audioSource;
-        
+
         #region Behaviour
         private void Awake()
         {

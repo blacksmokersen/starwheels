@@ -28,12 +28,12 @@ namespace Items
                 {
                     ActualTarget = other.gameObject;
                     StartCoroutine(GetComponentInParent<RocketBehaviour>().StartQuickTurn());
-                }            
+                }
             }
         }
 
         private void OnTriggerStay(Collider other)
-        {            
+        {
             if (other.gameObject.tag == Constants.KartRigidBodyTag && activated)
             {
                 if (other.GetComponentInParent<KartHub>().kartInventory == Owner) return;
@@ -49,12 +49,12 @@ namespace Items
         IEnumerator LookForTarget()
         {
             activated = false;
-            yield return new WaitForSeconds(SecondsBeforeSearchingTarget); // For X seconds the rocket goes straight forward       
+            yield return new WaitForSeconds(SecondsBeforeSearchingTarget); // For X seconds the rocket goes straight forward
             activated = true;
         }
 
         public bool IsKartIsCloserThanActualTarget(GameObject kart)
-        {            
+        {
             return Vector3.Distance(transform.position, kart.transform.position) < actualTargetDistance;
         }
     }

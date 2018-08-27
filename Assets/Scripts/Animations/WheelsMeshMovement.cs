@@ -4,8 +4,8 @@ namespace Animations
 {
     /*
      * Class used for the rotations of the kart wheels
-     * 
-     */ 
+     *
+     */
     public class WheelsMeshMovement : BaseKartComponent
     {
         [Header("Meshes")]
@@ -21,7 +21,7 @@ namespace Animations
             base.Awake();
             kartEvents.OnVelocityChange += FrontWheelsRotation;
             kartEvents.OnVelocityChange += BackWheelsRotation;
-            kartEvents.OnTurn += FrontWheelsTurn;            
+            kartEvents.OnTurn += FrontWheelsTurn;
         }
 
         private void FrontWheelsTurn(float currentAngle)

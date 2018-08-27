@@ -8,11 +8,11 @@ namespace Kart
         public int MaxHealth = 3;
         public int Health;
         public float CrashInvincibilityDuration = 3f;
-        public bool IsInvincible = false;        
+        public bool IsInvincible = false;
         public bool IsDead = false;
 
         private new void Awake()
-        {            
+        {
             base.Awake();
             Health = MaxHealth;
             kartEvents.OnHit += HealthLoss;
@@ -20,7 +20,7 @@ namespace Kart
         }
 
         public void HealthLoss()
-        {            
+        {
             photonView.RPC("RPCHealthLoss", PhotonTargets.All);
         }
 
@@ -28,14 +28,14 @@ namespace Kart
         public void RPCHealthLoss()
         {
             if (!IsInvincible)
-            {                
+            {
                 Health--;
                 kartEvents.OnHealthLoss(Health);
             }
             if(Health <= 0 && !IsDead)
             {
                 GetComponentInParent<Rigidbody>().transform.position = new Vector3(-221, 3, 0);
-                IsDead = true;                
+                IsDead = true;
             }
         }
 

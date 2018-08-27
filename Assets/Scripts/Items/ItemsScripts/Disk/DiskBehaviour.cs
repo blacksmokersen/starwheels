@@ -8,7 +8,7 @@ namespace Items
         [Header("Disk parameters")]
         public int ReboundsBeforeEnd;
         public int ParticlesToEmit;
-       
+
         private void OnCollisionEnter(Collision collision)
         {
             if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.GroundLayer))

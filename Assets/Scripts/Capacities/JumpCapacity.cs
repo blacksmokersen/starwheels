@@ -6,8 +6,8 @@ namespace Capacities
 {
     /*
      * Jump / Double Jump Capacity
-     * 
-     */ 
+     *
+     */
     public class JumpCapacity : Capacity
     {
         [Header("Jump Capacity")]
@@ -44,7 +44,7 @@ namespace Capacities
         {
             if (CanDoubleJump())
             {
-                DoubleJump(xAxis, yAxis);                
+                DoubleJump(xAxis, yAxis);
                 hasDoneFirstJump = false;
             }
             else

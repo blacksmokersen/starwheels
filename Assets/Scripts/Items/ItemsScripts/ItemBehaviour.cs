@@ -9,12 +9,12 @@ namespace Items
         { }
 
         public void DestroyObject(float timeBeforeDestroy = 0f)
-        {            
+        {
             if (PhotonNetwork.connected)
             {
                 if (timeBeforeDestroy > 0)
                     StartCoroutine(DelayedDestroy(timeBeforeDestroy));
-                else 
+                else
                 {
                     if (GetComponent<PhotonView>().isMine)
                         PhotonNetwork.Destroy(gameObject);
