@@ -125,8 +125,11 @@ namespace Items
 
         public void CheckCollision(Collider other)
         {
-            if (owner == null || (other.gameObject.GetComponentInParent<KartHub>().kartInventory == owner && ownerImmune)) return;
-            if (!other.gameObject.GetComponentInParent<KartHealthSystem>().IsInvincible && other == owner)
+            var otherKartInventory = other.gameObject.GetComponentInParent<KartHub>().kartInventory;
+
+            if (owner == null || (otherKartInventory == owner && ownerImmune)) return;
+
+            if (!other.gameObject.GetComponentInParent<KartHealthSystem>().IsInvincible)
             {
                 owner.gameObject.GetComponentInParent<KartEvents>().HitSomeoneElse();
             }
