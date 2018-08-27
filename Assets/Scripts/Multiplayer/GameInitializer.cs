@@ -13,7 +13,7 @@ public class GameInitializer : PunBehaviour
             PhotonNetwork.offlineMode = true;
             PhotonNetwork.CreateRoom("Solo");
         }
-       
+
         GameObject kart = SpawnKart();
         if (kart.GetComponent<PhotonView>().isMine)
         {

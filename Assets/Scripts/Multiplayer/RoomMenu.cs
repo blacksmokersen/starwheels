@@ -23,7 +23,7 @@ namespace Multiplayer
             startButton.onClick.AddListener(StartGame);
             mapDropdown.onValueChanged.AddListener(ChangeMap);
 
-            roomPlayerList = new List<RoomPlayer>();           
+            roomPlayerList = new List<RoomPlayer>();
             HideRoomMenu();
         }
         private void Start()
@@ -44,7 +44,7 @@ namespace Multiplayer
         {
             mapDropdown.value = value;
         }
-        
+
         public void ShowRoomMenu()
         {
             gameObject.SetActive(true);
@@ -67,7 +67,7 @@ namespace Multiplayer
                 Destroy(roomPlayer.gameObject);
             }
             roomPlayerList.Clear();
-            
+
             // Search and list all players in the room
             foreach (PhotonPlayer photonPlayer in PhotonNetwork.playerList)
             {

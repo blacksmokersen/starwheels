@@ -5,10 +5,10 @@ using HUD;
 
 namespace Kart
 {
-    /* 
+    /*
      * Main class to map the inputs to the different kart actions
      * The states should handled and modified within this class
-     * 
+     *
      */
     public class KartHub : MonoBehaviour
     {

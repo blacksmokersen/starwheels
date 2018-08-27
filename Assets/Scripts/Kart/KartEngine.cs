@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace Kart
 {
-    /* 
-     * Class for handling physics for the kart : 
+    /*
+     * Class for handling physics for the kart :
      * - Forces
      * - Velocity
      * - Drag

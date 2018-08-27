@@ -1,7 +1,7 @@
 ﻿namespace Items
 {
     public class GuileBehaviour : ProjectileBehaviour
-    {        
+    {
         new void Start()
         {
             base.Start();

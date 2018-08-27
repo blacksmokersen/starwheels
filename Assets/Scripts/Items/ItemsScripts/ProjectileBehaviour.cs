@@ -9,7 +9,7 @@ namespace Items
     {
         #region Variable
         [Header("Projectile parameters")]
-        public float Speed;        
+        public float Speed;
 
         [Header("Ground parameters")]
         public AirStates AirState = AirStates.InAir;
@@ -23,7 +23,7 @@ namespace Items
         public AudioClip LaunchSound;
         public AudioClip FlySound;
         public AudioClip PlayerHitSound;
-        public AudioClip CollisionSound;       
+        public AudioClip CollisionSound;
 
         protected Rigidbody rb;
         protected KartInventory owner;
@@ -41,7 +41,7 @@ namespace Items
 
         protected void Start()
         {
-            
+
         }
 
         protected void Update()
@@ -131,7 +131,7 @@ namespace Items
                 owner.gameObject.GetComponentInParent<KartEvents>().HitSomeoneElse();
             }
             other.gameObject.GetComponentInParent<KartEvents>().OnHit();
-            CollisionParticles.Emit(2000);            
+            CollisionParticles.Emit(2000);
             PlayPlayerHitSound();
             if (GetType().Name != "GuileBehaviour")
             {

@@ -29,7 +29,7 @@ namespace HUD
         {
             StartCoroutine(UpdateRoutine());
         }
-        
+
         IEnumerator UpdateRoutine()
         {
             while (Application.isPlaying)

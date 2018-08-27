@@ -3,7 +3,7 @@ using Kart;
 
 namespace Controls
 {
-    /* 
+    /*
      * Class for handling player inputs
      */
     public class PlayerInputs : BaseKartComponent
@@ -50,7 +50,7 @@ namespace Controls
         {
             kartHub.Accelerate(Input.GetAxis(Constants.AccelerateButton));
             kartHub.Decelerate(Input.GetAxis(Constants.DecelerateButton));
-            kartHub.Turn(Input.GetAxis(Constants.TurnAxis));            
+            kartHub.Turn(Input.GetAxis(Constants.TurnAxis));
         }
 
         void ButtonsDown()
