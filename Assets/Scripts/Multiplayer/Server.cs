@@ -24,7 +24,7 @@ namespace Multiplayer
             Debug.Log("OnConnectedToPhoton");
             lobbyMenu.ShowLobbyMenu();
         }
-        
+
         public void OnJoinedLobby()
         {
             Debug.Log("OnJoinedLobby");
@@ -41,7 +41,7 @@ namespace Multiplayer
             Debug.Log("OnReceivedRoomListUpdate");
             lobbyMenu.RefreshLobby();
         }
-        
+
         public void OnJoinedRoom()
         {
             Debug.Log("OnJoinedRoom");
@@ -55,7 +55,7 @@ namespace Multiplayer
             Debug.Log("OnPhotonPlayerConnected: " + newPlayer);
             roomMenu.RefreshRoom();
         }
-        
+
         public void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
         {
             Debug.Log("OnPhotonPlayerDisconnected: " + otherPlayer);

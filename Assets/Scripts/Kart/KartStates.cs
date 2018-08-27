@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Kart {
     /*
-     * States : 
-     * - Turning 
-     * - Drift 
+     * States :
+     * - Turning
+     * - Drift
      * - Air
      * - Acceleration ?
      */

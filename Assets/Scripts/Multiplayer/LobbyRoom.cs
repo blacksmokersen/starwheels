@@ -15,7 +15,7 @@ public class LobbyRoom : MonoBehaviour
         object owner;
         if (room.CustomProperties.TryGetValue("owner", out owner))
             _serverNameOwner.text = (string)owner;
-        
+
         _joinServerBtn.onClick.AddListener(callback);
     }
 }

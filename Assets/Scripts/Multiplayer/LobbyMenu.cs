@@ -24,11 +24,11 @@ namespace Multiplayer
             refreshRoomsBtn.onClick.AddListener(RefreshLobby);
             createRoomBtn.onClick.AddListener(CreateRoom);
             backToMenu.onClick.AddListener(BackToMenu);
-            
+
             nicknameInput.onValueChanged.AddListener((value) => {
                 PhotonNetwork.playerName = value;
             });
-            
+
             lobbyRooms = new List<LobbyRoom>();
 
             HideLobbyMenu();
@@ -43,7 +43,7 @@ namespace Multiplayer
         {
             gameObject.SetActive(false);
         }
-        
+
         private void CreateRoom()
         {
             string roomName = roomNameInput.text;
@@ -57,7 +57,7 @@ namespace Multiplayer
                     { "map", 0 }
                 };
                 options.CustomRoomPropertiesForLobby = new string[] { "owner", "map"};
-                
+
                 PhotonNetwork.CreateRoom(roomName, options, null);
             }
         }

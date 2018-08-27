@@ -15,7 +15,7 @@
     public const string KartObjectName = "Kart";
     public const string RuntimeObjectName = "_RUNTIME";
 
-    // Inputs    
+    // Inputs
     public const string AccelerateButton = "Accelerate";
     public const string DecelerateButton = "Decelerate";
     public const string SpecialCapacity = "SpecialCapacity";

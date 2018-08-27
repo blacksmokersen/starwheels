@@ -152,7 +152,7 @@ namespace Kart
             if (physicsBoostCoroutine != null) StopCoroutine(physicsBoostCoroutine);
             KartEvents.Instance.OnDriftBoost();
             KartEvents.Instance.OnDriftEnd();
-            physicsBoostCoroutine = StartCoroutine(kartEngine.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));            
+            physicsBoostCoroutine = StartCoroutine(kartEngine.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));
             SetKartBoostState(DriftBoostStates.Turbo, ColorId.Green);
             SetKartTurnState(TurningStates.NotTurning);
             yield return new WaitForSeconds(BoostDuration);
@@ -165,7 +165,7 @@ namespace Kart
             KartEvents.Instance.OnDriftReset();
             SetKartTurnState(TurningStates.NotTurning);
             SetKartBoostState(DriftBoostStates.NotDrifting, ColorId.Gray);
-            
+
             driftedLongEnough = false;
             if (driftedLongEnoughTimer != null)
             {
