@@ -192,7 +192,7 @@ namespace Kart
         [PunRPC]
         void UpdateScore()
         {
-            GameObject.Find("HUD").GetComponent<HUDUpdater>().UpdatePlayerList();
+            KartEvents.Instance.OnScoreChange();
         }
     }
 }

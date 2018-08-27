@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using HUD;
+using Kart;
 
 public class LevelManager : MonoBehaviour
 {
-
     [SerializeField] private GameObject escapeMenu;
     [SerializeField] private Button quitLevel;
     [SerializeField] private Button resetLevel;
@@ -47,7 +47,7 @@ public class LevelManager : MonoBehaviour
             foreach (PhotonPlayer player in PhotonNetwork.playerList)
             {
                 PhotonNetwork.player.SetScore(0);
-                GameObject.Find("HUD").GetComponent<HUDUpdater>().UpdatePlayerList();
+                KartEvents.Instance.OnScoreChange();
             }
             test.RPC("RPCResetLevel", PhotonTargets.All);
         }

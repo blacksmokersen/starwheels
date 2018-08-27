@@ -6,13 +6,8 @@ using Kart;
 
 namespace HUD
 {
-    public class HUDUpdater : MonoBehaviour
+    public class GameHUD : MonoBehaviour
     {
-        /*
-        public Text SpeedText;
-        public Text TimeText;
-        public Text FPSText;
-        */
         public Text ItemCountText;
         public Text PlayerList;
         public Image ItemTexture;
@@ -21,23 +16,10 @@ namespace HUD
         private void Start()
         {
             KartEvents.Instance.OnItemUsed += UpdateItem;
+            KartEvents.Instance.OnScoreChange += UpdatePlayerList;
+
             UpdateItem(null, 0);
             UpdatePlayerList();
-        }
-
-        public void SetKart(Rigidbody body)
-        {
-            StartCoroutine(UpdateRoutine());
-        }
-
-        IEnumerator UpdateRoutine()
-        {
-            while (Application.isPlaying)
-            {
-                //TimeText.text = "Time : " + Time.time;
-                //FPSText.text = "FPS : " + 1.0f / Time.deltaTime;
-                yield return new WaitForSeconds(0.05f);
-            }
         }
 
         public void UpdateItem(ItemData item, int count)
@@ -60,6 +42,7 @@ namespace HUD
         {
             UpdatePlayerList();
         }
+        
         void OnPhotonPlayerDisconnected()
         {
             UpdatePlayerList();

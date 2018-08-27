@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using Cinemachine;
 using Photon;
+using UnityEngine.SceneManagement;
 
 public class GameInitializer : PunBehaviour
 {
     public GameObject[] Spawns;
+    public string gameHudSceneName;
 
     private void Start()
     {
@@ -20,6 +22,8 @@ public class GameInitializer : PunBehaviour
             CinemachineVirtualCamera camera = FindObjectOfType<CinemachineVirtualCamera>();
             camera.Follow = kart.transform;
             camera.LookAt = kart.transform;
+
+            SceneManager.LoadScene(gameHudSceneName, LoadSceneMode.Additive);
         }
     }
 

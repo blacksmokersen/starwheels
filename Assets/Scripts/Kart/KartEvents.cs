@@ -46,5 +46,6 @@ namespace Kart
         public Action OnDriftBoost;
         public Action OnDriftReset;
         public Action OnDriftNextState;
+        public Action OnScoreChange;
     }
 }
