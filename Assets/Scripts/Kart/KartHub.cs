@@ -32,7 +32,6 @@ namespace Kart
             kartDriftSystem = GetComponentInChildren<KartDriftSystem>();
             kartInventory = GetComponentInChildren<KartInventory>();
             kartHealthSystem = GetComponentInChildren<KartHealthSystem>();
-            kartAbility = GetComponentInChildren<Ability>();
             cinemachineDynamicScript = GetComponentInChildren<CinemachineDynamicScript>();
 
             KartEvents.Instance.HitSomeoneElse += IncreaseScore;
@@ -66,8 +65,11 @@ namespace Kart
             kartInventory.ItemAction(Directions.Backward);
         }
 
-        public void UseCapacity(float xAxis, float yAxis)
+        public void UseAbility(float xAxis, float yAxis)
         {
+            if (kartAbility == null) kartAbility = GetComponentInChildren<Ability>();
+            if (kartAbility == null) return;
+
             kartAbility.Use(xAxis, yAxis);
         }
 
