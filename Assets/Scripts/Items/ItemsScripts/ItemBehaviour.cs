@@ -3,6 +3,11 @@ using UnityEngine;
 
 namespace Items
 {
+    /*
+     * Base item class for handling the instantiation and destroy
+     * 
+     */ 
+    [RequireComponent(typeof(PhotonView))]
     public class ItemBehaviour : MonoBehaviour
     {
         public virtual void Spawn(KartInventory kart, Directions direction)
@@ -12,25 +17,29 @@ namespace Items
         {
             if (PhotonNetwork.connected)
             {
-                if (timeBeforeDestroy > 0)
-                    StartCoroutine(DelayedDestroy(timeBeforeDestroy));
-                else
-                {
-                    if (GetComponent<PhotonView>().isMine)
-                        PhotonNetwork.Destroy(gameObject);
-                }
+                StartCoroutine(DelayedDestroy(timeBeforeDestroy));
             }
             else
             {
-                Destroy(gameObject, timeBeforeDestroy);
+                MonoBehaviour.Destroy(gameObject, timeBeforeDestroy);
             }
         }
 
-        IEnumerator DelayedDestroy(float t)
+        private IEnumerator DelayedDestroy(float t)
         {
             yield return new WaitForSeconds(t);
-            if (GetComponent<PhotonView>().isMine)
-                PhotonNetwork.Destroy(gameObject);
+            MultiplayerDestroy();
+        }
+
+        private void MultiplayerDestroy()
+        {
+            var view = GetComponent<PhotonView>();
+            if (view.isMine)
+            {
+                PhotonNetwork.RemoveRPCs(view);
+                PhotonNetwork.RemoveRPCsInGroup(view.group);
+                PhotonNetwork.Destroy(view);
+            }
         }
     }
 }
