@@ -18,8 +18,11 @@ namespace Controls
         private new void Awake()
         {
             base.Awake();
-            kartEvents.OnHit += () => Enabled = false;
-            kartEvents.OnHitRecover += () => Enabled = true;
+            if (photonView.isMine)
+            {
+                kartEvents.OnHit += () => Enabled = false;
+                kartEvents.OnHitRecover += () => Enabled = true;
+            }
         }
 
         private void Start()
@@ -29,7 +32,7 @@ namespace Controls
 
         void FixedUpdate()
         {
-            if (Enabled && kartHub != null)
+            if (Enabled && kartHub != null && photonView.isMine)
             {
                 Axis();
                 ButtonsPressed();
@@ -38,7 +41,7 @@ namespace Controls
 
         private void Update()
         {
-            if (Enabled && kartHub != null)
+            if (Enabled && kartHub != null && photonView.isMine)
             {
                 ButtonsDown();
                 ButtonsUp();

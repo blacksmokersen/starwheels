@@ -5,8 +5,8 @@ namespace Items
 {
     /*
      * Base item class for handling the instantiation and destroy
-     * 
-     */ 
+     *
+     */
     [RequireComponent(typeof(PhotonView))]
     public class ItemBehaviour : MonoBehaviour
     {
@@ -27,9 +27,9 @@ namespace Items
 
         private IEnumerator DelayedDestroy(float t)
         {
-            yield return new WaitForSeconds(t);            
+            yield return new WaitForSeconds(t);
             MultiplayerDestroy();
-        }        
+        }
 
         private void MultiplayerDestroy()
         {
