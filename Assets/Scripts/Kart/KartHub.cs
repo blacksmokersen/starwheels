@@ -28,13 +28,13 @@ namespace Kart
         {
             kartStates = GetComponent<KartStates>();
             kartEvents = GetComponent<KartEvents>();
-
             kartEngine = GetComponentInChildren<KartEngine>();
             kartDriftSystem = GetComponentInChildren<KartDriftSystem>();
             kartInventory = GetComponentInChildren<KartInventory>();
             kartHealthSystem = GetComponentInChildren<KartHealthSystem>();
             kartAbility = GetComponentInChildren<Ability>();
             cinemachineDynamicScript = GetComponentInChildren<CinemachineDynamicScript>();
+
             KartEvents.Instance.HitSomeoneElse += IncreaseScore;
         }
 

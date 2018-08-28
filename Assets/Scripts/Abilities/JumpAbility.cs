@@ -40,7 +40,9 @@ namespace Abilities
             */
         }
 
-        public void Jump(float xAxis, float yAxis)
+        // PRIVATE
+
+        private void Jump(float xAxis, float yAxis)
         {
             if (CanDoubleJump())
             {
@@ -58,7 +60,7 @@ namespace Abilities
             }
         }
 
-        public void DoubleJump(float xAxis, float yAxis)
+        private void DoubleJump(float xAxis, float yAxis)
         {
             if (Mathf.Abs(xAxis) < 0.3f)
             {
@@ -94,8 +96,6 @@ namespace Abilities
                 kartEvents.OnDoubleJump(Directions.Forward);
             }
         }
-
-        // PRIVATE
 
         private IEnumerator StartCooldownDoubleJump()
         {
