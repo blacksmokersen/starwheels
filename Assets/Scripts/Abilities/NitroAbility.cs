@@ -1,10 +1,14 @@
 ﻿using Items;
 
-namespace Capacities
+namespace Abilities
 {
-    public class NitroCapacity : Capacity
+    public class NitroAbility : Ability
     {
         public float EnergyConsumptionSpeed;
+
+        // CORE
+
+        // PUBLIC
 
         public override void Use(float xAxis, float yAxis)
         {
@@ -16,5 +20,7 @@ namespace Capacities
             }
             */
         }
+
+        // PRIVATE
     }
 }
