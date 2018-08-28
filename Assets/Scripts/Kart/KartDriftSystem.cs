@@ -22,7 +22,7 @@ namespace Kart
 
         private KartEngine _kartEngine;
         private bool _hasTurnedOtherSide = false;
-        private bool _driftedLongEnough;
+        private bool _driftedLongEnough = false;
         private Coroutine _driftedLongEnoughTimer;
         private Coroutine _physicsBoostCoroutine;
         private Coroutine _turboCoroutine;
@@ -53,23 +53,25 @@ namespace Kart
             if (_turboCoroutine != null)
             {
                 StopCoroutine(_turboCoroutine);
+                _turboCoroutine = null;
                 kartStates.SetDriftBoostState(DriftBoostState.NotDrifting);
             }
 
-            if (kartStates.DriftBoostState == DriftBoostState.NotDrifting)
+            if (kartStates.IsDrifting()) return;
+
+            kartStates.SetDrifting(true);
+
+            if (angle < 0)
             {
-                if (angle < 0)
-                {
-                    kartStates.SetDriftTurnState(TurnState.Left);
-                    KartEvents.Instance.OnDriftLeft();
-                }
-                if (angle > 0)
-                {
-                    kartStates.SetDriftTurnState(TurnState.Right);
-                    KartEvents.Instance.OnDriftRight();
-                }
-                EnterNextState();
+                kartStates.SetDriftTurnState(TurnState.Left);
+                KartEvents.Instance.OnDriftLeft();
             }
+            if (angle > 0)
+            {
+                kartStates.SetDriftTurnState(TurnState.Right);
+                KartEvents.Instance.OnDriftRight();
+            }
+            EnterNextState();
         }
 
         public void DriftForces()
@@ -115,6 +117,8 @@ namespace Kart
 
         public void StopDrift()
         {
+            if (!kartStates.IsDrifting()) return;
+
             if (kartStates.DriftBoostState == DriftBoostState.Red)
             {
                 _turboCoroutine = StartCoroutine(EnterTurbo());
@@ -124,11 +128,14 @@ namespace Kart
                 KartEvents.Instance.OnDriftEnd();
                 ResetDrift();
             }
+
+            kartStates.SetDrifting(false);
         }
 
         public void ResetDrift()
         {
             KartEvents.Instance.OnDriftReset();
+
             kartStates.SetDriftTurnState(TurnState.NotTurning);
             kartStates.SetDriftBoostState(DriftBoostState.NotDrifting);
 
@@ -162,14 +169,18 @@ namespace Kart
         private IEnumerator EnterTurbo()
         {
             if (_physicsBoostCoroutine != null) StopCoroutine(_physicsBoostCoroutine);
+
             KartEvents.Instance.OnDriftBoost();
             KartEvents.Instance.OnDriftEnd();
+
             _physicsBoostCoroutine = StartCoroutine(_kartEngine.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));
-            kartStates.SetDriftBoostState(DriftBoostState.Turbo);
+
             kartStates.SetDriftTurnState(TurnState.NotTurning);
+            kartStates.SetDriftBoostState(DriftBoostState.Turbo);
+
             yield return new WaitForSeconds(BoostDuration);
+
             ResetDrift();
-            yield break;
         }
 
         private IEnumerator DriftTimer()

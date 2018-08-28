@@ -3,18 +3,20 @@ using UnityEngine;
 
 namespace Kart
 {
+    public enum AirState { Ground, Air }
     public enum AccelerationState { None, Forward, Back }
     public enum TurnState { NotTurning, Left, Right }
     public enum DriftBoostState { NotDrifting, Simple, Orange, Red, Turbo }
 
     public class KartStates : MonoBehaviour
     {
+        public AirState AirState = AirState.Ground;
         public AccelerationState AccelerationState = AccelerationState.None;
         public TurnState TurningState = TurnState.NotTurning;
         public TurnState DriftTurnState = TurnState.NotTurning;
         public DriftBoostState DriftBoostState = DriftBoostState.NotDrifting;
 
-        private bool _isOnGround = true;
+        private bool _isDrifting = false;
         private bool _isCrashed = false;
 
         public float DistanceForGrounded;
@@ -31,7 +33,7 @@ namespace Kart
             _rb = GetComponentInChildren<Rigidbody>();
             _kartEvents = GetComponent<KartEvents>();
 
-            _kartEvents.OnCollisionEnterGround += () => _isOnGround = true;
+            _kartEvents.OnCollisionEnterGround += () => AirState = AirState.Ground;
             _kartEvents.OnHit += () => StartCoroutine(CrashBehaviour());
         }
 
@@ -64,6 +66,11 @@ namespace Kart
             }
         }
 
+        public void SetDrifting(bool isDrifting)
+        {
+            _isDrifting = isDrifting;
+        }
+
         public void SetDriftTurnState(TurnState state)
         {
             DriftTurnState = state;
@@ -71,12 +78,18 @@ namespace Kart
 
         public void SetDriftBoostState(DriftBoostState state)
         {
+            Debug.Log("Boost state: " + state.ToString());
             DriftBoostState = state;
         }
 
         public bool IsGrounded()
         {
-            return _isOnGround;
+            return AirState == AirState.Ground;
+        }
+
+        public bool IsDrifting()
+        {
+            return _isDrifting;
         }
 
         public bool IsCrashed()
@@ -108,12 +121,14 @@ namespace Kart
 
         private void CheckGrounded()
         {
-            _isOnGround = Physics.Raycast(
-                transform.position,
-                transform.TransformDirection(Vector3.down),
-                DistanceForGrounded,
-                1 << LayerMask.NameToLayer(Constants.GroundLayer)
-            );
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), DistanceForGrounded, 1 << LayerMask.NameToLayer(Constants.GroundLayer)))
+            {
+                AirState = AirState.Ground;
+            }
+            else
+            {
+                AirState = AirState.Air;
+            }
         }
 
         private void CheckAcceleration()
