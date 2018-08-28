@@ -9,8 +9,10 @@ namespace Kart
      * Main class to map the inputs to the different kart actions
      * The states should handled and modified within this class
      */
-    public class KartHub : BaseKartComponent
+    public class KartHub : MonoBehaviour
     {
+        [HideInInspector] public KartStates kartStates;
+        [HideInInspector] public KartEvents kartEvents;
         [HideInInspector] public KartEngine kartEngine;
         [HideInInspector] public KartDriftSystem kartDriftSystem;
         [HideInInspector] public KartInventory kartInventory;
@@ -22,10 +24,10 @@ namespace Kart
 
         // CORE
 
-        private new void Awake()
+        private void Awake()
         {
-            base.Awake();
-
+            kartStates = GetComponentInChildren<KartStates>();
+            kartEvents = GetComponentInChildren<KartEvents>();
             kartEngine = GetComponentInChildren<KartEngine>();
             kartDriftSystem = GetComponentInChildren<KartDriftSystem>();
             kartInventory = GetComponentInChildren<KartInventory>();

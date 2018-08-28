@@ -4,9 +4,9 @@ namespace Kart
 {
     public class KartSettings : MonoBehaviour
     {
-        [SerializeField] private MeshRenderer _kartRenderer;
-        [SerializeField] private TextMesh _nameText;
-        //[SerializeField] private GameObject _backCamera;
+        [SerializeField] private MeshRenderer kartRenderer;
+        [SerializeField] private TextMesh nameText;
+        [SerializeField] private GameObject backCamera;
 
         // CORE
 
@@ -17,25 +17,25 @@ namespace Kart
             if (PhotonNetwork.connected && !view.isMine)
             {
                 SetName(GetPlayer(view).NickName);
-                //Destroy(_backCamera);
+                Destroy(backCamera);
             }
         }
 
         private void Update()
         {
-            _nameText.transform.LookAt(Camera.main.transform);
+            nameText.transform.LookAt(Camera.main.transform);
         }
 
         // PUBLIC
 
         public void SetColor(Color color)
         {
-            _kartRenderer.material.color = color;
+            kartRenderer.material.color = color;
         }
 
         public void SetName(string name)
         {
-            _nameText.text = name;
+            nameText.text = name;
         }
 
         // PRIVATE

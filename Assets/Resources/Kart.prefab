@@ -4218,8 +4218,8 @@ MonoBehaviour:
   - {fileID: 114550539497350264}
   - {fileID: 114240422477425770}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 2
+  instantiationId: 2
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114112653764666390
@@ -4289,8 +4289,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 114539492184620100}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 1
+  instantiationId: 1
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114240422477425770
@@ -4398,6 +4398,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kartStates: {fileID: 0}
+  kartEvents: {fileID: 0}
   kartEngine: {fileID: 0}
   kartDriftSystem: {fileID: 0}
   kartInventory: {fileID: 0}
@@ -4560,8 +4561,6 @@ MonoBehaviour:
   TurningState: 0
   DriftTurnState: 0
   DriftBoostState: 0
-  AirState: 0
-  CrashedState: 0
   DistanceForGrounded: 0.5
   VelocityDetectionThreshold: 0.5
   CrashDuration: 2
@@ -4657,6 +4656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53e2b588a92dea146a0a40783d2a81c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  requiredSpeed: 10
   TimeBetweenDrifts: 0.5
   BoostDuration: 1
   BoostSpeed: 300

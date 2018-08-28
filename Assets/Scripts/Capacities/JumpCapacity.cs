@@ -105,7 +105,7 @@ namespace Capacities
 
         private bool CanDoubleJump()
         {
-            return hasDoneFirstJump && kartStates.IsGrounded();
+            return hasDoneFirstJump && !kartStates.IsGrounded();
         }
     }
 }
