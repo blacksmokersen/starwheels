@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
-namespace Capacities
+
+namespace Abilities
 {
-    public class Capacity : BaseKartComponent
+    public class Ability : BaseKartComponent
     {
         private float _energy = 1f;
         public float Energy
         {
-            get
-            {
-                return _energy;
-            }
+            get { return _energy; }
             set
             {
                 _energy = Mathf.Clamp(value, 0f, 1f);

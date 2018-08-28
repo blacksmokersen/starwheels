@@ -1,8 +1,8 @@
 ﻿using Items;
 
-namespace Capacities
+namespace Abilities
 {
-    public class NitroCapacity : Capacity
+    public class NitroAbility : Ability
     {
         public float EnergyConsumptionSpeed;
 

@@ -2,15 +2,11 @@
 using UnityEngine;
 using Kart;
 
-namespace Capacities
+namespace Abilities
 {
-    /*
-     * Jump / Double Jump Capacity
-     *
-     */
-    public class JumpCapacity : Capacity
+    public class JumpAbility : Ability
     {
-        [Header("Jump Capacity")]
+        [Header("Jump Ability")]
         public float CooldownDoubleJump;
         public float EnergyConsummedOnJump;
 
@@ -21,7 +17,7 @@ namespace Capacities
         private new void Awake()
         {
             base.Awake();
-            kartStates = GetComponentInParent<KartStates>();
+
             kartEngine = GetComponent<KartEngine>();
         }
 
@@ -95,7 +91,7 @@ namespace Capacities
             }
         }
 
-        IEnumerator StartCooldownDoubleJump()
+        private IEnumerator StartCooldownDoubleJump()
         {
             canDoubleJump = false;
             yield return new WaitForSeconds(CooldownDoubleJump);
