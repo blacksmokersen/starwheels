@@ -2,28 +2,28 @@
 using UnityEngine;
 using Kart;
 
-namespace Capacities
+namespace Abilities
 {
-    /*
-     * Jump / Double Jump Capacity
-     *
-     */
-    public class JumpCapacity : Capacity
+    public class JumpAbility : Ability
     {
-        [Header("Jump Capacity")]
+        [Header("Jump Ability")]
         public float CooldownDoubleJump;
         public float EnergyConsummedOnJump;
 
-        private bool hasDoneFirstJump = false;
-        private bool canDoubleJump = true;
-        private KartEngine kartEngine;
+        private bool _hasDoneFirstJump = false;
+        private bool _canDoubleJump = true;
+        private KartEngine _kartEngine;
+
+        // CORE
 
         private new void Awake()
         {
             base.Awake();
-            kartStates = GetComponentInParent<KartStates>();
-            kartEngine = GetComponent<KartEngine>();
+
+            _kartEngine = GetComponent<KartEngine>();
         }
+
+        // PUBLIC
 
         public override void Use(float xAxis, float yAxis)
         {
@@ -40,72 +40,74 @@ namespace Capacities
             */
         }
 
-        public void Jump(float xAxis, float yAxis)
+        // PRIVATE
+
+        private void Jump(float xAxis, float yAxis)
         {
             if (CanDoubleJump())
             {
                 DoubleJump(xAxis, yAxis);
-                hasDoneFirstJump = false;
+                _hasDoneFirstJump = false;
             }
             else
             {
-                if (kartStates.AirState == AirStates.Grounded && canDoubleJump)
+                if (kartStates.AirState == AirStates.Grounded && _canDoubleJump)
                 {
-                    hasDoneFirstJump = true;
+                    _hasDoneFirstJump = true;
                     StartCoroutine(StartCooldownDoubleJump());
-                    kartEngine.Jump();
+                    _kartEngine.Jump();
                 }
             }
         }
 
-        public void DoubleJump(float xAxis, float yAxis)
+        private void DoubleJump(float xAxis, float yAxis)
         {
             if (Mathf.Abs(xAxis) < 0.3f)
             {
                 if (yAxis <= -0.2f)
                 {
-                    kartEngine.DoubleJump(Vector3.back, 0.5f);
+                    _kartEngine.DoubleJump(Vector3.back, 0.5f);
                     kartEvents.OnDoubleJump(Directions.Backward);
                 }
                 else if (yAxis >= 0.2f)
                 {
-                    kartEngine.DoubleJump(Vector3.forward, 0.5f);
+                    _kartEngine.DoubleJump(Vector3.forward, 0.5f);
                     kartEvents.OnDoubleJump(Directions.Forward);
                 }
                 else
                 {
-                    kartEngine.DoubleJump(Vector3.forward, 0f);
+                    _kartEngine.DoubleJump(Vector3.forward, 0f);
                     kartEvents.OnDoubleJump(Directions.Forward);
                 }
             }
             else if (xAxis < -0.5f)
             {
-                kartEngine.DoubleJump(Vector3.left, 1f);
+                _kartEngine.DoubleJump(Vector3.left, 1f);
                 kartEvents.OnDoubleJump(Directions.Left);
             }
             else if (xAxis >= 0.5f)
             {
-                kartEngine.DoubleJump(Vector3.right, 1f);
+                _kartEngine.DoubleJump(Vector3.right, 1f);
                 kartEvents.OnDoubleJump(Directions.Right);
             }
             else
             {
-                kartEngine.DoubleJump(Vector3.forward, 0f);
+                _kartEngine.DoubleJump(Vector3.forward, 0f);
                 kartEvents.OnDoubleJump(Directions.Forward);
             }
         }
 
-        IEnumerator StartCooldownDoubleJump()
+        private IEnumerator StartCooldownDoubleJump()
         {
-            canDoubleJump = false;
+            _canDoubleJump = false;
             yield return new WaitForSeconds(CooldownDoubleJump);
-            canDoubleJump = true;
+            _canDoubleJump = true;
             kartEvents.OnDoubleJumpReset();
         }
 
         private bool CanDoubleJump()
         {
-            return hasDoneFirstJump && kartStates.AirState == AirStates.InAir;
+            return _hasDoneFirstJump && kartStates.AirState == AirStates.InAir;
         }
     }
 }

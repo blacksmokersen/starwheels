@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Capacities;
+using Abilities;
 using Items;
 using HUD;
 
@@ -17,7 +17,7 @@ namespace Kart
         [HideInInspector] public KartDriftSystem kartDriftSystem;
         [HideInInspector] public KartInventory kartInventory;
         [HideInInspector] public KartHealthSystem kartHealthSystem;
-        [HideInInspector] public Capacity kartCapacity;
+        [HideInInspector] public Ability kartAbility;
         [HideInInspector] public CinemachineDynamicScript cinemachineDynamicScript;
 
         private KartEvents kartEvents;
@@ -28,13 +28,13 @@ namespace Kart
         {
             kartStates = GetComponent<KartStates>();
             kartEvents = GetComponent<KartEvents>();
-
             kartEngine = GetComponentInChildren<KartEngine>();
             kartDriftSystem = GetComponentInChildren<KartDriftSystem>();
             kartInventory = GetComponentInChildren<KartInventory>();
             kartHealthSystem = GetComponentInChildren<KartHealthSystem>();
-            kartCapacity = GetComponentInChildren<Capacity>();
+            kartAbility = GetComponentInChildren<Ability>();
             cinemachineDynamicScript = GetComponentInChildren<CinemachineDynamicScript>();
+
             KartEvents.Instance.HitSomeoneElse += IncreaseScore;
         }
 
@@ -68,7 +68,7 @@ namespace Kart
 
         public void UseCapacity(float xAxis, float yAxis)
         {
-            kartCapacity.Use(xAxis, yAxis);
+            kartAbility.Use(xAxis, yAxis);
         }
 
         public void InitializeDrift(float angle)

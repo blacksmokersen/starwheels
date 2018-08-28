@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
-namespace Capacities
+
+namespace Abilities
 {
-    public class Capacity : BaseKartComponent
+    public class Ability : BaseKartComponent
     {
         private float _energy = 1f;
         public float Energy
         {
-            get
-            {
-                return _energy;
-            }
+            get { return _energy; }
             set
             {
                 _energy = Mathf.Clamp(value, 0f, 1f);
@@ -17,12 +15,18 @@ namespace Capacities
             }
         }
 
+        // CORE
+
         protected new void Awake()
         {
             base.Awake();
             //kartEvents.OnCollisionEnterItemBox += () => Energy = 1f;
         }
 
+        // PUBLIC
+
         public virtual void Use(float xAxis, float yAxis) { }
+
+        // PRIVATE
     }
 }
