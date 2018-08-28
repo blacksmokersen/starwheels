@@ -48,7 +48,7 @@ namespace Kart
 
         public void InitializeDrift(float angle)
         {
-            if (CheckRequiredSpeed() && kartStates.IsGrounded() && angle > 0) return;
+            if (!CheckRequiredSpeed() || !kartStates.IsGrounded() || angle == 0) return;
 
             if (_turboCoroutine != null)
             {

@@ -12,11 +12,11 @@ namespace Kart
 
         private void Awake()
         {
-            PhotonView photonView = GetComponentInParent<PhotonView>();
+            PhotonView view = GetComponentInParent<PhotonView>();
 
-            if (PhotonNetwork.connected && !photonView.isMine)
+            if (PhotonNetwork.connected && !view.isMine)
             {
-                SetName(GetPlayer(photonView).NickName);
+                SetName(GetPlayer(view).NickName);
                 //Destroy(_backCamera);
             }
         }
