@@ -37,7 +37,7 @@ namespace Items
             if (view.isMine)
             {
                 PhotonNetwork.RemoveRPCs(view);
-                PhotonNetwork.RemoveRPCsInGroup(view.group);
+                //PhotonNetwork.RemoveRPCsInGroup(view.group);
                 PhotonNetwork.Destroy(view);
             }
         }
