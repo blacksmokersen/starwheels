@@ -11,7 +11,7 @@ namespace Items {
     {
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == Constants.KartRigidBodyTag)
+            if (other.gameObject.tag == Constants.KartTriggerTag)
             {
                 GetComponentInParent<RocketBehaviour>().CheckCollision(other);
             }

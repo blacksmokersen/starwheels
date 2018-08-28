@@ -6,7 +6,8 @@
 
     // Tags
     public const string KartTag = "Kart";
-    public const string KartRigidBodyTag = "KartRB";
+    public const string KartTriggerTag = "KartTrigger";
+    public const string KartColliderTag = "KartCollider";
     public const string ItemBoxTag = "ItemBox";
     public const string ProjectileTag = "Projectile";
     public const string GroundItemTag = "GroundItem";
@@ -29,7 +30,6 @@
     public const string TurnCamera = "RightJoystick";
     public const string BackCamera = "ClickRightJoystick";
     public const string EscapeMenu = "Escape";
-
 
     // Assets
     public const string DiskPrefabName = "Prefab/Disk";
