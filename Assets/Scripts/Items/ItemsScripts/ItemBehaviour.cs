@@ -27,17 +27,16 @@ namespace Items
 
         private IEnumerator DelayedDestroy(float t)
         {
-            yield return new WaitForSeconds(t);
+            yield return new WaitForSeconds(t);            
             MultiplayerDestroy();
-        }
+        }        
 
         private void MultiplayerDestroy()
         {
             var view = GetComponent<PhotonView>();
-            if (view.isMine)
+            if (view.owner == PhotonNetwork.player)
             {
                 PhotonNetwork.RemoveRPCs(view);
-                //PhotonNetwork.RemoveRPCsInGroup(view.group);
                 PhotonNetwork.Destroy(view);
             }
         }

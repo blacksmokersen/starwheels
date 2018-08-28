@@ -8,7 +8,7 @@ namespace Items
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == Constants.KartRigidBodyTag && Activated)
+            if (other.gameObject.tag == Constants.KartTriggerTag && Activated)
             {
                 other.gameObject.GetComponentInParent<Kart.KartEvents>().OnHit();
                 GetComponentInParent<MineBehaviour>().PlayExplosion();
