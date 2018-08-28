@@ -78,7 +78,6 @@ namespace Kart
 
         public void SetDriftBoostState(DriftBoostState state)
         {
-            Debug.Log("Boost state: " + state.ToString());
             DriftBoostState = state;
         }
 
