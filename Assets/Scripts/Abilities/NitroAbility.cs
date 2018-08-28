@@ -6,6 +6,10 @@ namespace Abilities
     {
         public float EnergyConsumptionSpeed;
 
+        // CORE
+
+        // PUBLIC
+
         public override void Use(float xAxis, float yAxis)
         {
             /*
@@ -16,5 +20,7 @@ namespace Abilities
             }
             */
         }
+
+        // PRIVATE
     }
 }

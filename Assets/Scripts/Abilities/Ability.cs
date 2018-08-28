@@ -15,12 +15,18 @@ namespace Abilities
             }
         }
 
+        // CORE
+
         protected new void Awake()
         {
             base.Awake();
             //kartEvents.OnCollisionEnterItemBox += () => Energy = 1f;
         }
 
+        // PUBLIC
+
         public virtual void Use(float xAxis, float yAxis) { }
+
+        // PRIVATE
     }
 }
