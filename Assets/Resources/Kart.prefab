@@ -2744,7 +2744,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1571014680455984}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -134.74643, y: 89.36621, z: -213.69096}
+  m_LocalPosition: {x: 277.68057, y: -12.072601, z: 151.16888}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4109333596748662}
@@ -4402,7 +4402,7 @@ MonoBehaviour:
   kartDriftSystem: {fileID: 0}
   kartInventory: {fileID: 0}
   kartHealthSystem: {fileID: 0}
-  kartCapacity: {fileID: 0}
+  kartAbility: {fileID: 0}
   cinemachineDynamicScript: {fileID: 0}
 --- !u!114 &114534634932812642
 MonoBehaviour:
@@ -4482,10 +4482,10 @@ MonoBehaviour:
   m_PositionModel:
     SynchronizeEnabled: 1
     TeleportEnabled: 0
-    TeleportIfDistanceGreaterThan: 20
+    TeleportIfDistanceGreaterThan: 10
     InterpolateOption: 4
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 5
+    InterpolateMoveTowardsSpeed: 5
+    InterpolateLerpSpeed: 7
     InterpolateMoveTowardsAcceleration: 2
     InterpolateMoveTowardsDeceleration: 2
     InterpolateSpeedCurve:
@@ -4530,8 +4530,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    ExtrapolateOption: 0
-    ExtrapolateSpeed: 1
+    ExtrapolateOption: 2
+    ExtrapolateSpeed: 5
     ExtrapolateIncludingRoundTripTime: 1
     ExtrapolateNumberOfStoredPositions: 1
     DrawErrorGizmo: 1
