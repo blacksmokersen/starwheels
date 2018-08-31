@@ -102,8 +102,6 @@ namespace Kart
             }
             else if (kartStates.DriftTurnState == TurnState.NotTurning && kartStates.TurningState != TurnState.NotTurning)
             {
-                kartStates.SetDriftTurnState(kartStates.TurningState);
-
                 InitializeDrift(turnValue);
             }
         }

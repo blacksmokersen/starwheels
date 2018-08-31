@@ -5,9 +5,6 @@ namespace Kart
 {
     public class KartDriftSystem : BaseKartComponent
     {
-        [Header("Condition")]
-        [Range(0, 100)] public float requiredSpeed = 10f;
-
         [Header("Time")]
         [Range(0, 10)] public float TimeBetweenDrifts;
         [Range(0, 10)] public float BoostDuration;
@@ -15,6 +12,7 @@ namespace Kart
         [Header("Speed")]
         [Range(0, 1000)] public float BoostSpeed;
         [Range(0, 30)] public float MagnitudeBoost;
+        [Range(0, 100)] public float RequiredSpeedToDrift = 20f;
 
         [Header("Angles")]
         [Range(0, 90)] public float ForwardMaxAngle;
@@ -112,7 +110,7 @@ namespace Kart
 
         public bool CheckRequiredSpeed()
         {
-            return _kartEngine.PlayerVelocity >= requiredSpeed;
+            return _kartEngine.PlayerVelocity >= RequiredSpeedToDrift;
         }
 
         public void StopDrift()
