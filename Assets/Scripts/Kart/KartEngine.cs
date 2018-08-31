@@ -152,17 +152,17 @@ namespace Kart
         public void DriftTurn(float turnValue)
         {
             float turnValueRestrain = turnValue;
-            if (kartStates.DriftTurnState == TurningStates.Left)
+            if (kartStates.DriftTurnState == TurnState.Left)
             {
                 turnValueRestrain = turnValue <= -JoystickDeadZone2 ? MaxInteriorAngle : turnValue >= JoystickDeadZone1 ? MaxExteriorAngle : 100;
                 turnValue = turnValue <= -JoystickDeadZone2 ? turnValue : turnValue >= JoystickDeadZone1 ? turnValue : 1;
-                rb.AddTorque(Vector3.up * (-turnValueRestrain * Mathf.Abs(turnValue)) * DriftTurnSpeed * Time.deltaTime);
+                _rb.AddTorque(Vector3.up * (-turnValueRestrain * Mathf.Abs(turnValue)) * DriftTurnSpeed * Time.deltaTime);
             }
             else if (kartStates.DriftTurnState == TurnState.Right)
             {
                 turnValueRestrain = turnValue <= -JoystickDeadZone2 ? MaxExteriorAngle : turnValue >= JoystickDeadZone1 ? MaxInteriorAngle : 100;
                 turnValue = turnValue <= -JoystickDeadZone2 ? turnValue : turnValue >= JoystickDeadZone1 ? turnValue : 1;
-                rb.AddTorque(Vector3.up * (turnValueRestrain * Mathf.Abs(turnValue)) * DriftTurnSpeed * Time.deltaTime);
+                _rb.AddTorque(Vector3.up * (turnValueRestrain * Mathf.Abs(turnValue)) * DriftTurnSpeed * Time.deltaTime);
             }
         }
 

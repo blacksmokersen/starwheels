@@ -18,11 +18,8 @@ namespace Controls
         private new void Awake()
         {
             base.Awake();
-            if (photonView.isMine)
-            {
-                kartEvents.OnHit += () => Enabled = false;
-                kartEvents.OnHitRecover += () => Enabled = true;
-            }
+            kartEvents.OnHit += () => Enabled = false;
+            kartEvents.OnHitRecover += () => Enabled = true;
         }
 
         private void Start()

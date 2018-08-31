@@ -6,6 +6,7 @@
         {
             base.Start();
             rb.useGravity = false;
+            DestroyAfterHit = true;
             DestroyObject(10f);
         }
 
@@ -22,6 +23,10 @@
                 other.gameObject.CompareTag(Constants.ProjectileTag))
             {
                 other.gameObject.GetComponentInParent<ItemBehaviour>().DestroyObject();
+            }
+            else if (other.gameObject.CompareTag(Constants.GuileItemTag))
+            {
+                DestroyObject();
             }
         }
     }
