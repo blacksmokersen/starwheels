@@ -12,12 +12,15 @@ namespace Animations
         {
             base.Awake();
             animator = GetComponent<Animator>();
-            KartEvents.Instance.OnDoubleJump += DoubleJumpAnimation;
-            KartEvents.Instance.OnHealthLoss += (a) => PlayerHitAnimation();
-            KartEvents.Instance.OnDriftLeft += LeftDriftAnimation;
-            KartEvents.Instance.OnDriftRight += RightDriftAnimation;
-            KartEvents.Instance.OnDriftEnd += NoDriftAnimation;
-            KartEvents.Instance.OnDriftBoost += NoDriftAnimation;
+            if (photonView.isMine)
+            {
+                KartEvents.Instance.OnDoubleJump += DoubleJumpAnimation;
+                KartEvents.Instance.OnHealthLoss += (a) => PlayerHitAnimation();
+                KartEvents.Instance.OnDriftLeft += LeftDriftAnimation;
+                KartEvents.Instance.OnDriftRight += RightDriftAnimation;
+                KartEvents.Instance.OnDriftEnd += NoDriftAnimation;
+                KartEvents.Instance.OnDriftBoost += NoDriftAnimation;
+            }
         }
 
         public void DoubleJumpAnimation(Direction direction)
