@@ -23,10 +23,6 @@ namespace Controls
                 {
                     SwitchToNextItem();
                 }
-                else if (Input.GetKeyDown(KeyCode.Alpha3))
-                {
-                    SpawnEnemyKart();
-                }
                 else if (Input.GetKeyDown(KeyCode.Alpha4))
                 {
                     LoseOneLife();
@@ -51,11 +47,6 @@ namespace Controls
             kartInventory.Item = items[itemIndex];
             kartEvents.OnItemUsed(kartInventory.Item, kartInventory.Count);
             SetUnlimitedItems();
-        }
-
-        public void SpawnEnemyKart()
-        {
-            Instantiate(Resources.Load("KartDummy"), transform.position + Vector3.forward, Quaternion.identity);
         }
 
         public void LoseOneLife()

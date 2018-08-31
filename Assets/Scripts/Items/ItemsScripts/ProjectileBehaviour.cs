@@ -30,7 +30,7 @@ namespace Items
         protected KartInventory owner;
 
         private AudioSource _audioSource;
-        private const float _ownerImmunityDuration = 1f;
+        private const float _ownerImmunityDuration = 0.5f;
         private bool _ownerImmune = true;
         #endregion
 
@@ -137,7 +137,7 @@ namespace Items
 
         public void CheckCollision(GameObject kartCollisionObject)
         {
-            if (OwnerIsSet() || !IsOwnerAndImmune(kartCollisionObject))
+            if (OwnerIsSet() && !IsOwnerAndImmune(kartCollisionObject))
             {
                 if (!kartCollisionObject.GetComponentInParent<KartHealthSystem>().IsInvincible)
                 {
