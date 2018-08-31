@@ -34,7 +34,7 @@ namespace Items
         private void MultiplayerDestroy()
         {
             var view = GetComponent<PhotonView>();
-            if (view.owner == PhotonNetwork.player)
+            if (view.isMine)
             {
                 PhotonNetwork.RemoveRPCs(view);
                 PhotonNetwork.Destroy(view);

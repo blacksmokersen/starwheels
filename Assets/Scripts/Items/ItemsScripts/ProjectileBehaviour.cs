@@ -135,7 +135,7 @@ namespace Items
             }
         }
 
-        protected void CheckCollision(GameObject kartCollisionObject)
+        public void CheckCollision(GameObject kartCollisionObject)
         {
             if (OwnerIsSet() || !IsOwnerAndImmune(kartCollisionObject))
             {
