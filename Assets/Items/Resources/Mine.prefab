@@ -74,9 +74,9 @@ GameObject:
   - component: {fileID: 65455728929240064}
   - component: {fileID: 114413110447295286}
   - component: {fileID: 114411407681180782}
-  - component: {fileID: 114443103038158258}
   - component: {fileID: 114270967424691506}
   - component: {fileID: 82203276807651212}
+  - component: {fileID: 114468136884143040}
   m_Layer: 0
   m_Name: Mine
   m_TagString: GroundItem
@@ -523,12 +523,13 @@ MonoBehaviour:
   ownershipTransfer: 0
   ObservedComponents:
   - {fileID: 114411407681180782}
+  - {fileID: 114468136884143040}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
---- !u!114 &114443103038158258
+--- !u!114 &114468136884143040
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -536,10 +537,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1838917612140702}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35144820bcc25444bb8f0fd767d9423e, type: 3}
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SmoothingDelay: 1
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 1
 --- !u!114 &114758672781050578
 MonoBehaviour:
   m_ObjectHideFlags: 1

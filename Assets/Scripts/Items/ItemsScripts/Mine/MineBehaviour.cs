@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Items
 {
-    [RequireComponent(typeof(Rigidbody))]
     public class MineBehaviour : ItemBehaviour
     {
         [Header("Mine parameters")]
