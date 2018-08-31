@@ -8,15 +8,25 @@ namespace Kart
         [SerializeField] private TextMesh nameText;
         [SerializeField] private GameObject backCamera;
 
+        // CORE
+
         private void Awake()
         {
-            PhotonView photonView = GetComponentInParent<PhotonView>();
-            if (PhotonNetwork.connected && !photonView.isMine)
+            PhotonView view = GetComponentInParent<PhotonView>();
+
+            if (PhotonNetwork.connected && !view.isMine)
             {
-                SetName(GetPlayer(photonView).NickName);
+                SetName(GetPlayer(view).NickName);
                 Destroy(backCamera);
             }
         }
+
+        private void Update()
+        {
+            nameText.transform.LookAt(Camera.main.transform);
+        }
+
+        // PUBLIC
 
         public void SetColor(Color color)
         {
@@ -28,16 +38,15 @@ namespace Kart
             nameText.text = name;
         }
 
-        private void Update()
-        {
-            nameText.transform.LookAt(Camera.main.transform);
-        }
+        // PRIVATE
 
         private PhotonPlayer GetPlayer(PhotonView view)
         {
             foreach (PhotonPlayer player in PhotonNetwork.playerList)
-                if (player.ID == view.ownerId)
-                    return player;
+            {
+                if (player.ID == view.ownerId) return player;
+            }
+
             return null;
         }
     }

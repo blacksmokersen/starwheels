@@ -29,14 +29,14 @@ namespace Items
             StartCoroutine(MineActivationDelay());
         }
 
-        public override void Spawn(KartInventory kart, Directions direction)
+        public override void Spawn(KartInventory kart, Direction direction)
         {
-            if (direction == Directions.Forward)
+            if (direction == Direction.Forward)
             {
                 transform.position = kart.ItemPositions.FrontPosition.position;
                 GetComponent<Rigidbody>().AddForce((kart.transform.forward + kart.transform.up/TimesLongerThanHighThrow) * ForwardThrowingForce, ForceMode.Impulse);
             }
-            else if (direction == Directions.Backward || direction == Directions.Default)
+            else if (direction == Direction.Backward || direction == Direction.Default)
             {
                 transform.position = kart.ItemPositions.BackPosition.position;
             }

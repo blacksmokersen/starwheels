@@ -2778,7 +2778,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1571014680455984}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.227, y: 0.127, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4109333596748662}
@@ -4427,6 +4427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kartStates: {fileID: 0}
+  kartEvents: {fileID: 0}
   kartEngine: {fileID: 0}
   kartDriftSystem: {fileID: 0}
   kartInventory: {fileID: 0}
@@ -4585,12 +4586,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c585b8b6b957414cbd396cd9103023b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AirState: 0
   AccelerationState: 2
   TurningState: 0
   DriftTurnState: 0
   DriftBoostState: 0
-  AirState: 0
-  CrashedState: 0
   DistanceForGrounded: 0.5
   VelocityDetectionThreshold: 0.5
   CrashDuration: 2
@@ -4686,6 +4686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53e2b588a92dea146a0a40783d2a81c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  requiredSpeed: 10
   TimeBetweenDrifts: 0.5
   BoostDuration: 1
   BoostSpeed: 300

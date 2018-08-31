@@ -1,91 +1,157 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
-namespace Kart {
-    /*
-     * States :
-     * - Turning
-     * - Drift
-     * - Air
-     * - Acceleration ?
-     */
-    public enum AccelerationStates { Forward, Back, None }
-    public enum TurningStates { NotTurning, Left, Right }
-    public enum DriftBoostStates { NotDrifting, SimpleDrift, OrangeDrift, RedDrift, Turbo }
-    public enum AirStates { Grounded, InAir }
-    public enum CrashedStates { NotCrashed, Crashed }
+namespace Kart
+{
+    public enum AirState { Ground, Air }
+    public enum AccelerationState { None, Forward, Back }
+    public enum TurnState { NotTurning, Left, Right }
+    public enum DriftBoostState { NotDrifting, Simple, Orange, Red, Turbo }
 
-    public class KartStates : MonoBehaviour{
+    public class KartStates : MonoBehaviour
+    {
+        public AirState AirState = AirState.Ground;
+        public AccelerationState AccelerationState = AccelerationState.None;
+        public TurnState TurningState = TurnState.NotTurning;
+        public TurnState DriftTurnState = TurnState.NotTurning;
+        public DriftBoostState DriftBoostState = DriftBoostState.NotDrifting;
 
-        public AccelerationStates AccelerationState = AccelerationStates.None;
-        public TurningStates TurningState = TurningStates.NotTurning;
-        public TurningStates DriftTurnState = TurningStates.NotTurning;
-        public DriftBoostStates DriftBoostState = DriftBoostStates.NotDrifting;
-        public AirStates AirState = AirStates.Grounded;
-        public CrashedStates CrashedState = CrashedStates.NotCrashed;
+        private bool _isDrifting = false;
+        private bool _isCrashed = false;
 
         public float DistanceForGrounded;
         public float VelocityDetectionThreshold;
         public float CrashDuration;
 
-        private Rigidbody rb;
-        private KartEvents kartEvents;
+        private Rigidbody _rb;
+        private KartEvents _kartEvents;
+
+        // CORE
 
         private void Awake()
         {
-            kartEvents = GetComponent<KartEvents>();
-            rb = GetComponentInChildren<Rigidbody>();
+            _rb = GetComponentInChildren<Rigidbody>();
+            _kartEvents = GetComponent<KartEvents>();
 
-            kartEvents.OnCollisionEnterGround += () => AirState = AirStates.Grounded;
-            kartEvents.OnHit += () => StartCoroutine(CrashBehaviour());
+            _kartEvents.OnCollisionEnterGround += () => AirState = AirState.Ground;
+            _kartEvents.OnHit += () => StartCoroutine(CrashBehaviour());
         }
 
-        public void FixedUpdate()
+        private void FixedUpdate()
         {
             CheckGrounded();
             CheckAcceleration();
         }
 
+        // PUBLIC
+
+        public void SetTurnState(TurnState state)
+        {
+            TurningState = state;
+        }
+
+        public void SetTurnState(float turnValue)
+        {
+            if (turnValue > 0)
+            {
+                SetTurnState(TurnState.Right);
+            }
+            else if (turnValue < 0)
+            {
+                SetTurnState(TurnState.Left);
+            }
+            else
+            {
+                SetTurnState(TurnState.NotTurning);
+            }
+        }
+
+        public void SetDrifting(bool isDrifting)
+        {
+            _isDrifting = isDrifting;
+        }
+
+        public void SetDriftTurnState(TurnState state)
+        {
+            DriftTurnState = state;
+        }
+
+        public void SetDriftBoostState(DriftBoostState state)
+        {
+            DriftBoostState = state;
+        }
+
+        public bool IsGrounded()
+        {
+            return AirState == AirState.Ground;
+        }
+
+        public bool IsDrifting()
+        {
+            return _isDrifting;
+        }
+
+        public bool IsCrashed()
+        {
+            return _isCrashed;
+        }
+
+        public bool IsDriftTurning()
+        {
+            return DriftTurnState == TurnState.NotTurning;
+        }
+
+        public bool IsDriftSideEqualsTurnSide()
+        {
+            return TurningState == DriftTurnState;
+        }
+
+        public bool IsDriftSideDifferentFromTurnSide()
+        {
+            if (TurningState == TurnState.NotTurning || DriftTurnState == TurnState.NotTurning)
+            {
+                return false;
+            }
+
+            return !IsDriftSideEqualsTurnSide();
+        }
+
+        // PRIVATE
+
         private void CheckGrounded()
         {
             if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), DistanceForGrounded, 1 << LayerMask.NameToLayer(Constants.GroundLayer)))
             {
-                AirState = AirStates.Grounded;
+                AirState = AirState.Ground;
             }
             else
             {
-                AirState = AirStates.InAir;
+                AirState = AirState.Air;
             }
         }
 
         private void CheckAcceleration()
         {
-            if(transform.InverseTransformDirection(rb.velocity).z > VelocityDetectionThreshold)
+            if (transform.InverseTransformDirection(_rb.velocity).z > VelocityDetectionThreshold)
             {
-                AccelerationState = AccelerationStates.Forward;
+                AccelerationState = AccelerationState.Forward;
             }
-            else if(transform.InverseTransformDirection(rb.velocity).z < -VelocityDetectionThreshold)
+            else if (transform.InverseTransformDirection(_rb.velocity).z < -VelocityDetectionThreshold)
             {
-                AccelerationState = AccelerationStates.Back;
+                AccelerationState = AccelerationState.Back;
             }
             else
             {
-                AccelerationState = AccelerationStates.None;
+                AccelerationState = AccelerationState.None;
             }
         }
 
-        public bool IsGrounded()
+        private IEnumerator CrashBehaviour()
         {
-            return AirState == AirStates.Grounded;
-        }
-
-        IEnumerator CrashBehaviour()
-        {
-            CrashedState = CrashedStates.Crashed;
+            _isCrashed = true;
             yield return new WaitForSeconds(CrashDuration);
-            CrashedState = CrashedStates.NotCrashed;
-            kartEvents.OnHitRecover();
+            _isCrashed = false;
+            _kartEvents.OnHitRecover();
         }
     }
 }

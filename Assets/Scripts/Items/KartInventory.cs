@@ -26,7 +26,7 @@ namespace Items
             };
         }
 
-        public void ItemAction(Directions direction)
+        public void ItemAction(Direction direction)
         {
             if(lotteryStarted && !shortenLottery && lotteryTimer > 1f)
             {
@@ -39,7 +39,7 @@ namespace Items
             }
         }
 
-        public void UseStack(Directions direction)
+        public void UseStack(Direction direction)
         {
             if (Item != null)
             {
@@ -56,7 +56,7 @@ namespace Items
             kartEvents.OnItemUsed(Item,Count);
         }
 
-        public void UseItem(ItemData item, Directions direction)
+        public void UseItem(ItemData item, Direction direction)
         {
             ItemBehaviour itemObj;
             var obj = PhotonNetwork.Instantiate(item.ItemPrefab.name, new Vector3(1500,1500,1500), Quaternion.identity, 0);
