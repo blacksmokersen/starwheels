@@ -18,8 +18,8 @@ namespace Controls
         private new void Awake()
         {
             base.Awake();
-            kartEvents.OnHit += () => Enabled = false;
-            kartEvents.OnHitRecover += () => Enabled = true;
+            kartEvents.OnHit += () => SetInputEnabled(false);
+            kartEvents.OnHitRecover += () => SetInputEnabled(true);
         }
 
         private void Start()
@@ -29,21 +29,38 @@ namespace Controls
 
         void FixedUpdate()
         {
-            if (Enabled && kartHub != null && photonView.isMine)
+            if (photonView.isMine)
             {
-                Axis();
-                ButtonsPressed();
+                if (Enabled && kartHub != null)
+                {
+                    Axis();
+                    ButtonsPressed();
+                }
             }
         }
 
         private void Update()
         {
-            if (Enabled && kartHub != null && photonView.isMine)
+            if (photonView.isMine)
             {
-                ButtonsDown();
-                ButtonsUp();
-                AxisOnUse();
+                if (Enabled && kartHub != null)
+                {
+                    ButtonsDown();
+                    ButtonsUp();
+                    AxisOnUse();
+                }
             }
+        }
+
+        void SetInputEnabled(bool b)
+        {
+            photonView.RPC("RPCSetEnabled", PhotonTargets.All, b);
+        }
+
+        [PunRPC]
+        void RPCSetEnabled(bool b)
+        {
+            Enabled = b;
         }
 
         void Axis()
