@@ -24,6 +24,10 @@
             {
                 other.gameObject.GetComponentInParent<ItemBehaviour>().DestroyObject();
             }
+            else if (other.gameObject.CompareTag(Constants.GuileItemTag))
+            {
+                DestroyObject();
+            }
         }
     }
 }

@@ -11,6 +11,7 @@
     public const string ItemBoxTag = "ItemBox";
     public const string ProjectileTag = "Projectile";
     public const string GroundItemTag = "GroundItem";
+    public const string GuileItemTag = "GuileItem";
 
     // Object Names
     public const string KartObjectName = "Kart";
