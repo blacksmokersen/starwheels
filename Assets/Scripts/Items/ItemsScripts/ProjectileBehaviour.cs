@@ -141,7 +141,8 @@ namespace Items
             {
                 if (!kartCollisionObject.GetComponentInParent<KartHealthSystem>().IsInvincible)
                 {
-                    SendOwnerSuccessfulHitEvent();
+                    if(!IsOwner(kartCollisionObject))
+                        SendOwnerSuccessfulHitEvent();
                     SendTargetOnHitEvent(kartCollisionObject);
                 }
                 CollisionParticles.Emit(ParticlesToEmitOnHit);
@@ -156,6 +157,12 @@ namespace Items
         private bool OwnerIsSet()
         {
             return owner != null;
+        }
+
+        private bool IsOwner(GameObject other)
+        {
+            var otherKartInventory = other.GetComponentInParent<KartHub>().kartInventory;
+            return otherKartInventory == owner;
         }
 
         private bool IsOwnerAndImmune(GameObject other)
