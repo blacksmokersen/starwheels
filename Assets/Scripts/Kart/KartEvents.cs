@@ -50,5 +50,17 @@ namespace Kart
         public Action OnDriftBoost;
         public Action OnDriftReset;
         public Action OnDriftNextState;
+
+        public void StarOnHitEvent()
+        {
+            GetComponent<PhotonView>().RPC("RPCStarOnHitEvent", PhotonTargets.All);
+        }
+
+        [PunRPC]
+        public void RPCStarOnHitEvent()
+        {
+            OnHit();
+        }
+
     }
 }
