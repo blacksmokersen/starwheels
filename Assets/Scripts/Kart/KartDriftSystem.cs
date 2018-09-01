@@ -30,8 +30,10 @@ namespace Kart
         private new void Awake()
         {
             base.Awake();
-            kartEvents.OnHit += StopDrift;
+
             _kartEngine = GetComponentInChildren<KartEngine>();
+
+            kartEvents.OnHit += StopDrift;
         }
 
         private void Update()
