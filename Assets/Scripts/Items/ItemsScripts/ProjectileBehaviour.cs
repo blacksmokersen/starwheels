@@ -131,6 +131,8 @@ namespace Items
         {
             if (other.gameObject.CompareTag(Constants.KartTriggerTag))
             {
+                Debug.Log("I am : "+gameObject.name);
+                Debug.Log("He is : " + other.gameObject.tag);
                 CheckCollision(other.gameObject);
             }
         }
