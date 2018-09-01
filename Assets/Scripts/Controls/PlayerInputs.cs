@@ -54,12 +54,6 @@ namespace Controls
 
         void SetInputEnabled(bool b)
         {
-            photonView.RPC("RPCSetEnabled", PhotonTargets.All, b);
-        }
-
-        [PunRPC]
-        void RPCSetEnabled(bool b)
-        {
             Enabled = b;
         }
 
