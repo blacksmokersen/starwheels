@@ -16,7 +16,6 @@ namespace Kart
         public TurnState DriftTurnState = TurnState.NotTurning;
         public DriftBoostState DriftBoostState = DriftBoostState.NotDrifting;
 
-        private bool _isDrifting = false;
         private bool _isCrashed = false;
 
         public float DistanceForGrounded;
@@ -66,11 +65,6 @@ namespace Kart
             }
         }
 
-        public void SetDrifting(bool isDrifting)
-        {
-            _isDrifting = isDrifting;
-        }
-
         public void SetDriftTurnState(TurnState state)
         {
             DriftTurnState = state;
@@ -88,17 +82,12 @@ namespace Kart
 
         public bool IsDrifting()
         {
-            return _isDrifting;
+            return DriftTurnState != TurnState.NotTurning;
         }
 
         public bool IsCrashed()
         {
             return _isCrashed;
-        }
-
-        public bool IsDriftTurning()
-        {
-            return DriftTurnState == TurnState.NotTurning;
         }
 
         public bool IsDriftSideEqualsTurnSide()

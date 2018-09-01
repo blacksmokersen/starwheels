@@ -25,7 +25,7 @@ namespace Kart
         private Coroutine _physicsBoostCoroutine;
         private Coroutine _turboCoroutine;
 
-        // CORE
+        #region MonoBehaviour
 
         private new void Awake()
         {
@@ -41,56 +41,29 @@ namespace Kart
                 _hasTurnedOtherSide = true;
             }
         }
+        #endregion
 
-        // PUBLIC
+        #region Drift Logic
 
         public void InitializeDrift(float angle)
         {
-            if (!CheckRequiredSpeed() || !kartStates.IsGrounded() || angle == 0) return;
-
-            if (_turboCoroutine != null)
+            if (HasRequiredSpeed() && kartStates.IsGrounded() && angle != 0)
             {
-                StopCoroutine(_turboCoroutine);
-                _turboCoroutine = null;
-                kartStates.SetDriftBoostState(DriftBoostState.NotDrifting);
-            }
+                ResetDrift();
 
-            if (kartStates.IsDrifting()) return;
-
-            kartStates.SetDrifting(true);
-
-            if (angle < 0)
-            {
-                kartStates.SetDriftTurnState(TurnState.Left);
-                KartEvents.Instance.OnDriftLeft();
-            }
-            if (angle > 0)
-            {
-                kartStates.SetDriftTurnState(TurnState.Right);
-                KartEvents.Instance.OnDriftRight();
-            }
-            EnterNextState();
-        }
-
-        public void DriftForces()
-        {
-            _kartEngine.DriftUsingForce();
-        }
-
-        #region Conditions
-        public void CheckNewTurnDirection()
-        {
-            if (_hasTurnedOtherSide && kartStates.IsDriftSideEqualsTurnSide() && _driftedLongEnough)
-            {
+                if (angle < 0)
+                {
+                    kartStates.SetDriftTurnState(TurnState.Left);
+                    KartEvents.Instance.OnDriftLeft();
+                }
+                if (angle > 0)
+                {
+                    kartStates.SetDriftTurnState(TurnState.Right);
+                    KartEvents.Instance.OnDriftRight();
+                }
                 EnterNextState();
             }
         }
-
-        public bool CheckRequiredSpeed()
-        {
-            return _kartEngine.PlayerVelocity >= RequiredSpeedToDrift;
-        }
-        #endregion
 
         public void StopDrift()
         {
@@ -102,17 +75,14 @@ namespace Kart
                 }
                 else
                 {
-                    KartEvents.Instance.OnDriftEnd();
                     ResetDrift();
                 }
-                kartStates.SetDrifting(false);
+                KartEvents.Instance.OnDriftEnd();
             }
         }
 
         public void ResetDrift()
         {
-            KartEvents.Instance.OnDriftReset();
-
             kartStates.SetDriftTurnState(TurnState.NotTurning);
             kartStates.SetDriftBoostState(DriftBoostState.NotDrifting);
 
@@ -120,6 +90,10 @@ namespace Kart
             if (_driftedLongEnoughTimer != null)
             {
                 StopCoroutine(_driftedLongEnoughTimer);
+            }
+            if (_turboCoroutine != null)
+            {
+                StopCoroutine(_turboCoroutine);
             }
         }
 
@@ -129,7 +103,22 @@ namespace Kart
             _driftedLongEnough = true;
         }
 
-        // PRIVATE
+        #endregion
+
+        #region Conditions
+        public void CheckNewTurnDirection()
+        {
+            if (_hasTurnedOtherSide && kartStates.IsDriftSideEqualsTurnSide() && _driftedLongEnough)
+            {
+                EnterNextState();
+            }
+        }
+
+        public bool HasRequiredSpeed()
+        {
+            return _kartEngine.PlayerVelocity >= RequiredSpeedToDrift;
+        }
+        #endregion
 
         #region Changing States
         private void EnterNextState()
@@ -175,18 +164,16 @@ namespace Kart
 
         private IEnumerator EnterTurbo()
         {
-            if (_physicsBoostCoroutine != null) StopCoroutine(_physicsBoostCoroutine);
-
-            KartEvents.Instance.OnDriftBoost();
-            KartEvents.Instance.OnDriftEnd();
-
+            if (_physicsBoostCoroutine != null)
+            {
+                StopCoroutine(_physicsBoostCoroutine);
+            }
             _physicsBoostCoroutine = StartCoroutine(_kartEngine.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));
-
             kartStates.SetDriftTurnState(TurnState.NotTurning);
             kartStates.SetDriftBoostState(DriftBoostState.Turbo);
 
+            KartEvents.Instance.OnDriftBoost();
             yield return new WaitForSeconds(BoostDuration);
-
             ResetDrift();
         }
         #endregion
