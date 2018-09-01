@@ -32,6 +32,7 @@ namespace Kart
             base.Awake();
 
             _kartEngine = GetComponentInChildren<KartEngine>();
+            kartEvents.OnHit += StopDrift;
         }
 
         private void Update()

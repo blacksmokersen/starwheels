@@ -27,12 +27,6 @@ namespace Kart
 
         public void HealthLoss()
         {
-            photonView.RPC("RPCHealthLoss", PhotonTargets.All);
-        }
-
-        [PunRPC]
-        public void RPCHealthLoss()
-        {
             if (!IsInvincible)
             {
                 kartEvents.OnHealthLoss(--Health);
