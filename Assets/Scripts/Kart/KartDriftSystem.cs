@@ -12,7 +12,7 @@ namespace Kart
         [Header("Speed")]
         [Range(0, 1000)] public float BoostSpeed;
         [Range(0, 30)] public float MagnitudeBoost;
-        [Range(0, 100)] public float RequiredSpeedToDrift = 20f;
+        [Range(0, 100)] public float RequiredSpeedToDrift = 12f;
 
         [Header("Angles")]
         [Range(0, 90)] public float ForwardMaxAngle;
