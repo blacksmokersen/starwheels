@@ -73,7 +73,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4540307016684214}
   - component: {fileID: 54666048211524458}
-  - component: {fileID: 135067148752432064}
   - component: {fileID: 114495339683916810}
   - component: {fileID: 114539560893439074}
   - component: {fileID: 114726411467732960}
@@ -95,6 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4949494290635676}
   - component: {fileID: 135831469022452736}
+  - component: {fileID: 114733488798484252}
   m_Layer: 0
   m_Name: PlayerTrigger
   m_TagString: Projectile
@@ -114,6 +114,22 @@ GameObject:
   - component: {fileID: 199537664915123768}
   m_Layer: 0
   m_Name: CollisionsParticles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1830753569061786
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4343291980117246}
+  - component: {fileID: 135079340401835692}
+  m_Layer: 0
+  m_Name: DiskPhysicalCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -166,6 +182,19 @@ Transform:
   m_Father: {fileID: 4659753933396894}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90.94098, y: -0.000015258789, z: -0.000015258789}
+--- !u!4 &4343291980117246
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1830753569061786}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4540307016684214}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4526506990580234
 Transform:
   m_ObjectHideFlags: 1
@@ -186,11 +215,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1507300503580378}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.139788, y: 0.030904496, z: 2.2069256}
+  m_LocalPosition: {x: 1.7258039, y: 7.0145407, z: 16.39606}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4949494290635676}
   - {fileID: 4659753933396894}
+  - {fileID: 4343291980117246}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -640,12 +670,23 @@ MonoBehaviour:
   CollisionSound: {fileID: 8300000, guid: 76d3f5d9fa5e22d4db06415c72c076f5, type: 3}
   ReboundsBeforeEnd: 7
   ParticlesToEmit: 300
---- !u!135 &135067148752432064
+--- !u!114 &114733488798484252
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1550889122517646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f31a1c46652e3164aaf4306dbb4cacc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &135079340401835692
 SphereCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1507300503580378}
+  m_GameObject: {fileID: 1830753569061786}
   m_Material: {fileID: 13400000, guid: 7f5cb749e757d58478edd4b5b03e2c4c, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1

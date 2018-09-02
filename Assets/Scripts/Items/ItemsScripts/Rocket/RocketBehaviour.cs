@@ -53,13 +53,8 @@ namespace Items
                 {
                     transform.Rotate(Vector3.up * actualTurnSpeed * Time.deltaTime);
                 }
-                else
-                { }
             }
         }
-
-        // We override it because we don't need the default behaviour of the trigger
-        private new void OnTriggerEnter(Collider other) { }
 
         private void OnCollisionEnter(Collision collision)
         {
