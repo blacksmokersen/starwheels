@@ -127,14 +127,6 @@ namespace Items
 
         #region Collisions
 
-        protected void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag(Constants.KartTriggerTag))
-            {
-                CheckCollision(other.gameObject);
-            }
-        }
-
         public void CheckCollision(GameObject kartCollisionObject)
         {
             if (OwnerIsSet() && !IsOwnerAndImmune(kartCollisionObject))
