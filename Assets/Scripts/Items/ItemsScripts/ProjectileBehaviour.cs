@@ -40,11 +40,6 @@ namespace Items
             _audioSource = GetComponent<AudioSource>();
         }
 
-        protected void Start()
-        {
-
-        }
-
         protected void Update()
         {
             CheckGrounded();

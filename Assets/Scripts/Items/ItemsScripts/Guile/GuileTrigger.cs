@@ -6,7 +6,8 @@
         {
             base.OnTriggerEnter(other);
             if (other.gameObject.CompareTag(Constants.GroundItemTag) ||
-                other.gameObject.CompareTag(Constants.ProjectileTag))
+                other.gameObject.CompareTag(Constants.DiskItemTag) ||
+                other.gameObject.CompareTag(Constants.RocketItemTag))
             {
                 other.gameObject.GetComponentInParent<ItemBehaviour>().DestroyObject();
             }

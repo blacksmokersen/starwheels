@@ -21,9 +21,8 @@ namespace Items
             rocketLock = GetComponentInChildren<RocketLockTarget>();
         }
 
-        private new void Start()
+        private void Start()
         {
-            base.Start();
             rocketLock.Owner = owner;
         }
 
