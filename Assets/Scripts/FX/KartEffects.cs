@@ -13,6 +13,7 @@ namespace FX
         [Header("Particles")]
         public ParticleSystem MainJumpParticles;
         public ParticleSystem JumpReloadParticles;
+
         private int numberOfParticles = 300;
 
         private new void Awake()
@@ -28,8 +29,8 @@ namespace FX
 
             kartEvents.OnDriftStart += StartSmoke;
             kartEvents.OnDriftStart += () => SetWheelsColor(Color.white);
-            kartEvents.OnDriftReset += StopSmoke;
-            kartEvents.OnDriftReset += () => SetWheelsColor(Color.white);
+            kartEvents.OnDriftEnd += StopSmoke;
+            kartEvents.OnDriftEnd += () => SetWheelsColor(Color.white);
 
             kartEvents.OnDriftOrange += () => SetWheelsColor(Color.yellow);
             kartEvents.OnDriftRed += () => SetWheelsColor(Color.red);

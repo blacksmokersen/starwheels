@@ -48,7 +48,6 @@ namespace Kart
         public Action OnDrifting;
         public Action OnDriftEnd;
         public Action OnDriftBoost;
-        public Action OnDriftReset;
         public Action OnDriftNextState;
 
         public void CallOnHitEvent()

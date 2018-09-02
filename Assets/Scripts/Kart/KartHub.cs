@@ -94,10 +94,10 @@ namespace Kart
         {
             if (!kartStates.IsGrounded()) return;
 
-            if (kartStates.DriftTurnState != TurnState.NotTurning && kartDriftSystem.CheckRequiredSpeed())
+            if (kartStates.DriftTurnState != TurnState.NotTurning && kartDriftSystem.HasRequiredSpeed())
             {
                 kartEngine.DriftTurn(turnValue);
-                kartDriftSystem.DriftForces();
+                kartEngine.DriftUsingForce();
                 kartDriftSystem.CheckNewTurnDirection();
             }
             else if (kartStates.DriftTurnState == TurnState.NotTurning && kartStates.TurningState != TurnState.NotTurning)
