@@ -54,6 +54,7 @@ namespace Items
             if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.GroundLayer))
             {
                 GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                GetComponent<Rigidbody>().freezeRotation = true;
                 PlayIdleSound();
             }
         }
