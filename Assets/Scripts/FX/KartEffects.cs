@@ -51,11 +51,7 @@ namespace FX
 
         public void HealthParticlesManagement(int health)
         {
-            if (health > 0)
-            {
-                Lifes[kartHub.kartHealthSystem.Health].Stop(true);
-                LifeBursts[health].Play();
-            }
+            LifeBursts[0].Play();
         }
 
         public void MainJumpParticlesEmit()
@@ -78,6 +74,3 @@ namespace FX
         }
     }
 }
-
-
-            LifeBursts[0].Play();
