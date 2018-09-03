@@ -7,11 +7,11 @@ namespace GameModes
 {
     public class GameMode : PunBehaviour
     {
-        public GameObject[] Spawns;
-        public string gameHudSceneName;
+        private GameObject[] _spawns;
 
-        private void Start()
+        protected void Start()
         {
+            _spawns = GameObject.FindGameObjectsWithTag(Constants.SpawnPointTag);
             if (!PhotonNetwork.connected)
             {
                 PhotonNetwork.offlineMode = true;
@@ -23,15 +23,15 @@ namespace GameModes
         public void SpawnKart(PunTeams.Team team)
         {
             int numberOfPlayers = PhotonNetwork.countOfPlayers;
-            var initPos = Spawns[numberOfPlayers].transform.position;
-            var kart =  PhotonNetwork.Instantiate("Kart", initPos, Spawns[numberOfPlayers].transform.rotation, 0);
+            var initPos = _spawns[numberOfPlayers].transform.position;
+            var kart =  PhotonNetwork.Instantiate("Kart", initPos, _spawns[numberOfPlayers].transform.rotation, 0);
             if (kart.GetComponent<PhotonView>().isMine)
             {
                 CinemachineVirtualCamera camera = FindObjectOfType<CinemachineVirtualCamera>();
                 camera.Follow = kart.transform;
                 camera.LookAt = kart.transform;
 
-                SceneManager.LoadScene(gameHudSceneName, LoadSceneMode.Additive);
+                SceneManager.LoadScene(Constants.GameHUDSceneName, LoadSceneMode.Additive);
             }
         }
     }
