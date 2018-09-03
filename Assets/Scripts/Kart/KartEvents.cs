@@ -53,7 +53,7 @@ namespace Kart
 
         public void CallOnHitEvent()
         {
-            GetComponent<PhotonView>().RPC("RPCStarOnHitEvent", PhotonTargets.All);
+            GetComponent<PhotonView>().RPC("RPCCallOnHitEvent", PhotonTargets.All);
         }
 
         [PunRPC]
