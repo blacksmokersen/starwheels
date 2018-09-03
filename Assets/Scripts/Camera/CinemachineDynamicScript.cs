@@ -30,6 +30,8 @@ public class CinemachineDynamicScript : MonoBehaviour
         composer = cinemachine.GetCinemachineComponent<CinemachineComposer>();
 
         KartEvents.Instance.OnDriftBoost += BoostCameraBehaviour;
+        KartEvents.Instance.OnBackCameraStart += BackCamera;
+        KartEvents.Instance.OnBackCameraEnd += BackCamera;
     }
 
     public void IonBeamCameraControls(float horizontal, float vertical)

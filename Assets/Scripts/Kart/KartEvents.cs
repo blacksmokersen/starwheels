@@ -50,6 +50,10 @@ namespace Kart
         public Action OnDriftBoost;
         public Action OnDriftNextState;
 
+        //Camera
+        public Action<bool> OnBackCameraStart;
+        public Action<bool> OnBackCameraEnd;
+
         public void CallOnHitEvent()
         {
             GetComponent<PhotonView>().RPC("RPCCallOnHitEvent", PhotonTargets.All);
