@@ -9,9 +9,10 @@
     public const string KartTriggerTag = "KartTrigger";
     public const string KartColliderTag = "KartCollider";
     public const string ItemBoxTag = "ItemBox";
-    public const string ProjectileTag = "Projectile";
     public const string GroundItemTag = "GroundItem";
     public const string GuileItemTag = "GuileItem";
+    public const string RocketItemTag = "Rocket";
+    public const string DiskItemTag = "Disk";
 
     // Object Names
     public const string KartObjectName = "Kart";
@@ -35,4 +36,6 @@
     // Assets
     public const string DiskPrefabName = "Prefab/Disk";
     public const string RocketPrefabName = "Prefabs/Rocket";
+    public const string BlueKartTextureName = "Materials/KartBlueBody";
+    public const string RedKartTextureName = "Materials/KartRedBody";
 }

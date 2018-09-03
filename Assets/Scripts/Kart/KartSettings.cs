@@ -2,7 +2,7 @@
 
 namespace Kart
 {
-    public class KartSettings : MonoBehaviour
+    public class KartSettings : BaseKartComponent
     {
         [SerializeField] private MeshRenderer kartRenderer;
         [SerializeField] private TextMesh nameText;
@@ -10,15 +10,15 @@ namespace Kart
 
         // CORE
 
-        private void Awake()
+        private new void Awake()
         {
-            PhotonView view = GetComponentInParent<PhotonView>();
-
-            if (PhotonNetwork.connected && !view.isMine)
+            base.Awake();
+            if (PhotonNetwork.connected && !photonView.isMine)
             {
-                SetName(GetPlayer(view).NickName);
+                SetName(GetPlayer(photonView).NickName);
                 Destroy(backCamera);
             }
+            SetColor(PhotonNetwork.player.GetTeam());
         }
 
         private void Update()
@@ -28,9 +28,19 @@ namespace Kart
 
         // PUBLIC
 
-        public void SetColor(Color color)
+        public void SetColor(PunTeams.Team team)
         {
-            kartRenderer.material.color = color;
+            switch (team)
+            {
+                case PunTeams.Team.blue:
+                    kartRenderer.material = Resources.Load<Material>(Constants.BlueKartTextureName);
+                    break;
+                case PunTeams.Team.red:
+                    kartRenderer.material = Resources.Load<Material>(Constants.RedKartTextureName);
+                    break;
+                default:
+                    break;
+            }
         }
 
         public void SetName(string name)
