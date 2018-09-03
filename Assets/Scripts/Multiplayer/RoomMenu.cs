@@ -11,27 +11,38 @@ namespace Multiplayer
         [SerializeField] private Text roomTitleText;
         [SerializeField] private Button startButton;
         [SerializeField] private Dropdown mapDropdown;
+        [SerializeField] private Dropdown teamDropdown;
 
         [SerializeField] private RoomPlayer roomPlayerPrefab;
         [SerializeField] private Transform playerList;
         [SerializeField] private MapListData mapList;
 
         private List<RoomPlayer> roomPlayerList;
+        private RoomPlayer myRoomPlayer;
 
         private void Awake()
         {
             startButton.onClick.AddListener(StartGame);
             mapDropdown.onValueChanged.AddListener(ChangeMap);
+            teamDropdown.onValueChanged.AddListener(ChangeTeam);
 
             roomPlayerList = new List<RoomPlayer>();
             HideRoomMenu();
         }
+
         private void Start()
         {
             foreach (var map in mapList.MapList)
             {
                 mapDropdown.AddOptions(new List<string>() { map.MapName });
             }
+            teamDropdown.AddOptions(new List<string>() { "None", "Red", "Blue" });
+        }
+
+        private void ChangeTeam(int value)
+        {
+            Debug.Log("Whatsup");
+            myRoomPlayer.SetTeam((PunTeams.Team)value);
         }
 
         private void ChangeMap(int value)
@@ -71,10 +82,15 @@ namespace Multiplayer
             // Search and list all players in the room
             foreach (PhotonPlayer photonPlayer in PhotonNetwork.playerList)
             {
-                RoomPlayer roomPlayer = Instantiate(roomPlayerPrefab);
+                var roomPlayer = PhotonNetwork.Instantiate("Menu/RoomPlayer", transform.position, Quaternion.identity, 0).GetComponent<RoomPlayer>();
                 roomPlayer.transform.SetParent(playerList, false);
                 roomPlayer.SetPlayer(photonPlayer);
+                roomPlayer.SetTeam(photonPlayer.GetTeam());
                 roomPlayerList.Add(roomPlayer);
+                if (photonView.isMine)
+                {
+                    myRoomPlayer = roomPlayer;
+                }
             }
         }
 

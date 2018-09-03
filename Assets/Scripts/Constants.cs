@@ -36,4 +36,6 @@
     // Assets
     public const string DiskPrefabName = "Prefab/Disk";
     public const string RocketPrefabName = "Prefabs/Rocket";
+    public const string BlueKartTextureName = "Materials/KartBlueBody";
+    public const string RedKartTextureName = "Materials/KartRedBody";
 }

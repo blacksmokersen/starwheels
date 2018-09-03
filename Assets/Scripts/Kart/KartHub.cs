@@ -36,7 +36,7 @@ namespace Kart
             kartAbility = GetComponentInChildren<Ability>();
             cinemachineDynamicScript = GetComponentInChildren<CinemachineDynamicScript>();
 
-            KartEvents.Instance.HitSomeoneElse += IncreaseScore;
+            //KartEvents.Instance.HitSomeoneElse += IncreaseScore;
         }
 
         private void FixedUpdate()
