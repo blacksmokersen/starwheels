@@ -24,13 +24,10 @@ namespace GameModes
         {
             int numberOfPlayers = PhotonNetwork.countOfPlayers;
             var initPos = Spawns[numberOfPlayers].transform.position;
-            var kart =  PhotonNetwork.Instantiate("Kart", initPos, Spawns[numberOfPlayers].transform.rotation, 0);
+            var kart = PhotonNetwork.Instantiate("Kart", initPos, Spawns[numberOfPlayers].transform.rotation, 0);
             if (kart.GetComponent<PhotonView>().isMine)
             {
-                CinemachineVirtualCamera camera = FindObjectOfType<CinemachineVirtualCamera>();
-                camera.Follow = kart.transform;
-                camera.LookAt = kart.transform;
-
+                FindObjectOfType<CinemachineDynamicScript>().SetKart(kart);
                 SceneManager.LoadScene(gameHudSceneName, LoadSceneMode.Additive);
             }
         }

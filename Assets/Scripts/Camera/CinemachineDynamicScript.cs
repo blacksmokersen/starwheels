@@ -17,21 +17,32 @@ public class CinemachineDynamicScript : MonoBehaviour
     private bool backCamActivated = false;
     private bool cameraNeedReset = false;
     private float currentTimer;
+    private KartEngine kartEngine;
+
+    private void Awake()
+    {
+        cinemachine = GetComponent<CinemachineVirtualCamera>();
+        transposer = cinemachine.GetCinemachineComponent<CinemachineTransposer>();
+        composer = cinemachine.GetCinemachineComponent<CinemachineComposer>();
+    }
+
+    private void Start()
+    {
+        KartEvents.Instance.OnDriftBoost += BoostCameraBehaviour;
+        KartEvents.Instance.OnBackCameraStart += BackCamera;
+        KartEvents.Instance.OnBackCameraEnd += BackCamera;
+    }
 
     private void Update()
     {
         SpeedOnCamBehaviour();
     }
 
-    private void Start()
+    public void SetKart(GameObject kart)
     {
-        cinemachine = GetComponentInChildren<CinemachineVirtualCamera>();
-        transposer = cinemachine.GetCinemachineComponent<CinemachineTransposer>();
-        composer = cinemachine.GetCinemachineComponent<CinemachineComposer>();
-
-        KartEvents.Instance.OnDriftBoost += BoostCameraBehaviour;
-        KartEvents.Instance.OnBackCameraStart += BackCamera;
-        KartEvents.Instance.OnBackCameraEnd += BackCamera;
+        cinemachine.Follow = kart.transform;
+        cinemachine.LookAt = kart.transform;
+        kartEngine = kart.GetComponentInChildren<KartEngine>();
     }
 
     public void IonBeamCameraControls(float horizontal, float vertical)
@@ -50,8 +61,8 @@ public class CinemachineDynamicScript : MonoBehaviour
 
     public void SpeedOnCamBehaviour()
     {
-        /*clampCam = Mathf.Clamp(kartHub.kartEngine.PlayerVelocity / 5, 0, 20);
-        cinemachine.m_Lens.FieldOfView = 50 + clampCam;*/
+        float clampCam = Mathf.Clamp(kartEngine.PlayerVelocity / 5, 0, 20);
+        cinemachine.m_Lens.FieldOfView = 50 + clampCam;
     }
 
     public void AimAndFollow(bool value)
