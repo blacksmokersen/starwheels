@@ -7,7 +7,6 @@ namespace FX
         [HideInInspector] public ParticleSystem smokeLeftWheel;
         [HideInInspector] public ParticleSystem smokeRightWheel;
 
-        public ParticleSystem[] Lifes;
         public ParticleSystem[] LifeBursts;
         [Space(10)]
         [Header("Particles")]
@@ -59,14 +58,6 @@ namespace FX
             }
         }
 
-        public void ResetLives()
-        {
-            foreach (ParticleSystem ps in Lifes)
-            {
-                ps.Play();
-            }
-        }
-
         public void MainJumpParticlesEmit()
         {
             MainJumpParticles.Emit(numberOfParticles);
@@ -74,7 +65,7 @@ namespace FX
 
         public void ReloadJumpParticlesEmit()
         {
-          //  JumpReloadParticles.Emit(numberOfParticles);
+            //  JumpReloadParticles.Emit(numberOfParticles);
         }
 
         public void SetWheelsColor(Color color)
@@ -88,3 +79,5 @@ namespace FX
     }
 }
 
+
+            LifeBursts[0].Play();
