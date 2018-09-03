@@ -31,6 +31,8 @@ public class CinemachineDynamicScript : MonoBehaviour
         KartEvents.Instance.OnDriftBoost += BoostCameraBehaviour;
         KartEvents.Instance.OnBackCameraStart += BackCamera;
         KartEvents.Instance.OnBackCameraEnd += BackCamera;
+        KartEvents.Instance.OnCameraTurnStart += TurnCamera;
+        KartEvents.Instance.OnCameraTurnEnd +=  TurnOffCamera;
     }
 
     private void Update()
@@ -105,25 +107,25 @@ public class CinemachineDynamicScript : MonoBehaviour
 
     public void TurnCamera(float value)
     {
-        if (!backCamActivated)
+        if (value != 0 && Mathf.Abs(transposer.m_FollowOffset.x) <= 8)
         {
-            if (value != 0 && Mathf.Abs(transposer.m_FollowOffset.x) <= 8)
-            {
-                //   transposer.m_FollowOffset.x += value * 20 * Time.deltaTime;
-                transposer.m_FollowOffset += new Vector3(value * 20 * Time.deltaTime,
-                    0,
-                    Mathf.Abs(value) * 20 * Time.deltaTime);
-                cameraNeedReset = true;
-            }
-            else if (cameraNeedReset)
-            {
-                transposer.m_FollowOffset.x = Mathf.Lerp(transposer.m_FollowOffset.x, 0, Time.deltaTime * 20);
-                transposer.m_FollowOffset.z = Mathf.Lerp(transposer.m_FollowOffset.z, -7.5f, Time.deltaTime * 20);
-
-                cameraNeedReset = false;
-            }
+            //   transposer.m_FollowOffset.x += value * 20 * Time.deltaTime;
+            transposer.m_FollowOffset += new Vector3(value * 20 * Time.deltaTime,
+                0,
+                Mathf.Abs(value) * 20 * Time.deltaTime);
+            cameraNeedReset = true;
         }
     }
+
+    public void TurnOffCamera()
+    {
+
+        transposer.m_FollowOffset.x = Mathf.Lerp(transposer.m_FollowOffset.x, 0, Time.deltaTime * 20);
+        transposer.m_FollowOffset.z = Mathf.Lerp(transposer.m_FollowOffset.z, -7.5f, Time.deltaTime * 20);
+
+    }
+
+
     public void BackCamera(bool activate)
     {
         if (activate)

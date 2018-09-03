@@ -109,7 +109,10 @@ namespace Controls
         }
         void AxisOnUse()
         {
-          //  cinemachineDynamicScript.TurnCamera(Input.GetAxis(Constants.TurnCamera));
+            if(Input.GetAxis(Constants.TurnCamera) !=0f)
+                KartEvents.Instance.OnCameraTurnStart(Input.GetAxis(Constants.TurnCamera));
+            else
+                KartEvents.Instance.OnCameraTurnEnd();
         }
     }
 }
