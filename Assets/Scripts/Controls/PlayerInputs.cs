@@ -76,6 +76,10 @@ namespace Controls
             {
                 KartEvents.Instance.OnBackCameraStart(true);
             }
+            if (Input.GetButtonDown(Constants.ResetCamera))
+            {
+                KartEvents.Instance.OnCameraTurnReset();
+            }
 
             // Mouse
             if (Input.GetButtonDown(Constants.UseItemForwardButton))

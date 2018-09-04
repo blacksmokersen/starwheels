@@ -14,14 +14,18 @@ public class CinemachineDynamicScript : MonoBehaviour
     private Coroutine cameraIonBeamBehaviour;
     public CinemachineTransposer transposer;
     private CinemachineComposer composer;
+    private CinemachineOrbitalTransposer orbiter;
     private bool backCamActivated = false;
     private bool cameraNeedReset = false;
     private float currentTimer;
     private KartEngine kartEngine;
 
+    [SerializeField] private GameObject turnRotationPoint;
+
     private void Awake()
     {
         cinemachine = GetComponent<CinemachineVirtualCamera>();
+        orbiter = cinemachine.GetCinemachineComponent<CinemachineOrbitalTransposer>();
         transposer = cinemachine.GetCinemachineComponent<CinemachineTransposer>();
         composer = cinemachine.GetCinemachineComponent<CinemachineComposer>();
     }
@@ -33,6 +37,7 @@ public class CinemachineDynamicScript : MonoBehaviour
         KartEvents.Instance.OnBackCameraEnd += BackCamera;
         KartEvents.Instance.OnCameraTurnStart += TurnCamera;
         KartEvents.Instance.OnCameraTurnEnd +=  TurnOffCamera;
+        KartEvents.Instance.OnCameraTurnReset += CameraReset;
     }
 
     private void Update()
@@ -107,24 +112,80 @@ public class CinemachineDynamicScript : MonoBehaviour
 
     public void TurnCamera(float value)
     {
+        /*
+        transposer.enabled = false;
+        cinemachine.AddCinemachineComponent<CinemachineOrbitalTransposer>();
+        orbiter = cinemachine.GetCinemachineComponent<CinemachineOrbitalTransposer>();
+        orbiter.m_FollowOffset = new Vector3(0, 3,-7.5f);
+        orbiter.m_XDamping = 0;
+        orbiter.m_YDamping = 0;
+        orbiter.m_ZDamping = 0;
+
+        orbiter.m_XAxis.m_MaxSpeed = 150;
+        orbiter.m_XAxis.m_AccelTime = 0;
+        orbiter.m_XAxis.m_DecelTime = 0;
+        orbiter.m_XAxis.m_MinValue = -50;
+        orbiter.m_XAxis.m_MaxValue = 50;
+        orbiter.m_XAxis.m_Wrap = false;
+        orbiter.m_XAxis.m_InputAxisName = "RightJoystick";
+        */
+
+
+
+        /*
+        composer.enabled = false;
+
         if (value != 0 && Mathf.Abs(transposer.m_FollowOffset.x) <= 8)
         {
+            turnRotationPoint.transform.eulerAngles += new Vector3(0, -value* 100 * Time.deltaTime,0);
+        }
+        */
+
+        /*
+        if (value != 0 && Mathf.Abs(composer.m_TrackedObjectOffset.x) <= 8)
+        {
             //   transposer.m_FollowOffset.x += value * 20 * Time.deltaTime;
-            transposer.m_FollowOffset += new Vector3(value * 20 * Time.deltaTime,
+            composer.m_TrackedObjectOffset += new Vector3(-value * 500 * Time.deltaTime,
                 0,
-                Mathf.Abs(value) * 20 * Time.deltaTime);
+                0);
             cameraNeedReset = true;
         }
-    }
+        */
+
+        /*
+        if (value != 0 && Mathf.Abs(transposer.m_FollowOffset.x) <= 8)
+            {
+                //   transposer.m_FollowOffset.x += value * 20 * Time.deltaTime;
+                transposer.m_FollowOffset += new Vector3(value * 20 * Time.deltaTime,
+                    0,
+                    Mathf.Abs(value) * 20 * Time.deltaTime);
+                cameraNeedReset = true;
+            }
+            */
+        }
 
     public void TurnOffCamera()
     {
+        /*
+        composer.enabled = true;
+        */
 
-        transposer.m_FollowOffset.x = Mathf.Lerp(transposer.m_FollowOffset.x, 0, Time.deltaTime * 20);
-        transposer.m_FollowOffset.z = Mathf.Lerp(transposer.m_FollowOffset.z, -7.5f, Time.deltaTime * 20);
+        /*
+        composer.m_TrackedObjectOffset.x = Mathf.Lerp(composer.m_TrackedObjectOffset.x, 0, Time.deltaTime * 10);
+        composer.m_TrackedObjectOffset.z = Mathf.Lerp(composer.m_TrackedObjectOffset.z, 0, Time.deltaTime * 10);
+        */
 
+        /*
+        transposer.m_FollowOffset.x = Mathf.Lerp(transposer.m_FollowOffset.x, 0, Time.deltaTime * 2);
+        transposer.m_FollowOffset.z = Mathf.Lerp(transposer.m_FollowOffset.z, -7.5f, Time.deltaTime * 2);
+        */
     }
 
+    public void CameraReset()
+    {
+        Debug.Log("cameraRESET");
+        orbiter.m_XAxis.Value = 0;
+    }
 
     public void BackCamera(bool activate)
     {
