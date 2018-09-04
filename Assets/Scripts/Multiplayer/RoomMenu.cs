@@ -41,6 +41,7 @@ namespace Multiplayer
 
         private void ChangeTeam(int value)
         {
+            PhotonNetwork.player.SetTeam((PunTeams.Team)value);
             myRoomPlayer.SetTeam((PunTeams.Team)value);
         }
 

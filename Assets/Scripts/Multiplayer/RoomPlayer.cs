@@ -11,14 +11,14 @@ public class RoomPlayer : MonoBehaviour
     {
         PlayerNickname = player.NickName;
         playerNameText.text = player.NickName;
+        GetComponent<PhotonView>().TransferOwnership(player);
     }
 
     public void SetTeam(PunTeams.Team team)
     {
-        PhotonNetwork.player.SetTeam(team);
         Debug.Log("Setting team : " + team);
         PhotonView photonView = GetComponent<PhotonView>();
-        photonView.RPC("RPCChangeTeam", PhotonTargets.AllBuffered, team);
+        photonView.RPC("RPCChangeTeam", PhotonTargets.AllBufferedViaServer, team);
     }
 
     [PunRPC]
