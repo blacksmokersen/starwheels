@@ -25,18 +25,48 @@ namespace Multiplayer
             startButton.onClick.AddListener(StartGame);
             mapDropdown.onValueChanged.AddListener(ChangeMap);
             teamDropdown.onValueChanged.AddListener(ChangeTeam);
-
-            roomPlayerList = new List<RoomPlayer>();
             HideRoomMenu();
         }
 
         private void Start()
+        {
+            InitializeDropdowns();
+            InstantiatePlayerPrefab();
+            if (PhotonNetwork.isMasterClient)
+            {
+                MasterInitialization();
+            }
+        }
+        private void MasterInitialization()
+        {
+            roomTitleText.text = PhotonNetwork.room.Name;
+            startButton.enabled = true;
+            mapDropdown.enabled = true;
+        }
+
+        private void InitializeDropdowns()
         {
             foreach (var map in mapList.MapList)
             {
                 mapDropdown.AddOptions(new List<string>() { map.MapName });
             }
             teamDropdown.AddOptions(new List<string>() { "None", "Red", "Blue" });
+        }
+
+        private void InstantiatePlayerPrefab()
+        {
+            var playerPrefab = PhotonNetwork.Instantiate("Menu/RoomPlayer", playerList.transform.position, Quaternion.identity, 0);
+            var roomPlayer = playerPrefab.GetComponent<RoomPlayer>();
+            roomPlayer.SetTeam(PhotonNetwork.player.GetTeam());
+            myRoomPlayer = roomPlayer;
+        }
+
+        private void StartGame()
+        {
+            if (PhotonNetwork.isMasterClient)
+            {
+                PhotonNetwork.LoadLevel(mapList.MapList[mapDropdown.value].SceneName);
+            }
         }
 
         private void ChangeTeam(int value)
@@ -64,42 +94,6 @@ namespace Multiplayer
         public void HideRoomMenu()
         {
             gameObject.SetActive(false);
-        }
-
-        public void RefreshRoom()
-        {
-            roomTitleText.text = PhotonNetwork.room.Name;
-            startButton.enabled = PhotonNetwork.isMasterClient;
-            mapDropdown.enabled = PhotonNetwork.isMasterClient;
-
-            // Clean players from room
-            foreach (RoomPlayer roomPlayer in roomPlayerList)
-            {
-                Destroy(roomPlayer.gameObject);
-            }
-            roomPlayerList.Clear();
-
-            // Search and list all players in the room
-            foreach (PhotonPlayer photonPlayer in PhotonNetwork.playerList)
-            {
-                var roomPlayer = PhotonNetwork.Instantiate("Menu/RoomPlayer", transform.position, Quaternion.identity, 0).GetComponent<RoomPlayer>();
-                roomPlayer.transform.SetParent(playerList, false);
-                roomPlayer.SetPlayer(photonPlayer);
-                roomPlayer.SetTeam(photonPlayer.GetTeam());
-                roomPlayerList.Add(roomPlayer);
-                if(photonPlayer == PhotonNetwork.player)
-                {
-                    myRoomPlayer = roomPlayer;
-                }
-            }
-        }
-
-        private void StartGame()
-        {
-            if (PhotonNetwork.isMasterClient)
-            {
-                PhotonNetwork.LoadLevel(mapList.MapList[mapDropdown.value].SceneName);
-            }
         }
     }
 }
