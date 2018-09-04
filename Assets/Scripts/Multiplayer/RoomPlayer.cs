@@ -3,19 +3,22 @@ using UnityEngine.UI;
 
 public class RoomPlayer : MonoBehaviour
 {
+    public string PlayerNickname;
+
     [SerializeField] private Text playerNameText;
 
     public void SetPlayer(PhotonPlayer player)
     {
+        PlayerNickname = player.NickName;
         playerNameText.text = player.NickName;
     }
 
     public void SetTeam(PunTeams.Team team)
     {
-        Debug.Log("Setting team");
         PhotonNetwork.player.SetTeam(team);
+        Debug.Log("Setting team : " + team);
         PhotonView photonView = GetComponent<PhotonView>();
-        photonView.RPC("RPCChangeTeam", PhotonTargets.OthersBuffered, team);
+        photonView.RPC("RPCChangeTeam", PhotonTargets.AllBuffered, team);
     }
 
     [PunRPC]

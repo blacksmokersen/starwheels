@@ -41,7 +41,6 @@ namespace Multiplayer
 
         private void ChangeTeam(int value)
         {
-            Debug.Log("Whatsup");
             myRoomPlayer.SetTeam((PunTeams.Team)value);
         }
 
@@ -87,7 +86,7 @@ namespace Multiplayer
                 roomPlayer.SetPlayer(photonPlayer);
                 roomPlayer.SetTeam(photonPlayer.GetTeam());
                 roomPlayerList.Add(roomPlayer);
-                if (photonView.isMine)
+                if(photonPlayer == PhotonNetwork.player)
                 {
                     myRoomPlayer = roomPlayer;
                 }
