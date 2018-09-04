@@ -5,7 +5,7 @@
     public const string GroundLayer = "Ground";
 
     // Tags
-    public const string KartTag = "Kart";
+    public const string SpawnPointTag = "Spawn";
     public const string KartTriggerTag = "KartTrigger";
     public const string KartColliderTag = "KartCollider";
     public const string ItemBoxTag = "ItemBox";
@@ -13,10 +13,6 @@
     public const string GuileItemTag = "GuileItem";
     public const string RocketItemTag = "Rocket";
     public const string DiskItemTag = "Disk";
-
-    // Object Names
-    public const string KartObjectName = "Kart";
-    public const string RuntimeObjectName = "_RUNTIME";
 
     // Inputs
     public const string AccelerateButton = "Accelerate";
@@ -39,4 +35,8 @@
     public const string RocketPrefabName = "Prefabs/Rocket";
     public const string BlueKartTextureName = "Materials/KartBlueBody";
     public const string RedKartTextureName = "Materials/KartRedBody";
+    public const string ClassicBattleEndMenu = "Menu/ClassicBattleEndMenu";
+
+    // Scenes
+    public const string GameHUDSceneName = "GameHUD";
 }

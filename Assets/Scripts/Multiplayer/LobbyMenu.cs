@@ -59,6 +59,7 @@ namespace Multiplayer
                 options.CustomRoomPropertiesForLobby = new string[] { "owner", "map"};
 
                 PhotonNetwork.CreateRoom(roomName, options, null);
+                PhotonNetwork.LoadLevel("Room");
             }
         }
 
@@ -79,6 +80,7 @@ namespace Multiplayer
                 string roomName = roomInfo.Name;
                 room.SetServerName(roomInfo, () => {
                     PhotonNetwork.JoinRoom(roomName);
+                    //PhotonNetwork.LoadLevel("Room");
                 });
                 lobbyRooms.Add(room);
             }

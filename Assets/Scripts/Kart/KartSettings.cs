@@ -18,7 +18,7 @@ namespace Kart
                 SetName(GetPlayer(photonView).NickName);
                 Destroy(backCamera);
             }
-            SetColor(PhotonNetwork.player.GetTeam());
+            SetColor(GetPlayer(photonView).GetTeam());
         }
 
         private void Update()

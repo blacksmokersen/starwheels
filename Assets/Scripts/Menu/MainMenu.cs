@@ -14,7 +14,7 @@ public class MainMenu : MonoBehaviour, IPunCallbacks
     [SerializeField] private Button optionsButton;
     [SerializeField] private Button quitButton;
 
-    [SerializeField] private GameObject multiplayer;
+    [SerializeField] private GameObject multiplayerMenu;
     [SerializeField] private GameObject mainButtons;
 
     private Button[] buttons;
@@ -37,7 +37,7 @@ public class MainMenu : MonoBehaviour, IPunCallbacks
 
     private void Multi()
     {
-        multiplayer.SetActive(true);
+        multiplayerMenu.SetActive(true);
         mainButtons.SetActive(false);
     }
 

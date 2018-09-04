@@ -160,13 +160,12 @@ namespace Items
         private bool IsOnSameTeam(GameObject other)
         {
             var otherTeam = other.GetComponentInParent<PhotonView>().owner.GetTeam();
-            return otherTeam == PhotonNetwork.player.GetTeam();
+            return otherTeam == photonView.owner.GetTeam() && !IsOwner(other);
         }
-
 
         private void SendOwnerSuccessfulHitEvent()
         {
-            owner.gameObject.GetComponentInParent<KartEvents>().HitSomeoneElse();
+            //owner.gameObject.GetComponentInParent<KartEvents>().HitSomeoneElse();
         }
 
         private void SendTargetOnHitEvent(GameObject kartCollisionObject)
