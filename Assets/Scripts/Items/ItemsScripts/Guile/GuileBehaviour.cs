@@ -2,9 +2,8 @@
 {
     public class GuileBehaviour : ProjectileBehaviour
     {
-        new void Start()
+        void Start()
         {
-            base.Start();
             rb.useGravity = false;
             DestroyAfterHit = true;
             DestroyObject(10f);

@@ -40,11 +40,6 @@ namespace Items
             _audioSource = GetComponent<AudioSource>();
         }
 
-        protected void Start()
-        {
-
-        }
-
         protected void Update()
         {
             CheckGrounded();
@@ -131,7 +126,7 @@ namespace Items
         {
             if (OwnerIsSet() && !IsOwnerAndImmune(kartCollisionObject))
             {
-                if (!kartCollisionObject.GetComponentInParent<KartHealthSystem>().IsInvincible)
+                if (!kartCollisionObject.GetComponentInParent<KartHealthSystem>().IsInvincible && !IsOnSameTeam(kartCollisionObject))
                 {
                     if(!IsOwner(kartCollisionObject))
                         SendOwnerSuccessfulHitEvent();
@@ -162,6 +157,12 @@ namespace Items
             var otherKartInventory = other.GetComponentInParent<KartHub>().kartInventory;
             return otherKartInventory == owner && _ownerImmune;
         }
+        private bool IsOnSameTeam(GameObject other)
+        {
+            var otherTeam = other.GetComponentInParent<PhotonView>().owner.GetTeam();
+            return otherTeam == PhotonNetwork.player.GetTeam();
+        }
+
 
         private void SendOwnerSuccessfulHitEvent()
         {

@@ -6,30 +6,50 @@ using Kart;
 
 public class CinemachineDynamicScript : MonoBehaviour
 {
-    [Range(7.5f, 15)] public float MaxDistanceCamInBoost;
+    [Range(8.5f, 15)] public float MaxDistanceCamInBoost;
     public float SpeedCamMovements;
+    [SerializeField] private float autoCenterTiming;
 
     private CinemachineVirtualCamera cinemachine;
     private Coroutine cameraBoostCoroutine;
     private Coroutine cameraIonBeamBehaviour;
     public CinemachineTransposer transposer;
     private CinemachineComposer composer;
+    private CinemachineOrbitalTransposer orbiter;
     private bool backCamActivated = false;
     private bool cameraNeedReset = false;
     private float currentTimer;
+    private KartEngine kartEngine;
+
+    [SerializeField] private GameObject turnRotationPoint;
+
+    private void Awake()
+    {
+        cinemachine = GetComponent<CinemachineVirtualCamera>();
+        orbiter = cinemachine.GetCinemachineComponent<CinemachineOrbitalTransposer>();
+        transposer = cinemachine.GetCinemachineComponent<CinemachineTransposer>();
+        composer = cinemachine.GetCinemachineComponent<CinemachineComposer>();
+    }
+
+    private void Start()
+    {
+        KartEvents.Instance.OnDriftBoost += BoostCameraBehaviour;
+        KartEvents.Instance.OnBackCameraStart += BackCamera;
+        KartEvents.Instance.OnBackCameraEnd += BackCamera;
+        KartEvents.Instance.OnCameraTurnStart += TurnCamera;
+        KartEvents.Instance.OnCameraTurnReset += CameraReset;
+    }
 
     private void Update()
     {
         SpeedOnCamBehaviour();
     }
 
-    private void Start()
+    public void SetKart(GameObject kart)
     {
-        cinemachine = GetComponentInChildren<CinemachineVirtualCamera>();
-        transposer = cinemachine.GetCinemachineComponent<CinemachineTransposer>();
-        composer = cinemachine.GetCinemachineComponent<CinemachineComposer>();
-
-        KartEvents.Instance.OnDriftBoost += BoostCameraBehaviour;
+        cinemachine.Follow = kart.transform;
+        cinemachine.LookAt = kart.transform;
+        kartEngine = kart.GetComponentInChildren<KartEngine>();
     }
 
     public void IonBeamCameraControls(float horizontal, float vertical)
@@ -42,14 +62,14 @@ public class CinemachineDynamicScript : MonoBehaviour
     {
         if (cameraBoostCoroutine != null)
             StopCoroutine(cameraBoostCoroutine);
-        cameraBoostCoroutine = StartCoroutine(CameraBoostBehaviour(-7.5f, -MaxDistanceCamInBoost, 0.5f));
+        cameraBoostCoroutine = StartCoroutine(CameraBoostBehaviour(-8.5f, -MaxDistanceCamInBoost, 0.5f));
         currentTimer = 0f;
     }
 
     public void SpeedOnCamBehaviour()
     {
-        /*clampCam = Mathf.Clamp(kartHub.kartEngine.PlayerVelocity / 5, 0, 20);
-        cinemachine.m_Lens.FieldOfView = 50 + clampCam;*/
+        float clampCam = Mathf.Clamp(kartEngine.PlayerVelocity / 5, 0, 20);
+        cinemachine.m_Lens.FieldOfView = 50 + clampCam;
     }
 
     public void AimAndFollow(bool value)
@@ -86,31 +106,23 @@ public class CinemachineDynamicScript : MonoBehaviour
             AimAndFollow(true);
             if (cameraIonBeamBehaviour != null)
                 StopCoroutine(cameraIonBeamBehaviour);
-            cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(-7.5f, 3, 0.5f));
+            cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(-8.5f, 3, 0.5f));
         }
     }
 
     public void TurnCamera(float value)
     {
-        if (!backCamActivated)
-        {
-            if (value != 0 && Mathf.Abs(transposer.m_FollowOffset.x) <= 8)
-            {
-                //   transposer.m_FollowOffset.x += value * 20 * Time.deltaTime;
-                transposer.m_FollowOffset += new Vector3(value * 20 * Time.deltaTime,
-                    0,
-                    Mathf.Abs(value) * 20 * Time.deltaTime);
-                cameraNeedReset = true;
-            }
-            else if (cameraNeedReset)
-            {
-                transposer.m_FollowOffset.x = Mathf.Lerp(transposer.m_FollowOffset.x, 0, Time.deltaTime * 20);
-                transposer.m_FollowOffset.z = Mathf.Lerp(transposer.m_FollowOffset.z, -7.5f, Time.deltaTime * 20);
-
-                cameraNeedReset = false;
-            }
-        }
+        if (Mathf.Abs(orbiter.m_XAxis.Value) >= 1f)
+            orbiter.m_RecenterToTargetHeading.m_enabled = true;
+        else
+            orbiter.m_RecenterToTargetHeading.m_enabled = false;
     }
+
+    public void CameraReset()
+    {
+        orbiter.m_XAxis.Value = 0;
+    }
+
     public void BackCamera(bool activate)
     {
         if (activate)
@@ -120,7 +132,7 @@ public class CinemachineDynamicScript : MonoBehaviour
         }
         else
         {
-            transposer.m_FollowOffset.z = -7.5f;
+            transposer.m_FollowOffset.z = -8.5f;
             backCamActivated = false;
         }
     }

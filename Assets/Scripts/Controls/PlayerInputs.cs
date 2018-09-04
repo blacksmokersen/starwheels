@@ -13,18 +13,11 @@ namespace Controls
         public bool DisableMovement;
         public GameObject EscapeMEnu;
 
-        private CinemachineDynamicScript cinemachineDynamicScript;
-
         private new void Awake()
         {
             base.Awake();
             kartEvents.OnHit += () => SetInputEnabled(false);
             kartEvents.OnHitRecover += () => SetInputEnabled(true);
-        }
-
-        private void Start()
-        {
-            cinemachineDynamicScript = kartHub.cinemachineDynamicScript;
         }
 
         void FixedUpdate()
@@ -81,7 +74,11 @@ namespace Controls
             }
             if (Input.GetButtonDown(Constants.BackCamera))
             {
-                cinemachineDynamicScript.BackCamera(true);
+                KartEvents.Instance.OnBackCameraStart(true);
+            }
+            if (Input.GetButtonDown(Constants.ResetCamera))
+            {
+                KartEvents.Instance.OnCameraTurnReset();
             }
 
             // Mouse
@@ -111,12 +108,12 @@ namespace Controls
             }
             if (Input.GetButtonUp(Constants.BackCamera))
             {
-                cinemachineDynamicScript.BackCamera(false);
+                KartEvents.Instance.OnBackCameraEnd(false);
             }
         }
         void AxisOnUse()
         {
-          //  cinemachineDynamicScript.TurnCamera(Input.GetAxis(Constants.TurnCamera));
+            KartEvents.Instance.OnCameraTurnStart(Input.GetAxis(Constants.TurnCamera));
         }
     }
 }

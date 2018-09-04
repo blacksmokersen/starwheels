@@ -858,8 +858,6 @@ GameObject:
   - component: {fileID: 4611446738322668}
   - component: {fileID: 54115033852382540}
   - component: {fileID: 114098388412132924}
-  - component: {fileID: 114550539497350264}
-  - component: {fileID: 114240422477425770}
   - component: {fileID: 114738576795421352}
   - component: {fileID: 114509890867450628}
   - component: {fileID: 114604252966182538}
@@ -869,6 +867,7 @@ GameObject:
   - component: {fileID: 114922934292095696}
   - component: {fileID: 114182699996116866}
   - component: {fileID: 114939892422826800}
+  - component: {fileID: 81207853884014964}
   m_Layer: 0
   m_Name: Kart
   m_TagString: Kart
@@ -2717,7 +2716,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1571014680455984}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -39.28084, y: 6.6064234, z: 10.179363}
+  m_LocalPosition: {x: -488.73917, y: 26.23674, z: 10.179363}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4109333596748662}
@@ -3780,7 +3779,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: cc59c1e092df4e74b82ff254f367aae1, type: 2}
+  - {fileID: 2100000, guid: 69a54d4d8271ded41b608cb81b757042, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4042,6 +4041,13 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.1675258, z: 0.3}
   m_Center: {x: 0, y: 0.107158944, z: 0.060000002}
+--- !u!81 &81207853884014964
+AudioListener:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1571014680455984}
+  m_Enabled: 1
 --- !u!95 &95441002590951246
 Animator:
   serializedVersion: 3
@@ -4157,7 +4163,7 @@ MonoBehaviour:
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 114979250873304534}
+  - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
@@ -4251,19 +4257,6 @@ MonoBehaviour:
   cachedTransform: {fileID: 0}
   frameCount: 0
   cache_elementIsEnabled: 
---- !u!114 &114240422477425770
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1571014680455984}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 1
 --- !u!114 &114335135306814078
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4275,7 +4268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96b8f00f8ed4be6408197a50834e6320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kartRenderer: {fileID: 0}
+  kartRenderer: {fileID: 23726386846733754}
   nameText: {fileID: 102579939263838714}
   backCamera: {fileID: 1423625483568360}
 --- !u!114 &114368943646048412
@@ -4423,83 +4416,6 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
---- !u!114 &114550539497350264
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1571014680455984}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PositionModel:
-    SynchronizeEnabled: 1
-    TeleportEnabled: 0
-    TeleportIfDistanceGreaterThan: 10
-    InterpolateOption: 4
-    InterpolateMoveTowardsSpeed: 5
-    InterpolateLerpSpeed: 7
-    InterpolateMoveTowardsAcceleration: 2
-    InterpolateMoveTowardsDeceleration: 2
-    InterpolateSpeedCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: -1
-        value: 0
-        inSlope: 0
-        outSlope: Infinity
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 4
-        value: 4
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    ExtrapolateOption: 2
-    ExtrapolateSpeed: 5
-    ExtrapolateIncludingRoundTripTime: 1
-    ExtrapolateNumberOfStoredPositions: 1
-    DrawErrorGizmo: 1
-  m_RotationModel:
-    SynchronizeEnabled: 1
-    InterpolateOption: 1
-    InterpolateRotateTowardsSpeed: 120
-    InterpolateLerpSpeed: 5
-  m_ScaleModel:
-    SynchronizeEnabled: 0
-    InterpolateOption: 0
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 0
 --- !u!114 &114604252966182538
 MonoBehaviour:
   m_ObjectHideFlags: 1
