@@ -54,7 +54,6 @@ namespace Kart
         public Action<bool> OnBackCameraStart;
         public Action<bool> OnBackCameraEnd;
         public Action<float> OnCameraTurnStart;
-        public Action OnCameraTurnEnd;
         public Action OnCameraTurnReset;
 
         public void CallOnHitEvent()

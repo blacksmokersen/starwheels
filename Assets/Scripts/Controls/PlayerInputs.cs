@@ -113,10 +113,7 @@ namespace Controls
         }
         void AxisOnUse()
         {
-            if(Input.GetAxis(Constants.TurnCamera) !=0f)
-                KartEvents.Instance.OnCameraTurnStart(Input.GetAxis(Constants.TurnCamera));
-            else
-                KartEvents.Instance.OnCameraTurnEnd();
+            KartEvents.Instance.OnCameraTurnStart(Input.GetAxis(Constants.TurnCamera));
         }
     }
 }

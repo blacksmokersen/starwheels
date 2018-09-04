@@ -6,8 +6,9 @@ using Kart;
 
 public class CinemachineDynamicScript : MonoBehaviour
 {
-    [Range(7.5f, 15)] public float MaxDistanceCamInBoost;
+    [Range(8.5f, 15)] public float MaxDistanceCamInBoost;
     public float SpeedCamMovements;
+    [SerializeField] private float autoCenterTiming;
 
     private CinemachineVirtualCamera cinemachine;
     private Coroutine cameraBoostCoroutine;
@@ -36,7 +37,6 @@ public class CinemachineDynamicScript : MonoBehaviour
         KartEvents.Instance.OnBackCameraStart += BackCamera;
         KartEvents.Instance.OnBackCameraEnd += BackCamera;
         KartEvents.Instance.OnCameraTurnStart += TurnCamera;
-        KartEvents.Instance.OnCameraTurnEnd +=  TurnOffCamera;
         KartEvents.Instance.OnCameraTurnReset += CameraReset;
     }
 
@@ -62,7 +62,7 @@ public class CinemachineDynamicScript : MonoBehaviour
     {
         if (cameraBoostCoroutine != null)
             StopCoroutine(cameraBoostCoroutine);
-        cameraBoostCoroutine = StartCoroutine(CameraBoostBehaviour(-7.5f, -MaxDistanceCamInBoost, 0.5f));
+        cameraBoostCoroutine = StartCoroutine(CameraBoostBehaviour(-8.5f, -MaxDistanceCamInBoost, 0.5f));
         currentTimer = 0f;
     }
 
@@ -106,84 +106,20 @@ public class CinemachineDynamicScript : MonoBehaviour
             AimAndFollow(true);
             if (cameraIonBeamBehaviour != null)
                 StopCoroutine(cameraIonBeamBehaviour);
-            cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(-7.5f, 3, 0.5f));
+            cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(-8.5f, 3, 0.5f));
         }
     }
 
     public void TurnCamera(float value)
     {
-        /*
-        transposer.enabled = false;
-        cinemachine.AddCinemachineComponent<CinemachineOrbitalTransposer>();
-        orbiter = cinemachine.GetCinemachineComponent<CinemachineOrbitalTransposer>();
-        orbiter.m_FollowOffset = new Vector3(0, 3,-7.5f);
-        orbiter.m_XDamping = 0;
-        orbiter.m_YDamping = 0;
-        orbiter.m_ZDamping = 0;
-
-        orbiter.m_XAxis.m_MaxSpeed = 150;
-        orbiter.m_XAxis.m_AccelTime = 0;
-        orbiter.m_XAxis.m_DecelTime = 0;
-        orbiter.m_XAxis.m_MinValue = -50;
-        orbiter.m_XAxis.m_MaxValue = 50;
-        orbiter.m_XAxis.m_Wrap = false;
-        orbiter.m_XAxis.m_InputAxisName = "RightJoystick";
-        */
-
-
-
-        /*
-        composer.enabled = false;
-
-        if (value != 0 && Mathf.Abs(transposer.m_FollowOffset.x) <= 8)
-        {
-            turnRotationPoint.transform.eulerAngles += new Vector3(0, -value* 100 * Time.deltaTime,0);
-        }
-        */
-
-        /*
-        if (value != 0 && Mathf.Abs(composer.m_TrackedObjectOffset.x) <= 8)
-        {
-            //   transposer.m_FollowOffset.x += value * 20 * Time.deltaTime;
-            composer.m_TrackedObjectOffset += new Vector3(-value * 500 * Time.deltaTime,
-                0,
-                0);
-            cameraNeedReset = true;
-        }
-        */
-
-        /*
-        if (value != 0 && Mathf.Abs(transposer.m_FollowOffset.x) <= 8)
-            {
-                //   transposer.m_FollowOffset.x += value * 20 * Time.deltaTime;
-                transposer.m_FollowOffset += new Vector3(value * 20 * Time.deltaTime,
-                    0,
-                    Mathf.Abs(value) * 20 * Time.deltaTime);
-                cameraNeedReset = true;
-            }
-            */
-        }
-
-    public void TurnOffCamera()
-    {
-        /*
-        composer.enabled = true;
-        */
-
-        /*
-        composer.m_TrackedObjectOffset.x = Mathf.Lerp(composer.m_TrackedObjectOffset.x, 0, Time.deltaTime * 10);
-        composer.m_TrackedObjectOffset.z = Mathf.Lerp(composer.m_TrackedObjectOffset.z, 0, Time.deltaTime * 10);
-        */
-
-        /*
-        transposer.m_FollowOffset.x = Mathf.Lerp(transposer.m_FollowOffset.x, 0, Time.deltaTime * 2);
-        transposer.m_FollowOffset.z = Mathf.Lerp(transposer.m_FollowOffset.z, -7.5f, Time.deltaTime * 2);
-        */
+        if (Mathf.Abs(orbiter.m_XAxis.Value) >= 1f)
+            orbiter.m_RecenterToTargetHeading.m_enabled = true;
+        else
+            orbiter.m_RecenterToTargetHeading.m_enabled = false;
     }
 
     public void CameraReset()
     {
-        Debug.Log("cameraRESET");
         orbiter.m_XAxis.Value = 0;
     }
 
@@ -196,7 +132,7 @@ public class CinemachineDynamicScript : MonoBehaviour
         }
         else
         {
-            transposer.m_FollowOffset.z = -7.5f;
+            transposer.m_FollowOffset.z = -8.5f;
             backCamActivated = false;
         }
     }
