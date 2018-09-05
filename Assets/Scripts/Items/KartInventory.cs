@@ -38,7 +38,7 @@ namespace Items
 
         public void ItemAction(Direction direction)
         {
-            if(_lotteryStarted && !_shortenLottery && _lotteryTimer > 1f)
+            if (_lotteryStarted && !_shortenLottery && _lotteryTimer > 1f)
             {
                 _lotteryTimer += ShorteningSeconds;
                 _shortenLottery = true;
@@ -95,6 +95,7 @@ namespace Items
             Count = Item.Count;
 
             kartEvents.OnItemUsed(Item, Count);
+            kartEvents.OnLotteryStop();
 
             ResetLottery();
         }

@@ -30,6 +30,7 @@ namespace Audio
         private AudioSource _soundManager;
         private AudioSource _motorSource;
         private AudioSource _driftSource;
+        private AudioSource _lotterySource;
         private float _pitchMotorMagnitudeDiviser = 27f;
         private Coroutine _delayDriftStartRoutine;
 
@@ -52,6 +53,12 @@ namespace Audio
             _driftSource.loop = true;
             _driftSource.clip = DriftFullClip;
 
+            _lotterySource = gameObject.AddComponent<AudioSource>();
+            _lotterySource.spatialBlend = 1f;
+            _lotterySource.volume = 1;
+            _lotterySource.loop = true;
+            _lotterySource.clip = ItemLotteryClip;
+
             PlayMotorFullSound();
 
             kartEvents.OnJump += PlayFirstJumpSound;
@@ -67,7 +74,8 @@ namespace Audio
             };
             kartEvents.OnHit += PlayPlayerHitSound;
             kartEvents.OnGetItemBox += PlayItemBoxSound;
-            kartEvents.OnGetItemBox += PlayItemLotterySound;
+            kartEvents.OnGetItemBox += StartItemLotterySound;
+            kartEvents.OnLotteryStop += StopItemLotterySound;
         }
 
         #region Engine
@@ -167,9 +175,14 @@ namespace Audio
             _soundManager.PlayOneShot(ItemBoxClip);
         }
 
-        private void PlayItemLotterySound()
+        private void StartItemLotterySound()
         {
-            _soundManager.PlayOneShot(ItemLotteryClip);
+            _lotterySource.Play();
+        }
+
+        private void StopItemLotterySound()
+        {
+            _lotterySource.Stop();
         }
         #endregion
     }
