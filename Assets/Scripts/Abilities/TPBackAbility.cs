@@ -21,7 +21,7 @@ namespace Abilities
                 _tpBack = ((GameObject)Instantiate(Resources.Load("TPBack"))).GetComponent<TPBackBehaviour>();
                 _tpBack.Launch(kartHub.kartInventory, direction);
             }
-            else if (_tpBack.IsEnabled())
+            else //if (_tpBack.IsEnabled())
             {
                 kartHub.transform.position = _tpBack.transform.position;
                 Destroy(_tpBack.gameObject);
