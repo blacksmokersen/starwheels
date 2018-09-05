@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
-using Cinemachine;
 using Photon;
 using UnityEngine.SceneManagement;
+using CameraUtils;
 
 namespace GameModes
 {
-    public class GameMode : PunBehaviour
+    public enum GameMode { None, ClassicBattle, BankRobbery, GoldenTotem }
+
+    public class GameModeBase : PunBehaviour
     {
+        public static GameMode ActualGameMode;
+
         private GameObject[] _spawns;
 
         protected void Start()
@@ -16,6 +20,7 @@ namespace GameModes
             {
                 PhotonNetwork.offlineMode = true;
                 PhotonNetwork.CreateRoom("Solo");
+                PhotonNetwork.player.SetTeam(PunTeams.Team.blue);
             }
             SpawnKart(PhotonNetwork.player.GetTeam());
         }

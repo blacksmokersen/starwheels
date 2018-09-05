@@ -3,7 +3,7 @@ using Controls;
 
 namespace GameModes
 {
-    public class ClassicBattle : GameMode
+    public class ClassicBattle : GameModeBase
     {
         public static int MaxPlayersPerTeam;
         public static bool IsOver;
@@ -16,6 +16,8 @@ namespace GameModes
 
         private void Awake()
         {
+            ActualGameMode = GameMode.ClassicBattle;
+
             _endGameMenu = Resources.Load<GameObject>(Constants.ClassicBattleEndMenu);
             _endGameMenu.SetActive(false);
         }

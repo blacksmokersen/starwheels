@@ -35,6 +35,7 @@ namespace Kart
             {
                 GetComponentInParent<Rigidbody>().transform.position = new Vector3(-221, 3, 0);
                 IsDead = true;
+                kartEvents.OnKartDestroyed();
             }
         }
 

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Abilities;
 using Items;
-using HUD;
+using CameraUtils;
 
 namespace Kart
 {

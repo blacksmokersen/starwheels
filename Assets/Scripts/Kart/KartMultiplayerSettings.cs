@@ -2,7 +2,7 @@
 
 namespace Kart
 {
-    public class KartSettings : BaseKartComponent
+    public class KartMultiplayerSettings : BaseKartComponent
     {
         [SerializeField] private MeshRenderer kartRenderer;
         [SerializeField] private TextMesh nameText;

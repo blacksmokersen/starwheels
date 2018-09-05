@@ -27,6 +27,7 @@ namespace Kart
         public Action OnHitRecover;
         public Action HitSomeoneElse;
         public Action<int> OnHealthLoss;
+        public Action OnKartDestroyed;
         public Action OnScoreChange;
 
         // Collisions
