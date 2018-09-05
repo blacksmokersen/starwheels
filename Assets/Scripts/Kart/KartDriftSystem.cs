@@ -49,7 +49,7 @@ namespace Kart
 
         public void InitializeDrift(float angle)
         {
-            if (kartStates.DriftBoostState != DriftBoostState.NotDrifting) return;
+            if (kartStates.DriftState != DriftState.NotDrifting) return;
             if (!HasRequiredSpeed() || !kartStates.IsGrounded() || angle == 0) return;
 
             ResetDrift();
@@ -58,12 +58,10 @@ namespace Kart
 
             if (angle < 0)
             {
-                kartStates.SetDriftTurnState(TurnState.Left);
                 KartEvents.Instance.OnDriftLeft();
             }
             if (angle > 0)
             {
-                kartStates.SetDriftTurnState(TurnState.Right);
                 KartEvents.Instance.OnDriftRight();
             }
 
@@ -74,7 +72,7 @@ namespace Kart
         {
             if (kartStates.IsDrifting())
             {
-                if (kartStates.DriftBoostState == DriftBoostState.Red)
+                if (kartStates.DriftState == DriftState.Red)
                 {
                     _turboCoroutine = StartCoroutine(EnterTurbo());
                 }
@@ -89,8 +87,7 @@ namespace Kart
 
         public void ResetDrift()
         {
-            kartStates.SetDriftTurnState(TurnState.NotTurning);
-            kartStates.SetDriftBoostState(DriftBoostState.NotDrifting);
+            KartEvents.Instance.OnDriftReset();
 
             _driftedLongEnough = false;
             if (_driftedLongEnoughTimer != null)
@@ -133,24 +130,18 @@ namespace Kart
             _hasTurnedOtherSide = false;
             _driftedLongEnough = false;
 
-            switch (kartStates.DriftBoostState)
+            switch (kartStates.DriftState)
             {
-                case DriftBoostState.NotDrifting:
-                    // Enter White Drift
-                    kartStates.SetDriftBoostState(DriftBoostState.White);
+                case DriftState.NotDrifting:
                     KartEvents.Instance.OnDriftWhite();
                     break;
-                case DriftBoostState.White:
-                    // Enter Orange Drift
-                    kartStates.SetDriftBoostState(DriftBoostState.Orange);
+                case DriftState.White:
                     KartEvents.Instance.OnDriftOrange();
                     break;
-                case DriftBoostState.Orange:
-                    // Enter Red Drift
-                    kartStates.SetDriftBoostState(DriftBoostState.Red);
+                case DriftState.Orange:
                     KartEvents.Instance.OnDriftRed();
                     break;
-                case DriftBoostState.Red:
+                case DriftState.Red:
                     break;
             }
 
@@ -164,8 +155,6 @@ namespace Kart
                 StopCoroutine(_physicsBoostCoroutine);
             }
             _physicsBoostCoroutine = StartCoroutine(_kartEngine.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));
-            kartStates.SetDriftTurnState(TurnState.NotTurning);
-            kartStates.SetDriftBoostState(DriftBoostState.Turbo);
 
             KartEvents.Instance.OnDriftBoostStart();
             yield return new WaitForSeconds(BoostDuration);

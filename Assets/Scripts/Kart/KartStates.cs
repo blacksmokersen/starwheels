@@ -6,7 +6,7 @@ namespace Kart
     public enum AirState { Ground, Air }
     public enum AccelerationState { None, Forward, Back }
     public enum TurnState { NotTurning, Left, Right }
-    public enum DriftBoostState { NotDrifting, White, Orange, Red, Turbo }
+    public enum DriftState { NotDrifting, White, Orange, Red, Turbo }
 
     public class KartStates : MonoBehaviour
     {
@@ -14,7 +14,7 @@ namespace Kart
         public AccelerationState AccelerationState = AccelerationState.None;
         public TurnState TurningState = TurnState.NotTurning;
         public TurnState DriftTurnState = TurnState.NotTurning;
-        public DriftBoostState DriftBoostState = DriftBoostState.NotDrifting;
+        public DriftState DriftState = DriftState.NotDrifting;
 
         private bool _isCrashed = false;
 
@@ -31,6 +31,19 @@ namespace Kart
         {
             _rb = GetComponentInChildren<Rigidbody>();
             _kartEvents = GetComponent<KartEvents>();
+
+            _kartEvents.OnDriftLeft += () => DriftTurnState = TurnState.Left;
+            _kartEvents.OnDriftRight += () => DriftTurnState = TurnState.Right;
+
+            _kartEvents.OnDriftWhite += () => DriftState = DriftState.White;
+            _kartEvents.OnDriftOrange += () => DriftState = DriftState.Orange;
+            _kartEvents.OnDriftRed += () => DriftState = DriftState.Red;
+
+            _kartEvents.OnDriftBoostStart += () => DriftTurnState = TurnState.NotTurning;
+            _kartEvents.OnDriftBoostStart += () => DriftState = DriftState.Turbo;
+
+            _kartEvents.OnDriftReset += () => DriftTurnState = TurnState.NotTurning;
+            _kartEvents.OnDriftReset += () => DriftState = DriftState.NotDrifting;
 
             _kartEvents.OnCollisionEnterGround += () => AirState = AirState.Ground;
             _kartEvents.OnHit += () => StartCoroutine(CrashBehaviour());
@@ -63,16 +76,6 @@ namespace Kart
             {
                 SetTurnState(TurnState.NotTurning);
             }
-        }
-
-        public void SetDriftTurnState(TurnState state)
-        {
-            DriftTurnState = state;
-        }
-
-        public void SetDriftBoostState(DriftBoostState state)
-        {
-            DriftBoostState = state;
         }
 
         public bool IsGrounded()

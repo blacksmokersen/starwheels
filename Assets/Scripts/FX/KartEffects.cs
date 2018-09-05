@@ -38,7 +38,7 @@ namespace FX
 
         public void StopSmoke()
         {
-            if (kartStates.DriftBoostState != Kart.DriftBoostState.Turbo)
+            if (kartStates.DriftState != Kart.DriftState.Turbo)
             {
                 smokeLeftWheel.Stop(true);
                 smokeRightWheel.Stop(true);

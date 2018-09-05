@@ -48,8 +48,8 @@ namespace Kart
         public Action OnDriftWhite;
         public Action OnDriftOrange;
         public Action OnDriftRed;
-        public Action OnDrifting;
         public Action OnDriftEnd;
+        public Action OnDriftReset;
         public Action OnDriftBoostStart;
         public Action OnDrfitBoostEnd;
         public Action OnDriftNextState;
