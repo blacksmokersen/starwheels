@@ -50,7 +50,8 @@ namespace Kart
         public Action OnDriftRed;
         public Action OnDrifting;
         public Action OnDriftEnd;
-        public Action OnDriftBoost;
+        public Action OnDriftBoostStart;
+        public Action OnDrfitBoostEnd;
         public Action OnDriftNextState;
 
         //Camera

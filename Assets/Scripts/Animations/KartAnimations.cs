@@ -19,7 +19,7 @@ namespace Animations
                 KartEvents.Instance.OnDriftLeft += LeftDriftAnimation;
                 KartEvents.Instance.OnDriftRight += RightDriftAnimation;
                 KartEvents.Instance.OnDriftEnd += NoDriftAnimation;
-                KartEvents.Instance.OnDriftBoost += NoDriftAnimation;
+                KartEvents.Instance.OnDriftBoostStart += NoDriftAnimation;
             }
         }
 

@@ -29,17 +29,20 @@ namespace FX
             kartEvents.OnDriftStart += StartSmoke;
             kartEvents.OnDriftStart += () => SetWheelsColor(Color.white);
             kartEvents.OnDriftEnd += StopSmoke;
-            kartEvents.OnDriftEnd += () => SetWheelsColor(Color.white);
 
             kartEvents.OnDriftOrange += () => SetWheelsColor(Color.yellow);
             kartEvents.OnDriftRed += () => SetWheelsColor(Color.red);
-            kartEvents.OnDriftBoost += () => SetWheelsColor(Color.green);
+            kartEvents.OnDriftBoostStart += () => SetWheelsColor(Color.green);
+            kartEvents.OnDrfitBoostEnd += StopSmoke;
         }
 
         public void StopSmoke()
         {
-            smokeLeftWheel.Stop(true);
-            smokeRightWheel.Stop(true);
+            if (kartStates.DriftBoostState != Kart.DriftBoostState.Turbo)
+            {
+                smokeLeftWheel.Stop(true);
+                smokeRightWheel.Stop(true);
+            }
         }
         public void StartSmoke()
         {

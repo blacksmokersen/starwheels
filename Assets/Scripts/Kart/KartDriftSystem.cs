@@ -177,9 +177,10 @@ namespace Kart
             kartStates.SetDriftTurnState(TurnState.NotTurning);
             kartStates.SetDriftBoostState(DriftBoostState.Turbo);
 
-            KartEvents.Instance.OnDriftBoost();
+            KartEvents.Instance.OnDriftBoostStart();
             yield return new WaitForSeconds(BoostDuration);
             ResetDrift();
+            KartEvents.Instance.OnDrfitBoostEnd();
         }
         #endregion
     }

@@ -33,7 +33,7 @@ public class CinemachineDynamicScript : MonoBehaviour
 
     private void Start()
     {
-        KartEvents.Instance.OnDriftBoost += BoostCameraBehaviour;
+        KartEvents.Instance.OnDriftBoostStart += BoostCameraBehaviour;
         KartEvents.Instance.OnBackCameraStart += BackCamera;
         KartEvents.Instance.OnBackCameraEnd += BackCamera;
         KartEvents.Instance.OnCameraTurnStart += TurnCamera;

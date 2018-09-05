@@ -62,8 +62,8 @@ namespace Audio
             PlayMotorFullSound();
 
             kartEvents.OnJump += PlayFirstJumpSound;
-            kartEvents.OnDriftBoost += PlayBoostSound;
-            kartEvents.OnDriftBoost += PlayDriftEndSound;
+            kartEvents.OnDriftBoostStart += PlayBoostSound;
+            kartEvents.OnDriftBoostStart += PlayDriftEndSound;
             kartEvents.OnDriftStart += PlayDriftStartSound;
             kartEvents.OnDriftEnd += PlayDriftEndSound;
             kartEvents.OnDoubleJump += (a) => PlaySecondJumpSound();
