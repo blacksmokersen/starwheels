@@ -1,22 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using Photon;
 using ExitGames.Client.Photon;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-public class MainMenu : UnityEngine.MonoBehaviour, IPunCallbacks
+public class MainMenu : MonoBehaviour, IPunCallbacks
 {
     [SerializeField] private Button soloButton;
     [SerializeField] private Button multiButton;
     [SerializeField] private Button optionsButton;
     [SerializeField] private Button quitButton;
 
-    [SerializeField] private GameObject multiplayer;
+    [SerializeField] private GameObject multiplayerMenu;
+    [SerializeField] private GameObject mainButtons;
 
     private Button[] buttons;
     private int currentIndex;
@@ -29,7 +28,6 @@ public class MainMenu : UnityEngine.MonoBehaviour, IPunCallbacks
         soloButton.onClick.AddListener(Solo);
         multiButton.onClick.AddListener(Multi);
         quitButton.onClick.AddListener(Quit);
-        Select(currentIndex);
     }
 
     private void Start()
@@ -37,39 +35,10 @@ public class MainMenu : UnityEngine.MonoBehaviour, IPunCallbacks
         PhotonNetwork.autoJoinLobby = true;
     }
 
-    private void Update()
-    {
-        float ver = Input.GetAxis("Vertical");
-
-        if (ver != oldInput)
-        {
-            Unselect(currentIndex);
-            if (ver == -1) currentIndex++;
-            else if (ver == 1) currentIndex--;
-            if (currentIndex < 0) currentIndex = buttons.Length - 1;
-            if (currentIndex >= buttons.Length) currentIndex = 0;
-            Select(currentIndex);
-            oldInput = ver;
-        }
-
-        if (Input.GetButtonDown("Fire"))
-        {
-            buttons[currentIndex].onClick.Invoke();
-        }
-    }
-
-    private void Unselect(int index)
-    {
-        buttons[index].targetGraphic.color = buttons[index].colors.normalColor;
-    }
-    private void Select(int index)
-    {
-        buttons[index].targetGraphic.color = buttons[index].colors.highlightedColor;
-    }
-
     private void Multi()
     {
-        multiplayer.SetActive(true);
+        multiplayerMenu.SetActive(true);
+        mainButtons.SetActive(false);
     }
 
     private void Solo()
@@ -77,7 +46,7 @@ public class MainMenu : UnityEngine.MonoBehaviour, IPunCallbacks
         Debug.Log("Launching Solo mode");
         PhotonNetwork.offlineMode = true;
         PhotonNetwork.CreateRoom("Solo");
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 
     private void Quit()

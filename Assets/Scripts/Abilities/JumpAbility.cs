@@ -51,7 +51,7 @@ namespace Abilities
             }
             else
             {
-                if (kartStates.AirState == AirStates.Grounded && _canDoubleJump)
+                if (kartStates.IsGrounded() && _canDoubleJump)
                 {
                     _hasDoneFirstJump = true;
                     StartCoroutine(StartCooldownDoubleJump());
@@ -67,33 +67,33 @@ namespace Abilities
                 if (yAxis <= -0.2f)
                 {
                     _kartEngine.DoubleJump(Vector3.back, 0.5f);
-                    kartEvents.OnDoubleJump(Directions.Backward);
+                    kartEvents.OnDoubleJump(Direction.Backward);
                 }
                 else if (yAxis >= 0.2f)
                 {
                     _kartEngine.DoubleJump(Vector3.forward, 0.5f);
-                    kartEvents.OnDoubleJump(Directions.Forward);
+                    kartEvents.OnDoubleJump(Direction.Forward);
                 }
                 else
                 {
                     _kartEngine.DoubleJump(Vector3.forward, 0f);
-                    kartEvents.OnDoubleJump(Directions.Forward);
+                    kartEvents.OnDoubleJump(Direction.Forward);
                 }
             }
             else if (xAxis < -0.5f)
             {
                 _kartEngine.DoubleJump(Vector3.left, 1f);
-                kartEvents.OnDoubleJump(Directions.Left);
+                kartEvents.OnDoubleJump(Direction.Left);
             }
             else if (xAxis >= 0.5f)
             {
                 _kartEngine.DoubleJump(Vector3.right, 1f);
-                kartEvents.OnDoubleJump(Directions.Right);
+                kartEvents.OnDoubleJump(Direction.Right);
             }
             else
             {
                 _kartEngine.DoubleJump(Vector3.forward, 0f);
-                kartEvents.OnDoubleJump(Directions.Forward);
+                kartEvents.OnDoubleJump(Direction.Forward);
             }
         }
 
@@ -107,7 +107,7 @@ namespace Abilities
 
         private bool CanDoubleJump()
         {
-            return _hasDoneFirstJump && kartStates.AirState == AirStates.InAir;
+            return _hasDoneFirstJump && !kartStates.IsGrounded();
         }
     }
 }

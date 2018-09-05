@@ -6,139 +6,171 @@ namespace Audio
     public class KartSoundsScript : BaseKartComponent
     {
         // Clips
-        public AudioClip MotorAccel;
-        public AudioClip Motor;
-        public AudioClip MotorDecel;
-        public AudioClip DriftStart;
-        public AudioClip Drift;
-        public AudioClip DriftEnd;
-        public AudioClip FirstJump;
-        public AudioClip SecondJump;
-        public AudioClip PlayerHit;
-        public AudioClip Boost;
+        [Header("Engine")]
+        public AudioClip MotorAccelClip;
+        public AudioClip MotorFullClip;
+        public AudioClip MotorDecelClip;
+
+        [Header("Drift")]
+        public AudioClip DriftStartClip;
+        public AudioClip DriftFullClip;
+        public AudioClip DriftEndClip;
+        public AudioClip BoostClip;
+
+        [Header("Jump")]
+        public AudioClip FirstJumpClip;
+        public AudioClip SecondJumpClip;
+
+        [Header("Items")]
+        public AudioClip PlayerHitClip;
+        public AudioClip ItemBoxClip;
+        public AudioClip ItemLotteryClip;
 
         // Audio sources
-        private AudioSource soundManager;
-        private AudioSource motorSource;
-        private AudioSource driftSource;
-        private float pitchMotorMagnitudeDiviser = 27;
-        private Coroutine DelayDriftStartRoutine;
+        private AudioSource _soundManager;
+        private AudioSource _motorSource;
+        private AudioSource _driftSource;
+        private float _pitchMotorMagnitudeDiviser = 27f;
+        private Coroutine _delayDriftStartRoutine;
 
         private new void Awake()
         {
             base.Awake();
-            kartEvents.OnHit += Playerhit;
-            soundManager = gameObject.AddComponent<AudioSource>();
-            soundManager.spatialBlend = 1f;
+            _soundManager = gameObject.AddComponent<AudioSource>();
+            _soundManager.spatialBlend = 1f;
+            _soundManager.volume = 1;
 
-            motorSource = gameObject.AddComponent<AudioSource>();
-            motorSource.spatialBlend = 1f;
-            motorSource.loop = true;
-            motorSource.clip = Motor;
+            _motorSource = gameObject.AddComponent<AudioSource>();
+            _motorSource.spatialBlend = 1f;
+            _motorSource.volume = 1;
+            _motorSource.loop = true;
+            _motorSource.clip = MotorFullClip;
 
-            driftSource = gameObject.AddComponent<AudioSource>();
-            driftSource.spatialBlend = 1f;
-            driftSource.loop = true;
-            driftSource.clip = Drift;
+            _driftSource = gameObject.AddComponent<AudioSource>();
+            _driftSource.spatialBlend = 1f;
+            _driftSource.volume = 1;
+            _driftSource.loop = true;
+            _driftSource.clip = DriftFullClip;
 
-            PlayMotor();
+            PlayMotorFullSound();
 
-            kartEvents.OnJump += PlayFirstJump;
-            kartEvents.OnDriftBoost += BoostSound;
-            kartEvents.OnDriftBoost += PlayDriftEnd;
-            kartEvents.OnDriftStart += PlayDriftStart;
-            kartEvents.OnDriftEnd += PlayDriftEnd;
-            kartEvents.OnDoubleJump += (a) => PlaySecondJump();
+            kartEvents.OnJump += PlayFirstJumpSound;
+            kartEvents.OnDriftBoost += PlayBoostSound;
+            kartEvents.OnDriftBoost += PlayDriftEndSound;
+            kartEvents.OnDriftStart += PlayDriftStartSound;
+            kartEvents.OnDriftEnd += PlayDriftEndSound;
+            kartEvents.OnDoubleJump += (a) => PlaySecondJumpSound();
             kartEvents.OnVelocityChange += (velocity) =>
             {
                 Vector3 newVelocity = new Vector3(velocity.x, 0, velocity.z);
-                SetMotorPitch(0.5f + 0.35f * newVelocity.magnitude / pitchMotorMagnitudeDiviser);
+                SetMotorPitch(0.5f + 0.35f * newVelocity.magnitude / _pitchMotorMagnitudeDiviser);
             };
+            kartEvents.OnHit += PlayPlayerHitSound;
+            kartEvents.OnGetItemBox += PlayItemBoxSound;
+            kartEvents.OnGetItemBox += PlayItemLotterySound;
         }
 
-        public void PlayMotorAccel()
+        #region Engine
+        private void PlayMotorAccelSound()
         {
-            if (!soundManager.isPlaying)
+            if (!_soundManager.isPlaying)
             {
-                soundManager.PlayOneShot(MotorAccel);
+                _soundManager.PlayOneShot(MotorAccelClip);
             }
         }
 
-        public void SetMotorPitch(float pitch)
+        private void SetMotorPitch(float pitch)
         {
-            motorSource.pitch = pitch;
+            _motorSource.pitch = pitch;
         }
 
-        public void PlayMotor()
+        private void PlayMotorFullSound()
         {
-            motorSource.Play();
+            _motorSource.Play();
         }
 
-        public void PlayMotorDecel()
+        private void PlayMotorDecelSound()
         {
-            if (!soundManager.isPlaying)
+            if (!_soundManager.isPlaying)
             {
-                soundManager.PlayOneShot(MotorDecel);
+                _soundManager.PlayOneShot(MotorDecelClip);
             }
         }
+        #endregion
 
-        public void StartDrift()
+        #region Drift
+        private void StartDriftSource()
         {
             // AudioSource.PlayClipAtPoint(DriftStart, transform.position);
-            driftSource.Play();
+            _driftSource.Play();
         }
 
-        public void EndDrift()
+        private void StopDriftSource()
         {
-            driftSource.Stop();
+            _driftSource.Stop();
             // AudioSource.PlayClipAtPoint(DriftEnd, transform.position);
         }
 
-        public void PlayDriftStart()
+        private void PlayDriftStartSound()
         {
-            driftSource.PlayOneShot(DriftStart);
-            if (DelayDriftStartRoutine != null) StopCoroutine(DelayDriftStartRoutine);
-            DelayDriftStartRoutine = StartCoroutine(DelayDriftStart());
+            _driftSource.PlayOneShot(DriftStartClip);
+            if (_delayDriftStartRoutine != null) StopCoroutine(_delayDriftStartRoutine);
+            _delayDriftStartRoutine = StartCoroutine(DelayDriftStart());
         }
 
-        public void PlayOnDrift()
+        private void PlayDriftLoopSound()
         {
-            driftSource.clip = Drift;
-            driftSource.loop = true;
-            driftSource.Play();
+            _driftSource.clip = DriftFullClip;
+            _driftSource.loop = true;
+            _driftSource.Play();
         }
 
-        public void PlayDriftEnd()
+        private void PlayDriftEndSound()
         {
-            if (DelayDriftStartRoutine != null) StopCoroutine(DelayDriftStartRoutine);
-            driftSource.Stop();
-            driftSource.PlayOneShot(DriftEnd);
+            if (_delayDriftStartRoutine != null) StopCoroutine(_delayDriftStartRoutine);
+            _driftSource.Stop();
+            _driftSource.PlayOneShot(DriftEndClip);
         }
 
-        public void PlayFirstJump()
+        private void PlayBoostSound()
         {
-            soundManager.PlayOneShot(FirstJump);
+            _soundManager.PlayOneShot(BoostClip);
         }
 
-        public void PlaySecondJump()
+        private IEnumerator DelayDriftStart()
         {
-            soundManager.PlayOneShot(SecondJump);
+            yield return new WaitForSeconds(DriftStartClip.length);
+            PlayDriftLoopSound();
+        }
+        #endregion
+
+        #region Jump
+        private void PlayFirstJumpSound()
+        {
+            _soundManager.PlayOneShot(FirstJumpClip);
         }
 
-        public void Playerhit()
+        private void PlaySecondJumpSound()
         {
-            soundManager.PlayOneShot(PlayerHit);
+            _soundManager.PlayOneShot(SecondJumpClip);
+        }
+        #endregion
+
+        #region Items
+        private void PlayPlayerHitSound()
+        {
+            _soundManager.PlayOneShot(PlayerHitClip);
         }
 
-        public void BoostSound()
+        private void PlayItemBoxSound()
         {
-            soundManager.PlayOneShot(Boost);
+            _soundManager.PlayOneShot(ItemBoxClip);
         }
 
-        IEnumerator DelayDriftStart()
+        private void PlayItemLotterySound()
         {
-            yield return new WaitForSeconds(DriftStart.length);
-            PlayOnDrift();
+            _soundManager.PlayOneShot(ItemLotteryClip);
         }
+        #endregion
     }
 }

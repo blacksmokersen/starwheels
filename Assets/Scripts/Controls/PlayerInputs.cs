@@ -13,37 +13,41 @@ namespace Controls
         public bool DisableMovement;
         public GameObject EscapeMEnu;
 
-        private CinemachineDynamicScript cinemachineDynamicScript;
-
         private new void Awake()
         {
             base.Awake();
-            kartEvents.OnHit += () => Enabled = false;
-            kartEvents.OnHitRecover += () => Enabled = true;
-        }
-
-        private void Start()
-        {
-            cinemachineDynamicScript = kartHub.cinemachineDynamicScript;
+            kartEvents.OnHit += () => SetInputEnabled(false);
+            kartEvents.OnHitRecover += () => SetInputEnabled(true);
         }
 
         void FixedUpdate()
         {
-            if (Enabled && kartHub != null)
+            if (photonView.isMine)
             {
-                Axis();
-                ButtonsPressed();
+                if (Enabled && kartHub != null)
+                {
+                    Axis();
+                    ButtonsPressed();
+                }
             }
         }
 
         private void Update()
         {
-            if (Enabled && kartHub != null)
+            if (photonView.isMine)
             {
-                ButtonsDown();
-                ButtonsUp();
-                AxisOnUse();
+                if (Enabled && kartHub != null)
+                {
+                    ButtonsDown();
+                    ButtonsUp();
+                    AxisOnUse();
+                }
             }
+        }
+
+        void SetInputEnabled(bool b)
+        {
+            Enabled = b;
         }
 
         void Axis()
@@ -70,7 +74,11 @@ namespace Controls
             }
             if (Input.GetButtonDown(Constants.BackCamera))
             {
-                cinemachineDynamicScript.BackCamera(true);
+                KartEvents.Instance.OnBackCameraStart(true);
+            }
+            if (Input.GetButtonDown(Constants.ResetCamera))
+            {
+                KartEvents.Instance.OnCameraTurnReset();
             }
 
             // Mouse
@@ -100,12 +108,12 @@ namespace Controls
             }
             if (Input.GetButtonUp(Constants.BackCamera))
             {
-                cinemachineDynamicScript.BackCamera(false);
+                KartEvents.Instance.OnBackCameraEnd(false);
             }
         }
         void AxisOnUse()
         {
-          //  cinemachineDynamicScript.TurnCamera(Input.GetAxis(Constants.TurnCamera));
+            KartEvents.Instance.OnCameraTurnStart(Input.GetAxis(Constants.TurnCamera));
         }
     }
 }

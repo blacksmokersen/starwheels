@@ -13,25 +13,35 @@ namespace Items
         [Header("Lottery")]
         public float ShorteningSeconds;
 
-        private float lotteryTimer = 0f;
-        private bool lotteryStarted = false;
-        private bool shortenLottery = false;
+        private float _lotteryTimer = 0f;
+        private bool _lotteryStarted = false;
+        private bool _shortenLottery = false;
+
+        // CORE
 
         private new void Awake()
         {
             base.Awake();
-            kartEvents.OnCollisionEnterItemBox += () => {
+
+            kartEvents.OnGetItemBox += () => {
                 if (photonView.isMine || !PhotonNetwork.connected)
                     StartCoroutine(GetLotteryItem());
             };
         }
 
-        public void ItemAction(Directions direction)
+        // PUBLIC
+
+        public bool IsEmpty()
         {
-            if(lotteryStarted && !shortenLottery && lotteryTimer > 1f)
+            return Item == null;
+        }
+
+        public void ItemAction(Direction direction)
+        {
+            if(_lotteryStarted && !_shortenLottery && _lotteryTimer > 1f)
             {
-                lotteryTimer += ShorteningSeconds;
-                shortenLottery = true;
+                _lotteryTimer += ShorteningSeconds;
+                _shortenLottery = true;
             }
             else
             {
@@ -39,7 +49,7 @@ namespace Items
             }
         }
 
-        public void UseStack(Directions direction)
+        public void UseStack(Direction direction)
         {
             if (Item != null)
             {
@@ -53,13 +63,14 @@ namespace Items
                     }
                 }
             }
-            kartEvents.OnItemUsed(Item,Count);
+
+            kartEvents.OnItemUsed(Item, Count);
         }
 
-        public void UseItem(ItemData item, Directions direction)
+        public void UseItem(ItemData item, Direction direction)
         {
             ItemBehaviour itemObj;
-            var obj = PhotonNetwork.Instantiate(item.ItemPrefab.name, new Vector3(1500,1500,1500), Quaternion.identity, 0);
+            var obj = PhotonNetwork.Instantiate(item.ItemPrefab.name, new Vector3(0, -10, 0), Quaternion.identity, 0);
             itemObj = obj.GetComponent<ItemBehaviour>();
             itemObj.Spawn(this,direction);
         }
@@ -67,27 +78,34 @@ namespace Items
 
         public IEnumerator GetLotteryItem()
         {
-            if (Item != null || lotteryStarted) yield break;
-            lotteryStarted = true;
+            if (Item != null || _lotteryStarted) yield break;
+
+            _lotteryStarted = true;
             var lotteryIndex = 0;
             var items = ItemsLottery.Items;
-            while (lotteryTimer < ItemsLottery.LotteryDuration)
+
+            while (_lotteryTimer < ItemsLottery.LotteryDuration)
             {
-                kartEvents.OnItemUsed(items[(lotteryIndex++)%items.Length],0);
+                kartEvents.OnItemUsed(items[(lotteryIndex++) % items.Length], 0);
                 yield return new WaitForSeconds(0.1f);
-                lotteryTimer+=0.1f;
+                _lotteryTimer += 0.1f;
             }
+
             Item = ItemsLottery.GetRandomItem();
             Count = Item.Count;
+
             kartEvents.OnItemUsed(Item, Count);
+
             ResetLottery();
         }
 
+        // PRIVATE
+
         private void ResetLottery()
         {
-            lotteryTimer = 0f;
-            lotteryStarted = false;
-            shortenLottery = false;
+            _lotteryTimer = 0f;
+            _lotteryStarted = false;
+            _shortenLottery = false;
         }
     }
 }

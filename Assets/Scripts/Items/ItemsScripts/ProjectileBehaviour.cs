@@ -7,17 +7,18 @@ namespace Items
     [RequireComponent(typeof(AudioSource))]
     public class ProjectileBehaviour : ItemBehaviour
     {
-        #region Variable
+        #region Variables
         [Header("Projectile parameters")]
         public float Speed;
+        public bool DestroyAfterHit = true;
 
         [Header("Ground parameters")]
-        public AirStates AirState = AirStates.InAir;
         public float DistanceForGrounded;
         public float LocalGravity;
 
         [Header("Particles Effects")]
         public ParticleSystem CollisionParticles;
+        public int ParticlesToEmitOnHit = 2000;
 
         [Header("Sounds")]
         public AudioClip LaunchSound;
@@ -28,20 +29,15 @@ namespace Items
         protected Rigidbody rb;
         protected KartInventory owner;
 
-        private AudioSource audioSource;
-        private const float ownerImmunityDuration = 1f;
-        private bool ownerImmune = true;
+        private AudioSource _audioSource;
+        private const float _ownerImmunityDuration = 0.5f;
+        private bool _ownerImmune = true;
         #endregion
 
         protected void Awake()
         {
             rb = GetComponent<Rigidbody>();
-            audioSource = GetComponent<AudioSource>();
-        }
-
-        protected void Start()
-        {
-
+            _audioSource = GetComponent<AudioSource>();
         }
 
         protected void Update()
@@ -55,7 +51,41 @@ namespace Items
             ApplyLocalGravity();
         }
 
-        #region ItemLogic
+        #region Instantiation
+
+        public override void Spawn(KartInventory kart, Direction direction)
+        {
+            if (direction == Direction.Forward || direction == Direction.Default)
+            {
+                var rot = new Vector3(0, kart.transform.rotation.eulerAngles.y, 0);
+                transform.rotation = Quaternion.Euler(rot);
+                var vel = kart.transform.forward * Speed;
+                vel.y = 0;
+                rb.velocity = vel;
+                transform.position = kart.ItemPositions.FrontPosition.position;
+            }
+            else if (direction == Direction.Backward)
+            {
+                var rot = new Vector3(0, kart.transform.rotation.eulerAngles.y + 180, 0); // Apply 180° turn
+                transform.rotation = Quaternion.Euler(rot);
+                rb.velocity = -kart.transform.forward * Speed;
+                transform.position = kart.ItemPositions.BackPosition.position;
+            }
+            owner = kart;
+            StartCoroutine(StartOwnerImmunity());
+            PlayLaunchSound();
+            PlayFlySound();
+        }
+
+        private IEnumerator StartOwnerImmunity()
+        {
+            _ownerImmune = true;
+            yield return new WaitForSeconds(_ownerImmunityDuration);
+            _ownerImmune = false;
+        }
+        #endregion
+
+        #region Physics
 
         protected void NormalizeSpeed()
         {
@@ -88,89 +118,82 @@ namespace Items
                 rb.AddForce(Vector3.down * LocalGravity);
             }
         }
-
-        public override void Spawn(KartInventory kart, Directions direction)
-        {
-            if (direction == Directions.Forward || direction == Directions.Default)
-            {
-                var rot = new Vector3(0,kart.transform.rotation.eulerAngles.y,0);
-                transform.rotation = Quaternion.Euler(rot);
-                var vel = kart.transform.forward * Speed;
-                vel.y = 0;
-                rb.velocity = vel;
-                transform.position = kart.ItemPositions.FrontPosition.position;
-            }
-            else if (direction == Directions.Backward)
-            {
-                var rot = new Vector3(0, kart.transform.rotation.eulerAngles.y + 180, 0); // Apply 180° turn
-                transform.rotation = Quaternion.Euler(rot);
-                rb.velocity = -kart.transform.forward * Speed;
-                transform.position = kart.ItemPositions.BackPosition.position;
-            }
-            owner = kart;
-            StartCoroutine(StartOwnerImmunity());
-            PlayLaunchSound();
-            PlayFlySound();
-        }
-
-        IEnumerator StartOwnerImmunity()
-        {
-            ownerImmune = true;
-            yield return new WaitForSeconds(ownerImmunityDuration);
-            ownerImmune = false;
-        }
         #endregion
 
         #region Collisions
 
-        public void CheckCollision(Collider other)
+        public void CheckCollision(GameObject kartCollisionObject)
         {
-            var otherKartInventory = other.gameObject.GetComponentInParent<KartHub>().kartInventory;
-
-            if (owner == null || (otherKartInventory == owner && ownerImmune)) return;
-
-            if (!other.gameObject.GetComponentInParent<KartHealthSystem>().IsInvincible)
+            if (OwnerIsSet() && !IsOwnerAndImmune(kartCollisionObject))
             {
-                owner.gameObject.GetComponentInParent<KartEvents>().HitSomeoneElse();
-            }
-            other.gameObject.GetComponentInParent<KartEvents>().OnHit();
-            CollisionParticles.Emit(2000);
-            PlayPlayerHitSound();
-            if (GetType().Name != "GuileBehaviour")
-            {
-                DestroyObject();
+                if (!kartCollisionObject.GetComponentInParent<KartHealthSystem>().IsInvincible && !IsOnSameTeam(kartCollisionObject))
+                {
+                    if(!IsOwner(kartCollisionObject))
+                        SendOwnerSuccessfulHitEvent();
+                    SendTargetOnHitEvent(kartCollisionObject);
+                }
+                CollisionParticles.Emit(ParticlesToEmitOnHit);
+                PlayPlayerHitSound();
+                if (DestroyAfterHit)
+                {
+                    DestroyObject();
+                }
             }
         }
 
-        protected void OnTriggerEnter(Collider other)
+        private bool OwnerIsSet()
         {
-            if (other.gameObject.tag == Constants.KartTriggerTag)
-            {
-                CheckCollision(other);
-            }
+            return owner != null;
+        }
+
+        private bool IsOwner(GameObject other)
+        {
+            var otherKartInventory = other.GetComponentInParent<KartHub>().kartInventory;
+            return otherKartInventory == owner;
+        }
+
+        private bool IsOwnerAndImmune(GameObject other)
+        {
+            var otherKartInventory = other.GetComponentInParent<KartHub>().kartInventory;
+            return otherKartInventory == owner && _ownerImmune;
+        }
+        private bool IsOnSameTeam(GameObject other)
+        {
+            var otherTeam = other.GetComponentInParent<PhotonView>().owner.GetTeam();
+            return otherTeam == photonView.owner.GetTeam() && !IsOwner(other);
+        }
+
+        private void SendOwnerSuccessfulHitEvent()
+        {
+            //owner.gameObject.GetComponentInParent<KartEvents>().HitSomeoneElse();
+        }
+
+        private void SendTargetOnHitEvent(GameObject kartCollisionObject)
+        {
+            kartCollisionObject.gameObject.GetComponentInParent<KartEvents>().CallOnHitEvent();
         }
 
         #endregion
 
         #region Audio
-        public void PlayLaunchSound()
+        protected void PlayLaunchSound()
         {
-            audioSource.PlayOneShot(LaunchSound);
+            _audioSource.PlayOneShot(LaunchSound);
         }
 
-        public void PlayFlySound()
+        protected void PlayFlySound()
         {
-            audioSource.clip = FlySound;
-            audioSource.loop = true;
-            audioSource.Play();
+            _audioSource.clip = FlySound;
+            _audioSource.loop = true;
+            _audioSource.Play();
         }
 
-        public void PlayPlayerHitSound()
+        protected void PlayPlayerHitSound()
         {
             AudioSource.PlayClipAtPoint(PlayerHitSound, transform.position);
         }
 
-        public void PlayCollisionSound()
+        protected void PlayCollisionSound()
         {
             AudioSource.PlayClipAtPoint(CollisionSound, transform.position);
         }

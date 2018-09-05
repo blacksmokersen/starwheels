@@ -12,7 +12,6 @@ namespace Animations
         {
             base.Awake();
             animator = GetComponent<Animator>();
-
             if (photonView.isMine)
             {
                 KartEvents.Instance.OnDoubleJump += DoubleJumpAnimation;
@@ -24,27 +23,27 @@ namespace Animations
             }
         }
 
-        public void DoubleJumpAnimation(Directions direction)
+        public void DoubleJumpAnimation(Direction direction)
         {
             photonView.RPC("RPCDoubleJumpAnimation", PhotonTargets.All,direction);
         }
 
 
         [PunRPC]
-        public void RPCDoubleJumpAnimation(Directions direction)
+        public void RPCDoubleJumpAnimation(Direction direction)
         {
             switch (direction)
             {
-                case Directions.Forward:
+                case Direction.Forward:
                     FrontJumpAnimation();
                     break;
-                case Directions.Backward:
+                case Direction.Backward:
                     BackJumpAnimation();
                     break;
-                case Directions.Left:
+                case Direction.Left:
                     LeftJumpAnimation();
                     break;
-                case Directions.Right:
+                case Direction.Right:
                     RightJumpAnimation();
                     break;
             }

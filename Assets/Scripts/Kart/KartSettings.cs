@@ -2,30 +2,23 @@
 
 namespace Kart
 {
-    public class KartSettings : MonoBehaviour
+    public class KartSettings : BaseKartComponent
     {
         [SerializeField] private MeshRenderer kartRenderer;
         [SerializeField] private TextMesh nameText;
         [SerializeField] private GameObject backCamera;
 
-        private void Awake()
+        // CORE
+
+        private new void Awake()
         {
-            PhotonView photonView = GetComponentInParent<PhotonView>();
+            base.Awake();
             if (PhotonNetwork.connected && !photonView.isMine)
             {
                 SetName(GetPlayer(photonView).NickName);
                 Destroy(backCamera);
             }
-        }
-
-        public void SetColor(Color color)
-        {
-            kartRenderer.material.color = color;
-        }
-
-        public void SetName(string name)
-        {
-            nameText.text = name;
+            SetColor(GetPlayer(photonView).GetTeam());
         }
 
         private void Update()
@@ -33,11 +26,37 @@ namespace Kart
             nameText.transform.LookAt(Camera.main.transform);
         }
 
+        // PUBLIC
+
+        public void SetColor(PunTeams.Team team)
+        {
+            switch (team)
+            {
+                case PunTeams.Team.blue:
+                    kartRenderer.material = Resources.Load<Material>(Constants.BlueKartTextureName);
+                    break;
+                case PunTeams.Team.red:
+                    kartRenderer.material = Resources.Load<Material>(Constants.RedKartTextureName);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void SetName(string name)
+        {
+            nameText.text = name;
+        }
+
+        // PRIVATE
+
         private PhotonPlayer GetPlayer(PhotonView view)
         {
             foreach (PhotonPlayer player in PhotonNetwork.playerList)
-                if (player.ID == view.ownerId)
-                    return player;
+            {
+                if (player.ID == view.ownerId) return player;
+            }
+
             return null;
         }
     }

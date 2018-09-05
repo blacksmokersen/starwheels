@@ -18,7 +18,7 @@ public class IonBeamLaserBehaviour : MonoBehaviour
     private void Awake()
     {
         onExplode = true;
-        float currentTimer = WarningPosition.transform.localScale.x;
+        //float currentTimer = WarningPosition.transform.localScale.x;
     }
 
     private void Update()

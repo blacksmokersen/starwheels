@@ -7,12 +7,12 @@ namespace FX
         [HideInInspector] public ParticleSystem smokeLeftWheel;
         [HideInInspector] public ParticleSystem smokeRightWheel;
 
-        public ParticleSystem[] Lifes;
         public ParticleSystem[] LifeBursts;
         [Space(10)]
         [Header("Particles")]
         public ParticleSystem MainJumpParticles;
         public ParticleSystem JumpReloadParticles;
+
         private int numberOfParticles = 300;
 
         private new void Awake()
@@ -28,8 +28,8 @@ namespace FX
 
             kartEvents.OnDriftStart += StartSmoke;
             kartEvents.OnDriftStart += () => SetWheelsColor(Color.white);
-            kartEvents.OnDriftReset += StopSmoke;
-            kartEvents.OnDriftReset += () => SetWheelsColor(Color.white);
+            kartEvents.OnDriftEnd += StopSmoke;
+            kartEvents.OnDriftEnd += () => SetWheelsColor(Color.white);
 
             kartEvents.OnDriftOrange += () => SetWheelsColor(Color.yellow);
             kartEvents.OnDriftRed += () => SetWheelsColor(Color.red);
@@ -51,19 +51,7 @@ namespace FX
 
         public void HealthParticlesManagement(int health)
         {
-            if (health > 0)
-            {
-                Lifes[kartHub.kartHealthSystem.Health].Stop(true);
-                LifeBursts[health].Play();
-            }
-        }
-
-        public void ResetLives()
-        {
-            foreach (ParticleSystem ps in Lifes)
-            {
-                ps.Play();
-            }
+            LifeBursts[0].Play();
         }
 
         public void MainJumpParticlesEmit()
@@ -73,7 +61,7 @@ namespace FX
 
         public void ReloadJumpParticlesEmit()
         {
-          //  JumpReloadParticles.Emit(numberOfParticles);
+            //  JumpReloadParticles.Emit(numberOfParticles);
         }
 
         public void SetWheelsColor(Color color)
@@ -86,4 +74,3 @@ namespace FX
         }
     }
 }
-

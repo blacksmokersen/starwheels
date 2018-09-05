@@ -13,7 +13,16 @@ namespace Items {
         {
             if (other.gameObject.tag == Constants.KartTriggerTag)
             {
-                GetComponentInParent<RocketBehaviour>().CheckCollision(other);
+                GetComponentInParent<RocketBehaviour>().CheckCollision(other.gameObject);
+            }
+            else if(other.gameObject.CompareTag(Constants.DiskItemTag))
+            {
+                other.gameObject.GetComponentInParent<ItemBehaviour>().DestroyObject();
+                GetComponentInParent<ItemBehaviour>().DestroyObject();
+            }
+            else if (other.gameObject.CompareTag(Constants.RocketItemTag))
+            {
+                GetComponentInParent<ItemBehaviour>().DestroyObject();
             }
         }
     }

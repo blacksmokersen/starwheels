@@ -8,9 +8,11 @@ namespace Items
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == Constants.ProjectileTag && Activated)
+            if ((other.gameObject.CompareTag(Constants.DiskItemTag) ||
+                other.gameObject.CompareTag(Constants.RocketItemTag))
+                && Activated)
             {
-                other.gameObject.GetComponent<ProjectileBehaviour>().DestroyObject(); // Destroy the projectile
+                other.gameObject.GetComponentInParent<ProjectileBehaviour>().DestroyObject(); // Destroy the projectile
                 GetComponentInParent<MineBehaviour>().PlayExplosion();
                 GetComponentInParent<MineBehaviour>().DestroyObject(); // Destroy the mine root item
             }

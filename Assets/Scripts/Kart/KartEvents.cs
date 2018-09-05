@@ -7,31 +7,35 @@ namespace Kart
     public class KartEvents : MonoBehaviour
     {
         public static KartEvents Instance;
+
         private void Awake()
         {
-            PhotonView view = GetComponent<PhotonView>();
-            if (view.isMine || !PhotonNetwork.connected)
+            if (!PhotonNetwork.connected || GetComponent<PhotonView>().isMine)
             {
                 Instance = this;
             }
         }
 
+        // Movements
         public Action<Vector3> OnVelocityChange;
-        public Action<float> OnEnergyConsumption;
         public Action<float> OnTurn;
+
+        // Game
+        public Action<float> OnEnergyConsumption;
         public Action<ItemData, int> OnItemUsed;
         public Action OnHit;
         public Action OnHitRecover;
         public Action HitSomeoneElse;
         public Action<int> OnHealthLoss;
+        public Action OnScoreChange;
 
         // Collisions
         public Action OnCollisionEnterGround;
-        public Action OnCollisionEnterItemBox;
+        public Action OnGetItemBox;
 
         // Jumping Capacity
         public Action OnJump;
-        public Action<Directions> OnDoubleJump;
+        public Action<Direction> OnDoubleJump;
         public Action OnDoubleJumpReset;
 
         // Drifting
@@ -44,8 +48,23 @@ namespace Kart
         public Action OnDrifting;
         public Action OnDriftEnd;
         public Action OnDriftBoost;
-        public Action OnDriftReset;
         public Action OnDriftNextState;
-        public Action OnScoreChange;
+
+        //Camera
+        public Action<bool> OnBackCameraStart;
+        public Action<bool> OnBackCameraEnd;
+        public Action<float> OnCameraTurnStart;
+        public Action OnCameraTurnReset;
+
+        public void CallOnHitEvent()
+        {
+            GetComponent<PhotonView>().RPC("RPCCallOnHitEvent", PhotonTargets.All);
+        }
+
+        [PunRPC]
+        public void RPCCallOnHitEvent()
+        {
+            OnHit();
+        }
     }
 }

@@ -2,10 +2,10 @@
 {
     public class GuileBehaviour : ProjectileBehaviour
     {
-        new void Start()
+        void Start()
         {
-            base.Start();
             rb.useGravity = false;
+            DestroyAfterHit = true;
             DestroyObject(10f);
         }
 
@@ -13,16 +13,6 @@
         new void Update()
         {
 
-        }
-
-        private new void OnTriggerEnter(UnityEngine.Collider other)
-        {
-            base.OnTriggerEnter(other);
-            if(other.gameObject.CompareTag(Constants.GroundItemTag) ||
-                other.gameObject.CompareTag(Constants.ProjectileTag))
-            {
-                other.gameObject.GetComponentInParent<ItemBehaviour>().DestroyObject();
-            }
         }
     }
 }

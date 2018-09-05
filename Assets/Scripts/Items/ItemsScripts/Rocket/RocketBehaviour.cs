@@ -21,9 +21,8 @@ namespace Items
             rocketLock = GetComponentInChildren<RocketLockTarget>();
         }
 
-        private new void Start()
+        private void Start()
         {
-            base.Start();
             rocketLock.Owner = owner;
         }
 
@@ -53,13 +52,8 @@ namespace Items
                 {
                     transform.Rotate(Vector3.up * actualTurnSpeed * Time.deltaTime);
                 }
-                else
-                { }
             }
         }
-
-        // We override it because we don't need the default behaviour of the trigger
-        private new void OnTriggerEnter(Collider other) { }
 
         private void OnCollisionEnter(Collision collision)
         {

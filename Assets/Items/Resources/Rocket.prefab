@@ -71,15 +71,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4540307016684214}
+  - component: {fileID: 114038636429128078}
   - component: {fileID: 114423031125255274}
+  - component: {fileID: 114849343152606888}
   - component: {fileID: 54666048211524458}
   - component: {fileID: 135765547132418206}
-  - component: {fileID: 114038636429128078}
-  - component: {fileID: 114849343152606888}
   - component: {fileID: 82181477320484964}
+  - component: {fileID: 114016643574653904}
   m_Layer: 0
   m_Name: Rocket
-  m_TagString: Projectile
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -92,11 +93,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4417356342596450}
-  - component: {fileID: 135839622548525136}
   - component: {fileID: 114722433335964876}
+  - component: {fileID: 136835068504489122}
   m_Layer: 0
   m_Name: RocketPlayerTrigger
-  m_TagString: Untagged
+  m_TagString: Rocket
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -137,13 +138,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1731376856325852}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 1.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4540307016684214}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!4 &4535575265765028
 Transform:
   m_ObjectHideFlags: 1
@@ -152,7 +153,7 @@ Transform:
   m_GameObject: {fileID: 1136037534776732}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 20, y: 20, z: 20}
   m_Children:
   - {fileID: 4661629293043118}
   - {fileID: 4102279265202616}
@@ -426,6 +427,19 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &114016643574653904
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1507300503580378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 1
 --- !u!114 &114038636429128078
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -447,6 +461,7 @@ MonoBehaviour:
   ownershipTransfer: 0
   ObservedComponents:
   - {fileID: 114849343152606888}
+  - {fileID: 114016643574653904}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
@@ -464,11 +479,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 65
-  AirState: 1
+  DestroyAfterHit: 1
   DistanceForGrounded: 1.3
   LocalGravity: 30
   CollisionParticles: {fileID: 198258525634490310, guid: d67b1b8f048e34743b46b7244223ca2b,
     type: 2}
+  ParticlesToEmitOnHit: 2000
   LaunchSound: {fileID: 8300000, guid: c1d896bc535fe704491520b297b07c5e, type: 3}
   FlySound: {fileID: 8300000, guid: 3e50d50b352900242bba04e18f25a334, type: 3}
   PlayerHitSound: {fileID: 8300000, guid: 4da19c3a7e505ab4dbbce9e400e28bc7, type: 3}
@@ -477,7 +493,7 @@ MonoBehaviour:
   NormalTurnSpeed: 70
   QuickTurnSpeed: 350
   QuickTurnDuration: 0.4
-  AntiShakingThreshold: 0.7
+  AntiShakingThreshold: 2
 --- !u!114 &114658414787383878
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -565,7 +581,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    ExtrapolateOption: 0
+    ExtrapolateOption: 2
     ExtrapolateSpeed: 1
     ExtrapolateIncludingRoundTripTime: 1
     ExtrapolateNumberOfStoredPositions: 1
@@ -604,8 +620,8 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 3
   m_Center: {x: -0.0021139681, y: -0.000000014901165, z: 0.18926498}
---- !u!135 &135839622548525136
-SphereCollider:
+--- !u!136 &136835068504489122
+CapsuleCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -613,8 +629,9 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 10
+  m_Radius: 6
+  m_Height: 23
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!198 &198950081263085840
 ParticleSystem:

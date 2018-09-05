@@ -54,10 +54,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4928421063608056}
-  - component: {fileID: 135215965974701520}
+  - component: {fileID: 136307829594525636}
+  - component: {fileID: 114452897881348176}
   m_Layer: 9
-  m_Name: PlayerTrigger
-  m_TagString: Untagged
+  m_Name: Trigger
+  m_TagString: GuileItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -71,16 +72,16 @@ GameObject:
   m_Component:
   - component: {fileID: 4585230083791454}
   - component: {fileID: 54044191896366344}
-  - component: {fileID: 135914093191059536}
   - component: {fileID: 114938298749506902}
   - component: {fileID: 114540808614522802}
   - component: {fileID: 114930422525863730}
   - component: {fileID: 198069226958243806}
   - component: {fileID: 199884811507274230}
   - component: {fileID: 82316524787443154}
+  - component: {fileID: 114479064459123044}
   m_Layer: 9
   m_Name: Guile
-  m_TagString: GuileItem
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,7 +120,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1815964786037566}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 472.22003, y: -59.309246, z: 2573.5115}
+  m_LocalPosition: {x: -2.1589777, y: 9.367664, z: 24.590815}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4928421063608056}
@@ -133,13 +134,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1800600020838630}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: -0.7}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children: []
   m_Father: {fileID: 4585230083791454}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!23 &23933853824636870
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -365,6 +366,30 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &114452897881348176
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1800600020838630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 022d27b6ccbcead41a89245c6b486778, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114479064459123044
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1815964786037566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 1
 --- !u!114 &114540808614522802
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -386,6 +411,7 @@ MonoBehaviour:
   ownershipTransfer: 0
   ObservedComponents:
   - {fileID: 114930422525863730}
+  - {fileID: 114479064459123044}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
@@ -480,16 +506,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 100
-  AirState: 1
+  DestroyAfterHit: 1
   DistanceForGrounded: 0
   LocalGravity: 0
   CollisionParticles: {fileID: 198069226958243806}
+  ParticlesToEmitOnHit: 2000
   LaunchSound: {fileID: 8300000, guid: 0a1c8c398d82b494da60ee745d5c834c, type: 3}
   FlySound: {fileID: 8300000, guid: 1768a1b81a4377d46aa03b33aab8b3ec, type: 3}
   PlayerHitSound: {fileID: 8300000, guid: 592d98298755d914484638960a114ed6, type: 3}
   CollisionSound: {fileID: 8300000, guid: 592d98298755d914484638960a114ed6, type: 3}
---- !u!135 &135215965974701520
-SphereCollider:
+--- !u!136 &136307829594525636
+CapsuleCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -497,20 +524,9 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 4
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &135914093191059536
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1815964786037566}
-  m_Material: {fileID: 13400000, guid: 7f5cb749e757d58478edd4b5b03e2c4c, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.8
+  m_Height: 3.5
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!198 &198069226958243806
 ParticleSystem:

@@ -45,21 +45,17 @@ namespace Multiplayer
         public void OnJoinedRoom()
         {
             Debug.Log("OnJoinedRoom");
-            lobbyMenu.HideLobbyMenu();
             roomMenu.ShowRoomMenu();
-            roomMenu.RefreshRoom();
         }
 
         public void OnPhotonPlayerConnected(PhotonPlayer newPlayer)
         {
             Debug.Log("OnPhotonPlayerConnected: " + newPlayer);
-            roomMenu.RefreshRoom();
         }
 
         public void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
         {
             Debug.Log("OnPhotonPlayerDisconnected: " + otherPlayer);
-            roomMenu.RefreshRoom();
         }
 
         public void OnLeftRoom()
