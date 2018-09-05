@@ -62,20 +62,24 @@ namespace Audio
             PlayMotorFullSound();
 
             kartEvents.OnJump += PlayFirstJumpSound;
+            kartEvents.OnDoubleJump += (a) => PlaySecondJumpSound();
+
             kartEvents.OnDriftBoostStart += PlayBoostSound;
             kartEvents.OnDriftBoostStart += PlayDriftEndSound;
             kartEvents.OnDriftStart += PlayDriftStartSound;
             kartEvents.OnDriftEnd += PlayDriftEndSound;
-            kartEvents.OnDoubleJump += (a) => PlaySecondJumpSound();
+
             kartEvents.OnVelocityChange += (velocity) =>
             {
                 Vector3 newVelocity = new Vector3(velocity.x, 0, velocity.z);
                 SetMotorPitch(0.5f + 0.35f * newVelocity.magnitude / _pitchMotorMagnitudeDiviser);
             };
+
             kartEvents.OnHit += PlayPlayerHitSound;
-            kartEvents.OnGetItemBox += PlayItemBoxSound;
+
             kartEvents.OnGetItemBox += StartItemLotterySound;
             kartEvents.OnLotteryStop += StopItemLotterySound;
+            kartEvents.OnLotteryStop += PlayItemBoxSound;
         }
 
         #region Engine
