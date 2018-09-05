@@ -10,6 +10,7 @@ namespace Abilities
         [Header("TPBack parameters")]
         public float ActivationTime;
         public float AliveTime;
+        public float MaxDistance;
         public float ForwardThrowingForce;
         public float TimesLongerThanHighThrow;
 
@@ -17,7 +18,9 @@ namespace Abilities
         public AudioClip LaunchSound;
 
         private AudioSource _audioSource;
+        private bool _canBeEnabled = false;
         private bool _enabled = false;
+        private Transform _kart;
 
         // CORE
 
@@ -31,6 +34,14 @@ namespace Abilities
             StartCoroutine(ActivationDelay());
         }
 
+        private void Update()
+        {
+            if (_kart != null)
+            {
+                CheckForMaxDistance();
+            }
+        }
+
         // PUBLIC
 
         public bool IsEnabled()
@@ -38,17 +49,20 @@ namespace Abilities
             return _enabled;
         }
 
-        public void Launch(KartInventory kart, Directions direction)
+        public void Launch(KartInventory kart, Direction direction)
         {
-            if (direction == Directions.Forward)
+            _kart = kart.GetComponentInParent<Rigidbody>().transform;
+
+            if (direction == Direction.Forward)
             {
                 transform.position = kart.ItemPositions.FrontPosition.position;
                 GetComponent<Rigidbody>().AddForce((kart.transform.forward + kart.transform.up / TimesLongerThanHighThrow) * ForwardThrowingForce, ForceMode.Impulse);
             }
-            else if (direction == Directions.Backward)
+            else if (direction == Direction.Backward)
             {
                 transform.position = kart.ItemPositions.BackPosition.position;
             }
+
             PlayLaunchSound();
         }
 
@@ -59,10 +73,24 @@ namespace Abilities
 
         // PRIVATE
 
+        private void CheckForMaxDistance()
+        {
+            if (Vector3.Distance(_kart.position, transform.position) > MaxDistance)
+            {
+                StopCoroutine(AliveDuration());
+                Destroy(gameObject);
+            }
+        }
+
         private IEnumerator ActivationDelay()
         {
             yield return new WaitForSeconds(ActivationTime);
-            _enabled = true;
+
+            if (_canBeEnabled)
+                _enabled = true;
+            else
+                _canBeEnabled = true;
+
             StartCoroutine(AliveDuration());
         }
 
@@ -76,7 +104,14 @@ namespace Abilities
         {
             if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.GroundLayer))
             {
-                GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                Rigidbody rb = GetComponent<Rigidbody>();
+                rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                rb.freezeRotation = true;
+
+                if (_canBeEnabled)
+                    _enabled = true;
+                else
+                    _canBeEnabled = true;
             }
         }
     }
