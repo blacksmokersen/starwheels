@@ -49,22 +49,23 @@ namespace Kart
 
         public void InitializeDrift(float angle)
         {
-            if (HasRequiredSpeed() && kartStates.IsGrounded() && angle != 0)
-            {
-                ResetDrift();
+            if (kartStates.DriftBoostState != DriftBoostState.NotDrifting) return;
+            if (!HasRequiredSpeed() || !kartStates.IsGrounded() || angle == 0) return;
 
-                if (angle < 0)
-                {
-                    kartStates.SetDriftTurnState(TurnState.Left);
-                    KartEvents.Instance.OnDriftLeft();
-                }
-                if (angle > 0)
-                {
-                    kartStates.SetDriftTurnState(TurnState.Right);
-                    KartEvents.Instance.OnDriftRight();
-                }
-                EnterNextState();
+            ResetDrift();
+
+            if (angle < 0)
+            {
+                kartStates.SetDriftTurnState(TurnState.Left);
+                KartEvents.Instance.OnDriftLeft();
             }
+            if (angle > 0)
+            {
+                kartStates.SetDriftTurnState(TurnState.Right);
+                KartEvents.Instance.OnDriftRight();
+            }
+
+            EnterNextState();
         }
 
         public void StopDrift()
@@ -79,6 +80,7 @@ namespace Kart
                 {
                     ResetDrift();
                 }
+
                 KartEvents.Instance.OnDriftEnd();
             }
         }
@@ -93,6 +95,7 @@ namespace Kart
             {
                 StopCoroutine(_driftedLongEnoughTimer);
             }
+
             if (_turboCoroutine != null)
             {
                 StopCoroutine(_turboCoroutine);

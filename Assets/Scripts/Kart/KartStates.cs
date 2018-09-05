@@ -92,6 +92,11 @@ namespace Kart
 
         public bool IsDriftSideEqualsTurnSide()
         {
+            if (TurningState == TurnState.NotTurning || DriftTurnState == TurnState.NotTurning)
+            {
+                return false;
+            }
+
             return TurningState == DriftTurnState;
         }
 
@@ -102,7 +107,7 @@ namespace Kart
                 return false;
             }
 
-            return !IsDriftSideEqualsTurnSide();
+            return TurningState != DriftTurnState;
         }
 
         // PRIVATE
