@@ -11,7 +11,7 @@ namespace Controls
         public bool Enabled = true;
         public bool DisableUseItem;
         public bool DisableMovement;
-        public GameObject EscapeMEnu;
+        public GameObject EscapeMenu;
 
         private new void Awake()
         {
