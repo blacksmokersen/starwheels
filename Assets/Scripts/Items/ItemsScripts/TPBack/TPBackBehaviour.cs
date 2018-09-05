@@ -16,6 +16,7 @@ namespace Items
         [Header("Sounds")]
         public AudioClip LaunchSound;
 
+        private Quaternion _kartRotation;
         private AudioSource _audioSource;
         private bool _canBeEnabled = false;
         private bool _enabled = false;
@@ -51,6 +52,7 @@ namespace Items
         public void Launch(KartInventory kart, Direction direction)
         {
             _kart = kart.GetComponentInParent<Rigidbody>().transform;
+            _kartRotation = _kart.rotation;
 
             if (direction == Direction.Forward)
             {
@@ -63,6 +65,11 @@ namespace Items
             }
 
             PlayLaunchSound();
+        }
+
+        public Quaternion GetKartRotation()
+        {
+            return _kartRotation;
         }
 
         public void PlayLaunchSound()

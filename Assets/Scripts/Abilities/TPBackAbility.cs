@@ -24,6 +24,7 @@ namespace Abilities
             else //if (_tpBack.IsEnabled())
             {
                 kartHub.transform.position = _tpBack.transform.position;
+                kartHub.transform.rotation = _tpBack.GetKartRotation();
                 Destroy(_tpBack.gameObject);
             }
         }
