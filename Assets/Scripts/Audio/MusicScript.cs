@@ -4,7 +4,10 @@ namespace Audio
 {
     public class MusicScript : MonoBehaviour
     {
-        static MusicScript instance = null;
+        public static MusicScript instance = null;
+
+        [Header("OST")]
+        public AudioSource TargetSource;
 
         private bool muted = false;
 
@@ -25,12 +28,12 @@ namespace Audio
         {
             if (muted == false)
             {
-                GetComponent<AudioSource>().Pause();
+                TargetSource.Pause();
                 muted = true;
             }
             else
             {
-                GetComponent<AudioSource>().UnPause();
+                TargetSource.UnPause();
                 muted = false;
             }
         }
