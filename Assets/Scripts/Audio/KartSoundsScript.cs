@@ -38,17 +38,17 @@ namespace Audio
             base.Awake();
             _soundManager = gameObject.AddComponent<AudioSource>();
             _soundManager.spatialBlend = 1f;
-            _soundManager.volume = 0.4f;
+            _soundManager.volume = 1;
 
             _motorSource = gameObject.AddComponent<AudioSource>();
             _motorSource.spatialBlend = 1f;
-            _motorSource.volume = 0.4f;
+            _motorSource.volume = 1;
             _motorSource.loop = true;
             _motorSource.clip = MotorFullClip;
 
             _driftSource = gameObject.AddComponent<AudioSource>();
             _driftSource.spatialBlend = 1f;
-            _driftSource.volume = 0.4f;
+            _driftSource.volume = 1;
             _driftSource.loop = true;
             _driftSource.clip = DriftFullClip;
 
