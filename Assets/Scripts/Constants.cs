@@ -1,6 +1,5 @@
 ﻿public class Constants
 {
-
     // Layers
     public const string GroundLayer = "Ground";
 
@@ -17,7 +16,6 @@
     // Inputs
     public const string AccelerateButton = "Accelerate";
     public const string DecelerateButton = "Decelerate";
-    public const string SpecialCapacity = "SpecialCapacity";
     public const string FireButton = "Fire";
     public const string TurnAxis = "Turn";
     public const string UpAndDownAxis = "UpAndDown";
@@ -25,6 +23,7 @@
     public const string UseItemButton = "Item";
     public const string UseItemForwardButton = "ItemForward";
     public const string UseItemBackwardButton = "ItemBackward";
+    public const string UseAbilityButton = "Ability";
     public const string TurnCamera = "RightJoystick";
     public const string BackCamera = "ClickLeftJoystick";
     public const string ResetCamera = "ClickRightJoystick";

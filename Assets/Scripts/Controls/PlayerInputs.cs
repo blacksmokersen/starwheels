@@ -60,9 +60,9 @@ namespace Controls
         void ButtonsDown()
         {
             // Keyboard & GamePad
-            if (Input.GetButtonDown(Constants.SpecialCapacity))
+            if (Input.GetButtonDown(Constants.UseAbilityButton))
             {
-                kartHub.UseCapacity(Input.GetAxis(Constants.TurnAxis), Input.GetAxis(Constants.UpAndDownAxis));
+                kartHub.UseAbility(Input.GetAxis(Constants.TurnAxis), Input.GetAxis(Constants.UpAndDownAxis));
             }
             if (Input.GetButtonDown(Constants.DriftButton))
             {

@@ -7,8 +7,8 @@ namespace Abilities
     public class JumpAbility : Ability
     {
         [Header("Jump Ability")]
-        public float CooldownDoubleJump;
-        public float EnergyConsummedOnJump;
+        public float CooldownDoubleJump = 1f;
+        public float EnergyConsummedOnJump = 0.5f;
 
         private bool _hasDoneFirstJump = false;
         private bool _canDoubleJump = true;
