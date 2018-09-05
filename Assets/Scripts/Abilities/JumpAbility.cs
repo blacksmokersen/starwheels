@@ -13,6 +13,7 @@ namespace Abilities
         private bool _hasDoneFirstJump = false;
         private bool _canDoubleJump = true;
         private KartEngine _kartEngine;
+        private KartHub _kartHub;
 
         // CORE
 
@@ -21,29 +22,15 @@ namespace Abilities
             base.Awake();
 
             _kartEngine = GetComponent<KartEngine>();
+            _kartHub = GetComponentInParent<KartHub>();
         }
 
         // PUBLIC
 
         public override void Use(float xAxis, float yAxis)
         {
-            Jump(xAxis, yAxis);
-            /*
-            Debug.Log("Hello");
-            if (Energy >= EnergyConsummedOnJump)
-            {
-                Debug.Log("Friend");
-                Jump(xAxis, yAxis);
-                Energy -= 0.5f;
-                kartEvents.OnEnergyConsumption(Energy);
-            }
-            */
-        }
+            _kartHub.StopDrift();
 
-        // PRIVATE
-
-        private void Jump(float xAxis, float yAxis)
-        {
             if (CanDoubleJump())
             {
                 DoubleJump(xAxis, yAxis);
@@ -59,6 +46,8 @@ namespace Abilities
                 }
             }
         }
+
+        // PRIVATE
 
         private void DoubleJump(float xAxis, float yAxis)
         {
