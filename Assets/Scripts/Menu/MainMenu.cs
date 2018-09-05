@@ -31,11 +31,6 @@ public class MainMenu : MonoBehaviourPun
         quitButton.onClick.AddListener(Quit);
     }
 
-    private void Start()
-    {
-        PhotonNetwork.JoinLobby();
-    }
-
     private void Multi()
     {
         multiplayerMenu.SetActive(true);

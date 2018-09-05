@@ -6,7 +6,7 @@ using Photon.Pun.UtilityScripts;
 
 namespace Multiplayer
 {
-    public class RoomMenu : MonoBehaviourPun
+    public class RoomMenu : MonoBehaviourPunCallbacks
     {
         // HUD
         [SerializeField] private Text roomTitleText;
@@ -26,18 +26,19 @@ namespace Multiplayer
             startButton.onClick.AddListener(StartGame);
             mapDropdown.onValueChanged.AddListener(ChangeMap);
             teamDropdown.onValueChanged.AddListener(ChangeTeam);
-            HideRoomMenu();
         }
 
         private void Start()
         {
             InitializeDropdowns();
-            InstantiatePlayerPrefab();
             if (PhotonNetwork.IsMasterClient)
             {
                 MasterInitialization();
             }
         }
+
+        #region Initialization
+
         private void MasterInitialization()
         {
             roomTitleText.text = PhotonNetwork.CurrentRoom.Name;
@@ -60,6 +61,7 @@ namespace Multiplayer
             var roomPlayer = playerPrefab.GetComponent<RoomPlayer>();
             roomPlayer.SetTeam(PhotonNetwork.LocalPlayer.GetTeam());
             myRoomPlayer = roomPlayer;
+            Debug.Log("Instantiate");
         }
 
         private void StartGame()
@@ -69,6 +71,10 @@ namespace Multiplayer
                 PhotonNetwork.LoadLevel(mapList.MapList[mapDropdown.value].SceneName);
             }
         }
+
+        #endregion
+
+        #region RPCs
 
         private void ChangeTeam(int value)
         {
@@ -87,14 +93,13 @@ namespace Multiplayer
             mapDropdown.value = value;
         }
 
-        public void ShowRoomMenu()
-        {
-            gameObject.SetActive(true);
-        }
+        #endregion
 
-        public void HideRoomMenu()
+        #region Callbacks
+        public override void OnJoinedRoom()
         {
-            gameObject.SetActive(false);
+            InstantiatePlayerPrefab();
         }
+        #endregion
     }
 }

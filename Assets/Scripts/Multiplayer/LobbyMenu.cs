@@ -23,6 +23,8 @@ namespace Multiplayer
 
         private void Awake()
         {
+            InitializePhoton();
+
             //refreshRoomsBtn.onClick.AddListener(RefreshLobby);
             createRoomBtn.onClick.AddListener(CreateRoom);
             backToMenu.onClick.AddListener(BackToMenu);
@@ -32,18 +34,14 @@ namespace Multiplayer
             });
 
             lobbyRooms = new List<LobbyRoom>();
-
-            HideLobbyMenu();
         }
 
-        public void ShowLobbyMenu()
+        void InitializePhoton()
         {
-            gameObject.SetActive(true);
-        }
-
-        public void HideLobbyMenu()
-        {
-            gameObject.SetActive(false);
+            PhotonNetwork.OfflineMode = false;
+            PhotonNetwork.AutomaticallySyncScene = true;
+            PhotonNetwork.GameVersion = "1.00";
+            PhotonNetwork.ConnectUsingSettings();
         }
 
         private void CreateRoom()
@@ -65,11 +63,6 @@ namespace Multiplayer
             }
         }
 
-        public override void OnRoomListUpdate(List<RoomInfo> roomList)
-        {
-            RefreshLobby(roomList);
-        }
-
         public void RefreshLobby(List<RoomInfo> roomList)
         {
             // Clean all rooms
@@ -87,7 +80,6 @@ namespace Multiplayer
                 string roomName = roomInfo.Name;
                 room.SetServerName(roomInfo, () => {
                     PhotonNetwork.JoinRoom(roomName);
-                    //PhotonNetwork.LoadLevel("Room");
                 });
                 lobbyRooms.Add(room);
             }
@@ -97,5 +89,17 @@ namespace Multiplayer
         {
             multiplayerMenu.SetActive(false);
         }
+
+        #region Callbacks
+        public override void OnRoomListUpdate(List<RoomInfo> roomList)
+        {
+            RefreshLobby(roomList);
+        }
+
+        public override void OnConnectedToMaster()
+        {
+            PhotonNetwork.JoinLobby();
+        }
+        #endregion
     }
 }
