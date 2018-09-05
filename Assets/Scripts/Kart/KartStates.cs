@@ -6,7 +6,7 @@ namespace Kart
     public enum AirState { Ground, Air }
     public enum AccelerationState { None, Forward, Back }
     public enum TurnState { NotTurning, Left, Right }
-    public enum DriftBoostState { NotDrifting, Simple, Orange, Red, Turbo }
+    public enum DriftBoostState { NotDrifting, White, Orange, Red, Turbo }
 
     public class KartStates : MonoBehaviour
     {

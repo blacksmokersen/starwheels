@@ -54,6 +54,8 @@ namespace Kart
 
             ResetDrift();
 
+            KartEvents.Instance.OnDriftStart();
+
             if (angle < 0)
             {
                 kartStates.SetDriftTurnState(TurnState.Left);
@@ -134,37 +136,25 @@ namespace Kart
             switch (kartStates.DriftBoostState)
             {
                 case DriftBoostState.NotDrifting:
-                    EnterNormalDrift();
+                    // Enter White Drift
+                    kartStates.SetDriftBoostState(DriftBoostState.White);
+                    KartEvents.Instance.OnDriftWhite();
                     break;
-                case DriftBoostState.Simple:
-                    EnterOrangeDrift();
+                case DriftBoostState.White:
+                    // Enter Orange Drift
+                    kartStates.SetDriftBoostState(DriftBoostState.Orange);
+                    KartEvents.Instance.OnDriftOrange();
                     break;
                 case DriftBoostState.Orange:
-                    EnterRedDrift();
+                    // Enter Red Drift
+                    kartStates.SetDriftBoostState(DriftBoostState.Red);
+                    KartEvents.Instance.OnDriftRed();
                     break;
                 case DriftBoostState.Red:
                     break;
             }
 
             _driftedLongEnoughTimer = StartCoroutine(DriftTimer());
-        }
-
-        private void EnterNormalDrift()
-        {
-            kartStates.SetDriftBoostState(DriftBoostState.Simple);
-            KartEvents.Instance.OnDriftStart();
-        }
-
-        private void EnterOrangeDrift()
-        {
-            kartStates.SetDriftBoostState(DriftBoostState.Orange);
-            KartEvents.Instance.OnDriftOrange();
-        }
-
-        private void EnterRedDrift()
-        {
-            kartStates.SetDriftBoostState(DriftBoostState.Red);
-            KartEvents.Instance.OnDriftRed();
         }
 
         private IEnumerator EnterTurbo()
