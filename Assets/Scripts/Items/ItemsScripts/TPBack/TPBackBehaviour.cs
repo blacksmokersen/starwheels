@@ -1,8 +1,7 @@
-﻿using Items;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
-namespace Abilities
+namespace Items
 {
     [RequireComponent(typeof(Rigidbody))]
     public class TPBackBehaviour : MonoBehaviour
