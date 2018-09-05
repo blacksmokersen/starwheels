@@ -66,8 +66,8 @@ namespace Audio
                 SetMotorPitch(0.5f + 0.35f * newVelocity.magnitude / _pitchMotorMagnitudeDiviser);
             };
             kartEvents.OnHit += PlayPlayerHitSound;
-            kartEvents.OnCollisionEnterItemBox += PlayItemBoxSound;
-            kartEvents.OnCollisionEnterItemBox += PlayItemLotterySound;
+            kartEvents.OnGetItemBox += PlayItemBoxSound;
+            kartEvents.OnGetItemBox += PlayItemLotterySound;
         }
 
         #region Engine

@@ -31,7 +31,7 @@ namespace Kart
 
         // Collisions
         public Action OnCollisionEnterGround;
-        public Action OnCollisionEnterItemBox;
+        public Action OnGetItemBox;
 
         // Jumping Capacity
         public Action OnJump;

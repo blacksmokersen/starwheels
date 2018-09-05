@@ -8,12 +8,14 @@ namespace Kart {
     public class KartOnCollisions : MonoBehaviour {
 
         private KartEvents _kartEvents;
+        private KartInventory _kartInventory;
 
         // CORE
 
         private void Awake()
         {
             _kartEvents = GetComponent<KartEvents>();
+            _kartInventory = GetComponentInChildren<KartInventory>();
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -26,10 +28,10 @@ namespace Kart {
 
         private void OnTriggerEnter(Collider collision)
         {
-            if (collision.gameObject.tag == Constants.ItemBoxTag)
+            if (collision.gameObject.tag == Constants.ItemBoxTag && _kartInventory.IsEmpty())
             {
                 StartCoroutine(collision.gameObject.GetComponent<ItemBox>().Activate());
-                _kartEvents.OnCollisionEnterItemBox();
+                _kartEvents.OnGetItemBox();
             }
             else if (IsGround(collision.gameObject))
             {
