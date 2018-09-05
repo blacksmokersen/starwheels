@@ -1,18 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using HUD;
 using Kart;
+using Photon.Pun;
+using Photon.Pun.UtilityScripts;
+using Photon.Realtime;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager : MonoBehaviourPun
 {
     [SerializeField] private GameObject escapeMenu;
     [SerializeField] private Button quitLevel;
     [SerializeField] private Button resetLevel;
-
-    private PhotonView test;
 
     private bool menuActivated;
 
@@ -20,7 +18,6 @@ public class LevelManager : MonoBehaviour
     {
         quitLevel.onClick.AddListener(ReturnToMenu);
         resetLevel.onClick.AddListener(ResetLevel);
-        test = GetComponent<PhotonView>();
     }
 
     private void Update()
@@ -35,21 +32,15 @@ public class LevelManager : MonoBehaviour
 
     void ReturnToMenu()
     {
-        PhotonNetwork.player.SetScore(0);
         PhotonNetwork.LoadLevel("Menu");
         PhotonNetwork.Disconnect();
     }
 
     void ResetLevel()
     {
-        if (PhotonNetwork.isMasterClient)
+        if (PhotonNetwork.IsMasterClient)
         {
-            foreach (PhotonPlayer player in PhotonNetwork.playerList)
-            {
-                PhotonNetwork.player.SetScore(0);
-                KartEvents.Instance.OnScoreChange();
-            }
-            test.RPC("RPCResetLevel", PhotonTargets.All);
+            photonView.RPC("RPCResetLevel", RpcTarget.All);
         }
     }
     [PunRPC]

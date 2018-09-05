@@ -1,4 +1,7 @@
 ﻿using UnityEngine;
+using Photon.Pun;
+using Photon.Pun.UtilityScripts;
+using Photon.Realtime;
 
 namespace Kart
 {
@@ -13,7 +16,7 @@ namespace Kart
         private new void Awake()
         {
             base.Awake();
-            if (PhotonNetwork.connected && !photonView.isMine)
+            if (PhotonNetwork.IsConnected && !photonView.IsMine)
             {
                 SetName(GetPlayer(photonView).NickName);
                 Destroy(backCamera);
@@ -50,11 +53,11 @@ namespace Kart
 
         // PRIVATE
 
-        private PhotonPlayer GetPlayer(PhotonView view)
+        private Player GetPlayer(PhotonView view)
         {
-            foreach (PhotonPlayer player in PhotonNetwork.playerList)
+            foreach (var player in PhotonNetwork.CurrentRoom.Players)
             {
-                if (player.ID == view.ownerId) return player;
+                if (player.Value.UserId == view.Owner.UserId) return player.Value;
             }
 
             return null;

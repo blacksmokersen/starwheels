@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using Photon.Realtime;
+using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 
 namespace MyExtensions
 {
@@ -9,12 +12,12 @@ namespace MyExtensions
             return targetMin + (targetMax - targetMin) * ((val - actualMin) / (actualMax - actualMin));
         }
 
-        public static List<PhotonPlayer> GetTeammates()
+        public static List<Player> GetTeammates()
         {
-            var teammates = new List<PhotonPlayer>();
-            foreach (PhotonPlayer player in PhotonNetwork.otherPlayers)
+            var teammates = new List<Player>();
+            foreach (Player player in PhotonNetwork.PlayerListOthers)
             {
-                if(player.GetTeam() == PhotonNetwork.player.GetTeam())
+                if(player.GetTeam() == PhotonNetwork.LocalPlayer.GetTeam())
                 {
                     teammates.Add(player);
                 }

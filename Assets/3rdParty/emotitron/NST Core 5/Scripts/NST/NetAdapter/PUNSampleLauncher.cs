@@ -109,7 +109,7 @@ namespace emotitron.NST
 		}
 
 		/// <summary>
-		/// Start the connection process. 
+		/// Start the connection process.
 		/// - If already connected, we attempt joining a random room
 		/// - if not yet connected, Connect this application instance to Photon Cloud Network
 		/// </summary>

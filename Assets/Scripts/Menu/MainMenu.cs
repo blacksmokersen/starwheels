@@ -6,8 +6,9 @@ using ExitGames.Client.Photon;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
+using Photon.Pun;
 
-public class MainMenu : MonoBehaviour, IPunCallbacks
+public class MainMenu : MonoBehaviourPun
 {
     [SerializeField] private Button soloButton;
     [SerializeField] private Button multiButton;
@@ -32,7 +33,7 @@ public class MainMenu : MonoBehaviour, IPunCallbacks
 
     private void Start()
     {
-        PhotonNetwork.autoJoinLobby = true;
+        PhotonNetwork.JoinLobby();
     }
 
     private void Multi()
@@ -44,7 +45,7 @@ public class MainMenu : MonoBehaviour, IPunCallbacks
     private void Solo()
     {
         Debug.Log("Launching Solo mode");
-        PhotonNetwork.offlineMode = true;
+        PhotonNetwork.OfflineMode = true;
         PhotonNetwork.CreateRoom("Solo");
         SceneManager.LoadScene(2);
     }
@@ -57,34 +58,4 @@ public class MainMenu : MonoBehaviour, IPunCallbacks
         Application.Quit();
 #endif
     }
-
-    public void OnConnectedToMaster() {}
-    public void OnCreatedRoom() {}
-    public void OnJoinedLobby() {}
-    public void OnJoinedRoom() {}
-    public void OnConnectedToPhoton() { }
-    public void OnLeftRoom() {}
-    public void OnMasterClientSwitched(PhotonPlayer newMasterClient) {}
-    public void OnPhotonCreateRoomFailed(object[] codeAndMsg) {}
-    public void OnPhotonJoinRoomFailed(object[] codeAndMsg) {}
-    public void OnLeftLobby() {}
-    public void OnFailedToConnectToPhoton(DisconnectCause cause) {}
-    public void OnConnectionFail(DisconnectCause cause) {}
-    public void OnDisconnectedFromPhoton() {}
-    public void OnPhotonInstantiate(PhotonMessageInfo info) {}
-    public void OnReceivedRoomListUpdate() {}
-    public void OnPhotonPlayerConnected(PhotonPlayer newPlayer) {}
-    public void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer) {}
-    public void OnPhotonRandomJoinFailed(object[] codeAndMsg) {}
-    public void OnPhotonMaxCccuReached() {}
-    public void OnPhotonCustomRoomPropertiesChanged(ExitGames.Client.Photon.Hashtable propertiesThatChanged) {}
-    public void OnPhotonPlayerPropertiesChanged(object[] playerAndUpdatedProps) {}
-    public void OnUpdatedFriendList() {}
-    public void OnCustomAuthenticationFailed(string debugMessage) {}
-    public void OnCustomAuthenticationResponse(Dictionary<string, object> data) {}
-    public void OnWebRpcResponse(OperationResponse response) {}
-    public void OnOwnershipRequest(object[] viewAndPlayer) {}
-    public void OnLobbyStatisticsUpdate() {}
-    public void OnPhotonPlayerActivityChanged(PhotonPlayer otherPlayer) {}
-    public void OnOwnershipTransfered(object[] viewAndPlayers) {}
 }

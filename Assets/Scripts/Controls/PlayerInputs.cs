@@ -22,7 +22,7 @@ namespace Controls
 
         void FixedUpdate()
         {
-            if (photonView.isMine)
+            if (photonView.IsMine)
             {
                 if (Enabled && kartHub != null)
                 {
@@ -34,7 +34,7 @@ namespace Controls
 
         private void Update()
         {
-            if (photonView.isMine)
+            if (photonView.IsMine)
             {
                 if (Enabled && kartHub != null)
                 {

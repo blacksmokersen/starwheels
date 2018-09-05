@@ -20,8 +20,6 @@ namespace Kart
         [HideInInspector] public Ability kartAbility;
         [HideInInspector] public CinemachineDynamicScript cinemachineDynamicScript;
 
-        private int _score = 0;
-
         // CORE
 
         private void Awake()
@@ -139,23 +137,6 @@ namespace Kart
 
             var direction = kartStates.AccelerationState == AccelerationState.Forward ? Vector3.up : Vector3.down;
             kartEngine.TurnUsingTorque(direction * newTurnSensitivity, turnValue);
-        }
-
-        public void IncreaseScore()
-        {
-            _score++;
-            PhotonNetwork.player.SetScore(_score);
-            PhotonView view = GetComponent<PhotonView>();
-            // TODO: Use RaiseEvent instead?
-            view.RPC("UpdateScore", PhotonTargets.AllBuffered);
-        }
-
-        // PRIVATE
-
-        [PunRPC]
-        private void UpdateScore()
-        {
-            KartEvents.Instance.OnScoreChange();
         }
     }
 }

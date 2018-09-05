@@ -5,10 +5,15 @@ using emotitron.Compression;
 using emotitron.Utilities.GUIUtilities;
 using System.Collections.Generic;
 using System;
+using Photon.Pun;
+using Photon.Pun.UtilityScripts;
+using Photon.Realtime;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
+
+
 namespace emotitron.NST
 {
 	// ver 1
@@ -17,19 +22,19 @@ namespace emotitron.NST
 	/// </summary>
 	[DisallowMultipleComponent]
 	[AddComponentMenu("")]
-	public class MasterNetAdapter : Photon.PunBehaviour //, INSTMasterAdapter
+	public class MasterNetAdapter : MonoBehaviourPunCallbacks //, INSTMasterAdapter
 	{
 		[HideInInspector]
 		public static bool networkStarted;
-		
+
 		public static MasterNetAdapter single;
 		public const string ADAPTER_NAME = "PUN";
 
 		public const NetworkLibrary NET_LIB = NetworkLibrary.PUN;
-		
+
 		/// <summary>
 		/// Attribute for getting the NET_LIB value, without throwing warnings about unreachable code.
-		/// </summary>		
+		/// </summary>
 		public static NetworkLibrary NetLib { get { return NET_LIB; } }
 
 		public const NetworkModel NET_MODEL = NetworkModel.MasterClient;
@@ -37,17 +42,17 @@ namespace emotitron.NST
 		//private NSTMasterSettings nstMasterSettings;
 
 		// TODO this likely needs an actual test
-		public static int MasterClientId { get { return PhotonNetwork.masterClient.ID; } }
+		public static int MasterClientId { get { return PhotonNetwork.MasterClient.ActorNumber; } }
 
 		// Interfaced fields
 		public NetworkLibrary NetLibrary { get { return NetworkLibrary.PUN; } }
 		public static NetworkLibrary NetworkLibrary { get { return NetworkLibrary.PUN; } }
 
-		public static bool Connected { get { return PhotonNetwork.connected; } }
-		public static bool ReadyToSend { get { return PhotonNetwork.isMasterClient || PhotonNetwork.isNonMasterClientInRoom; } }
-		public static bool ServerIsActive { get { return PhotonNetwork.isMasterClient; } }
-		public static bool ClientIsActive { get { return PhotonNetwork.isNonMasterClientInRoom; } }
-		public static bool NetworkIsActive { get { return PhotonNetwork.isMasterClient || PhotonNetwork.isNonMasterClientInRoom; } }
+		public static bool Connected { get { return PhotonNetwork.IsConnected; } }
+		public static bool ReadyToSend { get { return true; } } // PhotonNetwork.IsMasterClient || PhotonNetwork.isNonMasterClientInRoom; } }
+		public static bool ServerIsActive { get { return true; } } //PhotonNetwork.IsMasterClient; } }
+        public static bool ClientIsActive { get { return true; } } //PhotonNetwork.isNonMasterClientInRoom; } }
+        public static bool NetworkIsActive { get { return PhotonNetwork.IsMasterClient || PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joined; } }
 		/// <summary> Cached value for defaultAuthority since this is hotpath </summary>
 
 		public const byte LowestMsgTypeId = 0;
@@ -123,11 +128,9 @@ namespace emotitron.NST
 			isServerClient = NetLibrarySettings.Single.defaultAuthority == DefaultAuthority.ServerAuthority;
 
 			optsOthers = new RaiseEventOptions();
-			optsOthers.Encrypt = false;
 			optsOthers.Receivers = ReceiverGroup.Others;
 
 			optsSvr = new RaiseEventOptions();
-			optsSvr.Encrypt = false;
 			optsSvr.Receivers = ReceiverGroup.MasterClient;
 		}
 
@@ -138,18 +141,18 @@ namespace emotitron.NST
 
 			isRegistered = true;
 
-			PhotonNetwork.OnEventCall -= this.OnEventHandler;
-			PhotonNetwork.OnEventCall += this.OnEventHandler;
+			//PhotonNetwork.RemoveCallbackTarget(OnEventHandler);
+			//PhotonNetwork.AddCallbackTarget(OnEventHandler);
 		}
 
 		private void OnDisable()
 		{
-			PhotonNetwork.OnEventCall -= this.OnEventHandler;
+			//PhotonNetwork.OnEventCall -= this.OnEventHandler;
 			isRegistered = false;
 		}
 
 
-		public override void OnConnectedToPhoton()
+		public override void OnConnected()
 		{
 			//Debug.Log("OnConnectedToPhoton");
 		}
@@ -163,10 +166,10 @@ namespace emotitron.NST
 				cb.OnConnect(ServerClient.Master);
 		}
 
-		public override void OnDisconnectedFromPhoton()
+		public override void OnDisconnected(DisconnectCause cause)
 		{
 			networkStarted = false;
-			
+
 			if (iNetEvents != null)
 				foreach (INetEvents cb in iNetEvents)
 					cb.OnNetworkDestroy();
@@ -175,7 +178,7 @@ namespace emotitron.NST
 				foreach (IOnNetworkDestroy cb in iOnNetworkDestroy)
 					cb.OnNetworkDestroy();
 		}
-
+        /*
 		public override void OnConnectionFail(DisconnectCause cause)
 		{
 			base.OnConnectionFail(cause);
@@ -187,14 +190,15 @@ namespace emotitron.NST
 			base.OnFailedToConnectToPhoton(cause);
 			DebugX.LogWarning("Failed to connect to Photon. " + cause);
 		}
+        */
 		public override void OnJoinedRoom()
 		{
 			foreach (IOnJoinRoom cb in iOnJoinRoom)
 				cb.OnJoinRoom();
 		}
 
-		public override void OnPhotonRandomJoinFailed(object[] codeAndMsg)
-		{
+		public override void OnJoinRoomFailed(short returnCode, string message)
+        {
 			foreach (IOnJoinRoomFailed cb in iOnJoinRoomFailed)
 				cb.OnJoinRoomFailed();
 		}
@@ -208,7 +212,7 @@ namespace emotitron.NST
 				return;
 
 			// ignore messages from self.
-			if (ServerIsActive && PhotonNetwork.masterClient.ID == senderId)
+			if (ServerIsActive && PhotonNetwork.MasterClient.ActorNumber == senderId)
 			{
 				DebugX.Log("Master Client talking to self? Normal occurance for a few seconds after Master leaves the game and a new master is selected.");
 				return;
@@ -217,7 +221,7 @@ namespace emotitron.NST
 			UdpBitStream bitstream = new UdpBitStream(content as byte[]);
 			UdpBitStream outstream = new UdpBitStream(NSTMaster.outstreamByteArray);
 
-			bool mirror = PhotonNetwork.isMasterClient && NetLibrarySettings.single.defaultAuthority == DefaultAuthority.ServerAuthority;
+			bool mirror = PhotonNetwork.IsMasterClient && NetLibrarySettings.single.defaultAuthority == DefaultAuthority.ServerAuthority;
 
 			NSTMaster.ReceiveUpdate(ref bitstream, ref outstream, mirror, senderId);
 
@@ -225,8 +229,8 @@ namespace emotitron.NST
 			{
 				byte[] outbytes = new byte[outstream.BytesUsed];
 				Array.Copy(outstream.Data, outbytes, outbytes.Length);
-				PhotonNetwork.networkingPeer.OpRaiseEvent(DefaultMsgTypeId, outbytes, false, optsOthers);
-				PhotonNetwork.networkingPeer.Service();
+				//PhotonNetwork.NetworkingClient.OpRaiseEvent(DefaultMsgTypeId, outbytes, false, optsOthers);
+				PhotonNetwork.NetworkingClient.Service();
 			}
 		}
 
@@ -235,12 +239,12 @@ namespace emotitron.NST
 			//TODO replace this GC generating mess with something prealloc
 			byte[] streambytes = new byte[bitstream.BytesUsed];
 			Array.Copy(bitstream.Data, streambytes, streambytes.Length);
-			PhotonNetwork.networkingPeer.OpRaiseEvent(DefaultMsgTypeId, streambytes, false, (isServerClient && !PhotonNetwork.isMasterClient) ? optsSvr : optsOthers);
-			PhotonNetwork.networkingPeer.Service();
+			//PhotonNetwork.NetworkingClient.OpRaiseEvent(DefaultMsgTypeId, streambytes, false, (isServerClient && !PhotonNetwork.IsMasterClient) ? optsSvr : optsOthers);
+			PhotonNetwork.NetworkingClient.Service();
 
 			// MasterClient send to self - may are may not need this in the future.
-			if (PhotonNetwork.isMasterClient)
-				NSTMaster.ReceiveUpdate(ref bitstream, ref outstream, false, PhotonNetwork.masterClient.ID);
+			if (PhotonNetwork.IsMasterClient)
+				NSTMaster.ReceiveUpdate(ref bitstream, ref outstream, false, PhotonNetwork.MasterClient.ActorNumber);
 		}
 
 		#region UNET Specific methods
@@ -254,26 +258,23 @@ namespace emotitron.NST
 
 		#region PUN Specific methods
 
-		public static bool PUN_AutoJoinLobby
-		{
-			get { return PhotonNetwork.autoJoinLobby; }
-			set { PhotonNetwork.autoJoinLobby = value; }
 
-		}
 		public static bool PUN_AutomaticallySyncScene
 		{
-			get { return PhotonNetwork.automaticallySyncScene; }
-			set { PhotonNetwork.automaticallySyncScene = value; }
+			get { return PhotonNetwork.AutomaticallySyncScene; }
+			set { PhotonNetwork.AutomaticallySyncScene = value; }
 
 		}
 		public static bool PUN_Connected
 		{
-			get { return PhotonNetwork.connected; }
+			get { return PhotonNetwork.IsConnected; }
 		}
 
-		public static void PUN_ConnectUsingSettings(string gameversion)
+        public static bool PUN_AutoJoinLobby { get; internal set; }
+
+        public static void PUN_ConnectUsingSettings(string gameversion)
 		{
-			PhotonNetwork.ConnectUsingSettings(gameversion);
+			PhotonNetwork.ConnectUsingSettings();
 		}
 
 		public static void PUN_JoinRandomRoom()

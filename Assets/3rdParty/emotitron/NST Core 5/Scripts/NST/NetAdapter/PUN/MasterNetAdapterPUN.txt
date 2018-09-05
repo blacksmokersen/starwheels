@@ -17,7 +17,7 @@ namespace emotitron.NST
 	/// </summary>
 	[DisallowMultipleComponent]
 	[AddComponentMenu("")]
-	public class MasterNetAdapter : Photon.PunBehaviour //, INSTMasterAdapter
+	public class MasterNetAdapter : Photon.MonoBehaviourPun //, INSTMasterAdapter
 	{
 		[HideInInspector]
 		public static bool networkStarted;
@@ -43,11 +43,11 @@ namespace emotitron.NST
 		public NetworkLibrary NetLibrary { get { return NetworkLibrary.PUN; } }
 		public static NetworkLibrary NetworkLibrary { get { return NetworkLibrary.PUN; } }
 
-		public static bool Connected { get { return PhotonNetwork.connected; } }
-		public static bool ReadyToSend { get { return PhotonNetwork.isMasterClient || PhotonNetwork.isNonMasterClientInRoom; } }
-		public static bool ServerIsActive { get { return PhotonNetwork.isMasterClient; } }
+		public static bool Connected { get { return PhotonNetwork.IsConnected; } }
+		public static bool ReadyToSend { get { return PhotonNetwork.IsMasterClient || PhotonNetwork.isNonMasterClientInRoom; } }
+		public static bool ServerIsActive { get { return PhotonNetwork.IsMasterClient; } }
 		public static bool ClientIsActive { get { return PhotonNetwork.isNonMasterClientInRoom; } }
-		public static bool NetworkIsActive { get { return PhotonNetwork.isMasterClient || PhotonNetwork.isNonMasterClientInRoom; } }
+		public static bool NetworkIsActive { get { return PhotonNetwork.IsMasterClient || PhotonNetwork.isNonMasterClientInRoom; } }
 		/// <summary> Cached value for defaultAuthority since this is hotpath </summary>
 
 		public const byte LowestMsgTypeId = 0;
@@ -217,7 +217,7 @@ namespace emotitron.NST
 			UdpBitStream bitstream = new UdpBitStream(content as byte[]);
 			UdpBitStream outstream = new UdpBitStream(NSTMaster.outstreamByteArray);
 
-			bool mirror = PhotonNetwork.isMasterClient && NetLibrarySettings.single.defaultAuthority == DefaultAuthority.ServerAuthority;
+			bool mirror = PhotonNetwork.IsMasterClient && NetLibrarySettings.single.defaultAuthority == DefaultAuthority.ServerAuthority;
 
 			NSTMaster.ReceiveUpdate(ref bitstream, ref outstream, mirror, senderId);
 
@@ -235,11 +235,11 @@ namespace emotitron.NST
 			//TODO replace this GC generating mess with something prealloc
 			byte[] streambytes = new byte[bitstream.BytesUsed];
 			Array.Copy(bitstream.Data, streambytes, streambytes.Length);
-			PhotonNetwork.networkingPeer.OpRaiseEvent(DefaultMsgTypeId, streambytes, false, (isServerClient && !PhotonNetwork.isMasterClient) ? optsSvr : optsOthers);
+			PhotonNetwork.networkingPeer.OpRaiseEvent(DefaultMsgTypeId, streambytes, false, (isServerClient && !PhotonNetwork.IsMasterClient) ? optsSvr : optsOthers);
 			PhotonNetwork.networkingPeer.Service();
 
 			// MasterClient send to self - may are may not need this in the future.
-			if (PhotonNetwork.isMasterClient)
+			if (PhotonNetwork.IsMasterClient)
 				NSTMaster.ReceiveUpdate(ref bitstream, ref outstream, false, PhotonNetwork.masterClient.ID);
 		}
 
@@ -268,7 +268,7 @@ namespace emotitron.NST
 		}
 		public static bool PUN_Connected
 		{
-			get { return PhotonNetwork.connected; }
+			get { return PhotonNetwork.IsConnected; }
 		}
 
 		public static void PUN_ConnectUsingSettings(string gameversion)

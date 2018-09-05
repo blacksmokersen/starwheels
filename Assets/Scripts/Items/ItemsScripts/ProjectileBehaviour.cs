@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using Kart;
 using System.Collections;
+using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 
 namespace Items
 {
@@ -159,8 +161,8 @@ namespace Items
         }
         private bool IsOnSameTeam(GameObject other)
         {
-            var otherTeam = other.GetComponentInParent<PhotonView>().owner.GetTeam();
-            return otherTeam == photonView.owner.GetTeam() && !IsOwner(other);
+            var otherTeam = other.GetComponentInParent<PhotonView>().Owner.GetTeam();
+            return otherTeam == photonView.Owner.GetTeam() && !IsOwner(other);
         }
 
         private void SendOwnerSuccessfulHitEvent()

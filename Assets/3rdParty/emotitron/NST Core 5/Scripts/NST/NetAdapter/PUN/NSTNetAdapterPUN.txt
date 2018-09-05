@@ -27,7 +27,7 @@ namespace emotitron.NST
 	[AddComponentMenu("")]
 	[RequireComponent(typeof(PhotonView))]
 
-	public class NSTNetAdapter : Photon.PunBehaviour //, INstNetAdapter
+	public class NSTNetAdapter : Photon.MonoBehaviourPun //, INstNetAdapter
 	{
 		public const string ADAPTER_NAME = "PUN";
 		public static NetworkLibrary NetLibrary { get { return NetworkLibrary.PUN; } }
@@ -48,8 +48,8 @@ namespace emotitron.NST
 		[HideInInspector] public List<IOnStart> iOnStart = new List<IOnStart>();
 
 		public bool IsServer { get { return MasterNetAdapter.ServerIsActive; } }
-		public bool IsLocalPlayer { get { return pv.isMine; } } // isLocalPlayer; } }
-		public bool IsMine { get { return pv.isMine; } }
+		public bool IsLocalPlayer { get { return pv.IsMine; } } // isLocalPlayer; } }
+		public bool IsMine { get { return pv.IsMine; } }
 
 		public uint NetId { get { return (uint)pv.viewID; } }
 		public int ClientId { get { return pv.ownerId; } }
@@ -68,11 +68,11 @@ namespace emotitron.NST
 			get {
 
 				if (authorityModel == AuthorityModel.ServerAuthority)
-					if (PhotonNetwork.isMasterClient)
+					if (PhotonNetwork.IsMasterClient)
 						return true;
 
 				if (authorityModel == AuthorityModel.OwnerAuthority)
-					if (pv.isMine)
+					if (pv.IsMine)
 						return true;
 
 				return false;
@@ -124,14 +124,14 @@ namespace emotitron.NST
 		// Detect changes in ownership
 		public override void OnOwnershipTransfered(object[] viewAndPlayers)
 		{
-			Debug.Log(pv.viewID + " <b>OnOwnershipTransfered</b> " + PhotonNetwork.isMasterClient + " " + PhotonNetwork.isNonMasterClientInRoom);
+			Debug.Log(pv.viewID + " <b>OnOwnershipTransfered</b> " + PhotonNetwork.IsMasterClient + " " + PhotonNetwork.isNonMasterClientInRoom);
 
 			PhotonView changedView = viewAndPlayers[0] as PhotonView;
 
 			if (changedView != pv)
 				return;
 
-			if (changedView.isMine)
+			if (changedView.IsMine)
 			{
 
 				if (iNetEvents != null)
@@ -158,10 +158,10 @@ namespace emotitron.NST
 		public override void OnPhotonInstantiate(PhotonMessageInfo info)
 		{
 			// If this is the first nst this client has spawned, call it the local player
-			if (pv.isMine && !NSTTools.localPlayerNST)
+			if (pv.IsMine && !NSTTools.localPlayerNST)
 				NSTTools.localPlayerNST = nst;
 
-			if (pv.isMine)// info.photonView.isMine)
+			if (pv.IsMine)// info.photonView.IsMine)
 			{
 
 				foreach (INetEvents cb in iNetEvents)

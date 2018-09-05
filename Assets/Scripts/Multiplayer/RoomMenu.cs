@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Photon;
+using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 
 namespace Multiplayer
 {
-    public class RoomMenu : PunBehaviour
+    public class RoomMenu : MonoBehaviourPun
     {
         // HUD
         [SerializeField] private Text roomTitleText;
@@ -32,14 +33,14 @@ namespace Multiplayer
         {
             InitializeDropdowns();
             InstantiatePlayerPrefab();
-            if (PhotonNetwork.isMasterClient)
+            if (PhotonNetwork.IsMasterClient)
             {
                 MasterInitialization();
             }
         }
         private void MasterInitialization()
         {
-            roomTitleText.text = PhotonNetwork.room.Name;
+            roomTitleText.text = PhotonNetwork.CurrentRoom.Name;
             startButton.enabled = true;
             mapDropdown.enabled = true;
         }
@@ -57,13 +58,13 @@ namespace Multiplayer
         {
             var playerPrefab = PhotonNetwork.Instantiate("Menu/RoomPlayer", playerList.transform.position, Quaternion.identity, 0);
             var roomPlayer = playerPrefab.GetComponent<RoomPlayer>();
-            roomPlayer.SetTeam(PhotonNetwork.player.GetTeam());
+            roomPlayer.SetTeam(PhotonNetwork.LocalPlayer.GetTeam());
             myRoomPlayer = roomPlayer;
         }
 
         private void StartGame()
         {
-            if (PhotonNetwork.isMasterClient)
+            if (PhotonNetwork.IsMasterClient)
             {
                 PhotonNetwork.LoadLevel(mapList.MapList[mapDropdown.value].SceneName);
             }
@@ -71,13 +72,13 @@ namespace Multiplayer
 
         private void ChangeTeam(int value)
         {
-            PhotonNetwork.player.SetTeam((PunTeams.Team)value);
+            PhotonNetwork.LocalPlayer.SetTeam((PunTeams.Team)value);
             myRoomPlayer.SetTeam((PunTeams.Team)value);
         }
 
         private void ChangeMap(int value)
         {
-            photonView.RPC("RPCChangeMap", PhotonTargets.OthersBuffered, value);
+            photonView.RPC("RPCChangeMap", RpcTarget.OthersBuffered, value);
         }
 
         [PunRPC]

@@ -4,9 +4,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 using emotitron.Compression;
 using emotitron.Utilities.GUIUtilities;
+using Photon.Realtime;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -20,14 +22,14 @@ namespace emotitron.NST
 	}
 
 	/// <summary>
-	/// This class contains the abstracted methods for different networking libraries. 
+	/// This class contains the abstracted methods for different networking libraries.
 	/// This adapter is for Photon PUN.
 	/// </summary>
 	[DisallowMultipleComponent]
 	[AddComponentMenu("")]
 	[RequireComponent(typeof(PhotonView))]
 
-	public class NSTNetAdapter : Photon.PunBehaviour //, INstNetAdapter
+	public class NSTNetAdapter : MonoBehaviourPunCallbacks, IPunOwnershipCallbacks, IPunInstantiateMagicCallback //, INstNetAdapter
 	{
 		public const string ADAPTER_NAME = "PUN";
 		public static NetworkLibrary NetLibrary { get { return NetworkLibrary.PUN; } }
@@ -48,11 +50,11 @@ namespace emotitron.NST
 		[HideInInspector] public List<IOnStart> iOnStart = new List<IOnStart>();
 
 		public bool IsServer { get { return MasterNetAdapter.ServerIsActive; } }
-		public bool IsLocalPlayer { get { return pv.isMine; } } // isLocalPlayer; } }
-		public bool IsMine { get { return pv.isMine; } }
+		public bool IsLocalPlayer { get { return pv.IsMine; } } // isLocalPlayer; } }
+		public bool IsMine { get { return pv.IsMine; } }
 
-		public uint NetId { get { return (uint)pv.viewID; } }
-		public int ClientId { get { return pv.ownerId; } }
+		public uint NetId { get { return (uint)pv.ViewID; } }
+		public int ClientId { get { return pv.Owner.ActorNumber; } }
 
 		private uint _nstIdSyncvar;
 		public uint NstIdSyncvar { get { return _nstIdSyncvar; } set {  _nstIdSyncvar = value; } }
@@ -68,17 +70,17 @@ namespace emotitron.NST
 			get {
 
 				if (authorityModel == AuthorityModel.ServerAuthority)
-					if (PhotonNetwork.isMasterClient)
+					if (PhotonNetwork.IsMasterClient)
 						return true;
 
 				if (authorityModel == AuthorityModel.OwnerAuthority)
-					if (pv.isMine)
+					if (pv.IsMine)
 						return true;
 
 				return false;
 			}
 		}
-		
+
 		public void CollectCallbackInterfaces()
 		{
 			GetComponentsInChildren(true, iNetEvents);
@@ -91,7 +93,7 @@ namespace emotitron.NST
 
 			//DebugX.LogError("You appear to have an 'NetworkSyncTransform' on instantiated object '" + name + "', but that object has NOT been network spawned. " +
 			//	"Only use NST on objects you intend to spawn normally from the server using PhotonNetwork.Instantiate(). " +
-			//	"(Projectiles for example probably don't need to be networked objects).", (nst.destroyUnspawned && pv.viewID == 0), true);
+			//	"(Projectiles for example probably don't need to be networked objects).", (nst.destroyUnspawned && pv.ViewID == 0), true);
 
 			authorityModel = (AuthorityModel)NetLibrarySettings.Single.defaultAuthority;
 
@@ -116,52 +118,14 @@ namespace emotitron.NST
 				cb.OnConnect(ServerClient.Master);
 		}
 
-		//public override void OnMasterClientSwitched(PhotonPlayer newMasterClient)
-		//{
-
-		//}
-
-		// Detect changes in ownership
-		public override void OnOwnershipTransfered(object[] viewAndPlayers)
-		{
-			Debug.Log(pv.viewID + " <b>OnOwnershipTransfered</b> " + PhotonNetwork.isMasterClient + " " + PhotonNetwork.isNonMasterClientInRoom);
-
-			PhotonView changedView = viewAndPlayers[0] as PhotonView;
-
-			if (changedView != pv)
-				return;
-
-			if (changedView.isMine)
-			{
-
-				if (iNetEvents != null)
-					foreach (INetEvents cb in iNetEvents)
-						cb.OnStartAuthority();
-
-				if (iOnNetworkDestroy != null)
-					foreach (IOnStartAuthority cb in iOnStartAuthority)
-						cb.OnStartAuthority();
-			}
-			else
-			{
-				if (iNetEvents != null)
-					foreach (INetEvents cb in iNetEvents)
-						cb.OnStopAuthority();
-
-				if (iOnNetworkDestroy != null)
-					foreach (IOnStopAuthority cb in iOnStopAuthority)
-						cb.OnStopAuthority();
-			}
-		}
-		
 		// TODO this generates a little garbage
-		public override void OnPhotonInstantiate(PhotonMessageInfo info)
+		public void OnPhotonInstantiate(PhotonMessageInfo info)
 		{
 			// If this is the first nst this client has spawned, call it the local player
-			if (pv.isMine && !NSTTools.localPlayerNST)
+			if (pv.IsMine && !NSTTools.localPlayerNST)
 				NSTTools.localPlayerNST = nst;
 
-			if (pv.isMine)// info.photonView.isMine)
+			if (pv.IsMine)// info.photonView.IsMine)
 			{
 
 				foreach (INetEvents cb in iNetEvents)
@@ -172,8 +136,8 @@ namespace emotitron.NST
 
 			}
 		}
-		
-		public override void OnDisconnectedFromPhoton()
+
+		public override void OnDisconnected(DisconnectCause cause)
 		{
 			if (iNetEvents != null)
 				foreach (INetEvents cb in iNetEvents)
@@ -232,8 +196,43 @@ namespace emotitron.NST
 				punl.playerPrefab = parprefab ? parprefab : go;
 			}
 		}
+
+        public void OnOwnershipRequest(PhotonView targetView, Player requestingPlayer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnOwnershipTransfered(PhotonView targetView, Player previousOwner)
+        {
+            PhotonView changedView = targetView;
+
+            if (changedView != pv)
+                return;
+
+            if (changedView.IsMine)
+            {
+
+                if (iNetEvents != null)
+                    foreach (INetEvents cb in iNetEvents)
+                        cb.OnStartAuthority();
+
+                if (iOnNetworkDestroy != null)
+                    foreach (IOnStartAuthority cb in iOnStartAuthority)
+                        cb.OnStartAuthority();
+            }
+            else
+            {
+                if (iNetEvents != null)
+                    foreach (INetEvents cb in iNetEvents)
+                        cb.OnStopAuthority();
+
+                if (iOnNetworkDestroy != null)
+                    foreach (IOnStopAuthority cb in iOnStopAuthority)
+                        cb.OnStopAuthority();
+            }
+        }
 #endif
-	}
+    }
 
 #if UNITY_EDITOR
 

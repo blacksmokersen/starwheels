@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Kart;
+using Photon.Pun;
 
 namespace Animations
 {
@@ -12,7 +13,7 @@ namespace Animations
         {
             base.Awake();
             animator = GetComponent<Animator>();
-            if (photonView.isMine)
+            if (photonView.IsMine)
             {
                 KartEvents.Instance.OnDoubleJump += DoubleJumpAnimation;
                 KartEvents.Instance.OnHealthLoss += (a) => PlayerHitAnimation();
@@ -25,7 +26,7 @@ namespace Animations
 
         public void DoubleJumpAnimation(Direction direction)
         {
-            photonView.RPC("RPCDoubleJumpAnimation", PhotonTargets.All,direction);
+            photonView.RPC("RPCDoubleJumpAnimation", RpcTarget.All,direction);
         }
 
 

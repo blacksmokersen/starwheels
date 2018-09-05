@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using Controls;
+using Photon.Pun;
+using Photon.Pun.UtilityScripts;
+using Photon.Realtime;
 
 namespace GameModes
 {
@@ -60,8 +63,8 @@ namespace GameModes
 
         private static void InitializePlayerCount()
         {
-            PhotonPlayer[] players = PhotonNetwork.playerList;
-            foreach(PhotonPlayer player in players)
+            Player[] players = PhotonNetwork.PlayerList;
+            foreach(Player player in players)
             {
                 switch (player.GetTeam())
                 {

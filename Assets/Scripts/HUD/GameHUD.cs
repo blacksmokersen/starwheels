@@ -3,6 +3,9 @@ using UnityEngine.UI;
 using UnityEngine;
 using Items;
 using Kart;
+using Photon.Pun;
+using Photon.Pun.UtilityScripts;
+using Photon.Realtime;
 
 namespace HUD
 {
@@ -34,7 +37,7 @@ namespace HUD
         public void UpdatePlayerList()
         {
             PlayerList.text = null;
-            foreach (PhotonPlayer player in PhotonNetwork.playerList)
+            foreach (Player player in PhotonNetwork.PlayerList)
             {
                 PlayerList.text += player.NickName + "\t Score: " + player.GetScore() + "\n";
             }

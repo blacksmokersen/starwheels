@@ -13,7 +13,7 @@ namespace Controls
         {
             if (!enabled) return;
 
-            if (photonView.isMine)
+            if (photonView.IsMine)
             {
                 if (Input.GetKeyDown(KeyCode.Alpha1))
                 {
