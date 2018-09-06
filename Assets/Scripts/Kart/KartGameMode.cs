@@ -1,4 +1,5 @@
-﻿using GameModes;
+﻿using CameraUtils;
+using GameModes;
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 
@@ -37,8 +38,8 @@ namespace Kart
         private void ClassicBattleDestroy()
         {
             ClassicBattle.OnKartDestroyed(PhotonNetwork.LocalPlayer.GetTeam());
-            FindObjectOfType<CameraUtilities.SpectatorControls>().Enabled = true;
-            FindObjectOfType<CameraUtilities.CameraPlayerSwitch>().SetCameraToNextPlayer();
+            FindObjectOfType<SpectatorControls>().Enabled = true;
+            FindObjectOfType<CameraPlayerSwitch>().SetCameraToNextPlayer();
             PhotonNetwork.Destroy(photonView);
         }
 

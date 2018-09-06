@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CameraUtilities
+namespace CameraUtils
 {
     public class SpectatorControls : MonoBehaviour
     {
