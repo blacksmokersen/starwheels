@@ -34,7 +34,7 @@ namespace CameraUtils
             composer = cinemachine.GetCinemachineComponent<CinemachineComposer>();
         }
 
-        private void Start()
+        public void Initialize()
         {
             KartEvents.Instance.OnDriftBoostStart += BoostCameraBehaviour;
             KartEvents.Instance.OnBackCameraStart += BackCamera;
