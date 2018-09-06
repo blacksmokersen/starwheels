@@ -33,6 +33,7 @@ namespace GameModes
             var kart = PhotonNetwork.Instantiate("Kart", initPos, _spawns[numberOfPlayers].transform.rotation, 0);
             if (kart.GetComponent<PhotonView>().IsMine)
             {
+                PhotonNetwork.Instantiate("Cameras", Vector3.zero, Quaternion.identity, 0);
                 FindObjectOfType<CinemachineDynamicScript>().SetKart(kart);
                 SceneManager.LoadScene(Constants.GameHUDSceneName, LoadSceneMode.Additive);
             }

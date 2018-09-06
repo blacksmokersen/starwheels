@@ -11,10 +11,10 @@ namespace Kart
         private new void Awake()
         {
             base.Awake();
+            PhotonNetwork.LocalPlayer.SetScore(0);
+
             kartEvents.OnKartDestroyed += DestroyKart;
             kartEvents.OnScoreChange();
-
-            PhotonNetwork.LocalPlayer.SetScore(0);
         }
 
         public void DestroyKart()
@@ -22,7 +22,7 @@ namespace Kart
             switch (GameModeBase.ActualGameMode)
             {
                 case GameMode.ClassicBattle:
-                    ClassicBattle.OnKartDestroyed(PhotonNetwork.LocalPlayer.GetTeam());
+                    ClassicBattleDestroy();
                     break;
                 case GameMode.BankRobbery:
                     break;
@@ -33,12 +33,24 @@ namespace Kart
             }
         }
 
+        #region Destroy Functions
+        private void ClassicBattleDestroy()
+        {
+            ClassicBattle.OnKartDestroyed(PhotonNetwork.LocalPlayer.GetTeam());
+            FindObjectOfType<CameraUtilities.SpectatorControls>().Enabled = true;
+            FindObjectOfType<CameraUtilities.CameraPlayerSwitch>().SetCameraToNextPlayer();
+            PhotonNetwork.Destroy(photonView);
+        }
+
+        #endregion
+
+        #region Score
+
         public void IncreaseScore()
         {
             _score++;
             PhotonNetwork.LocalPlayer.SetScore(_score);
-            PhotonView view = GetComponent<PhotonView>();
-            view.RPC("RPCUpdateScore", RpcTarget.AllBuffered);
+            photonView.RPC("RPCUpdateScore", RpcTarget.AllBuffered);
         }
 
         // PRIVATE
@@ -48,5 +60,7 @@ namespace Kart
         {
             KartEvents.Instance.OnScoreChange();
         }
+
+        #endregion
     }
 }

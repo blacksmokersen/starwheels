@@ -18,14 +18,11 @@ public class MainMenu : MonoBehaviourPun
     [SerializeField] private GameObject multiplayerMenu;
     [SerializeField] private GameObject mainButtons;
 
-    private Button[] buttons;
     private int currentIndex;
     private float oldInput;
 
     private void Awake()
     {
-        buttons = new Button[4] { soloButton, multiButton, optionsButton, quitButton };
-
         soloButton.onClick.AddListener(Solo);
         multiButton.onClick.AddListener(Multi);
         quitButton.onClick.AddListener(Quit);
