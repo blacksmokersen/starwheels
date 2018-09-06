@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Photon;
+using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 
 namespace Multiplayer
 {
-    public class RoomMenu : PunBehaviour
+    public class RoomMenu : MonoBehaviourPunCallbacks
     {
         // HUD
         [SerializeField] private Text roomTitleText;
@@ -25,21 +26,22 @@ namespace Multiplayer
             startButton.onClick.AddListener(StartGame);
             mapDropdown.onValueChanged.AddListener(ChangeMap);
             teamDropdown.onValueChanged.AddListener(ChangeTeam);
-            HideRoomMenu();
         }
 
         private void Start()
         {
             InitializeDropdowns();
-            InstantiatePlayerPrefab();
-            if (PhotonNetwork.isMasterClient)
+            if (PhotonNetwork.IsMasterClient)
             {
                 MasterInitialization();
             }
         }
+
+        #region Initialization
+
         private void MasterInitialization()
         {
-            roomTitleText.text = PhotonNetwork.room.Name;
+            roomTitleText.text = PhotonNetwork.CurrentRoom.Name;
             startButton.enabled = true;
             mapDropdown.enabled = true;
         }
@@ -57,27 +59,32 @@ namespace Multiplayer
         {
             var playerPrefab = PhotonNetwork.Instantiate("Menu/RoomPlayer", playerList.transform.position, Quaternion.identity, 0);
             var roomPlayer = playerPrefab.GetComponent<RoomPlayer>();
-            roomPlayer.SetTeam(PhotonNetwork.player.GetTeam());
+            roomPlayer.SetTeam(PhotonNetwork.LocalPlayer.GetTeam());
             myRoomPlayer = roomPlayer;
+            Debug.Log("Instantiate");
         }
 
         private void StartGame()
         {
-            if (PhotonNetwork.isMasterClient)
+            if (PhotonNetwork.IsMasterClient)
             {
                 PhotonNetwork.LoadLevel(mapList.MapList[mapDropdown.value].SceneName);
             }
         }
 
+        #endregion
+
+        #region RPCs
+
         private void ChangeTeam(int value)
         {
-            PhotonNetwork.player.SetTeam((PunTeams.Team)value);
+            PhotonNetwork.LocalPlayer.SetTeam((PunTeams.Team)value);
             myRoomPlayer.SetTeam((PunTeams.Team)value);
         }
 
         private void ChangeMap(int value)
         {
-            photonView.RPC("RPCChangeMap", PhotonTargets.OthersBuffered, value);
+            photonView.RPC("RPCChangeMap", RpcTarget.OthersBuffered, value);
         }
 
         [PunRPC]
@@ -86,14 +93,13 @@ namespace Multiplayer
             mapDropdown.value = value;
         }
 
-        public void ShowRoomMenu()
-        {
-            gameObject.SetActive(true);
-        }
+        #endregion
 
-        public void HideRoomMenu()
+        #region Callbacks
+        public override void OnJoinedRoom()
         {
-            gameObject.SetActive(false);
+            InstantiatePlayerPrefab();
         }
+        #endregion
     }
 }

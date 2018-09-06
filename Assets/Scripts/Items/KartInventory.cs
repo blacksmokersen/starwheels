@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Photon.Pun;
 
 namespace Items
 {
@@ -24,7 +25,7 @@ namespace Items
             base.Awake();
 
             kartEvents.OnGetItemBox += () => {
-                if (photonView.isMine || !PhotonNetwork.connected)
+                if (photonView.IsMine || !PhotonNetwork.IsConnected)
                     StartCoroutine(GetLotteryItem());
             };
         }

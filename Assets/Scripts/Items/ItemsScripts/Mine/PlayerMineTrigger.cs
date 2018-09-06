@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 
 namespace Items
 {
@@ -10,8 +12,8 @@ namespace Items
         {
             if (other.gameObject.tag == Constants.KartTriggerTag && Activated)
             {
-                var owner = GetComponentInParent<PhotonView>().owner;
-                var target = other.gameObject.GetComponentInParent<PhotonView>().owner;
+                var owner = GetComponentInParent<PhotonView>().Owner;
+                var target = other.gameObject.GetComponentInParent<PhotonView>().Owner;
                 if (owner.GetTeam() != target.GetTeam() || owner == target)
                 {
                     other.gameObject.GetComponentInParent<Kart.KartEvents>().OnHit();

@@ -1,4 +1,4 @@
-﻿using Photon;
+﻿using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 
@@ -8,14 +8,14 @@ namespace Items
      * Base item class for handling the instantiation and destroy
      *
      */
-    public class ItemBehaviour : PunBehaviour
+    public class ItemBehaviour : MonoBehaviourPun
     {
         public virtual void Spawn(KartInventory kart, Direction direction)
         { }
 
         public void DestroyObject(float timeBeforeDestroy = 0f)
         {
-            if (PhotonNetwork.connected)
+            if (PhotonNetwork.IsConnected)
             {
                 StartCoroutine(DelayedDestroy(timeBeforeDestroy));
             }
@@ -33,7 +33,7 @@ namespace Items
 
         private void MultiplayerDestroy()
         {
-            if (photonView.isMine)
+            if (photonView.IsMine)
             {
                 PhotonNetwork.RemoveRPCs(photonView);
                 PhotonNetwork.Destroy(photonView);

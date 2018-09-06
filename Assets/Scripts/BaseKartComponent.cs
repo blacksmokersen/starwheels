@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Kart;
+using Photon.Pun;
 
 public class BaseKartComponent : MonoBehaviour
 {

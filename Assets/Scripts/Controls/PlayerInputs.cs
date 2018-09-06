@@ -22,7 +22,7 @@ namespace Controls
 
         void FixedUpdate()
         {
-            if (photonView.isMine)
+            if (photonView.IsMine)
             {
                 if (Enabled && kartHub != null)
                 {
@@ -34,7 +34,7 @@ namespace Controls
 
         private void Update()
         {
-            if (photonView.isMine)
+            if (photonView.IsMine)
             {
                 if (Enabled && kartHub != null)
                 {
@@ -113,7 +113,10 @@ namespace Controls
         }
         void AxisOnUse()
         {
-            KartEvents.Instance.OnCameraTurnStart(Input.GetAxis(Constants.TurnCamera));
+            if (KartEvents.Instance.OnCameraTurnStart != null)
+            {
+                KartEvents.Instance.OnCameraTurnStart(Input.GetAxis(Constants.TurnCamera));
+            }
         }
     }
 }

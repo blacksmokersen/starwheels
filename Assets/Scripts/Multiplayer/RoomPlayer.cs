@@ -1,21 +1,22 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using Photon;
+using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 
-public class RoomPlayer : PunBehaviour
+public class RoomPlayer : MonoBehaviourPun
 {
     [SerializeField] private Text playerNameText;
 
     private void Awake()
     {
-        playerNameText.text = photonView.owner.NickName;
+        playerNameText.text = photonView.Owner.NickName;
         SetTransform();
     }
 
     public void SetTeam(PunTeams.Team team)
     {
         Debug.Log("Setting team : " + team);
-        photonView.RPC("RPCChangeTeam", PhotonTargets.AllBuffered, team);
+        photonView.RPC("RPCChangeTeam", RpcTarget.AllBuffered, team);
     }
 
     [PunRPC]
@@ -36,7 +37,7 @@ public class RoomPlayer : PunBehaviour
 
     public void SetTransform()
     {
-        photonView.RPC("RPCSetTransform", PhotonTargets.AllBuffered);
+        photonView.RPC("RPCSetTransform", RpcTarget.AllBuffered);
     }
 
     [PunRPC]

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using Items;
+using Photon.Pun;
 
 namespace Kart
 {
@@ -10,7 +11,7 @@ namespace Kart
 
         private void Awake()
         {
-            if (!PhotonNetwork.connected || GetComponent<PhotonView>().isMine)
+            if (!PhotonNetwork.IsConnected || GetComponent<PhotonView>().IsMine)
             {
                 Instance = this;
             }
@@ -27,6 +28,7 @@ namespace Kart
         public Action OnHitRecover;
         public Action HitSomeoneElse;
         public Action<int> OnHealthLoss;
+        public Action OnKartDestroyed;
         public Action OnScoreChange;
 
         // Collisions
@@ -62,7 +64,7 @@ namespace Kart
 
         public void CallOnHitEvent()
         {
-            GetComponent<PhotonView>().RPC("RPCCallOnHitEvent", PhotonTargets.All);
+            GetComponent<PhotonView>().RPC("RPCCallOnHitEvent", RpcTarget.All);
         }
 
         [PunRPC]

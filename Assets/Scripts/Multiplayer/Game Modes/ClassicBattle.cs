@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using Controls;
+using Photon.Pun;
+using Photon.Pun.UtilityScripts;
+using Photon.Realtime;
 
 namespace GameModes
 {
-    public class ClassicBattle : GameMode
+    public class ClassicBattle : GameModeBase
     {
         public static int MaxPlayersPerTeam;
         public static bool IsOver;
@@ -16,6 +19,8 @@ namespace GameModes
 
         private void Awake()
         {
+            ActualGameMode = GameMode.ClassicBattle;
+
             _endGameMenu = Resources.Load<GameObject>(Constants.ClassicBattleEndMenu);
             _endGameMenu.SetActive(false);
         }
@@ -58,8 +63,8 @@ namespace GameModes
 
         private static void InitializePlayerCount()
         {
-            PhotonPlayer[] players = PhotonNetwork.playerList;
-            foreach(PhotonPlayer player in players)
+            Player[] players = PhotonNetwork.PlayerList;
+            foreach(Player player in players)
             {
                 switch (player.GetTeam())
                 {
