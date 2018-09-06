@@ -28,6 +28,7 @@ namespace GameModes
 
         public void SpawnKart(PunTeams.Team team)
         {
+            SceneManager.LoadScene(Constants.GameHUDSceneName, LoadSceneMode.Additive);
             int numberOfPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
             var initPos = _spawns[numberOfPlayers].transform.position;
             var kart = PhotonNetwork.Instantiate("Kart", initPos, _spawns[numberOfPlayers].transform.rotation, 0);
@@ -35,7 +36,6 @@ namespace GameModes
             {
                 PhotonNetwork.Instantiate("Cameras", Vector3.zero, Quaternion.identity, 0);
                 FindObjectOfType<CinemachineDynamicScript>().SetKart(kart);
-                SceneManager.LoadScene(Constants.GameHUDSceneName, LoadSceneMode.Additive);
             }
         }
     }
