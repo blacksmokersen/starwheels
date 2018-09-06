@@ -20,7 +20,6 @@ namespace GameModes
             if (!PhotonNetwork.IsConnected)
             {
                 PhotonNetwork.OfflineMode = true;
-                PhotonNetwork.CreateRoom("Solo");
                 PhotonNetwork.LocalPlayer.SetTeam(PunTeams.Team.blue);
             }
             SpawnKart(PhotonNetwork.LocalPlayer.GetTeam());

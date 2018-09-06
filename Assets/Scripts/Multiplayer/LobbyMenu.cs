@@ -20,6 +20,7 @@ namespace Multiplayer
         [SerializeField] private GameObject multiplayerMenu;
 
         private List<LobbyRoom> lobbyRooms;
+        private bool _canCreateRoom = false;
 
         private void Awake()
         {
@@ -40,14 +41,14 @@ namespace Multiplayer
         {
             PhotonNetwork.OfflineMode = false;
             PhotonNetwork.AutomaticallySyncScene = true;
-            PhotonNetwork.GameVersion = "1.00";
+            PhotonNetwork.GameVersion = "1.01";
             PhotonNetwork.ConnectUsingSettings();
         }
 
         private void CreateRoom()
         {
             string roomName = roomNameInput.text;
-            if (!string.IsNullOrEmpty(roomName))
+            if (!string.IsNullOrEmpty(roomName) && _canCreateRoom)
             {
                 RoomOptions options = new RoomOptions();
                 options.MaxPlayers = 20;
@@ -99,6 +100,7 @@ namespace Multiplayer
         public override void OnConnectedToMaster()
         {
             PhotonNetwork.JoinLobby();
+            _canCreateRoom = true;
         }
         #endregion
     }

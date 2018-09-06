@@ -16,6 +16,7 @@ namespace Kart
         private new void Awake()
         {
             base.Awake();
+            photonView = GetComponent<PhotonView>();
             if (PhotonNetwork.IsConnected && !photonView.IsMine)
             {
                 SetName(GetPlayer(photonView).NickName);
@@ -33,12 +34,30 @@ namespace Kart
 
         public void SetColor(PunTeams.Team team)
         {
+            string teamStr = "default";
             switch (team)
             {
                 case PunTeams.Team.blue:
-                    kartRenderer.material = Resources.Load<Material>(Constants.BlueKartTextureName);
+                    teamStr = "blue";
                     break;
                 case PunTeams.Team.red:
+                    teamStr = "red";
+                    break;
+                default:
+                    break;
+            }
+            photonView.RPC("RPCSetColor", RpcTarget.AllBuffered, teamStr);
+        }
+
+        [PunRPC]
+        public void RPCSetColor(string team)
+        {
+            switch (team)
+            {
+                case "blue":
+                    kartRenderer.material = Resources.Load<Material>(Constants.BlueKartTextureName);
+                    break;
+                case "red":
                     kartRenderer.material = Resources.Load<Material>(Constants.RedKartTextureName);
                     break;
                 default:
@@ -47,6 +66,12 @@ namespace Kart
         }
 
         public void SetName(string name)
+        {
+            photonView.RPC("RPCSetName", RpcTarget.AllBuffered, name);
+        }
+
+        [PunRPC]
+        public void RPCSetName(string name)
         {
             nameText.text = name;
         }
