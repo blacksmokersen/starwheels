@@ -108,16 +108,18 @@ namespace Kart
 
         public void Accelerate(float value)
         {
-            if (!kartStates.IsGrounded()) return;
-
-            kartEngine.Accelerate(value);
+            if (kartStates.IsGrounded())
+            {
+                kartEngine.Accelerate(value);
+            }
         }
 
         public void Decelerate(float value)
         {
-            if (!kartStates.IsGrounded()) return;
-
-            kartEngine.Decelerate(value);
+            if (kartStates.IsGrounded() && !kartStates.IsDrifting())
+            {
+                kartEngine.Decelerate(value);
+            }
         }
 
         public void Turn(float turnValue)
