@@ -54,20 +54,6 @@ namespace GameModes
 
         // PRIVATE
 
-        private static void CheckIfOver()
-        {
-            if (_redKartsAlive <= 0)
-            {
-                IsOver = true;
-                WinnerTeam = PunTeams.Team.blue;
-            }
-            else if (_blueKartsAlive <= 0)
-            {
-                IsOver = true;
-                WinnerTeam = PunTeams.Team.red;
-            }
-        }
-
         private static void InitializePlayerCount()
         {
             Player[] players = PhotonNetwork.PlayerList;
@@ -85,6 +71,20 @@ namespace GameModes
                     default:
                         break;
                 }
+            }
+        }
+
+        private static void CheckIfOver()
+        {
+            if (_redKartsAlive <= 0)
+            {
+                IsOver = true;
+                WinnerTeam = PunTeams.Team.blue;
+            }
+            else if (_blueKartsAlive <= 0)
+            {
+                IsOver = true;
+                WinnerTeam = PunTeams.Team.red;
             }
         }
 

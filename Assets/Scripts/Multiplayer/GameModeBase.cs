@@ -3,6 +3,7 @@ using Photon.Pun.UtilityScripts;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
 using CameraUtils;
+using Photon.Realtime;
 
 namespace GameModes
 {
@@ -24,6 +25,7 @@ namespace GameModes
             {
                 PhotonNetwork.OfflineMode = true;
                 PhotonNetwork.LocalPlayer.SetTeam(PunTeams.Team.blue);
+                PhotonNetwork.CreateRoom("local");
             }
 
             SpawnKart(PhotonNetwork.LocalPlayer.GetTeam());
@@ -38,14 +40,21 @@ namespace GameModes
             SceneManager.LoadScene(Constants.Scene.GameHUD, LoadSceneMode.Additive);
 
             int numberOfPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
-            var initPos = _spawns[numberOfPlayers].transform.position;
-            var kart = PhotonNetwork.Instantiate("Kart", initPos, _spawns[numberOfPlayers].transform.rotation, 0);
 
-            if (kart.GetComponent<PhotonView>().IsMine)
+            for (int i = 0; i < numberOfPlayers; ++i)
             {
-                var cinemachineDynamicScript = FindObjectOfType<CinemachineDynamicScript>();
-                cinemachineDynamicScript.SetKart(kart);
-                cinemachineDynamicScript.Initialize();
+                var initPos = _spawns[i].transform.position;
+                var initRot = _spawns[i].transform.rotation;
+                var kart = PhotonNetwork.Instantiate("Kart", initPos, initRot, 0);
+
+                PhotonView photonView = kart.GetComponent<PhotonView>();
+
+                if (photonView.IsMine || !PhotonNetwork.IsConnected)
+                {
+                    var cinemachineDynamicScript = FindObjectOfType<CinemachineDynamicScript>();
+                    cinemachineDynamicScript.Initialize();
+                    cinemachineDynamicScript.SetKart(kart);
+                }
             }
         }
     }
