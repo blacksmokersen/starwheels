@@ -18,7 +18,7 @@ namespace Abilities
                 Direction direction = Direction.Forward;
                 if (yAxis < 0) direction = Direction.Backward;
 
-                _tpBack = ((GameObject)Instantiate(Resources.Load("TPBack"))).GetComponent<TPBackBehaviour>();
+                _tpBack = ((GameObject)Instantiate(Resources.Load("Items/TPBack"))).GetComponent<TPBackBehaviour>();
                 _tpBack.Launch(kartHub.kartInventory, direction);
             }
             else //if (_tpBack.IsEnabled())

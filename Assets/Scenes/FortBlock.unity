@@ -980,6 +980,10 @@ Prefab:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 4300000, guid: 67ce6ceb13e3c7146b27179f88c0a2bc, type: 3}
+    - target: {fileID: 100000, guid: de2d953520b4e344ca767fdcd454d79e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: de2d953520b4e344ca767fdcd454d79e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: de2d953520b4e344ca767fdcd454d79e, type: 3}
@@ -1378,6 +1382,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92cb3eb37b43174439de27b75ffe22d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  classicBattleEndMenu: {fileID: 1140238511485250, guid: 76630cc4dada6a8468ed83bd763e0627,
+    type: 2}
 --- !u!1001 &515242027
 Prefab:
   m_ObjectHideFlags: 0
@@ -2686,11 +2692,20 @@ Transform:
   m_Father: {fileID: 794932136}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1217013958 stripped
+--- !u!4 &1217013958
 Transform:
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 4660941049280168, guid: 4727b30b1ccafb04ea42cbe5a0bf5b05,
     type: 2}
   m_PrefabInternal: {fileID: 600305547}
+  m_GameObject: {fileID: 1759717953}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -638, y: 0, z: 112}
+  m_LocalScale: {x: 1, y: 1, z: 1.3000009}
+  m_Children: []
+  m_Father: {fileID: 794932136}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1001 &1240743687
 Prefab:
   m_ObjectHideFlags: 0
@@ -3744,6 +3759,84 @@ Transform:
   m_Father: {fileID: 1610034690}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1759717953
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 1867090779236294, guid: 4727b30b1ccafb04ea42cbe5a0bf5b05,
+    type: 2}
+  m_PrefabInternal: {fileID: 600305547}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1217013958}
+  - component: {fileID: 1759717956}
+  - component: {fileID: 1759717955}
+  - component: {fileID: 1759717954}
+  m_Layer: 8
+  m_Name: Race
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!64 &1759717954
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 64027567433478264, guid: 4727b30b1ccafb04ea42cbe5a0bf5b05,
+    type: 2}
+  m_PrefabInternal: {fileID: 600305547}
+  m_GameObject: {fileID: 1759717953}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300000, guid: d69f25d99a3482540980dc27ea18c626, type: 3}
+--- !u!23 &1759717955
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 23934424162110984, guid: 4727b30b1ccafb04ea42cbe5a0bf5b05,
+    type: 2}
+  m_PrefabInternal: {fileID: 600305547}
+  m_GameObject: {fileID: 1759717953}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 2100000, guid: 7ae59e716a044094692514f15620552c, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &1759717956
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 33443644626098002, guid: 4727b30b1ccafb04ea42cbe5a0bf5b05,
+    type: 2}
+  m_PrefabInternal: {fileID: 600305547}
+  m_GameObject: {fileID: 1759717953}
+  m_Mesh: {fileID: 4300000, guid: d69f25d99a3482540980dc27ea18c626, type: 3}
 --- !u!1001 &1850133145
 Prefab:
   m_ObjectHideFlags: 0
