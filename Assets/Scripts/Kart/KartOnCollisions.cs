@@ -28,7 +28,7 @@ namespace Kart {
 
         private void OnTriggerEnter(Collider collision)
         {
-            if (collision.gameObject.tag == Constants.ItemBoxTag && _kartInventory.IsEmpty())
+            if (collision.gameObject.tag == Constants.Tag.ItemBox && _kartInventory.IsEmpty())
             {
                 StartCoroutine(collision.gameObject.GetComponent<ItemBox>().Activate());
                 _kartEvents.OnGetItemBox();
@@ -51,7 +51,7 @@ namespace Kart {
 
         private bool IsGround(GameObject gameObject)
         {
-            return gameObject.layer == LayerMask.NameToLayer(Constants.GroundLayer);
+            return gameObject.layer == LayerMask.NameToLayer(Constants.Layer.Ground);
         }
     }
 }

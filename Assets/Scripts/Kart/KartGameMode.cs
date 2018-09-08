@@ -20,7 +20,7 @@ namespace Kart
 
         public void DestroyKart()
         {
-            switch (GameModeBase.ActualGameMode)
+            switch (GameModeBase.CurrentGameMode)
             {
                 case GameMode.ClassicBattle:
                     ClassicBattleDestroy();

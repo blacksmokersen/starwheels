@@ -34,7 +34,7 @@ public class WheelSuspensions : MonoBehaviour {
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(wheelTransform.position, Vector3.down, out hit, MaxExtensionDistance, 1 << LayerMask.NameToLayer(Constants.GroundLayer)))
+        if (Physics.Raycast(wheelTransform.position, Vector3.down, out hit, MaxExtensionDistance, 1 << LayerMask.NameToLayer(Constants.Layer.Ground)))
         {
             var distance = Mathf.Clamp(hit.distance, 0, MaxExtensionDistance);
             var compressionRatio = - distance + MaxExtensionDistance;

@@ -101,7 +101,7 @@ namespace Items
         private void CheckGrounded()
         {
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, Vector3.down, out hit, DistanceForGrounded, 1 << LayerMask.NameToLayer(Constants.GroundLayer)))
+            if (Physics.Raycast(transform.position, Vector3.down, out hit, DistanceForGrounded, 1 << LayerMask.NameToLayer(Constants.Layer.Ground)))
             {
                 rb.useGravity = false;
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);

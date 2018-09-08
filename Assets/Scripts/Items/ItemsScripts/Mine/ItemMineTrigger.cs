@@ -8,8 +8,8 @@ namespace Items
 
         private void OnTriggerEnter(Collider other)
         {
-            if ((other.gameObject.CompareTag(Constants.DiskItemTag) ||
-                other.gameObject.CompareTag(Constants.RocketItemTag))
+            if ((other.gameObject.CompareTag(Constants.Tag.DiskItem) ||
+                other.gameObject.CompareTag(Constants.Tag.RocketItem))
                 && Activated)
             {
                 other.gameObject.GetComponentInParent<ProjectileBehaviour>().DestroyObject(); // Destroy the projectile

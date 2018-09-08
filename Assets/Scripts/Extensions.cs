@@ -55,7 +55,7 @@ namespace MyExtensions
         public static List<GameObject> GetTeamKarts()
         {
             var teamKarts = new List<GameObject>();
-            var allKarts = GameObject.FindGameObjectsWithTag(Constants.KartRootTag);
+            var allKarts = GameObject.FindGameObjectsWithTag(Constants.Tag.Kart);
             foreach (GameObject kart in allKarts)
             {
                 var kartPlayer = kart.GetComponent<PhotonView>().Owner;

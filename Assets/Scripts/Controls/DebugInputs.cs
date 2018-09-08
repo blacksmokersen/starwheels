@@ -28,7 +28,7 @@ namespace Controls
             }
 
             // Abilities
-            if (Input.GetButtonDown(Constants.UseAbilityButton))
+            if (Input.GetButtonDown(Constants.Input.UseAbility))
             {
                 StartCoroutine(GetComponent<GamepadVibrations>().Vibrate(0.2f, 0.5f));
             }

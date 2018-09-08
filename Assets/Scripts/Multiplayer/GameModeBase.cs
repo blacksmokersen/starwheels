@@ -10,27 +10,37 @@ namespace GameModes
 
     public class GameModeBase : MonoBehaviourPun
     {
-        public static GameMode ActualGameMode;
+        public static GameMode CurrentGameMode;
 
         private GameObject[] _spawns;
 
+        // CORE
+
         protected void Start()
         {
-            _spawns = GameObject.FindGameObjectsWithTag(Constants.SpawnPointTag);
+            _spawns = GameObject.FindGameObjectsWithTag(Constants.Tag.Spawn);
+
             if (!PhotonNetwork.IsConnected)
             {
                 PhotonNetwork.OfflineMode = true;
                 PhotonNetwork.LocalPlayer.SetTeam(PunTeams.Team.blue);
             }
+
             SpawnKart(PhotonNetwork.LocalPlayer.GetTeam());
         }
 
-        public void SpawnKart(PunTeams.Team team)
+        // PUBLIC
+
+        // PRIVATE
+
+        private void SpawnKart(PunTeams.Team team)
         {
-            SceneManager.LoadScene(Constants.GameHUDSceneName, LoadSceneMode.Additive);
+            SceneManager.LoadScene(Constants.Scene.GameHUD, LoadSceneMode.Additive);
+
             int numberOfPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
             var initPos = _spawns[numberOfPlayers].transform.position;
             var kart = PhotonNetwork.Instantiate("Kart", initPos, _spawns[numberOfPlayers].transform.rotation, 0);
+
             if (kart.GetComponent<PhotonView>().IsMine)
             {
                 var cinemachineDynamicScript = FindObjectOfType<CinemachineDynamicScript>();

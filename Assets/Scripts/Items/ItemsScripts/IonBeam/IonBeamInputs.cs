@@ -7,18 +7,21 @@ namespace Controls
     public class IonBeamInputs : BaseKartComponent
     {
         public static bool IonBeamControlMode;
-        private float horizontalAxis;
-        private float verticalAxis;
-        private PlayerInputs playerinputs;
-        private IonBeamBehaviour ionBeamBehaviour;
-        private CinemachineDynamicScript cinemachineDynamicScript;
+
+        private float _horizontalAxis;
+        private float _verticalAxis;
+        private PlayerInputs _playerinputs;
+        private IonBeamBehaviour _ionBeamBehaviour;
+        private CinemachineDynamicScript _cinemachineDynamicScript;
+
+        // CORE
 
         private new void Awake()
         {
             base.Awake();
-            cinemachineDynamicScript = kartHub.GetComponent<CinemachineDynamicScript>();
-            playerinputs = GetComponent<PlayerInputs>();
-            ionBeamBehaviour = GetComponent<IonBeamBehaviour>();
+            _cinemachineDynamicScript = kartHub.GetComponent<CinemachineDynamicScript>();
+            _playerinputs = GetComponent<PlayerInputs>();
+            _ionBeamBehaviour = GetComponent<IonBeamBehaviour>();
         }
 
         private void Update()
@@ -27,23 +30,28 @@ namespace Controls
             ButtonsDown();
         }
 
-        public void MoveCam()
+        // PUBLIC
+
+        // PRIVATE
+
+        private void MoveCam()
         {
-            horizontalAxis = Input.GetAxis(Constants.UpAndDownAxis);
-            verticalAxis = Input.GetAxis(Constants.TurnAxis);
+            _horizontalAxis = Input.GetAxis(Constants.Input.UpAndDownAxis);
+            _verticalAxis = Input.GetAxis(Constants.Input.TurnAxis);
+
             if (IonBeamControlMode)
             {
-                cinemachineDynamicScript.IonBeamCameraControls(horizontalAxis, verticalAxis);
+                _cinemachineDynamicScript.IonBeamCameraControls(_horizontalAxis, _verticalAxis);
             }
         }
 
-        void ButtonsDown()
+        private void ButtonsDown()
         {
-            if (Input.GetButtonDown(Constants.UseItemButton))
+            if (Input.GetButtonDown(Constants.Input.UseItem))
             {
                 if (IonBeamControlMode)
                 {
-                    ionBeamBehaviour.FireIonBeam();
+                    _ionBeamBehaviour.FireIonBeam();
                     DisableKartInputs(false);
                 }
             }
@@ -52,7 +60,7 @@ namespace Controls
         public void DisableKartInputs(bool value)
         {
             IonBeamControlMode = false;
-            playerinputs.Enabled = value;
+            _playerinputs.Enabled = value;
         }
     }
 }

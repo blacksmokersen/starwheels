@@ -108,7 +108,7 @@ namespace Items
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.GroundLayer))
+            if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.Layer.Ground))
             {
                 Rigidbody rb = GetComponent<Rigidbody>();
                 rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;

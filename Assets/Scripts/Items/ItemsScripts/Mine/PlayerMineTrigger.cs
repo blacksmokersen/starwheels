@@ -10,7 +10,7 @@ namespace Items
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == Constants.KartTriggerTag && Activated)
+            if (other.gameObject.tag == Constants.Tag.KartTrigger && Activated)
             {
                 var owner = GetComponentInParent<PhotonView>().Owner;
                 var target = other.gameObject.GetComponentInParent<PhotonView>().Owner;

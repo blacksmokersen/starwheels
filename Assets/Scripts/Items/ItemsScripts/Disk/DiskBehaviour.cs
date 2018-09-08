@@ -11,7 +11,7 @@ namespace Items
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.GroundLayer))
+            if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.Layer.Ground))
             {
                 Vector3 contactPoint = collision.contacts[0].point;
                 CollisionParticles.transform.position = contactPoint;
