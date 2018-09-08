@@ -20,7 +20,6 @@ namespace Kart
 
         public void DestroyKart()
         {
-            Debug.Log("Me : " + photonView.Owner.NickName);
             switch (GameModeBase.CurrentGameMode)
             {
                 case GameMode.ClassicBattle:
@@ -43,12 +42,9 @@ namespace Kart
                 ClassicBattle.OnKartDestroyed(PhotonNetwork.LocalPlayer.GetTeam());
                 FindObjectOfType<SpectatorControls>().Enabled = true;
                 FindObjectOfType<CameraPlayerSwitch>().SetCameraToRandomPlayer();
-                PhotonNetwork.RemoveRPCs(photonView);
-                PhotonNetwork.Destroy(photonView);
-                Destroy(photonView.gameObject);
+                kartHub.DestroyKart();
             }
         }
-
         #endregion
 
         #region Score

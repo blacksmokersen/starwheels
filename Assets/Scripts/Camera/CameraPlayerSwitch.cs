@@ -20,7 +20,10 @@ namespace CameraUtils
         {
             var currentTarget = _cinemachineDynamicScript.CurrentTarget;
             var newTargetKart = MyExtensions.Functions.GetNextTeamKart(currentTarget);
-            _cinemachineDynamicScript.SetKart(newTargetKart);
+            if (newTargetKart != null)
+            {
+                _cinemachineDynamicScript.SetKart(newTargetKart);
+            }
         }
 
         public void SetCameraToRandomPlayer()
