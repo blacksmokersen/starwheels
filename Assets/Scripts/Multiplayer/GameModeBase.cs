@@ -3,7 +3,6 @@ using Photon.Pun.UtilityScripts;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
 using CameraUtils;
-using Photon.Realtime;
 
 namespace GameModes
 {
@@ -49,7 +48,7 @@ namespace GameModes
 
                 PhotonView photonView = kart.GetComponent<PhotonView>();
 
-                if (photonView.IsMine || !PhotonNetwork.IsConnected)
+                if (photonView.IsMine)
                 {
                     var cinemachineDynamicScript = FindObjectOfType<CinemachineDynamicScript>();
                     cinemachineDynamicScript.Initialize();
