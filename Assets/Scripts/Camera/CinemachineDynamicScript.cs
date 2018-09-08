@@ -10,19 +10,19 @@ namespace CameraUtils
     {
         [Range(8.5f, 15)] public float MaxDistanceCamInBoost;
         public float SpeedCamMovements;
-        public GameObject ActualTarget;
+        public GameObject CurrentTarget;
+        public CinemachineTransposer transposer;
 
         [SerializeField] private float autoCenterTiming;
 
         private CinemachineVirtualCamera cinemachine;
         private Coroutine cameraBoostCoroutine;
         private Coroutine cameraIonBeamBehaviour;
-        public CinemachineTransposer transposer;
         private CinemachineComposer composer;
         private CinemachineOrbitalTransposer orbiter;
         private bool backCamActivated = false;
         private float currentTimer;
-        private KartEngine kartEngine;
+        private KartEngine _kartEngine;
 
         [SerializeField] private GameObject turnRotationPoint;
 
@@ -52,8 +52,9 @@ namespace CameraUtils
         {
             cinemachine.Follow = kart.transform;
             cinemachine.LookAt = kart.transform;
-            kartEngine = kart.GetComponentInChildren<KartEngine>();
-            ActualTarget = kart;
+            CurrentTarget = kart;
+
+            _kartEngine = kart.GetComponentInChildren<KartEngine>();
         }
 
         public void IonBeamCameraControls(float horizontal, float vertical)
@@ -72,7 +73,7 @@ namespace CameraUtils
 
         public void SpeedOnCamBehaviour()
         {
-            float clampCam = Mathf.Clamp(kartEngine.PlayerVelocity / 5, 0, 20);
+            float clampCam = Mathf.Clamp(_kartEngine.PlayerVelocity / 5, 0, 20);
             cinemachine.m_Lens.FieldOfView = 50 + clampCam;
         }
 

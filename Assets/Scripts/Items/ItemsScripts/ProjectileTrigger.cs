@@ -6,7 +6,7 @@ namespace Items
     {
         protected void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.CompareTag(Constants.KartTriggerTag))
+            if (other.gameObject.CompareTag(Constants.Tag.KartTrigger))
             {
                 var projectileBehaviour = GetComponentInParent<ProjectileBehaviour>();
                 projectileBehaviour.CheckCollision(other.gameObject);

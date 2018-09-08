@@ -16,11 +16,11 @@ namespace Kart
         public TurnState DriftTurnState = TurnState.NotTurning;
         public DriftState DriftState = DriftState.NotDrifting;
 
-        private bool _isCrashed = false;
-
         public float DistanceForGrounded;
         public float VelocityDetectionThreshold;
         public float CrashDuration;
+
+        private bool _isCrashed = false;
 
         private Rigidbody _rb;
         private KartEvents _kartEvents;
@@ -117,7 +117,7 @@ namespace Kart
 
         private void CheckGrounded()
         {
-            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), DistanceForGrounded, 1 << LayerMask.NameToLayer(Constants.GroundLayer)))
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), DistanceForGrounded, 1 << LayerMask.NameToLayer(Constants.Layer.Ground)))
             {
                 AirState = AirState.Ground;
             }

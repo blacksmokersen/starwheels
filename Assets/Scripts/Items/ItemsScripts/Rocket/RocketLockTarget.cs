@@ -22,7 +22,7 @@ namespace Items
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == Constants.KartTriggerTag && activated && ActualTarget == null)
+            if (other.gameObject.tag == Constants.Tag.KartTrigger && activated && ActualTarget == null)
             {
                 if (other.GetComponentInParent<KartHub>().kartInventory != Owner)
                 {
@@ -34,7 +34,7 @@ namespace Items
 
         private void OnTriggerStay(Collider other)
         {
-            if (other.gameObject.tag == Constants.KartTriggerTag && activated)
+            if (other.gameObject.tag == Constants.Tag.KartTrigger && activated)
             {
                 if (other.GetComponentInParent<KartHub>().kartInventory == Owner) return;
                 if (IsKartIsCloserThanActualTarget(other.gameObject) || ActualTarget == null)

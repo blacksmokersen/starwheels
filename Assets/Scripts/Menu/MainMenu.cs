@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using ExitGames.Client.Photon;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -39,7 +37,7 @@ public class MainMenu : MonoBehaviourPun
         Debug.Log("Launching Solo mode");
         PhotonNetwork.OfflineMode = true;
         PhotonNetwork.CreateRoom("Solo");
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(Constants.Scene.FortBlock);
     }
 
     private void Quit()

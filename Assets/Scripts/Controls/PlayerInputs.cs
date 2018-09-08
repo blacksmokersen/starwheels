@@ -13,6 +13,8 @@ namespace Controls
         public bool DisableMovement;
         public GameObject EscapeMenu;
 
+        // CORE
+
         private new void Awake()
         {
             base.Awake();
@@ -45,77 +47,82 @@ namespace Controls
             }
         }
 
-        void SetInputEnabled(bool b)
+        // PUBLIC
+
+        // PRIVATE
+
+        private void SetInputEnabled(bool b)
         {
             Enabled = b;
         }
 
-        void Axis()
+        private void Axis()
         {
-            kartHub.Accelerate(Input.GetAxis(Constants.AccelerateButton));
-            kartHub.Decelerate(Input.GetAxis(Constants.DecelerateButton));
-            kartHub.Turn(Input.GetAxis(Constants.TurnAxis));
+            kartHub.Accelerate(Input.GetAxis(Constants.Input.Accelerate));
+            kartHub.Decelerate(Input.GetAxis(Constants.Input.Decelerate));
+            kartHub.Turn(Input.GetAxis(Constants.Input.TurnAxis));
         }
 
-        void ButtonsDown()
+        private void ButtonsDown()
         {
             // Keyboard & GamePad
-            if (Input.GetButtonDown(Constants.UseAbilityButton))
+            if (Input.GetButtonDown(Constants.Input.UseAbility))
             {
-                kartHub.UseAbility(Input.GetAxis(Constants.TurnAxis), Input.GetAxis(Constants.UpAndDownAxis));
+                kartHub.UseAbility(Input.GetAxis(Constants.Input.TurnAxis), Input.GetAxis(Constants.Input.UpAndDownAxis));
             }
-            if (Input.GetButtonDown(Constants.DriftButton))
+            if (Input.GetButtonDown(Constants.Input.Drift))
             {
-                kartHub.InitializeDrift(Input.GetAxis(Constants.TurnAxis));
+                kartHub.InitializeDrift(Input.GetAxis(Constants.Input.TurnAxis));
             }
-            if (Input.GetButtonDown(Constants.UseItemButton))
+            if (Input.GetButtonDown(Constants.Input.UseItem))
             {
-                kartHub.UseItem(Input.GetAxis(Constants.UpAndDownAxis));
+                kartHub.UseItem(Input.GetAxis(Constants.Input.UpAndDownAxis));
             }
-            if (Input.GetButtonDown(Constants.BackCamera))
+            if (Input.GetButtonDown(Constants.Input.BackCamera))
             {
                 KartEvents.Instance.OnBackCameraStart(true);
             }
-            if (Input.GetButtonDown(Constants.ResetCamera))
+            if (Input.GetButtonDown(Constants.Input.ResetCamera))
             {
                 KartEvents.Instance.OnCameraTurnReset();
             }
 
             // Mouse
-            if (Input.GetButtonDown(Constants.UseItemForwardButton))
+            if (Input.GetButtonDown(Constants.Input.UseItemForward))
             {
                 kartHub.UseItemForward();
             }
-            if (Input.GetButtonDown(Constants.UseItemBackwardButton))
+            if (Input.GetButtonDown(Constants.Input.UseItemBackward))
             {
                 kartHub.UseItemBackward();
             }
         }
 
-        void ButtonsPressed()
+        private void ButtonsPressed()
         {
-            if (Input.GetButton(Constants.DriftButton))
+            if (Input.GetButton(Constants.Input.Drift))
             {
-                kartHub.DriftTurns(Input.GetAxis(Constants.TurnAxis));
+                kartHub.DriftTurns(Input.GetAxis(Constants.Input.TurnAxis));
             }
         }
 
-        void ButtonsUp()
+        private void ButtonsUp()
         {
-            if (Input.GetButtonUp(Constants.DriftButton))
+            if (Input.GetButtonUp(Constants.Input.Drift))
             {
                 kartHub.StopDrift();
             }
-            if (Input.GetButtonUp(Constants.BackCamera))
+            if (Input.GetButtonUp(Constants.Input.BackCamera))
             {
                 KartEvents.Instance.OnBackCameraEnd(false);
             }
         }
-        void AxisOnUse()
+
+        private void AxisOnUse()
         {
             if (KartEvents.Instance.OnCameraTurnStart != null)
             {
-                KartEvents.Instance.OnCameraTurnStart(Input.GetAxis(Constants.TurnCamera));
+                KartEvents.Instance.OnCameraTurnStart(Input.GetAxis(Constants.Input.TurnCamera));
             }
         }
     }

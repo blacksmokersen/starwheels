@@ -17,8 +17,8 @@ namespace CameraUtils
 
         public void SetCameraToNextPlayer()
         {
-            var actualTarget = _cinemachineDynamicScript.ActualTarget;
-            var newTargetKart = MyExtensions.Functions.GetNextTeamKart(actualTarget);
+            var currentTarget = _cinemachineDynamicScript.CurrentTarget;
+            var newTargetKart = MyExtensions.Functions.GetNextTeamKart(currentTarget);
             _cinemachineDynamicScript.SetKart(newTargetKart);
         }
 

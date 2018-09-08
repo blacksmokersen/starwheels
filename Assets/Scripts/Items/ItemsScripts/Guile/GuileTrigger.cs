@@ -1,17 +1,20 @@
-﻿namespace Items
+﻿using UnityEngine;
+
+namespace Items
 {
     public class GuileTrigger : ProjectileTrigger
     {
-        private new void OnTriggerEnter(UnityEngine.Collider other)
+        private new void OnTriggerEnter(Collider other)
         {
             base.OnTriggerEnter(other);
-            if (other.gameObject.CompareTag(Constants.GroundItemTag) ||
-                other.gameObject.CompareTag(Constants.DiskItemTag) ||
-                other.gameObject.CompareTag(Constants.RocketItemTag))
+
+            if (other.gameObject.CompareTag(Constants.Tag.GroundItem) ||
+                other.gameObject.CompareTag(Constants.Tag.DiskItem) ||
+                other.gameObject.CompareTag(Constants.Tag.RocketItem))
             {
                 other.gameObject.GetComponentInParent<ItemBehaviour>().DestroyObject();
             }
-            else if (other.gameObject.CompareTag(Constants.GuileItemTag))
+            else if (other.gameObject.CompareTag(Constants.Tag.GuileItem))
             {
                 GetComponentInParent<ItemBehaviour>().DestroyObject();
             }

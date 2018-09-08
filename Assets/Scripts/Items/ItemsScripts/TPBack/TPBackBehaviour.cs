@@ -54,7 +54,7 @@ namespace Items
             _kart = kart.GetComponentInParent<Rigidbody>().transform;
             _kartRotation = _kart.rotation;
 
-            if (direction == Direction.Forward)
+            if (direction == Direction.Forward || direction == Direction.Default)
             {
                 transform.position = kart.ItemPositions.FrontPosition.position;
                 GetComponent<Rigidbody>().AddForce((kart.transform.forward + kart.transform.up / TimesLongerThanHighThrow) * ForwardThrowingForce, ForceMode.Impulse);
@@ -108,7 +108,7 @@ namespace Items
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.GroundLayer))
+            if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.Layer.Ground))
             {
                 Rigidbody rb = GetComponent<Rigidbody>();
                 rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;

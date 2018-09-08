@@ -22,7 +22,7 @@ public class LevelManager : MonoBehaviourPun
 
     private void Update()
     {
-        if (Input.GetButtonDown(Constants.EscapeMenu))
+        if (Input.GetButtonDown(Constants.Input.EscapeMenu))
             menuActivated = !menuActivated;
         if (menuActivated)
             escapeMenu.SetActive(true);

@@ -9,6 +9,8 @@ public class BaseKartComponent : MonoBehaviour
     protected KartHub kartHub;
     protected PhotonView photonView;
 
+    // CORE
+
     protected void Awake()
     {
         kartEvents = GetComponentInParent<KartEvents>();
@@ -16,4 +18,8 @@ public class BaseKartComponent : MonoBehaviour
         kartHub = GetComponentInParent<KartHub>();
         photonView = GetComponentInParent<PhotonView>();
     }
+
+    // PUBLIC
+
+    // PRIVATE
 }

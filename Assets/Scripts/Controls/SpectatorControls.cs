@@ -8,19 +8,22 @@ namespace CameraUtils
 
         private CameraPlayerSwitch _cameraPlayerSwitch;
 
+        // CORE
+
         private void Awake()
         {
             _cameraPlayerSwitch = GetComponent<CameraPlayerSwitch>();
         }
 
+        // PUBLIC
+
+        // PRIVATE
+
         private void Update()
         {
-            if (Enabled)
+            if (Enabled && Input.GetButtonDown(Constants.Input.SwitchCamToNextPlayer))
             {
-                if (Input.GetButtonDown(Constants.SwitchCamToNextPlayerButton))
-                {
-                    _cameraPlayerSwitch.SetCameraToNextPlayer();
-                }
+                _cameraPlayerSwitch.SetCameraToNextPlayer();
             }
         }
     }
