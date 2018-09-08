@@ -23,9 +23,13 @@ namespace Controls
                 {
                     SwitchToNextItem();
                 }
-                else if (Input.GetKeyDown(KeyCode.Alpha4))
+                else if (Input.GetKeyDown(KeyCode.Alpha3))
                 {
                     LoseOneLife();
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha4))
+                {
+                    DestroyKart();
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha5))
                 {
@@ -46,12 +50,16 @@ namespace Controls
             var itemIndex = (ActualItemIndex++) % items.Length;
             kartInventory.Item = items[itemIndex];
             kartEvents.OnItemUsed(kartInventory.Item, kartInventory.Count);
-            SetUnlimitedItems();
         }
 
         public void LoseOneLife()
         {
             kartHub.kartHealthSystem.HealthLoss();
+        }
+
+        public void DestroyKart()
+        {
+            kartHub.kartGameMode.DestroyKart();
         }
 
         public void ResetLives()

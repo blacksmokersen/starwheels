@@ -12,6 +12,7 @@ namespace CameraUtils
 
         private void Awake()
         {
+            _cinemachineDynamicScript = GetComponent<CinemachineDynamicScript>();
             _cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
         }
 
@@ -22,10 +23,13 @@ namespace CameraUtils
             _cinemachineDynamicScript.SetKart(newTargetKart);
         }
 
-        void SetCameraToRandomPlayer()
+        public void SetCameraToRandomPlayer()
         {
             var randomKart = MyExtensions.Functions.PickRandomTeamKart();
-            _cinemachineDynamicScript.SetKart(randomKart);
+            if (randomKart != null)
+            {
+                _cinemachineDynamicScript.SetKart(randomKart);
+            }
         }
     }
 }

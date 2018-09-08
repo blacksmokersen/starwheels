@@ -2,6 +2,7 @@
 using GameModes;
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
+using UnityEngine;
 
 namespace Kart
 {
@@ -15,11 +16,11 @@ namespace Kart
             PhotonNetwork.LocalPlayer.SetScore(0);
 
             kartEvents.OnKartDestroyed += DestroyKart;
-            kartEvents.OnScoreChange();
         }
 
         public void DestroyKart()
         {
+            Debug.Log("Me : " + photonView.Owner.NickName);
             switch (GameModeBase.CurrentGameMode)
             {
                 case GameMode.ClassicBattle:
@@ -37,10 +38,15 @@ namespace Kart
         #region Destroy Functions
         private void ClassicBattleDestroy()
         {
-            ClassicBattle.OnKartDestroyed(PhotonNetwork.LocalPlayer.GetTeam());
-            FindObjectOfType<SpectatorControls>().Enabled = true;
-            FindObjectOfType<CameraPlayerSwitch>().SetCameraToNextPlayer();
-            PhotonNetwork.Destroy(photonView);
+            if (photonView.IsMine)
+            {
+                ClassicBattle.OnKartDestroyed(PhotonNetwork.LocalPlayer.GetTeam());
+                FindObjectOfType<SpectatorControls>().Enabled = true;
+                FindObjectOfType<CameraPlayerSwitch>().SetCameraToRandomPlayer();
+                PhotonNetwork.RemoveRPCs(photonView);
+                PhotonNetwork.Destroy(photonView);
+                Destroy(photonView.gameObject);
+            }
         }
 
         #endregion

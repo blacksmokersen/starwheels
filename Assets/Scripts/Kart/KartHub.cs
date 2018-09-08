@@ -19,6 +19,7 @@ namespace Kart
         [HideInInspector] public KartHealthSystem kartHealthSystem;
         [HideInInspector] public Ability kartAbility;
         [HideInInspector] public CinemachineDynamicScript cinemachineDynamicScript;
+        [HideInInspector] public KartGameMode kartGameMode;
 
         // CORE
 
@@ -32,8 +33,7 @@ namespace Kart
             kartInventory = GetComponentInChildren<KartInventory>();
             kartHealthSystem = GetComponentInChildren<KartHealthSystem>();
             cinemachineDynamicScript = GetComponentInChildren<CinemachineDynamicScript>();
-
-            //KartEvents.Instance.HitSomeoneElse += IncreaseScore;
+            kartGameMode = GetComponentInChildren<KartGameMode>();
         }
 
         private void FixedUpdate()

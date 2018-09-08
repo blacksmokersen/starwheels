@@ -57,11 +57,10 @@ namespace Multiplayer
 
         private void InstantiatePlayerPrefab()
         {
-            var playerPrefab = PhotonNetwork.Instantiate("Menu/RoomPlayer", playerList.transform.position, Quaternion.identity, 0);
+            var playerPrefab = PhotonNetwork.Instantiate(Constants.Prefab.RoomPlayer, playerList.transform.position, Quaternion.identity, 0);
             var roomPlayer = playerPrefab.GetComponent<RoomPlayer>();
             roomPlayer.SetTeam(PhotonNetwork.LocalPlayer.GetTeam());
             myRoomPlayer = roomPlayer;
-            Debug.Log("Instantiate");
         }
 
         private void StartGame()
