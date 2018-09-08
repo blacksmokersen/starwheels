@@ -14,7 +14,7 @@ namespace Items
         private new void Update()
         {
             base.Update();
-            transform.Rotate(new Vector3(0, 0, 5));
+            transform.Rotate(new Vector3(0, 5, 0));
         }
 
         private void OnCollisionEnter(Collision collision)
