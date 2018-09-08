@@ -38,23 +38,15 @@ namespace GameModes
         {
             SceneManager.LoadScene(Constants.Scene.GameHUD, LoadSceneMode.Additive);
 
-            int numberOfPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+            int playerId = PhotonNetwork.LocalPlayer.ActorNumber;
 
-            for (int i = 0; i < numberOfPlayers; ++i)
-            {
-                var initPos = _spawns[i].transform.position;
-                var initRot = _spawns[i].transform.rotation;
-                var kart = PhotonNetwork.Instantiate("Kart", initPos, initRot, 0);
+            var initPos = _spawns[playerId].transform.position;
+            var initRot = _spawns[playerId].transform.rotation;
+            var kart = PhotonNetwork.Instantiate("Kart", initPos, initRot, 0);
 
-                PhotonView photonView = kart.GetComponent<PhotonView>();
-
-                if (photonView.IsMine)
-                {
-                    var cinemachineDynamicScript = FindObjectOfType<CinemachineDynamicScript>();
-                    cinemachineDynamicScript.Initialize();
-                    cinemachineDynamicScript.SetKart(kart);
-                }
-            }
+            var cinemachineDynamicScript = FindObjectOfType<CinemachineDynamicScript>();
+            cinemachineDynamicScript.Initialize();
+            cinemachineDynamicScript.SetKart(kart);
         }
     }
 }

@@ -11,23 +11,26 @@ namespace Items
         public static float ComputeItemChances()
         {
             if (Items == null)
-                Items = Resources.Load<ItemListData>("ItemList").Items;
-            
+                Items = Resources.Load<ItemListData>("Data/ItemList").Items;
+
             float total = 0;
+
             foreach (var item in Items)
             {
                 total += item.Chances;
             }
+
             return total;
         }
 
         public static ItemData GetRandomItem()
         {
             if (Items == null)
-                Items = Resources.Load<ItemListData>("ItemList").Items;
+                Items = Resources.Load<ItemListData>("Data/ItemList").Items;
 
             var chancesCount = 0f;
             var randomChance = Random.Range(0, TotalItemChances);
+
             foreach (var item in Items)
             {
                 chancesCount += item.Chances;
@@ -36,6 +39,7 @@ namespace Items
                     return item;
                 }
             }
+
             return null;
         }
     }

@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
-using Photon.Realtime;
 
 namespace Kart
 {
     public class KartMultiplayerSettings : BaseKartComponent
     {
+        [SerializeField] private Material redKartMaterial;
+        [SerializeField] private Material blueKartMaterial;
+
         [SerializeField] private MeshRenderer kartRenderer;
         [SerializeField] private TextMesh nameText;
         [SerializeField] private GameObject backCamera;
@@ -17,11 +19,13 @@ namespace Kart
         {
             base.Awake();
             photonView = GetComponent<PhotonView>();
+
             if (PhotonNetwork.IsConnected && !photonView.IsMine)
             {
                 SetName(photonView.Owner.NickName);
                 Destroy(backCamera);
             }
+
             SetColor(photonView.Owner.GetTeam());
         }
 
@@ -34,14 +38,13 @@ namespace Kart
 
         public void SetColor(PunTeams.Team team)
         {
-            Debug.Log("Setting color to : " + team);
             switch (team)
             {
                 case PunTeams.Team.blue:
-                    kartRenderer.material = Resources.Load<Material>(Constants.BlueKartTextureName);
+                    kartRenderer.material = blueKartMaterial;
                     break;
                 case PunTeams.Team.red:
-                    kartRenderer.material = Resources.Load<Material>(Constants.RedKartTextureName);
+                    kartRenderer.material = redKartMaterial;
                     break;
                 default:
                     break;

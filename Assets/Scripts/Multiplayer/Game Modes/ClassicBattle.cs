@@ -17,13 +17,15 @@ namespace GameModes
         private static int _redKartsAlive;
         private static int _blueKartsAlive;
 
+        [SerializeField] private GameObject classicBattleEndMenu;
+
         // CORE
 
         private void Awake()
         {
             CurrentGameMode = GameMode.ClassicBattle;
 
-            _endGameMenu = Resources.Load<GameObject>(Constants.ClassicBattleEndMenu);
+            _endGameMenu = classicBattleEndMenu;
             _endGameMenu.SetActive(false);
         }
 

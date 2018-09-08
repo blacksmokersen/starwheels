@@ -12,7 +12,7 @@
         public const string Spawn = "Spawn";
         public const string Kart = "Kart";
         public const string KartTrigger = "KartTrigger";
-        public const string KartColliderTag = "KartCollider";
+        public const string KartCollider = "KartCollider";
         public const string ItemBox = "ItemBox";
         public const string GroundItem = "GroundItem";
         public const string GuileItem = "GuileItem";
@@ -40,19 +40,12 @@
         public const string SwitchCamToNextPlayer = "SwitchCamToNextPlayer";
     }
 
-    // Assets
-    public const string DiskPrefabName = "Prefab/Disk";
-    public const string RocketPrefabName = "Prefabs/Rocket";
-    public const string BlueKartTextureName = "Materials/KartBlueBody";
-    public const string RedKartTextureName = "Materials/KartRedBody";
-    public const string ClassicBattleEndMenu = "Menu/ClassicBattleEndMenu";
-
     // Scenes
     public class Scene
     {
-        public const int Menu = 0;
-        public const int GameHUD = 1;
-        public const int FortBlock = 2;
-        public const int Room = 3;
+        public const string Menu = "Menu";
+        public const string GameHUD = "GameHUD";
+        public const string FortBlock = "FortBlock";
+        public const string Room = "Room";
     }
 }
