@@ -41,31 +41,16 @@ public class RoomMenu : MonoBehaviourPunCallbacks {
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
+        if (otherPlayer.IsInactive) return;
+
         Destroy(FindRowPlayer(otherPlayer).gameObject);
         UpdatePlayerCount();
     }
 
     public override void OnPlayerPropertiesUpdate(Player target, Hashtable changedProps)
     {
-        foreach (var change in changedProps)
-        {
-            if ((byte)change.Key == 255) // NickName
-            {
-                FindRowPlayer(target).SetNickName((string)change.Value);
-            }
-            else if ((byte)change.Key == 0) // Team
-            {
-                var team = PunTeams.Team.none;
-                if ((string)change.Value == "blue")
-                    team = PunTeams.Team.blue;
-                else if ((string)change.Value == "red")
-                    team = PunTeams.Team.red;
-
-                FindRowPlayer(target).SetTeam(team);
-            }
-
-            Debug.Log("" + target.NickName + " has changed its '" + change.Key + "' to '" + change.Value + "'.");
-        }
+        FindRowPlayer(target).SetNickName(target.NickName);
+        FindRowPlayer(target).SetTeam(target.GetTeam());
     }
 
     public override void OnLeftRoom()
@@ -82,6 +67,7 @@ public class RoomMenu : MonoBehaviourPunCallbacks {
         UpdateRoomName();
         UpdatePlayerCount();
 
+        Debug.Log(PhotonNetwork.CurrentRoom.CustomProperties["owner"]);
         if (PhotonNetwork.LocalPlayer.NickName != (string)PhotonNetwork.CurrentRoom.CustomProperties["owner"])
         {
             startGameButton.interactable = false;
