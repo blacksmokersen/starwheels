@@ -11,27 +11,40 @@ namespace HUD
 {
     public class GameHUD : MonoBehaviour
     {
-        public Text ItemCountText;
+        [Header("Players")]
         public Text PlayerList;
-        public Image ItemTexture;
-        public Image ItemFrame;
+
+        [Header("Item")]
+        [SerializeField] private Text _itemCountText;
+        [SerializeField] private Image _itemTexture;
+        [SerializeField] private Image _itemFrame;
+
+        [Header("Speedmeter")]
+        [SerializeField] private Image _speedBar;
+        [SerializeField] private Text _textSpeed;
+
+        private KartEvents _kartEvent;
 
         private void Start()
         {
-            KartEvents.Instance.OnItemUsed += UpdateItem;
             KartEvents.Instance.OnScoreChange += UpdatePlayerList;
-
-            // TODO: Add UpdatePlayerList to OnPhotonConnected and Disconnect events
 
             UpdateItem(null, 0);
             UpdatePlayerList();
         }
 
+        public void ObserveKart(GameObject kartRoot)
+        {
+            _kartEvent = kartRoot.GetComponent<KartEvents>();
+            _kartEvent.OnItemUsed += UpdateItem;
+            _kartEvent.OnVelocityChange += UpdateSpeedmeter;
+        }
+
         public void UpdateItem(ItemData item, int count)
         {
-            ItemTexture.sprite = item != null ? item.InventoryTexture : null;
-            ItemFrame.color = item != null ? item.ItemColor : Color.white ;
-            ItemCountText.text = "" + count;
+            _itemTexture.sprite = item != null ? item.InventoryTexture : null;
+            _itemFrame.color = item != null ? item.ItemColor : Color.white ;
+            _itemCountText.text = "" + count;
         }
 
         public void UpdatePlayerList()
@@ -41,6 +54,13 @@ namespace HUD
             {
                 PlayerList.text += player.NickName + "\t Score: " + player.GetScore() + "\n";
             }
+        }
+
+        public void UpdateSpeedmeter(Vector3 kartVelocity)
+        {
+            var speed = Mathf.Round(kartVelocity.magnitude);
+            _speedBar.fillAmount = speed / 70;
+            _textSpeed.text = "" + speed * 2;
         }
     }
 }

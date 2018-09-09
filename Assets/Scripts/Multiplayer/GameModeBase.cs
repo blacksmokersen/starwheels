@@ -47,6 +47,9 @@ namespace GameModes
             var cinemachineDynamicScript = FindObjectOfType<CinemachineDynamicScript>();
             cinemachineDynamicScript.Initialize();
             cinemachineDynamicScript.SetKart(kart);
+
+            var gameHUD = FindObjectOfType<HUD.GameHUD>();
+            gameHUD.ObserveKart(kart);
         }
     }
 }
