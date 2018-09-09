@@ -31,7 +31,6 @@ namespace Audio
         private new void Awake()
         {
             base.Awake();
-            PlayMotorFullSound();
 
             kartEvents.OnJump += PlayFirstJumpSound;
             kartEvents.OnDriftBoost += PlayBoostSound;
@@ -51,6 +50,7 @@ namespace Audio
             if (photonView.isMine)
             {
                 gameObject.AddComponent<AudioListener>();
+                PlayMotorFullSound();
             }
         }
 
