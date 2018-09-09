@@ -49,11 +49,11 @@ public class RoomMenu : MonoBehaviourPunCallbacks {
     {
         foreach (var change in changedProps)
         {
-            if ((int)change.Key == 255) // NickName
+            if ((byte)change.Key == 255) // NickName
             {
                 FindRowPlayer(target).SetNickName((string)change.Value);
             }
-            else if ((int)change.Key == 0) // Team
+            else if ((byte)change.Key == 0) // Team
             {
                 var team = PunTeams.Team.none;
                 if ((string)change.Value == "blue")
@@ -104,9 +104,19 @@ public class RoomMenu : MonoBehaviourPunCallbacks {
 
     private void UpdatePlayerList()
     {
+        ClearPlayerList();
+
         foreach (Player player in PhotonNetwork.CurrentRoom.Players.Values)
         {
             CreateRowPlayer(player);
+        }
+    }
+
+    private void ClearPlayerList()
+    {
+        for (int i = 1; i < panelPlayerList.transform.childCount; ++i)
+        {
+            Destroy(panelPlayerList.transform.GetChild(i).gameObject);
         }
     }
 

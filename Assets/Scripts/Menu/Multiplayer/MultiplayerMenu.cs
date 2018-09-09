@@ -108,7 +108,7 @@ public class MultiplayerMenu : MonoBehaviourPunCallbacks {
     {
         for (int i = 1; i < panelRoomList.transform.childCount; ++i)
         {
-            Destroy(panelRoomList.transform.GetChild(i));
+            Destroy(panelRoomList.transform.GetChild(i).gameObject);
         }
     }
 
