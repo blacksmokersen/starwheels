@@ -6,21 +6,26 @@ using Photon.Pun.UtilityScripts;
 
 namespace MyExtensions
 {
-    public class Functions
+    #region Math
+    public class Math
     {
         public static float RemapValue(float actualMin, float actualMax, float targetMin, float targetMax, float val)
         {
             return targetMin + (targetMax - targetMin) * ((val - actualMin) / (actualMax - actualMin));
         }
+    }
+    #endregion
 
-        #region TeamExtensions
+    #region TeamExtensions
 
+    public class TeamUtilities
+    {
         public static List<Player> GetTeammates()
         {
             var teammates = new List<Player>();
             foreach (Player player in PhotonNetwork.PlayerListOthers)
             {
-                if(player.GetTeam() == PhotonNetwork.LocalPlayer.GetTeam())
+                if (player.GetTeam() == PhotonNetwork.LocalPlayer.GetTeam())
                 {
                     teammates.Add(player);
                 }
@@ -31,9 +36,9 @@ namespace MyExtensions
         public static Player GetNextTeammate(Player currentTeammate)
         {
             var teammates = GetTeammates();
-            for(int i=0; i<teammates.Count; i++)
+            for (int i = 0; i < teammates.Count; i++)
             {
-                if(teammates[i] == currentTeammate)
+                if (teammates[i] == currentTeammate)
                 {
                     return teammates[(i + 1) % teammates.Count];
                 }
@@ -44,14 +49,16 @@ namespace MyExtensions
         public static Player PickRandomTeammate()
         {
             var teammates = GetTeammates();
-            var rand = Random.Range(0, teammates.Count-1);
+            var rand = Random.Range(0, teammates.Count - 1);
             return teammates[rand];
         }
+    }
 
         #endregion
 
-        #region KartExtensions
-
+    #region KartExtensions
+    public class Kart
+    {
         public static List<GameObject> GetTeamKarts()
         {
             var teamKarts = new List<GameObject>();
@@ -86,7 +93,22 @@ namespace MyExtensions
             var rand = Random.Range(0, teamKart.Count - 1);
             return teamKart[rand];
         }
-
-        #endregion
     }
+    #endregion
+
+    #region AudioExtensions
+    public class Audio
+    {
+        public static void PlayClipObjectAndDestroy(AudioSource audioSource)
+        {
+            GameObject oneShotObject = new GameObject("One shot sound from " + audioSource.name);
+            oneShotObject.transform.position = audioSource.transform.position;
+            UnityEditorInternal.ComponentUtility.CopyComponent(audioSource);
+            UnityEditorInternal.ComponentUtility.PasteComponentAsNew(oneShotObject);
+            var oneShotSource = oneShotObject.GetComponent<AudioSource>();
+            oneShotSource.Play();
+            MonoBehaviour.Destroy(oneShotObject, oneShotSource.clip.length);
+        }
+    }
+    #endregion
 }
