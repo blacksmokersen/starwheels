@@ -49,6 +49,21 @@ public class RoomMenu : MonoBehaviourPunCallbacks {
     {
         foreach (var change in changedProps)
         {
+            if ((int)change.Key == 255) // NickName
+            {
+                FindRowPlayer(target).SetNickName((string)change.Value);
+            }
+            else if ((int)change.Key == 0) // Team
+            {
+                var team = PunTeams.Team.none;
+                if ((string)change.Value == "blue")
+                    team = PunTeams.Team.blue;
+                else if ((string)change.Value == "red")
+                    team = PunTeams.Team.red;
+
+                FindRowPlayer(target).SetTeam(team);
+            }
+
             Debug.Log("" + target.NickName + " has changed its '" + change.Key + "' to '" + change.Value + "'.");
         }
     }
@@ -132,13 +147,6 @@ public class RoomMenu : MonoBehaviourPunCallbacks {
             newTeam = PunTeams.Team.blue;
         }
 
-        var parameters = new object[] { PhotonNetwork.LocalPlayer, newTeam };
-        //photonView.RPC("ChangePlayerTeam", RpcTarget.AllBuffered, parameters);
-    }
-
-    [PunRPC]
-    private void ChangePlayerTeam(Player player, PunTeams.Team newTeam)
-    {
-        FindRowPlayer(player).SetTeam(newTeam);
+        PhotonNetwork.LocalPlayer.SetTeam(newTeam);
     }
 }
