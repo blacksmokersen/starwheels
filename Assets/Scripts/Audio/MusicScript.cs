@@ -1,15 +1,24 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Audio
 {
     public class MusicScript : MonoBehaviour
     {
-        static MusicScript instance = null;
+        [SerializeField] private Button muteButton;
 
-        private bool muted = false;
+        private static MusicScript instance = null;
+
+        private AudioSource _audioSource;
+
+        // CORE
 
         private void Awake()
         {
+            _audioSource = GetComponent<AudioSource>();
+
+            muteButton.onClick.AddListener(ToggleMute);
+
             if (instance == null)
             {
                 instance = this;
@@ -21,18 +30,13 @@ namespace Audio
             }
         }
 
-        public void Mute()
+        // PUBLIC
+
+        // PRIVATE
+
+        private void ToggleMute()
         {
-            if (muted == false)
-            {
-                GetComponent<AudioSource>().Pause();
-                muted = true;
-            }
-            else
-            {
-                GetComponent<AudioSource>().UnPause();
-                muted = false;
-            }
+            _audioSource.mute = !_audioSource.mute;
         }
     }
 }
