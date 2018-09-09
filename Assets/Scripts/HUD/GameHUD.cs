@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 using UnityEngine;
 using Items;
 using Kart;
@@ -38,6 +37,9 @@ namespace HUD
             _kartEvent = kartRoot.GetComponent<KartEvents>();
             _kartEvent.OnItemUsed += UpdateItem;
             _kartEvent.OnVelocityChange += UpdateSpeedmeter;
+
+            var kartInventory = kartRoot.GetComponent<KartInventory>();
+            UpdateItem(kartInventory.Item, kartInventory.Count);
         }
 
         public void UpdateItem(ItemData item, int count)

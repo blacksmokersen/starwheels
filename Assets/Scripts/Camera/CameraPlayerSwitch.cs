@@ -23,6 +23,7 @@ namespace CameraUtils
             if (newTargetKart != null)
             {
                 _cinemachineDynamicScript.SetKart(newTargetKart);
+                FindObjectOfType<HUD.GameHUD>().ObserveKart(newTargetKart);
             }
         }
 
@@ -32,6 +33,7 @@ namespace CameraUtils
             if (randomKart != null)
             {
                 _cinemachineDynamicScript.SetKart(randomKart);
+                FindObjectOfType<HUD.GameHUD>().ObserveKart(randomKart);
             }
         }
     }
