@@ -5,8 +5,8 @@ using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RoomMenu : MonoBehaviourPunCallbacks {
-
+public class RoomMenu : MonoBehaviourPunCallbacks
+{
     [SerializeField] private MultiplayerMenu multiplayerMenu;
 
     [SerializeField] private Button leaveRoomButton;
@@ -53,6 +53,11 @@ public class RoomMenu : MonoBehaviourPunCallbacks {
         FindRowPlayer(target).SetTeam(target.GetTeam());
     }
 
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        UpdateRoomHost();
+    }
+
     public override void OnLeftRoom()
     {
         multiplayerMenu.gameObject.SetActive(true);
@@ -66,13 +71,7 @@ public class RoomMenu : MonoBehaviourPunCallbacks {
     {
         UpdateRoomName();
         UpdatePlayerCount();
-
-        Debug.Log(PhotonNetwork.CurrentRoom.CustomProperties["owner"]);
-        if (PhotonNetwork.LocalPlayer.NickName != (string)PhotonNetwork.CurrentRoom.CustomProperties["owner"])
-        {
-            startGameButton.interactable = false;
-        }
-
+        UpdateRoomHost();
         UpdatePlayerList();
     }
 
@@ -86,6 +85,14 @@ public class RoomMenu : MonoBehaviourPunCallbacks {
     private void UpdatePlayerCount()
     {
         playerCountText.text = "" + PhotonNetwork.CurrentRoom.PlayerCount + " / " + PhotonNetwork.CurrentRoom.MaxPlayers;
+    }
+
+    private void UpdateRoomHost()
+    {
+        if (PhotonNetwork.LocalPlayer != PhotonNetwork.MasterClient)
+        {
+            startGameButton.interactable = false;
+        }
     }
 
     private void UpdatePlayerList()

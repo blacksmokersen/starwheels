@@ -1,11 +1,10 @@
-﻿using Photon.Pun;
-using Photon.Pun.UtilityScripts;
+﻿using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RowPlayer : MonoBehaviour {
-
+public class RowPlayer : MonoBehaviour
+{
     [SerializeField] private Text playerNameText;
 
     private Player _player;

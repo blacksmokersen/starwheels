@@ -2,8 +2,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RowRoom : MonoBehaviour {
-
+public class RowRoom : MonoBehaviour
+{
     [SerializeField] private Text roomNameText;
     [SerializeField] private Text playerCountText;
 

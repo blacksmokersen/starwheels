@@ -2,8 +2,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StringInput : MonoBehaviour {
-
+public class StringInput : MonoBehaviour
+{
     [SerializeField] private GameObject shadow;
     [SerializeField] private InputField input;
     [SerializeField] private Text windowTitle;

@@ -6,7 +6,7 @@ using UnityEditor;
 #endif
 using Photon.Pun;
 
-public class MainMenu : MonoBehaviourPun
+public class MainMenu : MonoBehaviour
 {
     private enum State
     {
@@ -27,6 +27,8 @@ public class MainMenu : MonoBehaviourPun
 
     private State currentState;
 
+    // CORE
+
     private void Awake()
     {
         soloButton.onClick.AddListener(Solo);
@@ -38,6 +40,10 @@ public class MainMenu : MonoBehaviourPun
 
         mainMenu = gameObject;
     }
+
+    // PUBLIC
+
+    // PRIVATE
 
     private void Main()
     {

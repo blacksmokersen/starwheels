@@ -1,12 +1,11 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MultiplayerMenu : MonoBehaviourPunCallbacks {
-
+public class MultiplayerMenu : MonoBehaviourPunCallbacks
+{
     [SerializeField] private GameObject loadingPanel;
     [SerializeField] private Button createRoomButton;
 
@@ -92,15 +91,7 @@ public class MultiplayerMenu : MonoBehaviourPunCallbacks {
     {
         if (!_canCreateRoom) return;
 
-        RoomOptions options = new RoomOptions();
-        options.MaxPlayers = 20;
-
-        options.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() {
-                    { "owner", PhotonNetwork.LocalPlayer.NickName },
-                    { "map", 0 }
-                };
-        options.CustomRoomPropertiesForLobby = new string[] { "owner", "map" };
-
+        RoomOptions options = new RoomOptions() { MaxPlayers = 20 };
         PhotonNetwork.CreateRoom(roomName, options, null);
     }
 
