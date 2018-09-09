@@ -12,12 +12,9 @@ namespace GameModes
         public static bool IsOver;
         public static PunTeams.Team WinnerTeam = PunTeams.Team.none;
 
-        [SerializeField] private static GameObject _endGameMenu;
-
+        private static GameObject _endGameMenu;
         private static int _redKartsAlive;
         private static int _blueKartsAlive;
-
-        [SerializeField] private GameObject classicBattleEndMenu;
 
         // CORE
 
@@ -25,7 +22,7 @@ namespace GameModes
         {
             CurrentGameMode = GameMode.ClassicBattle;
 
-            _endGameMenu = classicBattleEndMenu;
+            _endGameMenu = Instantiate(Resources.Load<GameObject>(Constants.Prefab.EndGameMenu));
             _endGameMenu.SetActive(false);
         }
 
@@ -33,6 +30,8 @@ namespace GameModes
         {
             base.Start();
             InitializePlayerCount();
+            Debug.Log("Red players : " + _redKartsAlive);
+            Debug.Log("Blue players : " + _blueKartsAlive);
         }
 
         // PUBLIC
@@ -80,13 +79,17 @@ namespace GameModes
         {
             if (_redKartsAlive <= 0)
             {
+                Debug.Log("Blue wins !");
                 IsOver = true;
                 WinnerTeam = PunTeams.Team.blue;
+                EndGame();
             }
             else if (_blueKartsAlive <= 0)
             {
+                Debug.Log("Red wins !");
                 IsOver = true;
                 WinnerTeam = PunTeams.Team.red;
+                EndGame();
             }
         }
 

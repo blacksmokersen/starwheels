@@ -53,5 +53,6 @@
     public class Prefab
     {
         public const string RoomPlayer = "Menu/RoomPlayer";
+        public const string EndGameMenu = "Menu/EndGameMenu";
     }
 }

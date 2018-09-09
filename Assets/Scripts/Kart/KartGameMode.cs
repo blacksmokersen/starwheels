@@ -39,11 +39,18 @@ namespace Kart
         {
             if (photonView.IsMine)
             {
-                ClassicBattle.OnKartDestroyed(PhotonNetwork.LocalPlayer.GetTeam());
                 FindObjectOfType<SpectatorControls>().Enabled = true;
                 FindObjectOfType<CameraPlayerSwitch>().SetCameraToRandomPlayer();
                 kartHub.DestroyKart();
+                PhotonView photonView = GetComponent<PhotonView>();
+                photonView.RPC("RPCClassicBattleDestroy", RpcTarget.AllBuffered);
             }
+        }
+
+        [PunRPC]
+        private void RPCClassicBattleDestroy()
+        {
+            ClassicBattle.OnKartDestroyed(photonView.Owner.GetTeam());
         }
         #endregion
 

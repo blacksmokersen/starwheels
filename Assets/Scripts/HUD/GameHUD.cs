@@ -38,7 +38,7 @@ namespace HUD
             _kartEvent.OnItemUsed += UpdateItem;
             _kartEvent.OnVelocityChange += UpdateSpeedmeter;
 
-            var kartInventory = kartRoot.GetComponent<KartInventory>();
+            var kartInventory = kartRoot.GetComponentInChildren<KartInventory>();
             UpdateItem(kartInventory.Item, kartInventory.Count);
         }
 
