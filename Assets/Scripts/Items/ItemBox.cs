@@ -6,22 +6,28 @@ namespace Items
     [RequireComponent(typeof(BoxCollider))]
     public class ItemBox : MonoBehaviour
     {
-        public GameObject itemSphere;
+        [SerializeField] private GameObject itemSphere;
+        [SerializeField] private float cooldown = 2f;
 
-        public const float HideDuration = 2f;
         private BoxCollider boxCollider;
+
+        // CORE
 
         private void Awake()
         {
             boxCollider = GetComponent<BoxCollider>();
         }
 
-        public IEnumerator Activate()
+        // PUBLIC
+
+        public IEnumerator StartCooldown()
         {
             Hide();
-            yield return new WaitForSeconds(HideDuration);
+            yield return new WaitForSeconds(cooldown);
             Show();
         }
+
+        // PRIVATE
 
         private void Hide()
         {

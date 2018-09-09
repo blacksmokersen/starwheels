@@ -3,48 +3,51 @@ using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RowPlayer : MonoBehaviour
+namespace Menu
 {
-    [SerializeField] private Text playerNameText;
-
-    private Player _player;
-
-    // CORE
-
-    // PUBLIC
-
-    public int GetPlayerId()
+    public class RowPlayer : MonoBehaviour
     {
-        return _player.ActorNumber;
-    }
+        [SerializeField] private Text playerNameText;
 
-    public void SetPlayer(Player player)
-    {
-        _player = player;
-        SetNickName(player.NickName);
-        SetTeam(player.GetTeam());
-    }
+        private Player _player;
 
-    public void SetNickName(string name)
-    {
-        playerNameText.text = name;
-    }
+        // CORE
 
-    public void SetTeam(PunTeams.Team team)
-    {
-        switch (team)
+        // PUBLIC
+
+        public int GetPlayerId()
         {
-            case PunTeams.Team.blue:
-                GetComponent<Image>().color = new Color(0.3f, 0.8f, 1f, 0.5f);
-                break;
-            case PunTeams.Team.red:
-                GetComponent<Image>().color = new Color(1f, 0.3f, 0.3f, 0.5f);
-                break;
-            default:
-                GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.5f);
-                break;
+            return _player.ActorNumber;
         }
-    }
 
-    // PRIVATE
+        public void SetPlayer(Player player)
+        {
+            _player = player;
+            SetNickName(player.NickName);
+            SetTeam(player.GetTeam());
+        }
+
+        public void SetNickName(string name)
+        {
+            playerNameText.text = name;
+        }
+
+        public void SetTeam(PunTeams.Team team)
+        {
+            switch (team)
+            {
+                case PunTeams.Team.blue:
+                    GetComponent<Image>().color = new Color(0.3f, 0.8f, 1f, 0.5f);
+                    break;
+                case PunTeams.Team.red:
+                    GetComponent<Image>().color = new Color(1f, 0.3f, 0.3f, 0.5f);
+                    break;
+                default:
+                    GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.5f);
+                    break;
+            }
+        }
+
+        // PRIVATE
+    }
 }

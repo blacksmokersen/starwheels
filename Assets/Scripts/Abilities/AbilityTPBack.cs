@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Abilities
 {
-    public class TPBackAbility : Ability
+    public class AbilityTPBack : Ability
     {
         private TPBackBehaviour _tpBack = null;
 

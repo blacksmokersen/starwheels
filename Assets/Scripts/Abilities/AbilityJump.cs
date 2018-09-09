@@ -4,7 +4,7 @@ using Kart;
 
 namespace Abilities
 {
-    public class JumpAbility : Ability
+    public class AbilityJump : Ability
     {
         [Header("Jump Ability")]
         public float CooldownDoubleJump = 1f;

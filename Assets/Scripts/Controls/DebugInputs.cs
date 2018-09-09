@@ -35,11 +35,11 @@ namespace Controls
 
             if (Input.GetKeyDown(KeyCode.T))
             {
-                ReplaceAbility().AddComponent<TPBackAbility>();
+                ReplaceAbility().AddComponent<AbilityTPBack>();
             }
             if (Input.GetKeyDown(KeyCode.J))
             {
-                ReplaceAbility().AddComponent<JumpAbility>();
+                ReplaceAbility().AddComponent<AbilityJump>();
             }
         }
 
