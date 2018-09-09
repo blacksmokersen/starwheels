@@ -1,105 +1,129 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
+using Photon.Realtime;
+using UnityEngine;
+using UnityEngine.UI;
 
-namespace Multiplayer
-{
-    public class RoomMenu : MonoBehaviourPunCallbacks
+public class RoomMenu : MonoBehaviourPunCallbacks {
+
+    [SerializeField] private MultiplayerMenu multiplayerMenu;
+
+    [SerializeField] private Button leaveRoomButton;
+    [SerializeField] private Button changeNicknameButton;
+    [SerializeField] private Button switchTeamButton;
+    [SerializeField] private Button startGameButton;
+
+    [SerializeField] private Text roomNameText;
+    [SerializeField] private Text playerCountText;
+
+    [SerializeField] private GameObject panelPlayerList;
+    [SerializeField] private GameObject rowPlayerPrefab;
+
+    [SerializeField] private Button backButton;
+
+    // CORE
+
+    private void Awake()
     {
-        // HUD
-        [SerializeField] private Text roomTitleText;
-        [SerializeField] private Button startButton;
-        [SerializeField] private Dropdown mapDropdown;
-        [SerializeField] private Dropdown teamDropdown;
+        leaveRoomButton.onClick.AddListener(() => PhotonNetwork.LeaveRoom());
+        changeNicknameButton.onClick.AddListener(
+            () => FindObjectOfType<StringInput>().GetStringInput("New nickname", ChangeNickname)
+        );
+        switchTeamButton.onClick.AddListener(SwitchTeam);
+        startGameButton.onClick.AddListener(StartGame);
+    }
 
-        [SerializeField] private RoomPlayer roomPlayerPrefab;
-        [SerializeField] private Transform playerList;
-        [SerializeField] private MapListData mapList;
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        var rowPlayer = Instantiate(rowPlayerPrefab, panelPlayerList.transform).GetComponent<RowPlayer>();
+        rowPlayer.SetPlayer(newPlayer);
+        UpdatePlayerCount();
+    }
 
-        private List<RoomPlayer> roomPlayerList;
-        private RoomPlayer myRoomPlayer;
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        Destroy(FindRowPlayer(otherPlayer).gameObject);
+        UpdatePlayerCount();
+    }
 
-        private void Awake()
+    public override void OnPlayerPropertiesUpdate(Player target, Hashtable changedProps)
+    {
+        foreach (var change in changedProps)
         {
-            startButton.onClick.AddListener(StartGame);
-            mapDropdown.onValueChanged.AddListener(ChangeMap);
-            teamDropdown.onValueChanged.AddListener(ChangeTeam);
+            Debug.Log("" + target.NickName + " has changed its '" + change.Key + "' to '" + change.Value + "'.");
+        }
+    }
+
+    public override void OnLeftRoom()
+    {
+        multiplayerMenu.gameObject.SetActive(true);
+        gameObject.SetActive(false);
+        backButton.interactable = true;
+    }
+
+    // PUBLIC
+
+    public void Refresh()
+    {
+        UpdateRoomName();
+        UpdatePlayerCount();
+
+        if (PhotonNetwork.LocalPlayer.NickName != (string)PhotonNetwork.CurrentRoom.CustomProperties["owner"])
+        {
+            startGameButton.interactable = false;
+        }
+    }
+
+    // PRIVATE
+
+    private void UpdateRoomName()
+    {
+        roomNameText.text = PhotonNetwork.CurrentRoom.Name;
+    }
+
+    private void UpdatePlayerCount()
+    {
+        playerCountText.text = "" + PhotonNetwork.CurrentRoom.PlayerCount + " / " + PhotonNetwork.CurrentRoom.MaxPlayers;
+    }
+
+    private RowPlayer FindRowPlayer(Player player)
+    {
+        var players = panelPlayerList.GetComponentsInChildren<RowPlayer>();
+
+        foreach (RowPlayer p in players)
+        {
+            if (p.GetPlayerId() == player.ActorNumber) return p;
         }
 
-        private void Start()
+        return null;
+    }
+
+    private void ChangeNickname(string newName)
+    {
+        PhotonNetwork.LocalPlayer.NickName = newName;
+    }
+
+    private void StartGame()
+    {
+    }
+
+    private void SwitchTeam()
+    {
+        var newTeam = PunTeams.Team.red;
+
+        if (PhotonNetwork.LocalPlayer.GetTeam() == PunTeams.Team.red)
         {
-            InitializeDropdowns();
-            if (PhotonNetwork.IsMasterClient)
-            {
-                MasterInitialization();
-            }
+            newTeam = PunTeams.Team.blue;
         }
 
-        #region Initialization
+        var parameters = new object[] { PhotonNetwork.LocalPlayer, newTeam };
+        //photonView.RPC("ChangePlayerTeam", RpcTarget.AllBuffered, parameters);
+    }
 
-        private void MasterInitialization()
-        {
-            roomTitleText.text = PhotonNetwork.CurrentRoom.Name;
-            startButton.enabled = true;
-            mapDropdown.enabled = true;
-        }
-
-        private void InitializeDropdowns()
-        {
-            foreach (var map in mapList.MapList)
-            {
-                mapDropdown.AddOptions(new List<string>() { map.MapName });
-            }
-            teamDropdown.AddOptions(new List<string>() { "None", "Red", "Blue" });
-        }
-
-        private void InstantiatePlayerPrefab()
-        {
-            var playerPrefab = PhotonNetwork.Instantiate("Menu/RoomPlayer", playerList.transform.position, Quaternion.identity, 0);
-            var roomPlayer = playerPrefab.GetComponent<RoomPlayer>();
-            roomPlayer.SetTeam(PhotonNetwork.LocalPlayer.GetTeam());
-            myRoomPlayer = roomPlayer;
-            Debug.Log("Instantiate");
-        }
-
-        private void StartGame()
-        {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                PhotonNetwork.LoadLevel(mapList.MapList[mapDropdown.value].SceneName);
-            }
-        }
-
-        #endregion
-
-        #region RPCs
-
-        private void ChangeTeam(int value)
-        {
-            PhotonNetwork.LocalPlayer.SetTeam((PunTeams.Team)value);
-            myRoomPlayer.SetTeam((PunTeams.Team)value);
-        }
-
-        private void ChangeMap(int value)
-        {
-            photonView.RPC("RPCChangeMap", RpcTarget.OthersBuffered, value);
-        }
-
-        [PunRPC]
-        private void RPCChangeMap(int value)
-        {
-            mapDropdown.value = value;
-        }
-
-        #endregion
-
-        #region Callbacks
-        public override void OnJoinedRoom()
-        {
-            InstantiatePlayerPrefab();
-        }
-        #endregion
+    [PunRPC]
+    private void ChangePlayerTeam(Player player, PunTeams.Team newTeam)
+    {
+        FindRowPlayer(player).SetTeam(newTeam);
     }
 }

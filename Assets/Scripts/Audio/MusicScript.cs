@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Audio
 {
     public class MusicScript : MonoBehaviour
     {
+        [SerializeField] private Button muteButton;
+
         private static MusicScript instance = null;
 
         private AudioSource _audioSource;
@@ -13,6 +16,8 @@ namespace Audio
         private void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
+
+            muteButton.onClick.AddListener(ToggleMute);
 
             if (instance == null)
             {
@@ -27,11 +32,11 @@ namespace Audio
 
         // PUBLIC
 
-        public void Mute()
+        // PRIVATE
+
+        private void ToggleMute()
         {
             _audioSource.mute = !_audioSource.mute;
         }
-
-        // PRIVATE
     }
 }

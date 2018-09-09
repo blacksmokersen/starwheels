@@ -23,7 +23,7 @@ public class MainMenu : MonoBehaviourPun
     [SerializeField] private Button backButton;
 
     private GameObject mainMenu;
-    [SerializeField] private GameObject multiplayerMenu;
+    [SerializeField] private MultiplayerMenu multiplayerMenu;
 
     private State currentState;
 
@@ -81,6 +81,7 @@ public class MainMenu : MonoBehaviourPun
             case State.Main:
                 break;
             case State.Multiplayer:
+                multiplayerMenu.DisconnectFromPhoton();
                 currentState = State.Main;
                 break;
             case State.Options:
@@ -97,13 +98,14 @@ public class MainMenu : MonoBehaviourPun
         {
             case State.Main:
                 mainMenu.SetActive(true);
-                multiplayerMenu.SetActive(false);
+                multiplayerMenu.gameObject.SetActive(false);
                 backButton.interactable = false;
                 break;
             case State.Multiplayer:
                 mainMenu.SetActive(false);
-                multiplayerMenu.SetActive(true);
+                multiplayerMenu.gameObject.SetActive(true);
                 backButton.interactable = true;
+                multiplayerMenu.ConnectToPhoton();
                 break;
             case State.Options:
                 backButton.interactable = true;
