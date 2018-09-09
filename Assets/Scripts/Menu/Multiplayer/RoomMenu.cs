@@ -89,10 +89,7 @@ public class RoomMenu : MonoBehaviourPunCallbacks
 
     private void UpdateRoomHost()
     {
-        if (PhotonNetwork.LocalPlayer != PhotonNetwork.MasterClient)
-        {
-            startGameButton.interactable = false;
-        }
+        startGameButton.interactable = PhotonNetwork.IsMasterClient;
     }
 
     private void UpdatePlayerList()
@@ -139,6 +136,7 @@ public class RoomMenu : MonoBehaviourPunCallbacks
 
     private void StartGame()
     {
+        PhotonNetwork.LoadLevel(Constants.Scene.FortBlock);
     }
 
     private void SwitchTeam()
