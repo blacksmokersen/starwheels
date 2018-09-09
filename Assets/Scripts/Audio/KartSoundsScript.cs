@@ -80,7 +80,7 @@ namespace Audio
 
             kartEvents.OnHit += PlayPlayerHitSound;
 
-            kartEvents.OnGetItemBox += StartItemLotterySound;
+            kartEvents.OnItemBoxGet += StartItemLotterySound;
             kartEvents.OnLotteryStop += StopItemLotterySound;
             kartEvents.OnLotteryStop += PlayItemBoxSound;
         }

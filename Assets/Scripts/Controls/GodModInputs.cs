@@ -5,13 +5,14 @@ namespace Controls
 {
     public class GodModInputs : BaseKartComponent
     {
-        public bool Enabled = true;
+        private bool _enabled = true;
+        private int _currentItemIndex = 0;
 
-        private int ActualItemIndex = 0;
+        // CORE
 
-        public void Update()
+        private void Update()
         {
-            if (!enabled) return;
+            if (!_enabled) return;
 
             if (photonView.IsMine)
             {
@@ -34,27 +35,29 @@ namespace Controls
             }
         }
 
-        public void SetUnlimitedItems()
+        // PUBLIC
+
+        // PRIVATE
+
+        private void SetUnlimitedItems()
         {
-            kartHub.kartInventory.Count = 1000;
+            kartHub.kartInventory.SetCount(1000);
         }
 
-        public void SwitchToNextItem()
+        private void SwitchToNextItem()
         {
-            var kartInventory = kartHub.kartInventory;
             var items = ItemsLottery.Items;
-            var itemIndex = (ActualItemIndex++) % items.Length;
-            kartInventory.Item = items[itemIndex];
-            kartEvents.OnItemUsed(kartInventory.Item, kartInventory.Count);
+
+            kartHub.kartInventory.SetItem(items[(_currentItemIndex++) % items.Length]);
             SetUnlimitedItems();
         }
 
-        public void LoseOneLife()
+        private void LoseOneLife()
         {
             kartHub.kartHealthSystem.HealthLoss();
         }
 
-        public void ResetLives()
+        private void ResetLives()
         {
             kartHub.kartHealthSystem.ResetLives();
         }

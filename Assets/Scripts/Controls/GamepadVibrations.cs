@@ -6,39 +6,46 @@ namespace Controls
 {
     public class GamepadVibrations : BaseKartComponent
     {
+        // CORE
+
         private new void Awake()
         {
             base.Awake();
+
             kartEvents.OnJump += MediumVibration;
             kartEvents.OnDoubleJump += (a) => MediumVibration();
-            kartEvents.OnItemUsed += (a,b) => SmallVibration();
+            kartEvents.OnItemUse += (a) => SmallVibration();
         }
 
-        public IEnumerator Vibrate(float vibrationPower, float duration)
-        {
-            GamePad.SetVibration(0, vibrationPower, vibrationPower);
-            yield return new WaitForSeconds(duration);
-            ResetVibration();
-        }
+        // PUBLIC
 
         public void ResetVibration()
         {
             GamePad.SetVibration(0, 0, 0);
         }
 
-        private void SmallVibration()
+        public void SmallVibration()
         {
             StartCoroutine(Vibrate(0.1f, 0.5f));
         }
 
-        private void MediumVibration()
+        public void MediumVibration()
         {
             StartCoroutine(Vibrate(0.3f, 0.6f));
         }
 
-        private void StrongVibration()
+        public void StrongVibration()
         {
             StartCoroutine(Vibrate(0.5f, 1f));
+        }
+
+        // PRIVATE
+
+        private IEnumerator Vibrate(float vibrationPower, float duration)
+        {
+            GamePad.SetVibration(0, vibrationPower, vibrationPower);
+            yield return new WaitForSeconds(duration);
+            ResetVibration();
         }
 
         private void OnApplicationQuit()

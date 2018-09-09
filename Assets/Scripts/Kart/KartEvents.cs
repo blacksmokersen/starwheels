@@ -23,7 +23,6 @@ namespace Kart
 
         // Game
         public Action<float> OnEnergyConsumption;
-        public Action<ItemData, int> OnItemUsed;
         public Action OnHit;
         public Action OnHitRecover;
         public Action HitSomeoneElse;
@@ -35,7 +34,10 @@ namespace Kart
         public Action OnCollisionEnterGround;
 
         // ItemBox
-        public Action OnGetItemBox;
+        public Action<ItemData> OnItemGet;
+        public Action<int> OnItemCountChange;
+        public Action<ItemData> OnItemUse;
+        public Action OnItemBoxGet;
         public Action OnLotteryStop;
 
         // Jumping Capacity

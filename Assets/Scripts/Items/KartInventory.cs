@@ -7,12 +7,9 @@ namespace Items
     public class KartInventory : BaseKartComponent
     {
         [Header("Inventory")]
-        public ItemData Item;
-        public int Count;
-        public ItemPositions ItemPositions;
-
-        [Header("Lottery")]
-        public float ShorteningSeconds;
+        [SerializeField] public ItemData Item;
+        [SerializeField] public int Count;
+        [SerializeField] public ItemPositions ItemPositions;
 
         private float _lotteryTimer = 0f;
         private bool _lotteryStarted = false;
@@ -24,7 +21,7 @@ namespace Items
         {
             base.Awake();
 
-            kartEvents.OnGetItemBox += () => {
+            kartEvents.OnItemBoxGet += () => {
                 if (photonView.IsMine || !PhotonNetwork.IsConnected)
                     StartCoroutine(GetLotteryItem());
             };
@@ -34,14 +31,14 @@ namespace Items
 
         public bool IsEmpty()
         {
-            return Item == null;
+            return Item == null || Count == 0;
         }
 
         public void ItemAction(Direction direction)
         {
             if (_lotteryStarted && !_shortenLottery && _lotteryTimer > 1f)
             {
-                _lotteryTimer += ShorteningSeconds;
+                _lotteryTimer = ItemsLottery.LotteryDuration;
                 _shortenLottery = true;
             }
             else
@@ -50,36 +47,49 @@ namespace Items
             }
         }
 
-        public void UseStack(Direction direction)
+        public void SetItem(ItemData item, int count)
         {
-            if (Item != null)
+            Item = item;
+            Count = count;
+
+            kartEvents.OnItemGet(Item);
+            kartEvents.OnItemCountChange(Count);
+        }
+
+        public void SetItem(ItemData item)
+        {
+            SetItem(item, item.Count);
+        }
+
+        public void SetCount(int count)
+        {
+            SetItem(Item, count);
+        }
+
+        // PRIVATE
+
+        private void UseStack(Direction direction)
+        {
+            if (IsEmpty()) return;
+
+            ItemBehaviour itemObj;
+            var obj = PhotonNetwork.Instantiate("Items/" + Item.ItemPrefab.name, new Vector3(0, -10, 0), Quaternion.identity, 0);
+            itemObj = obj.GetComponent<ItemBehaviour>();
+            itemObj.Spawn(this, direction);
+
+            if (--Count == 0)
             {
-                if (Count > 0)
-                {
-                    UseItem(Item, direction);
-                    Count--;
-                    if (Count == 0)
-                    {
-                        Item = null;
-                    }
-                }
+                Item = null;
+                kartEvents.OnItemGet(null);
             }
 
-            kartEvents.OnItemUsed(Item, Count);
+            kartEvents.OnItemUse(Item);
+            kartEvents.OnItemCountChange(Count);
         }
 
-        public void UseItem(ItemData item, Direction direction)
+        private IEnumerator GetLotteryItem()
         {
-            ItemBehaviour itemObj;
-            var obj = PhotonNetwork.Instantiate("Items/" + item.ItemPrefab.name, new Vector3(0, -10, 0), Quaternion.identity, 0);
-            itemObj = obj.GetComponent<ItemBehaviour>();
-            itemObj.Spawn(this,direction);
-        }
-
-
-        public IEnumerator GetLotteryItem()
-        {
-            if (Item != null || _lotteryStarted) yield break;
+            if (!IsEmpty() || _lotteryStarted) yield break;
 
             _lotteryStarted = true;
             var lotteryIndex = 0;
@@ -87,21 +97,18 @@ namespace Items
 
             while (_lotteryTimer < ItemsLottery.LotteryDuration)
             {
-                kartEvents.OnItemUsed(items[(lotteryIndex++) % items.Length], 0);
+                kartEvents.OnItemGet(items[(lotteryIndex++) % items.Length]);
                 yield return new WaitForSeconds(0.1f);
                 _lotteryTimer += 0.1f;
             }
 
             Item = ItemsLottery.GetRandomItem();
-            Count = Item.Count;
+            SetItem(Item, Item.Count);
 
-            kartEvents.OnItemUsed(Item, Count);
             kartEvents.OnLotteryStop();
 
             ResetLottery();
         }
-
-        // PRIVATE
 
         private void ResetLottery()
         {

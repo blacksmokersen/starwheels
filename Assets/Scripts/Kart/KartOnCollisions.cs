@@ -31,7 +31,7 @@ namespace Kart {
             if (collision.gameObject.tag == Constants.Tag.ItemBox && _kartInventory.IsEmpty())
             {
                 StartCoroutine(collision.gameObject.GetComponent<ItemBox>().StartCooldown());
-                _kartEvents.OnGetItemBox();
+                _kartEvents.OnItemBoxGet();
             }
             else if (IsGround(collision.gameObject))
             {
