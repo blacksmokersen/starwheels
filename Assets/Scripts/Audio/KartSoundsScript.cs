@@ -51,10 +51,11 @@ namespace Audio
             };
 
             kartEvents.OnHit += PlayPlayerHitSound;
-            kartEvents.OnCollisionEnterItemBox += PlayItemBoxSound;
-            kartEvents.OnCollisionEnterItemBox += PlayItemLotterySound;
+            kartEvents.OnLotteryStop += PlayItemBoxSound;
+            kartEvents.OnItemBoxGet += StartItemLotterySound;
+            kartEvents.OnLotteryStop += StopItemLotterySound;
 
-            if (photonView.isMine)
+            if (photonView.IsMine)
             {
                 gameObject.AddComponent<AudioListener>();
             }
@@ -148,7 +149,7 @@ namespace Audio
 
         private void StopItemLotterySound()
         {
-            _lotterySource.Stop();
+            ItemLotterySource.Stop();
         }
         #endregion
     }
