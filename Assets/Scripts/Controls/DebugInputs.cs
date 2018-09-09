@@ -1,6 +1,7 @@
 ﻿using UnityEngine.SceneManagement;
 using UnityEngine;
 using Abilities;
+using Photon.Pun;
 
 namespace Controls
 {
@@ -45,7 +46,12 @@ namespace Controls
 
         private GameObject Kart()
         {
-            return GameObject.FindWithTag("Kart");
+            foreach (GameObject kart in GameObject.FindGameObjectsWithTag("Kart"))
+            {
+                if (kart.GetComponent<PhotonView>().IsMine) return kart;
+            }
+
+            return GameObject.FindGameObjectWithTag("Kart");
         }
 
         private GameObject ReplaceAbility()
