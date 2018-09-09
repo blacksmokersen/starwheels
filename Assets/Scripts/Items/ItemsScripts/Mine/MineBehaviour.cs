@@ -69,7 +69,7 @@ namespace Items
 
         public void PlayExplosion()
         {
-            ExplosionSource.Play();
+            MyExtensions.Audio.PlayClipObjectAndDestroy(ExplosionSource);
         }
         #endregion
     }

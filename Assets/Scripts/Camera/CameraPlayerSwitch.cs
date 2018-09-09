@@ -18,13 +18,13 @@ namespace CameraUtils
         public void SetCameraToNextPlayer()
         {
             var currentTarget = _cinemachineDynamicScript.CurrentTarget;
-            var newTargetKart = MyExtensions.Functions.GetNextTeamKart(currentTarget);
+            var newTargetKart = MyExtensions.Kart.GetNextTeamKart(currentTarget);
             _cinemachineDynamicScript.SetKart(newTargetKart);
         }
 
         void SetCameraToRandomPlayer()
         {
-            var randomKart = MyExtensions.Functions.PickRandomTeamKart();
+            var randomKart = MyExtensions.Kart.PickRandomTeamKart();
             _cinemachineDynamicScript.SetKart(randomKart);
         }
     }

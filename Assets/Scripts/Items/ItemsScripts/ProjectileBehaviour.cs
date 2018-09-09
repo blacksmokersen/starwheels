@@ -189,24 +189,12 @@ namespace Items
 
         protected void PlayPlayerHitSound()
         {
-            GameObject oneShotObject = new GameObject("One Shot Sound");
-            oneShotObject.transform.position = transform.position;
-            UnityEditorInternal.ComponentUtility.CopyComponent(PlayerHitSource);
-            UnityEditorInternal.ComponentUtility.PasteComponentAsNew(oneShotObject);
-            var oneShotSource = oneShotObject.GetComponent<AudioSource>();
-            oneShotSource.Play();
-            Destroy(oneShotObject, oneShotSource.clip.length);
+            MyExtensions.Audio.PlayClipObjectAndDestroy(PlayerHitSource);
         }
 
         protected void PlayCollisionSound()
         {
-            GameObject oneShotObject = new GameObject("One Shot Sound");
-            oneShotObject.transform.position = transform.position;
-            UnityEditorInternal.ComponentUtility.CopyComponent(CollisionSource);
-            UnityEditorInternal.ComponentUtility.PasteComponentAsNew(oneShotObject);
-            var oneShotSource = oneShotObject.GetComponent<AudioSource>();
-            oneShotSource.Play();
-            Destroy(oneShotObject, oneShotSource.clip.length);
+            MyExtensions.Audio.PlayClipObjectAndDestroy(CollisionSource);
         }
         #endregion
     }
