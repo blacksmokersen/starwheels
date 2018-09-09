@@ -4,8 +4,9 @@ namespace Audio
 {
     public class SoundManager : MonoBehaviour
     {
+        private static SoundManager instance = null;
 
-        static SoundManager instance = null;
+        // CORE
 
         private void Awake()
         {
@@ -19,5 +20,9 @@ namespace Audio
                 Destroy(gameObject);
             }
         }
+
+        // PUBLIC
+
+        // PRIVATE
     }
 }

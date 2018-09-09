@@ -9,14 +9,10 @@ namespace Audio
 
         private static MusicScript instance = null;
 
-        private AudioSource _audioSource;
-
         // CORE
 
         private void Awake()
         {
-            _audioSource = GetComponent<AudioSource>();
-
             muteButton.onClick.AddListener(ToggleMute);
 
             if (instance == null)
@@ -36,7 +32,8 @@ namespace Audio
 
         private void ToggleMute()
         {
-            _audioSource.mute = !_audioSource.mute;
+            var audioSource = GetComponent<AudioSource>();
+            audioSource.mute = !audioSource.mute;
         }
     }
 }

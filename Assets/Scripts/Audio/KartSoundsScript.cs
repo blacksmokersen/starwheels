@@ -7,24 +7,24 @@ namespace Audio
     {
         // Clips
         [Header("Engine")]
-        public AudioClip MotorAccelClip;
-        public AudioClip MotorFullClip;
-        public AudioClip MotorDecelClip;
+        [SerializeField] private AudioClip MotorAccelClip;
+        [SerializeField] private AudioClip MotorFullClip;
+        [SerializeField] private AudioClip MotorDecelClip;
 
         [Header("Drift")]
-        public AudioClip DriftStartClip;
-        public AudioClip DriftFullClip;
-        public AudioClip DriftEndClip;
-        public AudioClip BoostClip;
+        [SerializeField] private AudioClip DriftStartClip;
+        [SerializeField] private AudioClip DriftFullClip;
+        [SerializeField] private AudioClip DriftEndClip;
+        [SerializeField] private AudioClip BoostClip;
 
         [Header("Jump")]
-        public AudioClip FirstJumpClip;
-        public AudioClip SecondJumpClip;
+        [SerializeField] private AudioClip FirstJumpClip;
+        [SerializeField] private AudioClip SecondJumpClip;
 
         [Header("Items")]
-        public AudioClip PlayerHitClip;
-        public AudioClip ItemBoxClip;
-        public AudioClip ItemLotteryClip;
+        [SerializeField] private AudioClip PlayerHitClip;
+        [SerializeField] private AudioClip ItemBoxClip;
+        [SerializeField] private AudioClip ItemLotteryClip;
 
         // Audio sources
         private AudioSource _soundManager;
@@ -34,9 +34,12 @@ namespace Audio
         private float _pitchMotorMagnitudeDiviser = 27f;
         private Coroutine _delayDriftStartRoutine;
 
+        // CORE
+
         private new void Awake()
         {
             base.Awake();
+
             _soundManager = gameObject.AddComponent<AudioSource>();
             _soundManager.spatialBlend = 1f;
             _soundManager.volume = 1;
@@ -81,6 +84,10 @@ namespace Audio
             kartEvents.OnLotteryStop += StopItemLotterySound;
             kartEvents.OnLotteryStop += PlayItemBoxSound;
         }
+
+        // PUBLIC
+
+        // PRIVATE
 
         #region Engine
         private void PlayMotorAccelSound()
