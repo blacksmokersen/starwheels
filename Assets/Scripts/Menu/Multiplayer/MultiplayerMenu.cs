@@ -34,6 +34,11 @@ public class MultiplayerMenu : MonoBehaviourPunCallbacks {
         _canCreateRoom = true;
     }
 
+    public override void OnJoinedLobby()
+    {
+        StopLoading();
+    }
+
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         RefreshRooms(roomList);
@@ -53,8 +58,7 @@ public class MultiplayerMenu : MonoBehaviourPunCallbacks {
     public void ConnectToPhoton()
     {
         StartLoading();
-        StartCoroutine(InitializePhoton());
-        StopLoading();
+        InitializePhoton();
     }
 
     public void DisconnectFromPhoton()
@@ -64,14 +68,12 @@ public class MultiplayerMenu : MonoBehaviourPunCallbacks {
     }
 
     // PRIVATE
-    private IEnumerator InitializePhoton()
+    private void InitializePhoton()
     {
         PhotonNetwork.OfflineMode = false;
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.GameVersion = "1.01";
         PhotonNetwork.ConnectUsingSettings();
-
-        yield break;
     }
 
     private void StartLoading()

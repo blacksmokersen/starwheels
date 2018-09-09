@@ -36,9 +36,7 @@ public class RoomMenu : MonoBehaviourPunCallbacks {
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        var rowPlayer = Instantiate(rowPlayerPrefab, panelPlayerList.transform).GetComponent<RowPlayer>();
-        rowPlayer.SetPlayer(newPlayer);
-        UpdatePlayerCount();
+        CreateRowPlayer(newPlayer);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -73,6 +71,8 @@ public class RoomMenu : MonoBehaviourPunCallbacks {
         {
             startGameButton.interactable = false;
         }
+
+        UpdatePlayerList();
     }
 
     // PRIVATE
@@ -85,6 +85,21 @@ public class RoomMenu : MonoBehaviourPunCallbacks {
     private void UpdatePlayerCount()
     {
         playerCountText.text = "" + PhotonNetwork.CurrentRoom.PlayerCount + " / " + PhotonNetwork.CurrentRoom.MaxPlayers;
+    }
+
+    private void UpdatePlayerList()
+    {
+        foreach (Player player in PhotonNetwork.CurrentRoom.Players.Values)
+        {
+            CreateRowPlayer(player);
+        }
+    }
+
+    private void CreateRowPlayer(Player player)
+    {
+        var rowPlayer = Instantiate(rowPlayerPrefab, panelPlayerList.transform).GetComponent<RowPlayer>();
+        rowPlayer.SetPlayer(player);
+        UpdatePlayerCount();
     }
 
     private RowPlayer FindRowPlayer(Player player)
