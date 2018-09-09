@@ -23,15 +23,14 @@ namespace Items
         public int ParticlesToEmitOnHit = 2000;
 
         [Header("Sounds")]
-        public AudioClip LaunchSound;
-        public AudioClip FlySound;
-        public AudioClip PlayerHitSound;
-        public AudioClip CollisionSound;
+        public AudioSource LaunchSource;
+        public AudioSource FlySource;
+        public AudioSource PlayerHitSource;
+        public AudioSource CollisionSource;
 
         protected Rigidbody rb;
         protected KartInventory owner;
 
-        private AudioSource _audioSource;
         private const float _ownerImmunityDuration = 0.5f;
         private bool _ownerImmune = true;
         #endregion
@@ -39,7 +38,6 @@ namespace Items
         protected void Awake()
         {
             rb = GetComponent<Rigidbody>();
-            _audioSource = GetComponent<AudioSource>();
         }
 
         protected void Update()
@@ -180,24 +178,35 @@ namespace Items
         #region Audio
         protected void PlayLaunchSound()
         {
-            _audioSource.PlayOneShot(LaunchSound);
+            LaunchSource.Play();
         }
 
         protected void PlayFlySound()
         {
-            _audioSource.clip = FlySound;
-            _audioSource.loop = true;
-            _audioSource.Play();
+            FlySource.loop = true;
+            FlySource.Play();
         }
 
         protected void PlayPlayerHitSound()
         {
-            AudioSource.PlayClipAtPoint(PlayerHitSound, transform.position);
+            GameObject oneShotObject = new GameObject("One Shot Sound");
+            oneShotObject.transform.position = transform.position;
+            UnityEditorInternal.ComponentUtility.CopyComponent(PlayerHitSource);
+            UnityEditorInternal.ComponentUtility.PasteComponentAsNew(oneShotObject);
+            var oneShotSource = oneShotObject.GetComponent<AudioSource>();
+            oneShotSource.Play();
+            Destroy(oneShotObject, oneShotSource.clip.length);
         }
 
         protected void PlayCollisionSound()
         {
-            AudioSource.PlayClipAtPoint(CollisionSound, transform.position);
+            GameObject oneShotObject = new GameObject("One Shot Sound");
+            oneShotObject.transform.position = transform.position;
+            UnityEditorInternal.ComponentUtility.CopyComponent(CollisionSource);
+            UnityEditorInternal.ComponentUtility.PasteComponentAsNew(oneShotObject);
+            var oneShotSource = oneShotObject.GetComponent<AudioSource>();
+            oneShotSource.Play();
+            Destroy(oneShotObject, oneShotSource.clip.length);
         }
         #endregion
     }

@@ -11,17 +11,11 @@ namespace Items
         public float TimesLongerThanHighThrow;
 
         [Header("Sounds")]
-        public AudioClip LaunchSound;
-        public AudioClip IdleSound;
-        public AudioClip ExplosionSound;
-
-        private AudioSource audioSource;
+        public AudioSource LaunchSource;
+        public AudioSource IdleSource;
+        public AudioSource ExplosionSource;
 
         #region Behaviour
-        private void Awake()
-        {
-            audioSource = GetComponent<AudioSource>();
-        }
 
         private void Start()
         {
@@ -64,19 +58,18 @@ namespace Items
         #region Audio
         public void PlayLaunchSound()
         {
-            audioSource.PlayOneShot(LaunchSound);
+            LaunchSource.Play();
         }
 
         public void PlayIdleSound()
         {
-            audioSource.clip = IdleSound;
-            audioSource.loop = true;
-            audioSource.Play();
+            IdleSource.loop = true;
+            IdleSource.Play();
         }
 
         public void PlayExplosion()
         {
-            AudioSource.PlayClipAtPoint(ExplosionSound, transform.position);
+            ExplosionSource.Play();
         }
         #endregion
     }
