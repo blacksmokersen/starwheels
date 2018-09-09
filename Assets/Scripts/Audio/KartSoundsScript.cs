@@ -47,6 +47,11 @@ namespace Audio
             kartEvents.OnHit += PlayPlayerHitSound;
             kartEvents.OnCollisionEnterItemBox += PlayItemBoxSound;
             kartEvents.OnCollisionEnterItemBox += PlayItemLotterySound;
+
+            if (photonView.isMine)
+            {
+                gameObject.AddComponent<AudioListener>();
+            }
         }
 
         #region Engine
