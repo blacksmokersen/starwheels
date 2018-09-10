@@ -9,6 +9,7 @@ namespace CameraUtils
 
         private CinemachineDynamicScript _cinemachineDynamicScript;
         private CinemachineVirtualCamera _cinemachineVirtualCamera;
+        private GameObject _currentTarget;
         private Kart.KartEvents _currentKartEvents;
 
         private void Awake()
@@ -19,9 +20,7 @@ namespace CameraUtils
 
         public void SetCameraToNextPlayer()
         {
-            Debug.Log("Destroying");
-            var currentTarget = _cinemachineDynamicScript.CurrentTarget;
-            var newTargetKart = MyExtensions.Functions.GetNextTeamKart(currentTarget);
+            var newTargetKart = MyExtensions.Functions.GetNextTeamKart(_currentTarget);
             if (newTargetKart != null)
             {
                 SetCameraToPlayer(newTargetKart);
@@ -42,6 +41,7 @@ namespace CameraUtils
             _cinemachineDynamicScript.SetKart(kart);
             _currentKartEvents = kart.GetComponent<Kart.KartEvents>();
             _currentKartEvents.OnKartDestroyed += SetCameraToNextPlayer;
+            _currentTarget = kart;
             FindObjectOfType<HUD.GameHUD>().ObserveKart(kart);
         }
     }

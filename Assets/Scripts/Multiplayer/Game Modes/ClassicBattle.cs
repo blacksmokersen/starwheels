@@ -80,14 +80,14 @@ namespace GameModes
                 Debug.Log("Blue wins !");
                 IsOver = true;
                 WinnerTeam = PunTeams.Team.blue;
-                //EndGame();
+                EndGame();
             }
             else if (_blueKartsAlive <= 0)
             {
                 Debug.Log("Red wins !");
                 IsOver = true;
                 WinnerTeam = PunTeams.Team.red;
-                //EndGame();
+                EndGame();
             }
         }
 

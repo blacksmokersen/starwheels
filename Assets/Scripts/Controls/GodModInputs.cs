@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using Items;
+using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 
 namespace Controls
 {
@@ -17,7 +19,7 @@ namespace Controls
             {
                 if (Input.GetKeyDown(KeyCode.Alpha1))
                 {
-                    SetUnlimitedItems();
+                    ResetLives();
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha2))
                 {
@@ -33,14 +35,25 @@ namespace Controls
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha5))
                 {
-                    ResetLives();
+                    //SpawnRedKart();
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha6))
+                {
+                    //SpawnBlueKart();
                 }
             }
         }
 
-        public void SetUnlimitedItems()
+        public void SpawnRedKart()
         {
-            kartHub.kartInventory.Count = 1000;
+            var kart = PhotonNetwork.InstantiateSceneObject("Kart", (transform.position + Vector3.forward), Quaternion.identity);
+            kart.GetComponent<PhotonView>().Owner.SetTeam(PunTeams.Team.red);
+        }
+
+        public void SpawnBlueKart()
+        {
+            var kart = PhotonNetwork.InstantiateSceneObject("Kart", (transform.position + Vector3.forward), Quaternion.identity);
+            kart.GetComponent<PhotonView>().Owner.SetTeam(PunTeams.Team.blue);
         }
 
         public void SwitchToNextItem()
@@ -50,6 +63,7 @@ namespace Controls
             var itemIndex = (ActualItemIndex++) % items.Length;
             kartInventory.Item = items[itemIndex];
             kartEvents.OnItemUsed(kartInventory.Item, kartInventory.Count);
+            kartHub.kartInventory.Count = 1000;
         }
 
         public void LoseOneLife()
@@ -59,12 +73,18 @@ namespace Controls
 
         public void DestroyKart()
         {
-            kartHub.kartGameMode.DestroyKart();
+            GetComponent<PhotonView>().RPC("RPCDestroy", RpcTarget.AllBuffered);
         }
 
         public void ResetLives()
         {
             kartHub.kartHealthSystem.ResetLives();
+        }
+
+        [PunRPC]
+        private void RPCDestroy()
+        {
+            kartHub.kartEvents.OnKartDestroyed();
         }
     }
 }

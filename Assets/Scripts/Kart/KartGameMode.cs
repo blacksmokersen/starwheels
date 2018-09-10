@@ -39,6 +39,7 @@ namespace Kart
         {
             if (photonView.IsMine)
             {
+                Debug.LogError("ClassicBattleDestroy");
                 FindObjectOfType<SpectatorControls>().Enabled = true;
                 FindObjectOfType<CameraPlayerSwitch>().SetCameraToRandomPlayer();
                 kartHub.DestroyKart();
