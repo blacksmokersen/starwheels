@@ -2,30 +2,80 @@
 using UnityEngine;
 using Abilities;
 using Photon.Pun;
+using Items;
 
 namespace Controls
 {
     public class DebugInputs : BaseKartComponent
     {
+        private bool _enabled = true;
+        private int _currentItemIndex = 0;
+        private GameObject _kart;
+
+        // CORE
+
+        private new void Awake()
+        {
+            base.Awake();
+
+            if (PhotonNetwork.IsConnected)
+            {
+                foreach (GameObject kart in GameObject.FindGameObjectsWithTag(Constants.Tag.Kart))
+                {
+                    if (kart.GetComponent<PhotonView>().IsMine)
+                    {
+                        _kart = kart;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                _kart = GameObject.FindGameObjectWithTag(Constants.Tag.Kart);
+            }
+        }
+
         private void Update()
         {
+            if (!_enabled || !photonView.IsMine) return;
+
             if (Input.GetKey(KeyCode.R))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
 
+            // Items
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                ResetLives();
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                SwitchToNextItem();
+            }
+
+            // Health
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                LoseOneLife();
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                DestroyKart();
+            }
+
             // Maps
             if (Input.GetKeyDown(KeyCode.Alpha7))
             {
-                Kart().transform.position = new Vector3(0,0.1f,0);
+                _kart.transform.position = new Vector3(0,0.1f,0);
             }
             if (Input.GetKeyDown(KeyCode.Alpha8))
             {
-                Kart().transform.position = new Vector3(-221, 3, 0);
+                _kart.transform.position = new Vector3(-221, 3, 0);
             }
             if (Input.GetKeyDown(KeyCode.Alpha9))
             {
-                Kart().transform.position = new Vector3(400, 3, 0);
+                _kart.transform.position = new Vector3(400, 3, 0);
             }
 
             // Abilities
@@ -33,7 +83,6 @@ namespace Controls
             {
                 GetComponent<GamepadVibrations>().SmallVibration();
             }
-
             if (Input.GetKeyDown(KeyCode.T))
             {
                 ReplaceAbility().AddComponent<AbilityTPBack>();
@@ -44,22 +93,43 @@ namespace Controls
             }
         }
 
-        private GameObject Kart()
-        {
-            foreach (GameObject kart in GameObject.FindGameObjectsWithTag("Kart"))
-            {
-                if (kart.GetComponent<PhotonView>().IsMine) return kart;
-            }
+        // PUBLIC
 
-            return GameObject.FindGameObjectWithTag("Kart");
+        // PRIVATE
+
+        private void SwitchToNextItem()
+        {
+            var items = ItemsLottery.Items;
+
+            kartHub.kartInventory.SetItem(items[(_currentItemIndex++) % items.Length], 1000);
+        }
+
+        private void LoseOneLife()
+        {
+            kartHub.kartHealthSystem.HealthLoss();
+        }
+
+        private void ResetLives()
+        {
+            kartHub.kartHealthSystem.ResetLives();
         }
 
         private GameObject ReplaceAbility()
         {
-            var kart = Kart();
-            Destroy(kart.GetComponentInChildren<Ability>());
+            Destroy(_kart.GetComponentInChildren<Ability>());
 
-            return kart.transform.GetChild(0).gameObject;
+            return _kart.transform.GetChild(0).gameObject;
+        }
+
+        private void DestroyKart()
+        {
+            GetComponent<PhotonView>().RPC("RPCDestroy", RpcTarget.AllBuffered);
+        }
+
+        [PunRPC]
+        private void RPCDestroy()
+        {
+            kartHub.kartEvents.OnKartDestroyed();
         }
     }
 }
