@@ -48,4 +48,11 @@
         public const string FortBlock = "FortBlock";
         public const string Room = "Room";
     }
+
+    // Prefabs
+    public class Prefab
+    {
+        public const string RoomPlayer = "Menu/RoomPlayer";
+        public const string EndGameMenu = "Menu/EndGameMenu";
+    }
 }

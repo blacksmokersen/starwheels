@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using Items;
+using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 
 namespace Controls
 {
@@ -18,19 +20,27 @@ namespace Controls
             {
                 if (Input.GetKeyDown(KeyCode.Alpha1))
                 {
-                    SetUnlimitedItems();
+                    ResetLives();
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha2))
                 {
                     SwitchToNextItem();
                 }
-                else if (Input.GetKeyDown(KeyCode.Alpha4))
+                else if (Input.GetKeyDown(KeyCode.Alpha3))
                 {
                     LoseOneLife();
                 }
+                else if (Input.GetKeyDown(KeyCode.Alpha4))
+                {
+                    DestroyKart();
+                }
                 else if (Input.GetKeyDown(KeyCode.Alpha5))
                 {
-                    ResetLives();
+                    //SpawnRedKart();
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha6))
+                {
+                    //SpawnBlueKart();
                 }
             }
         }
@@ -44,7 +54,7 @@ namespace Controls
             kartHub.kartInventory.SetCount(1000);
         }
 
-        private void SwitchToNextItem()
+        public void SwitchToNextItem()
         {
             var items = ItemsLottery.Items;
 
@@ -57,9 +67,20 @@ namespace Controls
             kartHub.kartHealthSystem.HealthLoss();
         }
 
-        private void ResetLives()
+        public void DestroyKart()
+        {
+            GetComponent<PhotonView>().RPC("RPCDestroy", RpcTarget.AllBuffered);
+        }
+
+        public void ResetLives()
         {
             kartHub.kartHealthSystem.ResetLives();
+        }
+
+        [PunRPC]
+        private void RPCDestroy()
+        {
+            kartHub.kartEvents.OnKartDestroyed();
         }
     }
 }

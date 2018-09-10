@@ -15,15 +15,15 @@ namespace Controls
             }
 
             // Maps
-            if (Input.GetKeyDown(KeyCode.Alpha6))
+            if (Input.GetKeyDown(KeyCode.Alpha7))
             {
                 Kart().transform.position = new Vector3(0,0.1f,0);
             }
-            if (Input.GetKeyDown(KeyCode.Alpha7))
+            if (Input.GetKeyDown(KeyCode.Alpha8))
             {
                 Kart().transform.position = new Vector3(-221, 3, 0);
             }
-            if (Input.GetKeyDown(KeyCode.Alpha8))
+            if (Input.GetKeyDown(KeyCode.Alpha9))
             {
                 Kart().transform.position = new Vector3(400, 3, 0);
             }

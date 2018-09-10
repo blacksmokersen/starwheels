@@ -92,8 +92,12 @@ namespace MyExtensions
         public static GameObject PickRandomTeamKart()
         {
             var teamKart = GetTeamKarts();
-            var rand = UnityEngine.Random.Range(0, teamKart.Count - 1);
-            return teamKart[rand];
+            if (teamKart.Count > 0)
+            {
+                var rand = UnityEngine.Random.Range(0, teamKart.Count - 1);
+                return teamKart[rand];
+            }
+            return null;
         }
     }
     #endregion

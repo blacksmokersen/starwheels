@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using Photon.Pun.UtilityScripts;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
@@ -36,8 +37,6 @@ namespace GameModes
 
         private void SpawnKart(PunTeams.Team team)
         {
-            SceneManager.LoadScene(Constants.Scene.GameHUD, LoadSceneMode.Additive);
-
             int playerId = PhotonNetwork.LocalPlayer.ActorNumber;
 
             var initPos = _spawns[playerId].transform.position;
@@ -47,6 +46,17 @@ namespace GameModes
             var cinemachineDynamicScript = FindObjectOfType<CinemachineDynamicScript>();
             cinemachineDynamicScript.Initialize();
             cinemachineDynamicScript.SetKart(kart);
+            StartCoroutine(LoadGameHUD(kart));
+        }
+
+        private IEnumerator LoadGameHUD(GameObject kart)
+        {
+            AsyncOperation loadLevel = SceneManager.LoadSceneAsync(Constants.Scene.GameHUD, LoadSceneMode.Additive);
+            while (!loadLevel.isDone)
+            {
+                yield return null;
+            }
+            FindObjectOfType<HUD.GameHUD>().ObserveKart(kart);
         }
     }
 }

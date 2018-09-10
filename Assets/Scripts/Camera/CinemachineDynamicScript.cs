@@ -10,7 +10,6 @@ namespace CameraUtils
     {
         [Range(8.5f, 15)] public float MaxDistanceCamInBoost;
         public float SpeedCamMovements;
-        public GameObject CurrentTarget;
         public CinemachineTransposer transposer;
 
         [SerializeField] private float autoCenterTiming;
@@ -52,7 +51,6 @@ namespace CameraUtils
         {
             cinemachine.Follow = kart.transform;
             cinemachine.LookAt = kart.transform;
-            CurrentTarget = kart;
 
             _kartEngine = kart.GetComponentInChildren<KartEngine>();
         }

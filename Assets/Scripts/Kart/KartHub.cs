@@ -2,6 +2,7 @@
 using Abilities;
 using Items;
 using CameraUtils;
+using Photon.Pun;
 
 namespace Kart
 {
@@ -9,7 +10,7 @@ namespace Kart
      * Main class to map the inputs to the different kart actions
      * The states should handled and modified within this class
      */
-    public class KartHub : MonoBehaviour
+    public class KartHub : MonoBehaviourPun
     {
         [HideInInspector] public KartStates kartStates;
         [HideInInspector] public KartEvents kartEvents;
@@ -19,6 +20,7 @@ namespace Kart
         [HideInInspector] public KartHealthSystem kartHealthSystem;
         [HideInInspector] public Ability kartAbility;
         [HideInInspector] public CinemachineDynamicScript cinemachineDynamicScript;
+        [HideInInspector] public KartGameMode kartGameMode;
 
         // CORE
 
@@ -32,8 +34,7 @@ namespace Kart
             kartInventory = GetComponentInChildren<KartInventory>();
             kartHealthSystem = GetComponentInChildren<KartHealthSystem>();
             cinemachineDynamicScript = GetComponentInChildren<CinemachineDynamicScript>();
-
-            //KartEvents.Instance.HitSomeoneElse += IncreaseScore;
+            kartGameMode = GetComponentInChildren<KartGameMode>();
         }
 
         private void FixedUpdate()
@@ -139,6 +140,12 @@ namespace Kart
 
             var direction = kartStates.AccelerationState == AccelerationState.Forward ? Vector3.up : Vector3.down;
             kartEngine.TurnUsingTorque(direction * newTurnSensitivity, turnValue);
+        }
+
+        public void DestroyKart()
+        {
+            PhotonNetwork.RemoveRPCs(photonView);
+            PhotonNetwork.Destroy(photonView);
         }
     }
 }
