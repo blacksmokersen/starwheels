@@ -144,8 +144,11 @@ namespace Kart
 
         public void DestroyKart()
         {
-            PhotonNetwork.RemoveRPCs(photonView);
-            PhotonNetwork.Destroy(photonView);
+            if (photonView.IsMine)
+            {
+                PhotonNetwork.RemoveRPCs(photonView);
+                PhotonNetwork.Destroy(photonView);
+            }
         }
     }
 }

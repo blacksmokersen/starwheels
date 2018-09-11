@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4997142499940394}
+  - component: {fileID: 114998020652690104}
   m_Layer: 0
   m_Name: EndGameMenu
   m_TagString: Untagged
@@ -150,7 +151,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1140238511485250}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 151.78946, y: 65.39155, z: -299.56845}
+  m_LocalPosition: {x: -1.9930725, y: 184.80087, z: -299.56845}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224087955908382094}
@@ -388,6 +389,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114998020652690104
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1140238511485250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d856c0e88b2c734da38b2cc27dc8435, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panelImage: {fileID: 114877733835164408}
+  winnerTeamText: {fileID: 114253743228221522}
+  replayButton: {fileID: 114497821937156238}
 --- !u!222 &222152117049047188
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -470,10 +485,10 @@ RectTransform:
   m_Father: {fileID: 224087955908382094}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 529.7, y: 308.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224743350110507852
 RectTransform:

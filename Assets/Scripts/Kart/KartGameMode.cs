@@ -50,7 +50,7 @@ namespace Kart
         [PunRPC]
         private void RPCClassicBattleDestroy()
         {
-            ClassicBattle.OnKartDestroyed(photonView.Owner.GetTeam());
+            GameModeEvents.Instance.OnKartDestroyed(photonView.Owner.GetTeam());
         }
         #endregion
 

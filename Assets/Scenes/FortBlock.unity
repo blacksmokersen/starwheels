@@ -1350,7 +1350,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 507056566}
+  - component: {fileID: 507056568}
   - component: {fileID: 507056567}
+  - component: {fileID: 507056569}
   m_Layer: 0
   m_Name: '@GameInit'
   m_TagString: Untagged
@@ -1381,6 +1383,43 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92cb3eb37b43174439de27b75ffe22d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameStarted: 0
+  countdownSeconds: 3
+  MaxPlayersPerTeam: 0
+  IsOver: 0
+  WinnerTeam: 0
+--- !u!114 &507056568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 507056565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 999
+  InstantiationId: 999
+  isRuntimeInstantiated: 0
+--- !u!114 &507056569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 507056565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa2b26c211a3cb94faabbcf5f7823fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &515242027
@@ -2141,7 +2180,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4409278275421684, guid: 9e29d6387f632584c930969e2a427439, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114369311810050002, guid: 9e29d6387f632584c930969e2a427439,
         type: 2}
@@ -2784,7 +2823,7 @@ Transform:
   m_Children:
   - {fileID: 507056566}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1270345773
 Prefab:
