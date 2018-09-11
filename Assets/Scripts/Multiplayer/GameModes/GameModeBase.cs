@@ -11,9 +11,16 @@ namespace GameModes
 
     public class GameModeBase : MonoBehaviourPun
     {
+        #region Variables
+        //public static GameModeBase Instance;
         public static GameMode CurrentGameMode;
 
+        public bool GameStarted = false;
+
+        [SerializeField] private float countdownSeconds = 3f;
+
         private GameObject[] _spawns;
+        #endregion
 
         // CORE
 
@@ -25,20 +32,47 @@ namespace GameModes
             {
                 PhotonNetwork.OfflineMode = true;
                 PhotonNetwork.LocalPlayer.SetTeam(PunTeams.Team.blue);
-                PhotonNetwork.CreateRoom("local");
+                PhotonNetwork.CreateRoom("Local");
             }
 
-            SpawnKart(PhotonNetwork.LocalPlayer.GetTeam());
+            SpawnKart();
         }
 
         // PUBLIC
 
+        public void RespawnKart()
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                photonView.RPC("RPCRespawnKart", RpcTarget.AllBuffered);
+            }
+        }
+
+        // PROTECTED
+
+        protected virtual void InitializeGame()
+        {
+            // To Implement in concrete Game Modes
+        }
+
+        protected virtual void ResetGame()
+        {
+            // To Implement in concrete Game Modes
+        }
+
         // PRIVATE
 
-        private void SpawnKart(PunTeams.Team team)
+        private IEnumerator StartCountdown()
+        {
+            yield return new WaitForSeconds(countdownSeconds);
+            InitializeGame();
+            GameStarted = true;
+        }
+
+
+        private void SpawnKart()
         {
             int playerId = PhotonNetwork.LocalPlayer.ActorNumber;
-
             var initPos = _spawns[playerId].transform.position;
             var initRot = _spawns[playerId].transform.rotation;
             var kart = PhotonNetwork.Instantiate("Kart", initPos, initRot, 0);
@@ -46,6 +80,7 @@ namespace GameModes
             var cinemachineDynamicScript = FindObjectOfType<CinemachineDynamicScript>();
             cinemachineDynamicScript.Initialize();
             cinemachineDynamicScript.SetKart(kart);
+
             StartCoroutine(LoadGameHUD(kart));
         }
 
@@ -57,6 +92,12 @@ namespace GameModes
                 yield return null;
             }
             FindObjectOfType<HUD.GameHUD>().ObserveKart(kart);
+        }
+
+        [PunRPC]
+        private void RPCRespawnKart()
+        {
+            SpawnKart();
         }
     }
 }

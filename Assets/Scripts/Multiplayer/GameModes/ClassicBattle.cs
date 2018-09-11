@@ -8,18 +8,29 @@ namespace GameModes
 {
     public class ClassicBattle : GameModeBase
     {
-        public static int MaxPlayersPerTeam;
-        public static bool IsOver;
-        public static PunTeams.Team WinnerTeam = PunTeams.Team.none;
+        public static ClassicBattle Instance;
 
-        private static GameObject _endGameMenu;
-        private static int _redKartsAlive;
-        private static int _blueKartsAlive;
+        public int MaxPlayersPerTeam;
+        public bool IsOver;
+        public PunTeams.Team WinnerTeam = PunTeams.Team.none;
+
+        private GameObject _endGameMenu;
+        private int _redKartsAlive;
+        private int _blueKartsAlive;
 
         // CORE
 
         private void Awake()
         {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+
             CurrentGameMode = GameMode.ClassicBattle;
 
             _endGameMenu = Instantiate(Resources.Load<GameObject>(Constants.Prefab.EndGameMenu));
@@ -30,11 +41,14 @@ namespace GameModes
         {
             base.Start();
             InitializePlayerCount();
+
+            GameModeEvents.Instance.OnKartDestroyed += KartDestroyed;
+            GameModeEvents.Instance.OnGameReset += ResetGame;
         }
 
         // PUBLIC
 
-        public static void OnKartDestroyed(PunTeams.Team team)
+        public void KartDestroyed(PunTeams.Team team)
         {
             switch (team)
             {
@@ -47,13 +61,31 @@ namespace GameModes
                 default:
                     break;
             }
-
             CheckIfOver();
+        }
+
+        // PROTECTED
+
+        protected override void InitializeGame()
+        {
+            var karts = GameObject.FindGameObjectsWithTag(Constants.Tag.Kart);
+            foreach(var kart in karts)
+            {
+                //kart.GetComponent<>
+            }
+        }
+
+        protected override void ResetGame()
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                LevelManager.Instance.ResetLevel();
+            }
         }
 
         // PRIVATE
 
-        private static void InitializePlayerCount()
+        private void InitializePlayerCount()
         {
             Player[] players = PhotonNetwork.PlayerList;
 
@@ -73,25 +105,23 @@ namespace GameModes
             }
         }
 
-        private static void CheckIfOver()
+        private void CheckIfOver()
         {
             if (_redKartsAlive <= 0)
             {
-                Debug.Log("Blue wins !");
                 IsOver = true;
                 WinnerTeam = PunTeams.Team.blue;
                 EndGame();
             }
             else if (_blueKartsAlive <= 0)
             {
-                Debug.Log("Red wins !");
                 IsOver = true;
                 WinnerTeam = PunTeams.Team.red;
                 EndGame();
             }
         }
 
-        private static void EndGame()
+        private void EndGame()
         {
             var playerInputsList = FindObjectsOfType<PlayerInputs>();
 
@@ -101,6 +131,7 @@ namespace GameModes
             }
 
             _endGameMenu.SetActive(true);
+            _endGameMenu.GetComponent<Menu.GameOverMenu>().SetWinnerTeam(WinnerTeam);
         }
     }
 }

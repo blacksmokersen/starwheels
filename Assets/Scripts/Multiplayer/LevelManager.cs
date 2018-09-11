@@ -8,6 +8,9 @@ using Photon.Realtime;
 
 public class LevelManager : MonoBehaviourPun
 {
+    public static LevelManager Instance;
+
+    // TODO : Separer le menu des fonctions
     [SerializeField] private GameObject escapeMenu;
     [SerializeField] private Button quitLevel;
     [SerializeField] private Button resetLevel;
@@ -16,9 +19,31 @@ public class LevelManager : MonoBehaviourPun
 
     private void Awake()
     {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         quitLevel.onClick.AddListener(ReturnToMenu);
         resetLevel.onClick.AddListener(ResetLevel);
     }
+
+    // PUBLIC
+
+    public void ResetLevel()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("RPCResetLevel", RpcTarget.All);
+        }
+    }
+
+
+    // PRIVATE
 
     private void Update()
     {
@@ -36,13 +61,6 @@ public class LevelManager : MonoBehaviourPun
         PhotonNetwork.Disconnect();
     }
 
-    void ResetLevel()
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            photonView.RPC("RPCResetLevel", RpcTarget.All);
-        }
-    }
     [PunRPC]
     void RPCResetLevel()
     {
