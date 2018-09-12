@@ -16,6 +16,9 @@ namespace Menu
         [SerializeField] private Button switchTeamButton;
         [SerializeField] private Button startGameButton;
 
+        [SerializeField] private Dropdown mapChoiceDropdown;
+        [SerializeField] private Dropdown abilityChoiceDropdown;
+
         [SerializeField] private Text roomNameText;
         [SerializeField] private Text playerCountText;
 
@@ -138,7 +141,15 @@ namespace Menu
 
         private void StartGame()
         {
-            PhotonNetwork.LoadLevel(Constants.Scene.FortBlock);
+            switch (mapChoiceDropdown.value)
+            {
+                case 1:
+                    PhotonNetwork.LoadLevel(Constants.Scene.FortBlock);
+                    break;
+                case 2:
+                    PhotonNetwork.LoadLevel(Constants.Scene.Pillars);
+                    break;
+            }
         }
 
         private void SwitchTeam()

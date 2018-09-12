@@ -44,9 +44,10 @@
     public class Scene
     {
         public const string Menu = "Menu";
+        public const string Room = "Room";
         public const string GameHUD = "GameHUD";
         public const string FortBlock = "FortBlock";
-        public const string Room = "Room";
+        public const string Pillars = "Pillars";
     }
 
     // Prefabs
