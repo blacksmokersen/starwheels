@@ -1,5 +1,6 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -94,6 +95,8 @@ namespace Menu
             if (!_canCreateRoom) return;
 
             RoomOptions options = new RoomOptions() { MaxPlayers = 20 };
+            options.CustomRoomProperties.Add("map", 0);
+
             PhotonNetwork.CreateRoom(roomName, options, null);
         }
 
