@@ -15,7 +15,7 @@ namespace Items {
             {
                 GetComponentInParent<RocketBehaviour>().CheckCollision(other.gameObject);
             }
-            else if(other.gameObject.CompareTag(Constants.Tag.DiskItem))
+            else if (other.gameObject.CompareTag(Constants.Tag.DiskItem))
             {
                 other.gameObject.GetComponentInParent<ItemBehaviour>().DestroyObject();
                 GetComponentInParent<ItemBehaviour>().DestroyObject();

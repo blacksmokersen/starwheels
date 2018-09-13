@@ -128,12 +128,16 @@ namespace Items
             {
                 if (!kartCollisionObject.GetComponentInParent<KartHealthSystem>().IsInvincible && !IsOnSameTeam(kartCollisionObject))
                 {
-                    if(!IsOwner(kartCollisionObject))
+                    if (!IsOwner(kartCollisionObject))
+                    {
                         SendOwnerSuccessfulHitEvent();
+                    }
                     SendTargetOnHitEvent(kartCollisionObject);
                 }
+
                 CollisionParticles.Emit(ParticlesToEmitOnHit);
                 PlayPlayerHitSound();
+
                 if (DestroyAfterHit)
                 {
                     DestroyObject();
@@ -154,8 +158,7 @@ namespace Items
 
         private bool IsOwnerAndImmune(GameObject other)
         {
-            var otherKartInventory = other.GetComponentInParent<KartHub>().kartInventory;
-            return otherKartInventory == owner && _ownerImmune;
+            return IsOwner(other) && _ownerImmune;
         }
         private bool IsOnSameTeam(GameObject other)
         {

@@ -42,9 +42,9 @@ namespace Items
 
         private void TurnTowardTarget()
         {
-            if(rocketLock.ActualTarget != null)
+            if (rocketLock.ActualTarget != null)
             {
-                if(transform.InverseTransformPoint(rocketLock.ActualTarget.transform.position).x < -AntiShakingThreshold) // If the target is on the left we turn to the left
+                if (transform.InverseTransformPoint(rocketLock.ActualTarget.transform.position).x < -AntiShakingThreshold) // If the target is on the left we turn to the left
                 {
                     transform.Rotate(Vector3.down * actualTurnSpeed * Time.deltaTime);
                 }
@@ -57,7 +57,7 @@ namespace Items
 
         private void OnCollisionEnter(Collision collision)
         {
-            if(collision.gameObject.layer == LayerMask.NameToLayer(Constants.Layer.Ground))
+            if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.Layer.Ground))
             {
                 PlayCollisionSound();
                 DestroyObject();
