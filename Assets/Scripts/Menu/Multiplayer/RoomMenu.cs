@@ -16,6 +16,12 @@ namespace Menu
         [SerializeField] private Button switchTeamButton;
         [SerializeField] private Button startGameButton;
 
+        [SerializeField] private Dropdown mapDropdown;
+        // TODO: This has to be inside a custom dropdown script
+        // When interactable = false, hide the arrow inside the custom script instead of here
+        [SerializeField] private Image mapDropdownArrow;
+        [SerializeField] private Dropdown abilityDropdown;
+
         [SerializeField] private Text roomNameText;
         [SerializeField] private Text playerCountText;
 
@@ -34,6 +40,8 @@ namespace Menu
             );
             switchTeamButton.onClick.AddListener(SwitchTeam);
             startGameButton.onClick.AddListener(StartGame);
+
+            mapDropdown.onValueChanged.AddListener(SetRoomMap);
         }
 
         public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -53,6 +61,11 @@ namespace Menu
         {
             FindRowPlayer(target).SetNickName(target.NickName);
             FindRowPlayer(target).SetTeam(target.GetTeam());
+        }
+
+        public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+        {
+            UpdateMapName();
         }
 
         public override void OnMasterClientSwitched(Player newMasterClient)
@@ -92,6 +105,8 @@ namespace Menu
         private void UpdateRoomHost()
         {
             startGameButton.interactable = PhotonNetwork.IsMasterClient;
+            mapDropdown.interactable = PhotonNetwork.IsMasterClient;
+            mapDropdownArrow.enabled = false;
         }
 
         private void UpdatePlayerList()
@@ -102,6 +117,19 @@ namespace Menu
             {
                 CreateRowPlayer(player);
             }
+        }
+
+        private void UpdateMapName()
+        {
+            mapDropdown.value = (int)PhotonNetwork.CurrentRoom.CustomProperties["map"];
+        }
+
+        private void SetRoomMap(int id)
+        {
+            Hashtable props = new Hashtable();
+            props["map"] = id;
+
+            PhotonNetwork.CurrentRoom.SetCustomProperties(props);
         }
 
         private void ClearPlayerList()
@@ -138,7 +166,15 @@ namespace Menu
 
         private void StartGame()
         {
-            PhotonNetwork.LoadLevel(Constants.Scene.FortBlock);
+            switch (mapDropdown.value)
+            {
+                case 0:
+                    PhotonNetwork.LoadLevel(Constants.Scene.FortBlock);
+                    break;
+                case 1:
+                    PhotonNetwork.LoadLevel(Constants.Scene.Pillars);
+                    break;
+            }
         }
 
         private void SwitchTeam()
