@@ -36,7 +36,7 @@ namespace Menu
         {
             leaveRoomButton.onClick.AddListener(() => PhotonNetwork.LeaveRoom());
             changeNicknameButton.onClick.AddListener(
-                () => FindObjectOfType<StringInput>().GetStringInput("New nickname", ChangeNickname)
+                () => FindObjectOfType<StringInput>().GetStringInput("Enter your name", ChangeNickname)
             );
             switchTeamButton.onClick.AddListener(SwitchTeam);
             startGameButton.onClick.AddListener(StartGame);
@@ -84,10 +84,11 @@ namespace Menu
 
         public void Refresh()
         {
+            UpdateRoomHost();
             UpdateRoomName();
             UpdatePlayerCount();
-            UpdateRoomHost();
             UpdatePlayerList();
+            UpdateMapName();
         }
 
         // PRIVATE
@@ -104,9 +105,11 @@ namespace Menu
 
         private void UpdateRoomHost()
         {
-            startGameButton.interactable = PhotonNetwork.IsMasterClient;
-            mapDropdown.interactable = PhotonNetwork.IsMasterClient;
-            mapDropdownArrow.enabled = false;
+            bool isHost = PhotonNetwork.IsMasterClient;
+
+            startGameButton.interactable = isHost;
+            mapDropdown.interactable = isHost;
+            mapDropdownArrow.enabled = isHost;
         }
 
         private void UpdatePlayerList()

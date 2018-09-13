@@ -1,6 +1,5 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,7 +25,7 @@ namespace Menu
         private void Awake()
         {
             createRoomButton.onClick.AddListener(
-                () => FindObjectOfType<StringInput>().GetStringInput("Room name", CreateRoom)
+                () => FindObjectOfType<StringInput>().GetStringInput("Enter room name", CreateRoom)
             );
         }
 
@@ -34,6 +33,7 @@ namespace Menu
         {
             PhotonNetwork.JoinLobby();
             _canCreateRoom = true;
+            PhotonNetwork.LocalPlayer.NickName = "unnamed";
         }
 
         public override void OnJoinedLobby()
@@ -95,6 +95,7 @@ namespace Menu
             if (!_canCreateRoom) return;
 
             RoomOptions options = new RoomOptions() { MaxPlayers = 20 };
+            options.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
             options.CustomRoomProperties.Add("map", 0);
 
             PhotonNetwork.CreateRoom(roomName, options, null);
