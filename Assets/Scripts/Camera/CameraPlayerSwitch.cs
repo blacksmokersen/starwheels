@@ -38,11 +38,17 @@ namespace CameraUtils
 
         private void SetCameraToPlayer(GameObject kart)
         {
-            _cinemachineDynamicScript.SetKart(kart);
-            _currentKartEvents = kart.GetComponent<Kart.KartEvents>();
-            _currentKartEvents.OnKartDestroyed += SetCameraToNextPlayer;
+            if (_currentTarget != null)
+            {
+                _currentTarget.GetComponentInChildren<Audio.KartSoundsScript>().SetAudioListenerActive(false);
+            }
             _currentTarget = kart;
-            FindObjectOfType<HUD.GameHUD>().ObserveKart(kart);
+            _cinemachineDynamicScript.SetKart(_currentTarget);
+            _currentKartEvents = _currentTarget.GetComponent<Kart.KartEvents>();
+            _currentKartEvents.OnKartDestroyed += SetCameraToNextPlayer;
+            _currentTarget.GetComponentInChildren<Audio.KartSoundsScript>().SetAudioListenerActive(true);
+
+            FindObjectOfType<HUD.GameHUD>().ObserveKart(_currentTarget);            
         }
     }
 }

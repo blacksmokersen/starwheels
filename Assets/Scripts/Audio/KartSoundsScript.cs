@@ -55,10 +55,15 @@ namespace Audio
             kartEvents.OnItemBoxGet += StartItemLotterySound;
             kartEvents.OnLotteryStop += StopItemLotterySound;
 
-            if (photonView.IsMine)
+            if (!photonView.IsMine)
             {
-                gameObject.AddComponent<AudioListener>();
+                SetAudioListenerActive(false);
             }
+        }
+
+        public void SetAudioListenerActive(bool value)
+        {
+            GetComponent<AudioListener>().enabled = value;
         }
 
         #region Engine
