@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 
@@ -10,7 +11,8 @@ namespace Kart
         [SerializeField] private Material blueKartMaterial;
 
         [SerializeField] private MeshRenderer kartRenderer;
-        [SerializeField] private TextMesh nameText;
+        [SerializeField] private TMPro.TextMeshPro nameText;
+        [SerializeField] private GameObject nameFrameGO;
         [SerializeField] private GameObject backCamera;
 
         // CORE
@@ -18,25 +20,32 @@ namespace Kart
         private new void Awake()
         {
             base.Awake();
-            photonView = GetComponent<PhotonView>();
 
-            if (PhotonNetwork.IsConnected && !photonView.IsMine)
+            photonView = GetComponent<PhotonView>();
+            if (photonView.IsMine)
+            {
+                nameText.gameObject.SetActive(false);
+                nameFrameGO.SetActive(false);
+            }
+            else if (PhotonNetwork.IsConnected && !photonView.IsMine)
             {
                 SetName(photonView.Owner.NickName);
+                SetFrameColor(photonView.Owner.GetTeam());
                 Destroy(backCamera);
-            }
+            }            
 
-            SetColor(photonView.Owner.GetTeam());
+            SetKartColor(photonView.Owner.GetTeam());
         }
 
         private void Update()
         {
             nameText.transform.LookAt(Camera.main.transform);
+            nameFrameGO.transform.LookAt(Camera.main.transform);
         }
 
         // PUBLIC
 
-        public void SetColor(PunTeams.Team team)
+        public void SetKartColor(PunTeams.Team team)
         {
             switch (team)
             {
@@ -46,7 +55,18 @@ namespace Kart
                 case PunTeams.Team.red:
                     kartRenderer.material = redKartMaterial;
                     break;
-                default:
+            }
+        }
+
+        public void SetFrameColor(PunTeams.Team team)
+        {
+            switch (team)
+            {
+                case PunTeams.Team.blue:
+                    nameFrameGO.GetComponent<SpriteRenderer>().color = new Color(0.2f, 0.5f, 1f, 0.8f);
+                    break;
+                case PunTeams.Team.red:
+                    nameFrameGO.GetComponent<SpriteRenderer>().color = new Color(1f, 0.5f, 0.2f, 0.8f);
                     break;
             }
         }
