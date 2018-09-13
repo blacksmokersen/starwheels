@@ -26,7 +26,7 @@ namespace HUD
 
         private KartEvents _kartEvent;
 
-        private void Start()
+        private void Awake()
         {
             KartEvents.Instance.OnItemGet += UpdateItem;
             KartEvents.Instance.OnItemCountChange += UpdateItemCount;

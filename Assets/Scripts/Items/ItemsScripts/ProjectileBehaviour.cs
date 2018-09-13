@@ -131,6 +131,8 @@ namespace Items
                     if (!IsOwner(kartCollisionObject))
                     {
                         SendOwnerSuccessfulHitEvent();
+                        // TODO: Do this cleaner :)
+                        owner.gameObject.GetComponentInParent<KartHub>().GetComponentInChildren<KartGameMode>().IncreaseScore();
                     }
                     SendTargetOnHitEvent(kartCollisionObject);
                 }
