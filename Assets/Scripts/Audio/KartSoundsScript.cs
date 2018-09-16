@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Photon.Pun;
 
 namespace Audio
 {
@@ -64,6 +65,9 @@ namespace Audio
         public void SetAudioListenerActive(bool value)
         {
             GetComponent<AudioListener>().enabled = value;
+
+            ItemBoxSource.mute = !value;
+            ItemLotterySource.mute = !value;
         }
 
         #region Engine

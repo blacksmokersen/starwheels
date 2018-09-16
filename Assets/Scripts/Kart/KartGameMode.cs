@@ -1,8 +1,8 @@
 ﻿using CameraUtils;
 using GameModes;
+using HUD;
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
-using UnityEngine;
 
 namespace Kart
 {
@@ -68,7 +68,7 @@ namespace Kart
         [PunRPC]
         private void RPCUpdateScore()
         {
-            KartEvents.Instance.OnScoreChange();
+            FindObjectOfType<GameHUD>().UpdatePlayerList();
         }
 
         #endregion

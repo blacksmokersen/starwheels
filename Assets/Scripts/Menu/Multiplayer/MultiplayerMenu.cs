@@ -78,7 +78,7 @@ namespace Menu
         {
             PhotonNetwork.OfflineMode = false;
             PhotonNetwork.AutomaticallySyncScene = true;
-            PhotonNetwork.GameVersion = "1.01";
+            PhotonNetwork.GameVersion = "1.02";
             PhotonNetwork.ConnectUsingSettings();
         }
 

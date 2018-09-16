@@ -4,6 +4,7 @@ using Photon.Pun.UtilityScripts;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
 using CameraUtils;
+using Kart;
 
 namespace GameModes
 {
@@ -78,7 +79,6 @@ namespace GameModes
             var kart = PhotonNetwork.Instantiate("Kart", initPos, initRot, 0);
 
             var cinemachineDynamicScript = FindObjectOfType<CinemachineDynamicScript>();
-            cinemachineDynamicScript.Initialize();
             cinemachineDynamicScript.SetKart(kart);
 
             StartCoroutine(LoadGameHUD(kart));

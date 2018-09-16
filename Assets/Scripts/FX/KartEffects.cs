@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
 namespace FX
 {
@@ -33,7 +34,7 @@ namespace FX
             kartEvents.OnDriftOrange += () => SetWheelsColor(Color.yellow);
             kartEvents.OnDriftRed += () => SetWheelsColor(Color.red);
             kartEvents.OnDriftBoostStart += () => SetWheelsColor(Color.green);
-            kartEvents.OnDrfitBoostEnd += StopSmoke;
+            kartEvents.OnDriftBoostEnd += StopSmoke;
         }
 
         public void StopSmoke()

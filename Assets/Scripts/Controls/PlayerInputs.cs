@@ -18,33 +18,26 @@ namespace Controls
         private new void Awake()
         {
             base.Awake();
+
             kartEvents.OnHit += () => SetInputEnabled(false);
             kartEvents.OnHitRecover += () => SetInputEnabled(true);
         }
 
         void FixedUpdate()
         {
-            if (photonView.IsMine)
-            {
-                if (Enabled && kartHub != null)
-                {
-                    Axis();
-                    ButtonsPressed();
-                }
-            }
+            if (!photonView.IsMine || !Enabled || kartHub == null) return;
+
+            Axis();
+            ButtonsPressed();
         }
 
         private void Update()
         {
-            if (photonView.IsMine)
-            {
-                if (Enabled && kartHub != null)
-                {
-                    ButtonsDown();
-                    ButtonsUp();
-                    AxisOnUse();
-                }
-            }
+            if (!photonView.IsMine || !Enabled || kartHub == null) return;
+
+            ButtonsDown();
+            ButtonsUp();
+            AxisOnUse();
         }
 
         // PUBLIC
@@ -80,11 +73,11 @@ namespace Controls
             }
             if (Input.GetButtonDown(Constants.Input.BackCamera))
             {
-                KartEvents.Instance.OnBackCameraStart(true);
+                kartEvents.OnBackCameraStart(true);
             }
             if (Input.GetButtonDown(Constants.Input.ResetCamera))
             {
-                KartEvents.Instance.OnCameraTurnReset();
+                kartEvents.OnCameraTurnReset();
             }
 
             // Mouse
@@ -114,15 +107,15 @@ namespace Controls
             }
             if (Input.GetButtonUp(Constants.Input.BackCamera))
             {
-                KartEvents.Instance.OnBackCameraEnd(false);
+                kartEvents.OnBackCameraEnd(false);
             }
         }
 
         private void AxisOnUse()
         {
-            if (KartEvents.Instance.OnCameraTurnStart != null)
+            if (kartEvents.OnCameraTurnStart != null)
             {
-                KartEvents.Instance.OnCameraTurnStart(Input.GetAxis(Constants.Input.TurnCamera));
+                kartEvents.OnCameraTurnStart(Input.GetAxis(Constants.Input.TurnCamera));
             }
         }
     }

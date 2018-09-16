@@ -10,7 +10,7 @@ namespace GameModes
 
         // Events
         public Action<PunTeams.Team> OnKartDestroyed;
-        public Action OnGameReset;
+        public System.Action OnGameReset;
 
         private void Awake()
         {

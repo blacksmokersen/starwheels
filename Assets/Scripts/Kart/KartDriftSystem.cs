@@ -58,15 +58,15 @@ namespace Kart
 
             ResetDrift();
 
-            KartEvents.Instance.OnDriftStart();
+            kartEvents.CallRPC("OnDriftStart");
 
             if (angle < 0)
             {
-                KartEvents.Instance.OnDriftLeft();
+                kartEvents.OnDriftLeft();
             }
             if (angle > 0)
             {
-                KartEvents.Instance.OnDriftRight();
+                kartEvents.OnDriftRight();
             }
 
             EnterNextState();
@@ -85,12 +85,12 @@ namespace Kart
                 ResetDrift();
             }
 
-            KartEvents.Instance.OnDriftEnd();
+            kartEvents.CallRPC("OnDriftEnd");
         }
 
         public void ResetDrift()
         {
-            KartEvents.Instance.OnDriftReset();
+            kartEvents.CallRPC("OnDriftReset");
 
             _driftedLongEnough = false;
             if (_driftedLongEnoughTimer != null)
@@ -136,13 +136,13 @@ namespace Kart
             switch (kartStates.DriftState)
             {
                 case DriftState.NotDrifting:
-                    KartEvents.Instance.OnDriftWhite();
+                    kartEvents.CallRPC("OnDriftWhite");
                     break;
                 case DriftState.White:
-                    KartEvents.Instance.OnDriftOrange();
+                    kartEvents.CallRPC("OnDriftOrange");
                     break;
                 case DriftState.Orange:
-                    KartEvents.Instance.OnDriftRed();
+                    kartEvents.CallRPC("OnDriftRed");
                     break;
                 case DriftState.Red:
                     break;
@@ -159,10 +159,10 @@ namespace Kart
             }
             _physicsBoostCoroutine = StartCoroutine(_kartEngine.Boost(BoostDuration, MagnitudeBoost, BoostSpeed));
 
-            KartEvents.Instance.OnDriftBoostStart();
+            kartEvents.CallRPC("OnDriftBoostStart");
             yield return new WaitForSeconds(BoostDuration);
             ResetDrift();
-            KartEvents.Instance.OnDrfitBoostEnd();
+            kartEvents.CallRPC("OnDriftBoostEnd");
         }
         #endregion
     }

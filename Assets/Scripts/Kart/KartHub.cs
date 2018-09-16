@@ -150,5 +150,7 @@ namespace Kart
                 PhotonNetwork.Destroy(photonView);
             }
         }
+
+        // PRIVATE
     }
 }

@@ -9,29 +9,26 @@ namespace Animations
     {
         private Animator animator;
 
+        // CORE
+
         private new void Awake()
         {
             base.Awake();
             animator = GetComponent<Animator>();
-            if (photonView.IsMine)
-            {
-                KartEvents.Instance.OnDoubleJump += DoubleJumpAnimation;
-                KartEvents.Instance.OnHealthLoss += (a) => PlayerHitAnimation();
-                KartEvents.Instance.OnDriftLeft += LeftDriftAnimation;
-                KartEvents.Instance.OnDriftRight += RightDriftAnimation;
-                KartEvents.Instance.OnDriftEnd += NoDriftAnimation;
-                KartEvents.Instance.OnDriftBoostStart += NoDriftAnimation;
-            }
+
+            kartEvents.OnDoubleJump += DoubleJumpAnimation;
+            kartEvents.OnHealthLoss += (a) => PlayerHitAnimation();
+            kartEvents.OnDriftLeft += LeftDriftAnimation;
+            kartEvents.OnDriftRight += RightDriftAnimation;
+            kartEvents.OnDriftEnd += NoDriftAnimation;
+            kartEvents.OnDriftBoostStart += NoDriftAnimation;
         }
 
-        public void DoubleJumpAnimation(Direction direction)
-        {
-            photonView.RPC("RPCDoubleJumpAnimation", RpcTarget.All,direction);
-        }
+        // PUBLIC
 
+        // PRIVATE
 
-        [PunRPC]
-        public void RPCDoubleJumpAnimation(Direction direction)
+        private void DoubleJumpAnimation(Direction direction)
         {
             switch (direction)
             {
@@ -50,41 +47,51 @@ namespace Animations
             }
         }
 
-        public void LeftJumpAnimation()
+        private void LeftJumpAnimation()
         {
             animator.SetTrigger("LeftJump");
         }
-        public void RightJumpAnimation()
+
+        private void RightJumpAnimation()
         {
             animator.SetTrigger("RightJump");
         }
-        public void FrontJumpAnimation()
+
+        private void FrontJumpAnimation()
         {
             animator.SetTrigger("FrontJump");
         }
-        public void LeftDriftAnimation()
+
+        private void LeftDriftAnimation()
         {
             animator.SetBool("DriftLeft", true);
         }
-        public void RightDriftAnimation()
+
+        private void RightDriftAnimation()
         {
             animator.SetBool("DriftRight", true);
         }
-        public void NoDriftAnimation()
+
+        private void NoDriftAnimation()
         {
             animator.SetBool("DriftLeft", false);
             animator.SetBool("DriftRight", false);
         }
-        public void BackJumpAnimation()
+        private void BackJumpAnimation()
         {
             animator.SetTrigger("BackJump");
         }
-        public void PlayerHitAnimation()
+
+        private void PlayerHitAnimation()
         {
             if (kartHub.kartEngine.PlayerVelocity >= 10)
+            {
                 animator.SetTrigger("HitHighSpeed");
+            }
             else
+            {
                 animator.SetTrigger("HitLowSpeed");
+            }
         }
     }
 }

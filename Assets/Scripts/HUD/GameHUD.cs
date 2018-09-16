@@ -13,8 +13,6 @@ namespace HUD
         [Header("Players")]
         public Text PlayerList;
 
-        // CORE
-
         [Header("Item")]
         [SerializeField] private Text _itemCountText;
         [SerializeField] private Image _itemTexture;
@@ -26,21 +24,31 @@ namespace HUD
 
         private KartEvents _kartEvent;
 
+        // CORE
+
         private void Awake()
         {
-            KartEvents.Instance.OnItemGet += UpdateItem;
-            KartEvents.Instance.OnItemCountChange += UpdateItemCount;
-            KartEvents.Instance.OnScoreChange += UpdatePlayerList;
-
             UpdateItem(null);
             UpdateItemCount(0);
             UpdatePlayerList();
         }
 
+        // PUBLIC
+
         public void ObserveKart(GameObject kartRoot)
         {
+            // Remove (un-listen) old kart events
+            if (_kartEvent != null)
+            {
+                _kartEvent.OnItemGet -= UpdateItem;
+                _kartEvent.OnItemCountChange -= UpdateItemCount;
+                _kartEvent.OnVelocityChange -= UpdateSpeedmeter;
+            }
+
             _kartEvent = kartRoot.GetComponent<KartEvents>();
-            _kartEvent.OnItemUse += UpdateItem;
+
+            // Add (listen) new kart events
+            _kartEvent.OnItemGet += UpdateItem;
             _kartEvent.OnItemCountChange += UpdateItemCount;
             _kartEvent.OnVelocityChange += UpdateSpeedmeter;
 
@@ -49,7 +57,22 @@ namespace HUD
             UpdateItemCount(kartInventory.Count);
         }
 
-        // PUBLIC
+        public void UpdatePlayerList()
+        {
+            PlayerList.text = null;
+
+            foreach (Player player in PhotonNetwork.PlayerList)
+            {
+                PlayerList.text += player.NickName + "\t Score: " + player.GetScore() + "\n";
+            }
+        }
+
+        public void UpdateSpeedmeter(Vector3 kartVelocity)
+        {
+            var speed = Mathf.Round(kartVelocity.magnitude);
+            _speedBar.fillAmount = speed / 70;
+            _textSpeed.text = "" + speed * 2;
+        }
 
         // PRIVATE
 
@@ -81,22 +104,6 @@ namespace HUD
             {
                 _itemCountText.text = "" + count;
             }
-        }
-
-        private void UpdatePlayerList()
-        {
-            PlayerList.text = null;
-            foreach (Player player in PhotonNetwork.PlayerList)
-            {
-                PlayerList.text += player.NickName + "\t Score: " + player.GetScore() + "\n";
-            }
-        }
-
-        public void UpdateSpeedmeter(Vector3 kartVelocity)
-        {
-            var speed = Mathf.Round(kartVelocity.magnitude);
-            _speedBar.fillAmount = speed / 70;
-            _textSpeed.text = "" + speed * 2;
         }
     }
 }
