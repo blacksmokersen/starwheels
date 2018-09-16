@@ -76,6 +76,7 @@ namespace Items
             var obj = PhotonNetwork.Instantiate("Items/" + Item.ItemPrefab.name, new Vector3(0, -10, 0), Quaternion.identity, 0);
             itemObj = obj.GetComponent<ItemBehaviour>();
             itemObj.Spawn(this, direction);
+            itemObj.ItemData = Item;
 
             if (--Count == 0)
             {
