@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,7 +34,10 @@ namespace Menu
         {
             PhotonNetwork.JoinLobby();
             _canCreateRoom = true;
+
+            // DEFAULT
             PhotonNetwork.LocalPlayer.NickName = "unnamed";
+            PhotonNetwork.LocalPlayer.SetTeam(PunTeams.Team.red);
         }
 
         public override void OnJoinedLobby()
@@ -52,7 +56,7 @@ namespace Menu
             roomMenu.gameObject.SetActive(true);
             gameObject.SetActive(false);
 
-            roomMenu.Refresh();
+            roomMenu.Initialize();
         }
 
         // PUBLIC
