@@ -16,13 +16,18 @@ namespace Abilities
             _animator = GetComponent<Animator>();
         }
 
+        private void Start()
+        {
+            _animator.SetTrigger("Start");
+        }
+
         // PRIVATE
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.layer == LayerMask.NameToLayer(Constants.Layer.Ground))
             {
-                _animator.SetTrigger("Back");
+                _animator.SetTrigger("Hit");
             }
 
             else if (other.CompareTag(Constants.Tag.DiskItem)
@@ -32,6 +37,7 @@ namespace Abilities
             {
                 KartInventory.Item = other.GetComponentInParent<ItemBehaviour>().ItemData;
                 KartInventory.Count = 1;
+                _animator.SetTrigger("Hit");
             }
 
             else if (other.CompareTag(Constants.Tag.KartTrigger))
@@ -39,6 +45,7 @@ namespace Abilities
                 var otherKartInventory = other.GetComponentInParent<Kart.KartHub>().kartInventory;
                 KartInventory.Item = otherKartInventory.Item;
                 KartInventory.Count = otherKartInventory.Count;
+                _animator.SetTrigger("Hit");
             }
         }
     }

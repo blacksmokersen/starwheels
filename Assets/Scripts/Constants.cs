@@ -54,5 +54,6 @@
     {
         public const string RoomPlayer = "Menu/RoomPlayer";
         public const string EndGameMenu = "Menu/EndGameMenu";
+        public const string HookObject = "Items/Hook";
     }
 }
