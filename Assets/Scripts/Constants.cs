@@ -4,6 +4,7 @@
     public class Layer
     {
         public const string Ground = "Ground";
+        public const string Kart = "Kart";
     }
 
     // Tags

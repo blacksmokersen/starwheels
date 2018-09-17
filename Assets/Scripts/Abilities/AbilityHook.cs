@@ -23,7 +23,9 @@ namespace Abilities
         public override void Use(float xAxis, float yAxis)
         {
             var hook = Instantiate(_hookPrefab, transform.position, transform.rotation);
-            hook.GetComponent<HookBehaviour>().KartInventory = _kartInventory;
+            var hookBehaviour = hook.GetComponent<HookBehaviour>();
+            hookBehaviour.OwnerKartInventory = _kartInventory;
+            hookBehaviour.Owner = _kartInventory.transform;
         }
     }
 }
