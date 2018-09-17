@@ -38,7 +38,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4315107856145642}
   - component: {fileID: 20552691307183388}
-  - component: {fileID: 81591085532895948}
   - component: {fileID: 114270316216881410}
   - component: {fileID: 45268214484772100}
   m_Layer: 0
@@ -127,7 +126,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4409278275421684}
-  - component: {fileID: 114369311810050002}
   m_Layer: 0
   m_Name: Cameras
   m_TagString: Untagged
@@ -153,7 +151,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &1979843612711940
 GameObject:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
@@ -187,7 +185,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &4249283856329038
 Transform:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1979843612711940}
@@ -372,16 +370,9 @@ Skybox:
   m_GameObject: {fileID: 1352335373918424}
   m_Enabled: 1
   m_CustomSkybox: {fileID: 2100000, guid: 7d1430089afb5854892670b854d1d684, type: 2}
---- !u!81 &81591085532895948
-AudioListener:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1352335373918424}
-  m_Enabled: 1
 --- !u!114 &114000564765989982
 MonoBehaviour:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1979843612711940}
@@ -406,7 +397,7 @@ MonoBehaviour:
   m_BiasY: 0
 --- !u!114 &114049775554121980
 MonoBehaviour:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1979843612711940}
@@ -438,7 +429,7 @@ MonoBehaviour:
     m_MaxSpeed: 150
     m_AccelTime: 0
     m_DecelTime: 0
-    m_InputAxisName: RightJoystick
+    m_InputAxisName: 
     m_InputAxisValue: 0
     m_InvertInput: 1
     m_MinValue: -50
@@ -709,7 +700,7 @@ MonoBehaviour:
   m_HeadingIsSlave: 1
 --- !u!114 &114350739645386522
 MonoBehaviour:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1979843612711940}
@@ -743,27 +734,6 @@ MonoBehaviour:
   m_SoftZoneHeight: 0.8
   m_BiasX: 0
   m_BiasY: 0
---- !u!114 &114369311810050002
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1730406326990226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 0
-  OwnershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 0}
-  viewIdField: 0
-  InstantiationId: -1
-  isRuntimeInstantiated: 0
 --- !u!114 &114555230163644868
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -955,7 +925,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxDistanceCamInBoost: 10
   SpeedCamMovements: 5
-  CurrentTarget: {fileID: 0}
   transposer: {fileID: 0}
   autoCenterTiming: 1
   turnRotationPoint: {fileID: 0}
