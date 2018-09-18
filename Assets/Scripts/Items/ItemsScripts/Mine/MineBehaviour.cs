@@ -27,8 +27,7 @@ namespace Items
             if (direction == Direction.Forward)
             {
                 transform.position = kart.ItemPositions.FrontPosition.position;
-                var aimVector = kart.transform.forward + transform.TransformDirection(new Vector3(aimAxis, 0, 0));
-                Debug.Log(aimVector);
+                var aimVector = kart.transform.forward + kart.transform.TransformDirection(new Vector3(aimAxis, 0, 0));
                 GetComponent<Rigidbody>().AddForce((aimVector + kart.transform.up/TimesLongerThanHighThrow) * ForwardThrowingForce, ForceMode.Impulse);
             }
             else if (direction == Direction.Backward || direction == Direction.Default)
