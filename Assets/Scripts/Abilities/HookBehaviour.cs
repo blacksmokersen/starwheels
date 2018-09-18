@@ -102,9 +102,8 @@ namespace Abilities
                 var otherKartInventory = other.GetComponentInParent<Kart.KartHub>().kartInventory;
                 if (otherKartInventory != OwnerKartInventory)
                 {
-                    Debug.Log("Item : " + otherKartInventory.Item);
-                    OwnerKartInventory.Item = otherKartInventory.Item;
-                    OwnerKartInventory.Count = otherKartInventory.Count;
+                    OwnerKartInventory.SetItem(otherKartInventory.Item, otherKartInventory.Count);
+                    otherKartInventory.SetItem(null, 0);
                     SetTarget(other.transform);
                 }
                 else if(otherKartInventory == OwnerKartInventory && _state == HookState.Reverse)

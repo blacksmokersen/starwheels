@@ -131,7 +131,7 @@ namespace Items
         [PunRPC]
         private void RPCSetItem(int itemDataIndex, int count)
         {
-            Item = itemsList.Items[itemDataIndex];
+            Item = itemDataIndex == -1 ? null : itemsList.Items[itemDataIndex];
             if(kartEvents.OnItemGet != null) kartEvents.OnItemGet(Item);
 
             Count = count;
