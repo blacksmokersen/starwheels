@@ -22,10 +22,11 @@ namespace Abilities
 
         public override void Use(float xAxis, float yAxis)
         {
-            var hook = Instantiate(_hookPrefab, transform.position, transform.rotation);
+            var position = new Vector3(transform.position.x, transform.position.y + 0.4f, transform.position.z);
+            var hook = Instantiate(_hookPrefab, position, transform.rotation);
             var hookBehaviour = hook.GetComponent<HookBehaviour>();
             hookBehaviour.OwnerKartInventory = _kartInventory;
-            hookBehaviour.Owner = _kartInventory.transform;
+            hookBehaviour.SetOwner(_kartInventory.transform);
         }
     }
 }

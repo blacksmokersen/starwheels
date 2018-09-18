@@ -6,6 +6,8 @@ namespace Items
 {
     public class KartInventory : BaseKartComponent
     {
+        private static ItemListData itemsList;
+
         [Header("Inventory")]
         [SerializeField] public ItemData Item;
         [SerializeField] public int Count;
@@ -21,13 +23,22 @@ namespace Items
         {
             base.Awake();
 
-            kartEvents.OnItemBoxGet += () => {
+            photonView = GetComponent<PhotonView>();
+            itemsList = Resources.Load<ItemListData>("Data/ItemList");
+
+            kartEvents.OnItemBoxGet += () =>
+            {
                 if (photonView.IsMine || !PhotonNetwork.IsConnected)
-                    StartCoroutine(GetLotteryItem());
+                    StartItemLottery();
             };
         }
 
         // PUBLIC
+
+        public void StartItemLottery()
+        {
+            StartCoroutine(GetLotteryItem());
+        }
 
         public bool IsEmpty()
         {
@@ -49,44 +60,23 @@ namespace Items
 
         public void SetItem(ItemData item, int count)
         {
-            Item = item;
-            Count = count;
-
-            kartEvents.OnItemGet(Item);
-            kartEvents.OnItemCountChange(Count);
+            int itemIndex = itemsList.GetItemDataIndex(item);
+            photonView.RPC("RPCSetItem", RpcTarget.AllBufferedViaServer, itemIndex, count);
         }
 
         public void SetItem(ItemData item)
         {
-            SetItem(item, item.Count);
+            int itemIndex = itemsList.GetItemDataIndex(item);
+            photonView.RPC("RPCSetItem", RpcTarget.AllBufferedViaServer, itemIndex, item.Count);
         }
 
         public void SetCount(int count)
         {
-            SetItem(Item, count);
+            int itemIndex = itemsList.GetItemDataIndex(Item);
+            photonView.RPC("RPCSetItem", RpcTarget.AllBufferedViaServer, itemIndex, count);
         }
 
         // PRIVATE
-
-        private void UseStack(Direction direction)
-        {
-            if (IsEmpty()) return;
-
-            ItemBehaviour itemObj;
-            var obj = PhotonNetwork.Instantiate("Items/" + Item.ItemPrefab.name, new Vector3(0, -10, 0), Quaternion.identity, 0);
-            itemObj = obj.GetComponent<ItemBehaviour>();
-            itemObj.Spawn(this, direction);
-            itemObj.ItemData = Item;
-
-            if (--Count == 0)
-            {
-                Item = null;
-                kartEvents.OnItemGet(null);
-            }
-
-            kartEvents.OnItemUse(Item);
-            kartEvents.OnItemCountChange(Count);
-        }
 
         private IEnumerator GetLotteryItem()
         {
@@ -111,11 +101,41 @@ namespace Items
             ResetLottery();
         }
 
+        private void UseStack(Direction direction)
+        {
+            if (IsEmpty()) return;
+
+            ItemBehaviour itemObj;
+            var obj = PhotonNetwork.Instantiate("Items/" + Item.ItemPrefab.name, new Vector3(0, -10, 0), Quaternion.identity, 0);
+            itemObj = obj.GetComponent<ItemBehaviour>();
+            itemObj.Spawn(this, direction);
+            itemObj.ItemData = Item;
+
+            if (--Count == 0)
+            {
+                Item = null;
+                kartEvents.OnItemGet(null);
+            }
+
+            kartEvents.OnItemUse(Item);
+            kartEvents.OnItemCountChange(Count);
+        }
+
         private void ResetLottery()
         {
             _lotteryTimer = 0f;
             _lotteryStarted = false;
             _shortenLottery = false;
+        }
+
+        [PunRPC]
+        private void RPCSetItem(int itemDataIndex, int count)
+        {
+            Item = itemsList.Items[itemDataIndex];
+            if(kartEvents.OnItemGet != null) kartEvents.OnItemGet(Item);
+
+            Count = count;
+            if(kartEvents.OnItemCountChange != null) kartEvents.OnItemCountChange(Count);
         }
     }
 }
