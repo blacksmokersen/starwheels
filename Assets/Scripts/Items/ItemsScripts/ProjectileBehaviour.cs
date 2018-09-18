@@ -170,7 +170,8 @@ namespace Items
 
         private void SendOwnerSuccessfulHitEvent()
         {
-            //owner.gameObject.GetComponentInParent<KartEvents>().HitSomeoneElse();
+            var ownerEvents = owner.gameObject.GetComponentInParent<KartEvents>();
+            if (ownerEvents != null) ownerEvents.OnHitSomeoneElse();
         }
 
         private void SendTargetOnHitEvent(GameObject kartCollisionObject)

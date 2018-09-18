@@ -15,7 +15,7 @@ namespace Kart
         // Game
         public Action OnHit;
         public Action OnHitRecover;
-        public Action HitSomeoneElse;
+        public Action OnHitSomeoneElse;
         public Action<int> OnHealthLoss;
         public Action OnKartDestroyed;
 
