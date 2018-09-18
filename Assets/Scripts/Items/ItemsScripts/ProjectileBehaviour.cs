@@ -53,15 +53,17 @@ namespace Items
 
         #region Instantiation
 
-        public override void Spawn(KartInventory kart, Direction direction)
+        public override void Spawn(KartInventory kart, Direction direction, float aimAxis)
         {
             if (direction == Direction.Forward || direction == Direction.Default)
             {
-                var rot = new Vector3(0, kart.transform.rotation.eulerAngles.y, 0);
+                var aimSpeed = aimAxis * 50;
+                var rot = new Vector3(0, kart.transform.rotation.eulerAngles.y + aimSpeed * 50, 0);
                 transform.rotation = Quaternion.Euler(rot);
-                var vel = kart.transform.forward * Speed;
+                var vel = (kart.transform.forward) * Speed;
                 vel.y = 0;
-                rb.velocity = vel;
+                var aimVel = vel + transform.TransformDirection(new Vector3(aimSpeed * 50, 0, 0));
+                rb.velocity = aimVel;
                 transform.position = kart.ItemPositions.FrontPosition.position;
             }
             else if (direction == Direction.Backward)

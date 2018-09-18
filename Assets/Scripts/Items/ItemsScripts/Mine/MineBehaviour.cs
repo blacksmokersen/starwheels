@@ -22,12 +22,14 @@ namespace Items
             StartCoroutine(MineActivationDelay());
         }
 
-        public override void Spawn(KartInventory kart, Direction direction)
+        public override void Spawn(KartInventory kart, Direction direction, float aimAxis)
         {
             if (direction == Direction.Forward)
             {
                 transform.position = kart.ItemPositions.FrontPosition.position;
-                GetComponent<Rigidbody>().AddForce((kart.transform.forward + kart.transform.up/TimesLongerThanHighThrow) * ForwardThrowingForce, ForceMode.Impulse);
+                var aimVector = kart.transform.forward + transform.TransformDirection(new Vector3(aimAxis, 0, 0));
+                Debug.Log(aimVector);
+                GetComponent<Rigidbody>().AddForce((aimVector + kart.transform.up/TimesLongerThanHighThrow) * ForwardThrowingForce, ForceMode.Impulse);
             }
             else if (direction == Direction.Backward || direction == Direction.Default)
             {

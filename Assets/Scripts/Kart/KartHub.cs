@@ -22,6 +22,8 @@ namespace Kart
         [HideInInspector] public CinemachineDynamicScript cinemachineDynamicScript;
         [HideInInspector] public KartGameMode kartGameMode;
 
+        private float _aimAxis;
+
         // CORE
 
         private void Awake()
@@ -46,8 +48,12 @@ namespace Kart
         }
 
         // PUBLIC
+        public void ItemAim(float aimAxis)
+        {
+            _aimAxis = aimAxis;
+        }
 
-        public void UseItem(float verticalValue)
+            public void UseItem(float verticalValue)
         {
             if (verticalValue > 0.3f)
             {
@@ -59,18 +65,18 @@ namespace Kart
             }
             else
             {
-                kartInventory.ItemAction(Direction.Default);
+                kartInventory.ItemAction(Direction.Default, _aimAxis);
             }
         }
 
         public void UseItemForward()
         {
-            kartInventory.ItemAction(Direction.Forward);
+            kartInventory.ItemAction(Direction.Forward, _aimAxis);
         }
 
         public void UseItemBackward()
         {
-            kartInventory.ItemAction(Direction.Backward);
+            kartInventory.ItemAction(Direction.Backward, _aimAxis);
         }
 
         public void UseAbility(float xAxis, float yAxis)

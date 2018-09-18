@@ -29,7 +29,7 @@ namespace Items
         private new void FixedUpdate()
         {
             TurnTowardTarget();
-            SetVelocityForward();
+          //  SetVelocityForward();
             base.FixedUpdate();
         }
 
