@@ -16,7 +16,7 @@ namespace Items
                 var target = other.gameObject.GetComponentInParent<PhotonView>().Owner;
                 if (owner.GetTeam() != target.GetTeam() || owner == target)
                 {
-                    other.gameObject.GetComponentInParent<Kart.KartEvents>().OnHit();
+                    other.gameObject.GetComponentInParent<Kart.KartEvents>().CallRPC("OnHit");
                 }
                 GetComponentInParent<MineBehaviour>().PlayExplosion();
                 GetComponentInParent<MineBehaviour>().DestroyObject(); // Destroy the mine root item

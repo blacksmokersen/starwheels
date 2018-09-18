@@ -26,6 +26,8 @@ namespace Menu
         [SerializeField] private Text playerCountText;
 
         [SerializeField] private GameObject panelPlayerList;
+        [SerializeField] private GameObject panelRedTeam;
+        [SerializeField] private GameObject panelBlueTeam;
         [SerializeField] private GameObject rowPlayerPrefab;
 
         [SerializeField] private Button backButton;
@@ -36,7 +38,7 @@ namespace Menu
         {
             leaveRoomButton.onClick.AddListener(() => PhotonNetwork.LeaveRoom());
             changeNicknameButton.onClick.AddListener(
-                () => FindObjectOfType<StringInput>().GetStringInput("Enter your name", ChangeNickname)
+                () => FindObjectOfType<StringInput>().GetStringInput("Enter your name", ChangeLocalplayerName)
             );
             switchTeamButton.onClick.AddListener(SwitchTeam);
             startGameButton.onClick.AddListener(StartGame);
@@ -49,18 +51,18 @@ namespace Menu
             CreateRowPlayer(newPlayer);
         }
 
-        public override void OnPlayerLeftRoom(Player otherPlayer)
+        public override void OnPlayerLeftRoom(Player player)
         {
-            if (otherPlayer.IsInactive) return;
+            if (player.IsInactive) return;
 
-            Destroy(FindRowPlayer(otherPlayer).gameObject);
+            RemoveRowPlayer(player);
             UpdatePlayerCount();
         }
 
         public override void OnPlayerPropertiesUpdate(Player target, Hashtable changedProps)
         {
-            FindRowPlayer(target).SetNickName(target.NickName);
-            FindRowPlayer(target).SetTeam(target.GetTeam());
+            UpdatePlayerName(target);
+            ChangePlayerTeam(target);
         }
 
         public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
@@ -82,13 +84,18 @@ namespace Menu
 
         // PUBLIC
 
-        public void Refresh()
+        public void Initialize()
         {
             UpdateRoomHost();
             UpdateRoomName();
             UpdatePlayerCount();
-            UpdatePlayerList();
             UpdateMapName();
+
+            // Create row player for all players already in the room
+            foreach (Player player in PhotonNetwork.CurrentRoom.Players.Values)
+            {
+                CreateRowPlayer(player);
+            }
         }
 
         // PRIVATE
@@ -103,6 +110,11 @@ namespace Menu
             playerCountText.text = "" + PhotonNetwork.CurrentRoom.PlayerCount + " / " + PhotonNetwork.CurrentRoom.MaxPlayers;
         }
 
+        private void UpdatePlayerName(Player player)
+        {
+            FindRowPlayer(player).SetName(player.NickName);
+        }
+
         private void UpdateRoomHost()
         {
             bool isHost = PhotonNetwork.IsMasterClient;
@@ -110,16 +122,6 @@ namespace Menu
             startGameButton.interactable = isHost;
             mapDropdown.interactable = isHost;
             mapDropdownArrow.enabled = isHost;
-        }
-
-        private void UpdatePlayerList()
-        {
-            ClearPlayerList();
-
-            foreach (Player player in PhotonNetwork.CurrentRoom.Players.Values)
-            {
-                CreateRowPlayer(player);
-            }
         }
 
         private void UpdateMapName()
@@ -135,19 +137,35 @@ namespace Menu
             PhotonNetwork.CurrentRoom.SetCustomProperties(props);
         }
 
-        private void ClearPlayerList()
-        {
-            for (int i = 1; i < panelPlayerList.transform.childCount; ++i)
-            {
-                Destroy(panelPlayerList.transform.GetChild(i).gameObject);
-            }
-        }
-
         private void CreateRowPlayer(Player player)
         {
-            var rowPlayer = Instantiate(rowPlayerPrefab, panelPlayerList.transform).GetComponent<RowPlayer>();
-            rowPlayer.SetPlayer(player);
+            Instantiate(rowPlayerPrefab, GetTeamPanel(player.GetTeam()).transform).GetComponent<RowPlayer>().SetPlayer(player);
             UpdatePlayerCount();
+        }
+
+        private void RemoveRowPlayer(Player player)
+        {
+            Destroy(FindRowPlayer(player).gameObject);
+        }
+
+        private void ChangePlayerTeam(Player player)
+        {
+            RowPlayer rowPlayer = FindRowPlayer(player);
+            PunTeams.Team newTeam = player.GetTeam();
+
+            rowPlayer.SetTeam(newTeam);
+            rowPlayer.transform.SetParent(GetTeamPanel(newTeam).transform);
+        }
+
+        private GameObject GetTeamPanel(PunTeams.Team team)
+        {
+            switch (team)
+            {
+                case PunTeams.Team.red: return panelRedTeam;
+                case PunTeams.Team.blue: return panelBlueTeam;
+            }
+
+            return null;
         }
 
         private RowPlayer FindRowPlayer(Player player)
@@ -162,7 +180,7 @@ namespace Menu
             return null;
         }
 
-        private void ChangeNickname(string newName)
+        private void ChangeLocalplayerName(string newName)
         {
             PhotonNetwork.LocalPlayer.NickName = newName;
         }

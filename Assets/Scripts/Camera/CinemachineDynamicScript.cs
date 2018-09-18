@@ -22,6 +22,7 @@ namespace CameraUtils
         private bool backCamActivated = false;
         private float currentTimer;
         private KartEngine _kartEngine;
+        private KartEvents _kartEvents;
 
         [SerializeField] private GameObject turnRotationPoint;
 
@@ -31,15 +32,6 @@ namespace CameraUtils
             orbiter = cinemachine.GetCinemachineComponent<CinemachineOrbitalTransposer>();
             transposer = cinemachine.GetCinemachineComponent<CinemachineTransposer>();
             composer = cinemachine.GetCinemachineComponent<CinemachineComposer>();
-        }
-
-        public void Initialize()
-        {
-            KartEvents.Instance.OnDriftBoostStart += BoostCameraBehaviour;
-            KartEvents.Instance.OnBackCameraStart += BackCamera;
-            KartEvents.Instance.OnBackCameraEnd += BackCamera;
-            KartEvents.Instance.OnCameraTurnStart += TurnCamera;
-            KartEvents.Instance.OnCameraTurnReset += CameraReset;
         }
 
         private void Update()
@@ -52,7 +44,25 @@ namespace CameraUtils
             cinemachine.Follow = kart.transform;
             cinemachine.LookAt = kart.transform;
 
+            // Remove (un-listen) old kart events
+            if (_kartEvents != null)
+            {
+                _kartEvents.OnDriftBoostStart -= BoostCameraBehaviour;
+                _kartEvents.OnBackCameraStart -= BackCamera;
+                _kartEvents.OnBackCameraEnd -= BackCamera;
+                _kartEvents.OnCameraTurnStart -= TurnCamera;
+                _kartEvents.OnCameraTurnReset -= CameraReset;
+            }
+
             _kartEngine = kart.GetComponentInChildren<KartEngine>();
+            _kartEvents = kart.GetComponent<KartEvents>();
+
+            // Add (listen) new kart events
+            _kartEvents.OnDriftBoostStart += BoostCameraBehaviour;
+            _kartEvents.OnBackCameraStart += BackCamera;
+            _kartEvents.OnBackCameraEnd += BackCamera;
+            _kartEvents.OnCameraTurnStart += TurnCamera;
+            _kartEvents.OnCameraTurnReset += CameraReset;
         }
 
         public void IonBeamCameraControls(float horizontal, float vertical)

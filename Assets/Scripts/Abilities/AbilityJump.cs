@@ -56,33 +56,33 @@ namespace Abilities
                 if (yAxis <= -0.2f)
                 {
                     _kartEngine.DoubleJump(Vector3.back, 0.5f);
-                    kartEvents.OnDoubleJump(Direction.Backward);
+                    kartEvents.CallRPC("OnDoubleJump", Direction.Backward);
                 }
                 else if (yAxis >= 0.2f)
                 {
                     _kartEngine.DoubleJump(Vector3.forward, 0.5f);
-                    kartEvents.OnDoubleJump(Direction.Forward);
+                    kartEvents.CallRPC("OnDoubleJump", Direction.Forward);
                 }
                 else
                 {
                     _kartEngine.DoubleJump(Vector3.forward, 0f);
-                    kartEvents.OnDoubleJump(Direction.Forward);
+                    kartEvents.CallRPC("OnDoubleJump", Direction.Forward);
                 }
             }
             else if (xAxis < -0.5f)
             {
                 _kartEngine.DoubleJump(Vector3.left, 1f);
-                kartEvents.OnDoubleJump(Direction.Left);
+                kartEvents.CallRPC("OnDoubleJump", Direction.Left);
             }
             else if (xAxis >= 0.5f)
             {
                 _kartEngine.DoubleJump(Vector3.right, 1f);
-                kartEvents.OnDoubleJump(Direction.Right);
+                kartEvents.CallRPC("OnDoubleJump", Direction.Right);
             }
             else
             {
                 _kartEngine.DoubleJump(Vector3.forward, 0f);
-                kartEvents.OnDoubleJump(Direction.Forward);
+                kartEvents.CallRPC("OnDoubleJump", Direction.Forward);
             }
         }
 

@@ -5,30 +5,19 @@ using Photon.Pun;
 
 namespace Kart
 {
-    public class KartEvents : MonoBehaviour
+    [RequireComponent(typeof(PhotonView))]
+    public class KartEvents : MonoBehaviourPun
     {
-        public static KartEvents Instance;
-
-        private void Awake()
-        {
-            if (!PhotonNetwork.IsConnected || GetComponent<PhotonView>().IsMine)
-            {
-                Instance = this;
-            }
-        }
-
         // Movements
         public Action<Vector3> OnVelocityChange;
         public Action<float> OnTurn;
 
         // Game
-        public Action<float> OnEnergyConsumption;
         public Action OnHit;
         public Action OnHitRecover;
         public Action HitSomeoneElse;
         public Action<int> OnHealthLoss;
         public Action OnKartDestroyed;
-        public Action OnScoreChange;
 
         // Collisions
         public Action OnCollisionEnterGround;
@@ -55,8 +44,7 @@ namespace Kart
         public Action OnDriftEnd;
         public Action OnDriftReset;
         public Action OnDriftBoostStart;
-        public Action OnDrfitBoostEnd;
-        public Action OnDriftNextState;
+        public Action OnDriftBoostEnd;
 
         //Camera
         public Action<bool> OnBackCameraStart;
@@ -64,15 +52,28 @@ namespace Kart
         public Action<float> OnCameraTurnStart;
         public Action OnCameraTurnReset;
 
-        public void CallOnHitEvent()
+        // RPCs
+        [PunRPC] public void RPCOnHit() { OnHit(); }
+        [PunRPC] public void RPCOnJump() { OnJump(); }
+        [PunRPC] public void RPCOnDoubleJump(Direction direction) { OnDoubleJump(direction); }
+
+        [PunRPC] public void RPCOnDriftStart() { OnDriftStart(); }
+        [PunRPC] public void RPCOnDriftWhite() { OnDriftWhite(); }
+        [PunRPC] public void RPCOnDriftOrange() { OnDriftOrange(); }
+        [PunRPC] public void RPCOnDriftRed() { OnDriftRed(); }
+        [PunRPC] public void RPCOnDriftEnd() { OnDriftEnd(); }
+        [PunRPC] public void RPCOnDriftReset() { OnDriftReset(); }
+        [PunRPC] public void RPCOnDriftBoostEnd() { OnDriftBoostEnd(); }
+        [PunRPC] public void RPCOnDriftBoostStart() { OnDriftBoostStart(); }
+
+        // CORE
+
+        // PUBLIC
+        public void CallRPC(string onAction, params object[] parameters)
         {
-            GetComponent<PhotonView>().RPC("RPCCallOnHitEvent", RpcTarget.All);
+            photonView.RPC("RPC" + onAction, RpcTarget.All, parameters);
         }
 
-        [PunRPC]
-        public void RPCCallOnHitEvent()
-        {
-            OnHit();
-        }
+        // PRIVATE
     }
 }

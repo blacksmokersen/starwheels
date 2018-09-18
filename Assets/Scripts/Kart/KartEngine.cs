@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using UnityEngine;
 
 namespace Kart
@@ -83,6 +84,11 @@ namespace Kart
 
         // PUBLIC
 
+        public Rigidbody GetRigidbody()
+        {
+            return _rb;
+        }
+
         public void CompensateSlip()
         {
             var sideVelocity = new Vector3(transform.InverseTransformDirection(_rb.velocity).x, 0, 0);
@@ -123,7 +129,7 @@ namespace Kart
 
         public void Jump(float percentage = 1f)
         {
-            kartEvents.OnJump();
+            kartEvents.CallRPC("OnJump");
             _rb.AddRelativeForce(Vector3.up * JumpForce * percentage, ForceMode.Impulse);
         }
 
@@ -131,12 +137,8 @@ namespace Kart
         {
             var forceUp = Vector3.up * DoubleJumpUpForce;
             var forceDirectional = doubleJumpDirectionVector * DoubleJumpDirectionalForce * directionalForceMultiplier;
-            _rb.AddRelativeForce(forceUp + forceDirectional, ForceMode.Impulse);
-        }
 
-        public void DriftJump()
-        {
-            _rb.AddRelativeForce(Vector3.up * DriftJumpForce, ForceMode.Impulse);
+            _rb.AddRelativeForce(forceUp + forceDirectional, ForceMode.Impulse);
         }
 
         public void Accelerate(float value)

@@ -175,7 +175,7 @@ namespace Items
 
         private void SendTargetOnHitEvent(GameObject kartCollisionObject)
         {
-            kartCollisionObject.gameObject.GetComponentInParent<KartEvents>().CallOnHitEvent();
+            kartCollisionObject.gameObject.GetComponentInParent<KartEvents>().CallRPC("OnHit");
         }
 
         #endregion
