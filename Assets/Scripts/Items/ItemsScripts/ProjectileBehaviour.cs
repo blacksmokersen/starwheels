@@ -58,7 +58,8 @@ namespace Items
             if (direction == Direction.Forward || direction == Direction.Default)
             {
                 transform.position = kart.ItemPositions.FrontPosition.position;
-                transform.localEulerAngles = new Vector3(0, aimAxis, 0) * 45;
+                var rot = new Vector3(0, kart.transform.rotation.eulerAngles.y + aimAxis * 45, 0);
+                transform.rotation = Quaternion.Euler(rot);
                 var vel = kart.transform.TransformDirection(new Vector3(aimAxis,0,1)).normalized* Speed;
                 rb.velocity = vel;
             }

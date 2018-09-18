@@ -40,12 +40,12 @@ namespace FX
             kartEvents.OnDriftBoostEnd += StopSmoke;
         }
 
-        public void AimEffects(float aimAxis)
+        public void AimEffects(float aimAxisH,float aimAxisV)
         {
-            if(Mathf.Abs(aimAxis) > 0.1)
+            if(Mathf.Abs(aimAxisV) > 0.1)
             {
                 AimParticles.Play(true);
-                AimParticles.transform.localEulerAngles = new Vector3(0, aimAxis, 0) * 45;
+                AimParticles.transform.localEulerAngles = new Vector3(0, aimAxisH, 0) * 45;
             }
             else
             {

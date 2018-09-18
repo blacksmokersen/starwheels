@@ -49,7 +49,7 @@ namespace Kart
         //Camera
         public Action<bool> OnBackCameraStart;
         public Action<bool> OnBackCameraEnd;
-        public Action<float> OnCameraTurnStart;
+        public Action<float,float> OnCameraTurnStart;
         public Action OnCameraTurnReset;
 
         // RPCs

@@ -54,7 +54,7 @@ namespace Controls
             kartHub.Accelerate(Input.GetAxis(Constants.Input.Accelerate));
             kartHub.Decelerate(Input.GetAxis(Constants.Input.Decelerate));
             kartHub.Turn(Input.GetAxis(Constants.Input.TurnAxis));
-            kartHub.ItemAim(Input.GetAxis(Constants.Input.ItemAim));
+            kartHub.ItemAim(Input.GetAxis(Constants.Input.ItemAimHorinzontal));
         }
 
         private void ButtonsDown()
@@ -117,7 +117,7 @@ namespace Controls
         {
             if (kartEvents.OnCameraTurnStart != null)
             {
-                kartEvents.OnCameraTurnStart(Input.GetAxis(Constants.Input.ItemAim));
+                kartEvents.OnCameraTurnStart(Input.GetAxis(Constants.Input.ItemAimHorinzontal), Input.GetAxis(Constants.Input.ItemAimVertical));
             }
         }
 
