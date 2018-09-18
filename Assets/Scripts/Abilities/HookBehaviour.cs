@@ -120,8 +120,7 @@ namespace Abilities
                 _state = HookState.Reverse;
                 if (_itemBehaviour)
                 {
-                    OwnerKartInventory.SetItem(_itemBehaviour.ItemData);
-                    OwnerKartInventory.SetCount(1);
+                    OwnerKartInventory.SetItem(_itemBehaviour.ItemData,1);
                     _itemBehaviour.DestroyObject();
                 }
             }
