@@ -57,14 +57,10 @@ namespace Items
         {
             if (direction == Direction.Forward || direction == Direction.Default)
             {
-                var aimSpeed = aimAxis * 50;
-                var rot = new Vector3(0, kart.transform.rotation.eulerAngles.y + aimSpeed * 50, 0);
-                transform.rotation = Quaternion.Euler(rot);
-                var vel = (kart.transform.forward) * Speed;
-                vel.y = 0;
-                var aimVel = vel + transform.TransformDirection(new Vector3(aimSpeed * 50, 0, 0));
-                rb.velocity = aimVel;
                 transform.position = kart.ItemPositions.FrontPosition.position;
+                transform.localEulerAngles = new Vector3(0, aimAxis, 0) * 45;
+                var vel = kart.transform.TransformDirection(new Vector3(aimAxis,0,1)).normalized* Speed;
+                rb.velocity = vel;
             }
             else if (direction == Direction.Backward)
             {

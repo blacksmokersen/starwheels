@@ -45,7 +45,7 @@ namespace FX
             if(Mathf.Abs(aimAxis) > 0.1)
             {
                 AimParticles.Play(true);
-                AimParticles.transform.localEulerAngles = transform.forward + new Vector3(0, aimAxis * 50, 0);
+                AimParticles.transform.localEulerAngles = new Vector3(0, aimAxis, 0) * 45;
             }
             else
             {
