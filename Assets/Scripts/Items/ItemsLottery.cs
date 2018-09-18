@@ -11,7 +11,7 @@ namespace Items
         public static float ComputeItemChances()
         {
             if (Items == null)
-                Items = Resources.Load<ItemListData>("Game/ItemList").Items;
+                Items = Resources.Load<ItemListData>("Data/ItemList").Items;
 
             float total = 0;
 
