@@ -15,26 +15,20 @@ namespace Items
         private float actualTurnSpeed;
         private RocketLockTarget rocketLock;
 
-        private float followTargetDelay;
-        private bool _followTarget = false;
-
         private new void Awake()
         {
             base.Awake();
             rocketLock = GetComponentInChildren<RocketLockTarget>();
-            followTargetDelay = GetComponentInChildren<RocketLockTarget>().SecondsBeforeSearchingTarget;
         }
 
         private void Start()
         {
             rocketLock.Owner = owner;
-            StartCoroutine(DelayEnableFollowTarget());
         }
 
         private new void FixedUpdate()
         {
             TurnTowardTarget();
-            if(_followTarget)
             SetVelocityForward();
             base.FixedUpdate();
         }
@@ -75,11 +69,6 @@ namespace Items
             actualTurnSpeed = QuickTurnSpeed;
             yield return new WaitForSeconds(QuickTurnDuration);
             actualTurnSpeed = NormalTurnSpeed;
-        }
-        public IEnumerator DelayEnableFollowTarget()
-        {
-            yield return new WaitForSeconds(followTargetDelay);
-            _followTarget = true;
         }
     }
 }
