@@ -26,7 +26,7 @@ namespace Audio
 
             PlayRandomSelectedVoice();
 
-            kartEvents.OnHitSomeoneElse += PlayRandomHitVoice;
+            kartEvents.OnHitSomeoneElse += (p) => PlayRandomHitVoice();
             kartEvents.OnHit += PlayRandomHurtVoice;
         }
 
