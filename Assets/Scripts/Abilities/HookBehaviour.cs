@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using Items;
+using Photon.Pun;
 
 namespace Abilities
 {
     [RequireComponent(typeof(LineRenderer))]
-    public class HookBehaviour : MonoBehaviour
+    public class HookBehaviour : MonoBehaviourPun
     {
         private enum HookState { Forward, Hooked, Reverse }
 
@@ -36,9 +37,12 @@ namespace Abilities
 
         private void Update()
         {
-            StatesBehaviour();
-            CheckIfIsHooked();
-            CheckIfMissedTarget();
+            if (photonView.IsMine)
+            {
+                StatesBehaviour();
+                CheckIfIsHooked();
+                CheckIfMissedTarget();
+            }
             UpdateLineRenderer();
         }
 
@@ -70,6 +74,8 @@ namespace Abilities
 
         private void OnTriggerEnter(Collider other)
         {
+            if (!photonView.IsMine) return; // We want this code to be executed only on owner
+
             // A wall
             if (other.gameObject.layer == LayerMask.NameToLayer(Constants.Layer.Ground))
             {
@@ -108,7 +114,7 @@ namespace Abilities
                 }
                 else if(otherKartInventory == OwnerKartInventory && _state == HookState.Reverse)
                 {
-                    Destroy(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
                 }
             }
         }
@@ -136,12 +142,18 @@ namespace Abilities
 
         private void MoveTowardsTarget()
         {
-            transform.position = Vector3.MoveTowards(transform.position, _target.position, speed * Time.deltaTime);
+            if (_target)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, _target.position, speed * Time.deltaTime);
+            }
         }
 
         private void MoveBackToOwner()
         {
-            transform.position = Vector3.MoveTowards(transform.position, _owner.position, speed * Time.deltaTime);
+            if (_owner)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, _owner.position, speed * Time.deltaTime);
+            }
         }
 
         private void UpdateLineRenderer()
