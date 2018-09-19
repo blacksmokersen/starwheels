@@ -6,10 +6,6 @@ namespace Abilities
 {
     public class AbilityJump : Ability
     {
-        [Header("Jump Ability")]
-        public float CooldownDoubleJump = 1f;
-        public float EnergyConsummedOnJump = 0.5f;
-
         private bool _hasDoneFirstJump = false;
         private bool _canDoubleJump = true;
         private KartEngine _kartEngine;
@@ -29,20 +25,24 @@ namespace Abilities
 
         public override void Use(float xAxis, float yAxis)
         {
-            _kartHub.StopDrift();
+            if (canUseAbility)
+            {
+                _kartHub.StopDrift();
 
-            if (CanDoubleJump())
-            {
-                DoubleJump(xAxis, yAxis);
-                _hasDoneFirstJump = false;
-            }
-            else
-            {
-                if (kartStates.IsGrounded() && _canDoubleJump)
+                if (CanDoubleJump())
                 {
-                    _hasDoneFirstJump = true;
-                    StartCoroutine(StartCooldownDoubleJump());
-                    _kartEngine.Jump();
+                    DoubleJump(xAxis, yAxis);
+                    _hasDoneFirstJump = false;
+                    StartCoroutine(AbilityCooldown());
+                }
+                else
+                {
+                    if (kartStates.IsGrounded() && _canDoubleJump)
+                    {
+                        _hasDoneFirstJump = true;
+                        _kartEngine.Jump();
+                        kartEvents.OnAbilityUse();
+                    }
                 }
             }
         }
@@ -84,14 +84,6 @@ namespace Abilities
                 _kartEngine.DoubleJump(Vector3.forward, 0f);
                 kartEvents.CallRPC("OnDoubleJump", Direction.Forward);
             }
-        }
-
-        private IEnumerator StartCooldownDoubleJump()
-        {
-            _canDoubleJump = false;
-            yield return new WaitForSeconds(CooldownDoubleJump);
-            _canDoubleJump = true;
-            kartEvents.OnDoubleJumpReset();
         }
 
         private bool CanDoubleJump()
