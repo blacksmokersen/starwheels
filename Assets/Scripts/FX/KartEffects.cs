@@ -16,6 +16,7 @@ namespace FX
         public ParticleSystem AimParticles;
 
         private int numberOfParticles = 300;
+        [SerializeField] private float aimEffectAngle = 45;
 
         private new void Awake()
         {
@@ -45,7 +46,7 @@ namespace FX
             if(Mathf.Abs(aimAxisV) > 0.1)
             {
                 AimParticles.Play(true);
-                AimParticles.transform.localEulerAngles = new Vector3(0, aimAxisH, 0) * 45;
+                AimParticles.transform.localEulerAngles = new Vector3(0, aimAxisH, 0) * aimEffectAngle;
             }
             else
             {
