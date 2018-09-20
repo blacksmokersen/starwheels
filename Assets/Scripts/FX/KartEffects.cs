@@ -13,8 +13,10 @@ namespace FX
         [Header("Particles")]
         public ParticleSystem MainJumpParticles;
         public ParticleSystem JumpReloadParticles;
+        public ParticleSystem AimParticles;
 
         private int numberOfParticles = 300;
+        [SerializeField] private float aimEffectAngle = 45;
 
         private new void Awake()
         {
@@ -27,6 +29,8 @@ namespace FX
 
             kartEvents.OnHealthLoss += HealthParticlesManagement;
 
+            kartEvents.OnCameraTurnStart += AimEffects;
+
             kartEvents.OnDriftStart += StartSmoke;
             kartEvents.OnDriftStart += () => SetWheelsColor(Color.white);
             kartEvents.OnDriftEnd += StopSmoke;
@@ -35,6 +39,19 @@ namespace FX
             kartEvents.OnDriftRed += () => SetWheelsColor(Color.red);
             kartEvents.OnDriftBoostStart += () => SetWheelsColor(Color.green);
             kartEvents.OnDriftBoostEnd += StopSmoke;
+        }
+
+        public void AimEffects(float aimAxisH,float aimAxisV)
+        {
+            if(Mathf.Abs(aimAxisV) > 0.1)
+            {
+                AimParticles.Play(true);
+                AimParticles.transform.localEulerAngles = new Vector3(0, aimAxisH, 0) * aimEffectAngle;
+            }
+            else
+            {
+                AimParticles.Stop(true);
+            }
         }
 
         public void StopSmoke()

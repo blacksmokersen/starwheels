@@ -33,7 +33,8 @@
         public const string UseItemForward = "ItemForward";
         public const string UseItemBackward = "ItemBackward";
         public const string UseAbility = "Ability";
-        public const string TurnCamera = "RightJoystick";
+        public const string ItemAimHorinzontal = "RightJoystickHorizontal";
+        public const string ItemAimVertical = "RightJoystickVertical";
         public const string BackCamera = "ClickLeftJoystick";
         public const string ResetCamera = "ClickRightJoystick";
         public const string EscapeMenu = "Escape";

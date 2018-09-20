@@ -33,6 +33,7 @@ namespace Items
 
         private const float _ownerImmunityDuration = 0.5f;
         private bool _ownerImmune = true;
+        [SerializeField] private float aimAngle = 45;
         #endregion
 
         protected void Awake()
@@ -53,16 +54,15 @@ namespace Items
 
         #region Instantiation
 
-        public override void Spawn(KartInventory kart, Direction direction)
+        public override void Spawn(KartInventory kart, Direction direction, float aimAxis)
         {
             if (direction == Direction.Forward || direction == Direction.Default)
             {
-                var rot = new Vector3(0, kart.transform.rotation.eulerAngles.y, 0);
-                transform.rotation = Quaternion.Euler(rot);
-                var vel = kart.transform.forward * Speed;
-                vel.y = 0;
-                rb.velocity = vel;
                 transform.position = kart.ItemPositions.FrontPosition.position;
+                var rot = new Vector3(0, kart.transform.rotation.eulerAngles.y + aimAxis * aimAngle, 0);
+                transform.rotation = Quaternion.Euler(rot);
+                var vel = kart.transform.TransformDirection(new Vector3(aimAxis,0,1)).normalized* Speed;
+                rb.velocity = vel;
             }
             else if (direction == Direction.Backward)
             {

@@ -34,7 +34,7 @@ namespace Items
             return Item == null || Count == 0;
         }
 
-        public void ItemAction(Direction direction)
+        public void ItemAction(Direction direction, float aimAxis)
         {
             if (_lotteryStarted && !_shortenLottery && _lotteryTimer > 1f)
             {
@@ -43,7 +43,7 @@ namespace Items
             }
             else
             {
-                UseStack(direction);
+                UseStack(direction,aimAxis);
             }
         }
 
@@ -68,14 +68,14 @@ namespace Items
 
         // PRIVATE
 
-        private void UseStack(Direction direction)
+        private void UseStack(Direction direction,float aimAxis)
         {
             if (IsEmpty()) return;
 
             ItemBehaviour itemObj;
             var obj = PhotonNetwork.Instantiate("Items/" + Item.ItemPrefab.name, new Vector3(0, -10, 0), Quaternion.identity, 0);
             itemObj = obj.GetComponent<ItemBehaviour>();
-            itemObj.Spawn(this, direction);
+            itemObj.Spawn(this, direction, aimAxis);
 
             if (--Count == 0)
             {

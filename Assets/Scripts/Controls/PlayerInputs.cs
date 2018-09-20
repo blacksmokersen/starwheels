@@ -69,7 +69,7 @@ namespace Controls
             }
             if (Input.GetButtonDown(Constants.Input.UseItem))
             {
-                kartHub.UseItem(Input.GetAxis(Constants.Input.UpAndDownAxis));
+                kartHub.UseItem(Input.GetAxis(Constants.Input.UpAndDownAxis), Input.GetAxis(Constants.Input.ItemAimHorinzontal));
             }
             if (Input.GetButtonDown(Constants.Input.BackCamera))
             {
@@ -83,11 +83,11 @@ namespace Controls
             // Mouse
             if (Input.GetButtonDown(Constants.Input.UseItemForward))
             {
-                kartHub.UseItemForward();
+                kartHub.UseItemForward(Input.GetAxis(Constants.Input.ItemAimHorinzontal));
             }
             if (Input.GetButtonDown(Constants.Input.UseItemBackward))
             {
-                kartHub.UseItemBackward();
+                kartHub.UseItemBackward(Input.GetAxis(Constants.Input.ItemAimHorinzontal));
             }
         }
 
@@ -111,12 +111,13 @@ namespace Controls
             }
         }
 
-        private void AxisOnUse()
+        public void AxisOnUse()
         {
             if (kartEvents.OnCameraTurnStart != null)
             {
-                kartEvents.OnCameraTurnStart(Input.GetAxis(Constants.Input.TurnCamera));
+                kartEvents.OnCameraTurnStart(Input.GetAxis(Constants.Input.ItemAimHorinzontal), Input.GetAxis(Constants.Input.ItemAimVertical));
             }
         }
+
     }
 }

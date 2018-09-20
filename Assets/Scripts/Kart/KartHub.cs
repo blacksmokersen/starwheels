@@ -46,31 +46,30 @@ namespace Kart
         }
 
         // PUBLIC
-
-        public void UseItem(float verticalValue)
+        public void UseItem(float verticalValue, float aimAxis)
         {
             if (verticalValue > 0.3f)
             {
-                UseItemForward();
+                UseItemForward(aimAxis);
             }
             else if (verticalValue < -0.3f)
             {
-                UseItemBackward();
+                UseItemBackward(aimAxis);
             }
             else
             {
-                kartInventory.ItemAction(Direction.Default);
+                kartInventory.ItemAction(Direction.Default, aimAxis);
             }
         }
 
-        public void UseItemForward()
+        public void UseItemForward(float aimAxis)
         {
-            kartInventory.ItemAction(Direction.Forward);
+            kartInventory.ItemAction(Direction.Forward, aimAxis);
         }
 
-        public void UseItemBackward()
+        public void UseItemBackward(float aimAxis)
         {
-            kartInventory.ItemAction(Direction.Backward);
+            kartInventory.ItemAction(Direction.Backward, aimAxis);
         }
 
         public void UseAbility(float xAxis, float yAxis)

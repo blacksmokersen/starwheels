@@ -50,7 +50,7 @@ namespace CameraUtils
                 _kartEvents.OnDriftBoostStart -= BoostCameraBehaviour;
                 _kartEvents.OnBackCameraStart -= BackCamera;
                 _kartEvents.OnBackCameraEnd -= BackCamera;
-                _kartEvents.OnCameraTurnStart -= TurnCamera;
+                //  _kartEvents.OnCameraTurnStart -= TurnCamera;
                 _kartEvents.OnCameraTurnReset -= CameraReset;
             }
 
@@ -61,15 +61,11 @@ namespace CameraUtils
             _kartEvents.OnDriftBoostStart += BoostCameraBehaviour;
             _kartEvents.OnBackCameraStart += BackCamera;
             _kartEvents.OnBackCameraEnd += BackCamera;
-            _kartEvents.OnCameraTurnStart += TurnCamera;
+            //  _kartEvents.OnCameraTurnStart += TurnCamera;
             _kartEvents.OnCameraTurnReset += CameraReset;
         }
 
-        public void IonBeamCameraControls(float horizontal, float vertical)
-        {
-            transposer.m_FollowOffset.z += horizontal * SpeedCamMovements * Time.deltaTime;
-            transposer.m_FollowOffset.x += vertical * SpeedCamMovements * Time.deltaTime;
-        }
+        #region CameraMovements
 
         public void BoostCameraBehaviour()
         {
@@ -106,31 +102,6 @@ namespace CameraUtils
             }
         }
 
-        public void IonBeamCameraBehaviour(bool direction)
-        {
-            if (direction)
-            {
-                if (cameraIonBeamBehaviour != null)
-                    StopCoroutine(cameraIonBeamBehaviour);
-                cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamExpand(0, 200, 1f));
-            }
-            else
-            {
-                AimAndFollow(true);
-                if (cameraIonBeamBehaviour != null)
-                    StopCoroutine(cameraIonBeamBehaviour);
-                cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(-8.5f, 3, 0.5f));
-            }
-        }
-
-        public void TurnCamera(float value)
-        {
-            if (Mathf.Abs(orbiter.m_XAxis.Value) >= 1f)
-                orbiter.m_RecenterToTargetHeading.m_enabled = true;
-            else
-                orbiter.m_RecenterToTargetHeading.m_enabled = false;
-        }
-
         public void CameraReset()
         {
             orbiter.m_XAxis.Value = 0;
@@ -150,6 +121,48 @@ namespace CameraUtils
             }
         }
 
+        #endregion
+
+        #region CameraTurn
+        /*
+        public void TurnCamera(float value)
+        {
+            if (Mathf.Abs(orbiter.m_XAxis.Value) >= 1f)
+                orbiter.m_RecenterToTargetHeading.m_enabled = true;
+            else
+                orbiter.m_RecenterToTargetHeading.m_enabled = false;
+        }
+        */
+        #endregion
+
+        #region IonBeamTemporary
+
+        public void IonBeamCameraControls(float horizontal, float vertical)
+        {
+            transposer.m_FollowOffset.z += horizontal * SpeedCamMovements * Time.deltaTime;
+            transposer.m_FollowOffset.x += vertical * SpeedCamMovements * Time.deltaTime;
+        }
+
+        public void IonBeamCameraBehaviour(bool direction)
+        {
+            if (direction)
+            {
+                if (cameraIonBeamBehaviour != null)
+                    StopCoroutine(cameraIonBeamBehaviour);
+                cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamExpand(0, 200, 1f));
+            }
+            else
+            {
+                AimAndFollow(true);
+                if (cameraIonBeamBehaviour != null)
+                    StopCoroutine(cameraIonBeamBehaviour);
+                cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(-8.5f, 3, 0.5f));
+            }
+        }
+
+        #endregion
+
+        #region IENumerator
         IEnumerator CameraIonBeamExpand(float endValueZ, float endValueY, float boostDuration)
         {
             float startDynamicCamValueZ = transposer.m_FollowOffset.z;
@@ -220,5 +233,6 @@ namespace CameraUtils
                     break;
             }
         }
+        #endregion
     }
 }
