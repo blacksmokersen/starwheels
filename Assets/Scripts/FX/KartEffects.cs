@@ -22,13 +22,13 @@ namespace FX
         {
             base.Awake();
             StopSmoke();
+            AimParticles.Stop(true);
 
             // Events
             kartEvents.OnJump += MainJumpParticlesEmit;
             kartEvents.OnDoubleJumpReset += ReloadJumpParticlesEmit;
 
             kartEvents.OnHealthLoss += HealthParticlesManagement;
-
             kartEvents.OnCameraTurnStart += AimEffects;
 
             kartEvents.OnDriftStart += StartSmoke;
