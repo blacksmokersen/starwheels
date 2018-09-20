@@ -15,6 +15,9 @@ namespace Items
         private KartEvents kartEvents;
         private KartHub karthub;
 
+        [Header("Sounds")]
+        public AudioSource LaunchSource;
+        public AudioSource ExplosionSource;
 
         private void Awake()
         {
@@ -41,7 +44,7 @@ namespace Items
             karthub.GetComponentInChildren<PlayerInputs>().enabled = false;
             cam.GetComponent<CinemachineDynamicScript>().enabled = false;
             cam.GetComponent<IonBeamCamera>().enabled = true;
-            StartCoroutine(DelayBeforeInputsChange(false));
+            StartCoroutine(DelayBeforeDisablePlayerInputs());
         }
 
 
@@ -49,28 +52,25 @@ namespace Items
         {
             Vector3 camPosition = cam.transposer.transform.position;
             GameObject IonBeam = PhotonNetwork.Instantiate("Items/" + "IonBeamLaser", new Vector3(camPosition.x, 0, camPosition.z), Quaternion.identity);
-            //  IonBeam.transform.position = cam.transposer.transform.position;
+            IonBeam.transform.position =  new Vector3(cam.transform.position.x, IonBeam.transform.position.y, cam.transform.position.z);
             cam.composer.enabled = true;
             cam.IonBeamCameraBehaviour(false);
-            StartCoroutine(DelayBeforeInputsChange(true));
+            StartCoroutine(DelayBeforeInputsChange());
         }
 
-        IEnumerator DelayBeforeInputsChange(bool disable)
+        IEnumerator DelayBeforeDisablePlayerInputs()
         {
-            if (disable)
-            {
-                yield return new WaitForSeconds(1);
-                karthub.GetComponentInChildren<PlayerInputs>().enabled = true;
-                cam.GetComponent<CinemachineDynamicScript>().enabled = true;
-                karthub.GetComponentInChildren<IonBeamInputs>().enabled = false;
-                cam.GetComponent<IonBeamCamera>().enabled = false;
-            }
-            else
-            {
-                yield return new WaitForSeconds(1);
-                karthub.GetComponentInChildren<IonBeamInputs>().enabled = true;
-            }
+            yield return new WaitForSeconds(1);
+            karthub.GetComponentInChildren<IonBeamInputs>().enabled = true;
+        }
 
+        IEnumerator DelayBeforeInputsChange()
+        {
+            yield return new WaitForSeconds(1);
+            karthub.GetComponentInChildren<PlayerInputs>().enabled = true;
+            cam.GetComponent<CinemachineDynamicScript>().enabled = true;
+            karthub.GetComponentInChildren<IonBeamInputs>().enabled = false;
+            cam.GetComponent<IonBeamCamera>().enabled = false;
         }
     }
 }

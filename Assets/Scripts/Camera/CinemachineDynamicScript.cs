@@ -9,22 +9,18 @@ namespace CameraUtils
     public class CinemachineDynamicScript : MonoBehaviour
     {
         [Range(8.5f, 15)] public float MaxDistanceCamInBoost;
-        public float SpeedCamMovements;
         public CinemachineTransposer transposer;
 
         [SerializeField] private float autoCenterTiming;
 
         private CinemachineVirtualCamera cinemachine;
         private Coroutine cameraBoostCoroutine;
-        private Coroutine cameraIonBeamBehaviour;
         private CinemachineComposer composer;
         private CinemachineOrbitalTransposer orbiter;
         private bool backCamActivated = false;
         private float currentTimer;
         private KartEngine _kartEngine;
         private KartEvents _kartEvents;
-
-        [SerializeField] private GameObject turnRotationPoint;
 
         private void Awake()
         {
@@ -134,74 +130,7 @@ namespace CameraUtils
         }
         */
         #endregion
-            /*
-        #region IonBeamTemporary
 
-        public void IonBeamCameraControls(float horizontal, float vertical)
-        {
-            transposer.m_FollowOffset.z += horizontal * SpeedCamMovements * Time.deltaTime;
-            transposer.m_FollowOffset.x += vertical * SpeedCamMovements * Time.deltaTime;
-        }
-
-        public void IonBeamCameraBehaviour(bool direction)
-        {
-            if (direction)
-            {
-                if (cameraIonBeamBehaviour != null)
-                    StopCoroutine(cameraIonBeamBehaviour);
-                cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamExpand(0, 200, 1f));
-            }
-            else
-            {
-                AimAndFollow(true);
-                if (cameraIonBeamBehaviour != null)
-                    StopCoroutine(cameraIonBeamBehaviour);
-                cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(-8.5f, 3, 0.5f));
-            }
-        }
-
-        #endregion
-
-        #region IENumerator
-        IEnumerator CameraIonBeamExpand(float endValueZ, float endValueY, float boostDuration)
-        {
-            float startDynamicCamValueZ = transposer.m_FollowOffset.z;
-            float startDynamicCamValueY = transposer.m_FollowOffset.y;
-
-            currentTimer = 0f;
-            while (currentTimer < boostDuration)
-            {
-                transposer.m_FollowOffset.z = Mathf.Lerp(startDynamicCamValueZ, endValueZ, currentTimer / boostDuration);
-                transposer.m_FollowOffset.y = Mathf.Lerp(startDynamicCamValueY, endValueY, currentTimer / boostDuration);
-                currentTimer += Time.deltaTime;
-                yield return null;
-            }
-            AimAndFollow(false);
-        }
-
-        IEnumerator CameraIonBeamReset(float returnValueZ, float returnValueY, float boostDuration)
-        {
-            float startDynamicCamValueX = transposer.m_FollowOffset.x;
-            float startDynamicCamValueZ = transposer.m_FollowOffset.z;
-            float startDynamicCamValueY = transposer.m_FollowOffset.y;
-
-            currentTimer = 0f;
-
-            while (currentTimer < boostDuration)
-            {
-                transposer.m_FollowOffset.x = Mathf.Lerp(startDynamicCamValueX, 0, currentTimer / boostDuration);
-                transposer.m_FollowOffset.z = Mathf.Lerp(startDynamicCamValueZ, returnValueZ, currentTimer / boostDuration);
-                transposer.m_FollowOffset.y = Mathf.Lerp(startDynamicCamValueY, returnValueY, currentTimer / boostDuration);
-                currentTimer += Time.deltaTime;
-                yield return null;
-            }
-            if (transposer.m_FollowOffset.y > returnValueY)
-            {
-                // Security for lack of precision of Time.deltaTime
-                cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(returnValueZ, returnValueY, 0.5f));
-            }
-        }
-        */
         IEnumerator CameraBoostBehaviour(float startValue, float endValue, float boostDuration)
         {
             float startDynamicCamValue = transposer.m_FollowOffset.z;
