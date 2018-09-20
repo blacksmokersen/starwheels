@@ -51,7 +51,6 @@ namespace Abilities
         public void SetOwner(Transform owner)
         {
             _owner = owner;
-            _lineRenderer.SetPosition(0, owner.position);
         }
 
         // PRIVATE
