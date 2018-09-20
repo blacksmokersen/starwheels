@@ -18,7 +18,6 @@ namespace Items
 
         [Header("Sounds")]
         public AudioSource LaunchSource;
-        public AudioSource ExplosionSource;
 
         private void Awake()
         {
@@ -48,7 +47,6 @@ namespace Items
             StartCoroutine(DelayBeforeDisablePlayerInputs());
         }
 
-
         public void FireIonBeam()
         {
             if (!_isFiring)
@@ -56,6 +54,7 @@ namespace Items
                 Vector3 camPosition = cam.transposer.transform.position;
                 GameObject IonBeam = PhotonNetwork.Instantiate("Items/" + "IonBeamLaser", new Vector3(camPosition.x, 0, camPosition.z), Quaternion.identity);
                 IonBeam.transform.position = new Vector3(cam.transform.position.x, IonBeam.transform.position.y, cam.transform.position.z);
+                MyExtensions.Audio.PlayClipObjectAndDestroy(LaunchSource);
                 cam.composer.enabled = true;
                 cam.IonBeamCameraBehaviour(false);
                 StartCoroutine(DelayBeforeInputsChange());

@@ -16,6 +16,8 @@ public class IonBeamLaserBehaviour : MonoBehaviour
     public GameObject EffectiveAOE;
     public GameObject WarningPosition;
 
+    public AudioSource ExplosionSource;
+
     private void Awake()
     {
         onExplode = true;
@@ -70,10 +72,11 @@ public class IonBeamLaserBehaviour : MonoBehaviour
     IEnumerator ParticuleEffect()
     {
         GetComponent<ParticleSystem>().Emit(3000);
+        MyExtensions.Audio.PlayClipObjectAndDestroy(ExplosionSource);
         DamagePlayer = true;
         yield return new WaitForSeconds(0.1f);
         DamagePlayer = false;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         Destroy(gameObject);
     }
 
