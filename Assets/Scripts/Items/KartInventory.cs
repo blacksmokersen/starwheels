@@ -120,26 +120,6 @@ namespace Items
             ResetLottery();
         }
 
-        private void UseStack(Direction direction)
-        {
-            if (IsEmpty()) return;
-
-            ItemBehaviour itemObj;
-            var obj = PhotonNetwork.Instantiate("Items/" + Item.ItemPrefab.name, new Vector3(0, -10, 0), Quaternion.identity, 0);
-            itemObj = obj.GetComponent<ItemBehaviour>();
-            itemObj.Spawn(this, direction);
-            itemObj.ItemData = Item;
-
-            if (--Count == 0)
-            {
-                Item = null;
-                kartEvents.OnItemGet(null);
-            }
-
-            kartEvents.OnItemUse(Item);
-            kartEvents.OnItemCountChange(Count);
-        }
-
         private void ResetLottery()
         {
             _lotteryTimer = 0f;

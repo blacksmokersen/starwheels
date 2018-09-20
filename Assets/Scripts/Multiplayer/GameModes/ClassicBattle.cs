@@ -132,6 +132,8 @@ namespace GameModes
 
             _endGameMenu.SetActive(true);
             _endGameMenu.GetComponent<Menu.GameOverMenu>().SetWinnerTeam(WinnerTeam);
+
+            GameModeEvents.Instance.OnGameEnd(WinnerTeam);
         }
     }
 }
