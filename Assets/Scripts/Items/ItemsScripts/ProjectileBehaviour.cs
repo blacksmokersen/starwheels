@@ -3,6 +3,7 @@ using Kart;
 using System.Collections;
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
+using Photon.Realtime;
 
 namespace Items
 {
@@ -130,7 +131,8 @@ namespace Items
                 {
                     if (!IsOwner(kartCollisionObject))
                     {
-                        SendOwnerSuccessfulHitEvent();
+                        var target = kartCollisionObject.GetComponentInParent<PhotonView>().Owner;
+                        SendOwnerSuccessfulHitEvent(target);
                         // TODO: Do this cleaner :)
                         owner.gameObject.GetComponentInParent<KartHub>().GetComponentInChildren<KartGameMode>().IncreaseScore();
                     }
@@ -168,9 +170,10 @@ namespace Items
             return otherTeam == photonView.Owner.GetTeam() && !IsOwner(other);
         }
 
-        private void SendOwnerSuccessfulHitEvent()
+        private void SendOwnerSuccessfulHitEvent(Player target)
         {
-            //owner.gameObject.GetComponentInParent<KartEvents>().HitSomeoneElse();
+            var ownerEvents = owner.gameObject.GetComponentInParent<KartEvents>();
+            if (ownerEvents != null) ownerEvents.OnHitSomeoneElse(target);
         }
 
         private void SendTargetOnHitEvent(GameObject kartCollisionObject)

@@ -2,6 +2,7 @@
 using System;
 using Items;
 using Photon.Pun;
+using Photon.Realtime;
 
 namespace Kart
 {
@@ -15,7 +16,7 @@ namespace Kart
         // Game
         public Action OnHit;
         public Action OnHitRecover;
-        public Action HitSomeoneElse;
+        public Action<Player> OnHitSomeoneElse;
         public Action<int> OnHealthLoss;
         public Action OnKartDestroyed;
 

@@ -91,6 +91,10 @@ namespace Controls
             {
                 ReplaceAbility().AddComponent<AbilityJump>();
             }
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                ReplaceAbility().AddComponent<AbilityHook>();
+            }
         }
 
         // PUBLIC

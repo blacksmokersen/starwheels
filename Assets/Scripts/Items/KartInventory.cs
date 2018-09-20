@@ -6,6 +6,8 @@ namespace Items
 {
     public class KartInventory : BaseKartComponent
     {
+        private static ItemListData itemsList;
+
         [Header("Inventory")]
         [SerializeField] public ItemData Item;
         [SerializeField] public int Count;
@@ -21,13 +23,22 @@ namespace Items
         {
             base.Awake();
 
-            kartEvents.OnItemBoxGet += () => {
+            photonView = GetComponent<PhotonView>();
+            itemsList = Resources.Load<ItemListData>("Data/ItemList");
+
+            kartEvents.OnItemBoxGet += () =>
+            {
                 if (photonView.IsMine || !PhotonNetwork.IsConnected)
-                    StartCoroutine(GetLotteryItem());
+                    StartItemLottery();
             };
         }
 
         // PUBLIC
+
+        public void StartItemLottery()
+        {
+            StartCoroutine(GetLotteryItem());
+        }
 
         public bool IsEmpty()
         {
@@ -49,21 +60,20 @@ namespace Items
 
         public void SetItem(ItemData item, int count)
         {
-            Item = item;
-            Count = count;
-
-            kartEvents.OnItemGet(Item);
-            kartEvents.OnItemCountChange(Count);
+            int itemIndex = itemsList.GetItemDataIndex(item);
+            photonView.RPC("RPCSetItem", RpcTarget.AllBufferedViaServer, itemIndex, count);
         }
 
         public void SetItem(ItemData item)
         {
-            SetItem(item, item.Count);
+            int itemIndex = itemsList.GetItemDataIndex(item);
+            photonView.RPC("RPCSetItem", RpcTarget.AllBufferedViaServer, itemIndex, item.Count);
         }
 
         public void SetCount(int count)
         {
-            SetItem(Item, count);
+            int itemIndex = itemsList.GetItemDataIndex(Item);
+            photonView.RPC("RPCSetItem", RpcTarget.AllBufferedViaServer, itemIndex, count);
         }
 
         // PRIVATE
@@ -115,6 +125,16 @@ namespace Items
             _lotteryTimer = 0f;
             _lotteryStarted = false;
             _shortenLottery = false;
+        }
+
+        [PunRPC]
+        private void RPCSetItem(int itemDataIndex, int count)
+        {
+            Item = itemDataIndex == -1 ? null : itemsList.Items[itemDataIndex];
+            if(kartEvents.OnItemGet != null) kartEvents.OnItemGet(Item);
+
+            Count = count;
+            if(kartEvents.OnItemCountChange != null) kartEvents.OnItemCountChange(Count);
         }
     }
 }
