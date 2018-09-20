@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 4994627475318056}
   - component: {fileID: 114148066816190712}
   - component: {fileID: 65356133436487720}
+  - component: {fileID: 54099869994470928}
   m_Layer: 0
   m_Name: ItemBox
   m_TagString: ItemBox
@@ -271,6 +272,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1864691968933084}
   m_Mesh: {fileID: 4300002, guid: e298da21437f2924a84005c80be7731e, type: 3}
+--- !u!54 &54099869994470928
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1946180194658622}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!65 &65356133436487720
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -295,6 +311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemSphere: {fileID: 1150503316115428}
+  cooldown: 2
 --- !u!198 &198005028829093252
 ParticleSystem:
   m_ObjectHideFlags: 1

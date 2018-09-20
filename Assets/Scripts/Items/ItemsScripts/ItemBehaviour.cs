@@ -10,6 +10,7 @@ namespace Items
      */
     public class ItemBehaviour : MonoBehaviourPun
     {
+        public ItemData ItemData;
         public virtual void Spawn(KartInventory kart, Direction direction,float aimAxis)
         { }
 

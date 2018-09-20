@@ -4,6 +4,7 @@
     public class Layer
     {
         public const string Ground = "Ground";
+        public const string Kart = "Kart";
     }
 
     // Tags
@@ -55,5 +56,6 @@
     {
         public const string RoomPlayer = "Menu/RoomPlayer";
         public const string EndGameMenu = "Menu/EndGameMenu";
+        public const string HookObject = "Items/Hook";
     }
 }
