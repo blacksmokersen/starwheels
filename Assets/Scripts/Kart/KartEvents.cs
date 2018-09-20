@@ -34,6 +34,11 @@ namespace Kart
         public Action<Direction> OnDoubleJump;
         public Action OnDoubleJumpReset;
 
+        // IonBeam
+        public Action OnIonBeamActivated;
+        public Action OnIonBeamFire;
+        public Action OnIonBeamDisactivated;
+
         // Drifting
         public Action OnDriftStart;
         public Action OnDriftLeft;

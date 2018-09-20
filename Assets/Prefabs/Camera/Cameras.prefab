@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 114178455221078388}
   - component: {fileID: 114769727691753222}
   - component: {fileID: 114246949737927122}
+  - component: {fileID: 114234007728769194}
   m_Layer: 0
   m_Name: PlayerCamera
   m_TagString: Untagged
@@ -571,6 +572,21 @@ MonoBehaviour:
   m_SoftZoneHeight: 0.8
   m_BiasX: 0
   m_BiasY: 0
+--- !u!114 &114234007728769194
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1421337181609992}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd27ffb076282ea4596eb31f02315847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpeedCamMovements: 100
+  transposer: {fileID: 0}
+  composer: {fileID: 0}
+  crosshairIonBeam: {fileID: 2800000, guid: 93f5d256aa561204eb5055ec10541980, type: 3}
 --- !u!114 &114246949737927122
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -924,7 +940,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxDistanceCamInBoost: 10
-  SpeedCamMovements: 5
   transposer: {fileID: 0}
   autoCenterTiming: 1
-  turnRotationPoint: {fileID: 0}

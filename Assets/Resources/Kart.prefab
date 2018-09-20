@@ -934,6 +934,7 @@ GameObject:
   - component: {fileID: 4351266685654064}
   - component: {fileID: 114368943646048412}
   - component: {fileID: 114154857888813766}
+  - component: {fileID: 114989300924111792}
   - component: {fileID: 114410132016351836}
   - component: {fileID: 114730418989685460}
   m_Layer: 11
@@ -5792,6 +5793,7 @@ MonoBehaviour:
   MainJumpParticles: {fileID: 198993758412139186}
   JumpReloadParticles: {fileID: 198993758412139186}
   AimParticles: {fileID: 198503879876762998}
+  aimEffectAngle: 45
 --- !u!114 &114539492184620100
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5968,6 +5970,17 @@ MonoBehaviour:
   RequiredSpeedToDrift: 12
   ForwardMaxAngle: 45
   BackMaxAngle: -30
+--- !u!114 &114989300924111792
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1589234044636570}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dadcbddcdd072e4caa827b3c6aa84e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!124 &124059220799982334
 Behaviour:
   m_ObjectHideFlags: 1
@@ -19754,7 +19767,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.13
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -19807,7 +19820,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 50
+      scalar: 100
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -19923,7 +19936,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 0.3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -20448,7 +20461,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 200
+      scalar: 100
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -23397,7 +23410,7 @@ ParticleSystem:
         m_RotationOrder: 4
     maxLights: 20
   TrailModule:
-    enabled: 0
+    enabled: 1
     mode: 0
     ratio: 1
     lifetime:
@@ -23529,7 +23542,7 @@ ParticleSystem:
     widthOverTrail:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -42699,7 +42712,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: be605f62a6e1e024ea292a4801152027, type: 2}
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 4a9c103deeee25d4cbefddb1df2f63d0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
