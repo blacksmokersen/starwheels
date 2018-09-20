@@ -55,20 +55,21 @@ public class IonBeamLaserBehaviour : MonoBehaviour
         float IncreaseSpeed = growSpeed * Time.deltaTime;
         WarningPosition.transform.localScale += new Vector3(-IncreaseSpeed, 0, -IncreaseSpeed);
     }
+
     public void Explosion()
     {
         if (onExplode)
         {
             Destroy(EffectiveAOE);
             Destroy(WarningPosition);
-            StartCoroutine("ParticuleEffect");
+            StartCoroutine(ParticuleEffect());
             onExplode = false;
         }
     }
 
     IEnumerator ParticuleEffect()
     {
-        GetComponent<ParticleSystem>().Emit(5000);
+        GetComponent<ParticleSystem>().Emit(3000);
         DamagePlayer = true;
         yield return new WaitForSeconds(0.1f);
         DamagePlayer = false;
