@@ -14,6 +14,7 @@ namespace Items
         public IonBeamCamera cam;
         private KartEvents kartEvents;
         private KartHub karthub;
+        private bool _isFiring = false;
 
         [Header("Sounds")]
         public AudioSource LaunchSource;
@@ -50,12 +51,16 @@ namespace Items
 
         public void FireIonBeam()
         {
-            Vector3 camPosition = cam.transposer.transform.position;
-            GameObject IonBeam = PhotonNetwork.Instantiate("Items/" + "IonBeamLaser", new Vector3(camPosition.x, 0, camPosition.z), Quaternion.identity);
-            IonBeam.transform.position =  new Vector3(cam.transform.position.x, IonBeam.transform.position.y, cam.transform.position.z);
-            cam.composer.enabled = true;
-            cam.IonBeamCameraBehaviour(false);
-            StartCoroutine(DelayBeforeInputsChange());
+            if (!_isFiring)
+            {
+                Vector3 camPosition = cam.transposer.transform.position;
+                GameObject IonBeam = PhotonNetwork.Instantiate("Items/" + "IonBeamLaser", new Vector3(camPosition.x, 0, camPosition.z), Quaternion.identity);
+                IonBeam.transform.position = new Vector3(cam.transform.position.x, IonBeam.transform.position.y, cam.transform.position.z);
+                cam.composer.enabled = true;
+                cam.IonBeamCameraBehaviour(false);
+                StartCoroutine(DelayBeforeInputsChange());
+                _isFiring = true;
+            }
         }
 
         IEnumerator DelayBeforeDisablePlayerInputs()
@@ -71,6 +76,7 @@ namespace Items
             cam.GetComponent<CinemachineDynamicScript>().enabled = true;
             karthub.GetComponentInChildren<IonBeamInputs>().enabled = false;
             cam.GetComponent<IonBeamCamera>().enabled = false;
+            Destroy(gameObject);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Kart;
 
 public class IonBeamLaserBehaviour : MonoBehaviour
 {
@@ -71,17 +72,21 @@ public class IonBeamLaserBehaviour : MonoBehaviour
         DamagePlayer = true;
         yield return new WaitForSeconds(0.1f);
         DamagePlayer = false;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         Destroy(gameObject);
-
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other != null)
+        if (other.gameObject != null)
         {
             if(DamagePlayer)
-            other.GetComponentInParent<Kart.KartHealthSystem>().HealthLoss();
+                SendTargetOnHitEvent(other.gameObject);
         }
+    }
+
+    private void SendTargetOnHitEvent(GameObject kartCollision)
+    {
+        kartCollision.gameObject.gameObject.GetComponentInParent<KartEvents>().CallRPC("OnHit");
     }
 }
