@@ -134,7 +134,7 @@ namespace CameraUtils
         }
         */
         #endregion
-
+            /*
         #region IonBeamTemporary
 
         public void IonBeamCameraControls(float horizontal, float vertical)
@@ -201,7 +201,7 @@ namespace CameraUtils
                 cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(returnValueZ, returnValueY, 0.5f));
             }
         }
-
+        */
         IEnumerator CameraBoostBehaviour(float startValue, float endValue, float boostDuration)
         {
             float startDynamicCamValue = transposer.m_FollowOffset.z;
@@ -233,6 +233,5 @@ namespace CameraUtils
                     break;
             }
         }
-        #endregion
     }
 }
