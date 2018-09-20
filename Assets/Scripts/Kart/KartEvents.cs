@@ -30,10 +30,10 @@ namespace Kart
         public Action OnItemBoxGet;
         public Action OnLotteryStop;
 
-        // Jumping Capacity
-        public Action OnJump;
+        // Abilities
+        public Action OnAbilityUse;
         public Action<Direction> OnDoubleJump;
-        public Action OnDoubleJumpReset;
+        public Action OnAbilityReset;
 
         // IonBeam
         public Action OnIonBeamActivated;
@@ -60,9 +60,8 @@ namespace Kart
 
         // RPCs
         [PunRPC] public void RPCOnHit() { OnHit(); }
-        [PunRPC] public void RPCOnJump() { OnJump(); }
+        [PunRPC] public void RPCOnJump() { OnAbilityUse(); }
         [PunRPC] public void RPCOnDoubleJump(Direction direction) { OnDoubleJump(direction); }
-
         [PunRPC] public void RPCOnDriftStart() { OnDriftStart(); }
         [PunRPC] public void RPCOnDriftWhite() { OnDriftWhite(); }
         [PunRPC] public void RPCOnDriftOrange() { OnDriftOrange(); }

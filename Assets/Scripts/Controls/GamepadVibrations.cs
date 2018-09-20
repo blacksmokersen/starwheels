@@ -12,7 +12,7 @@ namespace Controls
         {
             base.Awake();
 
-            kartEvents.OnJump += MediumVibration;
+            kartEvents.OnAbilityUse += MediumVibration;
             kartEvents.OnDoubleJump += (a) => MediumVibration();
             kartEvents.OnItemUse += (a) => SmallVibration();
         }

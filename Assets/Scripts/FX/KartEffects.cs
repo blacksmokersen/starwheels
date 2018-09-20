@@ -12,7 +12,7 @@ namespace FX
         [Space(10)]
         [Header("Particles")]
         public ParticleSystem MainJumpParticles;
-        public ParticleSystem JumpReloadParticles;
+        public ParticleSystem AbilityReloadParticles;
         public ParticleSystem AimParticles;
 
         private int numberOfParticles = 300;
@@ -25,8 +25,8 @@ namespace FX
             AimParticles.Stop(true);
 
             // Events
-            kartEvents.OnJump += MainJumpParticlesEmit;
-            kartEvents.OnDoubleJumpReset += ReloadJumpParticlesEmit;
+            kartEvents.OnAbilityUse += MainJumpParticlesEmit;
+            kartEvents.OnAbilityReset += ReloadAbilityParticlesEmit;
 
             kartEvents.OnHealthLoss += HealthParticlesManagement;
             kartEvents.OnCameraTurnStart += AimEffects;
@@ -80,9 +80,9 @@ namespace FX
             MainJumpParticles.Emit(numberOfParticles);
         }
 
-        public void ReloadJumpParticlesEmit()
+        public void ReloadAbilityParticlesEmit()
         {
-            //  JumpReloadParticles.Emit(numberOfParticles);
+            AbilityReloadParticles.Emit(numberOfParticles);
         }
 
         public void SetWheelsColor(Color color)
