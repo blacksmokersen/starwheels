@@ -1,7 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System;
 using Tools;
+using Photon.Pun;
 
 
 
@@ -12,7 +13,8 @@ namespace drift
 
     [RequireComponent(typeof(GroundCondition))]
     [RequireComponent(typeof(Rigidbody))]
-    public class Drift : MonoBehaviour, IControllable
+    [RequireComponent(typeof(PhotonView))]
+    public class Drift : MonoBehaviourPun, IControllable
     {
         public DriftSettings Settings;
         public const float JoystickDeadZone1 = 0.1f;
@@ -26,9 +28,20 @@ namespace drift
         private Rigidbody _rigidBody;
         private GroundCondition _groundCondition;
 
+        public Action OnDriftStart;
+        public Action OnDriftLeft;
+        public Action OnDriftRight;
+        public Action OnDriftWhite;
+        public Action OnDriftOrange;
+        public Action OnDriftRed;
+        public Action OnDriftEnd;
+        public Action OnDriftReset;
+
+
         public TurnState TurningState = TurnState.NotTurning;
         public TurnState DriftTurnState = TurnState.NotTurning;
         public DriftState DriftState = DriftState.NotDrifting;
+
 
         private void Awake()
         {
@@ -91,15 +104,15 @@ namespace drift
 
             ResetDrift();
 
-            kartEvents.CallRPC("OnDriftStart");
+            CallRPC("OnDriftStart");
 
             if (angle < 0)
             {
-                kartEvents.OnDriftLeft();
+                OnDriftLeft();
             }
             if (angle > 0)
             {
-                kartEvents.OnDriftRight();
+                OnDriftRight();
             }
 
             EnterNextState();
@@ -119,14 +132,14 @@ namespace drift
                 ResetDrift();
             }
 
-            kartEvents.CallRPC("OnDriftEnd");
+            CallRPC("OnDriftEnd");
         }
 
 
 
         public void ResetDrift()
         {
-            kartEvents.CallRPC("OnDriftReset");
+            CallRPC("OnDriftReset");
 
             _driftedLongEnough = false;
             if (_driftedLongEnoughTimer != null)
@@ -166,13 +179,13 @@ namespace drift
             switch (DriftState)
             {
                 case DriftState.NotDrifting:
-                    kartEvents.CallRPC("OnDriftWhite");
+                    CallRPC("OnDriftWhite");
                     break;
                 case DriftState.White:
-                    kartEvents.CallRPC("OnDriftOrange");
+                    CallRPC("OnDriftOrange");
                     break;
                 case DriftState.Orange:
-                    kartEvents.CallRPC("OnDriftRed");
+                    CallRPC("OnDriftRed");
                     break;
                 case DriftState.Red:
                     break;
@@ -215,11 +228,22 @@ namespace drift
             _driftedLongEnough = true;
         }
 
-
-
         public void MapInputs()
         {
             DriftTurns(Input.GetAxis(Constants.Input.TurnAxis));
+        }
+
+
+        [PunRPC] public void RPCOnDriftStart() { OnDriftStart(); }
+        [PunRPC] public void RPCOnDriftWhite() { OnDriftWhite(); }
+        [PunRPC] public void RPCOnDriftOrange() { OnDriftOrange(); }
+        [PunRPC] public void RPCOnDriftRed() { OnDriftRed(); }
+        [PunRPC] public void RPCOnDriftEnd() { OnDriftEnd(); }
+        [PunRPC] public void RPCOnDriftReset() { OnDriftReset(); }
+
+        public void CallRPC(string onAction, params object[] parameters)
+        {
+            photonView.RPC("RPC" + onAction, RpcTarget.All, parameters);
         }
     }
 }

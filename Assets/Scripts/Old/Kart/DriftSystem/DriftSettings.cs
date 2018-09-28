@@ -15,7 +15,7 @@ public class DriftSettings : ScriptableObject
 
     [Header("Time")]
     [Range(0, 10)] public float TimeBetweenDrifts;
-    [Range(0, 10)] public float BoostDuration;
+    [Range(0, 100)] public float RequiredSpeedToDrift = 12f;
 
     [Header("Angles")]
     [Range(0, 90)] public float ForwardMaxAngle;
