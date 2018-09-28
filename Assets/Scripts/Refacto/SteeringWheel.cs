@@ -2,7 +2,6 @@
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(GroundCondition))]
 public class SteeringWheel : MonoBehaviour
 {
     public enum TurnState { NotTurning, Left, Right }
@@ -14,18 +13,19 @@ public class SteeringWheel : MonoBehaviour
     public TurnState TurningState = TurnState.NotTurning;
     public bool InverseDirections = false;
 
+    [Tooltip("This is an optional field to make turn possible only if grounded.")]
+    public GroundCondition _groundCondition;
+
     [Header("Events")]
     public UnityEvent<TurnState> OnTurn;
 
     private Rigidbody _rb;
-    private GroundCondition _groundCondition;
 
     // CORE
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        _groundCondition = GetComponent<GroundCondition>();
     }
 
     // PUBLIC
@@ -33,9 +33,17 @@ public class SteeringWheel : MonoBehaviour
     public void TurnUsingTorque(float turnValue)
     {
         SetTurnState(turnValue);
-        if (_groundCondition.Grounded)
+        if (_groundCondition != null)
         {
-            _rb.AddRelativeTorque(Vector3.up  * turnValue * Settings.TurnTorque, ForceMode.Force);
+            if (_groundCondition.Grounded)
+            {
+                _rb.AddRelativeTorque(Vector3.up * turnValue * Settings.TurnTorque, ForceMode.Force);
+                OnTurn.Invoke(TurningState);
+            }
+        }
+        else
+        {
+            _rb.AddRelativeTorque(Vector3.up * turnValue * Settings.TurnTorque, ForceMode.Force);
             OnTurn.Invoke(TurningState);
         }
     }

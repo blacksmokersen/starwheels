@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Kart Settings/Engine")]
 public class EngineSettings : ScriptableObject
 {
     public float Speed;

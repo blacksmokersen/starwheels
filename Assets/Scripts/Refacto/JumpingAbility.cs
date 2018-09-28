@@ -1,14 +1,22 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
+[RequireComponent(typeof(Rigidbody))]
 public class JumpingAbility : MonoBehaviour, IControllable
 {
+    [Header("Events")]
+    public UnityEvent OnFirstJump;
+    public UnityEvent OnSecondJump;
+
     [Header("Forces")]
     public JumpingAbilitySettings Settings;
 
+    [SerializeField] private GroundCondition groundCondition;
+
     private Rigidbody _rb;
-    private bool _canUseAbility;
-    private bool _hasDoneFirstJump;
+    private bool _canUseAbility = true;
+    private bool _hasDoneFirstJump = false;
 
     // CORE
 
@@ -17,7 +25,7 @@ public class JumpingAbility : MonoBehaviour, IControllable
         _rb = GetComponent<Rigidbody>();
 	}
 
-	void FixedUpdate ()
+	private void FixedUpdate ()
     {
         MapInputs();
 	}
@@ -28,6 +36,7 @@ public class JumpingAbility : MonoBehaviour, IControllable
     {
         _rb.AddRelativeForce(Vector3.up * Settings.FirstJumpForce, ForceMode.Impulse);
         _hasDoneFirstJump = true;
+        OnFirstJump.Invoke();
     }
 
     public void SecondJump(JoystickValues joystickValues)
@@ -47,6 +56,7 @@ public class JumpingAbility : MonoBehaviour, IControllable
         var forceUp = Vector3.up * Settings.SecondJumpUpForce;
         var forceDirectional = direction * Settings.SecondJumpLateralForces;
         _rb.AddRelativeForce(forceUp + forceDirectional, ForceMode.Impulse);
+        OnSecondJump.Invoke();
     }
 
     public  void MapInputs()

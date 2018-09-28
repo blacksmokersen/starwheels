@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Kart Settings/JumpingAbility")]
 public class JumpingAbilitySettings : ScriptableObject
 {
     [Header("Jump forces")]

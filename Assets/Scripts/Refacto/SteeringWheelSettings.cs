@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class SteeringWheelSettings : MonoBehaviour
+[CreateAssetMenu(menuName = "Kart Settings/SteeringWheel")]
+public class SteeringWheelSettings : ScriptableObject
 {
     public float TurnTorque;
 }
