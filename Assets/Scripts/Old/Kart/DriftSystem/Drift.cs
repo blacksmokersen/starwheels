@@ -47,6 +47,17 @@ namespace drift
         {
             _rigidBody = GetComponent<Rigidbody>();
             _groundCondition = GetComponent<GroundCondition>();
+
+
+            OnDriftLeft += () => DriftTurnState = TurnState.Left;
+            OnDriftRight += () => DriftTurnState = TurnState.Right;
+
+            OnDriftWhite += () => DriftState = DriftState.White;
+            OnDriftOrange += () => DriftState = DriftState.Orange;
+            OnDriftRed += () => DriftState = DriftState.Red;
+
+            OnDriftReset += () => DriftTurnState = TurnState.NotTurning;
+            OnDriftReset += () => DriftState = DriftState.NotDrifting;
         }
 
         public void DriftTurns(float turnValue)

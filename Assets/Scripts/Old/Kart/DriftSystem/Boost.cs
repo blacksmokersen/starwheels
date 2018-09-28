@@ -21,6 +21,9 @@ namespace Tools
         private void Awake()
         {
             _rigidBody = GetComponent<Rigidbody>();
+
+            OnDriftBoostStart += () => DriftTurnState = TurnState.NotTurning;
+            OnDriftBoostStart += () => DriftState = DriftState.Turbo;
         }
 
         private void StartTurbo()
@@ -38,7 +41,7 @@ namespace Tools
 
             CallRPC("OnDriftBoostStart");
             yield return new WaitForSeconds(Settings.BoostDuration);
-            ResetDrift(); // LANCER EVENT RESET DRIFT ???
+          //  ResetDrift(); // LANCER EVENT RESET DRIFT ???
             CallRPC("OnDriftBoostEnd");
         }
 

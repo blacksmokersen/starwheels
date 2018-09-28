@@ -903,6 +903,9 @@ GameObject:
   - component: {fileID: 114475196102562330}
   - component: {fileID: 114098388412132924}
   - component: {fileID: 114032499753766224}
+  - component: {fileID: 114450341963224902}
+  - component: {fileID: 114780444297581046}
+  - component: {fileID: 114978214787279948}
   m_Layer: 11
   m_Name: Kart
   m_TagString: Kart
@@ -5603,8 +5606,8 @@ MonoBehaviour:
   Synchronization: 0
   OwnershipTransfer: 0
   ObservedComponents: []
-  viewIdField: 0
-  InstantiationId: -1
+  viewIdField: 3
+  InstantiationId: 3
   isRuntimeInstantiated: 0
 --- !u!114 &114096441772208902
 MonoBehaviour:
@@ -5738,8 +5741,8 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 114032499753766224}
-  viewIdField: 4
-  InstantiationId: 4
+  viewIdField: 5
+  InstantiationId: 5
   isRuntimeInstantiated: 0
 --- !u!114 &114112653764666390
 MonoBehaviour:
@@ -5804,8 +5807,8 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 114539492184620100}
-  viewIdField: 3
-  InstantiationId: 3
+  viewIdField: 2
+  InstantiationId: 2
   isRuntimeInstantiated: 0
 --- !u!114 &114199671440468058
 MonoBehaviour:
@@ -5861,6 +5864,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaddb6dc064490b4c9461bc9664ef0f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114450341963224902
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1571014680455984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 594c6882b5bbd91478d85d258ca8d1d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Settings: {fileID: 11400000, guid: 2766024045128a4499267de9e44728d7, type: 2}
+  TurningState: 0
+  DriftTurnState: 0
+  DriftState: 0
 --- !u!114 &114475196102562330
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6078,8 +6096,8 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 0}
-  viewIdField: 2
-  InstantiationId: 2
+  viewIdField: 4
+  InstantiationId: 4
   isRuntimeInstantiated: 0
 --- !u!114 &114738576795421352
 MonoBehaviour:
@@ -6092,6 +6110,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa1bbb5767b323a4f9e63229f907f117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114780444297581046
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1571014680455984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afe30461f0462f84c92a2c24db7f6d21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Grounded: 0
+  DistanceForGrounded: 0
 --- !u!114 &114864825025773762
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6128,13 +6159,25 @@ MonoBehaviour:
   FrontWheelRight: {fileID: 1495586901813842}
   BackWheelsLeft: {fileID: 1636491680669860}
   BackWheelsRight: {fileID: 1636491680669860}
---- !u!114 &114979250873304534
+--- !u!114 &114978214787279948
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1571014680455984}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec636cc443810e64da039854e7761c11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Settings: {fileID: 11400000, guid: c599c944b5b41b446ab1e3ef29a19b81, type: 2}
+--- !u!114 &114979250873304534
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1571014680455984}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53e2b588a92dea146a0a40783d2a81c2, type: 3}
   m_Name: 
