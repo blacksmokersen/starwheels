@@ -6,9 +6,9 @@ public class Stabilizator : MonoBehaviour
 
     public void StabilizeRotation()
     {
-        var actualRotation = transform.parent.localRotation;
+        var actualRotation = transform.localRotation;
         actualRotation.x = Mathf.Lerp(actualRotation.x, 0, RotationStabilizationSpeed);
         actualRotation.z = Mathf.Lerp(actualRotation.z, 0, RotationStabilizationSpeed);
-        transform.parent.localRotation = actualRotation;
+        transform.localRotation = actualRotation;
     }
 }

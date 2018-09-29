@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 public class Engine : MonoBehaviour, IControllable
 {
     [Header("Forces")]
@@ -10,7 +9,7 @@ public class Engine : MonoBehaviour, IControllable
 
 	private void Awake ()
     {
-        _rb = GetComponent<Rigidbody>();
+        _rb = GetComponentInParent<Rigidbody>();
 	}
 
 	private void FixedUpdate ()

@@ -4,4 +4,5 @@
 public class SteeringWheelSettings : ScriptableObject
 {
     public float TurnTorque;
+    public float SlowdownTurnValue;
 }

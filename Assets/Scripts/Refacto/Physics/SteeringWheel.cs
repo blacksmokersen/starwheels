@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(Rigidbody))]
 public class SteeringWheel : MonoBehaviour
 {
     public enum TurnState { NotTurning, Left, Right }
@@ -19,13 +18,13 @@ public class SteeringWheel : MonoBehaviour
     [Header("Events")]
     public UnityEvent<TurnState> OnTurn;
 
-    private Rigidbody _rb;
+    public Rigidbody _rb;
 
     // CORE
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody>();
+        _rb = GetComponentInParent<Rigidbody>();
     }
 
     // PUBLIC
@@ -50,7 +49,16 @@ public class SteeringWheel : MonoBehaviour
 
     // PRIVATE
 
-    public void SetTurnState(float turnValue)
+    private void TurnSlowDown(float turnAxis)
+    {
+        if (TurningState != TurnState.NotTurning) // && PlayerVelocity > CapSpeedInTurn)
+        {
+            float slowdownForce = Settings.SlowdownTurnValue * -Mathf.Abs(turnAxis);
+            _rb.AddForce(transform.forward * slowdownForce);
+        }
+    }
+
+    private void SetTurnState(float turnValue)
     {
         if (turnValue > 0)
         {

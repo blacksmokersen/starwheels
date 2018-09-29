@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 public class CustomDrag : MonoBehaviour
 {
     public float Drag;
@@ -12,7 +11,7 @@ public class CustomDrag : MonoBehaviour
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody>();
+        _rb = GetComponentInParent<Rigidbody>();
     }
 
     public void SetCustomDrag()
