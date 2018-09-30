@@ -65,7 +65,7 @@ namespace Controls
             }
             if (Input.GetButtonDown(Constants.Input.Drift))
             {
-                kartHub.InitializeDrift(Input.GetAxis(Constants.Input.TurnAxis));
+              //  kartHub.InitializeDrift(Input.GetAxis(Constants.Input.TurnAxis));
             }
             if (Input.GetButtonDown(Constants.Input.UseItem))
             {
@@ -93,17 +93,19 @@ namespace Controls
 
         private void ButtonsPressed()
         {
+            /*
             if (Input.GetButton(Constants.Input.Drift))
             {
                 kartHub.DriftTurns(Input.GetAxis(Constants.Input.TurnAxis));
             }
+            */
         }
 
         private void ButtonsUp()
         {
             if (Input.GetButtonUp(Constants.Input.Drift))
             {
-                kartHub.StopDrift();
+             //   kartHub.StopDrift();
             }
             if (Input.GetButtonUp(Constants.Input.BackCamera))
             {

@@ -399,6 +399,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1206521376457624
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4218736252391600}
+  - component: {fileID: 114573831222497258}
+  - component: {fileID: 114624726679725154}
+  - component: {fileID: 114335996794665410}
+  - component: {fileID: 114070851478075268}
+  m_Layer: 11
+  m_Name: DriftPrefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1219233081061964
 GameObject:
   m_ObjectHideFlags: 1
@@ -899,13 +918,9 @@ GameObject:
   - component: {fileID: 114509890867450628}
   - component: {fileID: 114604252966182538}
   - component: {fileID: 114485541274518430}
-  - component: {fileID: 114979250873304534}
   - component: {fileID: 114475196102562330}
   - component: {fileID: 114098388412132924}
   - component: {fileID: 114032499753766224}
-  - component: {fileID: 114450341963224902}
-  - component: {fileID: 114780444297581046}
-  - component: {fileID: 114978214787279948}
   m_Layer: 11
   m_Name: Kart
   m_TagString: Kart
@@ -2189,6 +2204,19 @@ Transform:
   m_Father: {fileID: 4823784381013706}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!4 &4218736252391600
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1206521376457624}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4611446738322668}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4220624989653962
 Transform:
   m_ObjectHideFlags: 1
@@ -2895,6 +2923,7 @@ Transform:
   - {fileID: 4422502987046830}
   - {fileID: 4351266685654064}
   - {fileID: 4868287211757638}
+  - {fileID: 4218736252391600}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5589,6 +5618,19 @@ MonoBehaviour:
   Item: {fileID: 0}
   Count: 0
   ItemPositions: {fileID: 114489574900648120}
+--- !u!114 &114070851478075268
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1206521376457624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec636cc443810e64da039854e7761c11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Settings: {fileID: 0}
+  _rigidBody: {fileID: 54115033852382540}
 --- !u!114 &114076007938573346
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5606,8 +5648,8 @@ MonoBehaviour:
   Synchronization: 0
   OwnershipTransfer: 0
   ObservedComponents: []
-  viewIdField: 3
-  InstantiationId: 3
+  viewIdField: 0
+  InstantiationId: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114096441772208902
 MonoBehaviour:
@@ -5741,8 +5783,8 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 114032499753766224}
-  viewIdField: 5
-  InstantiationId: 5
+  viewIdField: 0
+  InstantiationId: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114112653764666390
 MonoBehaviour:
@@ -5807,8 +5849,8 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 114539492184620100}
-  viewIdField: 2
-  InstantiationId: 2
+  viewIdField: 0
+  InstantiationId: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114199671440468058
 MonoBehaviour:
@@ -5838,6 +5880,84 @@ MonoBehaviour:
   nameText: {fileID: 114096441772208902}
   nameFrameGO: {fileID: 1711424025928990}
   backCamera: {fileID: 1423625483568360}
+--- !u!114 &114335996794665410
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1206521376457624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 594c6882b5bbd91478d85d258ca8d1d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Settings: {fileID: 11400000, guid: 2766024045128a4499267de9e44728d7, type: 2}
+  _rigidBody: {fileID: 54115033852382540}
+  _groundCondition: {fileID: 114624726679725154}
+  TurningState: 0
+  DriftTurnState: 0
+  DriftState: 0
+  OnDriftStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnDriftLeft:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnDriftRight:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnDriftWhite:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnDriftOrange:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnDriftRed:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnDriftEnd:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnDriftReset:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnDriftBoostStart:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnDriftBoostEnd:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114368943646048412
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5864,21 +5984,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaddb6dc064490b4c9461bc9664ef0f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114450341963224902
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1571014680455984}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 594c6882b5bbd91478d85d258ca8d1d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Settings: {fileID: 11400000, guid: 2766024045128a4499267de9e44728d7, type: 2}
-  TurningState: 0
-  DriftTurnState: 0
-  DriftState: 0
 --- !u!114 &114475196102562330
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6001,6 +6106,27 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
+--- !u!114 &114573831222497258
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1206521376457624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: -1
+  isRuntimeInstantiated: 0
 --- !u!114 &114604252966182538
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6020,6 +6146,19 @@ MonoBehaviour:
   DistanceForGrounded: 0.5
   VelocityDetectionThreshold: 0.5
   CrashDuration: 2
+--- !u!114 &114624726679725154
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1206521376457624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afe30461f0462f84c92a2c24db7f6d21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Grounded: 0
+  DistanceForGrounded: 0.5
 --- !u!114 &114655913041541998
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6096,8 +6235,8 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 0}
-  viewIdField: 4
-  InstantiationId: 4
+  viewIdField: 0
+  InstantiationId: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114738576795421352
 MonoBehaviour:
@@ -6110,19 +6249,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa1bbb5767b323a4f9e63229f907f117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114780444297581046
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1571014680455984}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afe30461f0462f84c92a2c24db7f6d21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Grounded: 0
-  DistanceForGrounded: 0
 --- !u!114 &114864825025773762
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6141,8 +6267,8 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 0}
-  viewIdField: 1
-  InstantiationId: 1
+  viewIdField: 0
+  InstantiationId: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114907998683179784
 MonoBehaviour:
@@ -6159,36 +6285,6 @@ MonoBehaviour:
   FrontWheelRight: {fileID: 1495586901813842}
   BackWheelsLeft: {fileID: 1636491680669860}
   BackWheelsRight: {fileID: 1636491680669860}
---- !u!114 &114978214787279948
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1571014680455984}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec636cc443810e64da039854e7761c11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Settings: {fileID: 11400000, guid: c599c944b5b41b446ab1e3ef29a19b81, type: 2}
---- !u!114 &114979250873304534
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1571014680455984}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53e2b588a92dea146a0a40783d2a81c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TimeBetweenDrifts: 0.5
-  BoostDuration: 1
-  BoostSpeed: 300
-  MagnitudeBoost: 5
-  RequiredSpeedToDrift: 12
-  ForwardMaxAngle: 45
-  BackMaxAngle: -30
 --- !u!114 &114989300924111792
 MonoBehaviour:
   m_ObjectHideFlags: 1

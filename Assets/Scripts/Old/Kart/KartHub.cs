@@ -80,6 +80,7 @@ namespace Kart
             kartAbility.Use(xAxis, yAxis);
         }
 
+        /*
         public void InitializeDrift(float angle)
         {
             kartDriftSystem.InitializeDrift(angle);
@@ -105,7 +106,7 @@ namespace Kart
                 InitializeDrift(turnValue);
             }
         }
-
+        */
         public void Accelerate(float value)
         {
             if (kartStates.IsGrounded())

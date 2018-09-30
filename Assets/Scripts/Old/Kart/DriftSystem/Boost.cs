@@ -6,27 +6,22 @@ using Photon.Pun;
 
 namespace Tools
 {
-    [RequireComponent(typeof(Rigidbody))]
     public class Boost : MonoBehaviourPun
     {
         public BoostSettings Settings;
 
-        private Rigidbody _rigidBody;
+        [SerializeField] private Rigidbody _rigidBody;
         private Coroutine _turboCoroutine;
         private Coroutine _physicsBoostCoroutine;
 
-        public Action OnDriftBoostStart;
-        public Action OnDriftBoostEnd;
-
         private void Awake()
         {
-            _rigidBody = GetComponent<Rigidbody>();
 
-            OnDriftBoostStart += () => DriftTurnState = TurnState.NotTurning;
-            OnDriftBoostStart += () => DriftState = DriftState.Turbo;
+         //   OnDriftBoostStart += () => DriftTurnState = TurnState.NotTurning;
+         //   OnDriftBoostStart += () => DriftState = DriftState.Turbo;
         }
 
-        private void StartTurbo()
+        public void StartTurbo()
         {
             _turboCoroutine = StartCoroutine(EnterTurbo());
         }
@@ -39,10 +34,10 @@ namespace Tools
             }
             _physicsBoostCoroutine = StartCoroutine(BoostPhysic(Settings.BoostDuration, Settings.MagnitudeBoost, Settings.BoostSpeed));
 
-            CallRPC("OnDriftBoostStart");
+         //   CallRPC("OnDriftBoostStart");
             yield return new WaitForSeconds(Settings.BoostDuration);
           //  ResetDrift(); // LANCER EVENT RESET DRIFT ???
-            CallRPC("OnDriftBoostEnd");
+         //   CallRPC("OnDriftBoostEnd");
         }
 
         public IEnumerator BoostPhysic(float boostDuration, float magnitudeBoost, float speedBoost)
@@ -67,7 +62,7 @@ namespace Tools
                 yield return new WaitForFixedUpdate();
             }
         }
-
+        /*
         [PunRPC] public void RPCOnDriftBoostEnd() { OnDriftBoostEnd(); }
         [PunRPC] public void RPCOnDriftBoostStart() { OnDriftBoostStart(); }
 
@@ -75,5 +70,6 @@ namespace Tools
         {
             photonView.RPC("RPC" + onAction, RpcTarget.All, parameters);
         }
+        */
     }
 }

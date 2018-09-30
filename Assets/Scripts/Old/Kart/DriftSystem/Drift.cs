@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 using Tools;
 using Photon.Pun;
+using UnityEngine.Events;
 
 
 
@@ -12,7 +13,6 @@ namespace drift
     public enum DriftState { NotDrifting, White, Orange, Red, Turbo }
 
     [RequireComponent(typeof(GroundCondition))]
-    [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(PhotonView))]
     public class Drift : MonoBehaviourPun, IControllable
     {
@@ -25,30 +25,28 @@ namespace drift
         private Coroutine _driftedLongEnoughTimer;
         private Coroutine _physicsBoostCoroutine;
         private Coroutine _turboCoroutine;
-        private Rigidbody _rigidBody;
-        private GroundCondition _groundCondition;
-
-        public Action OnDriftStart;
-        public Action OnDriftLeft;
-        public Action OnDriftRight;
-        public Action OnDriftWhite;
-        public Action OnDriftOrange;
-        public Action OnDriftRed;
-        public Action OnDriftEnd;
-        public Action OnDriftReset;
-
+        [SerializeField] private Rigidbody _rigidBody;
+        [SerializeField] private GroundCondition _groundCondition;
 
         public TurnState TurningState = TurnState.NotTurning;
         public TurnState DriftTurnState = TurnState.NotTurning;
         public DriftState DriftState = DriftState.NotDrifting;
 
+        public UnityEvent OnDriftStart;
+        public UnityEvent OnDriftLeft;
+        public UnityEvent OnDriftRight;
+        public UnityEvent OnDriftWhite;
+        public UnityEvent OnDriftOrange;
+        public UnityEvent OnDriftRed;
+        public UnityEvent OnDriftEnd;
+        public UnityEvent OnDriftReset;
+        public UnityEvent OnDriftBoostStart;
+        public UnityEvent OnDriftBoostEnd;
 
         private void Awake()
         {
-            _rigidBody = GetComponent<Rigidbody>();
-            _groundCondition = GetComponent<GroundCondition>();
 
-
+            /*
             OnDriftLeft += () => DriftTurnState = TurnState.Left;
             OnDriftRight += () => DriftTurnState = TurnState.Right;
 
@@ -58,11 +56,33 @@ namespace drift
 
             OnDriftReset += () => DriftTurnState = TurnState.NotTurning;
             OnDriftReset += () => DriftState = DriftState.NotDrifting;
+            */
+
+            OnDriftLeft.AddListener(() => {DriftTurnState = TurnState.Left;});
+            OnDriftRight.AddListener(() => {DriftTurnState = TurnState.Right;});
+
+            OnDriftWhite.AddListener(() => {DriftState = DriftState.White;});
+            OnDriftOrange.AddListener(() => {DriftState = DriftState.Orange;});
+            OnDriftRed.AddListener(() => {DriftState = DriftState.Red;});
+
+            OnDriftReset.AddListener(() => {DriftTurnState = TurnState.NotTurning;});
+            OnDriftReset.AddListener(() => {DriftState = DriftState.NotDrifting;});
+
+            OnDriftStart.AddListener(() => { Test(); });
+        }
+
+
+        private void Update()
+        {
+            Debug.Log(_groundCondition.Grounded);
+
+            ButtonsPressed();
+            ButtonsUp();
+
         }
 
         public void DriftTurns(float turnValue)
         {
-
             if (!_groundCondition.Grounded) return;
 
             if (DriftTurnState != TurnState.NotTurning && HasRequiredSpeed())
@@ -87,7 +107,7 @@ namespace drift
             else if (DriftTurnState == TurnState.Right)
             {
                 _rigidBody.AddRelativeForce(Vector3.left * Settings.DriftGlideOrientation, ForceMode.Force);
-                _rigidBody.AddRelativeForce(Vector3.back * Settings.DriftGlideBack, ForceMode.Force);
+               _rigidBody.AddRelativeForce(Vector3.back * Settings.DriftGlideBack, ForceMode.Force);
             }
         }
 
@@ -110,25 +130,25 @@ namespace drift
 
         public void InitializeDrift(float angle)
         {
+
             if (IsDrifting()) return;
             if (!HasRequiredSpeed() || !_groundCondition.Grounded || angle == 0) return;
 
             ResetDrift();
 
-            CallRPC("OnDriftStart");
+            OnDriftStart.Invoke();
 
             if (angle < 0)
             {
-                OnDriftLeft();
+                OnDriftLeft.Invoke();
             }
             if (angle > 0)
             {
-                OnDriftRight();
+                OnDriftRight.Invoke();
             }
 
             EnterNextState();
         }
-
 
         public void StopDrift()
         {
@@ -136,21 +156,19 @@ namespace drift
 
             if (DriftState == DriftState.Red && HasRequiredSpeed())
             {
-                // LANCER EVENT BOOST
+                OnDriftBoostStart.Invoke();
             }
             else
             {
                 ResetDrift();
             }
 
-            CallRPC("OnDriftEnd");
+            OnDriftEnd.Invoke();
         }
-
-
 
         public void ResetDrift()
         {
-            CallRPC("OnDriftReset");
+            OnDriftReset.Invoke();
 
             _driftedLongEnough = false;
             if (_driftedLongEnoughTimer != null)
@@ -190,13 +208,13 @@ namespace drift
             switch (DriftState)
             {
                 case DriftState.NotDrifting:
-                    CallRPC("OnDriftWhite");
+                    OnDriftWhite.Invoke();
                     break;
                 case DriftState.White:
-                    CallRPC("OnDriftOrange");
+                    OnDriftOrange.Invoke();
                     break;
                 case DriftState.Orange:
-                    CallRPC("OnDriftRed");
+                    OnDriftRed.Invoke();
                     break;
                 case DriftState.Red:
                     break;
@@ -244,7 +262,39 @@ namespace drift
             DriftTurns(Input.GetAxis(Constants.Input.TurnAxis));
         }
 
+        private void ButtonsPressed()
+        {
+            if (Input.GetButtonDown(Constants.Input.Drift))
+            {
+                InitializeDrift(Input.GetAxis(Constants.Input.TurnAxis));
+                OnDriftStart.Invoke();
+            }
 
+            if (Input.GetButton(Constants.Input.Drift))
+            {
+                DriftTurns(Input.GetAxis(Constants.Input.TurnAxis));
+            }
+
+        }
+
+
+        public void Test()
+        {
+          //  Debug.Log("testEvent");
+        }
+
+
+        private void ButtonsUp()
+        {
+            if (Input.GetButtonUp(Constants.Input.Drift))
+            {
+                StopDrift();
+            }
+        }
+
+
+
+        /*
         [PunRPC] public void RPCOnDriftStart() { OnDriftStart(); }
         [PunRPC] public void RPCOnDriftWhite() { OnDriftWhite(); }
         [PunRPC] public void RPCOnDriftOrange() { OnDriftOrange(); }
@@ -256,5 +306,6 @@ namespace drift
         {
             photonView.RPC("RPC" + onAction, RpcTarget.All, parameters);
         }
+        */
     }
 }

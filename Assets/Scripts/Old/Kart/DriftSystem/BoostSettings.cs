@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Tools Settings/Boost")]
 public class BoostSettings : ScriptableObject {
 
     [Header("Boost")]
