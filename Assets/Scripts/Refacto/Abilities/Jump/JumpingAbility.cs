@@ -2,12 +2,12 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(Rigidbody))]
 public class JumpingAbility : MonoBehaviour, IControllable
 {
     [Header("Events")]
     public UnityEvent OnFirstJump;
     public UnityEvent OnSecondJump;
+    public UnityEvent OnJumpReload;
 
     [Header("Forces")]
     public JumpingAbilitySettings Settings;
@@ -22,7 +22,7 @@ public class JumpingAbility : MonoBehaviour, IControllable
 
     private void Awake ()
     {
-        _rb = GetComponent<Rigidbody>();
+        _rb = GetComponentInParent<Rigidbody>();
 	}
 
 	private void FixedUpdate ()
@@ -41,6 +41,8 @@ public class JumpingAbility : MonoBehaviour, IControllable
 
     public void SecondJump(JoystickValues joystickValues)
     {
+        _hasDoneFirstJump = false;
+
         Vector3 direction;
         if (joystickValues.X < -0.5f)
             direction = Vector3.left;
@@ -95,5 +97,7 @@ public class JumpingAbility : MonoBehaviour, IControllable
         _canUseAbility = false;
         yield return new WaitForSeconds(Settings.CooldownDuration);
         _canUseAbility = true;
+        _hasDoneFirstJump = false;
+        OnJumpReload.Invoke();
     }
 }

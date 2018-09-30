@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Sounds/JumpingAbility")]
-public class JumpingAbilitySounds : ScriptableObject
+public class JumpingAbilitySounds : MonoBehaviour
 {
     public AudioSource FirstJump;
     public AudioSource SecondJump;
@@ -9,6 +8,7 @@ public class JumpingAbilitySounds : ScriptableObject
     public void PlayFirstJumpSound()
     {
         FirstJump.Play();
+        Debug.Log("Played");
     }
 
     public void PlaySecondJumpSound()

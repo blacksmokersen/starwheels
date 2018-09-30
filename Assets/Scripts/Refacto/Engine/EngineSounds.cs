@@ -1,14 +1,18 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Sounds/EngineSounds")]
-public class NewBehaviourScript : ScriptableObject
+public class EngineSounds : MonoBehaviour
 {
     [Header("Engine")]
     public AudioSource MotorAccelSource;
     public AudioSource MotorFullSource;
     public AudioSource MotorDecelSource;
 
-    private void SetMotorFullPitch(float pitch)
+    private void Awake()
+    {
+        PlayMotorFullSound();
+    }
+
+    public void SetMotorFullPitch(float pitch)
     {
         MotorFullSource.pitch = pitch;
     }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-public class SteeringWheel : MonoBehaviour
+public class SteeringWheel : MonoBehaviour, IControllable
 {
     public enum TurnState { NotTurning, Left, Right }
 
@@ -18,7 +18,7 @@ public class SteeringWheel : MonoBehaviour
     [Header("Events")]
     public UnityEvent<TurnState> OnTurn;
 
-    public Rigidbody _rb;
+    private Rigidbody _rb;
 
     // CORE
 
@@ -27,7 +27,17 @@ public class SteeringWheel : MonoBehaviour
         _rb = GetComponentInParent<Rigidbody>();
     }
 
+    private void FixedUpdate()
+    {
+        MapInputs();
+    }
+
     // PUBLIC
+
+    public void MapInputs()
+    {
+        TurnUsingTorque(Input.GetAxis(Constants.Input.TurnAxis));
+    }
 
     public void TurnUsingTorque(float turnValue)
     {
@@ -37,7 +47,7 @@ public class SteeringWheel : MonoBehaviour
             if (_groundCondition.Grounded)
             {
                 _rb.AddRelativeTorque(Vector3.up * turnValue * Settings.TurnTorque, ForceMode.Force);
-                OnTurn.Invoke(TurningState);
+                //OnTurn.Invoke(TurningState);
             }
         }
         else
