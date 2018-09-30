@@ -17,8 +17,12 @@ namespace Tools
         private void Awake()
         {
 
-         //   OnDriftBoostStart += () => DriftTurnState = TurnState.NotTurning;
-         //   OnDriftBoostStart += () => DriftState = DriftState.Turbo;
+            //   OnDriftBoostStart += () => DriftTurnState = TurnState.NotTurning;
+            //   OnDriftBoostStart += () => DriftState = DriftState.Turbo;
+
+            Settings._controlMagnitude = Settings.MaxMagnitude;
+            Settings._controlSpeed = Settings.Speed;
+
         }
 
         public void StartTurbo()

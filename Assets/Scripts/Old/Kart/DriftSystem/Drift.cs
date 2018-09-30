@@ -45,19 +45,6 @@ namespace drift
 
         private void Awake()
         {
-
-            /*
-            OnDriftLeft += () => DriftTurnState = TurnState.Left;
-            OnDriftRight += () => DriftTurnState = TurnState.Right;
-
-            OnDriftWhite += () => DriftState = DriftState.White;
-            OnDriftOrange += () => DriftState = DriftState.Orange;
-            OnDriftRed += () => DriftState = DriftState.Red;
-
-            OnDriftReset += () => DriftTurnState = TurnState.NotTurning;
-            OnDriftReset += () => DriftState = DriftState.NotDrifting;
-            */
-
             OnDriftLeft.AddListener(() => { DriftTurnState = TurnState.Left; });
             OnDriftRight.AddListener(() => { DriftTurnState = TurnState.Right; });
 
@@ -75,6 +62,15 @@ namespace drift
         private void Update()
         {
             MapInputs();
+
+            if (IsDriftSideDifferentFromTurnSide())
+            {
+                _hasTurnedOtherSide = true;
+            }
+            if (IsDrifting() && !HasRequiredSpeed())
+            {
+                StopDrift();
+            }
         }
 
         private void FixedUpdate()
@@ -98,7 +94,7 @@ namespace drift
                 InitializeDrift(turnValue);
             }
         }
-
+        #region DriftBehaviour
         public void InitializeDrift(float angle)
         {
             _groundCondition.CheckGrounded();
@@ -128,6 +124,7 @@ namespace drift
             if (DriftState == DriftState.Red && HasRequiredSpeed())
             {
                 OnDriftBoostStart.Invoke();
+                ResetDrift();
             }
             else
             {
@@ -152,6 +149,7 @@ namespace drift
                 StopCoroutine(_turboCoroutine);
             }
         }
+        #endregion
 
         #region Conditions
         public void CheckNewTurnDirection()
@@ -182,7 +180,6 @@ namespace drift
                 _rigidBody.AddRelativeForce(Vector3.left * Settings.DriftGlideOrientation, ForceMode.Force);
                 _rigidBody.AddRelativeForce(Vector3.back * Settings.DriftGlideBack, ForceMode.Force);
             }
-            Debug.Log("DriftUsingForce");
         }
 
         public void DriftTurn(float turnValue)
@@ -200,7 +197,6 @@ namespace drift
                 turnValue = turnValue <= -JoystickDeadZone2 ? turnValue : turnValue >= JoystickDeadZone1 ? turnValue : 1;
                 _rigidBody.AddTorque(Vector3.up * (turnValueRestrain * Mathf.Abs(turnValue)) * Settings.DriftTurnSpeed * Time.deltaTime);
             }
-            Debug.Log("DriftTurn");
         }
 
         #endregion
@@ -215,12 +211,15 @@ namespace drift
             {
                 case DriftState.NotDrifting:
                     OnDriftWhite.Invoke();
+                    Debug.Log("w");
                     break;
                 case DriftState.White:
                     OnDriftOrange.Invoke();
+                    Debug.Log("o");
                     break;
                 case DriftState.Orange:
                     OnDriftRed.Invoke();
+                    Debug.Log("r");
                     break;
                 case DriftState.Red:
                     break;
@@ -310,21 +309,5 @@ namespace drift
         }
 
         #endregion
-
-
-
-        /*
-        [PunRPC] public void RPCOnDriftStart() { OnDriftStart(); }
-        [PunRPC] public void RPCOnDriftWhite() { OnDriftWhite(); }
-        [PunRPC] public void RPCOnDriftOrange() { OnDriftOrange(); }
-        [PunRPC] public void RPCOnDriftRed() { OnDriftRed(); }
-        [PunRPC] public void RPCOnDriftEnd() { OnDriftEnd(); }
-        [PunRPC] public void RPCOnDriftReset() { OnDriftReset(); }
-
-        public void CallRPC(string onAction, params object[] parameters)
-        {
-            photonView.RPC("RPC" + onAction, RpcTarget.All, parameters);
-        }
-        */
     }
 }
