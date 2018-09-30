@@ -12,12 +12,7 @@ namespace Tools
         [Header("Parameters")]
         public float DistanceForGrounded;
 
-        private void Update()
-        {
-            CheckGrounded();
-        }
-
-        private void CheckGrounded()
+        public void CheckGrounded()
         {
             if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), DistanceForGrounded, 1 << LayerMask.NameToLayer(Constants.Layer.Ground)))
             {

@@ -58,31 +58,33 @@ namespace drift
             OnDriftReset += () => DriftState = DriftState.NotDrifting;
             */
 
-            OnDriftLeft.AddListener(() => {DriftTurnState = TurnState.Left;});
-            OnDriftRight.AddListener(() => {DriftTurnState = TurnState.Right;});
+            OnDriftLeft.AddListener(() => { DriftTurnState = TurnState.Left; });
+            OnDriftRight.AddListener(() => { DriftTurnState = TurnState.Right; });
 
-            OnDriftWhite.AddListener(() => {DriftState = DriftState.White;});
-            OnDriftOrange.AddListener(() => {DriftState = DriftState.Orange;});
-            OnDriftRed.AddListener(() => {DriftState = DriftState.Red;});
+            OnDriftWhite.AddListener(() => { DriftState = DriftState.White; });
+            OnDriftOrange.AddListener(() => { DriftState = DriftState.Orange; });
+            OnDriftRed.AddListener(() => { DriftState = DriftState.Red; });
 
-            OnDriftReset.AddListener(() => {DriftTurnState = TurnState.NotTurning;});
-            OnDriftReset.AddListener(() => {DriftState = DriftState.NotDrifting;});
+            OnDriftReset.AddListener(() => { DriftTurnState = TurnState.NotTurning; });
+            OnDriftReset.AddListener(() => { DriftState = DriftState.NotDrifting; });
 
-            OnDriftStart.AddListener(() => { Test(); });
+            OnDriftStart.AddListener(() => { });
         }
 
 
         private void Update()
         {
-            Debug.Log(_groundCondition.Grounded);
+            MapInputs();
+        }
 
-            ButtonsPressed();
-            ButtonsUp();
-
+        private void FixedUpdate()
+        {
+            SetTurnState(Input.GetAxis(Constants.Input.TurnAxis));
         }
 
         public void DriftTurns(float turnValue)
         {
+            _groundCondition.CheckGrounded();
             if (!_groundCondition.Grounded) return;
 
             if (DriftTurnState != TurnState.NotTurning && HasRequiredSpeed())
@@ -97,40 +99,9 @@ namespace drift
             }
         }
 
-        public void DriftUsingForce()
-        {
-            if (DriftTurnState == TurnState.Left)
-            {
-                _rigidBody.AddRelativeForce(Vector3.right * Settings.DriftGlideOrientation, ForceMode.Force);
-                _rigidBody.AddRelativeForce(Vector3.back * Settings.DriftGlideBack, ForceMode.Force);
-            }
-            else if (DriftTurnState == TurnState.Right)
-            {
-                _rigidBody.AddRelativeForce(Vector3.left * Settings.DriftGlideOrientation, ForceMode.Force);
-               _rigidBody.AddRelativeForce(Vector3.back * Settings.DriftGlideBack, ForceMode.Force);
-            }
-        }
-
-        public void DriftTurn(float turnValue)
-        {
-            float turnValueRestrain = turnValue;
-            if (DriftTurnState == TurnState.Left)
-            {
-                turnValueRestrain = turnValue <= -JoystickDeadZone2 ? Settings.MaxInteriorAngle : turnValue >= JoystickDeadZone1 ? Settings.MaxExteriorAngle : 100;
-                turnValue = turnValue <= -JoystickDeadZone2 ? turnValue : turnValue >= JoystickDeadZone1 ? turnValue : 1;
-                _rigidBody.AddTorque(Vector3.up * (-turnValueRestrain * Mathf.Abs(turnValue)) * Settings.DriftTurnSpeed * Time.deltaTime);
-            }
-            else if (DriftTurnState == TurnState.Right)
-            {
-                turnValueRestrain = turnValue <= -JoystickDeadZone2 ? Settings.MaxExteriorAngle : turnValue >= JoystickDeadZone1 ? Settings.MaxInteriorAngle : 100;
-                turnValue = turnValue <= -JoystickDeadZone2 ? turnValue : turnValue >= JoystickDeadZone1 ? turnValue : 1;
-                _rigidBody.AddTorque(Vector3.up * (turnValueRestrain * Mathf.Abs(turnValue)) * Settings.DriftTurnSpeed * Time.deltaTime);
-            }
-        }
-
         public void InitializeDrift(float angle)
         {
-
+            _groundCondition.CheckGrounded();
             if (IsDrifting()) return;
             if (!HasRequiredSpeed() || !_groundCondition.Grounded || angle == 0) return;
 
@@ -198,6 +169,41 @@ namespace drift
         }
         #endregion
 
+        #region DriftPhysics
+        public void DriftUsingForce()
+        {
+            if (DriftTurnState == TurnState.Left)
+            {
+                _rigidBody.AddRelativeForce(Vector3.right * Settings.DriftGlideOrientation, ForceMode.Force);
+                _rigidBody.AddRelativeForce(Vector3.back * Settings.DriftGlideBack, ForceMode.Force);
+            }
+            else if (DriftTurnState == TurnState.Right)
+            {
+                _rigidBody.AddRelativeForce(Vector3.left * Settings.DriftGlideOrientation, ForceMode.Force);
+                _rigidBody.AddRelativeForce(Vector3.back * Settings.DriftGlideBack, ForceMode.Force);
+            }
+            Debug.Log("DriftUsingForce");
+        }
+
+        public void DriftTurn(float turnValue)
+        {
+            float turnValueRestrain = turnValue;
+            if (DriftTurnState == TurnState.Left)
+            {
+                turnValueRestrain = turnValue <= -JoystickDeadZone2 ? Settings.MaxInteriorAngle : turnValue >= JoystickDeadZone1 ? Settings.MaxExteriorAngle : 100;
+                turnValue = turnValue <= -JoystickDeadZone2 ? turnValue : turnValue >= JoystickDeadZone1 ? turnValue : 1;
+                _rigidBody.AddTorque(Vector3.up * (-turnValueRestrain * Mathf.Abs(turnValue)) * Settings.DriftTurnSpeed * Time.deltaTime);
+            }
+            else if (DriftTurnState == TurnState.Right)
+            {
+                turnValueRestrain = turnValue <= -JoystickDeadZone2 ? Settings.MaxExteriorAngle : turnValue >= JoystickDeadZone1 ? Settings.MaxInteriorAngle : 100;
+                turnValue = turnValue <= -JoystickDeadZone2 ? turnValue : turnValue >= JoystickDeadZone1 ? turnValue : 1;
+                _rigidBody.AddTorque(Vector3.up * (turnValueRestrain * Mathf.Abs(turnValue)) * Settings.DriftTurnSpeed * Time.deltaTime);
+            }
+            Debug.Log("DriftTurn");
+        }
+
+        #endregion
 
         #region Changing States
         private void EnterNextState()
@@ -243,26 +249,36 @@ namespace drift
             return TurningState != DriftTurnState;
         }
 
-
         public bool IsDrifting()
         {
             return DriftTurnState != TurnState.NotTurning;
         }
 
+        public void SetTurnState(TurnState state)
+        {
+            TurningState = state;
+        }
+
+        public void SetTurnState(float turnValue)
+        {
+            if (turnValue > 0)
+            {
+                SetTurnState(TurnState.Right);
+            }
+            else if (turnValue < 0)
+            {
+                SetTurnState(TurnState.Left);
+            }
+            else
+            {
+                SetTurnState(TurnState.NotTurning);
+            }
+        }
         #endregion
 
-        private IEnumerator DriftTimer()
-        {
-            yield return new WaitForSeconds(Settings.TimeBetweenDrifts);
-            _driftedLongEnough = true;
-        }
+        #region MapInput
 
         public void MapInputs()
-        {
-            DriftTurns(Input.GetAxis(Constants.Input.TurnAxis));
-        }
-
-        private void ButtonsPressed()
         {
             if (Input.GetButtonDown(Constants.Input.Drift))
             {
@@ -270,27 +286,30 @@ namespace drift
                 OnDriftStart.Invoke();
             }
 
+
             if (Input.GetButton(Constants.Input.Drift))
             {
                 DriftTurns(Input.GetAxis(Constants.Input.TurnAxis));
             }
 
-        }
 
-
-        public void Test()
-        {
-          //  Debug.Log("testEvent");
-        }
-
-
-        private void ButtonsUp()
-        {
             if (Input.GetButtonUp(Constants.Input.Drift))
             {
                 StopDrift();
             }
         }
+
+        #endregion
+
+        #region IEnumeratos
+
+        private IEnumerator DriftTimer()
+        {
+            yield return new WaitForSeconds(Settings.TimeBetweenDrifts);
+            _driftedLongEnough = true;
+        }
+
+        #endregion
 
 
 
