@@ -2,19 +2,14 @@
 using UnityEngine;
 using System;
 using Tools;
-using Photon.Pun;
 using UnityEngine.Events;
 
-
-
-namespace drift
+namespace Drift
 {
     public enum TurnState { NotTurning, Left, Right }
     public enum DriftState { NotDrifting, White, Orange, Red, Turbo }
 
-    [RequireComponent(typeof(GroundCondition))]
-    [RequireComponent(typeof(PhotonView))]
-    public class Drift : MonoBehaviourPun, IControllable
+    public class Drift : MonoBehaviour, IControllable
     {
         public DriftSettings Settings;
         public const float JoystickDeadZone1 = 0.1f;
@@ -80,7 +75,6 @@ namespace drift
 
         public void DriftTurns(float turnValue)
         {
-            _groundCondition.CheckGrounded();
             if (!_groundCondition.Grounded) return;
 
             if (DriftTurnState != TurnState.NotTurning && HasRequiredSpeed())
@@ -97,7 +91,6 @@ namespace drift
         #region DriftBehaviour
         public void InitializeDrift(float angle)
         {
-            _groundCondition.CheckGrounded();
             if (IsDrifting()) return;
             if (!HasRequiredSpeed() || !_groundCondition.Grounded || angle == 0) return;
 

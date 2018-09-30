@@ -51,8 +51,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4777917959298066}
-  - component: {fileID: 114857785453967272}
-  - component: {fileID: 114839542516702122}
   - component: {fileID: 114557392518534000}
   - component: {fileID: 114069609646532440}
   - component: {fileID: 114245998204012360}
@@ -161,8 +159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Settings: {fileID: 11400000, guid: 2766024045128a4499267de9e44728d7, type: 2}
   _rigidBody: {fileID: 0}
-  _groundCondition: {fileID: 114550072037297548, guid: 23a6849d0d69b2e438cfd66799b5f946,
-    type: 2}
+  _groundCondition: {fileID: 0}
   TurningState: 0
   DriftTurnState: 0
   DriftState: 0
@@ -301,40 +298,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Settings: {fileID: 11400000, guid: c599c944b5b41b446ab1e3ef29a19b81, type: 2}
   _rigidBody: {fileID: 0}
---- !u!114 &114839542516702122
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1337614903038932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afe30461f0462f84c92a2c24db7f6d21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Grounded: 0
-  DistanceForGrounded: 0.5
---- !u!114 &114857785453967272
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1337614903038932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 0
-  OwnershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 0}
-  viewIdField: 0
-  InstantiationId: 1
-  isRuntimeInstantiated: 0
 --- !u!198 &198545270054127530
 ParticleSystem:
   m_ObjectHideFlags: 1
