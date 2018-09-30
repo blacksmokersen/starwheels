@@ -94,7 +94,7 @@ namespace Kart
             var sideVelocity = new Vector3(transform.InverseTransformDirection(_rb.velocity).x, 0, 0);
             _rb.AddRelativeForce(-sideVelocity * SlipCompensationForce, ForceMode.Force);
         }
-
+        /*
         public void DriftUsingForce()
         {
             if (kartStates.DriftTurnState == TurnState.Left)
@@ -108,7 +108,7 @@ namespace Kart
                 _rb.AddRelativeForce(Vector3.back * DriftGlideBack, ForceMode.Force);
             }
         }
-
+        */
         public void TurnUsingTorque(Vector3 direction, float turnAxis)
         {
             TurnSlowDown(turnAxis);
@@ -150,7 +150,7 @@ namespace Kart
         {
             _rb.AddRelativeForce(Vector3.back * value * Speed / 2, ForceMode.Force);
         }
-
+        /*
         public void DriftTurn(float turnValue)
         {
             float turnValueRestrain = turnValue;
@@ -167,7 +167,7 @@ namespace Kart
                 _rb.AddTorque(Vector3.up * (turnValueRestrain * Mathf.Abs(turnValue)) * DriftTurnSpeed * Time.deltaTime);
             }
         }
-
+        */
         public void StabilizeRotation()
         {
             if (kartStates.IsGrounded()) return;

@@ -27,7 +27,7 @@ namespace Abilities
         {
             if (canUseAbility)
             {
-                _kartHub.StopDrift();
+             //   _kartHub.StopDrift();
 
                 if (CanDoubleJump())
                 {
