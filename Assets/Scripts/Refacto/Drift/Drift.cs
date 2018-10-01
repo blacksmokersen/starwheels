@@ -21,6 +21,7 @@ namespace Drift
         private Coroutine _physicsBoostCoroutine;
         private Coroutine _turboCoroutine;
         private Rigidbody _rigidBody;
+        [SerializeField] private SteeringWheel _steeringWheel;
         [SerializeField] private GroundCondition _groundCondition;
 
         public TurnState TurningState = TurnState.NotTurning;
@@ -43,6 +44,7 @@ namespace Drift
         private void Awake()
         {
             _rigidBody = GetComponentInParent<Rigidbody>();
+          //  _steeringWheel = GetComponentInParent<SteeringWheel>();
         }
 
 
@@ -58,6 +60,12 @@ namespace Drift
             {
                 StopDrift();
             }
+
+            if (DriftTurnState != TurnState.NotTurning)
+                _steeringWheel.enabled = false;
+            else
+                _steeringWheel.enabled = true;
+
         }
 
         private void FixedUpdate()
