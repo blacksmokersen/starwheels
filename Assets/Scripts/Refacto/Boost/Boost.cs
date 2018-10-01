@@ -10,12 +10,13 @@ namespace Tools
     {
         public BoostSettings Settings;
 
-        [SerializeField] private Rigidbody _rigidBody;
+        private Rigidbody _rigidBody;
         private Coroutine _turboCoroutine;
         private Coroutine _physicsBoostCoroutine;
 
         private void Awake()
         {
+            _rigidBody = GetComponentInParent<Rigidbody>();
 
             //   OnDriftBoostStart += () => DriftTurnState = TurnState.NotTurning;
             //   OnDriftBoostStart += () => DriftState = DriftState.Turbo;
