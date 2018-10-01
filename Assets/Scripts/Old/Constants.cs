@@ -58,4 +58,10 @@
         public const string EndGameMenu = "Menu/EndGameMenu";
         public const string HookObject = "Items/Hook";
     }
+
+    // GameObjects names
+    public class GameObjectName
+    {
+        public const string Speedmeter = "Speedmeter";
+    }
 }
