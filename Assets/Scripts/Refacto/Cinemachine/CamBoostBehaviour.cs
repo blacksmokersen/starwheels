@@ -1,25 +1,22 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
 public class CamBoostBehaviour : MonoBehaviour
 {
+    [SerializeField] private CamBoostSettings _camBoostSettings;
 
     private Coroutine _cameraBoostCoroutine;
     private CinemachineTransposer _transposer;
     private CinemachineVirtualCamera _cinemachine;
     private float _currentTimer;
 
-    [SerializeField] private CamBoostSettings _camBoostSettings;
-
     private void Awake()
     {
         _cinemachine = GetComponentInParent<CinemachineVirtualCamera>();
         _transposer = _cinemachine.GetCinemachineComponent<CinemachineTransposer>();
     }
-    //(SETTINGS)
-    // _cameraBoostCoroutine = StartCoroutine(CameraBoostBehaviour(-8.5f, -10, 0.5f));
+
     public void BoostCameraBehaviour()
     {
         if (_cameraBoostCoroutine != null)

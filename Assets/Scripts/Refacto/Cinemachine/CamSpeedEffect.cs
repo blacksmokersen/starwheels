@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Cinemachine;
 
 public class CamSpeedEffect : MonoBehaviour {
@@ -11,7 +9,7 @@ public class CamSpeedEffect : MonoBehaviour {
     private void Awake()
     {
         _cinemachine = GetComponentInParent<CinemachineVirtualCamera>();
-        _rigidbody = GetComponentInParent<Rigidbody>();
+        _rigidbody = _cinemachine.Follow.GetComponent<Rigidbody>();
     }
 
     void Update ()

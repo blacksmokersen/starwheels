@@ -37,6 +37,7 @@
         public const string ItemAimHorinzontal = "RightJoystickHorizontal";
         public const string ItemAimVertical = "RightJoystickVertical";
         public const string BackCamera = "ClickLeftJoystick";
+        public const string TurnCamera = "RightJoystickHorizontal";
         public const string ResetCamera = "ClickRightJoystick";
         public const string EscapeMenu = "Escape";
         public const string SwitchCamToNextPlayer = "SwitchCamToNextPlayer";

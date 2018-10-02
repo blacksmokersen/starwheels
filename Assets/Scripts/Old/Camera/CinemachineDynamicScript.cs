@@ -30,12 +30,12 @@ namespace CameraUtils
             composer = cinemachine.GetCinemachineComponent<CinemachineComposer>();
         }
 
-        /*
+
         private void Update()
         {
             SpeedOnCamBehaviour();
         }
-        */
+
 
         public void SetKart(GameObject kart)
         {
@@ -65,7 +65,7 @@ namespace CameraUtils
 
         #region CameraMovements
 
-        /*
+
         public void BoostCameraBehaviour()
         {
             if (cameraBoostCoroutine != null)
@@ -73,16 +73,16 @@ namespace CameraUtils
             cameraBoostCoroutine = StartCoroutine(CameraBoostBehaviour(-8.5f, -MaxDistanceCamInBoost, 0.5f));
             currentTimer = 0f;
         }
-        */
-        /*
+
+
         public void SpeedOnCamBehaviour()
         {
             float clampCam = Mathf.Clamp(_kartEngine.PlayerVelocity / 5, 0, 20);
             cinemachine.m_Lens.FieldOfView = 50 + clampCam;
         }
-        */
 
-        /*
+
+
         public void AimAndFollow(bool value)
         {
             if (value)
@@ -103,7 +103,7 @@ namespace CameraUtils
                 }
             }
         }
-        */
+
         public void CameraReset()
         {
             orbiter.m_XAxis.Value = 0;
@@ -137,7 +137,7 @@ namespace CameraUtils
         */
         #endregion
 
-            /*
+
         IEnumerator CameraBoostBehaviour(float startValue, float endValue, float boostDuration)
         {
             float startDynamicCamValue = transposer.m_FollowOffset.z;
@@ -169,6 +169,6 @@ namespace CameraUtils
                     break;
             }
         }
-        */
+
     }
 }
