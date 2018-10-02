@@ -2,58 +2,61 @@
 using UnityEngine;
 using Cinemachine;
 
-public class CamBoostBehaviour : MonoBehaviour
+namespace CameraUtils
 {
-    [SerializeField] private CamBoostSettings _camBoostSettings;
-
-    private Coroutine _cameraBoostCoroutine;
-    private CinemachineTransposer _transposer;
-    private CinemachineVirtualCamera _cinemachine;
-    private float _currentTimer;
-
-    private void Awake()
+    public class CamBoostBehaviour : MonoBehaviour
     {
-        _cinemachine = GetComponentInParent<CinemachineVirtualCamera>();
-        _transposer = _cinemachine.GetCinemachineComponent<CinemachineTransposer>();
-    }
+        [SerializeField] private CamBoostSettings _camBoostSettings;
 
-    public void BoostCameraBehaviour()
-    {
-        if (_cameraBoostCoroutine != null)
-            StopCoroutine(_cameraBoostCoroutine);
-        _cameraBoostCoroutine = StartCoroutine(CameraBoostBehaviour(_camBoostSettings.StartingDistanceCamInBoost, _camBoostSettings.MaxDistanceCamInBoost, _camBoostSettings.BoostDuration));
-        _currentTimer = 0f;
-    }
+        private Coroutine _cameraBoostCoroutine;
+        private CinemachineTransposer _transposer;
+        private CinemachineVirtualCamera _cinemachine;
+        private float _currentTimer;
 
-    IEnumerator CameraBoostBehaviour(float startValue, float endValue, float boostDuration)
-    {
-        float startDynamicCamValue = _transposer.m_FollowOffset.z;
-
-        _currentTimer = 0f;
-        while (_currentTimer < boostDuration)
+        private void Awake()
         {
-            //   if (!backCamActivated)
-            //   {
-            _transposer.m_FollowOffset.z = Mathf.Lerp(startDynamicCamValue, endValue, _currentTimer / boostDuration);
-            _currentTimer += Time.deltaTime;
-            yield return null;
-            //  }
-            //   else
-            //      break;
+            _cinemachine = GetComponentInParent<CinemachineVirtualCamera>();
+            _transposer = _cinemachine.GetCinemachineComponent<CinemachineTransposer>();
         }
-        yield return new WaitForSeconds(1f);
 
-        _currentTimer = 0f;
-        while (_currentTimer < (boostDuration * _camBoostSettings.CamBoostReturnOnKartDelay))
+        public void BoostCameraBehaviour()
         {
-            //  if (!_backCamActivated)
-            //  {
-            _transposer.m_FollowOffset.z = Mathf.Lerp(endValue, startValue, _currentTimer / (boostDuration * _camBoostSettings.CamBoostReturnOnKartDelay));
-            _currentTimer += Time.deltaTime;
-            yield return null;
-            //  }
-            //  else
-            //      break;
+            if (_cameraBoostCoroutine != null)
+                StopCoroutine(_cameraBoostCoroutine);
+            _cameraBoostCoroutine = StartCoroutine(CameraBoostBehaviour(_camBoostSettings.StartingDistanceCamInBoost, _camBoostSettings.MaxDistanceCamInBoost, _camBoostSettings.BoostDuration));
+            _currentTimer = 0f;
+        }
+
+        IEnumerator CameraBoostBehaviour(float startValue, float endValue, float boostDuration)
+        {
+            float startDynamicCamValue = _transposer.m_FollowOffset.z;
+
+            _currentTimer = 0f;
+            while (_currentTimer < boostDuration)
+            {
+                //   if (!backCamActivated)
+                //   {
+                _transposer.m_FollowOffset.z = Mathf.Lerp(startDynamicCamValue, endValue, _currentTimer / boostDuration);
+                _currentTimer += Time.deltaTime;
+                yield return null;
+                //  }
+                //   else
+                //      break;
+            }
+            yield return new WaitForSeconds(1f);
+
+            _currentTimer = 0f;
+            while (_currentTimer < (boostDuration * _camBoostSettings.CamBoostReturnOnKartDelay))
+            {
+                //  if (!_backCamActivated)
+                //  {
+                _transposer.m_FollowOffset.z = Mathf.Lerp(endValue, startValue, _currentTimer / (boostDuration * _camBoostSettings.CamBoostReturnOnKartDelay));
+                _currentTimer += Time.deltaTime;
+                yield return null;
+                //  }
+                //  else
+                //      break;
+            }
         }
     }
 }

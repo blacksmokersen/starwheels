@@ -1,51 +1,54 @@
 ﻿using UnityEngine;
 using Cinemachine;
 
-public class BackCamera : MonoBehaviour, IControllable
+namespace CameraUtils
 {
-    private CinemachineTransposer _transposer;
-    private CinemachineVirtualCamera _cinemachine;
-    private bool _backCamActivated = false;
-
-    private void Awake()
+    public class BackCamera : MonoBehaviour, IControllable
     {
-        _cinemachine = GetComponentInParent<CinemachineVirtualCamera>();
-        _transposer = _cinemachine.GetCinemachineComponent<CinemachineTransposer>();
-    }
+        private CinemachineTransposer _transposer;
+        private CinemachineVirtualCamera _cinemachine;
+        private bool _backCamActivated = false;
 
-    private void Update()
-    {
-        MapInputs();
-    }
-
-    public void BackCameraSwitch(bool activate)
-    {
-        if (activate)
+        private void Awake()
         {
-            _transposer.m_FollowOffset.z = 9;
-            _backCamActivated = true;
-        }
-        else
-        {
-            _transposer.m_FollowOffset.z = -8.5f;
-            _backCamActivated = false;
-        }
-    }
-
-    #region MapInput
-    public void MapInputs()
-    {
-        if (Input.GetButtonDown(Constants.Input.BackCamera))
-        {
-            BackCameraSwitch(true);
-          //  kartEvents.OnBackCameraStart(true);
+            _cinemachine = GetComponentInParent<CinemachineVirtualCamera>();
+            _transposer = _cinemachine.GetCinemachineComponent<CinemachineTransposer>();
         }
 
-        if (Input.GetButtonUp(Constants.Input.BackCamera))
+        private void Update()
         {
-            BackCameraSwitch(false);
-           // kartEvents.OnBackCameraEnd(false);
+            MapInputs();
         }
+
+        public void BackCameraSwitch(bool activate)
+        {
+            if (activate)
+            {
+                _transposer.m_FollowOffset.z = 9;
+                _backCamActivated = true;
+            }
+            else
+            {
+                _transposer.m_FollowOffset.z = -8.5f;
+                _backCamActivated = false;
+            }
+        }
+
+        #region MapInput
+        public void MapInputs()
+        {
+            if (Input.GetButtonDown(Constants.Input.BackCamera))
+            {
+                BackCameraSwitch(true);
+                //  kartEvents.OnBackCameraStart(true);
+            }
+
+            if (Input.GetButtonUp(Constants.Input.BackCamera))
+            {
+                BackCameraSwitch(false);
+                // kartEvents.OnBackCameraEnd(false);
+            }
+        }
+        #endregion
     }
-    #endregion
 }

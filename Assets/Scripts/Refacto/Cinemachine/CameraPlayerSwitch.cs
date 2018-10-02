@@ -7,14 +7,14 @@ namespace CameraUtils
     {
         public bool CanOnlyWatchTeam = true;
 
-        private CinemachineDynamicScript _cinemachineDynamicScript;
+        private SetKartCamera _setKartCamera;
         private CinemachineVirtualCamera _cinemachineVirtualCamera;
         private GameObject _currentTarget;
         private Kart.KartEvents _currentKartEvents;
 
         private void Awake()
         {
-            _cinemachineDynamicScript = GetComponent<CinemachineDynamicScript>();
+            _setKartCamera = GetComponent<SetKartCamera>();
             _cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
         }
 
@@ -43,12 +43,12 @@ namespace CameraUtils
                 _currentTarget.GetComponentInChildren<Audio.KartSoundsScript>().SetAudioListenerActive(false);
             }
             _currentTarget = kart;
-            _cinemachineDynamicScript.SetKart(_currentTarget);
+            _setKartCamera.SetKart(_currentTarget);
             _currentKartEvents = _currentTarget.GetComponent<Kart.KartEvents>();
             _currentKartEvents.OnKartDestroyed += SetCameraToNextPlayer;
             _currentTarget.GetComponentInChildren<Audio.KartSoundsScript>().SetAudioListenerActive(true);
 
-            FindObjectOfType<HUD.GameHUD>().ObserveKart(_currentTarget);            
+            FindObjectOfType<HUD.GameHUD>().ObserveKart(_currentTarget);
         }
     }
 }
