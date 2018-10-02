@@ -30,10 +30,12 @@ namespace CameraUtils
             composer = cinemachine.GetCinemachineComponent<CinemachineComposer>();
         }
 
+
         private void Update()
         {
             SpeedOnCamBehaviour();
         }
+
 
         public void SetKart(GameObject kart)
         {
@@ -43,7 +45,7 @@ namespace CameraUtils
             // Remove (un-listen) old kart events
             if (_kartEvents != null)
             {
-                _kartEvents.OnDriftBoostStart -= BoostCameraBehaviour;
+              //  _kartEvents.OnDriftBoostStart -= BoostCameraBehaviour;
                 _kartEvents.OnBackCameraStart -= BackCamera;
                 _kartEvents.OnBackCameraEnd -= BackCamera;
                 //  _kartEvents.OnCameraTurnStart -= TurnCamera;
@@ -54,7 +56,7 @@ namespace CameraUtils
             _kartEvents = kart.GetComponent<KartEvents>();
 
             // Add (listen) new kart events
-            _kartEvents.OnDriftBoostStart += BoostCameraBehaviour;
+          //  _kartEvents.OnDriftBoostStart += BoostCameraBehaviour;
             _kartEvents.OnBackCameraStart += BackCamera;
             _kartEvents.OnBackCameraEnd += BackCamera;
             //  _kartEvents.OnCameraTurnStart += TurnCamera;
@@ -62,6 +64,7 @@ namespace CameraUtils
         }
 
         #region CameraMovements
+
 
         public void BoostCameraBehaviour()
         {
@@ -71,11 +74,14 @@ namespace CameraUtils
             currentTimer = 0f;
         }
 
+
         public void SpeedOnCamBehaviour()
         {
             float clampCam = Mathf.Clamp(_kartEngine.PlayerVelocity / 5, 0, 20);
             cinemachine.m_Lens.FieldOfView = 50 + clampCam;
         }
+
+
 
         public void AimAndFollow(bool value)
         {
@@ -131,6 +137,7 @@ namespace CameraUtils
         */
         #endregion
 
+
         IEnumerator CameraBoostBehaviour(float startValue, float endValue, float boostDuration)
         {
             float startDynamicCamValue = transposer.m_FollowOffset.z;
@@ -162,5 +169,6 @@ namespace CameraUtils
                     break;
             }
         }
+
     }
 }
