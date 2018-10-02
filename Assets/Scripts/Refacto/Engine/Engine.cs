@@ -1,46 +1,49 @@
 ﻿using UnityEngine;
 
-public class Engine : MonoBehaviour, IControllable
+namespace Engine
 {
-    [Header("Forces")]
-    public EngineSettings Settings;
-
-    [Header("Events")]
-    public FloatEvent OnVelocityChange;
-
-    private Rigidbody _rb;
-
-	private void Awake ()
+    public class Engine : MonoBehaviour, IControllable
     {
-        _rb = GetComponentInParent<Rigidbody>();
-	}
+        [Header("Forces")]
+        public EngineSettings Settings;
 
-	private void FixedUpdate ()
-    {
-        MapInputs();
-        ClampMagnitude();
-        OnVelocityChange.Invoke(_rb.velocity.magnitude);
-	}
+        [Header("Events")]
+        public FloatEvent OnVelocityChange;
 
-    private void ClampMagnitude()
-    {
-        if(Settings.MaxMagnitude > 0)
-            _rb.velocity = Vector3.ClampMagnitude(_rb.velocity, Settings.MaxMagnitude);
-    }
+        private Rigidbody _rb;
 
-    public void Accelerate(float value)
-    {
-        _rb.AddRelativeForce(Vector3.forward * value * Settings.SpeedForce, ForceMode.Force);
-    }
+        private void Awake()
+        {
+            _rb = GetComponentInParent<Rigidbody>();
+        }
 
-    public void Decelerate(float value)
-    {
-        _rb.AddRelativeForce(Vector3.back * value * Settings.SpeedForce / Settings.DecelerationFactor, ForceMode.Force);
-    }
+        private void FixedUpdate()
+        {
+            MapInputs();
+            ClampMagnitude();
+            OnVelocityChange.Invoke(_rb.velocity.magnitude);
+        }
 
-    public void MapInputs()
-    {
-        Accelerate(Input.GetAxis(Constants.Input.Accelerate));
-        Decelerate(Input.GetAxis(Constants.Input.Decelerate));
+        private void ClampMagnitude()
+        {
+            if (Settings.MaxMagnitude > 0)
+                _rb.velocity = Vector3.ClampMagnitude(_rb.velocity, Settings.MaxMagnitude);
+        }
+
+        public void Accelerate(float value)
+        {
+            _rb.AddRelativeForce(Vector3.forward * value * Settings.SpeedForce, ForceMode.Force);
+        }
+
+        public void Decelerate(float value)
+        {
+            _rb.AddRelativeForce(Vector3.back * value * Settings.SpeedForce / Settings.DecelerationFactor, ForceMode.Force);
+        }
+
+        public void MapInputs()
+        {
+            Accelerate(Input.GetAxis(Constants.Input.Accelerate));
+            Decelerate(Input.GetAxis(Constants.Input.Decelerate));
+        }
     }
 }

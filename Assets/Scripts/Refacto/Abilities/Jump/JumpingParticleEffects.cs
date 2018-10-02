@@ -1,21 +1,24 @@
 ﻿using UnityEngine;
 
-public class JumpingParticleEffects : MonoBehaviour
+namespace Abilities.Jump
 {
-    [Header("Particles")]
-    public ParticleSystem MainJumpParticles;
-    public ParticleSystem AbilityReloadParticles;
-
-    [Header("Settings")]
-    public int ParticlesToEmit = 300;
-
-    public void MainJumpParticlesEmit()
+    public class JumpingParticleEffects : MonoBehaviour
     {
-        MainJumpParticles.Emit(ParticlesToEmit);
-    }
+        [Header("Particles")]
+        public ParticleSystem MainJumpParticles;
+        public ParticleSystem AbilityReloadParticles;
 
-    public void ReloadAbilityParticlesEmit()
-    {
-        AbilityReloadParticles.Emit(ParticlesToEmit);
+        [Header("Settings")]
+        public int ParticlesToEmit = 300;
+
+        public void MainJumpParticlesEmit()
+        {
+            MainJumpParticles.Emit(ParticlesToEmit);
+        }
+
+        public void ReloadAbilityParticlesEmit()
+        {
+            AbilityReloadParticles.Emit(ParticlesToEmit);
+        }
     }
 }

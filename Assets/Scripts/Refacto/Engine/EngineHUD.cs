@@ -1,63 +1,66 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class EngineHUD : MonoBehaviour
+namespace Engine
 {
-    private Rigidbody _rb;
-    private GameObject _speedMeter;
-    private Image _speedBar;
-    private Text _speedText;
-
-    private void Awake()
+    public class EngineHUD : MonoBehaviour
     {
-        _rb = GetComponentInParent<Rigidbody>();
-    }
+        private Rigidbody _rb;
+        private GameObject _speedMeter;
+        private Image _speedBar;
+        private Text _speedText;
 
-    private void Start()
-    {
-        _speedMeter = GameObject.Find(Constants.GameObjectName.Speedmeter);
-        _speedBar = _speedMeter.GetComponentInChildren<Image>();
-        _speedText = _speedMeter.GetComponentInChildren<Text>();
-    }
-
-    private void Update()
-    {
-        if (_speedMeter)
+        private void Awake()
         {
-            UpdateSpeedmeter(_rb.velocity);
+            _rb = GetComponentInParent<Rigidbody>();
         }
-    }
 
-    public void UpdateSpeedmeter(Vector3 kartVelocity)
-    {
-        var speed = Mathf.Round(kartVelocity.magnitude);
-        _speedBar.fillAmount = speed / 70;
-        _speedText.text = "" + speed * 2;
-    }
-
-    private void Show()
-    {
-        if (_speedMeter)
+        private void Start()
         {
-            _speedMeter.SetActive(true);
+            _speedMeter = GameObject.Find(Constants.GameObjectName.Speedmeter);
+            _speedBar = _speedMeter.GetComponentInChildren<Image>();
+            _speedText = _speedMeter.GetComponentInChildren<Text>();
         }
-    }
 
-    private void Hide()
-    {
-        if (_speedMeter)
+        private void Update()
         {
-            _speedMeter.SetActive(false);
+            if (_speedMeter)
+            {
+                UpdateSpeedmeter(_rb.velocity);
+            }
         }
-    }
 
-    private void OnEnable()
-    {
-        Show();
-    }
+        public void UpdateSpeedmeter(Vector3 kartVelocity)
+        {
+            var speed = Mathf.Round(kartVelocity.magnitude);
+            _speedBar.fillAmount = speed / 70;
+            _speedText.text = "" + speed * 2;
+        }
 
-    private void OnDisable()
-    {
-        Hide();
+        private void Show()
+        {
+            if (_speedMeter)
+            {
+                _speedMeter.SetActive(true);
+            }
+        }
+
+        private void Hide()
+        {
+            if (_speedMeter)
+            {
+                _speedMeter.SetActive(false);
+            }
+        }
+
+        private void OnEnable()
+        {
+            Show();
+        }
+
+        private void OnDisable()
+        {
+            Hide();
+        }
     }
 }

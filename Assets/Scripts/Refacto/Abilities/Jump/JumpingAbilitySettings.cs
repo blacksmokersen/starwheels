@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Kart Settings/JumpingAbility")]
-public class JumpingAbilitySettings : ScriptableObject
+namespace Abilities.Jump
 {
-    [Header("Jump forces")]
-    public float FirstJumpForce;
-    public float SecondJumpUpForce;
-    public float SecondJumpLateralForces;
+    [CreateAssetMenu(menuName = "Kart Settings/JumpingAbility")]
+    public class JumpingAbilitySettings : ScriptableObject
+    {
+        [Header("Jump forces")]
+        public float FirstJumpForce;
+        public float SecondJumpUpForce;
+        public float SecondJumpLateralForces;
 
-    [Header("Cooldown")]
-    public float CooldownDuration;
+        [Header("Cooldown")]
+        public float CooldownDuration;
+    }
 }

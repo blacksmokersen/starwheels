@@ -1,12 +1,9 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
-using Photon.Pun;
 
-namespace Tools
+namespace Boost
 {
-    public class Boost : MonoBehaviourPun
+    public class Boost : MonoBehaviour
     {
         public BoostSettings Settings;
 
@@ -39,10 +36,7 @@ namespace Tools
             }
             _physicsBoostCoroutine = StartCoroutine(BoostPhysic(Settings.BoostDuration, Settings.MagnitudeBoost, Settings.BoostSpeed));
 
-         //   CallRPC("OnDriftBoostStart");
             yield return new WaitForSeconds(Settings.BoostDuration);
-          //  ResetDrift(); // LANCER EVENT RESET DRIFT ???
-         //   CallRPC("OnDriftBoostEnd");
         }
 
         public IEnumerator BoostPhysic(float boostDuration, float magnitudeBoost, float speedBoost)
@@ -67,14 +61,5 @@ namespace Tools
                 yield return new WaitForFixedUpdate();
             }
         }
-        /*
-        [PunRPC] public void RPCOnDriftBoostEnd() { OnDriftBoostEnd(); }
-        [PunRPC] public void RPCOnDriftBoostStart() { OnDriftBoostStart(); }
-
-        public void CallRPC(string onAction, params object[] parameters)
-        {
-            photonView.RPC("RPC" + onAction, RpcTarget.All, parameters);
-        }
-        */
     }
 }

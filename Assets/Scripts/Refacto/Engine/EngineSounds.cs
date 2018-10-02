@@ -1,29 +1,32 @@
 ﻿using UnityEngine;
 
-public class EngineSounds : MonoBehaviour
+namespace Engine
 {
-    [Header("Engine")]
-    public AudioSource MotorAccelSource;
-    public AudioSource MotorFullSource;
-    public AudioSource MotorDecelSource;
-
-    private void Awake()
+    public class EngineSounds : MonoBehaviour
     {
-        PlayMotorFullSound();
-    }
+        [Header("Engine")]
+        public AudioSource MotorAccelSource;
+        public AudioSource MotorFullSource;
+        public AudioSource MotorDecelSource;
 
-    public void SetMotorFullPitch(float pitch)
-    {
-        MotorFullSource.pitch = pitch;
-    }
+        private void Awake()
+        {
+            PlayMotorFullSound();
+        }
 
-    private void PlayMotorFullSound()
-    {
-        MotorFullSource.Play();
-    }
+        public void SetMotorFullPitch(float pitch)
+        {
+            MotorFullSource.pitch = pitch;
+        }
 
-    private void StopMotorFullSound()
-    {
-        MotorFullSource.Stop();
+        private void PlayMotorFullSound()
+        {
+            MotorFullSource.Play();
+        }
+
+        private void StopMotorFullSound()
+        {
+            MotorFullSource.Stop();
+        }
     }
 }

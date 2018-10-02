@@ -1,21 +1,24 @@
 ﻿using UnityEngine;
 
-public class HealthAnimations : MonoBehaviour
+namespace Health
 {
-    private Animator _animator;
-
-    private void Awake()
+    public class HealthAnimations : MonoBehaviour
     {
-        GetComponentInParent<Animator>();
-    }
+        private Animator _animator;
 
-    public void HighSpeedHitAnimation()
-    {
-        _animator.SetTrigger("HitHighSpeed");
-    }
+        private void Awake()
+        {
+            GetComponentInParent<Animator>();
+        }
 
-    public void LowSpeedHitAnimation()
-    {
-        _animator.SetTrigger("HitLowSpeed");
+        public void HighSpeedHitAnimation()
+        {
+            _animator.SetTrigger("HitHighSpeed");
+        }
+
+        public void LowSpeedHitAnimation()
+        {
+            _animator.SetTrigger("HitLowSpeed");
+        }
     }
 }

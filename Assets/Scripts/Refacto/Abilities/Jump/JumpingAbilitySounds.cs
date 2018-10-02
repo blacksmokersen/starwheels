@@ -1,18 +1,20 @@
 ﻿using UnityEngine;
 
-public class JumpingAbilitySounds : MonoBehaviour
+namespace Abilities.Jump
 {
-    public AudioSource FirstJump;
-    public AudioSource SecondJump;
-
-    public void PlayFirstJumpSound()
+    public class JumpingAbilitySounds : MonoBehaviour
     {
-        FirstJump.Play();
-        Debug.Log("Played");
-    }
+        public AudioSource FirstJump;
+        public AudioSource SecondJump;
 
-    public void PlaySecondJumpSound()
-    {
-        SecondJump.Play();
+        public void PlayFirstJumpSound()
+        {
+            FirstJump.Play();
+        }
+
+        public void PlaySecondJumpSound()
+        {
+            SecondJump.Play();
+        }
     }
 }

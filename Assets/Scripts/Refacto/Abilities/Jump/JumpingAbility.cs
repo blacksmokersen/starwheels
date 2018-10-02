@@ -1,103 +1,107 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using Common.PhysicsUtils;
 
-public class JumpingAbility : MonoBehaviour, IControllable
+namespace Abilities.Jump
 {
-    [Header("Events")]
-    public UnityEvent OnFirstJump;
-    public UnityEvent OnSecondJump;
-    public UnityEvent OnJumpReload;
-
-    [Header("Forces")]
-    public JumpingAbilitySettings Settings;
-
-    [SerializeField] private GroundCondition groundCondition;
-
-    private Rigidbody _rb;
-    private bool _canUseAbility = true;
-    private bool _hasDoneFirstJump = false;
-
-    // CORE
-
-    private void Awake ()
+    public class JumpingAbility : MonoBehaviour, IControllable
     {
-        _rb = GetComponentInParent<Rigidbody>();
-	}
+        [Header("Events")]
+        public UnityEvent OnFirstJump;
+        public UnityEvent OnSecondJump;
+        public UnityEvent OnJumpReload;
 
-	private void FixedUpdate ()
-    {
-        MapInputs();
-	}
+        [Header("Forces")]
+        public JumpingAbilitySettings Settings;
 
-    // PUBLIC
+        [SerializeField] private GroundCondition groundCondition;
 
-    public void FirstJump()
-    {
-        _rb.AddRelativeForce(Vector3.up * Settings.FirstJumpForce, ForceMode.Impulse);
-        _hasDoneFirstJump = true;
-        OnFirstJump.Invoke();
-    }
+        private Rigidbody _rb;
+        private bool _canUseAbility = true;
+        private bool _hasDoneFirstJump = false;
 
-    public void SecondJump(JoystickValues joystickValues)
-    {
-        _hasDoneFirstJump = false;
+        // CORE
 
-        Vector3 direction;
-        if (joystickValues.X < -0.5f)
-            direction = Vector3.left;
-        else if (joystickValues.X > 0.5f)
-            direction = Vector3.right;
-        else if (joystickValues.Y > 0.5f)
-            direction = Vector3.forward;
-        else if (joystickValues.Y < -0.5f)
-            direction = Vector3.back;
-        else
-            direction = Vector3.up;
-
-        var forceUp = Vector3.up * Settings.SecondJumpUpForce;
-        var forceDirectional = direction * Settings.SecondJumpLateralForces;
-        _rb.AddRelativeForce(forceUp + forceDirectional, ForceMode.Impulse);
-        OnSecondJump.Invoke();
-    }
-
-    public  void MapInputs()
-    {
-        if (Input.GetButtonDown(Constants.Input.UseAbility))
+        private void Awake()
         {
-            JoystickValues joystickValues = new JoystickValues()
-            {
-                X = Input.GetAxis(Constants.Input.TurnAxis),
-                Y = Input.GetAxis(Constants.Input.UpAndDownAxis)
-            };
-            UseAbility(joystickValues);
+            _rb = GetComponentInParent<Rigidbody>();
         }
-    }
 
-    // PRIVATE
-
-    private void UseAbility(JoystickValues joystickValues)
-    {
-        if (_canUseAbility)
+        private void FixedUpdate()
         {
-            if (!_hasDoneFirstJump)
-            {
-                FirstJump();
-            }
+            MapInputs();
+        }
+
+        // PUBLIC
+
+        public void FirstJump()
+        {
+            _rb.AddRelativeForce(Vector3.up * Settings.FirstJumpForce, ForceMode.Impulse);
+            _hasDoneFirstJump = true;
+            OnFirstJump.Invoke();
+        }
+
+        public void SecondJump(JoystickValues joystickValues)
+        {
+            _hasDoneFirstJump = false;
+
+            Vector3 direction;
+            if (joystickValues.X < -0.5f)
+                direction = Vector3.left;
+            else if (joystickValues.X > 0.5f)
+                direction = Vector3.right;
+            else if (joystickValues.Y > 0.5f)
+                direction = Vector3.forward;
+            else if (joystickValues.Y < -0.5f)
+                direction = Vector3.back;
             else
+                direction = Vector3.up;
+
+            var forceUp = Vector3.up * Settings.SecondJumpUpForce;
+            var forceDirectional = direction * Settings.SecondJumpLateralForces;
+            _rb.AddRelativeForce(forceUp + forceDirectional, ForceMode.Impulse);
+            OnSecondJump.Invoke();
+        }
+
+        public void MapInputs()
+        {
+            if (Input.GetButtonDown(Constants.Input.UseAbility))
             {
-                SecondJump(joystickValues);
-                StartCoroutine(Cooldown());
+                JoystickValues joystickValues = new JoystickValues()
+                {
+                    X = Input.GetAxis(Constants.Input.TurnAxis),
+                    Y = Input.GetAxis(Constants.Input.UpAndDownAxis)
+                };
+                UseAbility(joystickValues);
             }
         }
-    }
 
-    private IEnumerator Cooldown ()
-    {
-        _canUseAbility = false;
-        yield return new WaitForSeconds(Settings.CooldownDuration);
-        _canUseAbility = true;
-        _hasDoneFirstJump = false;
-        OnJumpReload.Invoke();
+        // PRIVATE
+
+        private void UseAbility(JoystickValues joystickValues)
+        {
+            if (_canUseAbility)
+            {
+                if (!_hasDoneFirstJump)
+                {
+                    FirstJump();
+                }
+                else
+                {
+                    SecondJump(joystickValues);
+                    StartCoroutine(Cooldown());
+                }
+            }
+        }
+
+        private IEnumerator Cooldown()
+        {
+            _canUseAbility = false;
+            yield return new WaitForSeconds(Settings.CooldownDuration);
+            _canUseAbility = true;
+            _hasDoneFirstJump = false;
+            OnJumpReload.Invoke();
+        }
     }
 }
