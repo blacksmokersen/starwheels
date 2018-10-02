@@ -20,7 +20,8 @@ namespace Drift
         private Coroutine _driftedLongEnoughTimer;
         private Coroutine _physicsBoostCoroutine;
         private Coroutine _turboCoroutine;
-        [SerializeField] private Rigidbody _rigidBody;
+        private Rigidbody _rigidBody;
+        [SerializeField] private SteeringWheel _steeringWheel;
         [SerializeField] private GroundCondition _groundCondition;
 
         public TurnState TurningState = TurnState.NotTurning;
@@ -28,8 +29,10 @@ namespace Drift
         public DriftState DriftState = DriftState.NotDrifting;
 
         public UnityEvent OnDriftStart;
+        /*
         public UnityEvent OnDriftLeft;
         public UnityEvent OnDriftRight;
+        */
         public UnityEvent OnDriftWhite;
         public UnityEvent OnDriftOrange;
         public UnityEvent OnDriftRed;
@@ -40,17 +43,8 @@ namespace Drift
 
         private void Awake()
         {
-            OnDriftLeft.AddListener(() => { DriftTurnState = TurnState.Left; });
-            OnDriftRight.AddListener(() => { DriftTurnState = TurnState.Right; });
-
-            OnDriftWhite.AddListener(() => { DriftState = DriftState.White; });
-            OnDriftOrange.AddListener(() => { DriftState = DriftState.Orange; });
-            OnDriftRed.AddListener(() => { DriftState = DriftState.Red; });
-
-            OnDriftReset.AddListener(() => { DriftTurnState = TurnState.NotTurning; });
-            OnDriftReset.AddListener(() => { DriftState = DriftState.NotDrifting; });
-
-            OnDriftStart.AddListener(() => { });
+            _rigidBody = GetComponentInParent<Rigidbody>();
+          //  _steeringWheel = GetComponentInParent<SteeringWheel>();
         }
 
 
@@ -66,6 +60,12 @@ namespace Drift
             {
                 StopDrift();
             }
+
+            if (DriftTurnState != TurnState.NotTurning)
+                _steeringWheel.enabled = false;
+            else
+                _steeringWheel.enabled = true;
+
         }
 
         private void FixedUpdate()
@@ -100,11 +100,13 @@ namespace Drift
 
             if (angle < 0)
             {
-                OnDriftLeft.Invoke();
+                // OnDriftLeft.Invoke();
+                DriftTurnState = TurnState.Left;
             }
             if (angle > 0)
             {
-                OnDriftRight.Invoke();
+                // OnDriftRight.Invoke();
+                DriftTurnState = TurnState.Right;
             }
 
             EnterNextState();
@@ -129,6 +131,8 @@ namespace Drift
 
         public void ResetDrift()
         {
+            DriftTurnState = TurnState.NotTurning;
+            DriftState = DriftState.NotDrifting;
             OnDriftReset.Invoke();
 
             _driftedLongEnough = false;
@@ -203,16 +207,16 @@ namespace Drift
             switch (DriftState)
             {
                 case DriftState.NotDrifting:
+                    DriftState = DriftState.White;
                     OnDriftWhite.Invoke();
-                    Debug.Log("w");
                     break;
                 case DriftState.White:
+                    DriftState = DriftState.Orange;
                     OnDriftOrange.Invoke();
-                    Debug.Log("o");
                     break;
                 case DriftState.Orange:
+                    DriftState = DriftState.Red;
                     OnDriftRed.Invoke();
-                    Debug.Log("r");
                     break;
                 case DriftState.Red:
                     break;
