@@ -618,7 +618,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4017103279450112}
-  - component: {fileID: 114928400812221170}
   - component: {fileID: 114300515161948848}
   - component: {fileID: 114073646226483092}
   - component: {fileID: 114070487582926800}
@@ -2132,7 +2131,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1204662942502008}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.13, z: -0.106}
+  m_LocalPosition: {x: 0, y: 0.171, z: -0.106}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4654570510331058}
@@ -2611,7 +2610,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1138407828072762}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.2, y: 4.55, z: -11.07}
+  m_LocalPosition: {x: 0, y: 0.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4926205204491230}
@@ -4035,7 +4034,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Settings: {fileID: 11400000, guid: 2766024045128a4499267de9e44728d7, type: 2}
   _steeringWheel: {fileID: 114120355762576722}
-  _groundCondition: {fileID: 114928400812221170}
+  _groundCondition: {fileID: 114241659848452430}
   TurningState: 0
   DriftTurnState: 0
   DriftState: 0
@@ -4235,6 +4234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Grounded: 0
   distanceForGrounded: 0.5
+  offset: {x: 0, y: 0.25, z: 0}
 --- !u!114 &114277620233296718
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4503,19 +4503,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   m_maskType: 0
---- !u!114 &114928400812221170
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1445515110176292}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbf60f6c191a5c84897418b634f7cc4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Grounded: 0
-  distanceForGrounded: 0.5
 --- !u!114 &114969713501460798
 MonoBehaviour:
   m_ObjectHideFlags: 1
