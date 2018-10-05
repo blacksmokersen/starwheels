@@ -8,7 +8,7 @@ using UnityEditor;
 
 namespace Menu
 {
-    public class MainMenu : MonoBehaviour
+    public class MainMenu : Bolt.GlobalEventListener
     {
         private enum State
         {
@@ -45,6 +45,17 @@ namespace Menu
 
         // PUBLIC
 
+
+        public override void BoltStartDone()
+        {
+            if (BoltNetwork.isServer)
+            {
+                string matchName = "Test";
+                BoltNetwork.SetServerInfo(matchName, null);
+                BoltNetwork.LoadScene("RefactoTest");
+            }
+        }
+
         // PRIVATE
 
         private void Main()
@@ -56,9 +67,7 @@ namespace Menu
         private void Solo()
         {
             Debug.Log("Launching Solo mode");
-            //PhotonNetwork.OfflineMode = true;
-            //hotonNetwork.CreateRoom("Solo");
-            SceneManager.LoadScene(Constants.Scene.FortBlock);
+            BoltLauncher.StartSinglePlayer();
         }
 
         private void Multi()

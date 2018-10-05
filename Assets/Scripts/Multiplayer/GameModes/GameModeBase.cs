@@ -27,13 +27,6 @@ namespace GameModes
         {
             _spawns = GameObject.FindGameObjectsWithTag(Constants.Tag.Spawn);
 
-            /*if (!PhotonNetwork.IsConnected)
-            {
-                PhotonNetwork.OfflineMode = true;
-                PhotonNetwork.LocalPlayer.SetTeam(PunTeams.Team.blue);
-                PhotonNetwork.CreateRoom("Local");
-            }
-            */
             SpawnKart();
         }
 
