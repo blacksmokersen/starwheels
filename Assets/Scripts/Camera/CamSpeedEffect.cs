@@ -11,8 +11,7 @@ namespace CameraUtils
 
         private void Awake()
         {
-            _cinemachine = GetComponentInParent<CinemachineVirtualCamera>();
-            _rigidbody = _cinemachine.Follow.GetComponent<Rigidbody>();
+            _cinemachine = GetComponent<CinemachineVirtualCamera>();
         }
 
         void Update()
@@ -22,8 +21,16 @@ namespace CameraUtils
 
         public void SpeedOnCamBehaviour()
         {
-            float clampCam = Mathf.Clamp(_rigidbody.velocity.magnitude / 5, 0, 20);
-            _cinemachine.m_Lens.FieldOfView = 50 + clampCam;
+            if (_rigidbody)
+            {
+                float clampCam = Mathf.Clamp(_rigidbody.velocity.magnitude / 5, 0, 20);
+                _cinemachine.m_Lens.FieldOfView = 50 + clampCam;
+            }
+        }
+
+        public void SetRigidbody(Rigidbody rb)
+        {
+            _rigidbody = rb;
         }
     }
 }

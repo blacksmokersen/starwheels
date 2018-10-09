@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
+using UdpKit;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-
+using ExitGames.Client.Photon;
 
 namespace Menu
 {
@@ -50,9 +52,24 @@ namespace Menu
         {
             if (BoltNetwork.isServer)
             {
+
                 string matchName = "Test";
                 BoltNetwork.SetServerInfo(matchName, null);
                 BoltNetwork.LoadScene("RefactoTest");
+            }
+            Debug.Log("Gooo");
+        }
+
+        public override void SessionListUpdated(Map<Guid, UdpSession> sessionList)
+        {
+            Debug.LogFormat("Session list updated : {0} total sessions", sessionList.Count);
+            foreach(var session in sessionList)
+            {
+                UdpSession photonSession = session.Value as UdpSession;
+                if(photonSession.Source == UdpSessionSource.Photon)
+                {
+                    BoltNetwork.Connect(photonSession);
+                }
             }
         }
 
@@ -72,8 +89,10 @@ namespace Menu
 
         private void Multi()
         {
+            BoltLauncher.StartServer();
             currentState = State.Multiplayer;
-            UpdateMenu();
+            BoltLauncher.StartClient();
+            //UpdateMenu();
         }
 
         private void Options()
@@ -84,11 +103,11 @@ namespace Menu
 
         private void Quit()
         {
-#if UNITY_EDITOR
+            #if UNITY_EDITOR
             EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+            #else
+            Application.Quit();
+            #endif
         }
 
         private void Back()
