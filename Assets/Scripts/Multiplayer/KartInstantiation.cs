@@ -2,13 +2,22 @@
 
 namespace Multiplayer
 {
-    [BoltGlobalBehaviour]
     public class KartInstantiation : Bolt.GlobalEventListener
     {
-        public override void SceneLoadLocalDone(string map)
+        private void Awake()
         {
+            Debug.Log("Bolt is connected : " + BoltNetwork.isConnected);
+            if (!BoltNetwork.isConnected)
+            {
+                BoltLauncher.StartSinglePlayer();
+            }
+        }
+
+        public override void BoltStartDone()
+        {
+            Debug.Log("INSTANTIATION");
             var myKart = BoltNetwork.Instantiate(BoltPrefabs.KartBob, new Vector3(0, 1, 0), Quaternion.identity);
-            FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
+            //FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
         }
     }
 }

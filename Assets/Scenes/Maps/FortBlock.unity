@@ -375,6 +375,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1942301334107394, guid: 9e108fdb4daabb948a2333abdf6387e5, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e108fdb4daabb948a2333abdf6387e5, type: 2}
   m_IsPrefabAsset: 0
@@ -1109,10 +1113,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114819061569261648, guid: 9e29d6387f632584c930969e2a427439,
-        type: 2}
-      propertyPath: kartToFollow
-      value: 
+    - target: {fileID: 1730406326990226, guid: 9e29d6387f632584c930969e2a427439, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e29d6387f632584c930969e2a427439, type: 2}
@@ -1261,7 +1264,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 894089953}
-  - component: {fileID: 894089957}
   - component: {fileID: 894089955}
   - component: {fileID: 894089956}
   - component: {fileID: 894089954}
@@ -1349,18 +1351,6 @@ MonoBehaviour:
   MaxPlayersPerTeam: 0
   IsOver: 0
   WinnerTeam: 0
---- !u!114 &894089957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114266236610228482, guid: 478221f478f6e2743bd88fccf53e59af,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 894089952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &951217186
 Prefab:
   m_ObjectHideFlags: 0
@@ -2091,6 +2081,46 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1676150085
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1676150087}
+  - component: {fileID: 1676150086}
+  m_Layer: 0
+  m_Name: KartInstantiator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1676150086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1676150085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb9cdd18ef0fa034d901dbf746a0e9db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1676150087
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1676150085}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 79.8005, y: 24.004349, z: 83.03732}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1681897794
 Prefab:
   m_ObjectHideFlags: 0
@@ -2744,7 +2774,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2029616954
 Transform:
   m_ObjectHideFlags: 0

@@ -52,10 +52,9 @@ namespace Menu
         {
             if (BoltNetwork.isServer)
             {
-
                 string matchName = "Test";
                 BoltNetwork.SetServerInfo(matchName, null);
-                BoltNetwork.LoadScene("FortBlock");
+                BoltNetwork.LoadScene("RefactoTest");
             }
         }
 
@@ -83,7 +82,7 @@ namespace Menu
         private void Solo()
         {
             Debug.Log("Launching Solo mode");
-            BoltLauncher.StartServer();
+            BoltLauncher.StartSinglePlayer();
         }
 
         private void Multi()

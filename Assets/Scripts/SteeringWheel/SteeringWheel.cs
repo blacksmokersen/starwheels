@@ -41,7 +41,8 @@ namespace Steering
 
         public override void Attached()
         {
-            entity.TakeControl();
+            if(!entity.isControlled)
+                entity.TakeControl();
         }
 
         public override void SimulateController()
