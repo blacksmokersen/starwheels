@@ -5,10 +5,10 @@ namespace Multiplayer
     [BoltGlobalBehaviour]
     public class KartInstant : Bolt.GlobalEventListener
     {
-
         public override void SceneLoadLocalDone(string map)
         {
-            BoltNetwork.Instantiate(BoltPrefabs.KartRefacto_1, new Vector3(0, 1, 0), Quaternion.identity);
+            int randomX = Random.Range(-4, 4);
+            BoltNetwork.Instantiate(BoltPrefabs.KartRefacto, new Vector3(randomX, 1, 0), Quaternion.identity);
         }
     }
 }

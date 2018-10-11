@@ -4,7 +4,7 @@ using Common.PhysicsUtils;
 
 namespace Steering
 {
-    public class SteeringWheel : MonoBehaviour, IControllable
+    public class SteeringWheel : Bolt.EntityBehaviour<IKartState>, IControllable
     {
         public enum TurnState { NotTurning, Left, Right }
 
@@ -32,7 +32,7 @@ namespace Steering
 
         private void FixedUpdate()
         {
-            MapInputs();
+            //MapInputs();
         }
 
         // PUBLIC
@@ -40,6 +40,11 @@ namespace Steering
         public void MapInputs()
         {
             TurnUsingTorque(Input.GetAxis(Constants.Input.TurnAxis));
+        }
+
+        public override void SimulateOwner()
+        {
+            MapInputs();
         }
 
         public void TurnUsingTorque(float turnValue)

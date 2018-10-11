@@ -2,7 +2,7 @@
 
 namespace Engine
 {
-    public class Engine : MonoBehaviour, IControllable
+    public class Engine : Bolt.EntityBehaviour<IKartState>, IControllable
     {
         [Header("Forces")]
         public EngineSettings Settings;
@@ -12,6 +12,8 @@ namespace Engine
 
         private Rigidbody _rb;
 
+        // CORE
+
         private void Awake()
         {
             _rb = GetComponentInParent<Rigidbody>();
@@ -19,7 +21,6 @@ namespace Engine
 
         private void FixedUpdate()
         {
-            MapInputs();
             ClampMagnitude();
             OnVelocityChange.Invoke(_rb.velocity.magnitude);
         }
@@ -30,20 +31,29 @@ namespace Engine
                 _rb.velocity = Vector3.ClampMagnitude(_rb.velocity, Settings.MaxMagnitude);
         }
 
-        public void Accelerate(float value)
-        {
-            _rb.AddRelativeForce(Vector3.forward * value * Settings.SpeedForce, ForceMode.Force);
-        }
-
-        public void Decelerate(float value)
-        {
-            _rb.AddRelativeForce(Vector3.back * value * Settings.SpeedForce / Settings.DecelerationFactor, ForceMode.Force);
-        }
+        // PUBLIC
 
         public void MapInputs()
         {
             Accelerate(Input.GetAxis(Constants.Input.Accelerate));
             Decelerate(Input.GetAxis(Constants.Input.Decelerate));
+        }
+
+        public override void SimulateOwner()
+        {
+            MapInputs();
+        }
+
+        // PRIVATE
+
+        private void Accelerate(float value)
+        {
+            _rb.AddRelativeForce(Vector3.forward * value * Settings.SpeedForce, ForceMode.Force);
+        }
+
+        private void Decelerate(float value)
+        {
+            _rb.AddRelativeForce(Vector3.back * value * Settings.SpeedForce / Settings.DecelerationFactor, ForceMode.Force);
         }
     }
 }
