@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using Common.PhysicsUtils;
+using Bolt;
 
 namespace Steering
 {
-    public class SteeringWheel : Bolt.EntityBehaviour<IKartState>, IControllable
+    public class SteeringWheel : EntityBehaviour<IKartState>, IControllable
     {
         public enum TurnState { NotTurning, Left, Right }
 
@@ -22,6 +23,7 @@ namespace Steering
         public UnityEvent<TurnState> OnTurn;
 
         private Rigidbody _rb;
+        private float _turnValue;
 
         // CORE
 
@@ -30,21 +32,41 @@ namespace Steering
             _rb = GetComponentInParent<Rigidbody>();
         }
 
-        private void FixedUpdate()
-        {
-            //MapInputs();
-        }
-
         // PUBLIC
 
         public void MapInputs()
         {
-            TurnUsingTorque(Input.GetAxis(Constants.Input.TurnAxis));
+            _turnValue = Input.GetAxis(Constants.Input.TurnAxis);
         }
 
-        public override void SimulateOwner()
+        public override void Attached()
+        {
+            entity.TakeControl();
+        }
+
+        public override void SimulateController()
         {
             MapInputs();
+
+            IKartCommandInput input = KartCommand.Create();
+            input.Turn = _turnValue;
+
+            entity.QueueInput(input);
+        }
+
+        public override void ExecuteCommand(Command command, bool resetState)
+        {
+            KartCommand cmd = (KartCommand)command;
+
+            if (resetState)
+            {
+                Debug.LogWarning("Applying Engine Correction");
+            }
+            else
+            {
+                TurnUsingTorque(cmd.Input.Turn);
+                cmd.Result.Velocity = _rb.velocity;
+            }
         }
 
         public void TurnUsingTorque(float turnValue)
