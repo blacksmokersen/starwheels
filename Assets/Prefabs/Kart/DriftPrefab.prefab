@@ -55,6 +55,7 @@ GameObject:
   - component: {fileID: 114557392518534000}
   - component: {fileID: 114069609646532440}
   - component: {fileID: 114245998204012360}
+  - component: {fileID: 114900606784640444}
   m_Layer: 11
   m_Name: DriftPrefab
   m_TagString: Untagged
@@ -160,6 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Grounded: 0
   distanceForGrounded: 0.5
+  offset: {x: 0, y: 0, z: 0}
 --- !u!114 &114245998204012360
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -178,6 +180,37 @@ MonoBehaviour:
   DriftTurnState: 0
   DriftState: 0
   OnDriftStart:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnDriftEnd:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnDriftReset:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114069609646532440}
+        m_MethodName: StopSmoke
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnDriftLeft:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnDriftRight:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
@@ -241,27 +274,6 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  OnDriftEnd:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnDriftReset:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114069609646532440}
-        m_MethodName: StopSmoke
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   OnDriftBoostStart:
     m_PersistentCalls:
       m_Calls:
@@ -306,6 +318,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Settings: {fileID: 11400000, guid: c599c944b5b41b446ab1e3ef29a19b81, type: 2}
+--- !u!114 &114900606784640444
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1337614903038932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 824c354c0cfab5a47b59553eeda8a4a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &198545270054127530
 ParticleSystem:
   m_ObjectHideFlags: 1

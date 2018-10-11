@@ -55,7 +55,7 @@ namespace Menu
 
                 string matchName = "Test";
                 BoltNetwork.SetServerInfo(matchName, null);
-                BoltNetwork.LoadScene("RefactoTest");
+                BoltNetwork.LoadScene("FortBlock");
             }
         }
 
