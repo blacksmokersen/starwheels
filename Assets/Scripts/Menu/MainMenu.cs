@@ -57,7 +57,6 @@ namespace Menu
                 BoltNetwork.SetServerInfo(matchName, null);
                 BoltNetwork.LoadScene("RefactoTest");
             }
-            Debug.Log("Gooo");
         }
 
         public override void SessionListUpdated(Map<Guid, UdpSession> sessionList)
@@ -84,7 +83,7 @@ namespace Menu
         private void Solo()
         {
             Debug.Log("Launching Solo mode");
-            BoltLauncher.StartSinglePlayer();
+            BoltLauncher.StartServer();
         }
 
         private void Multi()

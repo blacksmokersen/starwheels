@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using Bolt;
+using UnityEngine;
 
 namespace Engine
 {
-    public class Engine : Bolt.EntityBehaviour<IKartState>, IControllable
+    public class Engine : EntityBehaviour<IKartState>, IControllable
     {
         [Header("Forces")]
         public EngineSettings Settings;
@@ -11,6 +12,9 @@ namespace Engine
         public FloatEvent OnVelocityChange;
 
         private Rigidbody _rb;
+
+        private float _forwardValue;
+        private float _backwardValue;
 
         // CORE
 
@@ -35,13 +39,41 @@ namespace Engine
 
         public void MapInputs()
         {
-            Accelerate(Input.GetAxis(Constants.Input.Accelerate));
-            Decelerate(Input.GetAxis(Constants.Input.Decelerate));
+            _forwardValue =  Input.GetAxis(Constants.Input.Accelerate);
+            _backwardValue =  Input.GetAxis(Constants.Input.Decelerate);
         }
 
-        public override void SimulateOwner()
+        public override void Attached()
         {
+            entity.TakeControl();
+        }
+
+        public override void SimulateController()
+        {
+            Debug.LogWarning("SimulateController");
             MapInputs();
+
+            IKartCommandInput input = KartCommand.Create();
+            input.Forward = _forwardValue;
+            input.Backward = _backwardValue;
+
+            entity.QueueInput(input);
+        }
+
+        public override void ExecuteCommand(Command command, bool resetState)
+        {
+            KartCommand cmd = (KartCommand)command;
+
+            if (resetState)
+            {
+                Debug.LogWarning("Applying Engine Correction");
+            }
+            else
+            {
+                Accelerate(cmd.Input.Forward);
+                Decelerate(cmd.Input.Backward);
+                cmd.Result.Velocity = _rb.velocity;
+            }
         }
 
         // PRIVATE
