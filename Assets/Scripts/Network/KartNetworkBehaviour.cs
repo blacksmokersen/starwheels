@@ -7,10 +7,9 @@ namespace Network
     {
         private void Awake()
         {
-            Debug.Log("Bolt is connected : " + BoltNetwork.isConnected);
             if (!BoltNetwork.isConnected)
             {
-                BoltLauncher.StartSinglePlayer();
+                BoltLauncher.StartServer();
             }
         }
 

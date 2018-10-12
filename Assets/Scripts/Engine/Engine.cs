@@ -46,12 +46,17 @@ namespace Engine
         public override void Attached()
         {
             if (!entity.isControlled)
+            {
                 entity.TakeControl();
+            }
         }
 
         public override void SimulateController()
         {
             MapInputs();
+
+            var position = transform.position; position.x += 1f;
+            transform.position = position;
 
             IKartCommandInput input = KartCommand.Create();
             input.Forward = _forwardValue;
@@ -74,7 +79,7 @@ namespace Engine
                 Accelerate(cmd.Input.Forward);
                 Decelerate(cmd.Input.Backward);
                 cmd.Result.Velocity = _rb.velocity;
-                //Debug.LogWarningFormat("Rb Velocity : {0}",_rb.velocity);
+                Debug.LogWarningFormat("Rb Velocity : {0}",_rb.velocity);
                 //Debug.LogWarningFormat("Position : {0}", transform.position);
             }
         }

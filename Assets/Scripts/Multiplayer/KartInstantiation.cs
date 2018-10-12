@@ -6,18 +6,17 @@ namespace Multiplayer
     {
         private void Awake()
         {
-            Debug.Log("Bolt is connected : " + BoltNetwork.isConnected);
             if (!BoltNetwork.isConnected)
             {
-                BoltLauncher.StartSinglePlayer();
+                BoltLauncher.StartServer();
+                Debug.Log("Starting bolt !");
             }
         }
 
         public override void BoltStartDone()
         {
-            Debug.Log("INSTANTIATION");
-            var myKart = BoltNetwork.Instantiate(BoltPrefabs.KartBob, new Vector3(0, 1, 0), Quaternion.identity);
-            //FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
+            var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart, new Vector3(0, 2, 0), Quaternion.identity);
+            FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
         }
     }
 }
