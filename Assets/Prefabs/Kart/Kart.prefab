@@ -141,7 +141,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4381460982689280}
-  - component: {fileID: 114477479647635672}
   - component: {fileID: 114467606810014674}
   - component: {fileID: 114576107098114956}
   - component: {fileID: 114260317956726740}
@@ -222,6 +221,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4725369991776876}
+  - component: {fileID: 95579590234998320}
   m_Layer: 11
   m_Name: Meshes
   m_TagString: Untagged
@@ -239,7 +239,6 @@ GameObject:
   - component: {fileID: 4745772536087832}
   - component: {fileID: 114405184842347682}
   - component: {fileID: 54088918247556054}
-  - component: {fileID: 95285800196304032}
   - component: {fileID: 81867531860159794}
   - component: {fileID: 114277620233296718}
   - component: {fileID: 114644358170194932}
@@ -3983,14 +3982,14 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!95 &95285800196304032
+--- !u!95 &95579590234998320
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1138407828072762}
-  m_Enabled: 0
+  m_GameObject: {fileID: 1125758342767834}
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: a8018e59aaa5144438c80490add1639f, type: 2}
   m_CullingMode: 0
@@ -4113,7 +4112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Settings: {fileID: 11400000, guid: 2766024045128a4499267de9e44728d7, type: 2}
   _steeringWheel: {fileID: 114120355762576722}
-  _groundCondition: {fileID: 114477479647635672}
+  _groundCondition: {fileID: 114241659848452430}
   TurningState: 0
   DriftTurnState: 0
   DriftState: 0
@@ -4300,6 +4299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 824c354c0cfab5a47b59553eeda8a4a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 95579590234998320}
 --- !u!114 &114389345933178724
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4412,20 +4412,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Settings: {fileID: 11400000, guid: c599c944b5b41b446ab1e3ef29a19b81, type: 2}
---- !u!114 &114477479647635672
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1085741530103564}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbf60f6c191a5c84897418b634f7cc4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Grounded: 0
-  distanceForGrounded: 0.5
-  offset: {x: 0, y: 0, z: 0}
 --- !u!114 &114562823632779928
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4604,11 +4590,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 23108742605548018}

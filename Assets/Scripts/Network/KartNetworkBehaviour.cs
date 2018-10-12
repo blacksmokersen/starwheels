@@ -16,6 +16,8 @@ namespace Network
         public override void Attached()
         {
             state.SetTransforms(state.Transform, transform);
+            state.SetAnimator(GetComponentInChildren<Animator>());
+            state.Animator.applyRootMotion = entity.isOwner;
         }
     }
 }

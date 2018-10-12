@@ -4,19 +4,16 @@ namespace Drift
 {
     public class DriftAnimation : MonoBehaviour
     {
-        private Animator _animator;
+        [SerializeField] private Animator _animator;
 
         // CORE
-
-        private void Awake()
-        {
-            _animator = GetComponentInParent<Animator>();
-        }
 
         // PUBLIC
 
         public void LeftDriftAnimation()
         {
+            Debug.Log("Left driftuuu");
+            Debug.LogFormat("Animator is null : {0}", (_animator == null));
             _animator.SetBool("DriftLeft", true);
         }
 
