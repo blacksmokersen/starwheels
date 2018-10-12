@@ -17,7 +17,7 @@ namespace Network
         {
             state.SetTransforms(state.Transform, transform);
             state.SetAnimator(GetComponentInChildren<Animator>());
-            state.Animator.applyRootMotion = entity.isOwner;
+            //state.Animator.applyRootMotion = entity.isOwner;
         }
     }
 }
