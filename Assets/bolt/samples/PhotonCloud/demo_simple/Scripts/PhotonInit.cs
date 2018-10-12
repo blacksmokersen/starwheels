@@ -109,7 +109,7 @@ namespace Photon
                             string matchName = "MyPhotonGame #" + UnityEngine.Random.Range(1, 100);
 
                             BoltNetwork.SetServerInfo(matchName, roomProperties);
-                            BoltNetwork.LoadScene("Level1");
+                            BoltNetwork.LoadScene("FortBlock");
                         }
                     }
                     break;

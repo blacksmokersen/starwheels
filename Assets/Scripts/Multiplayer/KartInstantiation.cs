@@ -4,6 +4,8 @@ namespace Multiplayer
 {
     public class KartInstantiation : Bolt.GlobalEventListener
     {
+        private bool _kartInstantiated = false;
+
         private void Awake()
         {
             if (!BoltNetwork.isConnected)
@@ -13,10 +15,24 @@ namespace Multiplayer
             }
         }
 
+        private void Start()
+        {
+            InstantiateKart();
+        }
+
         public override void BoltStartDone()
         {
-            var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart, new Vector3(0, 2, 0), Quaternion.identity);
-            FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
+            InstantiateKart();
+        }
+
+        private void InstantiateKart()
+        {
+            if (!_kartInstantiated)
+            {
+                var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart, new Vector3(0, 2, 0), Quaternion.identity);
+                FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
+                _kartInstantiated = true;
+            }
         }
     }
 }
