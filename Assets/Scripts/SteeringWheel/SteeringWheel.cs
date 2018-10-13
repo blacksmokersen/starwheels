@@ -14,10 +14,13 @@ namespace Steering
 
         [Header("States")]
         public TurnState TurningState = TurnState.NotTurning;
-        public bool InverseDirections = false;
+        public bool InversedDirections = false;
 
+        [Header("Options")]
         [Tooltip("This is an optional field to make turn possible only if grounded.")]
         public GroundCondition _groundCondition;
+        [Tooltip("This is an optional field to make turn possible only if a certain speed is reached.")]
+        public Engine.Engine _engine;
 
         [Header("Events")]
         public UnityEvent<TurnState> OnTurn;
@@ -74,27 +77,38 @@ namespace Steering
 
         public void TurnUsingTorque(float turnValue)
         {
-            SetTurnState(turnValue);
-            if (_groundCondition != null)
+            if (CanTurn())
             {
-                if (_groundCondition.Grounded)
+                SetTurnState(turnValue);
+                turnValue = InversedTurnValue(turnValue);
+
+                if (_groundCondition != null)
+                {
+                    if (_groundCondition.Grounded)
+                    {
+                        _rb.AddRelativeTorque(Vector3.up * turnValue * Settings.TurnTorque, ForceMode.Force);
+                        //OnTurn.Invoke(TurningState);
+                    }
+                }
+                else
                 {
                     _rb.AddRelativeTorque(Vector3.up * turnValue * Settings.TurnTorque, ForceMode.Force);
-                    //OnTurn.Invoke(TurningState);
+                    OnTurn.Invoke(TurningState);
                 }
             }
-            else
-            {
-                _rb.AddRelativeTorque(Vector3.up * turnValue * Settings.TurnTorque, ForceMode.Force);
-                OnTurn.Invoke(TurningState);
-            }
+        }
+
+        public void InverseDirections()
+        {
+            InversedDirections = !InversedDirections;
+            Debug.Log("Inversing directions !");
         }
 
         // PRIVATE
 
         private void TurnSlowDown(float turnAxis)
         {
-            if (TurningState != TurnState.NotTurning) // && PlayerVelocity > CapSpeedInTurn)
+            if (TurningState != TurnState.NotTurning)
             {
                 float slowdownForce = Settings.SlowdownTurnValue * -Mathf.Abs(turnAxis);
                 _rb.AddForce(transform.forward * slowdownForce);
@@ -115,6 +129,23 @@ namespace Steering
             {
                 TurningState = TurnState.NotTurning;
             }
+        }
+
+        private bool CanTurn()
+        {
+            if (_engine)
+            {
+                return Mathf.Abs(_engine.CurrentSpeed) > Settings.MinimumSpeedToTurn;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private float InversedTurnValue(float value)
+        {
+            return _engine.CurrentMovingDirection == Engine.MovingDirection.Backward ? -value : value;
         }
     }
 }

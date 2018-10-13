@@ -1,8 +1,11 @@
 ﻿using Bolt;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Engine
 {
+    public enum MovingDirection { NotMoving, Forward, Backward }
+
     public class Engine : EntityBehaviour<IKartState>, IControllable
     {
         [Header("Forces")]
@@ -10,6 +13,11 @@ namespace Engine
 
         [Header("Events")]
         public FloatEvent OnVelocityChange;
+
+        [Header("States")]
+        public MovingDirection CurrentMovingDirection = MovingDirection.NotMoving;
+
+        [HideInInspector] public float CurrentSpeed;
 
         private Rigidbody _rb;
 
@@ -26,6 +34,8 @@ namespace Engine
         private void FixedUpdate()
         {
             ClampMagnitude();
+            CurrentSpeed = transform.InverseTransformDirection(_rb.velocity).z;
+            CheckMovingDirection();
             OnVelocityChange.Invoke(_rb.velocity.magnitude);
         }
 
@@ -75,12 +85,9 @@ namespace Engine
             }
             else
             {
-                Debug.Log("Execute commands !");
                 Accelerate(cmd.Input.Forward);
                 Decelerate(cmd.Input.Backward);
                 cmd.Result.Velocity = _rb.velocity;
-                Debug.LogWarningFormat("Rb Velocity : {0}",_rb.velocity);
-                //Debug.LogWarningFormat("Position : {0}", transform.position);
             }
         }
 
@@ -94,6 +101,22 @@ namespace Engine
         private void Decelerate(float value)
         {
             _rb.AddRelativeForce(Vector3.back * value * Settings.SpeedForce / Settings.DecelerationFactor, ForceMode.Force);
+        }
+
+        private void CheckMovingDirection()
+        {
+            if(CurrentSpeed > 0 && CurrentMovingDirection != MovingDirection.Forward)
+            {
+                CurrentMovingDirection = MovingDirection.Forward;
+            }
+            else if(CurrentSpeed < 0 && CurrentMovingDirection != MovingDirection.Backward)
+            {
+                CurrentMovingDirection = MovingDirection.Backward;
+            }
+            else if(CurrentSpeed == 0 && CurrentMovingDirection != MovingDirection.NotMoving)
+            {
+                CurrentMovingDirection = MovingDirection.NotMoving;
+            }
         }
     }
 }

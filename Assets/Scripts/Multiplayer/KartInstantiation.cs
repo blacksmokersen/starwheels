@@ -27,7 +27,7 @@ namespace Multiplayer
 
         private void InstantiateKart()
         {
-            if (!_kartInstantiated)
+            if (!_kartInstantiated && BoltNetwork.isConnected)
             {
                 var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart, new Vector3(0, 2, 0), Quaternion.identity);
                 FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
