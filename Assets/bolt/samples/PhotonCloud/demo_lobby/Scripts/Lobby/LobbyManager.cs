@@ -26,6 +26,7 @@ namespace Photon.Lobby
         [Space]
         [Header("UI Reference")]
         [SerializeField] private GameObject mainGameMenu;
+        [SerializeField] private Dropdown mapDropDownMenu;
         public LobbyTopPanel topPanel;
 
         public RectTransform mainMenuPanel;
@@ -141,7 +142,7 @@ namespace Photon.Lobby
             }
             else
             {
-               // backButton.gameObject.SetActive(false);
+                // backButton.gameObject.SetActive(false);
                 SetServerInfo("Offline", "None");
             }
         }
@@ -188,8 +189,8 @@ namespace Photon.Lobby
 
         public void Stop()
         {
-            if(BoltNetwork.isConnected)
-            BoltLauncher.Shutdown();
+            if (BoltNetwork.isConnected)
+                BoltLauncher.Shutdown();
         }
 
         public void CreateMatch(string matchName, bool dedicated = false)
@@ -319,7 +320,26 @@ namespace Photon.Lobby
             countdown.Time = 0;
             countdown.Send();
 
-            BoltNetwork.LoadScene(gameScene.SimpleSceneName);
+             BoltNetwork.LoadScene(gameScene.SimpleSceneName);
+
+          //  BoltNetwork.LoadScene(mapDropDownMenu.options[mapDropDownMenu.value].text);
+
+            /*
+            switch (mapDropDownMenu.value)
+            {
+                case 0:
+                    BoltNetwork.LoadScene("FortBlock");
+                    break;
+
+                case 1:
+                    BoltNetwork.LoadScene("Pillars");
+                    break;
+
+                case 2:
+
+                    break;
+            }
+            */
         }
 
         // ----------------- Client callbacks ------------------
