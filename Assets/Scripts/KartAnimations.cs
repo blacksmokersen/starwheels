@@ -17,9 +17,7 @@ namespace Animations
 
         // PUBLIC
 
-        // PRIVATE
-
-        private void DoubleJumpAnimation(Direction direction)
+        public void DoubleJumpAnimation(Direction direction)
         {
             switch (direction)
             {
@@ -37,6 +35,8 @@ namespace Animations
                     break;
             }
         }
+
+        // PRIVATE
 
         private void LeftJumpAnimation()
         {

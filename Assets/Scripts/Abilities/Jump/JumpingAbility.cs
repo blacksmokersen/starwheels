@@ -9,7 +9,7 @@ namespace Abilities.Jump
     {
         [Header("Events")]
         public UnityEvent OnFirstJump;
-        public UnityEvent OnSecondJump;
+        public DirectionEvent OnSecondJump;
         public UnityEvent OnJumpReload;
 
         [Header("Forces")]
@@ -45,23 +45,36 @@ namespace Abilities.Jump
         public void SecondJump(JoystickValues joystickValues)
         {
             _hasDoneFirstJump = false;
+            var direction = Direction.Default;
 
-            Vector3 direction;
+            Vector3 forceDirection;
             if (joystickValues.X < -0.5f)
-                direction = Vector3.left;
+            {
+                forceDirection = Vector3.left;
+                direction = Direction.Left;
+            }
             else if (joystickValues.X > 0.5f)
-                direction = Vector3.right;
+            {
+                forceDirection = Vector3.right;
+                direction = Direction.Right;
+            }
             else if (joystickValues.Y > 0.5f)
-                direction = Vector3.forward;
+            {
+                forceDirection = Vector3.forward;
+                direction = Direction.Forward;
+            }
             else if (joystickValues.Y < -0.5f)
-                direction = Vector3.back;
+            {
+                forceDirection = Vector3.back;
+                direction = Direction.Backward;
+            }
             else
-                direction = Vector3.up;
+                forceDirection = Vector3.up;
 
             var forceUp = Vector3.up * Settings.SecondJumpUpForce;
-            var forceDirectional = direction * Settings.SecondJumpLateralForces;
+            var forceDirectional = forceDirection * Settings.SecondJumpLateralForces;
             _rb.AddRelativeForce(forceUp + forceDirectional, ForceMode.Impulse);
-            OnSecondJump.Invoke();
+            OnSecondJump.Invoke(direction);
         }
 
         public void MapInputs()
