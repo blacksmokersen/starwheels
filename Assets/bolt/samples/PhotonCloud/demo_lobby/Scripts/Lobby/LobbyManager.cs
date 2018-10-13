@@ -25,6 +25,7 @@ namespace Photon.Lobby
 
         [Space]
         [Header("UI Reference")]
+        [SerializeField] private GameObject mainGameMenu;
         public LobbyTopPanel topPanel;
 
         public RectTransform mainMenuPanel;
@@ -163,8 +164,8 @@ namespace Photon.Lobby
         {
             if (currentPanel == mainMenuPanel)
             {
-                Debug.Log(backDelegate);
                 gameObject.SetActive(false);
+                mainGameMenu.SetActive(true);
             }
             else
             {
