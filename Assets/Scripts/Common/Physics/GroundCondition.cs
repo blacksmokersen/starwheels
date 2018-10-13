@@ -23,19 +23,27 @@ namespace Common.PhysicsUtils
 
         private void CheckGrounded()
         {
-            if (Physics.Raycast(transform.position + offset,
+            if (Physics.Raycast
+                (
+                transform.position + offset,
                 transform.TransformDirection(Vector3.down),
                 distanceForGrounded,
-                1 << LayerMask.NameToLayer(Constants.Layer.Ground))
-                && !Grounded)
+                1 << LayerMask.NameToLayer(Constants.Layer.Ground)
+                ))
             {
-                Grounded = true;
-                OnHitGround.Invoke();
+                if (!Grounded)
+                {
+                    Grounded = true;
+                    OnHitGround.Invoke();
+                }
             }
-            else if(Grounded)
+            else
             {
-                Grounded = false;
-                OnLeftGround.Invoke();
+                if (Grounded)
+                {
+                    Grounded = false;
+                    OnLeftGround.Invoke();
+                }
             }
         }
 

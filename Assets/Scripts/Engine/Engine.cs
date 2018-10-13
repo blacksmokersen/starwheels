@@ -1,6 +1,6 @@
 ﻿using Bolt;
 using UnityEngine;
-using UnityEngine.Events;
+using Common.PhysicsUtils;
 
 namespace Engine
 {
@@ -16,6 +16,9 @@ namespace Engine
 
         [Header("States")]
         public MovingDirection CurrentMovingDirection = MovingDirection.NotMoving;
+
+        [Header("Options")]
+        [SerializeField] private GroundCondition _groundCondition;
 
         [HideInInspector] public float CurrentSpeed;
 
@@ -95,11 +98,13 @@ namespace Engine
 
         private void Accelerate(float value)
         {
+            if (_groundCondition && !_groundCondition.Grounded) return;
             _rb.AddRelativeForce(Vector3.forward * value * Settings.SpeedForce, ForceMode.Force);
         }
 
         private void Decelerate(float value)
         {
+            if (_groundCondition && !_groundCondition.Grounded) return;
             _rb.AddRelativeForce(Vector3.back * value * Settings.SpeedForce / Settings.DecelerationFactor, ForceMode.Force);
         }
 
