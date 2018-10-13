@@ -69,7 +69,7 @@ namespace Photon.Lobby
             s_Singleton = this;
             currentPanel = mainMenuPanel;
 
-            backButton.gameObject.SetActive(false);
+            backButton.gameObject.SetActive(true);
             GetComponent<Canvas>().enabled = true;
 
             DontDestroyOnLoad(gameObject);
@@ -111,7 +111,8 @@ namespace Photon.Lobby
                     // SpawnGamePlayer();
                 }
 
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 BoltConsole.Write(e.Message, Color.red);
                 BoltConsole.Write(e.Source, Color.red);
@@ -139,7 +140,7 @@ namespace Photon.Lobby
             }
             else
             {
-                backButton.gameObject.SetActive(false);
+               // backButton.gameObject.SetActive(false);
                 SetServerInfo("Offline", "None");
             }
         }
@@ -160,8 +161,16 @@ namespace Photon.Lobby
         public BackButtonDelegate backDelegate;
         public void GoBackButton()
         {
-            backDelegate();
-            topPanel.isInGame = false;
+            if (currentPanel == mainMenuPanel)
+            {
+                Debug.Log(backDelegate);
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                backDelegate();
+                topPanel.isInGame = false;
+            }
         }
 
         // ----------------- Server management
@@ -178,6 +187,7 @@ namespace Photon.Lobby
 
         public void Stop()
         {
+            if(BoltNetwork.isConnected)
             BoltLauncher.Shutdown();
         }
 
@@ -227,7 +237,8 @@ namespace Photon.Lobby
                 BoltEntity entity = BoltNetwork.Instantiate(BoltPrefabs.PlayerInfo);
                 entity.TakeControl();
 
-            } else if (BoltNetwork.isClient)
+            }
+            else if (BoltNetwork.isClient)
             {
                 backDelegate = Stop;
                 SetServerInfo("Client", "");
@@ -247,7 +258,8 @@ namespace Photon.Lobby
                 SceneManager.LoadScene(lobbyScene.SimpleSceneName);
             }
 
-            registerDoneCallback(() => {
+            registerDoneCallback(() =>
+            {
                 Debug.Log("Shutdown Done");
                 ChangeTo(mainMenuPanel);
             });
@@ -328,7 +340,7 @@ namespace Photon.Lobby
 
             if (!entity.isControlled)
             {
-                LobbyPhotonPlayer photonPlayer =  entity.gameObject.GetComponent<LobbyPhotonPlayer>();
+                LobbyPhotonPlayer photonPlayer = entity.gameObject.GetComponent<LobbyPhotonPlayer>();
 
                 if (photonPlayer != null)
                 {

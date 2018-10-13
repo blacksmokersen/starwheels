@@ -18,7 +18,7 @@ namespace Menu
             Multiplayer,
             Options
         }
-
+        [SerializeField] private GameObject lobbyManager;
         [SerializeField] private Button soloButton;
         [SerializeField] private Button multiButton;
         [SerializeField] private Button optionsButton;
@@ -87,10 +87,13 @@ namespace Menu
 
         private void Multi()
         {
+            lobbyManager.SetActive(true);
+            /*
             BoltLauncher.StartServer();
             currentState = State.Multiplayer;
             BoltLauncher.StartClient();
             //UpdateMenu();
+            */
         }
 
         private void Options()
