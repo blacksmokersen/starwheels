@@ -102,10 +102,24 @@ namespace Engine
             _rb.AddRelativeForce(Vector3.forward * value * Settings.SpeedForce, ForceMode.Force);
         }
 
+        private Rigidbody Accelerate(float value, Rigidbody rb)
+        {
+            if (_groundCondition && !_groundCondition.Grounded) return rb;
+            rb.AddRelativeForce(Vector3.forward * value * Settings.SpeedForce, ForceMode.Force);
+            return rb;
+        }
+
         private void Decelerate(float value)
         {
             if (_groundCondition && !_groundCondition.Grounded) return;
             _rb.AddRelativeForce(Vector3.back * value * Settings.SpeedForce / Settings.DecelerationFactor, ForceMode.Force);
+        }
+
+        private Rigidbody Decelerate(float value, Rigidbody rb)
+        {
+            if (_groundCondition && !_groundCondition.Grounded) return rb;
+            rb.AddRelativeForce(Vector3.back * value * Settings.SpeedForce / Settings.DecelerationFactor, ForceMode.Force);
+            return rb;
         }
 
         private void CheckMovingDirection()
