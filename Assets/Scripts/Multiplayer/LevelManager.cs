@@ -32,7 +32,10 @@ public class LevelManager : MonoBehaviour
 
     public void ResetLevel()
     {
-
+        if (BoltNetwork.isServer)
+        {
+            BoltNetwork.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
 
@@ -50,7 +53,7 @@ public class LevelManager : MonoBehaviour
 
     void ReturnToMenu()
     {
-        //PhotonNetwork.LoadLevel("Menu");
-        //PhotonNetwork.Disconnect();
+        BoltLauncher.Shutdown();
+        SceneManager.LoadScene(Constants.Scene.MainMenu);
     }
 }

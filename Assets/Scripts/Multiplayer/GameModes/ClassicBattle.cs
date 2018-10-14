@@ -1,11 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
+using UnityEngine.Events;
+using Multiplayer;
 
 namespace GameModes
 {
     public class ClassicBattle : GameModeBase
     {
-        public static ClassicBattle Instance;
+        [HideInInspector] public static ClassicBattle Instance;
 
+        [Header("GameMode Settings")]
         public int MaxPlayersPerTeam;
         public bool IsOver;
         public Team WinnerTeam = Team.None;
@@ -39,7 +43,6 @@ namespace GameModes
             InitializePlayerCount();
 
             GameModeEvents.Instance.OnKartDestroyed.AddListener(KartDestroyed);
-            GameModeEvents.Instance.OnGameReset.AddListener(ResetGame);
         }
 
         // PUBLIC
@@ -67,28 +70,27 @@ namespace GameModes
             var karts = GameObject.FindGameObjectsWithTag(Constants.Tag.Kart);
             foreach(var kart in karts)
             {
-                //kart.GetComponent<>
+
             }
         }
 
         protected override void ResetGame()
         {
-            /*if (PhotonNetwork.IsMasterClient)
+            if (BoltNetwork.isServer)
             {
                 LevelManager.Instance.ResetLevel();
             }
-            */
         }
 
         // PRIVATE
 
         private void InitializePlayerCount()
         {
-            /*Player[] players = PhotonNetwork.PlayerList;
+            PlayerSettings[] players = FindObjectsOfType<PlayerSettings>();
 
-            foreach(Player player in players)
+            foreach(PlayerSettings player in players)
             {
-                switch (player.GetTeam())
+                switch (player.Team)
                 {
                     case Team.Blue:
                         _blueKartsAlive++;
@@ -100,7 +102,6 @@ namespace GameModes
                         break;
                 }
             }
-            */
         }
 
         private void CheckIfOver()
@@ -121,18 +122,18 @@ namespace GameModes
 
         private void EndGame()
         {
-            /*var playerInputsList = FindObjectsOfType<PlayerInputs>();
+            var playerInputsList = FindObjectsOfType<MonoBehaviour>().OfType<IControllable>();
 
-            foreach(PlayerInputs playerInputs in playerInputsList)
+            foreach(MonoBehaviour playerInputs in playerInputsList)
             {
-                playerInputs.Enabled = false;
+                playerInputs.enabled = false;
             }
 
 
             _endGameMenu.SetActive(true);
             _endGameMenu.GetComponent<Menu.GameOverMenu>().SetWinnerTeam(WinnerTeam);
 
-            GameModeEvents.Instance.OnGameEnd(WinnerTeam);*/
+            OnGameEnd.Invoke(WinnerTeam);
         }
     }
 }

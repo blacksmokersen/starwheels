@@ -9,13 +9,6 @@ namespace Kart
     {
         private int _score;
 
-        private void Awake()
-        {
-            //PhotonNetwork.LocalPlayer.SetScore(0);
-
-            //kartEvents.OnKartDestroyed += DestroyKart;
-        }
-
         public void DestroyKart()
         {
             switch (GameModeBase.CurrentGameMode)
@@ -35,14 +28,8 @@ namespace Kart
         #region Destroy Functions
         private void ClassicBattleDestroy()
         {
-            /*if (photonView.IsMine)
-            {
-                FindObjectOfType<SpectatorControls>().Enabled = true;
-                FindObjectOfType<CameraPlayerSwitch>().SetCameraToRandomPlayer();
-                kartHub.DestroyKart();
-                PhotonView photonView = GetComponent<PhotonView>();
-                photonView.RPC("RPCClassicBattleDestroy", RpcTarget.AllBuffered);
-            }*/
+            FindObjectOfType<SpectatorControls>().Enabled = true;
+            FindObjectOfType<CameraPlayerSwitch>().SetCameraToRandomPlayer();
         }
 
         #endregion
@@ -52,8 +39,6 @@ namespace Kart
         public void IncreaseScore()
         {
             _score++;
-            //PhotonNetwork.LocalPlayer.SetScore(_score);
-            //photonView.RPC("RPCUpdateScore", RpcTarget.AllBuffered);
         }
 
         // PRIVATE
