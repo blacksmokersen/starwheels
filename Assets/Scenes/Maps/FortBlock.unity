@@ -1316,10 +1316,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa2b26c211a3cb94faabbcf5f7823fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnKartDestroyed:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: TeamEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!114 &894089956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 114614414403677036, guid: 478221f478f6e2743bd88fccf53e59af,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 894089952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92cb3eb37b43174439de27b75ffe22d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameStarted: 0
   OnGameReset:
     m_PersistentCalls:
       m_Calls: []
@@ -1334,23 +1343,14 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &894089956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114614414403677036, guid: 478221f478f6e2743bd88fccf53e59af,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 894089952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92cb3eb37b43174439de27b75ffe22d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GameStarted: 0
   countdownSeconds: 3
   MaxPlayersPerTeam: 0
   IsOver: 0
   WinnerTeam: 0
+  OnKartDestroyed:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: TeamEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1001 &951217186
 Prefab:
   m_ObjectHideFlags: 0
@@ -2814,10 +2814,6 @@ Prefab:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1138407828072762, guid: aa93093fecc0167469b0a9096dd3b953, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1085741530103564, guid: aa93093fecc0167469b0a9096dd3b953, type: 2}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}

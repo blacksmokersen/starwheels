@@ -151,7 +151,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1103039608187178
 GameObject:
   m_ObjectHideFlags: 1
@@ -222,6 +222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4725369991776876}
   - component: {fileID: 95579590234998320}
+  - component: {fileID: 114838526349982084}
   m_Layer: 11
   m_Name: Meshes
   m_TagString: Untagged
@@ -2615,7 +2616,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1138407828072762}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.092, y: 1.168, z: -0.573}
+  m_LocalPosition: {x: -0.092, y: 0.586, z: -0.573}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4381460982689280}
@@ -4554,6 +4555,18 @@ MonoBehaviour:
   - {fileID: 4490456506876336}
   - {fileID: 4059028053787120}
   - {fileID: 4327720265782332}
+--- !u!114 &114838526349982084
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1125758342767834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e13639a753417e47bdfbe9a0508cb3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetKartRenderer: {fileID: 23078099778726290}
 --- !u!114 &114873449904048732
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4708,7 +4721,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 114838526349982084}
+        m_MethodName: SetKartColorUsingTeam
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: TeamEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnScoreChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: IntEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114982058650038630
 MonoBehaviour:
   m_ObjectHideFlags: 1

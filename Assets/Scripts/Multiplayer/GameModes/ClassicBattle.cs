@@ -14,6 +14,9 @@ namespace GameModes
         public bool IsOver;
         public Team WinnerTeam = Team.None;
 
+        [Header("Events")]
+        public TeamEvent OnKartDestroyed;
+
         private GameObject _endGameMenu;
         private int _redKartsAlive;
         private int _blueKartsAlive;
@@ -41,8 +44,6 @@ namespace GameModes
         {
             base.Start();
             InitializePlayerCount();
-
-            GameModeEvents.Instance.OnKartDestroyed.AddListener(KartDestroyed);
         }
 
         // PUBLIC
@@ -60,6 +61,7 @@ namespace GameModes
                 default:
                     break;
             }
+            OnKartDestroyed.Invoke(team);
             CheckIfOver();
         }
 

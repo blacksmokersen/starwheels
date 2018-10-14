@@ -9,7 +9,7 @@ namespace GameModes
         public static GameModeEvents Instance;
 
         // Events
-        public TeamEvent OnKartDestroyed;
+
 
 
         private void Awake()
