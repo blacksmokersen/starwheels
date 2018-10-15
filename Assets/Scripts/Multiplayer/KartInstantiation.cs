@@ -22,9 +22,9 @@ namespace Multiplayer
 
         // BOLT
 
-        public override void SceneLoadLocalDone(string map)
+        public override void BoltStartDone()
         {
-
+            InstantiateKart(new Vector3(0, 0, 0));
         }
 
         // PRIVATE
@@ -33,9 +33,10 @@ namespace Multiplayer
         {
             while(SpawnPosition == null)
             {
-                SpawnPosition =
+                SpawnPosition = new Vector3(0,0,0);
                 yield return null;
             }
+            yield break;
         }
 
         private void InstantiateKart(Vector3 spawnPoint)

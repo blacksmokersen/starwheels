@@ -24,11 +24,12 @@ namespace Multiplayer
             }
         }
 
+        /*
         public override void OnEvent()
         {
 
         }
-
+        */
 
         public Transform GetSpawnPosition()
         {
