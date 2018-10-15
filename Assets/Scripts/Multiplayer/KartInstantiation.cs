@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Bolt;
 
 namespace Multiplayer
 {
-    public class KartInstantiation : Bolt.GlobalEventListener
+    public class KartInstantiation : GlobalEventListener
     {
         public Vector3 SpawnPosition;
 
         private bool _kartInstantiated = false;
+        private BoltEntity _me;
 
         // CORE
 
@@ -22,22 +24,22 @@ namespace Multiplayer
 
         // BOLT
 
+        public override void OnEvent(PlayerSpawn evnt)
+        {
+            if(evnt.NetworkID == _me.networkId)
+            {
+                InstantiateKart(evnt.SpawnPosition);
+            }
+        }
+
         public override void BoltStartDone()
         {
-            InstantiateKart(new Vector3(0, 0, 0));
+            PlayerReady playerReady = PlayerReady.Create();
+            playerReady.Entity = _me;
+            playerReady.Send();
         }
 
         // PRIVATE
-
-        private IEnumerator WaitForSpawn()
-        {
-            while(SpawnPosition == null)
-            {
-                SpawnPosition = new Vector3(0,0,0);
-                yield return null;
-            }
-            yield break;
-        }
 
         private void InstantiateKart(Vector3 spawnPoint)
         {

@@ -8,7 +8,10 @@ namespace Multiplayer
     [BoltGlobalBehaviour(BoltNetworkModes.Server)]
     public class ServerSpawnGenerator : GlobalEventListener
     {
-        private List<GameObject> _spawns;
+        private List<BoltEntity> _players = new List<BoltEntity>();
+        private List<GameObject> _spawns = new List<GameObject>();
+        private int _nbOfPlayersInGame;
+        private int _playersReady = 0;
         private bool _readyToAssignSpawns = false;
 
         // CORE
@@ -17,43 +20,42 @@ namespace Multiplayer
 
         public override void SceneLoadLocalDone(string map)
         {
-            if (BoltNetwork.isServer)
+            _spawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.Spawn));
+        }
+
+        public override void OnEvent(PlayerReady evnt)
+        {
+            Debug.LogFormat("Player Ready : {0}", evnt.Entity.networkId);
+            _playersReady++;
+            _players.Add(evnt.Entity);
+            if(_playersReady == _nbOfPlayersInGame)
             {
-                _spawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.Spawn));
-                StartCoroutine(WaitForPlayers());
+                AssignSpawns();
             }
         }
 
-        /*
-        public override void OnEvent()
+        public Vector3 GetSpawnPosition()
         {
-
-        }
-        */
-
-        public Transform GetSpawnPosition()
-        {
-            if (BoltNetwork.isServer)
+            if (_spawns.Count > 0)
             {
-                if (_spawns.Count > 0)
-                {
-                    var spawnPosition = _spawns[0];
-                    _spawns.Remove(spawnPosition);
-                    return spawnPosition.transform;
-                }
+                var spawnPosition = _spawns[0];
+                _spawns.Remove(spawnPosition);
+                return spawnPosition.transform.position;
             }
-            return null;
+            return Vector3.zero;
         }
 
         // PRIVATE
 
-        private IEnumerator WaitForPlayers()
+        private void AssignSpawns()
         {
-            while (Application.isPlaying)
+            foreach(var player in _players)
             {
-                yield return null;
+                PlayerSpawn playerSpawn = PlayerSpawn.Create();
+                playerSpawn.NetworkID = player.networkId;
+                playerSpawn.SpawnPosition = GetSpawnPosition();
+                playerSpawn.Send();
             }
-            _readyToAssignSpawns = true;
         }
     }
 }
