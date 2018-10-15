@@ -74,7 +74,7 @@ namespace Photon.Lobby
             backButton.gameObject.SetActive(true);
             GetComponent<Canvas>().enabled = true;
 
-            DontDestroyOnLoad(gameObject);
+            //  DontDestroyOnLoad(gameObject);
 
             SetServerInfo("Offline", "None");
 
@@ -320,26 +320,10 @@ namespace Photon.Lobby
             countdown.Time = 0;
             countdown.Send();
 
-             BoltNetwork.LoadScene(gameScene.SimpleSceneName);
 
-          //  BoltNetwork.LoadScene(mapDropDownMenu.options[mapDropDownMenu.value].text);
+            BoltNetwork.LoadScene(mapDropDownMenu.options[mapDropDownMenu.value].text);
 
-            /*
-            switch (mapDropDownMenu.value)
-            {
-                case 0:
-                    BoltNetwork.LoadScene("FortBlock");
-                    break;
 
-                case 1:
-                    BoltNetwork.LoadScene("Pillars");
-                    break;
-
-                case 2:
-
-                    break;
-            }
-            */
         }
 
         // ----------------- Client callbacks ------------------
