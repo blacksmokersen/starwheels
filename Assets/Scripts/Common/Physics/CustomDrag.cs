@@ -17,6 +17,8 @@ namespace Common.PhysicsUtils
         private void Awake()
         {
             _rb = GetComponentInParent<Rigidbody>();
+            _initialDrag = _rb.drag;
+            _initialAngularDrag = _rb.angularDrag;
         }
 
         private void FixedUpdate()
