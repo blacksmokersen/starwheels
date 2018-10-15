@@ -39,6 +39,7 @@ namespace Photon.Lobby
         protected RectTransform currentPanel;
 
         public Button backButton;
+        public Button StartButton;
 
         public Text statusInfo;
         public Text hostInfo;
@@ -72,6 +73,7 @@ namespace Photon.Lobby
             currentPanel = mainMenuPanel;
 
             backButton.gameObject.SetActive(true);
+            StartButton.gameObject.SetActive(false);
             GetComponent<Canvas>().enabled = true;
 
             //  DontDestroyOnLoad(gameObject);
@@ -288,8 +290,17 @@ namespace Photon.Lobby
             if (allReady && readyCount >= minPlayers)
             {
                 _isCountdown = true;
-                StartCoroutine(ServerCountdownCoroutine());
+                StartButton.gameObject.SetActive(true);
             }
+            else
+            {
+                StartButton.gameObject.SetActive(false);
+            }
+        }
+
+        public void StartGame()
+        {
+            StartCoroutine(ServerCountdownCoroutine());
         }
 
         public IEnumerator ServerCountdownCoroutine()
