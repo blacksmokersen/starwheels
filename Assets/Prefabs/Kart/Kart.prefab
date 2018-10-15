@@ -151,7 +151,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1103039608187178
 GameObject:
   m_ObjectHideFlags: 1
@@ -222,6 +222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4725369991776876}
   - component: {fileID: 95579590234998320}
+  - component: {fileID: 114838526349982084}
   m_Layer: 11
   m_Name: Meshes
   m_TagString: Untagged
@@ -1168,6 +1169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4853006159338170}
   - component: {fileID: 114389345933178724}
+  - component: {fileID: 114625566649328150}
   m_Layer: 0
   m_Name: JumpingAbility
   m_TagString: Untagged
@@ -2614,7 +2616,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1138407828072762}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.85, z: 0}
+  m_LocalPosition: {x: -0.092, y: 0.586, z: -0.573}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4381460982689280}
@@ -3464,8 +3466,8 @@ Rigidbody:
   m_GameObject: {fileID: 1138407828072762}
   serializedVersion: 2
   m_Mass: 60
-  m_Drag: 5
-  m_AngularDrag: 20
+  m_Drag: 0.8
+  m_AngularDrag: 5
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
@@ -4070,6 +4072,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: FloatEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  CurrentMovingDirection: 0
+  _groundCondition: {fileID: 114241659848452430}
+  CurrentSpeed: 0
 --- !u!114 &114120355762576722
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4083,8 +4088,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Settings: {fileID: 11400000, guid: 56de6da549441da40b170a7e798ad10e, type: 2}
   TurningState: 0
-  InverseDirections: 0
+  InversedDirections: 0
   _groundCondition: {fileID: 114241659848452430}
+  _engine: {fileID: 114112130390458132}
 --- !u!114 &114241659848452430
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4099,6 +4105,38 @@ MonoBehaviour:
   Grounded: 0
   distanceForGrounded: 0.5
   offset: {x: 0, y: 0.25, z: 0}
+  OnHitGround:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114982058650038630}
+        m_MethodName: ResetToDefaultDrag
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnLeftGround:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114982058650038630}
+        m_MethodName: SetCustomDrag
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114260317956726740
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4287,7 +4325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23f30ebbee8eb614bb3f66c6baafce7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RotationStabilizationSpeed: 0.15
+  RotationStabilizationSpeed: 0.3
 --- !u!114 &114326461368033480
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4341,8 +4379,8 @@ MonoBehaviour:
   OnSecondJump:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114637690579342960}
-        m_MethodName: PlaySecondJumpSound
+      - m_Target: {fileID: 114050487025073590}
+        m_MethodName: MainJumpParticlesEmit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4352,8 +4390,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+      - m_Target: {fileID: 114625566649328150}
+        m_MethodName: DoubleJumpAnimation
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: DirectionEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   OnJumpReload:
     m_PersistentCalls:
       m_Calls:
@@ -4383,7 +4432,7 @@ MonoBehaviour:
   m_Script: {fileID: -36112512, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneGuid: 
+  _sceneGuid: a1db5815-ebff-4d59-8431-887e5f4ec331
   _serializerGuid: 3d46793e-7c24-4279-882f-df983ef4cb50
   _prefabId: 10
   _updateRate: 1
@@ -4449,6 +4498,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameText: {fileID: 114873449904048732}
   frameRenderer: {fileID: 212908051091630986}
+--- !u!114 &114625566649328150
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1756455937523544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5646743cbed4ed343a16ee4b32e58706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 95579590234998320}
 --- !u!114 &114637690579342960
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4494,6 +4555,18 @@ MonoBehaviour:
   - {fileID: 4490456506876336}
   - {fileID: 4059028053787120}
   - {fileID: 4327720265782332}
+--- !u!114 &114838526349982084
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1125758342767834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e13639a753417e47bdfbe9a0508cb3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetKartRenderer: {fileID: 23078099778726290}
 --- !u!114 &114873449904048732
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4590,11 +4663,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 23108742605548018}
@@ -4648,7 +4721,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 114838526349982084}
+        m_MethodName: SetKartColorUsingTeam
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: TeamEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnScoreChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: IntEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114982058650038630
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4661,7 +4749,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Drag: 0.1
-  AngularDrag: 0.1
+  AngularDrag: 5
   SlipCompensationForce: 100
 --- !u!114 &114994917259369108
 MonoBehaviour:

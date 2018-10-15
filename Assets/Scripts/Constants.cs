@@ -46,7 +46,7 @@
     // Scenes
     public class Scene
     {
-        public const string Menu = "Menu";
+        public const string MainMenu = "Menu";
         public const string GameHUD = "GameHUD";
         public const string FortBlock = "FortBlock";
         public const string Pillars = "Pillars";
@@ -64,5 +64,13 @@
     public class GameObjectName
     {
         public const string Speedmeter = "Speedmeter";
+    }
+
+    // Materials
+    public class Materials
+    {
+        public const string BlueKart = "Materials/KartBlueBody";
+        public const string RedKart = "Materials/KartRedBody";
+        public const string WhiteKart = "Materials/KartWhiteBody";
     }
 }

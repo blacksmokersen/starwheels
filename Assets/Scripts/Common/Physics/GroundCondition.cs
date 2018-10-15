@@ -1,15 +1,20 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace Common.PhysicsUtils
 {
     public class GroundCondition : MonoBehaviour
     {
         [Header("State")]
-        public bool Grounded;
+        public bool Grounded = false;
 
         [Header("Parameters")]
         [SerializeField] private float distanceForGrounded;
         [SerializeField] private Vector3 offset;
+
+        [Header("Events")]
+        public UnityEvent OnHitGround;
+        public UnityEvent OnLeftGround;
 
         private void FixedUpdate()
         {
@@ -18,16 +23,27 @@ namespace Common.PhysicsUtils
 
         private void CheckGrounded()
         {
-            if (Physics.Raycast(transform.position + offset,
+            if (Physics.Raycast
+                (
+                transform.position + offset,
                 transform.TransformDirection(Vector3.down),
                 distanceForGrounded,
-                1 << LayerMask.NameToLayer(Constants.Layer.Ground)))
+                1 << LayerMask.NameToLayer(Constants.Layer.Ground)
+                ))
             {
-                Grounded = true;
+                if (!Grounded)
+                {
+                    Grounded = true;
+                    OnHitGround.Invoke();
+                }
             }
             else
             {
-                Grounded = false;
+                if (Grounded)
+                {
+                    Grounded = false;
+                    OnLeftGround.Invoke();
+                }
             }
         }
 

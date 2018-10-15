@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using CameraUtils;
-using Kart;
+using UnityEngine.Events;
 
 namespace GameModes
 {
@@ -10,16 +9,18 @@ namespace GameModes
 
     public class GameModeBase : MonoBehaviour
     {
-        #region Variables
-        //public static GameModeBase Instance;
         public static GameMode CurrentGameMode;
 
         public bool GameStarted = false;
 
+        [Header("Events")]
+        public UnityEvent OnGameReset;
+        public TeamEvent OnGameEnd;
+        public UnityEvent OnGameStart;
+
         [SerializeField] private float countdownSeconds = 3f;
 
         private GameObject[] _spawns;
-        #endregion
 
         // CORE
 
@@ -42,11 +43,13 @@ namespace GameModes
         protected virtual void InitializeGame()
         {
             // To Implement in concrete Game Modes
+            OnGameStart.Invoke();
         }
 
         protected virtual void ResetGame()
         {
             // To Implement in concrete Game Modes
+            OnGameReset.Invoke();
         }
 
         // PRIVATE
@@ -74,14 +77,14 @@ namespace GameModes
             */
         }
 
-        private IEnumerator LoadGameHUD(GameObject kart)
+        private IEnumerator LoadGameHUD(GameObject kart) // USE A PREFAB ?
         {
             AsyncOperation loadLevel = SceneManager.LoadSceneAsync(Constants.Scene.GameHUD, LoadSceneMode.Additive);
             while (!loadLevel.isDone)
             {
                 yield return null;
             }
-            //FindObjectOfType<HUD.GameHUD>().ObserveKart(kart);
+            FindObjectOfType<HUD.GameHUD>().ObserveKart(kart);
         }
     }
 }

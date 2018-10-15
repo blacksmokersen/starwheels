@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using GameModes;
 using Multiplayer.Teams;
 
 namespace Menu
@@ -14,7 +13,7 @@ namespace Menu
         private void Awake()
         {
             replayButton.onClick.AddListener(OnReplayButtonPressed);
-            //replayButton.enabled = PhotonNetwork.IsMasterClient;
+            replayButton.enabled = BoltNetwork.isServer;
         }
 
         // PUBLIC
@@ -37,7 +36,7 @@ namespace Menu
 
         private void OnReplayButtonPressed()
         {
-            GameModeEvents.Instance.OnGameReset.Invoke();
+            //OnGameReset.Invoke();
         }
     }
 }

@@ -13,19 +13,11 @@ namespace Audio
         [SerializeField] private AudioClip winAudioClip;
         [SerializeField] private AudioClip loseAudioClip;
 
-        // CORE
+        // PUBLIC
 
-        private void Start()
+        public void GameEndSound(Team winningTeam)
         {
-            //GameModeEvents.Instance.OnGameStart += PlayIntroSound;
-            //GameModeEvents.Instance.OnGameEnd += GameEnd;
-        }
-
-        // PRIVATE
-
-        private void GameEnd(Team winningTeam)
-        {
-            /*var myTeam = PhotonNetwork.LocalPlayer.GetTeam();
+            var myTeam = Multiplayer.PlayerSettings.Me.Team;
             if (myTeam == winningTeam)
             {
                 PlayVictorySound();
@@ -34,8 +26,10 @@ namespace Audio
             {
                 PlayLoseSound();
             }
-            */
+
         }
+
+        // PRIVATE
 
         private void PlayVictorySound()
         {

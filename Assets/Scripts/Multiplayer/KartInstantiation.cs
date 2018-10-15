@@ -1,10 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace Multiplayer
 {
     public class KartInstantiation : Bolt.GlobalEventListener
     {
+        public Vector3 SpawnPosition;
+
         private bool _kartInstantiated = false;
+
+        // CORE
 
         private void Awake()
         {
@@ -15,21 +20,30 @@ namespace Multiplayer
             }
         }
 
-        private void Start()
-        {
-            InstantiateKart();
-        }
+        // BOLT
 
         public override void BoltStartDone()
         {
-            InstantiateKart();
+            InstantiateKart(new Vector3(0, 0, 0));
         }
 
-        private void InstantiateKart()
+        // PRIVATE
+
+        private IEnumerator WaitForSpawn()
         {
-            if (!_kartInstantiated)
+            while(SpawnPosition == null)
             {
-                var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart, new Vector3(0, 2, 0), Quaternion.identity);
+                SpawnPosition = new Vector3(0,0,0);
+                yield return null;
+            }
+            yield break;
+        }
+
+        private void InstantiateKart(Vector3 spawnPoint)
+        {
+            if (!_kartInstantiated && BoltNetwork.isConnected)
+            {
+                var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart, spawnPoint, Quaternion.identity);
                 FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
                 _kartInstantiated = true;
             }
