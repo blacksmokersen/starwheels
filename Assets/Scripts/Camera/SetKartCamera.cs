@@ -5,12 +5,26 @@ namespace CameraUtils
 {
     public class SetKartCamera : MonoBehaviour
     {
+        [SerializeField] private GameObject kartToFollow;
+
         private CinemachineVirtualCamera _cinemachine;
 
         private void Awake()
         {
             _cinemachine = GetComponentInParent<CinemachineVirtualCamera>();
+            if (kartToFollow) SetKart(kartToFollow);
         }
+
+        private void Start()
+        {
+            if (!kartToFollow)
+            {
+                var kart = GameObject.FindGameObjectWithTag(Constants.Tag.Kart);
+                if(kart)
+                    SetKart(kart);
+            }
+        }
+
         public void SetKart(GameObject kart)
         {
             _cinemachine.Follow = kart.transform;

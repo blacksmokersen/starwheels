@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
+using UdpKit;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-
+using ExitGames.Client.Photon;
 
 namespace Menu
 {
-    public class MainMenu : MonoBehaviour
+    public class MainMenu : Bolt.GlobalEventListener
     {
         private enum State
         {
@@ -16,7 +18,8 @@ namespace Menu
             Multiplayer,
             Options
         }
-
+        [SerializeField] private GameObject mainGameMenu;
+        [SerializeField] private GameObject lobbyManager;
         [SerializeField] private Button soloButton;
         [SerializeField] private Button multiButton;
         [SerializeField] private Button optionsButton;
@@ -45,6 +48,30 @@ namespace Menu
 
         // PUBLIC
 
+
+        public override void BoltStartDone()
+        {
+            if (BoltNetwork.isServer)
+            {
+                string matchName = "Test";
+                BoltNetwork.SetServerInfo(matchName, null);
+                BoltNetwork.LoadScene("RefactoTest");
+            }
+        }
+
+        public override void SessionListUpdated(Map<Guid, UdpSession> sessionList)
+        {
+            Debug.LogFormat("Session list updated : {0} total sessions", sessionList.Count);
+            foreach(var session in sessionList)
+            {
+                UdpSession photonSession = session.Value as UdpSession;
+                if(photonSession.Source == UdpSessionSource.Photon)
+                {
+                    BoltNetwork.Connect(photonSession);
+                }
+            }
+        }
+
         // PRIVATE
 
         private void Main()
@@ -56,15 +83,19 @@ namespace Menu
         private void Solo()
         {
             Debug.Log("Launching Solo mode");
-            //PhotonNetwork.OfflineMode = true;
-            //hotonNetwork.CreateRoom("Solo");
-            SceneManager.LoadScene(Constants.Scene.FortBlock);
+            BoltLauncher.StartSinglePlayer();
         }
 
         private void Multi()
         {
+            lobbyManager.SetActive(true);
+            mainGameMenu.SetActive(false);
+            /*
+            BoltLauncher.StartServer();
             currentState = State.Multiplayer;
-            UpdateMenu();
+            BoltLauncher.StartClient();
+            //UpdateMenu();
+            */
         }
 
         private void Options()
@@ -75,11 +106,11 @@ namespace Menu
 
         private void Quit()
         {
-#if UNITY_EDITOR
+            #if UNITY_EDITOR
             EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+            #else
+            Application.Quit();
+            #endif
         }
 
         private void Back()

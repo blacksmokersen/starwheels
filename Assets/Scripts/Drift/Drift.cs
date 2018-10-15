@@ -28,23 +28,26 @@ namespace Drift
         public TurnState DriftTurnState = TurnState.NotTurning;
         public DriftState DriftState = DriftState.NotDrifting;
 
+        [Header("Events")]
         public UnityEvent OnDriftStart;
-        /*
+        public UnityEvent OnDriftEnd;
+        public UnityEvent OnDriftReset;
+
         public UnityEvent OnDriftLeft;
         public UnityEvent OnDriftRight;
-        */
+
         public UnityEvent OnDriftWhite;
         public UnityEvent OnDriftOrange;
         public UnityEvent OnDriftRed;
-        public UnityEvent OnDriftEnd;
-        public UnityEvent OnDriftReset;
+
         public UnityEvent OnDriftBoostStart;
         public UnityEvent OnDriftBoostEnd;
+
+        // CORE
 
         private void Awake()
         {
             _rigidBody = GetComponentInParent<Rigidbody>();
-          //  _steeringWheel = GetComponentInParent<SteeringWheel>();
         }
 
 
@@ -73,6 +76,8 @@ namespace Drift
             SetTurnState(Input.GetAxis(Constants.Input.TurnAxis));
         }
 
+        // PUBLIC
+
         public void DriftTurns(float turnValue)
         {
             if (!_groundCondition.Grounded) return;
@@ -100,12 +105,12 @@ namespace Drift
 
             if (angle < 0)
             {
-                // OnDriftLeft.Invoke();
+                OnDriftLeft.Invoke();
                 DriftTurnState = TurnState.Left;
             }
             if (angle > 0)
             {
-                // OnDriftRight.Invoke();
+                OnDriftRight.Invoke();
                 DriftTurnState = TurnState.Right;
             }
 
