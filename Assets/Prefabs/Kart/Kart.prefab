@@ -141,7 +141,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4381460982689280}
-  - component: {fileID: 114467606810014674}
   - component: {fileID: 114576107098114956}
   - component: {fileID: 114260317956726740}
   - component: {fileID: 114326461368033480}
@@ -244,6 +243,8 @@ GameObject:
   - component: {fileID: 114277620233296718}
   - component: {fileID: 114644358170194932}
   - component: {fileID: 114982058650038630}
+  - component: {fileID: 114499899481407548}
+  - component: {fileID: 114948352301696880}
   - component: {fileID: 114241659848452430}
   - component: {fileID: 114969713501460798}
   - component: {fileID: 114562823632779928}
@@ -4307,7 +4308,7 @@ MonoBehaviour:
   OnDriftBoostStart:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114467606810014674}
+      - m_Target: {fileID: 0}
         m_MethodName: StartTurbo
         m_Mode: 1
         m_Arguments:
@@ -4318,8 +4319,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114576107098114956}
-        m_MethodName: SetWheelsGreen
+      - m_Target: {fileID: 114948352301696880}
+        m_MethodName: StartTurbo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4471,18 +4472,18 @@ MonoBehaviour:
   _entityBehaviourQueryOption: 0
   _entityPriorityCalculatorQueryOption: 0
   _entityReplicationFilterQueryOption: 0
---- !u!114 &114467606810014674
+--- !u!114 &114499899481407548
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1085741530103564}
+  m_GameObject: {fileID: 1138407828072762}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec636cc443810e64da039854e7761c11, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a9da18533e30d34dad5f3084b6e1a2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Settings: {fileID: 11400000, guid: c599c944b5b41b446ab1e3ef29a19b81, type: 2}
+  MaxSpeed: 0
 --- !u!114 &114562823632779928
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4703,6 +4704,19 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   m_maskType: 0
+--- !u!114 &114948352301696880
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1138407828072762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec636cc443810e64da039854e7761c11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Settings: {fileID: 11400000, guid: c599c944b5b41b446ab1e3ef29a19b81, type: 2}
+  clampSpeed: {fileID: 114499899481407548}
 --- !u!114 &114969713501460798
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -7,24 +7,23 @@ namespace Boost
     {
         public BoostSettings Settings;
 
+        [SerializeField] private ClampSpeed clampSpeed;
+
         private Rigidbody _rigidBody;
         private Coroutine _turboCoroutine;
         private Coroutine _physicsBoostCoroutine;
 
+        private float _controlMagnitude;
+        private float _currentTimer;
+
         private void Awake()
         {
             _rigidBody = GetComponentInParent<Rigidbody>();
-
-            //   OnDriftBoostStart += () => DriftTurnState = TurnState.NotTurning;
-            //   OnDriftBoostStart += () => DriftState = DriftState.Turbo;
-
-            Settings._controlMagnitude = Settings.MaxMagnitude;
-            Settings._controlSpeed = Settings.Speed;
-
         }
 
         public void StartTurbo()
         {
+            _controlMagnitude = clampSpeed.MaxSpeed;
             _turboCoroutine = StartCoroutine(EnterTurbo());
         }
 
@@ -34,30 +33,28 @@ namespace Boost
             {
                 StopCoroutine(_physicsBoostCoroutine);
             }
-            _physicsBoostCoroutine = StartCoroutine(BoostPhysic(Settings.BoostDuration, Settings.MagnitudeBoost, Settings.BoostSpeed));
+            _physicsBoostCoroutine = StartCoroutine(BoostPhysic(Settings.BoostDuration, Settings.IncreaseMaxSpeedBy, Settings.BoostSpeed));
 
             yield return new WaitForSeconds(Settings.BoostDuration);
         }
 
         public IEnumerator BoostPhysic(float boostDuration, float magnitudeBoost, float speedBoost)
         {
-            Settings.MaxMagnitude = Mathf.Clamp(Settings.MaxMagnitude, 0, Settings._controlMagnitude) + magnitudeBoost;
-            Settings.Speed = Mathf.Clamp(Settings.Speed, 0, Settings._controlSpeed) + speedBoost;
+            clampSpeed.MaxSpeed = Mathf.Clamp(clampSpeed.MaxSpeed, 0, _controlMagnitude) + magnitudeBoost;
 
-            Settings._currentTimer = 0f;
-            while (Settings._currentTimer < boostDuration)
+            _currentTimer = 0f;
+            while (_currentTimer < boostDuration)
             {
                 _rigidBody.AddRelativeForce(Vector3.forward * Settings.BoostPowerImpulse, ForceMode.VelocityChange);
-                Settings._currentTimer += Time.fixedDeltaTime;
+                _currentTimer += Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
             }
 
-            Settings._currentTimer = 0f;
-            while (Settings._currentTimer < boostDuration)
+            _currentTimer = 0f;
+            while (_currentTimer < boostDuration)
             {
-                Settings.MaxMagnitude = Mathf.Lerp(Settings._controlMagnitude + magnitudeBoost, Settings._controlMagnitude, Settings._currentTimer / boostDuration);
-                Settings.Speed = Mathf.Lerp(Settings._controlSpeed + speedBoost, Settings._controlSpeed, Settings._currentTimer / boostDuration);
-                Settings._currentTimer += Time.fixedDeltaTime;
+                clampSpeed.MaxSpeed = Mathf.Lerp(_controlMagnitude + magnitudeBoost, _controlMagnitude, _currentTimer / boostDuration);
+                _currentTimer += Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
             }
         }
