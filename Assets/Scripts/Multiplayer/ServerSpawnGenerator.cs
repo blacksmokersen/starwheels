@@ -10,7 +10,7 @@ namespace Multiplayer
     {
         private List<BoltEntity> _players = new List<BoltEntity>();
         private List<GameObject> _spawns = new List<GameObject>();
-        private int _nbOfPlayersInGame;
+        private int _nbOfPlayersInGame = 2;
         private int _playersReady = 0;
         private bool _readyToAssignSpawns = false;
 
@@ -21,11 +21,12 @@ namespace Multiplayer
         public override void SceneLoadLocalDone(string map)
         {
             _spawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.Spawn));
+            BoltConsole.Write("Got Spawns");
         }
 
         public override void OnEvent(PlayerReady evnt)
         {
-            Debug.LogFormat("Player Ready : {0}", evnt.Entity.networkId);
+            BoltConsole.Write("Player Ready : " + evnt.Entity.networkId);
             _playersReady++;
             _players.Add(evnt.Entity);
             if(_playersReady == _nbOfPlayersInGame)
@@ -49,6 +50,7 @@ namespace Multiplayer
 
         private void AssignSpawns()
         {
+            BoltConsole.Write("Assigning spawns");
             foreach(var player in _players)
             {
                 PlayerSpawn playerSpawn = PlayerSpawn.Create();
