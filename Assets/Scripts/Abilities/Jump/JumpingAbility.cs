@@ -20,6 +20,7 @@ namespace Abilities.Jump
         private Rigidbody _rb;
         private bool _canUseAbility = true;
         private bool _hasDoneFirstJump = false;
+        private bool _straightUpSecondJump = false;
 
         // CORE
 
@@ -45,6 +46,8 @@ namespace Abilities.Jump
         public void SecondJump(JoystickValues joystickValues)
         {
             _hasDoneFirstJump = false;
+            _straightUpSecondJump = false;
+
             var direction = Direction.Default;
 
             Vector3 forceDirection;
@@ -69,11 +72,17 @@ namespace Abilities.Jump
                 direction = Direction.Backward;
             }
             else
+            {
                 forceDirection = Vector3.up;
+                _straightUpSecondJump = true;
+            }
 
             var forceUp = Vector3.up * Settings.SecondJumpUpForce;
             var forceDirectional = forceDirection * Settings.SecondJumpLateralForces;
-            _rb.AddRelativeForce(forceUp + forceDirectional, ForceMode.Impulse);
+            if (_straightUpSecondJump)
+                _rb.AddRelativeForce(forceUp, ForceMode.Impulse);
+            else
+                _rb.AddRelativeForce(forceUp + forceDirectional, ForceMode.Impulse);
             OnSecondJump.Invoke(direction);
         }
 
