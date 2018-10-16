@@ -36,16 +36,9 @@ namespace Engine
 
         private void FixedUpdate()
         {
-            ClampMagnitude();
             CurrentSpeed = transform.InverseTransformDirection(_rb.velocity).z;
             CheckMovingDirection();
             OnVelocityChange.Invoke(_rb.velocity.magnitude);
-        }
-
-        private void ClampMagnitude()
-        {
-            if (Settings.MaxMagnitude > 0)
-                _rb.velocity = Vector3.ClampMagnitude(_rb.velocity, Settings.MaxMagnitude);
         }
 
         // PUBLIC
