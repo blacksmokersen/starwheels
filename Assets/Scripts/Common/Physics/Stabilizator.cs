@@ -6,9 +6,26 @@ namespace Common.PhysicsUtils
     {
         public float RotationStabilizationSpeed = .25f;
 
+        private bool _activated = false;
+
+        // CORE
+
         public void Update()
         {
-            StabilizeRotation();
+            if (_activated)
+                StabilizeRotation();
+        }
+
+        // PUBLIC
+
+        public void Activate()
+        {
+            _activated = true;
+        }
+
+        public void Deactivate()
+        {
+            _activated = false;
         }
 
         public void StabilizeRotation()
