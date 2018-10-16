@@ -20,7 +20,9 @@ namespace Abilities.Jump
         private Rigidbody _rb;
         private bool _canUseAbility = true;
         private bool _hasDoneFirstJump = false;
+        private bool _hasDoneSecondJump = false;
         private bool _straightUpSecondJump = false;
+        private Coroutine _timeBetweenFirstAndSecondJump;
 
         // CORE
 
@@ -105,16 +107,25 @@ namespace Abilities.Jump
         {
             if (_canUseAbility)
             {
-                if (!_hasDoneFirstJump)
+                if (!_hasDoneFirstJump && groundCondition.Grounded)
                 {
                     FirstJump();
+                    _timeBetweenFirstAndSecondJump = StartCoroutine(TimeBetweenFirstAndSecondJump());
                 }
-                else
+                else if (!groundCondition.Grounded)
                 {
                     SecondJump(joystickValues);
+                    if (_timeBetweenFirstAndSecondJump != null) { }
+                    StopCoroutine(_timeBetweenFirstAndSecondJump);
                     StartCoroutine(Cooldown());
                 }
             }
+        }
+
+        private IEnumerator TimeBetweenFirstAndSecondJump()
+        {
+            yield return new WaitForSeconds(Settings.MaxTimeBetweenFirstAndSecondJump);
+            StartCoroutine(Cooldown());
         }
 
         private IEnumerator Cooldown()

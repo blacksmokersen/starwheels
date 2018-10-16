@@ -12,5 +12,6 @@ namespace Abilities.Jump
 
         [Header("Cooldown")]
         public float CooldownDuration;
+        public float MaxTimeBetweenFirstAndSecondJump;
     }
 }
