@@ -32,6 +32,7 @@ namespace Multiplayer
             player.GetState<IKartState>().Team = lobbyPlayer.playerColor;
             player.GetState<IKartState>().Nickname = lobbyPlayer.playerName;
             player.AssignControl(connection);
+            player.ReleaseControl();
         }
 
         public Vector3 GetSpawnPosition()
