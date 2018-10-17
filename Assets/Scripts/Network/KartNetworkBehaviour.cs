@@ -20,8 +20,6 @@ namespace Network
         {
             state.SetTransforms(state.Transform, transform);
             state.SetAnimator(GetComponentInChildren<Animator>());
-            state.Team = LobbyPhotonPlayer.localPlayer.playerColor;
-            state.Nickname = LobbyPhotonPlayer.localPlayer.playerName;
             state.AddCallback("Team", ColorChanged);
             state.AddCallback("Nickname", NameChanged);
             ColorChanged();

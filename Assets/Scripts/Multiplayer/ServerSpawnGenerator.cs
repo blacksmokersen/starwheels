@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Bolt;
+using Photon.Lobby;
 
 namespace Multiplayer
 {
@@ -18,6 +19,8 @@ namespace Multiplayer
         {
             _spawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.Spawn));
             var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart);
+            myKart.GetState<IKartState>().Team = LobbyPhotonPlayer.localPlayer.playerColor;
+            myKart.GetState<IKartState>().Nickname = LobbyPhotonPlayer.localPlayer.playerName;
             myKart.transform.position = GetSpawnPosition();
             FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
         }
@@ -25,8 +28,9 @@ namespace Multiplayer
         public override void SceneLoadRemoteDone(BoltConnection connection)
         {
             var player = BoltNetwork.Instantiate(BoltPrefabs.Kart);
-            //playerSettings.Team = Team.Blue;
-            //playerSettings.Nickname = "Sha";
+            var lobbyPlayer = LobbyPlayerList._instance.GetPlayer(connection);
+            player.GetState<IKartState>().Team = lobbyPlayer.playerColor;
+            player.GetState<IKartState>().Nickname = lobbyPlayer.playerName;
             player.AssignControl(connection);
         }
 
