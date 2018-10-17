@@ -24,7 +24,7 @@ namespace Common.HUD
 
         public void SetFrameRendererTeam(Team team)
         {
-            frameRenderer.color = TeamsColors.GetTeamColor(team);
+            frameRenderer.color = TeamsColors.GetColorFromTeam(team);
         }
 
         public void ShowPanel()

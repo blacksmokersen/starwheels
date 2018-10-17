@@ -8,11 +8,7 @@ namespace Multiplayer
     [BoltGlobalBehaviour(BoltNetworkModes.Server)]
     public class ServerSpawnGenerator : GlobalEventListener
     {
-        private List<BoltEntity> _players = new List<BoltEntity>();
         private List<GameObject> _spawns = new List<GameObject>();
-        private int _nbOfPlayersInGame = 2;
-        private int _playersReady = 0;
-        private bool _readyToAssignSpawns = false;
 
         // CORE
 
@@ -21,18 +17,19 @@ namespace Multiplayer
         public override void SceneLoadLocalDone(string map)
         {
             _spawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.Spawn));
-            BoltConsole.Write("Got Spawns");
+            var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart);
+            myKart.transform.position = GetSpawnPosition();
+            FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
         }
 
-        public override void OnEvent(PlayerReady evnt)
+        public override void SceneLoadRemoteDone(BoltConnection connection)
         {
-            BoltConsole.Write("Player Ready : " + evnt.Entity.networkId);
-            _playersReady++;
-            _players.Add(evnt.Entity);
-            if(_playersReady == _nbOfPlayersInGame)
-            {
-                AssignSpawns();
-            }
+            var player = BoltNetwork.Instantiate(BoltPrefabs.Kart);
+            player.transform.position = GetSpawnPosition();
+            var playerSettings = player.GetComponent<PlayerSettings>();
+            playerSettings.Team = Team.Blue;
+            playerSettings.Nickname = "Sha";
+            player.AssignControl(connection);
         }
 
         public Vector3 GetSpawnPosition()
@@ -44,20 +41,6 @@ namespace Multiplayer
                 return spawnPosition.transform.position;
             }
             return Vector3.zero;
-        }
-
-        // PRIVATE
-
-        private void AssignSpawns()
-        {
-            BoltConsole.Write("Assigning spawns");
-            foreach(var player in _players)
-            {
-                PlayerSpawn playerSpawn = PlayerSpawn.Create();
-                playerSpawn.NetworkID = player.networkId;
-                playerSpawn.SpawnPosition = GetSpawnPosition();
-                playerSpawn.Send();
-            }
         }
     }
 }

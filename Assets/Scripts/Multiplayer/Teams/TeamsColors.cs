@@ -17,9 +17,19 @@ namespace Multiplayer.Teams
             material.color = _teamToColor[team];
         }
 
-        public static Color GetTeamColor(Team team)
+        public static Color GetColorFromTeam(Team team)
         {
             return _teamToColor[team];
+        }
+
+        public static Team GetTeamFromColor(Color color)
+        {
+            foreach (KeyValuePair<Team, Color> entry in _teamToColor)
+            {
+                if (entry.Value == color)
+                    return entry.Key;
+            }
+            return Team.None;
         }
     }
 }

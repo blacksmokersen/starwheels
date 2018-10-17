@@ -6,6 +6,11 @@ namespace Photon.Lobby
 {
     public class LobbyPhotonPlayer : Bolt.EntityEventListener<ILobbyPlayerInfoState>
     {
+        private void Awake()
+        {
+            //DontDestroyOnLoad(gameObject);
+        }
+
         // Bolt
         public BoltConnection connection;
 
@@ -37,6 +42,8 @@ namespace Photon.Lobby
         static Color TransparentColor = new Color(0, 0, 0, 0);
 
         public static LobbyPhotonPlayer localPlayer;
+
+
 
         // Handlers
 
@@ -96,7 +103,7 @@ namespace Photon.Lobby
         public override void SimulateController()
         {
             ILobbyCommandInput input = LobbyCommand.Create();
-            
+
             input.Name = playerName;
             input.Color = playerColor;
             input.Ready = ready;
@@ -204,12 +211,14 @@ namespace Photon.Lobby
 
         public void OnColorClicked()
         {
-            playerColor = Random.ColorHSV();
+            playerColor = Multiplayer.Teams.TeamsColors.GetColorFromTeam(Team.Blue);
         }
 
         public void OnReadyClicked()
         {
             ready = !ready;
+            //gameObject.transform.SetParent(null);
+            //DontDestroyOnLoad(gameObject);
         }
 
         public void OnNameChanged(string newName)
