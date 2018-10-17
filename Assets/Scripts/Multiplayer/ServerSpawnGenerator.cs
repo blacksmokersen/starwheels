@@ -25,10 +25,8 @@ namespace Multiplayer
         public override void SceneLoadRemoteDone(BoltConnection connection)
         {
             var player = BoltNetwork.Instantiate(BoltPrefabs.Kart);
-            player.transform.position = GetSpawnPosition();
-            var playerSettings = player.GetComponent<PlayerSettings>();
-            playerSettings.Team = Team.Blue;
-            playerSettings.Nickname = "Sha";
+            //playerSettings.Team = Team.Blue;
+            //playerSettings.Nickname = "Sha";
             player.AssignControl(connection);
         }
 

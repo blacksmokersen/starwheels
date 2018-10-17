@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
+using Photon.Lobby;
 using Bolt;
+using Multiplayer;
+using Multiplayer.Teams;
 
 namespace Network
 {
@@ -17,7 +20,22 @@ namespace Network
         {
             state.SetTransforms(state.Transform, transform);
             state.SetAnimator(GetComponentInChildren<Animator>());
-            //state.Animator.applyRootMotion = entity.isOwner;
+            state.Team = LobbyPhotonPlayer.localPlayer.playerColor;
+            state.Nickname = LobbyPhotonPlayer.localPlayer.playerName;
+            state.AddCallback("Team", ColorChanged);
+            state.AddCallback("Nickname", NameChanged);
+            ColorChanged();
+            NameChanged();
+        }
+
+        private void ColorChanged()
+        {
+            GetComponent<PlayerSettings>().Team = TeamsColors.GetTeamFromColor(state.Team);
+        }
+
+        private void NameChanged()
+        {
+            GetComponent<PlayerSettings>().Nickname = state.Nickname;
         }
     }
 }
