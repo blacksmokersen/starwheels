@@ -23,7 +23,7 @@ namespace Boost
 
         public void StartTurbo()
         {
-            _controlMagnitude = clampSpeed.MaxSpeed;
+            _controlMagnitude = clampSpeed.ControlMaxSpeed;
             _turboCoroutine = StartCoroutine(EnterTurbo());
         }
 
@@ -53,7 +53,7 @@ namespace Boost
             _currentTimer = 0f;
             while (_currentTimer < boostDuration)
             {
-                clampSpeed.MaxSpeed = Mathf.Lerp(_controlMagnitude + magnitudeBoost, _controlMagnitude, _currentTimer / boostDuration);
+                clampSpeed.MaxSpeed = Mathf.Lerp(_controlMagnitude + magnitudeBoost, clampSpeed.ControlMaxSpeed, _currentTimer / boostDuration);
                 _currentTimer += Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
             }

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ClampSpeed : MonoBehaviour {
 
+    [Header("BaseMaxSpeed")]
+    public float ControlMaxSpeed;
+    [Header("ActualMaxSpeed(Dont touch that)")]
     public float MaxSpeed;
 
     private Rigidbody _rigidbody;
@@ -11,6 +14,7 @@ public class ClampSpeed : MonoBehaviour {
     private void Awake()
     {
         _rigidbody = GetComponentInParent<Rigidbody>();
+        ControlMaxSpeed = MaxSpeed;
     }
 
     private void FixedUpdate()
