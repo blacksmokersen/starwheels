@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 using UnityEngine.SceneManagement;
 using System;
 using UdpKit;
@@ -20,6 +21,7 @@ namespace Menu
         }
         [SerializeField] private GameObject mainGameMenu;
         [SerializeField] private GameObject lobbyManager;
+        [SerializeField] private Dropdown mapChoiceSolo;
         [SerializeField] private Button soloButton;
         [SerializeField] private Button multiButton;
         [SerializeField] private Button optionsButton;
@@ -73,7 +75,12 @@ namespace Menu
         {
             Debug.Log("Launching Solo mode");
             BoltLauncher.StartSinglePlayer();
-            BoltNetwork.LoadScene("FortBlock");
+        }
+
+        public override void BoltStartDone()
+        {
+            base.BoltStartDone();
+            BoltNetwork.LoadScene(mapChoiceSolo.options[mapChoiceSolo.value].text);
         }
 
         private void Multi()
