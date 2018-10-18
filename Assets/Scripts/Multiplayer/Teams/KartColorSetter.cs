@@ -35,5 +35,15 @@ namespace Multiplayer.Teams
                     break;
             }
         }
+
+        public void SetKartColor(Color color)
+        {
+            if(color == TeamsColors.GetColorFromTeam(Team.Blue))
+                targetKartRenderer.material = _blueKartMaterial;
+            else if (color == TeamsColors.GetColorFromTeam(Team.Red))
+                targetKartRenderer.material = _redKartMaterial;
+            else
+                targetKartRenderer.material = _whiteKartMaterial;
+        }
     }
 }

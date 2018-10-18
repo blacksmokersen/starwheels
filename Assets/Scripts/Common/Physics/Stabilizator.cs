@@ -12,7 +12,7 @@ namespace Common.PhysicsUtils
 
         public void Update()
         {
-            if (_activated)
+            if(_activated)
                 StabilizeRotation();
         }
 
@@ -28,7 +28,9 @@ namespace Common.PhysicsUtils
             _activated = false;
         }
 
-        public void StabilizeRotation()
+        // PRIVATE
+
+        private void StabilizeRotation()
         {
             var actualRotation = transform.localRotation;
             actualRotation.x = Mathf.Lerp(actualRotation.x, 0, RotationStabilizationSpeed * Time.deltaTime);

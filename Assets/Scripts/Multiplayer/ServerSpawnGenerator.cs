@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Bolt;
+using Photon.Lobby;
 
 namespace Multiplayer
 {
     [BoltGlobalBehaviour(BoltNetworkModes.Server)]
     public class ServerSpawnGenerator : GlobalEventListener
     {
-        private List<GameObject> _spawns;
-        private bool _readyToAssignSpawns = false;
+        private List<GameObject> _spawns = new List<GameObject>();
 
         // CORE
 
@@ -17,43 +17,33 @@ namespace Multiplayer
 
         public override void SceneLoadLocalDone(string map)
         {
-            if (BoltNetwork.isServer)
-            {
-                _spawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.Spawn));
-                StartCoroutine(WaitForPlayers());
-            }
+            _spawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.Spawn));
+            var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart);
+            myKart.GetState<IKartState>().Team = LobbyPhotonPlayer.localPlayer.playerColor;
+            myKart.GetState<IKartState>().Nickname = LobbyPhotonPlayer.localPlayer.playerName;
+            myKart.transform.position = GetSpawnPosition();
+            FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
         }
 
-        /*
-        public override void OnEvent()
+        public override void SceneLoadRemoteDone(BoltConnection connection)
         {
-
-        }
-        */
-
-        public Transform GetSpawnPosition()
-        {
-            if (BoltNetwork.isServer)
-            {
-                if (_spawns.Count > 0)
-                {
-                    var spawnPosition = _spawns[0];
-                    _spawns.Remove(spawnPosition);
-                    return spawnPosition.transform;
-                }
-            }
-            return null;
+            var player = BoltNetwork.Instantiate(BoltPrefabs.Kart);
+            var lobbyPlayer = LobbyPlayerList._instance.GetPlayer(connection);
+            player.GetState<IKartState>().Team = lobbyPlayer.playerColor;
+            player.GetState<IKartState>().Nickname = lobbyPlayer.playerName;
+            player.AssignControl(connection);
+            player.ReleaseControl();
         }
 
-        // PRIVATE
-
-        private IEnumerator WaitForPlayers()
+        public Vector3 GetSpawnPosition()
         {
-            while (Application.isPlaying)
+            if (_spawns.Count > 0)
             {
-                yield return null;
+                var spawnPosition = _spawns[0];
+                _spawns.Remove(spawnPosition);
+                return spawnPosition.transform.position;
             }
-            _readyToAssignSpawns = true;
+            return Vector3.zero;
         }
     }
 }

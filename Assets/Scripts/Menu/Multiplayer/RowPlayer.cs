@@ -41,7 +41,7 @@ namespace Menu
 
         public void SetTeam(Team team)
         {
-            backgroundColor.color = TeamsColors.GetTeamColor(team);
+            backgroundColor.color = TeamsColors.GetColorFromTeam(team);
         }
 
         // PRIVATE

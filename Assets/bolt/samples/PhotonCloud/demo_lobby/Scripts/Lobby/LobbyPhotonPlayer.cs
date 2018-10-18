@@ -1,6 +1,7 @@
 ﻿using Bolt;
 using UnityEngine;
 using UnityEngine.UI;
+using Multiplayer.Teams;
 
 namespace Photon.Lobby
 {
@@ -16,7 +17,7 @@ namespace Photon.Lobby
 
         // Lobby
         public string playerName = "";
-        public Color playerColor = Color.white;
+        public Color playerColor = TeamsColors.GetColorFromTeam(Team.Blue);
         public bool ready = false;
 
         public Button colorButton;
@@ -44,7 +45,8 @@ namespace Photon.Lobby
         {
             if (entity.isOwner)
             {
-                state.Color = Random.ColorHSV();
+                Debug.Log("Color used : " + playerColor);
+                state.Color = playerColor;
                 state.Name = "Player #" + Random.Range(1, 100);
             }
 
@@ -56,7 +58,7 @@ namespace Photon.Lobby
 
             state.AddCallback("Color", () =>
             {
-                //OnColorChanged(state.Color);
+                OnColorChanged(state.Color);
                 colorButton.GetComponent<Image>().color = state.Color;
             });
 
@@ -96,7 +98,7 @@ namespace Photon.Lobby
         public override void SimulateController()
         {
             ILobbyCommandInput input = LobbyCommand.Create();
-            
+
             input.Name = playerName;
             input.Color = playerColor;
             input.Ready = ready;
@@ -198,13 +200,18 @@ namespace Photon.Lobby
 
         public void OnColorChanged(Color newColor)
         {
-            //playerColor = newColor;
+            playerColor = newColor;
             colorButton.GetComponent<Image>().color = newColor;
         }
 
         public void OnColorClicked()
         {
-            playerColor = Random.ColorHSV();
+            if(playerColor == TeamsColors.GetColorFromTeam(Team.Blue))
+                playerColor = TeamsColors.GetColorFromTeam(Team.Red);
+            else if (playerColor == TeamsColors.GetColorFromTeam(Team.Red))
+                playerColor = TeamsColors.GetColorFromTeam(Team.Blue);
+            else
+                playerColor = TeamsColors.GetColorFromTeam(Team.Blue);
         }
 
         public void OnReadyClicked()
