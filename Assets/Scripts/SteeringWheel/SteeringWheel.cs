@@ -44,7 +44,7 @@ namespace Steering
 
         public override void Attached()
         {
-            if (!entity.isControlled)
+            if (!entity.isControlled && entity.isOwner)
             {
                 entity.TakeControl();
             }
@@ -70,9 +70,33 @@ namespace Steering
             }
             else
             {
-                TurnUsingTorque(cmd.Input.Turn);
-                cmd.Result.Velocity = _rb.velocity;
+                var rb = _rb;
+                rb = TurnUsingTorque(cmd.Input.Turn,rb);
+                cmd.Result.Velocity = rb.velocity;
             }
+        }
+        public Rigidbody TurnUsingTorque(float turnValue, Rigidbody rb)
+        {
+            if (CanTurn())
+            {
+                SetTurnState(turnValue);
+                turnValue = InversedTurnValue(turnValue);
+
+                if (_groundCondition != null)
+                {
+                    if (_groundCondition.Grounded)
+                    {
+                        rb.AddRelativeTorque(Vector3.up * turnValue * Settings.TurnTorque, ForceMode.Force);
+                        //OnTurn.Invoke(TurningState);
+                    }
+                }
+                else
+                {
+                    rb.AddRelativeTorque(Vector3.up * turnValue * Settings.TurnTorque, ForceMode.Force);
+                    OnTurn.Invoke(TurningState);
+                }
+            }
+            return rb;
         }
 
         public void TurnUsingTorque(float turnValue)

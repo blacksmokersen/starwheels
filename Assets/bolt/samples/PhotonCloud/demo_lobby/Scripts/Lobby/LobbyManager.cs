@@ -48,8 +48,6 @@ namespace Photon.Lobby
         protected bool _isCountdown = false;
         protected string _matchName;
 
-        private PlayerInfoToken _playerInfo;
-
 
         public string matchHost
         {
@@ -80,7 +78,7 @@ namespace Photon.Lobby
             StartButton.gameObject.SetActive(false);
             GetComponent<Canvas>().enabled = true;
 
-            // DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
 
             SetServerInfo("Offline", "None");
 
@@ -346,17 +344,6 @@ namespace Photon.Lobby
         {
             countdownPanel.UIText.text = "Match Starting in " + evnt.Time;
             countdownPanel.gameObject.SetActive(evnt.Time != 0);
-            /*
-            if(evnt.Time == 0)
-            {
-                Debug.Log("Creating player token");
-                PlayerInfoToken playerInfoToken = new PlayerInfoToken()
-                {
-                    Nickname = LobbyPhotonPlayer.nameInput.text,
-                    Team = (int) TeamsColors.GetTeamFromColor(LobbyPhotonPlayer.playerColor)
-                };
-            }
-            */
         }
 
         public override void EntityReceived(BoltEntity entity)
@@ -371,7 +358,6 @@ namespace Photon.Lobby
             if (!entity.isControlled)
             {
                 LobbyPhotonPlayer photonPlayer = entity.gameObject.GetComponent<LobbyPhotonPlayer>();
-                DontDestroyOnLoad(photonPlayer);
 
                 if (photonPlayer != null)
                 {
@@ -396,6 +382,8 @@ namespace Photon.Lobby
                 BoltEntity entity = BoltNetwork.Instantiate(BoltPrefabs.PlayerInfo);
 
                 LobbyPhotonPlayer lobbyPlayer = entity.GetComponent<LobbyPhotonPlayer>();
+                DontDestroyOnLoad(lobbyPlayer.gameObject);
+
                 lobbyPlayer.connection = connection;
 
                 connection.UserData = lobbyPlayer;

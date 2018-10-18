@@ -43,6 +43,7 @@ namespace Photon.Lobby
 
         public override void Attached()
         {
+            DontDestroyOnLoad(gameObject);
             if (entity.isOwner)
             {
                 Debug.Log("Color used : " + playerColor);
@@ -74,6 +75,8 @@ namespace Photon.Lobby
 
             readyButton.transform.GetChild(0).GetComponent<Text>().color = Color.white;
             SetupPlayer();
+
+            DontDestroyOnLoad(gameObject);
         }
 
         public void OnPlayerListChanged(int idx)
@@ -178,6 +181,7 @@ namespace Photon.Lobby
 
         public void RemovePlayer()
         {
+            Debug.Log("Removing player");
             LobbyPlayerList._instance.RemovePlayer(this);
 
             if (entity != null)
