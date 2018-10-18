@@ -13,9 +13,16 @@ namespace Common.HUD
         [SerializeField] private TextMeshPro nameText;
         [SerializeField] private SpriteRenderer frameRenderer;
 
+        public override void Attached()
+        {
+            SetName(state.Nickname);
+            SetFrameRendererColor(state.Team);
+            Debug.Log(state.Nickname);
+        }
+
         public override void ControlGained()
         {
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
 
         public override void ControlLost()
@@ -25,17 +32,19 @@ namespace Common.HUD
 
         public void SetName(string name)
         {
+            Debug.Log("Changing frame nickname : " + name);
             nameText.text = name;
         }
 
         public void SetFrameRendererColor(Color color)
         {
+            Debug.Log("Changing frame color : " + color);
             frameRenderer.color = color;
         }
 
         public void SetFrameRendererTeam(Team team)
         {
-            frameRenderer.color = TeamsColors.GetColorFromTeam(team);
+            SetFrameRendererColor(TeamsColors.GetColorFromTeam(team));
         }
 
         public void ShowPanel()

@@ -48,17 +48,6 @@ namespace Menu
 
         // PUBLIC
 
-
-        public override void BoltStartDone()
-        {
-            if (BoltNetwork.isServer)
-            {
-                string matchName = "Test";
-                BoltNetwork.SetServerInfo(matchName, null);
-                BoltNetwork.LoadScene("RefactoTest");
-            }
-        }
-
         public override void SessionListUpdated(Map<Guid, UdpSession> sessionList)
         {
             Debug.LogFormat("Session list updated : {0} total sessions", sessionList.Count);
@@ -84,6 +73,7 @@ namespace Menu
         {
             Debug.Log("Launching Solo mode");
             BoltLauncher.StartSinglePlayer();
+            BoltNetwork.LoadScene("FortBlock");
         }
 
         private void Multi()
