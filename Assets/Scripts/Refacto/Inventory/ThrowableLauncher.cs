@@ -11,9 +11,9 @@ namespace Items
             {
                 float directionAxis = Input.GetAxis(Constants.Input.UpAndDownAxis);
 
-                if (directionAxis > settings.ForwardTreshold)
+                if (directionAxis > 0.3f)
                     return Direction.Forward;
-                else if (directionAxis < settings.BackwardTreshold)
+                else if (directionAxis < -0.3f)
                     return Direction.Backward;
                 else
                     return Direction.Default;
@@ -65,7 +65,7 @@ namespace Items
             {
                 transform.position = _itemPositions.FrontPosition.position;
                 rot = new Vector3(0, throwable.transform.rotation.eulerAngles.y, 0);
-                var aimVector = throwable.transform.forward;
+                var aimVector = throwable.transform.TransformDirection(0, 0, 1);
                 rb.AddForce((aimVector + throwable.transform.up / TimesLongerThanHighThrow) * ForwardThrowingForce, ForceMode.Impulse);
             }
             else if (ThrowingDirection == Direction.Backward)
@@ -85,13 +85,13 @@ namespace Items
             {
                 transform.position = _itemPositions.FrontPosition.position;
                 rot = new Vector3(0, throwable.transform.rotation.eulerAngles.y, 0);
-                rb.velocity = throwable.transform.forward.normalized * Speed;
+                rb.velocity = throwable.transform.TransformDirection(0,0,1).normalized * Speed;
             }
             else if (ThrowingDirection == Direction.Backward)
             {
                 transform.position = _itemPositions.BackPosition.position;
                 rot = new Vector3(0, throwable.transform.rotation.eulerAngles.y + 180, 0);
-                rb.velocity = -throwable.transform.forward.normalized * Speed;
+                rb.velocity = -throwable.transform.TransformDirection(0, 0, 1).normalized * Speed;
             }
             transform.rotation = Quaternion.Euler(rot);
         }

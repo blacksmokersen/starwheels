@@ -10,23 +10,37 @@ namespace Items
         public IntEvent OnItemCountChange;
 
         private ThrowableLauncher _projectileLauncher;
-        private Item _currentItem;
-        private int _currentItemCount;
+        [SerializeField] private Item _currentItem;
+        [SerializeField] private int _currentItemCount;
 
         // CORE
+
+        private void Awake()
+        {
+            _projectileLauncher = GetComponent<ThrowableLauncher>();
+        }
+
+        private void Update()
+        {
+            MapInputs();
+        }
+
+        // PUBLIC
+
         public void MapInputs()
         {
-            if (Input.GetButtonDown("Item"))
+            if (Input.GetButtonDown(Constants.Input.UseItem))
             {
+                Debug.Log("Using Item");
                 UseItem();
             }
         }
 
-        // PUBLIC
         public void UseItem()
         {
             if (_currentItemCount > 0 || _currentItem != null)
             {
+                Debug.Log("UseItem()");
                 var instantiatedItem = BoltNetwork.Instantiate(_currentItem.itemPrefab);
                 if (_currentItem.ItemType == ItemType.Throwable)
                 {

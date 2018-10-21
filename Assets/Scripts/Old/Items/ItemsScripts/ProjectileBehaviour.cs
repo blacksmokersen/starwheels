@@ -52,29 +52,6 @@ namespace Items
 
         #region Instantiation
 
-        public void Spawn(Inventory kart, Direction direction, float aimAxis)
-        {
-            if (direction == Direction.Forward || direction == Direction.Default)
-            {
-                //transform.position = kart.ItemPositions.FrontPosition.position;
-                var rot = new Vector3(0, kart.transform.rotation.eulerAngles.y + aimAxis * aimAngle, 0);
-                transform.rotation = Quaternion.Euler(rot);
-                var vel = kart.transform.TransformDirection(new Vector3(aimAxis,0,1)).normalized* Speed;
-                rb.velocity = vel;
-            }
-            else if (direction == Direction.Backward)
-            {
-                var rot = new Vector3(0, kart.transform.rotation.eulerAngles.y + 180, 0); // Apply 180° turn
-                transform.rotation = Quaternion.Euler(rot);
-                rb.velocity = -kart.transform.forward * Speed;
-                //transform.position = kart.ItemPositions.BackPosition.position;
-            }
-            owner = kart;
-            StartCoroutine(StartOwnerImmunity());
-            PlayLaunchSound();
-            PlayFlySound();
-        }
-
         private IEnumerator StartOwnerImmunity()
         {
             _ownerImmune = true;
