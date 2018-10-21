@@ -1,4 +1,7 @@
 ﻿using UnityEngine.Events;
 
-[System.Serializable]
-public class ItemEvent : UnityEvent<Item> { }
+namespace Items
+{
+    [System.Serializable]
+    public class ItemEvent : UnityEvent<Item> { }
+}

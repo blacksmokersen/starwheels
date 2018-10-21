@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu]
-public class Item : ScriptableObject
+namespace Items
 {
-    public string Name;
-    public Effect Effect;
-    public int Count;
-    public Texture2D Icon;
+    [CreateAssetMenu]
+    public class Item : ScriptableObject
+    {
+        public string Name;
+        public int Count;
+        public Texture2D Icon;
+        public ItemType ItemType;
+        public GameObject itemPrefab;
+    }
 }
