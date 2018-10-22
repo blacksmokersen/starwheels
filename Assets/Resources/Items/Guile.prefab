@@ -139,10 +139,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4585230083791454}
   - component: {fileID: 54044191896366344}
-  - component: {fileID: 114540808614522802}
-  - component: {fileID: 114930422525863730}
-  - component: {fileID: 114479064459123044}
+  - component: {fileID: 114305238291265940}
   - component: {fileID: 114938298749506902}
+  - component: {fileID: 114268119908979466}
   - component: {fileID: 198069226958243806}
   - component: {fileID: 199884811507274230}
   - component: {fileID: 82316524787443154}
@@ -391,7 +390,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
@@ -739,6 +738,46 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &114268119908979466
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1815964786037566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05da5082f6c1fb643801679d94caf256, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ThrowableType: 0
+--- !u!114 &114305238291265940
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1815964786037566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -36112512, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sceneGuid: 
+  _serializerGuid: 6612d789-ac7e-410d-bc9e-901586e209f5
+  _prefabId: 12
+  _updateRate: 1
+  _autoFreezeProxyFrames: 0
+  _clientPredicted: 1
+  _allowInstantiateOnClient: 1
+  _persistThroughSceneLoads: 0
+  _sceneObjectDestroyOnDetach: 1
+  _sceneObjectAutoAttach: 1
+  _alwaysProxy: 0
+  _detachOnDisable: 1
+  _allowFirstReplicationWhenFrozen: 0
+  _autoRemoveChildEntities: 0
+  _entityBehaviourQueryOption: 0
+  _entityPriorityCalculatorQueryOption: 0
+  _entityReplicationFilterQueryOption: 0
 --- !u!114 &114452897881348176
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -750,57 +789,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 022d27b6ccbcead41a89245c6b486778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114479064459123044
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1815964786037566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 1
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &114540808614522802
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1815964786037566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 114930422525863730}
-  - {fileID: 114479064459123044}
-  viewIdField: 0
-  InstantiationId: 1
-  isRuntimeInstantiated: 0
---- !u!114 &114930422525863730
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1815964786037566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
 --- !u!114 &114938298749506902
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -822,6 +810,7 @@ MonoBehaviour:
   FlySource: {fileID: 82855826527264988}
   PlayerHitSource: {fileID: 82337798892220254}
   CollisionSource: {fileID: 82337798892220254}
+  aimAngle: 45
 --- !u!136 &136307829594525636
 CapsuleCollider:
   m_ObjectHideFlags: 1

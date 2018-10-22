@@ -62,8 +62,8 @@ namespace Items
 
             if (ThrowingDirection == Direction.Forward || ThrowingDirection == Direction.Default)
             {
-                transform.position = _itemPositions.FrontPosition.position;
-                rot = new Vector3(0, throwable.transform.rotation.eulerAngles.y, 0);
+                throwable.transform.position = _itemPositions.FrontPosition.position;
+                rot = new Vector3(0, transform.rotation.eulerAngles.y, 0);
                 var aimVector = transform.forward;
                 rb.AddForce((aimVector + transform.up / TimesLongerThanHighThrow) * ForwardThrowingForce, ForceMode.Impulse);
             }

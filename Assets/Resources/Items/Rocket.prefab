@@ -151,10 +151,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4540307016684214}
   - component: {fileID: 54666048211524458}
-  - component: {fileID: 114038636429128078}
+  - component: {fileID: 114194943366987480}
   - component: {fileID: 114423031125255274}
-  - component: {fileID: 114849343152606888}
-  - component: {fileID: 114016643574653904}
+  - component: {fileID: 114800518752806076}
   - component: {fileID: 82181477320484964}
   - component: {fileID: 82165839209395766}
   - component: {fileID: 82626556239005228}
@@ -929,7 +928,7 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &114016643574653904
+--- !u!114 &114194943366987480
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -937,35 +936,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1507300503580378}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Script: {fileID: -36112512, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 1
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &114038636429128078
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1507300503580378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 114849343152606888}
-  - {fileID: 114016643574653904}
-  viewIdField: 0
-  InstantiationId: 1
-  isRuntimeInstantiated: 0
+  _sceneGuid: 
+  _serializerGuid: 6612d789-ac7e-410d-bc9e-901586e209f5
+  _prefabId: 16
+  _updateRate: 1
+  _autoFreezeProxyFrames: 0
+  _clientPredicted: 1
+  _allowInstantiateOnClient: 1
+  _persistThroughSceneLoads: 0
+  _sceneObjectDestroyOnDetach: 1
+  _sceneObjectAutoAttach: 1
+  _alwaysProxy: 0
+  _detachOnDisable: 1
+  _allowFirstReplicationWhenFrozen: 0
+  _autoRemoveChildEntities: 0
+  _entityBehaviourQueryOption: 0
+  _entityPriorityCalculatorQueryOption: 0
+  _entityReplicationFilterQueryOption: 0
 --- !u!114 &114423031125255274
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -987,6 +977,7 @@ MonoBehaviour:
   FlySource: {fileID: 82165839209395766}
   PlayerHitSource: {fileID: 82626556239005228}
   CollisionSource: {fileID: 82626556239005228}
+  aimAngle: 45
   MaxAngle: 30
   NormalTurnSpeed: 70
   QuickTurnSpeed: 350
@@ -1017,7 +1008,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71bae115c7f815f4b89fd4bfbb059faf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114849343152606888
+--- !u!114 &114800518752806076
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1025,12 +1016,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1507300503580378}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Script: {fileID: 11500000, guid: 05da5082f6c1fb643801679d94caf256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
+  ThrowableType: 0
 --- !u!135 &135744187394408888
 SphereCollider:
   m_ObjectHideFlags: 1
