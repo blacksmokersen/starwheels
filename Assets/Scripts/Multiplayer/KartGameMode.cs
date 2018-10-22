@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using CameraUtils;
 using GameModes;
-using HUD;
 
-namespace Kart
+namespace GameModes
 {
     public class KartGameMode : MonoBehaviour
     {

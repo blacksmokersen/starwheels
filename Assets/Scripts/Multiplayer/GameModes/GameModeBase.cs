@@ -84,7 +84,7 @@ namespace GameModes
             {
                 yield return null;
             }
-            FindObjectOfType<HUD.GameHUD>().ObserveKart(kart);
+            //FindObjectOfType<HUD.GameHUD>().ObserveKart(kart);
         }
     }
 }
