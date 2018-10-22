@@ -12,9 +12,9 @@ namespace Items
                 other.gameObject.CompareTag(Constants.Tag.RocketItem))
                 && Activated)
             {
-                //other.gameObject.GetComponentInParent<ProjectileBehaviour>().DestroyObject(); // Destroy the projectile
+                other.gameObject.GetComponentInParent<ProjectileBehaviour>().DestroyObject();
                 GetComponentInParent<MineBehaviour>().PlayExplosion();
-                GetComponentInParent<MineBehaviour>().DestroyObject(); // Destroy the mine root item
+                GetComponentInParent<MineBehaviour>().DestroyObject();
             }
         }
     }

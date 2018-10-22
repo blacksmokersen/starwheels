@@ -8,7 +8,7 @@ namespace Items
         public int Count;
         public string ItemName;
         public Sprite InventoryTexture;
-        public ItemBehaviour ItemPrefab;
+        public NetworkDestroyable ItemPrefab;
         public float Chances;
         public Color ItemColor;
     }

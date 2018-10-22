@@ -18,7 +18,7 @@ namespace Abilities
         private GameObject _initialTargetObject;
         private Animator _animator;
         private HookState _state;
-        private ItemBehaviour _itemBehaviour;
+        private NetworkDestroyable _itemBehaviour;
         private LineRenderer _lineRenderer;
 
         // CORE
@@ -81,7 +81,7 @@ namespace Abilities
                 || other.CompareTag(Constants.Tag.GuileItem)
                 || other.CompareTag(Constants.Tag.GroundItem))
             {
-                _itemBehaviour = other.GetComponentInParent<ItemBehaviour>();
+                _itemBehaviour = other.GetComponentInParent<NetworkDestroyable>();
 
                 SetTarget(other.transform);
             }

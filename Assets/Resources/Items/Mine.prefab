@@ -78,6 +78,7 @@ GameObject:
   - component: {fileID: 82203276807651212}
   - component: {fileID: 82687528043077804}
   - component: {fileID: 82086500504472776}
+  - component: {fileID: 114487436481830474}
   m_Layer: 0
   m_Name: Mine
   m_TagString: GroundItem
@@ -581,13 +582,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fbf4fb8b7ab55d41a36e4002de70c73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemData: {fileID: 0}
   ActivationTime: 2
   ForwardThrowingForce: 50
   TimesLongerThanHighThrow: 5
   LaunchSource: {fileID: 82203276807651212}
   IdleSource: {fileID: 82687528043077804}
   ExplosionSource: {fileID: 82086500504472776}
+--- !u!114 &114487436481830474
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1838917612140702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faf449d14c1b8214587b11af62a948e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OwnerKartRoot: {fileID: 0}
+  Team: 0
 --- !u!114 &114578968453696728
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -23,7 +23,7 @@ namespace Items
 
                 if (ReboundsBeforeEnd <= 0)
                 {
-                    //DestroyObject();
+                    DestroyObject();
                 }
             }
         }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Multiplayer;
 
 namespace Items
 {
@@ -49,12 +50,7 @@ namespace Items
         {
             if (CurrentItemCount > 0 || CurrentItem != null)
             {
-                var instantiatedItem = BoltNetwork.Instantiate(CurrentItem.itemPrefab);
-                if (CurrentItem.ItemType == ItemType.Throwable)
-                {
-                    var throwable = instantiatedItem.GetComponent<Throwable>();
-                    _projectileLauncher.Throw(throwable);
-                }
+                InstantiateItem();
                 OnItemUse.Invoke(CurrentItem);
                 SetCount(CurrentItemCount - 1);
             }
@@ -85,5 +81,19 @@ namespace Items
 
         // PRIVATE
 
+        private void InstantiateItem()
+        {
+            var instantiatedItem = BoltNetwork.Instantiate(CurrentItem.itemPrefab);
+
+            var itemOwnership = instantiatedItem.GetComponent<Ownership>();
+            var playerSettings = GetComponentInParent<PlayerSettings>();
+            itemOwnership.Set(playerSettings);
+
+            if (CurrentItem.ItemType == ItemType.Throwable)
+            {
+                var throwable = instantiatedItem.GetComponent<Throwable>();
+                _projectileLauncher.Throw(throwable);
+            }
+        }
     }
 }

@@ -17,12 +17,12 @@ namespace Items {
             }
             else if (other.gameObject.CompareTag(Constants.Tag.DiskItem))
             {
-                other.gameObject.GetComponentInParent<ItemBehaviour>().DestroyObject();
-                GetComponentInParent<ItemBehaviour>().DestroyObject();
+                other.gameObject.GetComponentInParent<NetworkDestroyable>().DestroyObject();
+                GetComponentInParent<NetworkDestroyable>().DestroyObject();
             }
             else if (other.gameObject.CompareTag(Constants.Tag.RocketItem))
             {
-                GetComponentInParent<ItemBehaviour>().DestroyObject();
+                GetComponentInParent<NetworkDestroyable>().DestroyObject();
             }
         }
     }

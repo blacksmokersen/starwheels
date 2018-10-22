@@ -26,9 +26,12 @@ namespace Health
 
         public void LoseHealth()
         {
-            CurrentHealth--;
-            OnHealthLoss.Invoke(CurrentHealth);
-            CheckIfIsDead();
+            if (!IsInvincible)
+            {
+                CurrentHealth--;
+                OnHealthLoss.Invoke(CurrentHealth);
+                CheckIfIsDead();
+            }
         }
 
         public void ResetLives()

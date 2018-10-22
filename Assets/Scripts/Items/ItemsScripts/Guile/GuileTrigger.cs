@@ -12,11 +12,11 @@ namespace Items
                 other.gameObject.CompareTag(Constants.Tag.DiskItem) ||
                 other.gameObject.CompareTag(Constants.Tag.RocketItem))
             {
-                other.gameObject.GetComponentInParent<ItemBehaviour>().DestroyObject();
+                other.gameObject.GetComponentInParent<NetworkDestroyable>().DestroyObject();
             }
             else if (other.gameObject.CompareTag(Constants.Tag.GuileItem))
             {
-                GetComponentInParent<ItemBehaviour>().DestroyObject();
+                GetComponentInParent<NetworkDestroyable>().DestroyObject();
             }
         }
     }

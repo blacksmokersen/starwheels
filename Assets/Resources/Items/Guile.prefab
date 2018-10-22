@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 82316524787443154}
   - component: {fileID: 82855826527264988}
   - component: {fileID: 82337798892220254}
+  - component: {fileID: 114312127213964192}
   m_Layer: 9
   m_Name: Guile
   m_TagString: Untagged
@@ -778,6 +779,19 @@ MonoBehaviour:
   _entityBehaviourQueryOption: 0
   _entityPriorityCalculatorQueryOption: 0
   _entityReplicationFilterQueryOption: 0
+--- !u!114 &114312127213964192
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1815964786037566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faf449d14c1b8214587b11af62a948e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OwnerKartRoot: {fileID: 0}
+  Team: 0
 --- !u!114 &114452897881348176
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -800,6 +814,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d53f86f558a4e2249b867ed95fb63800, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Ownership: {fileID: 0}
   Speed: 100
   DestroyAfterHit: 1
   DistanceForGrounded: 0
@@ -810,7 +825,6 @@ MonoBehaviour:
   FlySource: {fileID: 82855826527264988}
   PlayerHitSource: {fileID: 82337798892220254}
   CollisionSource: {fileID: 82337798892220254}
-  aimAngle: 45
 --- !u!136 &136307829594525636
 CapsuleCollider:
   m_ObjectHideFlags: 1
