@@ -594,6 +594,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4821667778052482}
   - component: {fileID: 114994917259369108}
+  - component: {fileID: 114156034432813912}
   m_Layer: 0
   m_Name: Health
   m_TagString: Untagged
@@ -1041,6 +1042,21 @@ GameObject:
   - component: {fileID: 4187082776800634}
   m_Layer: 11
   m_Name: Base HumanLDigit51
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1641048049955280
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4751566006419492}
+  m_Layer: 0
+  m_Name: LifeBurst
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2715,6 +2731,19 @@ Transform:
   m_Father: {fileID: 4995567081210462}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4751566006419492
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1641048049955280}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4821667778052482}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4754096688846648
 Transform:
   m_ObjectHideFlags: 1
@@ -2797,7 +2826,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4751566006419492}
   m_Father: {fileID: 4745772536087832}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4199,6 +4229,20 @@ MonoBehaviour:
   InversedDirections: 0
   _groundCondition: {fileID: 114241659848452430}
   _engine: {fileID: 114112130390458132}
+--- !u!114 &114156034432813912
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1402166597443428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa87f91f1ed08d04f906ccc12345cc2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LifeBursts:
+  - {fileID: 0}
+  NumberOfParticles: 300
 --- !u!114 &114241659848452430
 MonoBehaviour:
   m_ObjectHideFlags: 1
