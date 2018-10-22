@@ -834,7 +834,9 @@ GameObject:
   - component: {fileID: 114570479638899584}
   - component: {fileID: 114370031336882382}
   - component: {fileID: 114678612611431884}
+  - component: {fileID: 114593838059053520}
   - component: {fileID: 114771178506899832}
+  - component: {fileID: 65044690839908312}
   m_Layer: 0
   m_Name: Inventory
   m_TagString: Untagged
@@ -3566,6 +3568,18 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!65 &65044690839908312
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1540390246441956}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 1, z: 2}
+  m_Center: {x: 0, y: 0.45, z: 0}
 --- !u!65 &65209227064178120
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -4605,17 +4619,50 @@ MonoBehaviour:
   CurrentItemCount: 100
   OnItemGet:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114771178506899832}
+        m_MethodName: UpdateItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: Items.ItemEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   OnItemUse:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114771178506899832}
+        m_MethodName: UpdateItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: Items.ItemEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   OnItemCountChange:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114771178506899832}
+        m_MethodName: UpdateItemCount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: IntEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114576107098114956
 MonoBehaviour:
@@ -4630,6 +4677,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smokeLeftWheel: {fileID: 198986211210334766}
   smokeRightWheel: {fileID: 198021017002471084}
+--- !u!114 &114593838059053520
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1540390246441956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6735970ebbc8a5a4abd7a7683ca92e51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnLotteryStart:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnLotteryStop:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  _inventory: {fileID: 114570479638899584}
 --- !u!114 &114596180493556864
 MonoBehaviour:
   m_ObjectHideFlags: 1

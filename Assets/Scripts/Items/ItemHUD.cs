@@ -31,9 +31,7 @@ namespace Items
             UpdateItemCount(kartInventory.CurrentItemCount);
         }
 
-        // PRIVATE
-
-        private void UpdateItem(Item item)
+        public void UpdateItem(Item item)
         {
             if (item == null)
             {
@@ -51,7 +49,7 @@ namespace Items
             }
         }
 
-        private void UpdateItemCount(int count)
+        public void UpdateItemCount(int count)
         {
             if (count == 0)
             {
@@ -62,5 +60,7 @@ namespace Items
                 _itemCountText.text = "" + count;
             }
         }
+
+        // PRIVATE
     }
 }

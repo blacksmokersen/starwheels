@@ -21,6 +21,8 @@ namespace Items
         private void Awake()
         {
             _projectileLauncher = GetComponent<ThrowableLauncher>();
+            CurrentItem = null;
+            CurrentItemCount = 0;
         }
 
         private void Update()
