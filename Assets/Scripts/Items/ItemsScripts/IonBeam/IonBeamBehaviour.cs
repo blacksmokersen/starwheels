@@ -21,7 +21,7 @@ namespace Items
             _ionBeamInputs = GetComponent<IonBeamInputs>();
         }
 
-        public override void Spawn(KartInventory kart, Direction direction, float aimAxis)
+        public override void Spawn(Inventory kart, Direction direction, float aimAxis)
         {
             _ionBeamCam.IonBeamCameraBehaviour(true);
             EnableIonInputs();

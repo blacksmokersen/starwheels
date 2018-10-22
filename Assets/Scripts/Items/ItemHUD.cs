@@ -1,56 +1,39 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
-using Items;
-using Kart;
 
-namespace HUD
+namespace Items
 {
-    public class GameHUD : MonoBehaviour
+    public class ItemHUD : MonoBehaviour
     {
-        [Header("Players")]
-        public Text PlayerList;
-
         [Header("Item")]
         [SerializeField] private Text _itemCountText;
         [SerializeField] private Image _itemTexture;
         [SerializeField] private Image _itemFrame;
 
-        [Header("Speedmeter")]
-        [SerializeField] private Image _speedBar;
-        [SerializeField] private Text _textSpeed;
-
         // CORE
 
-        private void Awake()
+        private void Start()
         {
+            _itemFrame = GameObject.Find("ItemFrame").GetComponent<Image>();
+            _itemTexture = GameObject.Find("ItemSprite").GetComponent<Image>();
+            _itemCountText = GameObject.Find("ItemCount").GetComponent<Text>();
+
             UpdateItem(null);
             UpdateItemCount(0);
-            UpdatePlayerList();
         }
 
         // PUBLIC
 
         public void ObserveKart(GameObject kartRoot)
         {
-            /*var kartInventory = kartRoot.GetComponentInChildren<KartInventory>();
-            UpdateItem(kartInventory.Item);
-            UpdateItemCount(kartInventory.Count);*/
-        }
-
-        public void UpdatePlayerList()
-        {
-            PlayerList.text = null;
-            /*
-            foreach (Player player in PhotonNetwork.PlayerList)
-            {
-                PlayerList.text += player.NickName + "\t Score: " + player.GetScore() + "\n";
-            }
-            */
+            var kartInventory = kartRoot.GetComponentInChildren<Inventory>();
+            UpdateItem(kartInventory.CurrentItem);
+            UpdateItemCount(kartInventory.CurrentItemCount);
         }
 
         // PRIVATE
 
-        private void UpdateItem(ItemData item)
+        private void UpdateItem(Item item)
         {
             if (item == null)
             {

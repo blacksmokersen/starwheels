@@ -11,9 +11,9 @@ namespace Items
             {
                 float directionAxis = Input.GetAxis(Constants.Input.UpAndDownAxis);
 
-                if (directionAxis > settings.ForwardTreshold)
+                if (directionAxis > 0.3f)
                     return Direction.Forward;
-                else if (directionAxis < settings.BackwardTreshold)
+                else if (directionAxis < -0.3f)
                     return Direction.Backward;
                 else
                     return Direction.Default;
@@ -57,7 +57,6 @@ namespace Items
 
         private void ArcThrow(Throwable throwable)
         {
-            Transform transform = throwable.transform;
             Rigidbody rb = throwable.GetComponent<Rigidbody>();
             Vector3 rot = Vector3.zero;
 
@@ -65,35 +64,34 @@ namespace Items
             {
                 transform.position = _itemPositions.FrontPosition.position;
                 rot = new Vector3(0, throwable.transform.rotation.eulerAngles.y, 0);
-                var aimVector = throwable.transform.forward;
-                rb.AddForce((aimVector + throwable.transform.up / TimesLongerThanHighThrow) * ForwardThrowingForce, ForceMode.Impulse);
+                var aimVector = transform.forward;
+                rb.AddForce((aimVector + transform.up / TimesLongerThanHighThrow) * ForwardThrowingForce, ForceMode.Impulse);
             }
             else if (ThrowingDirection == Direction.Backward)
             {
                 Drop(throwable);
             }
-            transform.rotation = Quaternion.Euler(rot);
+            throwable.transform.rotation = Quaternion.Euler(rot);
         }
 
         private void StraightThrow(Throwable throwable)
         {
-            Transform transform = throwable.transform;
             Rigidbody rb = throwable.GetComponent<Rigidbody>();
             Vector3 rot = Vector3.zero;
 
             if (ThrowingDirection == Direction.Forward || ThrowingDirection == Direction.Default)
             {
-                transform.position = _itemPositions.FrontPosition.position;
-                rot = new Vector3(0, throwable.transform.rotation.eulerAngles.y, 0);
-                rb.velocity = throwable.transform.forward.normalized * Speed;
+                throwable.transform.position = _itemPositions.FrontPosition.position;
+                rot = new Vector3(0, transform.rotation.eulerAngles.y, 0);
+                rb.velocity = transform.forward.normalized * Speed;
             }
             else if (ThrowingDirection == Direction.Backward)
             {
-                transform.position = _itemPositions.BackPosition.position;
-                rot = new Vector3(0, throwable.transform.rotation.eulerAngles.y + 180, 0);
-                rb.velocity = -throwable.transform.forward.normalized * Speed;
+                throwable.transform.position = _itemPositions.BackPosition.position;
+                rot = new Vector3(0, transform.rotation.eulerAngles.y + 180, 0);
+                rb.velocity = -transform.forward.normalized * Speed;
             }
-            transform.rotation = Quaternion.Euler(rot);
+            throwable.transform.rotation = Quaternion.Euler(rot);
         }
 
         private void Drop(Throwable throwable)

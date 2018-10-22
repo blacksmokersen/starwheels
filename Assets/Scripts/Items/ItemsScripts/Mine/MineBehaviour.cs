@@ -22,17 +22,17 @@ namespace Items
             StartCoroutine(MineActivationDelay());
         }
 
-        public override void Spawn(KartInventory kart, Direction direction, float aimAxis)
+        public override void Spawn(Inventory kart, Direction direction, float aimAxis)
         {
             if (direction == Direction.Forward)
             {
-                transform.position = kart.ItemPositions.FrontPosition.position;
+                //transform.position = kart.ItemPositions.FrontPosition.position;
                 var aimVector = kart.transform.forward + kart.transform.TransformDirection(new Vector3(aimAxis, 0, 0));
                 GetComponent<Rigidbody>().AddForce((aimVector + kart.transform.up/TimesLongerThanHighThrow) * ForwardThrowingForce, ForceMode.Impulse);
             }
             else if (direction == Direction.Backward || direction == Direction.Default)
             {
-                transform.position = kart.ItemPositions.BackPosition.position;
+                //transform.position = kart.ItemPositions.BackPosition.position;
             }
             PlayLaunchSound();
         }

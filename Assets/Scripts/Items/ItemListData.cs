@@ -5,9 +5,9 @@ namespace Items
     [CreateAssetMenu]
     public class ItemListData : ScriptableObject
     {
-        public ItemData[] Items;
+        public Item[] Items;
 
-        public int GetItemDataIndex(ItemData itemData)
+        public int GetItemDataIndex(Item itemData)
         {
             for (int i = 0; i < Items.Length; i++)
             {

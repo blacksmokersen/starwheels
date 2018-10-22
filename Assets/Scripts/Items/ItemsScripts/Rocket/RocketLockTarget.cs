@@ -9,7 +9,7 @@ namespace Items
     {
         [Header("Targeting system")]
         public float SecondsBeforeSearchingTarget;
-        public KartInventory Owner;
+        public Inventory Owner;
         public GameObject ActualTarget;
 
         private float actualTargetDistance;

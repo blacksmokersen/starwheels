@@ -10,7 +10,7 @@ namespace Items
     public class ItemBehaviour : MonoBehaviour
     {
         public ItemData ItemData;
-        public virtual void Spawn(KartInventory kart, Direction direction,float aimAxis)
+        public virtual void Spawn(Inventory kart, Direction direction,float aimAxis)
         { }
 
         public void DestroyObject(float timeBeforeDestroy = 0f)

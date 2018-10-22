@@ -19,8 +19,8 @@ namespace Multiplayer
         {
             _spawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.Spawn));
             var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart);
-            myKart.GetState<IKartState>().Team = LobbyPhotonPlayer.localPlayer.playerColor;
-            myKart.GetState<IKartState>().Nickname = LobbyPhotonPlayer.localPlayer.playerName;
+            //myKart.GetState<IKartState>().Team = LobbyPhotonPlayer.localPlayer.playerColor;
+            //myKart.GetState<IKartState>().Nickname = LobbyPhotonPlayer.localPlayer.playerName;
             myKart.transform.position = GetSpawnPosition();
             FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
         }

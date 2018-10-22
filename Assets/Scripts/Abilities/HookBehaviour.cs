@@ -8,7 +8,7 @@ namespace Abilities
     {
         private enum HookState { Forward, Hooked, Reverse }
 
-        [HideInInspector] public KartInventory OwnerKartInventory;
+        [HideInInspector] public Inventory OwnerKartInventory;
 
         [SerializeField] private float distanceTarget;
         [SerializeField] private float speed;
@@ -91,7 +91,7 @@ namespace Abilities
             {
                 var itemBox = other.GetComponent<ItemBox>();
                 itemBox.StartCoroutine(itemBox.StartCooldown());
-                OwnerKartInventory.StartItemLottery();
+                //OwnerKartInventory.StartItemLottery();
                 SetTarget(other.transform);
             }
 

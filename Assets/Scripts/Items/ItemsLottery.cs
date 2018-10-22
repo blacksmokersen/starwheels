@@ -5,7 +5,7 @@ namespace Items
     public class ItemsLottery
     {
         public static float LotteryDuration = 3.0f;
-        public static ItemData[] Items;
+        public static Item[] Items;
         public static float TotalItemChances = ComputeItemChances();
 
         public static float ComputeItemChances()
@@ -23,7 +23,7 @@ namespace Items
             return total;
         }
 
-        public static ItemData GetRandomItem()
+        public static Item GetRandomItem()
         {
             if (Items == null)
                 Items = Resources.Load<ItemListData>("Data/ItemList").Items;

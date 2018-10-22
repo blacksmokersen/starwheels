@@ -49,19 +49,19 @@ namespace Items
             return _enabled;
         }
 
-        public void Launch(KartInventory kart, Direction direction)
+        public void Launch(Inventory kart, Direction direction)
         {
             _kart = kart.GetComponentInParent<Rigidbody>().transform;
             _kartRotation = _kart.rotation;
 
             if (direction == Direction.Forward || direction == Direction.Default)
             {
-                transform.position = kart.ItemPositions.FrontPosition.position;
+                //transform.position = kart.ItemPositions.FrontPosition.position;
                 GetComponent<Rigidbody>().AddForce((kart.transform.forward + kart.transform.up / TimesLongerThanHighThrow) * ForwardThrowingForce, ForceMode.Impulse);
             }
             else if (direction == Direction.Backward)
             {
-                transform.position = kart.ItemPositions.BackPosition.position;
+                //transform.position = kart.ItemPositions.BackPosition.position;
             }
 
             PlayLaunchSound();
