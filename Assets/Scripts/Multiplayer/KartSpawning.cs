@@ -10,10 +10,8 @@ namespace Multiplayer
 
         public override void OnEvent(PlayerSpawn evnt)
         {
-            Debug.LogError("Event for " + evnt.Nickname);
-
+            Debug.Log("Event for " + evnt.ConnectionID);
             InstantiateKart(evnt.SpawnPosition);
-
         }
 
         // PRIVATE

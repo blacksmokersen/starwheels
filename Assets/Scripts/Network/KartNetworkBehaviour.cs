@@ -32,6 +32,7 @@ namespace Network
 
                 ColorChanged();
                 NameChanged();
+                GameObject.Find("LobbyManager").SetActive(false);
             }
         }
 

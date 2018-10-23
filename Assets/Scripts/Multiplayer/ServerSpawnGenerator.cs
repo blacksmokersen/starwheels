@@ -25,15 +25,12 @@ namespace Multiplayer
 
         public override void SceneLoadRemoteDone(BoltConnection connection)
         {
-            Debug.Log("SCENELOADREMOTE!!");
-            var lobbyPlayer = connection.GetLobbyPlayer();
-            Debug.Log(lobbyPlayer == null);
-            Debug.Log("Connection from : " + lobbyPlayer.state.Name);
+            Debug.LogError("SCENELOADREMOTE!!");
             PlayerSpawn playerSpawn = PlayerSpawn.Create();
-            playerSpawn.Nickname = lobbyPlayer.state.Name;
+            //playerSpawn.ConnectionID = (int) connection.ConnectionId;
             playerSpawn.SpawnPosition = GetSpawnPosition();
             playerSpawn.Send();
-            Debug.Log("MESSAGE SEEEENT");
+            Debug.LogError("MESSAGE SEEEENT");
         }
 
         public Vector3 GetSpawnPosition()
