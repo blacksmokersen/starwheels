@@ -35,8 +35,8 @@ namespace Abilities
                 var hook = BoltNetwork.Instantiate(prefabHook, position, transform.rotation);
                 //  var hook = PhotonNetwork.Instantiate(Constants.Prefab.HookObject, position, transform.rotation);
                 var hookBehaviour = hook.GetComponent<HookBehaviour>();
-                // hookBehaviour.OwnerKartInventory = _kartInventory;
-                // hookBehaviour.SetOwner(_kartInventory.transform);
+              //   hookBehaviour.OwnerKartInventory = _kartInventory;
+              //   hookBehaviour.SetOwner(_kartInventory.transform);
                 // StartCoroutine(AbilityCooldown());
 
             }
