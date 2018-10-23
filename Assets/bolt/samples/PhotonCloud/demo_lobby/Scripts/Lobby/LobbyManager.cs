@@ -5,7 +5,7 @@ using Bolt;
 using UdpKit;
 using System;
 using UnityEngine.SceneManagement;
-using Multiplayer.Teams;
+using Multiplayer;
 using Utilities;
 
 namespace Photon.Lobby
@@ -48,7 +48,6 @@ namespace Photon.Lobby
         protected bool _isCountdown = false;
         protected string _matchName;
 
-
         public string matchHost
         {
             get
@@ -78,7 +77,7 @@ namespace Photon.Lobby
             StartButton.gameObject.SetActive(false);
             GetComponent<Canvas>().enabled = true;
 
-            DontDestroyOnLoad(gameObject);
+            // DontDestroyOnLoad(gameObject);
 
             SetServerInfo("Offline", "None");
 

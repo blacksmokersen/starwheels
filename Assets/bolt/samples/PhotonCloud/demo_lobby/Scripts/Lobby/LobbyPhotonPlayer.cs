@@ -1,6 +1,7 @@
 ﻿using Bolt;
 using UnityEngine;
 using UnityEngine.UI;
+using Multiplayer;
 using Multiplayer.Teams;
 
 namespace Photon.Lobby
@@ -14,6 +15,8 @@ namespace Photon.Lobby
         {
             get { return state.Ready; }
         }
+
+        [SerializeField] private PlayerSettingsSO _playerSettingsSO;
 
         // Lobby
         public string playerName = "";
@@ -216,6 +219,7 @@ namespace Photon.Lobby
                 playerColor = TeamsColors.GetColorFromTeam(Team.Blue);
             else
                 playerColor = TeamsColors.GetColorFromTeam(Team.Blue);
+            _playerSettingsSO.Team = playerColor;
         }
 
         public void OnReadyClicked()
@@ -226,7 +230,7 @@ namespace Photon.Lobby
         public void OnNameChanged(string newName)
         {
             playerName = newName;
-            //nameInput.text = newName;
+            _playerSettingsSO.Nickname = newName;
         }
 
         public void OnClientReady(bool readyState)
