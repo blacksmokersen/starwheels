@@ -1,15 +1,18 @@
 ﻿using Items;
 using UnityEngine;
+using UnityEngine.Events;
+using System.Collections;
 
 namespace Abilities
 {
-
     public class AbilityTPBack : MonoBehaviour, IControllable
     {
+        public UnityEvent OnTpBackEvent;
 
-        [SerializeField] private GameObject prefabTpBack;
+        [SerializeField] private AbilitySettings abilitySettings;
         [SerializeField] private ThrowableLauncher throwableLauncher;
 
+        private ParticleSystem _reloadEffect;
         private TPBackBehaviour _tpBack = null;
         private bool _canUseAbility = true;
         private Rigidbody _rb;
@@ -19,6 +22,10 @@ namespace Abilities
         private void Awake()
         {
             _rb = GetComponentInParent<Rigidbody>();
+            var instantiatedReloadEffect = BoltNetwork.Instantiate(abilitySettings.ReloadParticlePrefab);
+            instantiatedReloadEffect.transform.parent = gameObject.transform;
+            instantiatedReloadEffect.transform.position = new Vector3(0, 0, 0);
+            _reloadEffect = instantiatedReloadEffect.GetComponent<ParticleSystem>();
         }
 
         private void FixedUpdate()
@@ -42,7 +49,7 @@ namespace Abilities
             {
                 if (_tpBack == null)
                 {
-                    var instantiatedItem = BoltNetwork.Instantiate(prefabTpBack);
+                    var instantiatedItem = BoltNetwork.Instantiate(abilitySettings.Prefab);
                     var throwable = instantiatedItem.GetComponent<Throwable>();
                     _tpBack = instantiatedItem.GetComponent<TPBackBehaviour>();
                     throwableLauncher.Throw(throwable);
@@ -52,10 +59,19 @@ namespace Abilities
                     _rb.transform.position = _tpBack.transform.position;
                     _rb.transform.rotation = _tpBack.GetKartRotation();
                     Destroy(_tpBack.gameObject);
-                    //StartCoroutine(AbilityCooldown());
+                    StartCoroutine(AbilityCooldown(abilitySettings.Cooldown));
                 }
             }
         }
         // PRIVATE
+        IEnumerator AbilityCooldown(float Duration)
+        {
+            _canUseAbility = false;
+            yield return new WaitForSeconds(Duration);
+            _canUseAbility = true;
+          //  _reloadEffect.Emit(abilitySettings.ReloadParticleNumber);
+            _reloadEffect.Emit(100);
+            // OnTpBackEvent.Invoke();
+        }
     }
 }

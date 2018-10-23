@@ -4725,9 +4725,9 @@ MonoBehaviour:
   m_Script: {fileID: -36112512, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneGuid: d6b1d1fe-121d-479c-9149-145ff89c78d4
+  _sceneGuid: 
   _serializerGuid: 3d46793e-7c24-4279-882f-df983ef4cb50
-  _prefabId: 10
+  _prefabId: 11
   _updateRate: 1
   _autoFreezeProxyFrames: 0
   _clientPredicted: 1
@@ -4914,8 +4914,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3e705ff20ce16a418035ed98c24bbff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabTpBack: {fileID: 1796988099504070, guid: bc61e1234cd00ac46b558de82fc3896f,
-    type: 2}
+  OnTpBackEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  abilitySettings: {fileID: 11400000, guid: 8c4f4b84f4fd8d940918d0b0bde965d5, type: 2}
   throwableLauncher: {fileID: 114678612611431884}
 --- !u!114 &114771178506899832
 MonoBehaviour:
