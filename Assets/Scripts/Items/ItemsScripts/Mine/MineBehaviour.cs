@@ -15,11 +15,20 @@ namespace Items
         public AudioSource IdleSource;
         public AudioSource ExplosionSource;
 
-        #region Behaviour
+        private Ownership _ownerShip;
+
+        // CORE
+
+        private void Awake()
+        {
+            _ownerShip = GetComponent<Ownership>();
+        }
 
         private void Start()
         {
             StartCoroutine(MineActivationDelay());
+            GetComponentInChildren<PlayerMineTrigger>().Ownership = _ownerShip;
+            GetComponentInChildren<ItemMineTrigger>().Ownership = _ownerShip;
         }
 
         IEnumerator MineActivationDelay()
@@ -38,8 +47,6 @@ namespace Items
                 PlayIdleSound();
             }
         }
-
-        #endregion
 
         #region Audio
         public void PlayLaunchSound()
