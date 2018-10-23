@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using Items;
 
-namespace Items.Debug
+namespace KBA.Debug
 {
     [RequireComponent(typeof(Inventory))]
     public class ItemSwitcher : MonoBehaviour, IControllable

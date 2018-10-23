@@ -8,6 +8,7 @@ namespace Items
         {
             if (other.gameObject.CompareTag(Constants.Tag.HealthHitBox))
             {
+                Debug.Log("Hit");
                 var projectileBehaviour = GetComponentInParent<ProjectileBehaviour>();
                 projectileBehaviour.CheckCollision(other.gameObject);
             }

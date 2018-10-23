@@ -40,6 +40,10 @@ namespace Multiplayer
         public TeamEvent OnTeamChanged;
         public IntEvent OnScoreChanged;
 
+        // CORE
+
+        // BOLT
+
         public override void Attached()
         {
             if (entity.isOwner)

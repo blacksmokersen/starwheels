@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using Multiplayer;
+using Bolt;
 
 namespace Items
 {
     [RequireComponent(typeof(ThrowableLauncher))]
-    public class Inventory : MonoBehaviour, IControllable
+    public class Inventory : EntityBehaviour<IKartState>, IControllable
     {
         [Header("Current Item")]
         public Item CurrentItem;
@@ -26,7 +27,9 @@ namespace Items
             CurrentItemCount = 0;
         }
 
-        private void Update()
+        // BOLT
+
+        public override void SimulateController()
         {
             MapInputs();
         }

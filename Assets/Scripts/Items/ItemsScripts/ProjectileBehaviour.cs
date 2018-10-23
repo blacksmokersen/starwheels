@@ -88,9 +88,10 @@ namespace Items
         public void CheckCollision(GameObject kartCollisionObject)
         {
             var otherPlayer = kartCollisionObject.GetComponentInParent<PlayerSettings>();
-
+            Debug.Log("Hey");
             if (Ownership.IsNotSameTeam(otherPlayer) || (Ownership.IsMe(otherPlayer.gameObject) && !_ownerImmune))
             {
+                Debug.Log("How");
                 kartCollisionObject.GetComponent<Health.Health>().LoseHealth();
                 OnHit();
             }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Multiplayer;
 
 namespace KBA.Debug
 {
@@ -29,7 +30,7 @@ namespace KBA.Debug
 
         private void InstantiateKart(GameObject kart)
         {
-            var spawnPosition = transform.position + transform.forward;
+            var spawnPosition = transform.position;
             MonoBehaviour.Instantiate(kart, spawnPosition, Quaternion.identity);
         }
     }
