@@ -19,6 +19,7 @@
         public const string GuileItem = "GuileItem";
         public const string RocketItem = "Rocket";
         public const string DiskItem = "Disk";
+        public const string HealthHitBox = "Health";
     }
 
     // Inputs

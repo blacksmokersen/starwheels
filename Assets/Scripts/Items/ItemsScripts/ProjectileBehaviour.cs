@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Multiplayer;
-using Kart;
 
 namespace Items
 {
@@ -88,10 +87,11 @@ namespace Items
 
         public void CheckCollision(GameObject kartCollisionObject)
         {
-            var otherPlayer = kartCollisionObject.GetComponent<PlayerSettings>();
+            var otherPlayer = kartCollisionObject.GetComponentInParent<PlayerSettings>();
 
             if (Ownership.IsNotSameTeam(otherPlayer) || (Ownership.IsMe(otherPlayer.gameObject) && !_ownerImmune))
             {
+                kartCollisionObject.GetComponent<Health.Health>().LoseHealth();
                 OnHit();
             }
         }
