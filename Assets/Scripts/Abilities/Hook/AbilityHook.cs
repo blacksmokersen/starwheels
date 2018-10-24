@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using Bolt;
 using Items;
 
 namespace Abilities
 {
-    public class AbilityHook : EntityBehaviour<IKartState>, IControllable
+    public class AbilityHook : AbilitiesBehaviour, IControllable
     {
         [SerializeField] private GameObject prefabHook;
         [SerializeField] private AbilitiesBehaviourSettings abilitiesBehaviourSettings;

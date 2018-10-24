@@ -1,12 +1,11 @@
 ﻿using Items;
 using UnityEngine;
-using Bolt;
 using UnityEngine.Events;
 using System.Collections;
 
 namespace Abilities
 {
-    public class AbilityTPBack : EntityBehaviour<IKartState>, IControllable
+    public class AbilityTPBack : AbilitiesBehaviour, IControllable
     {
         public UnityEvent OnTpBackEvent;
 

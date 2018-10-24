@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
-using Bolt;
 using UnityEngine.Events;
 using Common.PhysicsUtils;
 
 namespace Abilities.Jump
 {
-    public class JumpingAbility : EntityBehaviour<IKartState>, IControllable
+    public class JumpingAbility : AbilitiesBehaviour, IControllable
     {
         [Header("Events")]
         public UnityEvent OnFirstJump;
