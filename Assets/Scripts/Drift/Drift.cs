@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Bolt;
 using UnityEngine.Events;
 using Common.PhysicsUtils;
 using Steering;
@@ -9,7 +10,7 @@ namespace Drift
     public enum TurnState { NotTurning, Left, Right }
     public enum DriftState { NotDrifting, White, Orange, Red, Turbo }
 
-    public class Drift : MonoBehaviour, IControllable
+    public class Drift : EntityBehaviour<IKartState>, IControllable
     {
         public DriftSettings Settings;
         public const float JoystickDeadZone1 = 0.1f;
@@ -50,9 +51,9 @@ namespace Drift
             _rigidBody = GetComponentInParent<Rigidbody>();
         }
 
-
-        private void Update()
+        public override void SimulateController()
         {
+            // base.SimulateController();
             MapInputs();
 
             if (IsDriftSideDifferentFromTurnSide())
@@ -68,7 +69,6 @@ namespace Drift
                 _steeringWheel.enabled = false;
             else
                 _steeringWheel.enabled = true;
-
         }
 
         private void FixedUpdate()

@@ -3,17 +3,23 @@ using Items;
 
 namespace Abilities
 {
-    public class AbilityHook : MonoBehaviour, IControllable
+    public class AbilityHook : AbilitiesBehaviour, IControllable
     {
         [SerializeField] private GameObject prefabHook;
+        [SerializeField] private HookSettings hookSettings;
         private GameObject _ownerKart;
         private bool _canUseAbility = true;
 
         // CORE
-        private void FixedUpdate()
+
+        // BOLT
+
+        public override void SimulateController()
         {
+            if(abilitiesBehaviourSettings.ActiveAbility == "Hook")
             MapInputs();
         }
+
         // PUBLIC
 
         public void MapInputs()

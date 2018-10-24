@@ -5,11 +5,11 @@ using System.Collections;
 
 namespace Abilities
 {
-    public class AbilityTPBack : MonoBehaviour, IControllable
+    public class AbilityTPBack : AbilitiesBehaviour, IControllable
     {
         public UnityEvent OnTpBackEvent;
 
-        [SerializeField] private AbilitySettings abilitySettings;
+        [SerializeField] private TPBackSettings tPBackSettings;
         [SerializeField] private ThrowableLauncher throwableLauncher;
 
         private ParticleSystem _reloadEffect;
@@ -22,15 +22,18 @@ namespace Abilities
         private void Awake()
         {
             _rb = GetComponentInParent<Rigidbody>();
-            var instantiatedReloadEffect = BoltNetwork.Instantiate(abilitySettings.ReloadParticlePrefab);
+            var instantiatedReloadEffect = BoltNetwork.Instantiate(tPBackSettings.ReloadParticlePrefab);
             instantiatedReloadEffect.transform.parent = gameObject.transform;
             instantiatedReloadEffect.transform.position = new Vector3(0, 0, 0);
             _reloadEffect = instantiatedReloadEffect.GetComponent<ParticleSystem>();
         }
 
-        private void FixedUpdate()
+        // BOLT
+
+        public override void SimulateController()
         {
-            MapInputs();
+            if (abilitiesBehaviourSettings.ActiveAbility == "TPBack")
+                MapInputs();
         }
 
         // PUBLIC
@@ -49,7 +52,7 @@ namespace Abilities
             {
                 if (_tpBack == null)
                 {
-                    var instantiatedItem = BoltNetwork.Instantiate(abilitySettings.Prefab);
+                    var instantiatedItem = BoltNetwork.Instantiate(tPBackSettings.Prefab);
                     var throwable = instantiatedItem.GetComponent<Throwable>();
                     _tpBack = instantiatedItem.GetComponent<TPBackBehaviour>();
                     throwableLauncher.Throw(throwable);
@@ -59,7 +62,7 @@ namespace Abilities
                     _rb.transform.position = _tpBack.transform.position;
                     _rb.transform.rotation = _tpBack.GetKartRotation();
                     Destroy(_tpBack.gameObject);
-                    StartCoroutine(AbilityCooldown(abilitySettings.Cooldown));
+                    StartCoroutine(AbilityCooldown(tPBackSettings.Cooldown));
                 }
             }
         }
