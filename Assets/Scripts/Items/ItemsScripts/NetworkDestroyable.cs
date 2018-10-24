@@ -3,16 +3,8 @@ using UnityEngine;
 
 namespace Items
 {
-    /*
-     * Base item class for handling the instantiation and destroy
-     *
-     */
-    public class ItemBehaviour : MonoBehaviour
+    public class NetworkDestroyable : MonoBehaviour
     {
-        public ItemData ItemData;
-        public virtual void Spawn(Inventory kart, Direction direction,float aimAxis)
-        { }
-
         public void DestroyObject(float timeBeforeDestroy = 0f)
         {
             if (BoltNetwork.isConnected)
@@ -21,7 +13,7 @@ namespace Items
             }
             else
             {
-                UnityEngine.MonoBehaviour.Destroy(gameObject, timeBeforeDestroy);
+                MonoBehaviour.Destroy(gameObject, timeBeforeDestroy);
             }
         }
 

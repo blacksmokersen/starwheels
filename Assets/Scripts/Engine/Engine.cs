@@ -1,4 +1,5 @@
-﻿using Bolt;
+﻿using System.Collections;
+using Bolt;
 using UnityEngine;
 using Common.PhysicsUtils;
 
@@ -26,6 +27,7 @@ namespace Engine
 
         private float _forwardValue;
         private float _backwardValue;
+        private bool _enabled = true;
 
         // CORE
 
@@ -45,8 +47,21 @@ namespace Engine
 
         public void MapInputs()
         {
-            _forwardValue =  Input.GetAxis(Constants.Input.Accelerate);
-            _backwardValue =  Input.GetAxis(Constants.Input.Decelerate);
+            if (_enabled)
+            {
+                _forwardValue = Input.GetAxis(Constants.Input.Accelerate);
+                _backwardValue = Input.GetAxis(Constants.Input.Decelerate);
+            }
+            else
+            {
+                _forwardValue = 0f;
+                _backwardValue = 0f;
+            }
+        }
+
+        public void DisableForXSeconds(float x)
+        {
+            StartCoroutine(DisableForXSecondsRoutine(x));
         }
 
         public override void Attached()
@@ -89,6 +104,14 @@ namespace Engine
         }
 
         // PRIVATE
+
+        private IEnumerator DisableForXSecondsRoutine(float x)
+        {
+            _enabled = false;
+            yield return new WaitForSeconds(x);
+            _enabled = true;
+        }
+
 
         private void Accelerate(float value)
         {

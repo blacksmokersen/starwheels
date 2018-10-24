@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
-using Kart;
 using System.Collections;
+using Multiplayer;
 
 namespace Items
 {
     [RequireComponent(typeof(AudioSource))]
-    public class ProjectileBehaviour : MonoBehaviour
+    public class ProjectileBehaviour : NetworkDestroyable
     {
         #region Variables
+        [Header("Owner")]
+        public Ownership Ownership;
+
         [Header("Projectile parameters")]
         public float Speed;
         public bool DestroyAfterHit = true;
@@ -26,17 +29,24 @@ namespace Items
         public AudioSource PlayerHitSource;
         public AudioSource CollisionSource;
 
-        protected Rigidbody rb;
-        protected Inventory owner;
+        [Header("Invincibility")]
+        [SerializeField] private const float _ownerImmunityDuration = 0.5f;
+        [SerializeField] private bool _ownerImmune = true;
 
-        private const float _ownerImmunityDuration = 0.5f;
-        private bool _ownerImmune = true;
-        [SerializeField] private float aimAngle = 45;
+        protected Rigidbody rb;
         #endregion
+
+        // CORE
 
         protected void Awake()
         {
             rb = GetComponent<Rigidbody>();
+            Ownership = GetComponent<Ownership>();
+        }
+
+        protected void Start()
+        {
+            StartCoroutine(StartOwnerImmunity());
         }
 
         protected void Update()
@@ -50,82 +60,7 @@ namespace Items
             ApplyLocalGravity();
         }
 
-        #region Instantiation
-
-        private IEnumerator StartOwnerImmunity()
-        {
-            _ownerImmune = true;
-            yield return new WaitForSeconds(_ownerImmunityDuration);
-            _ownerImmune = false;
-        }
-        #endregion
-
-        #region Physics
-
-        protected void NormalizeSpeed()
-        {
-            var newVelocity = rb.velocity;
-            newVelocity.y = 0;
-            newVelocity = newVelocity.normalized * Speed;
-            newVelocity.y = rb.velocity.y;
-            rb.velocity = newVelocity;
-        }
-
-        private void CheckGrounded()
-        {
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, Vector3.down, out hit, DistanceForGrounded, 1 << LayerMask.NameToLayer(Constants.Layer.Ground)))
-            {
-                rb.useGravity = false;
-                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                transform.position = new Vector3(transform.position.x, hit.point.y + DistanceForGrounded - 0.1f, transform.position.z);
-            }
-            else
-            {
-                rb.useGravity = true;
-            }
-        }
-
-        public void ApplyLocalGravity()
-        {
-            if (rb.useGravity == true)
-            {
-                rb.AddForce(Vector3.down * LocalGravity);
-            }
-        }
-        #endregion
-
-        #region Collisions
-
-        public void CheckCollision(GameObject kartCollisionObject)
-        {
-            /*
-            if (OwnerIsSet() && !IsOwnerAndImmune(kartCollisionObject))
-            {
-                if (!kartCollisionObject.GetComponentInParent<KartHealthSystem>().IsInvincible && !IsOnSameTeam(kartCollisionObject))
-                {
-                    if (!IsOwner(kartCollisionObject))
-                    {
-                        var target = kartCollisionObject.GetComponentInParent<PhotonView>().Owner;
-                        SendOwnerSuccessfulHitEvent(target);
-                        // TODO: Do this cleaner :)
-                        owner.gameObject.GetComponentInParent<KartHub>().GetComponentInChildren<KartGameMode>().IncreaseScore();
-                    }
-                    SendTargetOnHitEvent(kartCollisionObject);
-                }
-
-                CollisionParticles.Emit(ParticlesToEmitOnHit);
-                PlayPlayerHitSound();
-
-                if (DestroyAfterHit)
-                {
-                    DestroyObject();
-                }
-            }
-            */
-        }
-
-        #endregion
+        // PUBLIC
 
         #region Audio
         protected void PlayLaunchSound()
@@ -149,5 +84,69 @@ namespace Items
             MyExtensions.Audio.PlayClipObjectAndDestroy(CollisionSource);
         }
         #endregion
+
+        public void CheckCollision(GameObject kartCollisionObject)
+        {
+            var otherPlayer = kartCollisionObject.GetComponentInParent<PlayerSettings>();
+            Debug.Log("Hey");
+            if (Ownership.IsNotSameTeam(otherPlayer) || (Ownership.IsMe(otherPlayer.gameObject) && !_ownerImmune))
+            {
+                Debug.Log("How");
+                kartCollisionObject.GetComponent<Health.Health>().LoseHealth();
+                OnHit();
+            }
+        }
+
+        // PROTECTED
+
+        protected void NormalizeSpeed()
+        {
+            var newVelocity = rb.velocity;
+            newVelocity.y = 0;
+            newVelocity = newVelocity.normalized * Speed;
+            newVelocity.y = rb.velocity.y;
+            rb.velocity = newVelocity;
+        }
+
+        // PRIVATE
+
+        private void OnHit()
+        {
+            CollisionParticles.Emit(ParticlesToEmitOnHit);
+            PlayPlayerHitSound();
+            if (DestroyAfterHit)
+            {
+                DestroyObject();
+            }
+        }
+
+        private IEnumerator StartOwnerImmunity()
+        {
+            _ownerImmune = true;
+            yield return new WaitForSeconds(_ownerImmunityDuration);
+            _ownerImmune = false;
+        }
+
+        private void CheckGrounded()
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, Vector3.down, out hit, DistanceForGrounded, 1 << LayerMask.NameToLayer(Constants.Layer.Ground)))
+            {
+                rb.useGravity = false;
+                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+                transform.position = new Vector3(transform.position.x, hit.point.y + DistanceForGrounded - 0.1f, transform.position.z);
+            }
+            else
+            {
+                rb.useGravity = true;
+            }
+        }
+        private void ApplyLocalGravity()
+        {
+            if (rb.useGravity == true)
+            {
+                rb.AddForce(Vector3.down * LocalGravity);
+            }
+        }
     }
 }

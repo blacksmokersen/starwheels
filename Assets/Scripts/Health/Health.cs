@@ -13,9 +13,9 @@ namespace Health
         public bool IsInvincible = false;
 
         [Header("Events")]
-        public UnityEvent<int> OnHealthLoss;
+        public IntEvent OnHealthLoss;
         public UnityEvent OnDeath;
-        public UnityEvent<float> OnInvincibilityDuration;
+        public FloatEvent OnInvincibilityDuration;
 
         private void Awake()
         {
@@ -26,9 +26,12 @@ namespace Health
 
         public void LoseHealth()
         {
-            CurrentHealth--;
-            OnHealthLoss.Invoke(CurrentHealth);
-            CheckIfIsDead();
+            if (!IsInvincible)
+            {
+                CurrentHealth--;
+                OnHealthLoss.Invoke(CurrentHealth);
+                CheckIfIsDead();
+            }
         }
 
         public void ResetLives()

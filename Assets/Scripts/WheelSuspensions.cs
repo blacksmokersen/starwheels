@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-public class WheelSuspensions : MonoBehaviour {
-
+public class WheelSuspensions : MonoBehaviour
+{
     public float MaxExtensionDistance;
     public float SuspensionStiffness;
     public float ForceToApply;
 
     [Header("Wheels transforms")]
-    public Transform[] wheelsTransforms;
+    [SerializeField] private Transform[] wheelsTransforms;
 
     private Rigidbody _rb;
 

@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using Multiplayer;
+using Bolt;
 
 namespace Items
 {
     [RequireComponent(typeof(ThrowableLauncher))]
-    public class Inventory : MonoBehaviour, IControllable
+    public class Inventory : EntityBehaviour<IKartState>, IControllable
     {
         [Header("Current Item")]
         public Item CurrentItem;
@@ -21,9 +23,13 @@ namespace Items
         private void Awake()
         {
             _projectileLauncher = GetComponent<ThrowableLauncher>();
+            CurrentItem = null;
+            CurrentItemCount = 0;
         }
 
-        private void Update()
+        // BOLT
+
+        public override void SimulateController()
         {
             MapInputs();
         }
@@ -47,12 +53,7 @@ namespace Items
         {
             if (CurrentItemCount > 0 || CurrentItem != null)
             {
-                var instantiatedItem = BoltNetwork.Instantiate(CurrentItem.itemPrefab);
-                if (CurrentItem.ItemType == ItemType.Throwable)
-                {
-                    var throwable = instantiatedItem.GetComponent<Throwable>();
-                    _projectileLauncher.Throw(throwable);
-                }
+                InstantiateItem();
                 OnItemUse.Invoke(CurrentItem);
                 SetCount(CurrentItemCount - 1);
             }
@@ -83,5 +84,19 @@ namespace Items
 
         // PRIVATE
 
+        private void InstantiateItem()
+        {
+            var instantiatedItem = BoltNetwork.Instantiate(CurrentItem.itemPrefab);
+
+            var itemOwnership = instantiatedItem.GetComponent<Ownership>();
+            var playerSettings = GetComponentInParent<PlayerSettings>();
+            itemOwnership.Set(playerSettings);
+
+            if (CurrentItem.ItemType == ItemType.Throwable)
+            {
+                var throwable = instantiatedItem.GetComponent<Throwable>();
+                _projectileLauncher.Throw(throwable);
+            }
+        }
     }
 }

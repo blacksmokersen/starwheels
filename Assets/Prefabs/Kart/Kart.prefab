@@ -380,6 +380,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1225063340607550
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4167592228515140}
+  - component: {fileID: 114258727179377248}
+  m_Layer: 11
+  m_Name: Debug
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1230855199829490
 GameObject:
   m_ObjectHideFlags: 1
@@ -593,9 +609,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4821667778052482}
   - component: {fileID: 114994917259369108}
+  - component: {fileID: 114156034432813912}
+  - component: {fileID: 114457561451997724}
+  - component: {fileID: 65639728941430446}
   m_Layer: 0
   m_Name: Health
-  m_TagString: Untagged
+  m_TagString: Health
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -833,7 +852,10 @@ GameObject:
   - component: {fileID: 114570479638899584}
   - component: {fileID: 114370031336882382}
   - component: {fileID: 114678612611431884}
+  - component: {fileID: 114593838059053520}
   - component: {fileID: 114771178506899832}
+  - component: {fileID: 114293661950101820}
+  - component: {fileID: 65044690839908312}
   m_Layer: 0
   m_Name: Inventory
   m_TagString: Untagged
@@ -1037,6 +1059,21 @@ GameObject:
   - component: {fileID: 4187082776800634}
   m_Layer: 11
   m_Name: Base HumanLDigit51
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1641048049955280
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4751566006419492}
+  m_Layer: 0
+  m_Name: LifeBurst
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1820,6 +1857,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4226044659967794}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4167592228515140
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1225063340607550}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4745772536087832}
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4172385416631390
 Transform:
@@ -2694,6 +2744,7 @@ Transform:
   - {fileID: 4126607121165242}
   - {fileID: 4775071829322508}
   - {fileID: 4172385416631390}
+  - {fileID: 4167592228515140}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2709,6 +2760,19 @@ Transform:
   m_Children:
   - {fileID: 4595709864946080}
   m_Father: {fileID: 4995567081210462}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4751566006419492
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1641048049955280}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4821667778052482}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4754096688846648
@@ -2793,7 +2857,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4751566006419492}
   m_Father: {fileID: 4745772536087832}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3565,6 +3630,18 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!65 &65044690839908312
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1540390246441956}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 1, z: 2}
+  m_Center: {x: 0, y: 0.45, z: 0}
 --- !u!65 &65209227064178120
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -3577,6 +3654,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.2738309, z: 1.2642498}
   m_Center: {x: 0, y: 0.036604166, z: 0.11487579}
+--- !u!65 &65639728941430446
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1402166597443428}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.35, y: 1, z: 2}
+  m_Center: {x: 0, y: 0.5, z: 0.15}
 --- !u!65 &65932765275691828
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -4172,6 +4261,20 @@ MonoBehaviour:
   InversedDirections: 0
   _groundCondition: {fileID: 114241659848452430}
   _engine: {fileID: 114112130390458132}
+--- !u!114 &114156034432813912
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1402166597443428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa87f91f1ed08d04f906ccc12345cc2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LifeBursts:
+  - {fileID: 0}
+  NumberOfParticles: 300
 --- !u!114 &114241659848452430
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4240,6 +4343,19 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114258727179377248
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1225063340607550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477bd284e36a5bb498232707d5b71a57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blueKart: {fileID: 1138407828072762, guid: 864913ed16c7e90408215c74acdfc2f7, type: 2}
+  redKart: {fileID: 1242967131995960, guid: f6048614405a1ee4f882f3858d3cab59, type: 2}
 --- !u!114 &114260317956726740
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4429,6 +4545,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RotationStabilizationSpeed: 10
+--- !u!114 &114293661950101820
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1540390246441956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d029ad98c143564290b85e8c606228a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114326461368033480
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4537,7 +4664,7 @@ MonoBehaviour:
   m_Script: {fileID: -36112512, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneGuid: 
+  _sceneGuid: bffcac15-e79b-4389-aad3-42006098b107
   _serializerGuid: 3d46793e-7c24-4279-882f-df983ef4cb50
   _prefabId: 1
   _updateRate: 1
@@ -4554,6 +4681,18 @@ MonoBehaviour:
   _entityBehaviourQueryOption: 0
   _entityPriorityCalculatorQueryOption: 0
   _entityReplicationFilterQueryOption: 0
+--- !u!114 &114457561451997724
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1402166597443428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9dd1702f8fb20346a14f9207465c6ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 95579590234998320}
 --- !u!114 &114499899481407548
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4594,17 +4733,50 @@ MonoBehaviour:
   CurrentItemCount: 100
   OnItemGet:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114771178506899832}
+        m_MethodName: UpdateItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: Items.ItemEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   OnItemUse:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114771178506899832}
+        m_MethodName: UpdateItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: Items.ItemEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   OnItemCountChange:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114771178506899832}
+        m_MethodName: UpdateItemCount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: IntEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114576107098114956
 MonoBehaviour:
@@ -4619,6 +4791,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smokeLeftWheel: {fileID: 198986211210334766}
   smokeRightWheel: {fileID: 198021017002471084}
+--- !u!114 &114593838059053520
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1540390246441956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6735970ebbc8a5a4abd7a7683ca92e51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnLotteryStart:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnLotteryStop:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  _inventory: {fileID: 114570479638899584}
 --- !u!114 &114596180493556864
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4683,7 +4877,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 60
   ForwardThrowingForce: 60
-  TimesLongerThanHighThrow: 2
+  TimesLongerThanHighThrow: 5
   settings: {fileID: 0}
 --- !u!114 &114678793825288130
 MonoBehaviour:
@@ -4944,11 +5138,41 @@ MonoBehaviour:
   CurrentHealth: 0
   IsDead: 0
   IsInvincible: 0
+  OnHealthLoss:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114457561451997724}
+        m_MethodName: HighSpeedHitAnimation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 114112130390458132}
+        m_MethodName: DisableForXSeconds
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 3
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: IntEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  OnInvincibilityDuration:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: FloatEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!137 &137143658837847100
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

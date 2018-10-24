@@ -12,18 +12,21 @@ namespace Items
         public float QuickTurnDuration;
         public float AntiShakingThreshold;
 
-        private float actualTurnSpeed;
-        private RocketLockTarget rocketLock;
+        private float _actualTurnSpeed;
+        private RocketLockTarget _rocketLock;
+
+        // CORE
 
         private new void Awake()
         {
             base.Awake();
-            rocketLock = GetComponentInChildren<RocketLockTarget>();
+            _rocketLock = GetComponentInChildren<RocketLockTarget>();
         }
 
-        private void Start()
+        private new void Start()
         {
-            //rocketLock.Owner = owner;
+            base.Start();
+            _rocketLock.Ownership = Ownership;
         }
 
         private new void FixedUpdate()
@@ -32,6 +35,10 @@ namespace Items
             SetVelocityForward();
             base.FixedUpdate();
         }
+
+        // PUBLIC
+
+        // PRIVATE
 
         private void SetVelocityForward()
         {
@@ -42,15 +49,15 @@ namespace Items
 
         private void TurnTowardTarget()
         {
-            if (rocketLock.ActualTarget != null)
+            if (_rocketLock.ActualTarget != null)
             {
-                if (transform.InverseTransformPoint(rocketLock.ActualTarget.transform.position).x < -AntiShakingThreshold) // If the target is on the left we turn to the left
+                if (transform.InverseTransformPoint(_rocketLock.ActualTarget.transform.position).x < -AntiShakingThreshold) // If the target is on the left we turn to the left
                 {
-                    transform.Rotate(Vector3.down * actualTurnSpeed * Time.deltaTime);
+                    transform.Rotate(Vector3.down * _actualTurnSpeed * Time.deltaTime);
                 }
-                else if (transform.InverseTransformPoint(rocketLock.ActualTarget.transform.position).x > AntiShakingThreshold)  // If the target is on the right we turn to the right
+                else if (transform.InverseTransformPoint(_rocketLock.ActualTarget.transform.position).x > AntiShakingThreshold)  // If the target is on the right we turn to the right
                 {
-                    transform.Rotate(Vector3.up * actualTurnSpeed * Time.deltaTime);
+                    transform.Rotate(Vector3.up * _actualTurnSpeed * Time.deltaTime);
                 }
             }
         }
@@ -60,15 +67,15 @@ namespace Items
             if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.Layer.Ground))
             {
                 PlayCollisionSound();
-                //DestroyObject();
+                DestroyObject();
             }
         }
 
         public IEnumerator StartQuickTurn()
         {
-            actualTurnSpeed = QuickTurnSpeed;
+            _actualTurnSpeed = QuickTurnSpeed;
             yield return new WaitForSeconds(QuickTurnDuration);
-            actualTurnSpeed = NormalTurnSpeed;
+            _actualTurnSpeed = NormalTurnSpeed;
         }
     }
 }

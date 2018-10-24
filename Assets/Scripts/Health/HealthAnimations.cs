@@ -4,12 +4,7 @@ namespace Health
 {
     public class HealthAnimations : MonoBehaviour
     {
-        private Animator _animator;
-
-        private void Awake()
-        {
-            GetComponentInParent<Animator>();
-        }
+        [SerializeField] private Animator _animator;
 
         public void HighSpeedHitAnimation()
         {

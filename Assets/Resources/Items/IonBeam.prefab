@@ -19,12 +19,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4542860684376320}
+  - component: {fileID: 114154161607451314}
   - component: {fileID: 114011170284891586}
-  - component: {fileID: 114135807606378458}
-  - component: {fileID: 114885107379201930}
+  - component: {fileID: 114682623051937338}
+  - component: {fileID: 114456940152008542}
   - component: {fileID: 82791731942225518}
   m_Layer: 0
-  m_Name: IonBeamCam
+  m_Name: IonBeam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -150,9 +151,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f8862acb4a5fca4cb8eec4882c6fbc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
+  ItemData: {fileID: 0}
   LaunchSource: {fileID: 82791731942225518}
---- !u!114 &114135807606378458
+--- !u!114 &114154161607451314
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -160,20 +161,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 1917514857341964}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Script: {fileID: -36112512, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 0
-  OwnershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 0}
-  viewIdField: 0
-  InstantiationId: -1
-  isRuntimeInstantiated: 0
---- !u!114 &114885107379201930
+  _sceneGuid: 
+  _serializerGuid: 6612d789-ac7e-410d-bc9e-901586e209f5
+  _prefabId: 14
+  _updateRate: 1
+  _autoFreezeProxyFrames: 0
+  _clientPredicted: 1
+  _allowInstantiateOnClient: 1
+  _persistThroughSceneLoads: 0
+  _sceneObjectDestroyOnDetach: 1
+  _sceneObjectAutoAttach: 1
+  _alwaysProxy: 0
+  _detachOnDisable: 1
+  _allowFirstReplicationWhenFrozen: 0
+  _autoRemoveChildEntities: 0
+  _entityBehaviourQueryOption: 0
+  _entityPriorityCalculatorQueryOption: 0
+  _entityReplicationFilterQueryOption: 0
+--- !u!114 &114456940152008542
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,9 +189,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1917514857341964}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Script: {fileID: 11500000, guid: 6dadcbddcdd072e4caa827b3c6aa84e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
+--- !u!114 &114682623051937338
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1917514857341964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd27ffb076282ea4596eb31f02315847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpeedCamMovements: 4
+  transposer: {fileID: 0}
+  composer: {fileID: 0}
+  crosshairIonBeam: {fileID: 2800000, guid: 93f5d256aa561204eb5055ec10541980, type: 3}

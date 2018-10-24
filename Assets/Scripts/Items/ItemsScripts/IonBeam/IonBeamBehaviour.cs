@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Items
 {
-    public class IonBeamBehaviour : ItemBehaviour
+    public class IonBeamBehaviour : NetworkDestroyable
     {
         private IonBeamInputs _ionBeamInputs;
         private IonBeamCamera _ionBeamCam;
@@ -21,7 +21,7 @@ namespace Items
             _ionBeamInputs = GetComponent<IonBeamInputs>();
         }
 
-        public override void Spawn(Inventory kart, Direction direction, float aimAxis)
+        public void Start()
         {
             _ionBeamCam.IonBeamCameraBehaviour(true);
             EnableIonInputs();

@@ -2,17 +2,15 @@
 {
     public class GuileBehaviour : ProjectileBehaviour
     {
-        void Start()
+        private new void Start()
         {
+            base.Start();
             rb.useGravity = false;
             DestroyAfterHit = true;
-            //DestroyObject(10f);
+            DestroyObject(10f);
         }
 
         // We override it because we don't want to call CheckGrounded
-        new void Update()
-        {
-
-        }
+        new void Update() { }
     }
 }
