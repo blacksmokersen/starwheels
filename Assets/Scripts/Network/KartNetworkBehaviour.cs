@@ -18,6 +18,8 @@ namespace Network
             }
         }
 
+        // BOLT
+
         public override void Attached()
         {
             state.SetTransforms(state.Transform, transform);
@@ -33,6 +35,21 @@ namespace Network
             var lobby = GameObject.Find("LobbyManager");
             if(lobby) lobby.SetActive(false);
         }
+
+        // PUBLIC
+
+        public void DestroyKart()
+        {
+            if (entity.isOwner)
+            {
+                Debug.Log("Destroying kart");
+                FindObjectOfType<CameraUtils.SpectatorControls>().Enabled = true;
+                FindObjectOfType<CameraUtils.CameraPlayerSwitch>().SetCameraToRandomPlayer();
+                BoltNetwork.Destroy(gameObject);
+            }
+        }
+
+        // PRIVATE
 
         private void ColorChanged()
         {

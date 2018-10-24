@@ -4840,7 +4840,7 @@ MonoBehaviour:
   m_Script: {fileID: -36112512, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneGuid: 
+  _sceneGuid: f9a0ee01-6c14-493e-9331-c6b6090377b3
   _serializerGuid: 3d46793e-7c24-4279-882f-df983ef4cb50
   _prefabId: 2
   _updateRate: 1
@@ -5268,6 +5268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65ff36d4213e1b34f98fe41a3a17a3e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerSettingsSO: {fileID: 11400000, guid: d3786b31f0466fb4a97bd3941281e55a, type: 2}
   OnNicknameChanged:
     m_PersistentCalls:
       m_Calls:
@@ -5341,7 +5342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 3
-  CurrentHealth: 0
+  CurrentHealth: 3
   IsDead: 0
   IsInvincible: 0
   OnHealthLoss:
@@ -5372,7 +5373,18 @@ MonoBehaviour:
     m_TypeName: IntEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   OnDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114562823632779928}
+        m_MethodName: DestroyKart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnInvincibilityDuration:

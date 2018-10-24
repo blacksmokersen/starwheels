@@ -35,12 +35,19 @@ namespace Multiplayer
         public BoltConnection Connection;
         #endregion
 
+        [SerializeField] private PlayerSettingsSO playerSettingsSO;
+
         [Header("Events")]
         public StringEvent OnNicknameChanged;
         public TeamEvent OnTeamChanged;
         public IntEvent OnScoreChanged;
 
         // CORE
+
+        private void Awake()
+        {
+            playerSettingsSO.LocalPlayer = this;
+        }
 
         // BOLT
 
