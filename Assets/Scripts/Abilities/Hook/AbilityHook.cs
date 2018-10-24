@@ -8,6 +8,7 @@ namespace Abilities
     {
         [SerializeField] private GameObject prefabHook;
         [SerializeField] private AbilitiesBehaviourSettings abilitiesBehaviourSettings;
+        [SerializeField] private HookSettings hookSettings;
         private GameObject _ownerKart;
         private bool _canUseAbility = true;
 

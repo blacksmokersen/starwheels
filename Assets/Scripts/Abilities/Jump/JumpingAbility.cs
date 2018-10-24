@@ -14,7 +14,7 @@ namespace Abilities.Jump
         public UnityEvent OnJumpReload;
 
         [Header("Forces")]
-        public JumpingAbilitySettings Settings;
+        [SerializeField] private JumpSettings jumpSettings;
 
         [SerializeField] private GroundCondition groundCondition;
         [SerializeField] private AbilitiesBehaviourSettings abilitiesBehaviourSettings;
@@ -45,7 +45,7 @@ namespace Abilities.Jump
 
         public void FirstJump()
         {
-            _rb.AddRelativeForce(Vector3.up * Settings.FirstJumpForce, ForceMode.Impulse);
+            _rb.AddRelativeForce(Vector3.up * jumpSettings.FirstJumpForce, ForceMode.Impulse);
             _hasDoneFirstJump = true;
             OnFirstJump.Invoke();
         }
@@ -84,8 +84,8 @@ namespace Abilities.Jump
                 _straightUpSecondJump = true;
             }
 
-            var forceUp = Vector3.up * Settings.SecondJumpUpForce;
-            var forceDirectional = forceDirection * Settings.SecondJumpLateralForces;
+            var forceUp = Vector3.up * jumpSettings.SecondJumpUpForce;
+            var forceDirectional = forceDirection * jumpSettings.SecondJumpLateralForces;
             if (_straightUpSecondJump)
                 _rb.AddRelativeForce(forceUp, ForceMode.Impulse);
             else
@@ -129,14 +129,14 @@ namespace Abilities.Jump
 
         private IEnumerator TimeBetweenFirstAndSecondJump()
         {
-            yield return new WaitForSeconds(Settings.MaxTimeBetweenFirstAndSecondJump);
+            yield return new WaitForSeconds(jumpSettings.MaxTimeBetweenFirstAndSecondJump);
             StartCoroutine(Cooldown());
         }
 
         private IEnumerator Cooldown()
         {
             _canUseAbility = false;
-            yield return new WaitForSeconds(Settings.CooldownDuration);
+            yield return new WaitForSeconds(jumpSettings.CooldownDuration);
             _canUseAbility = true;
             _hasDoneFirstJump = false;
             OnJumpReload.Invoke();

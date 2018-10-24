@@ -10,7 +10,7 @@ namespace Abilities
     {
         public UnityEvent OnTpBackEvent;
 
-        [SerializeField] private AbilitySettings abilitySettings;
+        [SerializeField] private TPBackSettings tPBackSettings;
         [SerializeField] private AbilitiesBehaviourSettings abilitiesBehaviourSettings;
         [SerializeField] private ThrowableLauncher throwableLauncher;
 
@@ -24,7 +24,7 @@ namespace Abilities
         private void Awake()
         {
             _rb = GetComponentInParent<Rigidbody>();
-            var instantiatedReloadEffect = BoltNetwork.Instantiate(abilitySettings.ReloadParticlePrefab);
+            var instantiatedReloadEffect = BoltNetwork.Instantiate(tPBackSettings.ReloadParticlePrefab);
             instantiatedReloadEffect.transform.parent = gameObject.transform;
             instantiatedReloadEffect.transform.position = new Vector3(0, 0, 0);
             _reloadEffect = instantiatedReloadEffect.GetComponent<ParticleSystem>();
@@ -54,7 +54,7 @@ namespace Abilities
             {
                 if (_tpBack == null)
                 {
-                    var instantiatedItem = BoltNetwork.Instantiate(abilitySettings.Prefab);
+                    var instantiatedItem = BoltNetwork.Instantiate(tPBackSettings.Prefab);
                     var throwable = instantiatedItem.GetComponent<Throwable>();
                     _tpBack = instantiatedItem.GetComponent<TPBackBehaviour>();
                     throwableLauncher.Throw(throwable);
@@ -64,7 +64,7 @@ namespace Abilities
                     _rb.transform.position = _tpBack.transform.position;
                     _rb.transform.rotation = _tpBack.GetKartRotation();
                     Destroy(_tpBack.gameObject);
-                    StartCoroutine(AbilityCooldown(abilitySettings.Cooldown));
+                    StartCoroutine(AbilityCooldown(tPBackSettings.Cooldown));
                 }
             }
         }
