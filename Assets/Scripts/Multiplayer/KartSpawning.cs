@@ -6,12 +6,32 @@ namespace Multiplayer
 {
     public class KartSpawning : GlobalEventListener
     {
+        [SerializeField] private PlayerSettingsSO _playerSettings;
+
+        // CORE
+
+        private void Awake()
+        {
+            Debug.LogError("Name : " + _playerSettings.Nickname);
+            Debug.LogError("ConnectionID : " + _playerSettings.ConnectionID);
+            Debug.LogError("Loaded map !");
+        }
+
         // BOLT
 
         public override void OnEvent(PlayerSpawn evnt)
         {
-            Debug.Log("Event for " + evnt.ConnectionID);
-            InstantiateKart(evnt.SpawnPosition);
+            Debug.LogError("Event for " + evnt.ConnectionID);
+            if(evnt.ConnectionID == _playerSettings.ConnectionID)
+            {
+                InstantiateKart(evnt.SpawnPosition);
+                Debug.LogError("It's meeee");
+            }
+        }
+
+        public override void SceneLoadLocalBegin(string map)
+        {
+            Debug.LogError("Loaded map : " + map);
         }
 
         // PRIVATE

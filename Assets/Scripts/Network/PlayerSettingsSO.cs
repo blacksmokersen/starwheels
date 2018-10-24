@@ -7,5 +7,6 @@ namespace Multiplayer
     {
         public Color Team;
         public string Nickname;
+        public int ConnectionID;
     }
 }

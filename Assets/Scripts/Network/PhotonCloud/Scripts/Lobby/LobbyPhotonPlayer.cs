@@ -46,12 +46,15 @@ namespace Photon.Lobby
 
         public override void Attached()
         {
-            DontDestroyOnLoad(gameObject);
+            // DontDestroyOnLoad(gameObject);
             if (entity.isOwner)
             {
                 Debug.Log("Color used : " + playerColor);
                 state.Color = playerColor;
                 state.Name = "Player #" + Random.Range(1, 100);
+
+                if(BoltNetwork.isClient)
+                    _playerSettingsSO.ConnectionID = (int) connection.ConnectionId;
             }
 
             state.AddCallback("Name", () =>
@@ -78,6 +81,8 @@ namespace Photon.Lobby
 
             readyButton.transform.GetChild(0).GetComponent<Text>().color = Color.white;
             SetupPlayer();
+
+            _playerSettingsSO.ConnectionID = state.PlayerID;
 
             DontDestroyOnLoad(gameObject);
         }
@@ -127,6 +132,11 @@ namespace Photon.Lobby
         }
 
         // Commands
+
+        public void SetPlayerID(int playerID)
+        {
+            state.PlayerID = playerID;
+        }
 
         public void SetupOtherPlayer()
         {

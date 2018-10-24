@@ -48,6 +48,8 @@ namespace Photon.Lobby
         protected bool _isCountdown = false;
         protected string _matchName;
 
+        [SerializeField] private PlayerSettingsSO _playerSettings;
+
         public string matchHost
         {
             get
@@ -254,6 +256,7 @@ namespace Photon.Lobby
         {
             _matchName = "";
 
+            /*
             if (BoltNetwork.isServer)
             {
                 BoltNetwork.LoadScene(lobbyScene.SimpleSceneName);
@@ -263,11 +266,13 @@ namespace Photon.Lobby
                 SceneManager.LoadScene(lobbyScene.SimpleSceneName);
             }
 
+
             registerDoneCallback(() =>
             {
                 Debug.Log("Shutdown Done");
                 ChangeTo(mainMenuPanel);
             });
+            */
         }
 
         // --- Countdown management
@@ -372,6 +377,7 @@ namespace Photon.Lobby
 
                 infoPanel.gameObject.SetActive(false);
                 ChangeTo(lobbyPanel);
+
             }
             else if (BoltNetwork.isServer)
             {
@@ -383,6 +389,7 @@ namespace Photon.Lobby
                 DontDestroyOnLoad(lobbyPlayer.gameObject);
 
                 lobbyPlayer.connection = connection;
+                lobbyPlayer.SetPlayerID((int) connection.ConnectionId);
 
                 connection.UserData = lobbyPlayer;
                 connection.SetStreamBandwidth(1024 * 1024);

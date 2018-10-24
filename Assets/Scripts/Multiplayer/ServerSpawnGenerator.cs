@@ -27,7 +27,7 @@ namespace Multiplayer
         {
             Debug.LogError("SCENELOADREMOTE!!");
             PlayerSpawn playerSpawn = PlayerSpawn.Create();
-            //playerSpawn.ConnectionID = (int) connection.ConnectionId;
+            playerSpawn.ConnectionID = (int) connection.ConnectionId;
             playerSpawn.SpawnPosition = GetSpawnPosition();
             playerSpawn.Send();
             Debug.LogError("MESSAGE SEEEENT");
