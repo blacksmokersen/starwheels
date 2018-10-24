@@ -24,13 +24,6 @@ namespace GameModes
 
         // CORE
 
-        protected void Start()
-        {
-            _spawns = GameObject.FindGameObjectsWithTag(Constants.Tag.Spawn);
-
-            SpawnKart();
-        }
-
         // PUBLIC
 
         public void RespawnKart()
@@ -59,22 +52,6 @@ namespace GameModes
             yield return new WaitForSeconds(countdownSeconds);
             InitializeGame();
             GameStarted = true;
-        }
-
-
-        private void SpawnKart()
-        {
-            /*
-             * int playerId = PhotonNetwork.LocalPlayer.ActorNumber;
-            var initPos = _spawns[playerId].transform.position;
-            var initRot = _spawns[playerId].transform.rotation;
-            var kart = PhotonNetwork.Instantiate("Kart", initPos, initRot, 0);
-
-            var cinemachineDynamicScript = FindObjectOfType<CinemachineDynamicScript>();
-            cinemachineDynamicScript.SetKart(kart);
-
-            StartCoroutine(LoadGameHUD(kart));
-            */
         }
 
         private IEnumerator LoadGameHUD(GameObject kart) // USE A PREFAB ?
