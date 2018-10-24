@@ -20,20 +20,18 @@ namespace Network
 
         public override void Attached()
         {
-            if (entity.isOwner)
-            {
-                state.SetTransforms(state.Transform, transform);
-                state.SetAnimator(GetComponentInChildren<Animator>());
-                state.Team = _playerSettings.Team;
-                state.Nickname = _playerSettings.Nickname;
+            state.SetTransforms(state.Transform, transform);
+            state.SetAnimator(GetComponentInChildren<Animator>());
+            state.Team = _playerSettings.Team;
+            state.Nickname = _playerSettings.Nickname;
 
-                state.AddCallback("Team", ColorChanged);
-                state.AddCallback("Nickname", NameChanged);
+            state.AddCallback("Team", ColorChanged);
+            state.AddCallback("Nickname", NameChanged);
 
-                ColorChanged();
-                NameChanged();
-                GameObject.Find("LobbyManager").SetActive(false);
-            }
+            ColorChanged();
+            NameChanged();
+            var lobby = GameObject.Find("LobbyManager");
+            if(lobby) lobby.SetActive(false);
         }
 
         private void ColorChanged()
