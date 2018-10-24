@@ -6,7 +6,6 @@ namespace Abilities
     public class AbilityHook : AbilitiesBehaviour, IControllable
     {
         [SerializeField] private GameObject prefabHook;
-        [SerializeField] private AbilitiesBehaviourSettings abilitiesBehaviourSettings;
         [SerializeField] private HookSettings hookSettings;
         private GameObject _ownerKart;
         private bool _canUseAbility = true;

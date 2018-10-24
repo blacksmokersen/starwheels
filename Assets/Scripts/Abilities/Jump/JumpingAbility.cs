@@ -16,7 +16,6 @@ namespace Abilities.Jump
         [SerializeField] private JumpSettings jumpSettings;
 
         [SerializeField] private GroundCondition groundCondition;
-        [SerializeField] private AbilitiesBehaviourSettings abilitiesBehaviourSettings;
 
         private Rigidbody _rb;
         private bool _canUseAbility = true;

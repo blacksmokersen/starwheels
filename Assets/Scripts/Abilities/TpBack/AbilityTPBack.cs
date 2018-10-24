@@ -10,7 +10,6 @@ namespace Abilities
         public UnityEvent OnTpBackEvent;
 
         [SerializeField] private TPBackSettings tPBackSettings;
-        [SerializeField] private AbilitiesBehaviourSettings abilitiesBehaviourSettings;
         [SerializeField] private ThrowableLauncher throwableLauncher;
 
         private ParticleSystem _reloadEffect;
