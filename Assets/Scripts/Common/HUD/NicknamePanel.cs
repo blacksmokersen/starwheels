@@ -13,6 +13,7 @@ namespace Common.HUD
         [SerializeField] private TextMeshPro nameText;
         [SerializeField] private SpriteRenderer frameRenderer;
 
+
         public override void Attached()
         {
             SetName(state.Nickname);
@@ -22,7 +23,7 @@ namespace Common.HUD
 
         public override void ControlGained()
         {
-            //gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
 
         public override void ControlLost()

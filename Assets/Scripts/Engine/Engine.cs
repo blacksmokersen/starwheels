@@ -51,7 +51,7 @@ namespace Engine
 
         public override void Attached()
         {
-            if (!entity.isControlled)
+            if (!entity.isControlled && entity.isOwner)
             {
                 entity.TakeControl();
             }
@@ -81,9 +81,10 @@ namespace Engine
             }
             else
             {
-                Accelerate(cmd.Input.Forward);
-                Decelerate(cmd.Input.Backward);
-                cmd.Result.Velocity = _rb.velocity;
+                var rb = _rb;
+                rb = Accelerate(cmd.Input.Forward,rb);
+                rb = Decelerate(cmd.Input.Backward,rb);
+                cmd.Result.Velocity = rb.velocity;
             }
         }
 

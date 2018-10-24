@@ -19,20 +19,18 @@ namespace Multiplayer
         {
             _spawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.Spawn));
             var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart);
-            //myKart.GetState<IKartState>().Team = LobbyPhotonPlayer.localPlayer.playerColor;
-            //myKart.GetState<IKartState>().Nickname = LobbyPhotonPlayer.localPlayer.playerName;
             myKart.transform.position = GetSpawnPosition();
             FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
         }
 
         public override void SceneLoadRemoteDone(BoltConnection connection)
         {
-            var player = BoltNetwork.Instantiate(BoltPrefabs.Kart);
-            var lobbyPlayer = LobbyPlayerList._instance.GetPlayer(connection);
-            player.GetState<IKartState>().Team = lobbyPlayer.playerColor;
-            player.GetState<IKartState>().Nickname = lobbyPlayer.playerName;
-            player.AssignControl(connection);
-            player.ReleaseControl();
+            Debug.LogError("SCENELOADREMOTE!!");
+            PlayerSpawn playerSpawn = PlayerSpawn.Create();
+            playerSpawn.ConnectionID = (int) connection.ConnectionId;
+            playerSpawn.SpawnPosition = GetSpawnPosition();
+            playerSpawn.Send();
+            Debug.LogError("MESSAGE SEEEENT");
         }
 
         public Vector3 GetSpawnPosition()

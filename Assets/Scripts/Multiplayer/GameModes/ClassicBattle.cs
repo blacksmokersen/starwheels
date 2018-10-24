@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 using Multiplayer;
 
 namespace GameModes
@@ -36,13 +35,12 @@ namespace GameModes
 
             CurrentGameMode = GameMode.ClassicBattle;
 
-            _endGameMenu = Instantiate(Resources.Load<GameObject>(Constants.Prefab.EndGameMenu));
+            _endGameMenu = MonoBehaviour.Instantiate(Resources.Load<GameObject>(Constants.Prefab.EndGameMenu));
             _endGameMenu.SetActive(false);
         }
 
-        private new void Start()
+        private void Start()
         {
-            base.Start();
             InitializePlayerCount();
         }
 
@@ -72,7 +70,7 @@ namespace GameModes
             var karts = GameObject.FindGameObjectsWithTag(Constants.Tag.Kart);
             foreach(var kart in karts)
             {
-
+                // Do stuff ?
             }
         }
 
@@ -130,7 +128,6 @@ namespace GameModes
             {
                 playerInputs.enabled = false;
             }
-
 
             _endGameMenu.SetActive(true);
             _endGameMenu.GetComponent<Menu.GameOverMenu>().SetWinnerTeam(WinnerTeam);

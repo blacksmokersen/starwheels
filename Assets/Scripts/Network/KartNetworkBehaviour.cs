@@ -8,6 +8,8 @@ namespace Network
 {
     public class KartNetworkBehaviour : EntityBehaviour<IKartState>
     {
+        [SerializeField] private PlayerSettingsSO _playerSettings;
+
         private void Awake()
         {
             if (!BoltNetwork.isConnected)
@@ -20,10 +22,16 @@ namespace Network
         {
             state.SetTransforms(state.Transform, transform);
             state.SetAnimator(GetComponentInChildren<Animator>());
+            state.Team = _playerSettings.Team;
+            state.Nickname = _playerSettings.Nickname;
+
             state.AddCallback("Team", ColorChanged);
             state.AddCallback("Nickname", NameChanged);
+
             ColorChanged();
             NameChanged();
+            var lobby = GameObject.Find("LobbyManager");
+            if(lobby) lobby.SetActive(false);
         }
 
         private void ColorChanged()
