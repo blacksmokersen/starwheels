@@ -1,19 +1,26 @@
 ﻿using UnityEngine;
+using Bolt;
 using Items;
 
 namespace Abilities
 {
-    public class AbilityHook : MonoBehaviour, IControllable
+    public class AbilityHook : EntityBehaviour<IKartState>, IControllable
     {
         [SerializeField] private GameObject prefabHook;
+        [SerializeField] private AbilitiesBehaviourSettings abilitiesBehaviourSettings;
         private GameObject _ownerKart;
         private bool _canUseAbility = true;
 
         // CORE
-        private void FixedUpdate()
+
+        // BOLT
+
+        public override void SimulateController()
         {
+            if(abilitiesBehaviourSettings.ActiveAbility == "Hook")
             MapInputs();
         }
+
         // PUBLIC
 
         public void MapInputs()

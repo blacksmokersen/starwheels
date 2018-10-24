@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Bolt;
 using UnityEngine.Events;
 using Common.PhysicsUtils;
 
 namespace Abilities.Jump
 {
-    public class JumpingAbility : MonoBehaviour, IControllable
+    public class JumpingAbility : EntityBehaviour<IKartState>, IControllable
     {
         [Header("Events")]
         public UnityEvent OnFirstJump;
@@ -16,6 +17,7 @@ namespace Abilities.Jump
         public JumpingAbilitySettings Settings;
 
         [SerializeField] private GroundCondition groundCondition;
+        [SerializeField] private AbilitiesBehaviourSettings abilitiesBehaviourSettings;
 
         private Rigidbody _rb;
         private bool _canUseAbility = true;
@@ -31,9 +33,12 @@ namespace Abilities.Jump
             _rb = GetComponentInParent<Rigidbody>();
         }
 
-        private void FixedUpdate()
+        // BOLT
+
+        public override void SimulateController()
         {
-            MapInputs();
+            if (abilitiesBehaviourSettings.ActiveAbility == "Jump")
+                MapInputs();
         }
 
         // PUBLIC

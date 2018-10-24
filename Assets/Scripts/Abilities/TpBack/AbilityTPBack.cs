@@ -1,15 +1,17 @@
 ﻿using Items;
 using UnityEngine;
+using Bolt;
 using UnityEngine.Events;
 using System.Collections;
 
 namespace Abilities
 {
-    public class AbilityTPBack : MonoBehaviour, IControllable
+    public class AbilityTPBack : EntityBehaviour<IKartState>, IControllable
     {
         public UnityEvent OnTpBackEvent;
 
         [SerializeField] private AbilitySettings abilitySettings;
+        [SerializeField] private AbilitiesBehaviourSettings abilitiesBehaviourSettings;
         [SerializeField] private ThrowableLauncher throwableLauncher;
 
         private ParticleSystem _reloadEffect;
@@ -28,9 +30,12 @@ namespace Abilities
             _reloadEffect = instantiatedReloadEffect.GetComponent<ParticleSystem>();
         }
 
-        private void FixedUpdate()
+        // BOLT
+
+        public override void SimulateController()
         {
-            MapInputs();
+            if (abilitiesBehaviourSettings.ActiveAbility == "TPBack")
+                MapInputs();
         }
 
         // PUBLIC
