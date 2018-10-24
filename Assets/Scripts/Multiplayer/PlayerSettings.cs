@@ -44,17 +44,14 @@ namespace Multiplayer
 
         // CORE
 
-        private void Awake()
-        {
-            playerSettingsSO.LocalPlayer = this;
-        }
-
         // BOLT
 
         public override void Attached()
         {
             if (entity.isOwner)
+            {
                 Me = this;
+            }
         }
     }
 

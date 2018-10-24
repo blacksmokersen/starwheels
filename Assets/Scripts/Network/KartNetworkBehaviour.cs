@@ -24,8 +24,12 @@ namespace Network
         {
             state.SetTransforms(state.Transform, transform);
             state.SetAnimator(GetComponentInChildren<Animator>());
-            state.Team = _playerSettings.Team;
-            state.Nickname = _playerSettings.Nickname;
+
+            if (entity.isOwner)
+            {
+                state.Team = _playerSettings.Team;
+                state.Nickname = _playerSettings.Nickname;
+            }
 
             state.AddCallback("Team", ColorChanged);
             state.AddCallback("Nickname", NameChanged);
@@ -40,9 +44,10 @@ namespace Network
 
         public void DestroyKart()
         {
+            FindObjectOfType<GameModes.ClassicBattle>().KartDestroyed(PlayerSettings.Me.Team);
+
             if (entity.isOwner)
             {
-                Debug.Log("Destroying kart");
                 FindObjectOfType<CameraUtils.SpectatorControls>().Enabled = true;
                 FindObjectOfType<CameraUtils.CameraPlayerSwitch>().SetCameraToRandomPlayer();
                 BoltNetwork.Destroy(gameObject);

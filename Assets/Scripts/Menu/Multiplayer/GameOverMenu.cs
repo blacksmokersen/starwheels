@@ -36,7 +36,7 @@ namespace Menu
 
         private void OnReplayButtonPressed()
         {
-            //OnGameReset.Invoke();
+            FindObjectOfType<LevelManager>().ResetLevel();
         }
     }
 }

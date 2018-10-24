@@ -15,6 +15,11 @@ namespace Audio
 
         // PUBLIC
 
+        public void PlayIntroSound()
+        {
+            introSource.Play();
+        }
+
         public void GameEndSound(Team winningTeam)
         {
             var myTeam = Multiplayer.PlayerSettings.Me.Team;
@@ -26,7 +31,6 @@ namespace Audio
             {
                 PlayLoseSound();
             }
-
         }
 
         // PRIVATE
@@ -41,11 +45,6 @@ namespace Audio
         {
             endGameSource.clip = loseAudioClip;
             endGameSource.Play();
-        }
-
-        private void PlayIntroSound()
-        {
-            introSource.Play();
         }
     }
 }

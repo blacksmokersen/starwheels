@@ -22,7 +22,7 @@ namespace CameraUtils
 
         public void SetCameraToNextPlayer()
         {
-            var newTargetKart = PlayerSettingsSO.LocalPlayer.GetNextTeamKart(_currentTarget);
+            var newTargetKart = PlayerSettings.Me.GetNextTeamKart(_currentTarget);
             if (newTargetKart != null)
             {
                 SetCameraToPlayer(newTargetKart);
@@ -31,8 +31,7 @@ namespace CameraUtils
 
         public void SetCameraToRandomPlayer()
         {
-            var randomKart = PlayerSettingsSO.LocalPlayer.PickRandomTeamKart();
-            Debug.LogFormat("Random Kart : {0}",randomKart.name);
+            var randomKart = PlayerSettings.Me.PickRandomTeamKart();
 
             if (randomKart != null)
             {
@@ -51,7 +50,7 @@ namespace CameraUtils
             _setKartCamera.SetKart(_currentTarget);
             //_currentTarget.GetComponentInChildren<Audio.KartSoundsScript>().SetAudioListenerActive(true);
 
-            var localHUD = PlayerSettingsSO.LocalPlayer.GetComponentInChildren<Items.ItemHUD>();
+            var localHUD = PlayerSettings.Me.GetComponentInChildren<Items.ItemHUD>();
             localHUD.ObserveKart(_currentTarget);
         }
     }

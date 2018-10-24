@@ -10,28 +10,14 @@ namespace Multiplayer
 
         // CORE
 
-        private void Awake()
-        {
-            Debug.LogError("Name : " + _playerSettings.Nickname);
-            Debug.LogError("ConnectionID : " + _playerSettings.ConnectionID);
-            Debug.LogError("Loaded map !");
-        }
-
         // BOLT
 
         public override void OnEvent(PlayerSpawn evnt)
         {
-            Debug.LogError("Event for " + evnt.ConnectionID);
             if(evnt.ConnectionID == _playerSettings.ConnectionID)
             {
                 InstantiateKart(evnt.SpawnPosition);
-                Debug.LogError("It's meeee");
             }
-        }
-
-        public override void SceneLoadLocalBegin(string map)
-        {
-            Debug.LogError("Loaded map : " + map);
         }
 
         // PRIVATE
