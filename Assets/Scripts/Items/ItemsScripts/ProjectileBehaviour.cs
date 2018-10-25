@@ -89,14 +89,15 @@ namespace Items
         {
             var otherPlayer = kartCollisionObject.GetComponentInParent<PlayerSettings>();
 
-            Debug.LogError("Is Not Same Team : " + Ownership.IsNotSameTeam(otherPlayer));
-            Debug.LogError("Is Me : " + Ownership.IsMe(otherPlayer.gameObject));
-            Debug.LogError("Is Immune : " + _ownerImmune);
-
             if (Ownership.IsNotSameTeam(otherPlayer) || (Ownership.IsMe(otherPlayer.gameObject) && !_ownerImmune))
             {
-                Debug.LogErrorFormat("{0} was hit with {1} hp", otherPlayer.Nickname, kartCollisionObject.GetComponent<Health.Health>().state.Health);
-                kartCollisionObject.GetComponent<Health.Health>().LoseHealth();
+                Debug.LogErrorFormat("{0} was hit on {2} with {1} hp", otherPlayer.Nickname, kartCollisionObject.GetComponent<Health.Health>().state.Health, kartCollisionObject.name);
+                Debug.LogError("Time : " + BoltNetwork.time);
+
+                PlayerHit playerHitEvent = PlayerHit.Create();
+                playerHitEvent.PlayerEntity = kartCollisionObject.GetComponentInParent<BoltEntity>();
+                playerHitEvent.Send();
+
                 OnHit();
             }
         }

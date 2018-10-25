@@ -40,8 +40,6 @@ namespace Network
             ColorChanged();
             NameChanged();
 
-            //FindObjectOfType<GameModes.ClassicBattle>().PlayerJoined(TeamsColors.GetTeamFromColor(state.Team));
-
             var lobby = GameObject.Find("LobbyManager");
             if(lobby) lobby.SetActive(false);
         }
@@ -50,8 +48,6 @@ namespace Network
 
         public void DestroyKart()
         {
-            FindObjectOfType<GameModes.ClassicBattle>().KartDestroy(PlayerSettings.Me.Team);
-
             if (entity.isOwner)
             {
                 FindObjectOfType<CameraUtils.SpectatorControls>().Enabled = true;

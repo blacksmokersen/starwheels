@@ -65,6 +65,7 @@ namespace Health
                 {
                     KartDestroyed kartDestroyedEvent = KartDestroyed.Create();
                     kartDestroyedEvent.Team = Multiplayer.Teams.TeamsColors.GetColorFromTeam(Multiplayer.PlayerSettings.Me.Team);
+                    kartDestroyedEvent.Send();
                 }
                 IsDead = true;
                 OnDeath.Invoke();

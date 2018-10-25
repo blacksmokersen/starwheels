@@ -25,6 +25,12 @@ namespace GameModes
 
         // BOLT
 
+        public override void SceneLoadLocalDone(string map)
+        {
+            _redKartsAlive = 0;
+            _blueKartsAlive = 0;
+        }
+
         public override void OnEvent(KartDestroyed evnt)
         {
             KartDestroy(TeamsColors.GetTeamFromColor(evnt.Team));
