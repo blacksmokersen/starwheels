@@ -263,6 +263,7 @@ GameObject:
   - component: {fileID: 114241659848452430}
   - component: {fileID: 114969713501460798}
   - component: {fileID: 114562823632779928}
+  - component: {fileID: 114964643293710670}
   m_Layer: 11
   m_Name: Kart
   m_TagString: Kart
@@ -434,6 +435,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4167592228515140}
   - component: {fileID: 114258727179377248}
+  - component: {fileID: 114220499607170080}
   m_Layer: 11
   m_Name: Debug
   m_TagString: Untagged
@@ -4451,6 +4453,19 @@ MonoBehaviour:
   LifeBursts:
   - {fileID: 0}
   NumberOfParticles: 300
+--- !u!114 &114220499607170080
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1225063340607550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c8e32ad3db3cd84e80e0cb71d70a62c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilitiesBehaviourSettings: {fileID: 11400000, guid: a046a5ba860884645842e4cf1e7516b7,
+    type: 2}
 --- !u!114 &114241659848452430
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4768,6 +4783,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfbe232ca97b40d4ca8753d5ad41f1b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilitiesBehaviourSettings: {fileID: 11400000, guid: a046a5ba860884645842e4cf1e7516b7,
+    type: 2}
   OnFirstJump:
     m_PersistentCalls:
       m_Calls:
@@ -4829,8 +4846,6 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   jumpSettings: {fileID: 11400000, guid: e9d85ae3c27e1dc46a352d8fe5690014, type: 2}
   groundCondition: {fileID: 114241659848452430}
-  abilitiesBehaviourSettings: {fileID: 11400000, guid: a046a5ba860884645842e4cf1e7516b7,
-    type: 2}
 --- !u!114 &114405184842347682
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5015,9 +5030,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6efd2b69c0785b4594537bcea2ff8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabHook: {fileID: 1575942261286728, guid: 30d418695e5c8704bbf7fcfa3ed1d3ed, type: 2}
   abilitiesBehaviourSettings: {fileID: 11400000, guid: a046a5ba860884645842e4cf1e7516b7,
     type: 2}
+  prefabHook: {fileID: 1575942261286728, guid: 30d418695e5c8704bbf7fcfa3ed1d3ed, type: 2}
   hookSettings: {fileID: 11400000, guid: c40bde39291641f41acfbe41c969ef80, type: 2}
 --- !u!114 &114625566649328150
 MonoBehaviour:
@@ -5102,14 +5117,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3e705ff20ce16a418035ed98c24bbff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilitiesBehaviourSettings: {fileID: 11400000, guid: a046a5ba860884645842e4cf1e7516b7,
+    type: 2}
   OnTpBackEvent:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   tPBackSettings: {fileID: 11400000, guid: 8c4f4b84f4fd8d940918d0b0bde965d5, type: 2}
-  abilitiesBehaviourSettings: {fileID: 11400000, guid: a046a5ba860884645842e4cf1e7516b7,
-    type: 2}
   throwableLauncher: {fileID: 114678612611431884}
 --- !u!114 &114771178506899832
 MonoBehaviour:
@@ -5264,6 +5279,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Settings: {fileID: 11400000, guid: c599c944b5b41b446ab1e3ef29a19b81, type: 2}
   clampSpeed: {fileID: 114499899481407548}
+--- !u!114 &114964643293710670
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1138407828072762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dadcbddcdd072e4caa827b3c6aa84e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114969713501460798
 MonoBehaviour:
   m_ObjectHideFlags: 1
