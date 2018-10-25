@@ -5,27 +5,14 @@ using UnityEngine;
 
 namespace Abilities
 {
-    public class AbilitiesBehaviour : EntityBehaviour<IKartState>, IControllable
+    public class AbilitiesBehaviour : EntityBehaviour<IKartState>
     {
         public AbilitiesBehaviourSettings abilitiesBehaviourSettings;
-
-        private void Awake()
-        {
-            abilitiesBehaviourSettings = Resources.Load<AbilitiesBehaviourSettings>("AbilitiesBehaviourSettings");
-        }
-
 
         public override void SimulateController()
         {
 
         }
-
-        public void MapInputs()
-        {
-
-
-        }
-
 
         /*
         private IEnumerator Cooldown()
