@@ -26,7 +26,6 @@ namespace CameraUtils
 
         public void SetKart(GameObject kart)
         {
-            Debug.Log("Observing kart : " + kart.GetComponent<Multiplayer.PlayerSettings>().Nickname);
             _cinemachine.Follow = kart.transform;
             _cinemachine.LookAt = kart.transform;
         }

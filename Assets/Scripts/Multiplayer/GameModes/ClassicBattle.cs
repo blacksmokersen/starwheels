@@ -1,22 +1,18 @@
 ﻿using System.Linq;
 using UnityEngine;
 using Multiplayer;
+using Multiplayer.Teams;
 
 namespace GameModes
 {
+    [BoltGlobalBehaviour(BoltNetworkModes.Server)]
     public class ClassicBattle : GameModeBase
     {
-        [HideInInspector] public static ClassicBattle Instance;
-
         [Header("GameMode Settings")]
         public int MaxPlayersPerTeam;
         public bool IsOver;
         public Team WinnerTeam = Team.None;
 
-        [Header("Events")]
-        public TeamEvent OnKartDestroyed;
-
-        private GameObject _endGameMenu;
         private int _redKartsAlive;
         private int _blueKartsAlive;
 
@@ -24,29 +20,40 @@ namespace GameModes
 
         private void Awake()
         {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-
             CurrentGameMode = GameMode.ClassicBattle;
-
-            _endGameMenu = MonoBehaviour.Instantiate(Resources.Load<GameObject>(Constants.Prefab.EndGameMenu));
-            _endGameMenu.SetActive(false);
         }
 
-        private void Start()
+        // BOLT
+
+        public override void OnEvent(KartDestroyed evnt)
         {
-            InitializePlayerCount();
+            KartDestroy(TeamsColors.GetTeamFromColor(evnt.Team));
+        }
+
+        public override void OnEvent(PlayerReady evnt)
+        {
+            var team = TeamsColors.GetTeamFromColor(evnt.Team);
+            PlayerJoined(team);
         }
 
         // PUBLIC
 
-        public void KartDestroyed(Team team)
+        public void PlayerJoined(Team team)
+        {
+            switch (team)
+            {
+                case Team.Blue:
+                    _blueKartsAlive++;
+                    break;
+                case Team.Red:
+                    _redKartsAlive++;
+                    break;
+            }
+            Debug.Log("Blue players : " + _blueKartsAlive);
+            Debug.Log("Red players : " + _redKartsAlive);
+        }
+
+        public void KartDestroy(Team team)
         {
             switch (team)
             {
@@ -59,7 +66,6 @@ namespace GameModes
                 default:
                     break;
             }
-            OnKartDestroyed.Invoke(team);
             CheckIfOver();
         }
 
@@ -109,7 +115,13 @@ namespace GameModes
 
         private void CheckIfOver()
         {
-            if (_redKartsAlive <= 0)
+            if (_redKartsAlive <= 0 && _blueKartsAlive <= 0)
+            {
+                IsOver = true;
+                WinnerTeam = Team.None;
+                EndGame();
+            }
+            else if (_redKartsAlive <= 0)
             {
                 IsOver = true;
                 WinnerTeam = Team.Blue;
@@ -125,17 +137,16 @@ namespace GameModes
 
         private void EndGame()
         {
+            GameOver goEvent = GameOver.Create();
+            goEvent.WinningTeam = TeamsColors.GetColorFromTeam(WinnerTeam);
+            goEvent.Send();
+
             var playerInputsList = FindObjectsOfType<MonoBehaviour>().OfType<IControllable>();
 
             foreach(MonoBehaviour playerInputs in playerInputsList)
             {
                 playerInputs.enabled = false;
             }
-
-            _endGameMenu.SetActive(true);
-            _endGameMenu.GetComponent<Menu.GameOverMenu>().SetWinnerTeam(WinnerTeam);
-
-            OnGameEnd.Invoke(WinnerTeam);
         }
     }
 }

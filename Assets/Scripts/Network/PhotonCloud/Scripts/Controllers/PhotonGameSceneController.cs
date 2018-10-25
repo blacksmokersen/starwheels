@@ -9,7 +9,7 @@ public class PhotonGameSceneController : Bolt.GlobalEventListener
     public override void SceneLoadLocalDone(string map)
     {
         BoltConsole.Write("Spawn Player on map " + map, Color.yellow);
-        BomberPlayerController.Spawn();
+        //BomberPlayerController.Spawn();
 
         if (BoltNetwork.isServer)
         {

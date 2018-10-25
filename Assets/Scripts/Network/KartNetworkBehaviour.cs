@@ -29,6 +29,9 @@ namespace Network
             {
                 state.Team = _playerSettings.Team;
                 state.Nickname = _playerSettings.Nickname;
+                PlayerReady playerReadyEvent = PlayerReady.Create();
+                playerReadyEvent.Team = state.Team;
+                playerReadyEvent.Send();
             }
 
             state.AddCallback("Team", ColorChanged);
@@ -36,6 +39,9 @@ namespace Network
 
             ColorChanged();
             NameChanged();
+
+            //FindObjectOfType<GameModes.ClassicBattle>().PlayerJoined(TeamsColors.GetTeamFromColor(state.Team));
+
             var lobby = GameObject.Find("LobbyManager");
             if(lobby) lobby.SetActive(false);
         }
@@ -44,7 +50,7 @@ namespace Network
 
         public void DestroyKart()
         {
-            FindObjectOfType<GameModes.ClassicBattle>().KartDestroyed(PlayerSettings.Me.Team);
+            FindObjectOfType<GameModes.ClassicBattle>().KartDestroy(PlayerSettings.Me.Team);
 
             if (entity.isOwner)
             {

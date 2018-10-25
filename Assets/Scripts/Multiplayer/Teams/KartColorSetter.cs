@@ -21,7 +21,6 @@ namespace Multiplayer.Teams
 
         public void SetKartColorUsingTeam(Team team)
         {
-            Debug.LogFormat("Team : {0} ", team);
             switch (team)
             {
                 case Team.Blue:

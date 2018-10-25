@@ -9,7 +9,10 @@ namespace Multiplayer
     [BoltGlobalBehaviour(BoltNetworkModes.Server)]
     public class ServerSpawnGenerator : GlobalEventListener
     {
+        public enum SpawnMode { Random, Deterministic }
+
         private List<GameObject> _spawns = new List<GameObject>();
+        private SpawnMode _spawnMode = SpawnMode.Random;
 
         // CORE
 
@@ -25,19 +28,24 @@ namespace Multiplayer
 
         public override void SceneLoadRemoteDone(BoltConnection connection)
         {
-            Debug.LogError("SCENELOADREMOTE!!");
             PlayerSpawn playerSpawn = PlayerSpawn.Create();
             playerSpawn.ConnectionID = (int) connection.ConnectionId;
             playerSpawn.SpawnPosition = GetSpawnPosition();
             playerSpawn.Send();
-            Debug.LogError("MESSAGE SEEEENT");
         }
 
         public Vector3 GetSpawnPosition()
         {
             if (_spawns.Count > 0)
             {
-                var spawnPosition = _spawns[0];
+                GameObject spawnPosition = _spawns[0];
+
+                if (_spawnMode == SpawnMode.Random)
+                {
+                    int randomIndex = Random.Range(0, _spawns.Count - 1);
+                    spawnPosition = _spawns[randomIndex];
+                }
+
                 _spawns.Remove(spawnPosition);
                 return spawnPosition.transform.position;
             }
