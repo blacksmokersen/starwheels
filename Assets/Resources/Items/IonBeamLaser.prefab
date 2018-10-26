@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 136808278217480694}
   - component: {fileID: 82331756838676912}
   - component: {fileID: 114954992984807780}
+  - component: {fileID: 114709753562049224}
   m_Layer: 0
   m_Name: IonBeamLaser
   m_TagString: Untagged
@@ -331,15 +332,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1642ea525a6a5a8489fa9ba7175520e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 1
-  SpeedOffset: 0.1
-  GrowingWarningSpeed: 60
-  MaxWarningScale: 0
-  onExplode: 0
-  DamagePlayer: 0
+  ionBeamLaserSettings: {fileID: 11400000, guid: 6a2a330bb79b10348b05400976d99964,
+    type: 2}
   EffectiveAOE: {fileID: 1061952050393796}
   WarningPosition: {fileID: 1715620537510334}
   ExplosionSource: {fileID: 82331756838676912}
+--- !u!114 &114709753562049224
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1039182035529638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faf449d14c1b8214587b11af62a948e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OwnerKartRoot: {fileID: 0}
+  Team: 0
 --- !u!114 &114954992984807780
 MonoBehaviour:
   m_ObjectHideFlags: 1
