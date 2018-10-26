@@ -1,48 +1,43 @@
 ﻿using UnityEngine;
 using CameraUtils;
-using GameModes;
+using Multiplayer.Teams;
+using Bolt;
 
 namespace GameModes
 {
-    public class KartGameMode : MonoBehaviour
+    public class KartGameMode : GlobalEventListener
     {
-        private int _score;
+        [Header("Events")]
+        public TeamEvent OnGameEnd;
 
-        public void DestroyKart()
+        private GameObject _endGameMenu;
+
+        // CORE
+
+        private void Awake()
         {
-            switch (GameModeBase.CurrentGameMode)
-            {
-                case GameMode.ClassicBattle:
-                    ClassicBattleDestroy();
-                    break;
-                case GameMode.BankRobbery:
-                    break;
-                case GameMode.GoldenTotem:
-                    break;
-                default:
-                    break;
-            }
+            _endGameMenu = MonoBehaviour.Instantiate(Resources.Load<GameObject>(Constants.Prefab.EndGameMenu));
+            _endGameMenu.SetActive(false);
         }
 
-        #region Destroy Functions
+        // BOLT
+
+        public override void OnEvent(GameOver evnt)
+        {
+            var winningTeam = TeamsColors.GetTeamFromColor(evnt.WinningTeam);
+
+            _endGameMenu.SetActive(true);
+            _endGameMenu.GetComponent<Menu.GameOverMenu>().SetWinnerTeam(winningTeam);
+
+            OnGameEnd.Invoke(winningTeam);
+        }
+
+        // PRIVATE
+
         private void ClassicBattleDestroy()
         {
             FindObjectOfType<SpectatorControls>().Enabled = true;
             FindObjectOfType<CameraPlayerSwitch>().SetCameraToRandomPlayer();
         }
-
-        #endregion
-
-        #region Score
-
-        public void IncreaseScore()
-        {
-            _score++;
-        }
-
-        // PRIVATE
-
-
-        #endregion
     }
 }

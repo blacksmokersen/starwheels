@@ -18,21 +18,45 @@ namespace Network
             }
         }
 
+        // BOLT
+
         public override void Attached()
         {
             state.SetTransforms(state.Transform, transform);
             state.SetAnimator(GetComponentInChildren<Animator>());
-            state.Team = _playerSettings.Team;
-            state.Nickname = _playerSettings.Nickname;
+
+            if (entity.isOwner)
+            {
+                state.Team = _playerSettings.Team;
+                state.Nickname = _playerSettings.Nickname;
+                PlayerReady playerReadyEvent = PlayerReady.Create();
+                playerReadyEvent.Team = state.Team;
+                playerReadyEvent.Send();
+            }
 
             state.AddCallback("Team", ColorChanged);
             state.AddCallback("Nickname", NameChanged);
 
             ColorChanged();
             NameChanged();
+
             var lobby = GameObject.Find("LobbyManager");
             if(lobby) lobby.SetActive(false);
         }
+
+        // PUBLIC
+
+        public void DestroyKart()
+        {
+            if (entity.isOwner)
+            {
+                FindObjectOfType<CameraUtils.SpectatorControls>().Enabled = true;
+                FindObjectOfType<CameraUtils.CameraPlayerSwitch>().SetCameraToRandomPlayer();
+                BoltNetwork.Destroy(gameObject);
+            }
+        }
+
+        // PRIVATE
 
         private void ColorChanged()
         {

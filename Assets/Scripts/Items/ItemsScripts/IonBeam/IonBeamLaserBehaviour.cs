@@ -70,7 +70,7 @@ public class IonBeamLaserBehaviour : MonoBehaviour
     IEnumerator ParticuleEffect()
     {
         GetComponent<ParticleSystem>().Emit(3000);
-        MyExtensions.Audio.PlayClipObjectAndDestroy(ExplosionSource);
+        MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(ExplosionSource);
         DamagePlayer = true;
         yield return new WaitForSeconds(0.1f);
         DamagePlayer = false;

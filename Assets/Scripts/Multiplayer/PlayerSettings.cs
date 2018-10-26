@@ -35,6 +35,8 @@ namespace Multiplayer
         public BoltConnection Connection;
         #endregion
 
+        [SerializeField] private PlayerSettingsSO playerSettingsSO;
+
         [Header("Events")]
         public StringEvent OnNicknameChanged;
         public TeamEvent OnTeamChanged;
@@ -47,7 +49,9 @@ namespace Multiplayer
         public override void Attached()
         {
             if (entity.isOwner)
+            {
                 Me = this;
+            }
         }
     }
 

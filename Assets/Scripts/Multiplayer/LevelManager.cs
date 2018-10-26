@@ -11,7 +11,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Button quitLevel;
     [SerializeField] private Button resetLevel;
 
-    private bool menuActivated;
+    private bool menuActivated = false;
+
+    // CORE
 
     private void Awake()
     {
@@ -24,8 +26,19 @@ public class LevelManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        quitLevel.onClick.AddListener(ReturnToMenu);
-        resetLevel.onClick.AddListener(ResetLevel);
+        if(quitLevel) quitLevel.onClick.AddListener(ReturnToMenu);
+        if(resetLevel) resetLevel.onClick.AddListener(ResetLevel);
+    }
+    private void Update()
+    {
+        /*
+        if (Input.GetButtonDown(Constants.Input.EscapeMenu))
+            menuActivated = !menuActivated;
+        if (menuActivated)
+            escapeMenu.SetActive(true);
+        else
+            escapeMenu.SetActive(false);
+        */
     }
 
     // PUBLIC
@@ -41,17 +54,7 @@ public class LevelManager : MonoBehaviour
 
     // PRIVATE
 
-    private void Update()
-    {
-        if (Input.GetButtonDown(Constants.Input.EscapeMenu))
-            menuActivated = !menuActivated;
-        if (menuActivated)
-            escapeMenu.SetActive(true);
-        else
-            escapeMenu.SetActive(false);
-    }
-
-    void ReturnToMenu()
+    private void ReturnToMenu()
     {
         BoltLauncher.Shutdown();
         SceneManager.LoadScene(Constants.Scene.MainMenu);

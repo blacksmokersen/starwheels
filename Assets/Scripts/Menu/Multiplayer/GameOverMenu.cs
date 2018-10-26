@@ -13,7 +13,7 @@ namespace Menu
         private void Awake()
         {
             replayButton.onClick.AddListener(OnReplayButtonPressed);
-            replayButton.enabled = BoltNetwork.isServer;
+            replayButton.gameObject.SetActive(BoltNetwork.isServer);
         }
 
         // PUBLIC
@@ -36,7 +36,7 @@ namespace Menu
 
         private void OnReplayButtonPressed()
         {
-            //OnGameReset.Invoke();
+            FindObjectOfType<LevelManager>().ResetLevel();
         }
     }
 }

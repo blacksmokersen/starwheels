@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using Cinemachine;
+using Multiplayer;
+using MyExtensions;
 
 namespace CameraUtils
 {
     public class CameraPlayerSwitch : MonoBehaviour
     {
         public bool CanOnlyWatchTeam = true;
+        public PlayerSettingsSO PlayerSettingsSO;
 
         private SetKartCamera _setKartCamera;
         private CinemachineVirtualCamera _cinemachineVirtualCamera;
@@ -19,7 +22,7 @@ namespace CameraUtils
 
         public void SetCameraToNextPlayer()
         {
-            var newTargetKart = MyExtensions.Kart.GetNextTeamKart(_currentTarget);
+            var newTargetKart = PlayerSettings.Me.GetNextTeamKart(_currentTarget);
             if (newTargetKart != null)
             {
                 SetCameraToPlayer(newTargetKart);
@@ -28,9 +31,11 @@ namespace CameraUtils
 
         public void SetCameraToRandomPlayer()
         {
-            var randomKart = MyExtensions.Kart.PickRandomTeamKart();
+            var randomKart = PlayerSettings.Me.PickRandomTeamKart();
+
             if (randomKart != null)
             {
+                Debug.Log("Setting camera to new kart");
                 SetCameraToPlayer(randomKart);
             }
         }
@@ -45,7 +50,8 @@ namespace CameraUtils
             _setKartCamera.SetKart(_currentTarget);
             //_currentTarget.GetComponentInChildren<Audio.KartSoundsScript>().SetAudioListenerActive(true);
 
-            //FindObjectOfType<HUD.GameHUD>().ObserveKart(_currentTarget);
+            var localHUD = PlayerSettings.Me.GetComponentInChildren<Items.ItemHUD>();
+            localHUD.ObserveKart(_currentTarget);
         }
     }
 }

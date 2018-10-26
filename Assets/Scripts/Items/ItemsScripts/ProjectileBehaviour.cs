@@ -76,23 +76,28 @@ namespace Items
 
         protected void PlayPlayerHitSound()
         {
-            MyExtensions.Audio.PlayClipObjectAndDestroy(PlayerHitSource);
+            MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(PlayerHitSource);
         }
 
         protected void PlayCollisionSound()
         {
-            MyExtensions.Audio.PlayClipObjectAndDestroy(CollisionSource);
+            MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(CollisionSource);
         }
         #endregion
 
         public void CheckCollision(GameObject kartCollisionObject)
         {
             var otherPlayer = kartCollisionObject.GetComponentInParent<PlayerSettings>();
-            Debug.Log("Hey");
+
             if (Ownership.IsNotSameTeam(otherPlayer) || (Ownership.IsMe(otherPlayer.gameObject) && !_ownerImmune))
             {
-                Debug.Log("How");
-                kartCollisionObject.GetComponent<Health.Health>().LoseHealth();
+                Debug.LogErrorFormat("{0} was hit on {2} with {1} hp", otherPlayer.Nickname, kartCollisionObject.GetComponent<Health.Health>().state.Health, kartCollisionObject.name);
+                Debug.LogError("Time : " + BoltNetwork.time);
+
+                PlayerHit playerHitEvent = PlayerHit.Create();
+                playerHitEvent.PlayerEntity = kartCollisionObject.GetComponentInParent<BoltEntity>();
+                playerHitEvent.Send();
+
                 OnHit();
             }
         }

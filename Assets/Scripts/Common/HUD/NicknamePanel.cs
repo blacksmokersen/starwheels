@@ -18,7 +18,6 @@ namespace Common.HUD
         {
             SetName(state.Nickname);
             SetFrameRendererColor(state.Team);
-            Debug.Log(state.Nickname);
         }
 
         public override void ControlGained()
@@ -33,13 +32,11 @@ namespace Common.HUD
 
         public void SetName(string name)
         {
-            Debug.Log("Changing frame nickname : " + name);
             nameText.text = name;
         }
 
         public void SetFrameRendererColor(Color color)
         {
-            Debug.Log("Changing frame color : " + color);
             frameRenderer.color = color;
         }
 

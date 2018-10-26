@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using Bolt;
 
 namespace GameModes
 {
     public enum GameMode { None, ClassicBattle, BankRobbery, GoldenTotem }
 
-    public class GameModeBase : MonoBehaviour
+    [BoltGlobalBehaviour(BoltNetworkModes.Server)]
+    public class GameModeBase : GlobalEventListener
     {
         public static GameMode CurrentGameMode;
 
@@ -20,16 +21,9 @@ namespace GameModes
 
         [SerializeField] private float countdownSeconds = 3f;
 
-        private GameObject[] _spawns;
-
         // CORE
 
         // PUBLIC
-
-        public void RespawnKart()
-        {
-            //
-        }
 
         // PROTECTED
 
@@ -52,16 +46,6 @@ namespace GameModes
             yield return new WaitForSeconds(countdownSeconds);
             InitializeGame();
             GameStarted = true;
-        }
-
-        private IEnumerator LoadGameHUD(GameObject kart) // USE A PREFAB ?
-        {
-            AsyncOperation loadLevel = SceneManager.LoadSceneAsync(Constants.Scene.GameHUD, LoadSceneMode.Additive);
-            while (!loadLevel.isDone)
-            {
-                yield return null;
-            }
-            //FindObjectOfType<HUD.GameHUD>().ObserveKart(kart);
         }
     }
 }

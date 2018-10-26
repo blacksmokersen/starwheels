@@ -20,8 +20,7 @@ namespace CameraUtils
             if (!kartToFollow)
             {
                 var kart = GameObject.FindGameObjectWithTag(Constants.Tag.Kart);
-                if(kart)
-                    SetKart(kart);
+                if(kart) SetKart(kart);
             }
         }
 

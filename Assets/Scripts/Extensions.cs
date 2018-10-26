@@ -1,29 +1,27 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Multiplayer;
 
 namespace MyExtensions
 {
-    #region Math
-    public class Math
+    public class MathExtensions
     {
         public static float RemapValue(float actualMin, float actualMax, float targetMin, float targetMax, float val)
         {
             return targetMin + (targetMax - targetMin) * ((val - actualMin) / (actualMax - actualMin));
         }
     }
-    #endregion
 
-    #region TeamExtensions
-
-    public class TeamUtilities
+    public static class TeamExtensions
     {
-        /*
-        public static List<Player> GetTeammates()
+        public static List<PlayerSettings> GetTeammates(this PlayerSettings playerSettings)
         {
-            var teammates = new List<Player>();
-            foreach (Player player in PhotonNetwork.PlayerListOthers)
+            var teammates = new List<PlayerSettings>();
+            var allPlayers = MonoBehaviour.FindObjectsOfType<PlayerSettings>();
+
+            foreach (PlayerSettings player in allPlayers)
             {
-                if (player.GetTeam() == PhotonNetwork.LocalPlayer.GetTeam())
+                if (player.Team == playerSettings.Team)
                 {
                     teammates.Add(player);
                 }
@@ -31,9 +29,9 @@ namespace MyExtensions
             return teammates;
         }
 
-        public static Player GetNextTeammate(Player currentTeammate)
+        public static PlayerSettings GetNextTeammate(this PlayerSettings playerSettings, PlayerSettings currentTeammate)
         {
-            var teammates = GetTeammates();
+            var teammates = playerSettings.GetTeammates();
             for (int i = 0; i < teammates.Count; i++)
             {
                 if (teammates[i] == currentTeammate)
@@ -44,38 +42,34 @@ namespace MyExtensions
             return null;
         }
 
-        public static Player PickRandomTeammate()
+        public static PlayerSettings PickRandomTeammate(this PlayerSettings playerSettings)
         {
-            var teammates = GetTeammates();
-            var rand = UnityEngine.Random.Range(0, teammates.Count - 1);
+            var teammates = playerSettings.GetTeammates();
+            var rand = UnityEngine.Random.Range(0, teammates.Count);
             return teammates[rand];
         }
-        */
     }
 
-        #endregion
-
-    #region KartExtensions
-    public class Kart
+    public static class KartExtensions
     {
-        public static List<GameObject> GetTeamKarts()
+        public static List<GameObject> GetTeamKarts(this PlayerSettings playerSettings)
         {
             var teamKarts = new List<GameObject>();
             var allKarts = GameObject.FindGameObjectsWithTag(Constants.Tag.Kart);
             foreach (GameObject kart in allKarts)
             {
-                /*var kartPlayer = kart.GetComponent<PhotonView>().Owner;
-                if (kartPlayer.GetTeam() == PhotonNetwork.LocalPlayer.GetTeam() && kartPlayer != PhotonNetwork.LocalPlayer)
+                var kartPlayer = kart.GetComponent<PlayerSettings>();
+                if (kartPlayer.Team == playerSettings.Team && kartPlayer != playerSettings)
                 {
                     teamKarts.Add(kart);
-                }*/
+                }
             }
             return teamKarts;
         }
 
-        public static GameObject GetNextTeamKart(GameObject currentTeamKart)
+        public static GameObject GetNextTeamKart(this PlayerSettings playerSettings, GameObject currentTeamKart)
         {
-            var teamKarts = GetTeamKarts();
+            var teamKarts = playerSettings.GetTeamKarts();
             for (int i = 0; i < teamKarts.Count; i++)
             {
                 if (teamKarts[i] == currentTeamKart)
@@ -86,21 +80,20 @@ namespace MyExtensions
             return null;
         }
 
-        public static GameObject PickRandomTeamKart()
+        public static GameObject PickRandomTeamKart(this PlayerSettings playerSettings)
         {
-            var teamKart = GetTeamKarts();
+            var teamKart = playerSettings.GetTeamKarts();
+            Debug.Log("Team Karts : " + teamKart.Count);
             if (teamKart.Count > 0)
             {
-                var rand = UnityEngine.Random.Range(0, teamKart.Count - 1);
+                var rand = UnityEngine.Random.Range(0, teamKart.Count);
                 return teamKart[rand];
             }
             return null;
         }
     }
-    #endregion
 
-    #region Components
-    public static class Components
+    public static class ComponentExtensions
     {
         public static T CopyComponent<T>(T original, GameObject destination) where T : Component
         {
@@ -154,20 +147,17 @@ namespace MyExtensions
             audioSource.volume = original.volume;
         }
     }
-    #endregion
 
-    #region AudioExtensions
-    public class Audio
+    public class AudioExtensions
     {
         public static void PlayClipObjectAndDestroy(AudioSource audioSource)
         {
             GameObject oneShotObject = new GameObject("One shot sound from " + audioSource.name);
             oneShotObject.transform.position = audioSource.transform.position;
-            Components.CopyAndPasteAudioSource(audioSource, oneShotObject);
+            ComponentExtensions.CopyAndPasteAudioSource(audioSource, oneShotObject);
             var oneShotSource = oneShotObject.GetComponent<AudioSource>();
             oneShotSource.Play();
             MonoBehaviour.Destroy(oneShotObject, oneShotSource.clip.length);
         }
     }
-    #endregion
 }
