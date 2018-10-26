@@ -1898,7 +1898,7 @@ Transform:
   - {fileID: 224515125964380446}
   - {fileID: 224041846215442328}
   m_Father: {fileID: 4745772536087832}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4140296553293692
 Transform:
@@ -2005,7 +2005,7 @@ Transform:
   - {fileID: 4754096688846648}
   - {fileID: 4974318436861282}
   m_Father: {fileID: 4745772536087832}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4187082776800634
 Transform:
@@ -2720,7 +2720,7 @@ Transform:
   - {fileID: 4429111098067340}
   - {fileID: 4358087710232434}
   m_Father: {fileID: 4745772536087832}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4654860726261726
 Transform:
@@ -2858,7 +2858,7 @@ Transform:
   - {fileID: 4723211111619726}
   - {fileID: 4504580380519834}
   m_Father: {fileID: 4745772536087832}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 1, y: 180, z: 360}
 --- !u!4 &4731585136793852
 Transform:
@@ -2887,12 +2887,12 @@ Transform:
   - {fileID: 4926205204491230}
   - {fileID: 4493290326490868}
   - {fileID: 4821667778052482}
-  - {fileID: 4853006159338170}
   - {fileID: 4725369991776876}
   - {fileID: 4654570510331058}
   - {fileID: 4126607121165242}
   - {fileID: 4775071829322508}
   - {fileID: 4172385416631390}
+  - {fileID: 4853006159338170}
   - {fileID: 4055476211037992}
   - {fileID: 4310330988004880}
   - {fileID: 4167592228515140}
@@ -2968,7 +2968,7 @@ Transform:
   - {fileID: 4059028053787120}
   - {fileID: 4327720265782332}
   m_Father: {fileID: 4745772536087832}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4799933584878812
 Transform:
@@ -3067,7 +3067,7 @@ Transform:
   - {fileID: 4195292941521800}
   - {fileID: 4379408460128192}
   m_Father: {fileID: 4745772536087832}
-  m_RootOrder: 4
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4871947570747162
 Transform:
@@ -4769,6 +4769,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfbe232ca97b40d4ca8753d5ad41f1b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilitiesBehaviourSettings: {fileID: 11400000, guid: a046a5ba860884645842e4cf1e7516b7,
+    type: 2}
   OnFirstJump:
     m_PersistentCalls:
       m_Calls:
@@ -4830,8 +4832,6 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   jumpSettings: {fileID: 11400000, guid: e9d85ae3c27e1dc46a352d8fe5690014, type: 2}
   groundCondition: {fileID: 114241659848452430}
-  abilitiesBehaviourSettings: {fileID: 11400000, guid: a046a5ba860884645842e4cf1e7516b7,
-    type: 2}
 --- !u!114 &114391136788547072
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4854,7 +4854,7 @@ MonoBehaviour:
   m_Script: {fileID: -36112512, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneGuid: ffb58882-dff2-47d0-90da-bff03181263f
+  _sceneGuid: 811d011a-e8ed-490e-84f6-92e97cf8b114
   _serializerGuid: 3d46793e-7c24-4279-882f-df983ef4cb50
   _prefabId: 2
   _updateRate: 1
@@ -5027,9 +5027,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6efd2b69c0785b4594537bcea2ff8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabHook: {fileID: 1575942261286728, guid: 30d418695e5c8704bbf7fcfa3ed1d3ed, type: 2}
   abilitiesBehaviourSettings: {fileID: 11400000, guid: a046a5ba860884645842e4cf1e7516b7,
     type: 2}
+  prefabHook: {fileID: 1575942261286728, guid: 30d418695e5c8704bbf7fcfa3ed1d3ed, type: 2}
   hookSettings: {fileID: 11400000, guid: c40bde39291641f41acfbe41c969ef80, type: 2}
 --- !u!114 &114625566649328150
 MonoBehaviour:
@@ -5114,14 +5114,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3e705ff20ce16a418035ed98c24bbff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilitiesBehaviourSettings: {fileID: 11400000, guid: a046a5ba860884645842e4cf1e7516b7,
+    type: 2}
   OnTpBackEvent:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   tPBackSettings: {fileID: 11400000, guid: 8c4f4b84f4fd8d940918d0b0bde965d5, type: 2}
-  abilitiesBehaviourSettings: {fileID: 11400000, guid: a046a5ba860884645842e4cf1e7516b7,
-    type: 2}
   throwableLauncher: {fileID: 114678612611431884}
 --- !u!114 &114771178506899832
 MonoBehaviour:
