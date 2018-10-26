@@ -18,16 +18,12 @@ public class IonBeamCamera : MonoBehaviour
     private float _currentTimer;
     private bool _showCrosshair;
 
-    //CORE
-
     private void Awake()
     {
         cinemachine = GetComponent<CinemachineVirtualCamera>();
         transposer = cinemachine.GetCinemachineComponent<CinemachineTransposer>();
         composer = cinemachine.GetCinemachineComponent<CinemachineComposer>();
     }
-
-    //PUBLIC
 
     public void IonBeamCameraControls(float horizontal, float vertical)
     {
@@ -50,8 +46,6 @@ public class IonBeamCamera : MonoBehaviour
             cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(-8.5f, 3, 0.5f));
         }
     }
-
-    //PRIVATE
 
     private void OnGUI()
     {

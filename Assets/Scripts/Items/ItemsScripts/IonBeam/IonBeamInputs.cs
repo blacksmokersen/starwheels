@@ -6,7 +6,7 @@ namespace Controls
 {
     public class IonBeamInputs : MonoBehaviour, IControllable
     {
-        //public static bool IonBeamControlMode;
+        public static bool IonBeamControlMode;
 
         private float _horizontalAxis;
         private float _verticalAxis;
@@ -24,7 +24,6 @@ namespace Controls
         private void Update()
         {
             MoveCam();
-            MapInputs();
         }
 
         // PUBLIC
@@ -33,7 +32,7 @@ namespace Controls
         {
             if (Input.GetButtonDown(Constants.Input.UseItem))
             {
-                _ionBeamBehaviour.FireIonBeam();
+
             }
         }
 

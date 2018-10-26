@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4542860684376320}
   - component: {fileID: 114154161607451314}
   - component: {fileID: 114011170284891586}
+  - component: {fileID: 114682623051937338}
+  - component: {fileID: 114456940152008542}
   - component: {fileID: 82791731942225518}
-  - component: {fileID: 114070042825428462}
-  - component: {fileID: 114584384504514322}
   m_Layer: 0
   m_Name: IonBeam
   m_TagString: Untagged
@@ -151,22 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f8862acb4a5fca4cb8eec4882c6fbc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ionBeamLaserPrefab: {fileID: 1039182035529638, guid: efed87d509833704fb8c72e81802eb9d,
-    type: 2}
   LaunchSource: {fileID: 82791731942225518}
---- !u!114 &114070042825428462
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1917514857341964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: faf449d14c1b8214587b11af62a948e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OwnerKartRoot: {fileID: 0}
-  Team: 0
 --- !u!114 &114154161607451314
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -195,14 +180,29 @@ MonoBehaviour:
   _entityBehaviourQueryOption: 0
   _entityPriorityCalculatorQueryOption: 0
   _entityReplicationFilterQueryOption: 0
---- !u!114 &114584384504514322
+--- !u!114 &114456940152008542
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1917514857341964}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6dadcbddcdd072e4caa827b3c6aa84e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114682623051937338
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1917514857341964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd27ffb076282ea4596eb31f02315847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpeedCamMovements: 4
+  transposer: {fileID: 0}
+  composer: {fileID: 0}
+  crosshairIonBeam: {fileID: 2800000, guid: 93f5d256aa561204eb5055ec10541980, type: 3}

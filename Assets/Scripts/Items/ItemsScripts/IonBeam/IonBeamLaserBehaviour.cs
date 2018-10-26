@@ -1,106 +1,90 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Items
+public class IonBeamLaserBehaviour : MonoBehaviour
 {
-    public class IonBeamLaserBehaviour : MonoBehaviour
+
+    public float Speed;
+    public float SpeedOffset;
+    public float GrowingWarningSpeed;
+    public float MaxWarningScale;
+    public bool onExplode;
+    public bool DamagePlayer;
+    private Vector2 offset;
+    public GameObject EffectiveAOE;
+    public GameObject WarningPosition;
+
+    public AudioSource ExplosionSource;
+
+    private void Awake()
     {
-        //  [SerializeField] private ProjectileBehaviour projectileBehaviour;
+        onExplode = true;
+        //float currentTimer = WarningPosition.transform.localScale.x;
+    }
 
-        [SerializeField] private IonBeamLaserSettings ionBeamLaserSettings;
-        [SerializeField] private GameObject EffectiveAOE;
-        [SerializeField] private GameObject WarningPosition;
-        [SerializeField] private AudioSource ExplosionSource;
+    private void Update()
+    {
+        offset = new Vector2(0, Time.deltaTime * SpeedOffset);
+        if (EffectiveAOE != null)
+            EffectiveAOE.GetComponent<Renderer>().material.mainTextureOffset += offset;
 
-        private Vector2 offset;
-        private bool _damagePlayer = false;
 
-        //CORE
-
-        private void Awake()
+        if (WarningPosition != null)
         {
-            ionBeamLaserSettings.onExplode = true;
-            GameObject owner = GetComponent<Ownership>().gameObject;
-            //float currentTimer = WarningPosition.transform.localScale.x;
-        }
-
-        private void Update()
-        {
-            offset = new Vector2(0, Time.deltaTime * ionBeamLaserSettings.SpeedOffset);
-            if (EffectiveAOE != null)
-                EffectiveAOE.GetComponent<Renderer>().material.mainTextureOffset += offset;
-
-            if (WarningPosition != null)
+            if (WarningPosition.transform.localScale.x >= MaxWarningScale)
             {
-                if (WarningPosition.transform.localScale.x >= ionBeamLaserSettings.MaxWarningScale)
+                if (WarningPosition.transform.localScale.x >= MaxWarningScale / 2)
                 {
-                    if (WarningPosition.transform.localScale.x >= ionBeamLaserSettings.MaxWarningScale / 2)
-                    {
-                        GrowingAoeWarning(ionBeamLaserSettings.GrowingWarningSpeed / 2);
-                    }
-                    else
-                    {
-                        GrowingAoeWarning(ionBeamLaserSettings.GrowingWarningSpeed);
-                    }
+                    GrowingAoeWarning(GrowingWarningSpeed / 2);
                 }
                 else
                 {
-                    if (ionBeamLaserSettings.onExplode)
-                        Explosion();
+                    GrowingAoeWarning(GrowingWarningSpeed);
                 }
             }
-        }
-
-        // PUBLIC
-
-        public void GrowingAoeWarning(float growSpeed)
-        {
-            float IncreaseSpeed = growSpeed * Time.deltaTime;
-            WarningPosition.transform.localScale += new Vector3(-IncreaseSpeed, 0, -IncreaseSpeed);
-        }
-
-        public void Explosion()
-        {
-            if (ionBeamLaserSettings.onExplode)
+            else
             {
-                Destroy(EffectiveAOE);
-                Destroy(WarningPosition);
-                StartCoroutine(ParticuleEffect());
-                ionBeamLaserSettings.onExplode = false;
+                if (onExplode)
+                    Explosion();
             }
         }
+    }
 
-        //PRIVATE
+    public void GrowingAoeWarning(float growSpeed)
+    {
+        float IncreaseSpeed = growSpeed * Time.deltaTime;
+        WarningPosition.transform.localScale += new Vector3(-IncreaseSpeed, 0, -IncreaseSpeed);
+    }
 
-        IEnumerator ParticuleEffect()
+    public void Explosion()
+    {
+        if (onExplode)
         {
-            GetComponent<ParticleSystem>().Emit(3000);
-          //  MyExtensions.Audio.PlayClipObjectAndDestroy(ExplosionSource);
-            _damagePlayer = true;
-            yield return new WaitForSeconds(0.1f);
-            _damagePlayer = false;
-            yield return new WaitForSeconds(1);
-            Destroy(gameObject);
+            Destroy(EffectiveAOE);
+            Destroy(WarningPosition);
+            StartCoroutine(ParticuleEffect());
+            onExplode = false;
         }
+    }
 
-        private void OnTriggerStay(Collider other)
+    IEnumerator ParticuleEffect()
+    {
+        GetComponent<ParticleSystem>().Emit(3000);
+        MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(ExplosionSource);
+        DamagePlayer = true;
+        yield return new WaitForSeconds(0.1f);
+        DamagePlayer = false;
+        yield return new WaitForSeconds(1);
+        Destroy(gameObject);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject != null)
         {
-            /*
-            if (other.gameObject != null)
+            if (DamagePlayer)
             {
-                if (DamagePlayer)
-                {
-                    //SendTargetOnHitEvent(other.gameObject);
-                }
-            }
-            */
-            if (_damagePlayer)
-            {
-                if (other.gameObject.CompareTag(Constants.Tag.HealthHitBox))
-                {
-                    Debug.Log("Hit");
-                    //  projectileBehaviour.CheckCollision(other.gameObject);
-                }
+                //SendTargetOnHitEvent(other.gameObject);
             }
         }
     }
