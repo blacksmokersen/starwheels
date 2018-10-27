@@ -14,12 +14,12 @@ namespace MyExtensions
 
     public static class TeamExtensions
     {
-        public static List<PlayerSettings> GetTeammates(this PlayerSettings playerSettings)
+        public static List<Player> GetTeammates(this Player playerSettings)
         {
-            var teammates = new List<PlayerSettings>();
-            var allPlayers = MonoBehaviour.FindObjectsOfType<PlayerSettings>();
+            var teammates = new List<Player>();
+            var allPlayers = MonoBehaviour.FindObjectsOfType<Player>();
 
-            foreach (PlayerSettings player in allPlayers)
+            foreach (Player player in allPlayers)
             {
                 if (player.Team == playerSettings.Team)
                 {
@@ -29,7 +29,7 @@ namespace MyExtensions
             return teammates;
         }
 
-        public static PlayerSettings GetNextTeammate(this PlayerSettings playerSettings, PlayerSettings currentTeammate)
+        public static Player GetNextTeammate(this Player playerSettings, Player currentTeammate)
         {
             var teammates = playerSettings.GetTeammates();
             for (int i = 0; i < teammates.Count; i++)
@@ -42,7 +42,7 @@ namespace MyExtensions
             return null;
         }
 
-        public static PlayerSettings PickRandomTeammate(this PlayerSettings playerSettings)
+        public static Player PickRandomTeammate(this Player playerSettings)
         {
             var teammates = playerSettings.GetTeammates();
             var rand = UnityEngine.Random.Range(0, teammates.Count);
@@ -52,13 +52,13 @@ namespace MyExtensions
 
     public static class KartExtensions
     {
-        public static List<GameObject> GetTeamKarts(this PlayerSettings playerSettings)
+        public static List<GameObject> GetTeamKarts(this Player playerSettings)
         {
             var teamKarts = new List<GameObject>();
             var allKarts = GameObject.FindGameObjectsWithTag(Constants.Tag.Kart);
             foreach (GameObject kart in allKarts)
             {
-                var kartPlayer = kart.GetComponent<PlayerSettings>();
+                var kartPlayer = kart.GetComponent<Player>();
                 if (kartPlayer.Team == playerSettings.Team && kartPlayer != playerSettings)
                 {
                     teamKarts.Add(kart);
@@ -67,7 +67,7 @@ namespace MyExtensions
             return teamKarts;
         }
 
-        public static GameObject GetNextTeamKart(this PlayerSettings playerSettings, GameObject currentTeamKart)
+        public static GameObject GetNextTeamKart(this Player playerSettings, GameObject currentTeamKart)
         {
             var teamKarts = playerSettings.GetTeamKarts();
             for (int i = 0; i < teamKarts.Count; i++)
@@ -80,7 +80,7 @@ namespace MyExtensions
             return null;
         }
 
-        public static GameObject PickRandomTeamKart(this PlayerSettings playerSettings)
+        public static GameObject PickRandomTeamKart(this Player playerSettings)
         {
             var teamKart = playerSettings.GetTeamKarts();
             Debug.Log("Team Karts : " + teamKart.Count);

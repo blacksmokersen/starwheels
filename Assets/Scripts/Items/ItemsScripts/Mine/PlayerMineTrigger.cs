@@ -12,10 +12,12 @@ namespace Items
         {
             if (other.gameObject.tag == Constants.Tag.HealthHitBox && Activated)
             {
-                var otherPlayer = other.GetComponentInParent<PlayerSettings>();
+                var otherPlayer = other.GetComponentInParent<Player>();
                 if (Ownership.IsNotSameTeam(otherPlayer) || Ownership.IsMe(otherPlayer))
                 {
-                    other.gameObject.GetComponent<Health.Health>().LoseHealth();
+                    PlayerHit playerHitEvent = PlayerHit.Create();
+                    playerHitEvent.PlayerEntity = other.GetComponentInParent<BoltEntity>();
+                    playerHitEvent.Send();
                 }
                 GetComponentInParent<MineBehaviour>().PlayExplosion();
                 GetComponentInParent<MineBehaviour>().DestroyObject(); // Destroy the mine root item

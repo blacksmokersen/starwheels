@@ -60,12 +60,12 @@ namespace Network
 
         private void ColorChanged()
         {
-            GetComponent<PlayerSettings>().Team = TeamsColors.GetTeamFromColor(state.Team);
+            GetComponent<Player>().Team = TeamsColors.GetTeamFromColor(state.Team);
         }
 
         private void NameChanged()
         {
-            GetComponent<PlayerSettings>().Nickname = state.Nickname;
+            GetComponent<Player>().Nickname = state.Nickname;
         }
     }
 }

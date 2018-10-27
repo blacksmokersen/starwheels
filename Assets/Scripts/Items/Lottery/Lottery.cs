@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using Bolt;
 
 namespace Items
 {
-    public class Lottery : MonoBehaviour
+    public class Lottery : EntityBehaviour
     {
         [Header("Events")]
         public UnityEvent OnLotteryStart;
@@ -59,9 +60,9 @@ namespace Items
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(Constants.Tag.ItemBox))
+            if (other.CompareTag(Constants.Tag.ItemBox) && entity.isControllerOrOwner)
             {
-                StartCoroutine(GetLotteryItem());
+                this.StartCoroutine(GetLotteryItem());
             }
         }
     }

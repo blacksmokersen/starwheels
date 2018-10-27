@@ -8,7 +8,7 @@ namespace Items
         public GameObject OwnerKartRoot;
         public Team Team;
 
-        public void Set(PlayerSettings player)
+        public void Set(Player player)
         {
             OwnerKartRoot = player.gameObject;
             Team = player.Team;
@@ -19,22 +19,22 @@ namespace Items
             return OwnerKartRoot == kartRoot;
         }
 
-        public bool IsMe(PlayerSettings otherPlayer)
+        public bool IsMe(Player otherPlayer)
         {
             return otherPlayer.gameObject == OwnerKartRoot;
         }
 
         public bool IsSameTeam(GameObject kartRoot)
         {
-            return kartRoot.GetComponent<PlayerSettings>().Team == Team;
+            return kartRoot.GetComponent<Player>().Team == Team;
         }
 
-        public bool IsSameTeam(PlayerSettings otherPlayer)
+        public bool IsSameTeam(Player otherPlayer)
         {
             return otherPlayer.Team == Team;
         }
 
-        public bool IsNotSameTeam(PlayerSettings otherPlayer)
+        public bool IsNotSameTeam(Player otherPlayer)
         {
             return otherPlayer.Team != Team;
         }

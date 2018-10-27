@@ -10,7 +10,7 @@ namespace Menu
         [SerializeField] private Text playerNameText;
         [SerializeField] private Image backgroundColor;
 
-        private PlayerSettings _player;
+        private Player _player;
 
         // CORE
 
@@ -21,7 +21,7 @@ namespace Menu
             return 1;// _player.ActorNumber;
         }
 
-        public void SetPlayer(PlayerSettings player)
+        public void SetPlayer(Player player)
         {
             _player = player;
             SetName(player.Nickname);

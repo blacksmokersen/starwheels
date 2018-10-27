@@ -24,7 +24,7 @@ namespace Items
         {
             if (other.gameObject.tag == Constants.Tag.KartTrigger && _activated && ActualTarget == null)
             {
-                var otherPlayer = other.GetComponentInParent<PlayerSettings>();
+                var otherPlayer = other.GetComponentInParent<Player>();
                 if (Ownership.IsNotSameTeam(otherPlayer))
                 {
                     ActualTarget = other.gameObject;
@@ -37,7 +37,7 @@ namespace Items
         {
             if (other.gameObject.tag == Constants.Tag.KartTrigger && _activated)
             {
-                var otherPlayer = other.GetComponentInParent<PlayerSettings>();
+                var otherPlayer = other.GetComponentInParent<Player>();
                 if (Ownership.IsNotSameTeam(otherPlayer))
                 {
                     if (IsKartIsCloserThanActualTarget(other.gameObject) || ActualTarget == null)

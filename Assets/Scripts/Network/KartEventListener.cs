@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using Bolt;
+﻿using Bolt;
 
 public class KartEventListener : GlobalEventListener
 {
@@ -8,7 +7,6 @@ public class KartEventListener : GlobalEventListener
         var kartEntity = GetComponent<BoltEntity>();
         if (kartEntity == evnt.PlayerEntity)
         {
-            Debug.LogError("It's me !");
             kartEntity.GetComponentInChildren<Health.Health>().LoseHealth();
         }
     }

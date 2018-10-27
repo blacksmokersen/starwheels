@@ -89,7 +89,7 @@ namespace Items
             var instantiatedItem = BoltNetwork.Instantiate(CurrentItem.itemPrefab);
 
             var itemOwnership = instantiatedItem.GetComponent<Ownership>();
-            var playerSettings = GetComponentInParent<PlayerSettings>();
+            var playerSettings = GetComponentInParent<Player>();
             itemOwnership.Set(playerSettings);
 
             if (CurrentItem.ItemType == ItemType.Throwable)

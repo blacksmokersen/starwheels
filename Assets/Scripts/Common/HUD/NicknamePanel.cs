@@ -3,6 +3,7 @@ using UnityEditor;
 #endif
 using UnityEngine;
 using TMPro;
+using Multiplayer;
 using Multiplayer.Teams;
 using Bolt;
 
@@ -13,6 +14,14 @@ namespace Common.HUD
         [SerializeField] private TextMeshPro nameText;
         [SerializeField] private SpriteRenderer frameRenderer;
 
+        // CORE
+
+        private void Update()
+        {
+            //transform.LookAt();
+        }
+
+        // BOLT
 
         public override void Attached()
         {
@@ -29,6 +38,8 @@ namespace Common.HUD
         {
             gameObject.SetActive(true);
         }
+
+        // PUBLIC
 
         public void SetName(string name)
         {

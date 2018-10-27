@@ -64,7 +64,7 @@ namespace Health
                 if (entity.isOwner)
                 {
                     KartDestroyed kartDestroyedEvent = KartDestroyed.Create();
-                    kartDestroyedEvent.Team = Multiplayer.Teams.TeamsColors.GetColorFromTeam(Multiplayer.PlayerSettings.Me.Team);
+                    kartDestroyedEvent.Team = Multiplayer.Teams.TeamsColors.GetColorFromTeam(Multiplayer.Player.Me.Team);
                     kartDestroyedEvent.Send();
                 }
                 IsDead = true;

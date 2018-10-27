@@ -6,10 +6,10 @@ using UnityEditor;
 
 namespace Multiplayer
 {
-    public class PlayerSettings : EntityBehaviour
+    public class Player : EntityBehaviour
     {
         #region Variables
-        public static PlayerSettings Me;
+        public static Player Me;
 
         private string _nickName;
         public string Nickname
@@ -57,14 +57,14 @@ namespace Multiplayer
 
     #region Editor
 #if UNITY_EDITOR
-    [CustomEditor(typeof(PlayerSettings))]
+    [CustomEditor(typeof(Player))]
     public class PlayerSettingsEditor : Editor
     {
         public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
 
-            PlayerSettings playerSettings = (PlayerSettings)target;
+            Player playerSettings = (Player)target;
             playerSettings.Nickname = EditorGUILayout.TextField("Enter nickname", playerSettings.Nickname);
             playerSettings.Team = (Team)EditorGUILayout.EnumPopup("Choose a team", playerSettings.Team);
         }

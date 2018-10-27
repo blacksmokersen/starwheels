@@ -98,9 +98,9 @@ namespace GameModes
 
         private void InitializePlayerCount()
         {
-            PlayerSettings[] players = FindObjectsOfType<PlayerSettings>();
+            Player[] players = FindObjectsOfType<Player>();
 
-            foreach(PlayerSettings player in players)
+            foreach(Player player in players)
             {
                 switch (player.Team)
                 {
