@@ -89,14 +89,16 @@ namespace Items
         {
             var otherPlayer = kartCollisionObject.GetComponentInParent<Player>();
 
-            if (Ownership.IsNotSameTeam(otherPlayer) || (Ownership.IsMe(otherPlayer.gameObject) && !_ownerImmune))
+            if (Ownership.IsMe(otherPlayer.gameObject) && _ownerImmune) return;
+
+            if (Ownership.IsNotSameTeam(otherPlayer) || Ownership.IsMe(otherPlayer.gameObject) && !_ownerImmune)
             {
                 PlayerHit playerHitEvent = PlayerHit.Create();
                 playerHitEvent.PlayerEntity = kartCollisionObject.GetComponentInParent<BoltEntity>();
                 playerHitEvent.Send();
-
-                OnHit();
             }
+
+            OnHit();
         }
 
         // PROTECTED
