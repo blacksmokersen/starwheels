@@ -18,7 +18,7 @@ namespace Common.HUD
 
         private void Update()
         {
-            //transform.LookAt();
+            transform.LookAt(Camera.main.transform);
         }
 
         // BOLT
