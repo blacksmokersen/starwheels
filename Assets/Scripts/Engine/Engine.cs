@@ -96,7 +96,6 @@ namespace Engine
                 var rb = _rb;
                 rb = Accelerate(cmd.Input.Forward,rb);
                 rb = Decelerate(cmd.Input.Backward,rb);
-                Debug.Log(rb.velocity);
                 cmd.Result.Velocity = rb.velocity;
             }
         }

@@ -38,10 +38,13 @@ namespace Health
             if (!IsInvincible)
             {
                 if (entity.isOwner)
+                {
                     state.Health--;
+                }
 
                 OnHealthLoss.Invoke(state.Health);
                 CheckIfIsDead();
+                SetInvincibilityForXSeconds(3f);
             }
         }
 

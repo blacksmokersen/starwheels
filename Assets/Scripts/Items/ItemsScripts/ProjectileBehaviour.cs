@@ -93,6 +93,8 @@ namespace Items
 
             if (Ownership.IsNotSameTeam(otherPlayer) || Ownership.IsMe(otherPlayer.gameObject) && !_ownerImmune)
             {
+                Debug.Log("Other player : " + otherPlayer.Nickname);
+
                 PlayerHit playerHitEvent = PlayerHit.Create();
                 playerHitEvent.PlayerEntity = kartCollisionObject.GetComponentInParent<BoltEntity>();
                 playerHitEvent.Send();

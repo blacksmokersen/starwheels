@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
+using Bolt;
 
-namespace Items {
-
+namespace Items
+{
     /*
      * Collider for detecting collision of the rocket with another kart
      * Calls the Collision method of RocketBehaviour for particle effect and Health Loss
      */
     [RequireComponent(typeof(Collider))]
-    public class RocketPlayerTrigger : MonoBehaviour
+    public class RocketPlayerTrigger : EntityBehaviour
     {
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == Constants.Tag.KartTrigger)
+            if (other.gameObject.CompareTag(Constants.Tag.HealthHitBox) && entity.isOwner)
             {
                 GetComponentInParent<RocketBehaviour>().CheckCollision(other.gameObject);
             }
