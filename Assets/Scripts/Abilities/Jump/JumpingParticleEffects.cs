@@ -15,10 +15,5 @@ namespace Abilities.Jump
         {
             MainJumpParticles.Emit(ParticlesToEmit);
         }
-
-        public void ReloadAbilityParticlesEmit()
-        {
-            AbilityReloadParticles.Emit(ParticlesToEmit);
-        }
     }
 }
