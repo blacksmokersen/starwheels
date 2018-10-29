@@ -15,7 +15,7 @@ namespace Engine
 
         public void SetMotorFullPitch(float pitch)
         {
-            MotorFullSource.pitch = pitch;
+            MotorFullSource.pitch = (0.5f+0.35f * pitch) / 27;
         }
 
         private void PlayMotorFullSound()
