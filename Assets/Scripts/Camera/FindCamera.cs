@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
+using Bolt;
 
 namespace CameraUtils
 {
-    public class FindCamera : MonoBehaviour
+    public class FindCamera : EntityBehaviour
     {
-        void Start()
+        public override void ControlGained()
         {
             SetKartCamera setKartCamera = FindObjectOfType<SetKartCamera>();
             if (setKartCamera)
