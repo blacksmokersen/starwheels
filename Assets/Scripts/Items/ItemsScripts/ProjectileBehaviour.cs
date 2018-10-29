@@ -30,7 +30,7 @@ namespace Items
         public AudioSource CollisionSource;
 
         [Header("Invincibility")]
-        [SerializeField] private const float _ownerImmunityDuration = 0.5f;
+        [SerializeField] private const float _ownerImmunityDuration = 1f;
         [SerializeField] private bool _ownerImmune = true;
 
         protected Rigidbody rb;
