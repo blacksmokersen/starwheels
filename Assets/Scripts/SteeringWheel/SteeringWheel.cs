@@ -157,13 +157,17 @@ namespace Steering
 
         private bool CanTurn()
         {
-            if (_engine)
+            if (_engine.CurrentSpeed > Settings.MinimumSpeedToTurn)
             {
-                return Mathf.Abs(_engine.CurrentSpeed) > Settings.MinimumSpeedToTurn;
+                return true;
+            }
+            else if (_engine.CurrentSpeed < Settings.MinimumBackSpeedToTurn)
+            {
+                return true;
             }
             else
             {
-                return true;
+                return false;
             }
         }
 

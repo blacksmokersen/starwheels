@@ -8,5 +8,6 @@ namespace Steering
         public float TurnTorque;
         public float SlowdownTurnValue;
         public float MinimumSpeedToTurn;
+        public float MinimumBackSpeedToTurn;
     }
 }
