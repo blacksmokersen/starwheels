@@ -32,7 +32,7 @@ namespace Items
         private IEnumerator GetLotteryItem()
         {
             if (_lotteryStarted || !_inventory.IsEmpty()) yield break;
-
+            OnLotteryStart.Invoke();
             _lotteryStarted = true;
             var lotteryIndex = 0;
             var items = ItemsLottery.Items;
