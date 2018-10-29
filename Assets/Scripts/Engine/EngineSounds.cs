@@ -5,9 +5,8 @@ namespace Engine
     public class EngineSounds : MonoBehaviour
     {
         [Header("Engine")]
-        public AudioSource MotorAccelSource;
         public AudioSource MotorFullSource;
-        public AudioSource MotorDecelSource;
+
 
         private void Awake()
         {

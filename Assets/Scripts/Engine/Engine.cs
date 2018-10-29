@@ -76,9 +76,6 @@ namespace Engine
         {
             MapInputs();
 
-            var position = transform.position; position.x += 1f;
-            transform.position = position;
-
             IKartCommandInput input = KartCommand.Create();
             input.Forward = _forwardValue;
             input.Backward = _backwardValue;
@@ -99,6 +96,7 @@ namespace Engine
                 var rb = _rb;
                 rb = Accelerate(cmd.Input.Forward,rb);
                 rb = Decelerate(cmd.Input.Backward,rb);
+                Debug.Log(rb.velocity);
                 cmd.Result.Velocity = rb.velocity;
             }
         }
