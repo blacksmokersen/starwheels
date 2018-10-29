@@ -11,6 +11,9 @@ namespace Abilities
 
         [SerializeField] private TPBackSettings tPBackSettings;
         [SerializeField] private ThrowableLauncher throwableLauncher;
+        [Header("Effects")]
+        [SerializeField] private ParticleSystem reloadParticlePrefab;
+        [SerializeField] private int reloadParticleNumber;
 
         private ParticleSystem _reloadEffect;
         private TPBackBehaviour _tpBack = null;
@@ -22,10 +25,12 @@ namespace Abilities
         private void Awake()
         {
             _rb = GetComponentInParent<Rigidbody>();
+            /*
             var instantiatedReloadEffect = BoltNetwork.Instantiate(tPBackSettings.ReloadParticlePrefab);
             instantiatedReloadEffect.transform.parent = gameObject.transform;
             instantiatedReloadEffect.transform.position = new Vector3(0, 0, 0);
             _reloadEffect = instantiatedReloadEffect.GetComponent<ParticleSystem>();
+            */
         }
 
         // BOLT
@@ -72,8 +77,8 @@ namespace Abilities
             _canUseAbility = false;
             yield return new WaitForSeconds(Duration);
             _canUseAbility = true;
-          //  _reloadEffect.Emit(abilitySettings.ReloadParticleNumber);
-            _reloadEffect.Emit(100);
+            //  _reloadEffect.Emit(abilitySettings.ReloadParticleNumber);
+            reloadParticlePrefab.Emit(reloadParticleNumber);
             // OnTpBackEvent.Invoke();
         }
     }

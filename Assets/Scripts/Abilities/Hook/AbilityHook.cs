@@ -7,6 +7,11 @@ namespace Abilities
     {
         [SerializeField] private GameObject prefabHook;
         [SerializeField] private HookSettings hookSettings;
+
+        [Header("Effects")]
+        [SerializeField] private ParticleSystem reloadParticlePrefab;
+        [SerializeField] private int reloadParticleNumber;
+
         private GameObject _ownerKart;
         private bool _canUseAbility = true;
 

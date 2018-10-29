@@ -11,8 +11,4 @@ public class JumpSettings : ScriptableObject
     [Header("Cooldown")]
     public float CooldownDuration;
     public float MaxTimeBetweenFirstAndSecondJump;
-
-    [Header("Effects")]
-    public GameObject ReloadParticlePrefab;
-    public int ReloadParticleNumber;
 }

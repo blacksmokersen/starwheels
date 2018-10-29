@@ -17,6 +17,10 @@ namespace Abilities.Jump
 
         [SerializeField] private GroundCondition groundCondition;
 
+        [Header("Effects")]
+        [SerializeField] private ParticleSystem reloadParticlePrefab;
+        [SerializeField] private int reloadParticleNumber;
+
         private Rigidbody _rb;
         private bool _canUseAbility = true;
         private bool _hasDoneFirstJump = false;
@@ -137,7 +141,8 @@ namespace Abilities.Jump
             yield return new WaitForSeconds(jumpSettings.CooldownDuration);
             _canUseAbility = true;
             _hasDoneFirstJump = false;
-            OnJumpReload.Invoke();
+            reloadParticlePrefab.Emit(reloadParticleNumber);
+          //  OnJumpReload.Invoke();
         }
     }
 }
