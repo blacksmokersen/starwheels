@@ -26,7 +26,7 @@ namespace Multiplayer
         {
             var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart);
             myKart.transform.position = spawnPosition;
-            FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart); // Set on Control Gained (network behaviour)
+         //   FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart); // Set on Control Gained (network behaviour)
         }
     }
 }
