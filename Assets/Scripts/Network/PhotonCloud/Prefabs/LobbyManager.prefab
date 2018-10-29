@@ -470,7 +470,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &157512
 GameObject:
   m_ObjectHideFlags: 1
@@ -2361,6 +2361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38de513803c5e60498ad31fbc327b120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LobbyPhotonPlayer: {fileID: 0}
   lobbyScene:
     sceneAsset: {fileID: 102900000, guid: 42d6ac873a5b84d439478f72d40c21ce, type: 3}
     sceneName: bolt_samples/NEW-PhotonCloud/demo_lobby/Scenes/PhotonLobby
@@ -2381,6 +2382,7 @@ MonoBehaviour:
   StartButton: {fileID: 11477488}
   statusInfo: {fileID: 11415712}
   hostInfo: {fileID: 11403930}
+  _playerSettings: {fileID: 0}
 --- !u!114 &11476426
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4989,7 +4991,9 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Pillars
       m_Image: {fileID: 0}
-    - m_Text: Carapace
+    - m_Text: CarapaceSquare
+      m_Image: {fileID: 0}
+    - m_Text: CarapaceOvale
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
