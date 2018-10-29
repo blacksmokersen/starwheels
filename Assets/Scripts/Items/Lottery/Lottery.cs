@@ -60,9 +60,13 @@ namespace Items
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(Constants.Tag.ItemBox) && entity.isControllerOrOwner)
+            if (other.CompareTag(Constants.Tag.ItemBox))
             {
-                this.StartCoroutine(GetLotteryItem());
+                if (entity.isControllerOrOwner)
+                {
+                    this.StartCoroutine(GetLotteryItem());
+                }
+                other.GetComponent<ItemBox>().Activate();
             }
         }
     }

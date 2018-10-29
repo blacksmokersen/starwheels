@@ -20,6 +20,11 @@ namespace Items
 
         // PUBLIC
 
+        public void Activate()
+        {
+            StartCoroutine(StartCooldown());
+        }
+
         public IEnumerator StartCooldown()
         {
             Hide();
