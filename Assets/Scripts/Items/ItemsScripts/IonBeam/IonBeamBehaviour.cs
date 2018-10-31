@@ -2,6 +2,8 @@
 using Controls;
 using CameraUtils;
 using System.Collections;
+using Steering;
+using Engine;
 
 
 namespace Items
@@ -10,6 +12,7 @@ namespace Items
     {
         [SerializeField] private GameObject ionBeamLaserPrefab;
 
+        private GameObject _ionBeamOwner;
         private IonBeamInputs _ionBeamInputs;
         private IonBeamCamera _ionBeamCam;
         private bool _isFiring = false;
@@ -27,6 +30,11 @@ namespace Items
 
         public void Start()
         {
+            // WTF d'ou ça empeche d'appliquer les dégats du ionbeamlaser ????????????
+            _ionBeamOwner = GetComponent<Ownership>().OwnerKartRoot;
+            // si je vire ça, la collision est bien prise en compte
+
+
             _ionBeamCam.IonBeamCameraBehaviour(true);
             EnableIonInputs();
         }
@@ -73,6 +81,8 @@ namespace Items
         IEnumerator DelayBeforeDisablePlayerInputs()
         {
             yield return new WaitForSeconds(1);
+          //  _ionBeamOwner.GetComponentInChildren<SteeringWheel>().enabled = false;
+          //  _ionBeamOwner.GetComponentInChildren<EngineBehaviour>().enabled = false;
             _ionBeamInputs.enabled = true;
         }
 
@@ -81,6 +91,8 @@ namespace Items
             yield return new WaitForSeconds(1);
             _ionBeamCam.GetComponent<IonBeamCamera>().enabled = false;
             _ionBeamInputs.enabled = false;
+          //  _ionBeamOwner.GetComponentInChildren<SteeringWheel>().enabled = true;
+          //  _ionBeamOwner.GetComponentInChildren<EngineBehaviour>().enabled = true;
             Destroy(gameObject);
         }
     }
