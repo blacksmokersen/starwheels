@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Items
 {
-    public class IonBeamLaserBehaviour : MonoBehaviour
+    public class IonBeamLaserBehaviour : ProjectileBehaviour
     {
         //  [SerializeField] private ProjectileBehaviour projectileBehaviour;
 
@@ -17,14 +17,14 @@ namespace Items
 
         //CORE
 
-        private void Awake()
+        private new void Awake()
         {
             ionBeamLaserSettings.onExplode = true;
-            GameObject owner = GetComponent<Ownership>().gameObject;
+           // GameObject owner = GetComponent<Ownership>().gameObject;
             //float currentTimer = WarningPosition.transform.localScale.x;
         }
 
-        private void Update()
+        private new void Update()
         {
             offset = new Vector2(0, Time.deltaTime * ionBeamLaserSettings.SpeedOffset);
             if (EffectiveAOE != null)
@@ -49,6 +49,11 @@ namespace Items
                         Explosion();
                 }
             }
+        }
+
+        private new void FixedUpdate()
+        {
+
         }
 
         // PUBLIC
@@ -85,22 +90,17 @@ namespace Items
 
         private void OnTriggerStay(Collider other)
         {
-            /*
-            if (other.gameObject != null)
-            {
-                if (DamagePlayer)
-                {
-                    //SendTargetOnHitEvent(other.gameObject);
-                }
-            }
-            */
             if (_damagePlayer)
             {
                 if (other.gameObject.CompareTag(Constants.Tag.HealthHitBox))
                 {
                     Debug.Log("Hit");
-                    //  projectileBehaviour.CheckCollision(other.gameObject);
+                    //  CheckCollision(other.gameObject);
+                    PlayerHit playerHitEvent = PlayerHit.Create();
+                    playerHitEvent.PlayerEntity = other.GetComponentInParent<BoltEntity>();
+                    playerHitEvent.Send();
                 }
+                _damagePlayer = false;
             }
         }
     }

@@ -52,9 +52,9 @@ namespace Items
 
                 var IonBeam = BoltNetwork.Instantiate(ionBeamLaserPrefab, new Vector3(camPosition.x, 0, camPosition.z), Quaternion.identity);
 
-                var IonOwnership = GetComponent<Ownership>();
-                var itemOwnership = IonBeam.GetComponent<Ownership>();
-                // var playerSettings = GetComponentInParent<PlayerSettings>();
+                Ownership IonOwnership = GetComponent<Ownership>();
+                Ownership itemOwnership = IonBeam.GetComponent<Ownership>();
+
                 itemOwnership.OwnerKartRoot = IonOwnership.OwnerKartRoot;
                 itemOwnership.Team = IonOwnership.Team;
 
