@@ -35,7 +35,7 @@ namespace Multiplayer
         public BoltConnection Connection;
         #endregion
 
-        [SerializeField] private PlayerSettingsSO playerSettingsSO;
+        [SerializeField] private PlayerSettings playerSettingsSO;
 
         [Header("Events")]
         public StringEvent OnNicknameChanged;

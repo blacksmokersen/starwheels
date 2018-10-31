@@ -16,7 +16,7 @@ namespace Photon.Lobby
             get { return state.Ready; }
         }
 
-        [SerializeField] private PlayerSettingsSO _playerSettingsSO;
+        [SerializeField] private PlayerSettings _playerSettingsSO;
 
         // Lobby
         public string playerName = "";

@@ -33,7 +33,7 @@ namespace GameModes
 
         public override void OnEvent(KartDestroyed evnt)
         {
-            KartDestroy(TeamsColors.GetTeamFromColor(evnt.Team));
+            //KartDestroy(TeamsColors.GetTeamFromColor(evnt.Team));
         }
 
         public override void OnEvent(PlayerReady evnt)
@@ -55,8 +55,6 @@ namespace GameModes
                     _redKartsAlive++;
                     break;
             }
-            Debug.Log("Blue players : " + _blueKartsAlive);
-            Debug.Log("Red players : " + _redKartsAlive);
         }
 
         public void KartDestroy(Team team)

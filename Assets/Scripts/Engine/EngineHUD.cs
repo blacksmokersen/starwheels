@@ -60,7 +60,7 @@ namespace Engine
 
         private void OnDisable()
         {
-            Hide();
+            //Hide();
         }
     }
 }

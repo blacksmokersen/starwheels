@@ -8,7 +8,7 @@ namespace Network
 {
     public class KartNetworkBehaviour : EntityBehaviour<IKartState>
     {
-        [SerializeField] private PlayerSettingsSO _playerSettings;
+        [SerializeField] private PlayerSettings _playerSettings;
 
         private void Awake()
         {
@@ -61,11 +61,15 @@ namespace Network
         private void ColorChanged()
         {
             GetComponent<Player>().Team = TeamsColors.GetTeamFromColor(state.Team);
+            var panel = GetComponentInChildren<Common.HUD.NicknamePanel>();
+            if (panel) panel.SetFrameRendererColor(state.Team);
         }
 
         private void NameChanged()
         {
             GetComponent<Player>().Nickname = state.Nickname;
+            var panel = GetComponentInChildren<Common.HUD.NicknamePanel>();
+            if(panel) panel.SetName(state.Nickname);
         }
     }
 }
