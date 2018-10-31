@@ -48,7 +48,7 @@ namespace Photon.Lobby
         protected bool _isCountdown = false;
         protected string _matchName;
 
-        [SerializeField] private PlayerSettingsSO _playerSettings;
+        [SerializeField] private PlayerSettings _playerSettings;
 
         public string matchHost
         {

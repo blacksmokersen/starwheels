@@ -8,7 +8,7 @@ namespace CameraUtils
     public class CameraPlayerSwitch : MonoBehaviour
     {
         public bool CanOnlyWatchTeam = true;
-        public PlayerSettingsSO PlayerSettingsSO;
+        public PlayerSettings PlayerSettingsSO;
 
         private SetKartCamera _setKartCamera;
         private CinemachineVirtualCamera _cinemachineVirtualCamera;

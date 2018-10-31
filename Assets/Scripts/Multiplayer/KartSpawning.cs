@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using Bolt;
-using Photon.Lobby;
 
 namespace Multiplayer
 {
     public class KartSpawning : GlobalEventListener
     {
-        [SerializeField] private PlayerSettingsSO _playerSettings;
+        [SerializeField] private PlayerSettings _playerSettings;
 
         // CORE
 
@@ -26,7 +25,6 @@ namespace Multiplayer
         {
             var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart);
             myKart.transform.position = spawnPosition;
-         //   FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart); // Set on Control Gained (network behaviour)
         }
     }
 }

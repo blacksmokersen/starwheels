@@ -5527,7 +5527,7 @@ MonoBehaviour:
   m_Script: {fileID: -36112512, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneGuid: 
+  _sceneGuid: 74889d7e-fbd4-46ed-8bb1-fd34582ab6cd
   _serializerGuid: 3d46793e-7c24-4279-882f-df983ef4cb50
   _prefabId: 2
   _updateRate: 1
@@ -5890,7 +5890,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 
+  m_text: Default
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: beef652c535bc964c99c30fb5b0e0ee5, type: 2}
   m_sharedMaterial: {fileID: 21333293265245578, guid: beef652c535bc964c99c30fb5b0e0ee5,
@@ -5959,13 +5959,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 0}
-    characterCount: 0
+    characterCount: 7
     spriteCount: 0
     spaceCount: 0
-    wordCount: 0
+    wordCount: 1
     linkCount: 0
-    lineCount: 0
-    pageCount: 0
+    lineCount: 1
+    pageCount: 1
     materialCount: 1
   m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
@@ -6095,8 +6095,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32f62c2eaa1d2aa4b84393ef843ade7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 3
-  CurrentHealth: 3
+  MaxHealth: 1
+  CurrentHealth: 1
   IsDead: 0
   IsInvincible: 0
   OnHealthLoss:
@@ -6130,6 +6130,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 114562823632779928}
         m_MethodName: DestroyKart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 11400000, guid: d3786b31f0466fb4a97bd3941281e55a, type: 2}
+        m_MethodName: SendKartDestroyedEvent
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
