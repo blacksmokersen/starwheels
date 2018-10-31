@@ -55,8 +55,6 @@ namespace GameModes
                     _redKartsAlive++;
                     break;
             }
-            Debug.Log("Blue players : " + _blueKartsAlive);
-            Debug.Log("Red players : " + _redKartsAlive);
         }
 
         public void KartDestroy(Team team)

@@ -60,16 +60,16 @@ namespace Network
 
         private void ColorChanged()
         {
-            Debug.Log("Team changed callback.");
             GetComponent<Player>().Team = TeamsColors.GetTeamFromColor(state.Team);
-            GetComponentInChildren<Common.HUD.NicknamePanel>().SetFrameRendererColor(state.Team);
+            var panel = GetComponentInChildren<Common.HUD.NicknamePanel>();
+            if (panel) panel.SetFrameRendererColor(state.Team);
         }
 
         private void NameChanged()
         {
-            Debug.Log("Nickname changed callback.");
             GetComponent<Player>().Nickname = state.Nickname;
-            GetComponentInChildren<Common.HUD.NicknamePanel>().SetName(state.Nickname);
+            var panel = GetComponentInChildren<Common.HUD.NicknamePanel>();
+            if(panel) panel.SetName(state.Nickname);
         }
     }
 }

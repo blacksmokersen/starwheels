@@ -83,7 +83,7 @@ namespace MyExtensions
         public static GameObject PickRandomTeamKart(this Player playerSettings)
         {
             var teamKart = playerSettings.GetTeamKarts();
-            Debug.Log("Team Karts : " + teamKart.Count);
+
             if (teamKart.Count > 0)
             {
                 var rand = UnityEngine.Random.Range(0, teamKart.Count);
