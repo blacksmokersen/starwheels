@@ -50,6 +50,16 @@ namespace Items
                 case ThrowableType.Straight:
                     StraightThrow(throwable);
                     break;
+                case ThrowableType.Drop:
+                    if(ThrowingDirection == Direction.Forward)
+                    {
+                        ArcThrow(throwable);
+                    }
+                    else
+                    {
+                        Drop(throwable);
+                    }
+                    break;
             }
         }
 
@@ -96,11 +106,11 @@ namespace Items
 
         private void Drop(Throwable throwable)
         {
-            if (ThrowingDirection == Direction.Forward || ThrowingDirection == Direction.Default)
+            if (ThrowingDirection == Direction.Forward)
             {
                 throwable.transform.position = _itemPositions.FrontPosition.position;
             }
-            else if (ThrowingDirection == Direction.Backward)
+            else if (ThrowingDirection == Direction.Backward || ThrowingDirection == Direction.Default)
             {
                 throwable.transform.position = _itemPositions.BackPosition.position;
             }
