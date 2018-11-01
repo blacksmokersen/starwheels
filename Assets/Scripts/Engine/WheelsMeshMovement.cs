@@ -12,26 +12,28 @@ namespace Animations
 
         private float _wheelsSpeed;
 
-        private void FrontWheelsTurn(float currentAngle)
+        // PUBLIC
+
+        public void FrontWheelsTurn(float currentAngle)
         {
             FrontWheelLeft.transform.localEulerAngles = new Vector3(0, currentAngle * 30, 0);
             FrontWheelRight.transform.localEulerAngles = new Vector3(0, currentAngle * 30, 0);
         }
 
-        private void FrontWheelsRotation(Vector3 playerVelocity)
+        public void FrontWheelsRotation(float playerVelocity)
         {
-            _wheelsSpeed = -playerVelocity.magnitude;
-            if (playerVelocity.magnitude > 0.01f)
+            _wheelsSpeed = -playerVelocity;
+            if (playerVelocity > 0.01f)
             {
                 FrontWheelLeft.transform.Rotate(Vector3.right * _wheelsSpeed);
                 FrontWheelRight.transform.Rotate(Vector3.right * _wheelsSpeed);
             }
         }
 
-        private void BackWheelsRotation(Vector3 playerVelocity)
+        public void BackWheelsRotation(float playerVelocity)
         {
-            _wheelsSpeed = playerVelocity.magnitude;
-            if (playerVelocity.magnitude > 0.01f)
+            _wheelsSpeed = playerVelocity;
+            if (playerVelocity > 0.01f)
             {
                 BackWheelsLeft.transform.Rotate(Vector3.right * _wheelsSpeed);
                 BackWheelsRight.transform.Rotate(Vector3.right * _wheelsSpeed);
