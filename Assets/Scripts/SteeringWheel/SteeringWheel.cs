@@ -82,7 +82,8 @@ namespace Steering
             {
                 SetTurnState(turnValue);
                 turnValue = InversedTurnValue(turnValue);
-                OnTurnValueChanged.Invoke(turnValue);
+
+                OnTurnValueChanged.Invoke(_turnValue);
 
                 if (_groundCondition != null)
                 {
