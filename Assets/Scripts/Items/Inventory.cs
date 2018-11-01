@@ -71,6 +71,7 @@ namespace Items
             OnItemGet.Invoke(item);
             CurrentItemCount = count;
             OnItemCountChange.Invoke(count);
+            
         }
 
         public void SetCount(int count)
