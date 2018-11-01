@@ -27,9 +27,7 @@ namespace Audio
 
         // PUBLIC
 
-        // PRIVATE
-
-        private void PlayRandomHitVoice()
+        public void PlayRandomHitVoice()
         {
             if (_lastPlayedHitClips.Count > rememberTheLastXClips)
             {
@@ -42,7 +40,7 @@ namespace Audio
             voiceLaneSource.Play();
         }
 
-        private void PlayRandomHurtVoice()
+        public void PlayRandomHurtVoice()
         {
             if (_lastPlayedHurtClips.Count > rememberTheLastXClips)
             {
@@ -55,7 +53,7 @@ namespace Audio
             voiceLaneSource.Play();
         }
 
-        private void PlayRandomSelectedVoice()
+        public void PlayRandomSelectedVoice()
         {
             if (_lastPlayedSelectedClips.Count > rememberTheLastXClips)
             {
