@@ -52,8 +52,8 @@ namespace Network
         {
             if (entity.isOwner)
             {
-                FindObjectOfType<CameraUtils.SpectatorControls>().Enabled = true;
-                FindObjectOfType<CameraUtils.CameraPlayerSwitch>().SetCameraToRandomPlayer();
+                //FindObjectOfType<CameraUtils.SpectatorControls>().Enabled = true;
+                //FindObjectOfType<CameraUtils.CameraPlayerSwitch>().SetCameraToRandomPlayer();
                 BoltNetwork.Destroy(gameObject);
             }
         }
