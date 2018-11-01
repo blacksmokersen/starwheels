@@ -81,8 +81,8 @@ namespace Items
         IEnumerator DelayBeforeDisablePlayerInputs()
         {
             yield return new WaitForSeconds(1);
-          //  _ionBeamOwner.GetComponentInChildren<SteeringWheel>().enabled = false;
-          //  _ionBeamOwner.GetComponentInChildren<EngineBehaviour>().enabled = false;
+            _ionBeamOwner.GetComponentInChildren<SteeringWheel>().enabled = false;
+            _ionBeamOwner.GetComponentInChildren<EngineBehaviour>().enabled = false;
             _ionBeamInputs.enabled = true;
         }
 
@@ -91,8 +91,8 @@ namespace Items
             yield return new WaitForSeconds(1);
             _ionBeamCam.GetComponent<IonBeamCamera>().enabled = false;
             _ionBeamInputs.enabled = false;
-          //  _ionBeamOwner.GetComponentInChildren<SteeringWheel>().enabled = true;
-          //  _ionBeamOwner.GetComponentInChildren<EngineBehaviour>().enabled = true;
+            _ionBeamOwner.GetComponentInChildren<SteeringWheel>().enabled = true;
+            _ionBeamOwner.GetComponentInChildren<EngineBehaviour>().enabled = true;
             Destroy(gameObject);
         }
     }

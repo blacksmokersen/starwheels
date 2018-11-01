@@ -92,6 +92,7 @@ namespace Items
         {
             if (_damagePlayer)
             {
+                Debug.Log(other.gameObject.name);
                 if (other.gameObject.CompareTag(Constants.Tag.HealthHitBox))
                 {
                     Debug.Log("Hit");
@@ -99,8 +100,8 @@ namespace Items
                     PlayerHit playerHitEvent = PlayerHit.Create();
                     playerHitEvent.PlayerEntity = other.GetComponentInParent<BoltEntity>();
                     playerHitEvent.Send();
+                    _damagePlayer = false;
                 }
-                _damagePlayer = false;
             }
         }
     }
