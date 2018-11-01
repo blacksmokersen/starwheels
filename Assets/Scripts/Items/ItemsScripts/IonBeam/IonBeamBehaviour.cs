@@ -38,8 +38,13 @@ namespace Items
                 EnableIonInputs();
             }
         }
-
+        /*
         private void Update()
+        {
+            transform.position = _ionBeamCam.transposer.transform.position;
+        }
+        */
+        public override void SimulateController()
         {
             transform.position = _ionBeamCam.transposer.transform.position;
         }
@@ -54,7 +59,7 @@ namespace Items
 
         public void FireIonBeam()
         {
-            if (!_isFiring)
+            if (!_isFiring && entity.isOwner)
             {
                 Vector3 camPosition = _ionBeamCam.transposer.transform.position;
 
@@ -67,7 +72,7 @@ namespace Items
                 itemOwnership.Team = IonOwnership.Team;
 
                 IonBeam.transform.position = new Vector3(_ionBeamCam.transform.position.x, IonBeam.transform.position.y, _ionBeamCam.transform.position.z);
-                //  MyExtensions.Audio.PlayClipObjectAndDestroy(LaunchSource);
+                MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(LaunchSource);
                 _ionBeamCam.composer.enabled = true;
                 _ionBeamCam.IonBeamCameraBehaviour(false);
 
@@ -93,7 +98,8 @@ namespace Items
             _ionBeamInputs.enabled = false;
             _ionBeamOwner.GetComponentInChildren<SteeringWheel>().enabled = true;
             _ionBeamOwner.GetComponentInChildren<EngineBehaviour>().enabled = true;
-            BoltNetwork.Destroy(gameObject);
+            if (entity.isOwner)
+                BoltNetwork.Destroy(gameObject);
         }
     }
 }
