@@ -80,7 +80,8 @@ namespace Items
             yield return new WaitForSeconds(0.1f);
             _damagePlayer = false;
             yield return new WaitForSeconds(1);
-            Destroy(gameObject);
+            BoltNetwork.Destroy(gameObject);
+           // Destroy(gameObject);
         }
 
         private void OnTriggerStay(Collider other)

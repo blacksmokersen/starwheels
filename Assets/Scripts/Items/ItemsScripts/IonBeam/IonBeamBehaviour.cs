@@ -93,7 +93,7 @@ namespace Items
             _ionBeamInputs.enabled = false;
             _ionBeamOwner.GetComponentInChildren<SteeringWheel>().enabled = true;
             _ionBeamOwner.GetComponentInChildren<EngineBehaviour>().enabled = true;
-            Destroy(gameObject);
+            BoltNetwork.Destroy(gameObject);
         }
     }
 }
