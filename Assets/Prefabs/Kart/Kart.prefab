@@ -274,6 +274,7 @@ GameObject:
   - component: {fileID: 4725369991776876}
   - component: {fileID: 95579590234998320}
   - component: {fileID: 114838526349982084}
+  - component: {fileID: 114736896453993018}
   m_Layer: 11
   m_Name: Meshes
   m_TagString: Untagged
@@ -5126,6 +5127,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 114736896453993018}
+        m_MethodName: BackWheelsRotation
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 114736896453993018}
+        m_MethodName: FrontWheelsRotation
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: FloatEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   CurrentMovingDirection: 0
   _groundCondition: {fileID: 114241659848452430}
@@ -5146,6 +5169,21 @@ MonoBehaviour:
   InversedDirections: 0
   _groundCondition: {fileID: 114241659848452430}
   _engine: {fileID: 114112130390458132}
+  OnTurnValueChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114736896453993018}
+        m_MethodName: FrontWheelsTurn
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: FloatEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114153923227003868
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5966,6 +6004,21 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e63f9c89a0327d24eaf9db3cf0a30c7a, type: 3}
   - {fileID: 8300000, guid: ec923b9df0a1ef84ca3a4f1a2dbfbd18, type: 3}
   rememberTheLastXClips: 2
+--- !u!114 &114736896453993018
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1125758342767834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc7fc469ab13db94cb6002a0a157f46b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FrontWheelLeft: {fileID: 1529319391600806}
+  FrontWheelRight: {fileID: 1413024419352120}
+  BackWheelsLeft: {fileID: 1973439337890926}
+  BackWheelsRight: {fileID: 1973439337890926}
 --- !u!114 &114741894357768948
 MonoBehaviour:
   m_ObjectHideFlags: 1
