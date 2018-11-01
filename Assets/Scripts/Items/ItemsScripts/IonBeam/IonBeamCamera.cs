@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using Bolt;
 
-public class IonBeamCamera : MonoBehaviour
+public class IonBeamCamera : EntityBehaviour
 {
 
     public float SpeedCamMovements;
@@ -76,7 +77,7 @@ public class IonBeamCamera : MonoBehaviour
             _currentTimer += Time.deltaTime;
             yield return null;
         }
-       // transform.rotation = new Quaternion(Mathf.Lerp(transform.rotation.x, 90, _currentTimer / boostDuration), 0, 0, 0);
+        // transform.rotation = new Quaternion(Mathf.Lerp(transform.rotation.x, 90, _currentTimer / boostDuration), 0, 0, 0);
         transform.eulerAngles = new Vector3(90, transform.eulerAngles.y, transform.eulerAngles.z);
         composer.enabled = false;
         _showCrosshair = true;
@@ -105,5 +106,4 @@ public class IonBeamCamera : MonoBehaviour
             cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(returnValueZ, returnValueY, 0.5f));
         }
     }
-
 }

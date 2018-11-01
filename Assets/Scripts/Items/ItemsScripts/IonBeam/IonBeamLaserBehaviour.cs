@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Items
 {
-    public class IonBeamLaserBehaviour : ProjectileBehaviour
+    public class IonBeamLaserBehaviour : MonoBehaviour
     {
         //  [SerializeField] private ProjectileBehaviour projectileBehaviour;
 
@@ -17,14 +17,14 @@ namespace Items
 
         //CORE
 
-        private new void Awake()
+        private void Awake()
         {
             ionBeamLaserSettings.onExplode = true;
            // GameObject owner = GetComponent<Ownership>().gameObject;
             //float currentTimer = WarningPosition.transform.localScale.x;
         }
 
-        private new void Update()
+        private void Update()
         {
             offset = new Vector2(0, Time.deltaTime * ionBeamLaserSettings.SpeedOffset);
             if (EffectiveAOE != null)
@@ -49,11 +49,6 @@ namespace Items
                         Explosion();
                 }
             }
-        }
-
-        private new void FixedUpdate()
-        {
-
         }
 
         // PUBLIC

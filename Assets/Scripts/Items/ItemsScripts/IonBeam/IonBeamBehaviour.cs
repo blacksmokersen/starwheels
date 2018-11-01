@@ -4,11 +4,11 @@ using CameraUtils;
 using System.Collections;
 using Steering;
 using Engine;
-
+using Bolt;
 
 namespace Items
 {
-    public class IonBeamBehaviour : NetworkDestroyable
+    public class IonBeamBehaviour : EntityBehaviour
     {
         [SerializeField] private GameObject ionBeamLaserPrefab;
 
@@ -30,13 +30,13 @@ namespace Items
 
         public void Start()
         {
-            // WTF d'ou ça empeche d'appliquer les dégats du ionbeamlaser ????????????
             _ionBeamOwner = GetComponent<Ownership>().OwnerKartRoot;
-            // si je vire ça, la collision est bien prise en compte
 
-
-            _ionBeamCam.IonBeamCameraBehaviour(true);
-            EnableIonInputs();
+            if (entity.isOwner)
+            {
+                _ionBeamCam.IonBeamCameraBehaviour(true);
+                EnableIonInputs();
+            }
         }
 
         private void Update()
@@ -67,7 +67,7 @@ namespace Items
                 itemOwnership.Team = IonOwnership.Team;
 
                 IonBeam.transform.position = new Vector3(_ionBeamCam.transform.position.x, IonBeam.transform.position.y, _ionBeamCam.transform.position.z);
-              //  MyExtensions.Audio.PlayClipObjectAndDestroy(LaunchSource);
+                //  MyExtensions.Audio.PlayClipObjectAndDestroy(LaunchSource);
                 _ionBeamCam.composer.enabled = true;
                 _ionBeamCam.IonBeamCameraBehaviour(false);
 
