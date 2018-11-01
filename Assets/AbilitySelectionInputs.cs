@@ -24,11 +24,13 @@ public class AbilitySelectionInputs : EntityBehaviour<IKartState>, IControllable
             _abilityNumber = 1;
             ChangeAbility();
         }
+        /*
         if (Input.GetKeyDown(KeyCode.T))
         {
             _abilityNumber = 2;
             ChangeAbility();
         }
+        */
     }
 
     private void ChangeAbility()
