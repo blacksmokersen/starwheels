@@ -94,7 +94,6 @@ namespace Items
                     PlayerHit playerHitEvent = PlayerHit.Create();
                     playerHitEvent.PlayerEntity = other.GetComponentInParent<BoltEntity>();
                     playerHitEvent.Send();
-                    _damagePlayer = false;
                 }
             }
         }
