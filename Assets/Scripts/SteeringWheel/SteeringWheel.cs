@@ -24,6 +24,7 @@ namespace Steering
 
         [Header("Events")]
         public UnityEvent<TurnState> OnTurn;
+        public FloatEvent OnTurnValueChanged;
 
         private Rigidbody _rb;
         private float _turnValue;
@@ -82,12 +83,13 @@ namespace Steering
                 SetTurnState(turnValue);
                 turnValue = InversedTurnValue(turnValue);
 
+                OnTurnValueChanged.Invoke(_turnValue);
+
                 if (_groundCondition != null)
                 {
                     if (_groundCondition.Grounded)
                     {
                         rb.AddRelativeTorque(Vector3.up * turnValue * Settings.TurnTorque, ForceMode.Force);
-                        //OnTurn.Invoke(TurningState);
                     }
                 }
                 else
@@ -99,33 +101,9 @@ namespace Steering
             return rb;
         }
 
-        public void TurnUsingTorque(float turnValue)
-        {
-            if (CanTurn())
-            {
-                SetTurnState(turnValue);
-                turnValue = InversedTurnValue(turnValue);
-
-                if (_groundCondition != null)
-                {
-                    if (_groundCondition.Grounded)
-                    {
-                        _rb.AddRelativeTorque(Vector3.up * turnValue * Settings.TurnTorque, ForceMode.Force);
-                        //OnTurn.Invoke(TurningState);
-                    }
-                }
-                else
-                {
-                    _rb.AddRelativeTorque(Vector3.up * turnValue * Settings.TurnTorque, ForceMode.Force);
-                    OnTurn.Invoke(TurningState);
-                }
-            }
-        }
-
         public void InverseDirections()
         {
             InversedDirections = !InversedDirections;
-            Debug.Log("Inversing directions !");
         }
 
         // PRIVATE
