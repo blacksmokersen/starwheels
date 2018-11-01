@@ -51,6 +51,11 @@ namespace Abilities
             }
         }
 
+        public Quaternion GetKartRotation()
+        {
+            return _rb.transform.rotation;
+        }
+
         public void Use()
         {
             if (_canUseAbility)
@@ -65,7 +70,7 @@ namespace Abilities
                 else //if (_tpBack.IsEnabled())
                 {
                     _rb.transform.position = _tpBack.transform.position;
-                    _rb.transform.rotation = _tpBack.GetKartRotation();
+                    _rb.transform.rotation = GetKartRotation();
                     Destroy(_tpBack.gameObject);
                     StartCoroutine(AbilityCooldown(tPBackSettings.Cooldown));
                 }

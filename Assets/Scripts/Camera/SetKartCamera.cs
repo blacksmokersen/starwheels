@@ -13,12 +13,12 @@ namespace CameraUtils
         private void Awake()
         {
             _cinemachine = GetComponentInParent<CinemachineVirtualCamera>();
-            //   if (kartToFollow) SetKart(kartToFollow);
+            if (_kartToFollow) SetKart(_kartToFollow);
         }
         /*
         private void Start()
         {
-            if (!kartToFollow)
+            if (!_kartToFollow)
             {
                 var kart = GameObject.FindGameObjectWithTag(Constants.Tag.Kart);
                 if(kart) SetKart(kart);

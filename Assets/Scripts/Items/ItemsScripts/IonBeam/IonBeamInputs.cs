@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using Items;
 using CameraUtils;
+using Bolt;
 
 namespace Controls
 {
-    public class IonBeamInputs : MonoBehaviour, IControllable
+    public class IonBeamInputs : EntityBehaviour, IControllable
     {
         //public static bool IonBeamControlMode;
 
@@ -23,8 +24,11 @@ namespace Controls
 
         private void Update()
         {
-            MoveCam();
-            MapInputs();
+            if (entity.isOwner)
+            {
+                MoveCam();
+                MapInputs();
+            }
         }
 
         // PUBLIC

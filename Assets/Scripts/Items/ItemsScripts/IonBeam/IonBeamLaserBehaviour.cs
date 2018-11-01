@@ -20,7 +20,7 @@ namespace Items
         private void Awake()
         {
             ionBeamLaserSettings.onExplode = true;
-            GameObject owner = GetComponent<Ownership>().gameObject;
+           // GameObject owner = GetComponent<Ownership>().gameObject;
             //float currentTimer = WarningPosition.transform.localScale.x;
         }
 
@@ -75,31 +75,26 @@ namespace Items
         IEnumerator ParticuleEffect()
         {
             GetComponent<ParticleSystem>().Emit(3000);
-          //  MyExtensions.Audio.PlayClipObjectAndDestroy(ExplosionSource);
+           // MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(ExplosionSource);
             _damagePlayer = true;
             yield return new WaitForSeconds(0.1f);
             _damagePlayer = false;
             yield return new WaitForSeconds(1);
-            Destroy(gameObject);
+            BoltNetwork.Destroy(gameObject);
         }
 
         private void OnTriggerStay(Collider other)
         {
-            /*
-            if (other.gameObject != null)
-            {
-                if (DamagePlayer)
-                {
-                    //SendTargetOnHitEvent(other.gameObject);
-                }
-            }
-            */
             if (_damagePlayer)
             {
                 if (other.gameObject.CompareTag(Constants.Tag.HealthHitBox))
                 {
                     Debug.Log("Hit");
-                    //  projectileBehaviour.CheckCollision(other.gameObject);
+                    //  CheckCollision(other.gameObject);
+                    PlayerHit playerHitEvent = PlayerHit.Create();
+                    playerHitEvent.PlayerEntity = other.GetComponentInParent<BoltEntity>();
+                    playerHitEvent.Send();
+                    _damagePlayer = false;
                 }
             }
         }

@@ -38,7 +38,10 @@ namespace KBA.Debug
         private void SwitchToNextItem()
         {
             var nextItem = _itemsList[(_actualItemIndex++) % _itemsList.Length];
-            _inventory.SetItem(nextItem, 50);
+            if (nextItem.name == "IonBeam")
+                _inventory.SetItem(nextItem, 1);
+            else
+                _inventory.SetItem(nextItem, 50);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Engine
 {
     public enum MovingDirection { NotMoving, Forward, Backward }
 
-    public class Engine : EntityBehaviour<IKartState>, IControllable
+    public class EngineBehaviour : EntityBehaviour<IKartState>, IControllable
     {
         [Header("Forces")]
         public EngineSettings Settings;

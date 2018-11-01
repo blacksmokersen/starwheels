@@ -20,7 +20,7 @@ namespace Steering
         [Tooltip("This is an optional field to make turn possible only if grounded.")]
         public GroundCondition _groundCondition;
         [Tooltip("This is an optional field to make turn possible only if a certain speed is reached.")]
-        public Engine.Engine _engine;
+        public Engine.EngineBehaviour _engine;
 
         [Header("Events")]
         public UnityEvent<TurnState> OnTurn;

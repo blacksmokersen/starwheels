@@ -2,14 +2,17 @@
 using Controls;
 using CameraUtils;
 using System.Collections;
-
+using Steering;
+using Engine;
+using Bolt;
 
 namespace Items
 {
-    public class IonBeamBehaviour : NetworkDestroyable
+    public class IonBeamBehaviour : EntityBehaviour
     {
         [SerializeField] private GameObject ionBeamLaserPrefab;
 
+        private GameObject _ionBeamOwner;
         private IonBeamInputs _ionBeamInputs;
         private IonBeamCamera _ionBeamCam;
         private bool _isFiring = false;
@@ -27,11 +30,21 @@ namespace Items
 
         public void Start()
         {
-            _ionBeamCam.IonBeamCameraBehaviour(true);
-            EnableIonInputs();
-        }
+            _ionBeamOwner = GetComponent<Ownership>().OwnerKartRoot;
 
+            if (entity.isOwner)
+            {
+                _ionBeamCam.IonBeamCameraBehaviour(true);
+                EnableIonInputs();
+            }
+        }
+        /*
         private void Update()
+        {
+            transform.position = _ionBeamCam.transposer.transform.position;
+        }
+        */
+        public override void SimulateController()
         {
             transform.position = _ionBeamCam.transposer.transform.position;
         }
@@ -46,20 +59,20 @@ namespace Items
 
         public void FireIonBeam()
         {
-            if (!_isFiring)
+            if (!_isFiring && entity.isOwner)
             {
                 Vector3 camPosition = _ionBeamCam.transposer.transform.position;
 
                 var IonBeam = BoltNetwork.Instantiate(ionBeamLaserPrefab, new Vector3(camPosition.x, 0, camPosition.z), Quaternion.identity);
 
-                var IonOwnership = GetComponent<Ownership>();
-                var itemOwnership = IonBeam.GetComponent<Ownership>();
-                // var playerSettings = GetComponentInParent<PlayerSettings>();
+                Ownership IonOwnership = GetComponent<Ownership>();
+                Ownership itemOwnership = IonBeam.GetComponent<Ownership>();
+
                 itemOwnership.OwnerKartRoot = IonOwnership.OwnerKartRoot;
                 itemOwnership.Team = IonOwnership.Team;
 
                 IonBeam.transform.position = new Vector3(_ionBeamCam.transform.position.x, IonBeam.transform.position.y, _ionBeamCam.transform.position.z);
-              //  MyExtensions.Audio.PlayClipObjectAndDestroy(LaunchSource);
+                MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(LaunchSource);
                 _ionBeamCam.composer.enabled = true;
                 _ionBeamCam.IonBeamCameraBehaviour(false);
 
@@ -73,6 +86,8 @@ namespace Items
         IEnumerator DelayBeforeDisablePlayerInputs()
         {
             yield return new WaitForSeconds(1);
+            _ionBeamOwner.GetComponentInChildren<SteeringWheel>().enabled = false;
+            _ionBeamOwner.GetComponentInChildren<EngineBehaviour>().enabled = false;
             _ionBeamInputs.enabled = true;
         }
 
@@ -81,7 +96,10 @@ namespace Items
             yield return new WaitForSeconds(1);
             _ionBeamCam.GetComponent<IonBeamCamera>().enabled = false;
             _ionBeamInputs.enabled = false;
-            Destroy(gameObject);
+            _ionBeamOwner.GetComponentInChildren<SteeringWheel>().enabled = true;
+            _ionBeamOwner.GetComponentInChildren<EngineBehaviour>().enabled = true;
+            if (entity.isOwner)
+                BoltNetwork.Destroy(gameObject);
         }
     }
 }
