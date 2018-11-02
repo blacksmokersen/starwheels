@@ -8,7 +8,6 @@ namespace CameraUtils
     public class CameraPlayerSwitch : MonoBehaviour
     {
         public bool CanOnlyWatchTeam = true;
-        public PlayerSettings PlayerSettingsSO;
 
         private SetKartCamera _setKartCamera;
         private GameObject _currentTarget;
@@ -33,7 +32,6 @@ namespace CameraUtils
 
             if (randomKart != null)
             {
-                Debug.Log("Setting camera to new kart");
                 SetCameraToPlayer(randomKart);
             }
         }

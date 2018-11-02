@@ -31,11 +31,7 @@ namespace Multiplayer
             get { return _score; }
             set { _score = value; OnScoreChanged.Invoke(_score); }
         }
-
-        public BoltConnection Connection;
         #endregion
-
-        [SerializeField] private PlayerSettings playerSettingsSO;
 
         [Header("Events")]
         public StringEvent OnNicknameChanged;
