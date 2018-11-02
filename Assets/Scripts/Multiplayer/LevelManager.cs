@@ -29,16 +29,15 @@ public class LevelManager : MonoBehaviour
         if(quitLevel) quitLevel.onClick.AddListener(ReturnToMenu);
         if(resetLevel) resetLevel.onClick.AddListener(ResetLevel);
     }
+
     private void Update()
     {
-        /*
         if (Input.GetButtonDown(Constants.Input.EscapeMenu))
             menuActivated = !menuActivated;
         if (menuActivated)
             escapeMenu.SetActive(true);
         else
             escapeMenu.SetActive(false);
-        */
     }
 
     // PUBLIC
