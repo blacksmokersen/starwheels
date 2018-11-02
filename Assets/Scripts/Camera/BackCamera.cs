@@ -7,7 +7,8 @@ namespace CameraUtils
     {
         private CinemachineTransposer _transposer;
         private CinemachineVirtualCamera _cinemachine;
-        private bool _backCamActivated = false;
+
+        // CORE
 
         private void Awake()
         {
@@ -20,21 +21,8 @@ namespace CameraUtils
             MapInputs();
         }
 
-        public void BackCameraSwitch(bool activate)
-        {
-            if (activate)
-            {
-                _transposer.m_FollowOffset.z = 9;
-                _backCamActivated = true;
-            }
-            else
-            {
-                _transposer.m_FollowOffset.z = -8.5f;
-                _backCamActivated = false;
-            }
-        }
+        // PUBLIC
 
-        #region MapInput
         public void MapInputs()
         {
             if (Input.GetButtonDown(Constants.Input.BackCamera))
@@ -49,6 +37,17 @@ namespace CameraUtils
                 // kartEvents.OnBackCameraEnd(false);
             }
         }
-        #endregion
+
+        public void BackCameraSwitch(bool activate)
+        {
+            if (activate)
+            {
+                _transposer.m_FollowOffset.z = 9;
+            }
+            else
+            {
+                _transposer.m_FollowOffset.z = -8.5f;
+            }
+        }
     }
 }
