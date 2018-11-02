@@ -8,16 +8,13 @@ namespace CameraUtils
     public class CameraPlayerSwitch : MonoBehaviour
     {
         public bool CanOnlyWatchTeam = true;
-        public PlayerSettings PlayerSettingsSO;
 
         private SetKartCamera _setKartCamera;
-        private CinemachineVirtualCamera _cinemachineVirtualCamera;
         private GameObject _currentTarget;
 
         private void Awake()
         {
             _setKartCamera = GetComponent<SetKartCamera>();
-            _cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
         }
 
         public void SetCameraToNextPlayer()
@@ -35,7 +32,6 @@ namespace CameraUtils
 
             if (randomKart != null)
             {
-                Debug.Log("Setting camera to new kart");
                 SetCameraToPlayer(randomKart);
             }
         }

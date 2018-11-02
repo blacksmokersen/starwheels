@@ -81,7 +81,7 @@ namespace Abilities
                 || other.CompareTag(Constants.Tag.GuileItem)
                 || other.CompareTag(Constants.Tag.GroundItem))
             {
-                _itemBehaviour = other.GetComponentInParent<NetworkDestroyable>();
+                // _itemBehaviour = other.GetComponentInParent<NetworkDestroyable>();
 
                 SetTarget(other.transform);
             }

@@ -24,7 +24,6 @@ namespace Abilities.Jump
         private Rigidbody _rb;
         private bool _canUseAbility = true;
         private bool _hasDoneFirstJump = false;
-        private bool _hasDoneSecondJump = false;
         private bool _straightUpSecondJump = false;
         private Coroutine _timeBetweenFirstAndSecondJump;
 

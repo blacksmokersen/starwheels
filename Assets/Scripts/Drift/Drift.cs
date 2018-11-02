@@ -20,7 +20,6 @@ namespace Drift
         private bool _driftedLongEnough = false;
         private Coroutine _driftedLongEnoughTimer;
         private Coroutine _physicsBoostCoroutine;
-        private Coroutine _turboCoroutine;
         private Rigidbody _rigidBody;
         [SerializeField] private SteeringWheel _steeringWheel;
         [SerializeField] private GroundCondition _groundCondition;
@@ -51,9 +50,15 @@ namespace Drift
             _rigidBody = GetComponentInParent<Rigidbody>();
         }
 
+        private void FixedUpdate()
+        {
+            SetTurnState(Input.GetAxis(Constants.Input.TurnAxis));
+        }
+
+        // BOLT
+
         public override void SimulateController()
         {
-            // base.SimulateController();
             MapInputs();
 
             if (IsDriftSideDifferentFromTurnSide())
@@ -69,11 +74,6 @@ namespace Drift
                 _steeringWheel.enabled = false;
             else
                 _steeringWheel.enabled = true;
-        }
-
-        private void FixedUpdate()
-        {
-            SetTurnState(Input.GetAxis(Constants.Input.TurnAxis));
         }
 
         // PUBLIC
@@ -144,11 +144,6 @@ namespace Drift
             if (_driftedLongEnoughTimer != null)
             {
                 StopCoroutine(_driftedLongEnoughTimer);
-            }
-
-            if (_turboCoroutine != null)
-            {
-                StopCoroutine(_turboCoroutine);
             }
         }
         #endregion
