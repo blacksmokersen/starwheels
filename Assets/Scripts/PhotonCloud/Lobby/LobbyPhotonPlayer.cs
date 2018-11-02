@@ -16,7 +16,7 @@ namespace Photon.Lobby
             get { return state.Ready; }
         }
 
-        [SerializeField] private PlayerSettings _playerSettingsSO;
+        [SerializeField] private PlayerSettings _playerSettings;
 
         // Lobby
         public string playerName = "";
@@ -42,19 +42,17 @@ namespace Photon.Lobby
 
         public static LobbyPhotonPlayer localPlayer;
 
-        // Handlers
-
         public override void Attached()
         {
-            // DontDestroyOnLoad(gameObject);
             if (entity.isOwner)
             {
-                Debug.Log("Color used : " + playerColor);
                 state.Color = playerColor;
                 state.Name = "Player #" + Random.Range(1, 100);
 
-                if(BoltNetwork.isClient)
-                    _playerSettingsSO.ConnectionID = (int) connection.ConnectionId;
+                if (BoltNetwork.isClient)
+                {
+                    _playerSettings.ConnectionID = (int)connection.ConnectionId;
+                }
             }
 
             state.AddCallback("Name", () =>
@@ -82,7 +80,7 @@ namespace Photon.Lobby
             readyButton.transform.GetChild(0).GetComponent<Text>().color = Color.white;
             SetupPlayer();
 
-            _playerSettingsSO.ConnectionID = state.PlayerID;
+            _playerSettings.ConnectionID = state.PlayerID;
         }
 
         public void OnPlayerListChanged(int idx)
@@ -227,7 +225,7 @@ namespace Photon.Lobby
                 playerColor = TeamsColors.GetColorFromTeam(Team.Blue);
             else
                 playerColor = TeamsColors.GetColorFromTeam(Team.Blue);
-            _playerSettingsSO.Team = playerColor;
+            _playerSettings.Team = playerColor;
         }
 
         public void OnReadyClicked()
@@ -238,7 +236,7 @@ namespace Photon.Lobby
         public void OnNameChanged(string newName)
         {
             playerName = newName;
-            _playerSettingsSO.Nickname = newName;
+            _playerSettings.Nickname = newName;
         }
 
         public void OnClientReady(bool readyState)
@@ -267,5 +265,4 @@ namespace Photon.Lobby
             }
         }
     }
-
 }
