@@ -3,7 +3,7 @@ using Bolt;
 
 namespace Multiplayer
 {
-    public class KartSpawning : GlobalEventListener
+    public class SpawnEventListener : GlobalEventListener
     {
         [SerializeField] private PlayerSettings _playerSettings;
 

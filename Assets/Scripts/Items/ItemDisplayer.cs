@@ -1,36 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Items
 {
     [RequireComponent(typeof(Inventory))]
-    public class ItemDisplay : MonoBehaviour
+    public class ItemDisplayer : MonoBehaviour
     {
         [Header("Shields")]
         public GameObject GreenItem;
         public GameObject PurpleItem;
         public GameObject GoldItem;
 
-
-        public string ItemToDisplay;
-
-
+        private string _itemNameToDisplay;
         private Inventory _inventory;
-
 
         public void Awake()
         {
             _inventory = GetComponent<Inventory>();
         }
 
-        
         public void DisplayItem()
         {
-           
-            ItemToDisplay = _inventory.CurrentItem.Name;
 
-            switch(ItemToDisplay)
+            _itemNameToDisplay = _inventory.CurrentItem.Name;
+
+            switch(_itemNameToDisplay)
             {
                 case "Disk":
                     GreenItem.SetActive(true); //Activating the empty game object green
@@ -68,17 +61,13 @@ namespace Items
                     GoldItem.transform.GetChild(1).gameObject.SetActive(true); //Activating the back purple shield on the hierarchie
                     break;
             }
-            
-
-
-           
         }
 
         public void HideItem()
         {
             if (_inventory.CurrentItemCount == 1)
             {
-                switch (ItemToDisplay)
+                switch (_itemNameToDisplay)
                 {
                     case "Disk":
                         GreenItem.SetActive(false); //Activating the empty game object green
@@ -117,8 +106,6 @@ namespace Items
                         break;
                 }
             }
-            
         }
     }
-
 }

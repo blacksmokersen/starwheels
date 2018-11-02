@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Items
+namespace ThrowingSystem
 {
-    public class ItemPositions : MonoBehaviour
+    public class ThrowPositions : MonoBehaviour
     {
         public Transform FrontPosition;
         public Transform BackPosition;

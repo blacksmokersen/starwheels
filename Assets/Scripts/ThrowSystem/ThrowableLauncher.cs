@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Items
+namespace ThrowingSystem
 {
-    [RequireComponent(typeof(ItemPositions))]
+    [RequireComponent(typeof(ThrowPositions))]
     public class ThrowableLauncher : MonoBehaviour
     {
         public Direction ThrowingDirection
@@ -27,15 +27,13 @@ namespace Items
         public float ForwardThrowingForce;
         public float TimesLongerThanHighThrow;
 
-        [SerializeField] private ProjectileLauncherSettings settings;
-
-        private ItemPositions _itemPositions;
+        private ThrowPositions _itemPositions;
 
         // CORE
 
         private void Awake()
         {
-            _itemPositions = GetComponent<ItemPositions>();
+            _itemPositions = GetComponent<ThrowPositions>();
         }
 
         // PUBLIC

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Multiplayer;
 using Bolt;
+using ThrowingSystem;
 
 namespace Items
 {
@@ -71,7 +72,7 @@ namespace Items
             OnItemGet.Invoke(item);
             CurrentItemCount = count;
             OnItemCountChange.Invoke(count);
-            
+
         }
 
         public void SetCount(int count)

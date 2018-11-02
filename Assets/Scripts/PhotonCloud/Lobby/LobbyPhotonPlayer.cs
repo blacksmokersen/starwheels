@@ -83,8 +83,6 @@ namespace Photon.Lobby
             SetupPlayer();
 
             _playerSettingsSO.ConnectionID = state.PlayerID;
-
-            DontDestroyOnLoad(gameObject);
         }
 
         public void OnPlayerListChanged(int idx)

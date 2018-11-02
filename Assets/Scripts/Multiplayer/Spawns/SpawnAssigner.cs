@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Bolt;
-using Photon.Lobby;
 
 namespace Multiplayer
 {
     [BoltGlobalBehaviour(BoltNetworkModes.Server)]
-    public class ServerSpawnGenerator : GlobalEventListener
+    public class SpawnAssigner : GlobalEventListener
     {
         public enum SpawnMode { Random, Deterministic }
 

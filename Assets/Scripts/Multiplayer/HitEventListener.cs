@@ -1,6 +1,6 @@
 ﻿using Bolt;
 
-public class KartEventListener : GlobalEventListener
+public class HitEventListener : GlobalEventListener
 {
     public override void OnEvent(PlayerHit evnt)
     {
