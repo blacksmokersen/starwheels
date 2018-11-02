@@ -6,7 +6,7 @@ using Multiplayer.Teams;
 
 namespace Network
 {
-    public class KartNetworkBehaviour : EntityBehaviour<IKartState>
+    public class KartMultiplayerSetup : EntityBehaviour<IKartState>
     {
         [SerializeField] private PlayerSettings _playerSettings;
 
@@ -24,6 +24,8 @@ namespace Network
         {
             state.SetTransforms(state.Transform, transform);
             state.SetAnimator(GetComponentInChildren<Animator>());
+            state.AddCallback("Team", ColorChanged);
+            state.AddCallback("Nickname", NameChanged);
 
             if (entity.isOwner)
             {
@@ -33,12 +35,6 @@ namespace Network
                 playerReadyEvent.Team = state.Team;
                 playerReadyEvent.Send();
             }
-
-            state.AddCallback("Team", ColorChanged);
-            state.AddCallback("Nickname", NameChanged);
-
-            ColorChanged();
-            NameChanged();
 
             var lobby = GameObject.Find("LobbyManager");
             if(lobby) lobby.SetActive(false);

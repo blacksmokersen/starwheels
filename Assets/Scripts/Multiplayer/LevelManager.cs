@@ -7,7 +7,7 @@ public class LevelManager : MonoBehaviour
     public static LevelManager Instance;
 
     // TODO : Separer le menu des fonctions
-    [SerializeField] private GameObject escapeMenu;
+    //[SerializeField] private GameObject escapeMenu;
     [SerializeField] private Button quitLevel;
     [SerializeField] private Button resetLevel;
 
@@ -34,10 +34,12 @@ public class LevelManager : MonoBehaviour
     {
         if (Input.GetButtonDown(Constants.Input.EscapeMenu))
             menuActivated = !menuActivated;
+        /*
         if (menuActivated)
             escapeMenu.SetActive(true);
         else
             escapeMenu.SetActive(false);
+        */
     }
 
     // PUBLIC
