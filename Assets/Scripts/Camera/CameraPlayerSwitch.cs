@@ -11,13 +11,11 @@ namespace CameraUtils
         public PlayerSettings PlayerSettingsSO;
 
         private SetKartCamera _setKartCamera;
-        private CinemachineVirtualCamera _cinemachineVirtualCamera;
         private GameObject _currentTarget;
 
         private void Awake()
         {
             _setKartCamera = GetComponent<SetKartCamera>();
-            _cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
         }
 
         public void SetCameraToNextPlayer()
