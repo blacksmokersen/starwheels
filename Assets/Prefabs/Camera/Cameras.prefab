@@ -89,11 +89,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4999250074767062}
-  - component: {fileID: 114975988317706942}
   - component: {fileID: 114178455221078388}
   - component: {fileID: 114769727691753222}
   - component: {fileID: 114246949737927122}
-  - component: {fileID: 114234007728769194}
+  - component: {fileID: 114691271307825630}
+  - component: {fileID: 114213982792045872}
+  - component: {fileID: 114306472253382052}
+  - component: {fileID: 114707741726061332}
+  - component: {fileID: 114819061569261648}
+  - component: {fileID: 114707109256323212}
   m_Layer: 0
   m_Name: PlayerCamera
   m_TagString: Untagged
@@ -370,7 +374,7 @@ Skybox:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1352335373918424}
   m_Enabled: 1
-  m_CustomSkybox: {fileID: 2100000, guid: 7d1430089afb5854892670b854d1d684, type: 2}
+  m_CustomSkybox: {fileID: 2100000, guid: e7471c7bc3e48f8408ba34ff15fec1e5, type: 2}
 --- !u!114 &114000564765989982
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -536,6 +540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanOnlyWatchTeam: 1
+  PlayerSettingsSO: {fileID: 11400000, guid: d3786b31f0466fb4a97bd3941281e55a, type: 2}
 --- !u!114 &114204134640476236
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -572,21 +577,17 @@ MonoBehaviour:
   m_SoftZoneHeight: 0.8
   m_BiasX: 0
   m_BiasY: 0
---- !u!114 &114234007728769194
+--- !u!114 &114213982792045872
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1421337181609992}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd27ffb076282ea4596eb31f02315847, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e628df7af1c7c14f94b72e31e6bee2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpeedCamMovements: 150
-  transposer: {fileID: 0}
-  composer: {fileID: 0}
-  crosshairIonBeam: {fileID: 2800000, guid: 93f5d256aa561204eb5055ec10541980, type: 3}
 --- !u!114 &114246949737927122
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -670,6 +671,17 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Cinemachine.CinemachineBrain+VcamEvent, Cinemachine, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114306472253382052
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1421337181609992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4856103365212e44991e543beef37520, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114312209979649388
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -863,6 +875,18 @@ MonoBehaviour:
   m_SoftZoneHeight: 0.8
   m_BiasX: 0
   m_BiasY: 0
+--- !u!114 &114691271307825630
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1421337181609992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a6047edef92fa54d888b864fd1ae1a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camBoostSettings: {fileID: 0}
 --- !u!114 &114696540935886252
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -872,6 +896,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114707109256323212
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1421337181609992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd27ffb076282ea4596eb31f02315847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpeedCamMovements: 100
+  transposer: {fileID: 0}
+  composer: {fileID: 0}
+  crosshairIonBeam: {fileID: 2800000, guid: 93f5d256aa561204eb5055ec10541980, type: 3}
+--- !u!114 &114707741726061332
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1421337181609992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bad0b0e57b234a34aa7e454d29b9d993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114726647596660244
@@ -928,7 +978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enabled: 0
---- !u!114 &114975988317706942
+--- !u!114 &114819061569261648
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -936,9 +986,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1421337181609992}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33b871421be7e004289002feef3104e9, type: 3}
+  m_Script: {fileID: 11500000, guid: 335ccab7b90ae1e41be3bc58a7c9b61e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxDistanceCamInBoost: 10
-  transposer: {fileID: 0}
-  autoCenterTiming: 1
+  kartToFollow: {fileID: 0}

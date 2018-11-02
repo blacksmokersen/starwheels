@@ -23,8 +23,9 @@ GameObject:
   - component: {fileID: 199494214417755938}
   - component: {fileID: 198961571802855014}
   - component: {fileID: 136808278217480694}
-  - component: {fileID: 114696918550793950}
   - component: {fileID: 82331756838676912}
+  - component: {fileID: 114954992984807780}
+  - component: {fileID: 114232220731031222}
   m_Layer: 0
   m_Name: IonBeamLaser
   m_TagString: Untagged
@@ -320,6 +321,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &114232220731031222
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1039182035529638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faf449d14c1b8214587b11af62a948e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OwnerKartRoot: {fileID: 0}
+  Team: 0
 --- !u!114 &114239382402133140
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -331,16 +345,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1642ea525a6a5a8489fa9ba7175520e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 1
-  SpeedOffset: 0.1
-  GrowingWarningSpeed: 60
-  MaxWarningScale: 0
-  onExplode: 0
-  DamagePlayer: 0
+  ionBeamLaserSettings: {fileID: 11400000, guid: 6a2a330bb79b10348b05400976d99964,
+    type: 2}
   EffectiveAOE: {fileID: 1061952050393796}
   WarningPosition: {fileID: 1715620537510334}
   ExplosionSource: {fileID: 82331756838676912}
---- !u!114 &114696918550793950
+--- !u!114 &114954992984807780
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -348,19 +358,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1039182035529638}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Script: {fileID: -36112512, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 0
-  OwnershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 0}
-  viewIdField: 0
-  InstantiationId: -1
-  isRuntimeInstantiated: 0
+  _sceneGuid: 
+  _serializerGuid: 6612d789-ac7e-410d-bc9e-901586e209f5
+  _prefabId: 8
+  _updateRate: 1
+  _autoFreezeProxyFrames: 0
+  _clientPredicted: 1
+  _allowInstantiateOnClient: 1
+  _persistThroughSceneLoads: 0
+  _sceneObjectDestroyOnDetach: 1
+  _sceneObjectAutoAttach: 1
+  _alwaysProxy: 0
+  _detachOnDisable: 1
+  _allowFirstReplicationWhenFrozen: 0
+  _autoRemoveChildEntities: 0
+  _entityBehaviourQueryOption: 0
+  _entityPriorityCalculatorQueryOption: 0
+  _entityReplicationFilterQueryOption: 0
 --- !u!136 &136621452132597412
 CapsuleCollider:
   m_ObjectHideFlags: 1

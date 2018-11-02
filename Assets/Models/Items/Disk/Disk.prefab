@@ -9,33 +9,17 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1407620922979834}
+  m_RootGameObject: {fileID: 1513270603398480}
   m_IsPrefabAsset: 1
---- !u!1 &1261600702800462
+--- !u!1 &1513270603398480
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4656129137587136}
-  - component: {fileID: 96504686309811316}
-  m_Layer: 0
-  m_Name: Trail
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1407620922979834
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4637467482429340}
-  - component: {fileID: 95240998258529354}
+  - component: {fileID: 4450202952290124}
+  - component: {fileID: 95895952235094416}
   m_Layer: 0
   m_Name: Disk
   m_TagString: Untagged
@@ -43,16 +27,16 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1511861152361068
+--- !u!1 &1828546029039728
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4181826198616430}
-  - component: {fileID: 33785297554864786}
-  - component: {fileID: 23257758034881950}
+  - component: {fileID: 4316146758416826}
+  - component: {fileID: 33890610231272120}
+  - component: {fileID: 23551818446111272}
   m_Layer: 0
   m_Name: Disk Mesh
   m_TagString: Untagged
@@ -60,53 +44,69 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4181826198616430
+--- !u!1 &1939647982532890
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4641479301991948}
+  - component: {fileID: 96080718454019310}
+  m_Layer: 0
+  m_Name: Trail
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4316146758416826
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1511861152361068}
+  m_GameObject: {fileID: 1828546029039728}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4637467482429340}
+  m_Father: {fileID: 4450202952290124}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4637467482429340
+--- !u!4 &4450202952290124
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1407620922979834}
+  m_GameObject: {fileID: 1513270603398480}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4181826198616430}
-  - {fileID: 4656129137587136}
+  - {fileID: 4316146758416826}
+  - {fileID: 4641479301991948}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4656129137587136
+--- !u!4 &4641479301991948
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1261600702800462}
+  m_GameObject: {fileID: 1939647982532890}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.442, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4637467482429340}
+  m_Father: {fileID: 4450202952290124}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!23 &23257758034881950
+--- !u!23 &23551818446111272
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1511861152361068}
+  m_GameObject: {fileID: 1828546029039728}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -136,20 +136,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33785297554864786
+--- !u!33 &33890610231272120
 MeshFilter:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1511861152361068}
-  m_Mesh: {fileID: 4300006, guid: 9a79a7961cf1e8f45a2f5f436d4522c6, type: 3}
---- !u!95 &95240998258529354
+  m_GameObject: {fileID: 1828546029039728}
+  m_Mesh: {fileID: 4300006, guid: 66f1d32ac189e24499954afbd6a8f229, type: 3}
+--- !u!95 &95895952235094416
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1407620922979834}
+  m_GameObject: {fileID: 1513270603398480}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 4dd04843e1d50b2489390e17e3115de8, type: 2}
@@ -161,13 +161,13 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!96 &96504686309811316
+--- !u!96 &96080718454019310
 TrailRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1261600702800462}
+  m_GameObject: {fileID: 1939647982532890}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -227,8 +227,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.10196079, g: 0.882353, b: 0.7686275, a: 1}
-      key1: {r: 0.04705883, g: 0.31764707, b: 0.49411768, a: 0}
+      key0: {r: 0.12378627, g: 1, b: 0.051886797, a: 1}
+      key1: {r: 0.29846752, g: 0.4433962, b: 0.07738519, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
