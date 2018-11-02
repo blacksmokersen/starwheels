@@ -10,28 +10,19 @@ namespace Menu
         [SerializeField] private Text playerNameText;
         [SerializeField] private Image backgroundColor;
 
-        private Player _player;
-
         // CORE
 
         // PUBLIC
 
         public int GetPlayerId()
         {
-            return 1;// _player.ActorNumber;
+            return 1;
         }
 
         public void SetPlayer(Player player)
         {
-            _player = player;
             SetName(player.Nickname);
             SetTeam(player.Team);
-
-            /*if (PhotonNetwork.LocalPlayer == player)
-            {
-                playerNameText.color = Color.yellow;
-            }
-            */
         }
 
         public void SetName(string name)

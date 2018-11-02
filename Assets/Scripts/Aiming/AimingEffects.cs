@@ -7,7 +7,6 @@ namespace Aiming
         [Header("Particles")]
         public float AimEffectMaxAngle = 45;
         [SerializeField] private ParticleSystem aimParticles;
-        [SerializeField] private int numberOfParticles = 300;
 
         // CORE
 
