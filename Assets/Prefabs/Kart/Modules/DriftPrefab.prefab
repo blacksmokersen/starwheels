@@ -162,6 +162,16 @@ MonoBehaviour:
   Grounded: 0
   distanceForGrounded: 0.5
   offset: {x: 0, y: 0, z: 0}
+  OnHitGround:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnLeftGround:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114245998204012360
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -318,6 +328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Settings: {fileID: 11400000, guid: c599c944b5b41b446ab1e3ef29a19b81, type: 2}
+  clampSpeed: {fileID: 0}
 --- !u!114 &114900606784640444
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -329,6 +340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 824c354c0cfab5a47b59553eeda8a4a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
 --- !u!198 &198545270054127530
 ParticleSystem:
   m_ObjectHideFlags: 1
