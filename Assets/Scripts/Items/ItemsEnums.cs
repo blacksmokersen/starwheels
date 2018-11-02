@@ -6,12 +6,4 @@
         Self,
         None
     }
-
-    public enum ThrowableType
-    {
-        Straight,
-        Arc,
-        Drop,
-        None
-    }
 }

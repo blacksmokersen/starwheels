@@ -10,7 +10,6 @@ namespace Boost
         [SerializeField] private ClampSpeed clampSpeed;
 
         private Rigidbody _rigidBody;
-        private Coroutine _turboCoroutine;
         private Coroutine _physicsBoostCoroutine;
 
         private float _controlMagnitude;
@@ -24,7 +23,7 @@ namespace Boost
         public void StartTurbo()
         {
             _controlMagnitude = clampSpeed.ControlMaxSpeed;
-            _turboCoroutine = StartCoroutine(EnterTurbo());
+            StartCoroutine(EnterTurbo());
         }
 
         private IEnumerator EnterTurbo()
@@ -33,12 +32,12 @@ namespace Boost
             {
                 StopCoroutine(_physicsBoostCoroutine);
             }
-            _physicsBoostCoroutine = StartCoroutine(BoostPhysic(Settings.BoostDuration, Settings.IncreaseMaxSpeedBy, Settings.BoostSpeed));
+            _physicsBoostCoroutine = StartCoroutine(PhysicsBoost(Settings.BoostDuration, Settings.IncreaseMaxSpeedBy, Settings.BoostSpeed));
 
             yield return new WaitForSeconds(Settings.BoostDuration);
         }
 
-        public IEnumerator BoostPhysic(float boostDuration, float magnitudeBoost, float speedBoost)
+        public IEnumerator PhysicsBoost(float boostDuration, float magnitudeBoost, float speedBoost)
         {
             clampSpeed.MaxSpeed = Mathf.Clamp(clampSpeed.MaxSpeed, 0, _controlMagnitude) + magnitudeBoost;
 

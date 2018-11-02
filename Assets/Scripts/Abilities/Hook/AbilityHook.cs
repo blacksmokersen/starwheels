@@ -42,14 +42,15 @@ namespace Abilities
         {
             if (_canUseAbility)
             {
+                /*
                 var position = new Vector3(transform.position.x, transform.position.y + 0.4f, transform.position.z);
                 var hook = BoltNetwork.Instantiate(prefabHook, position, transform.rotation);
-                //  var hook = PhotonNetwork.Instantiate(Constants.Prefab.HookObject, position, transform.rotation);
+                var hook = PhotonNetwork.Instantiate(Constants.Prefab.HookObject, position, transform.rotation);
                 var hookBehaviour = hook.GetComponent<HookBehaviour>();
-              //   hookBehaviour.OwnerKartInventory = _kartInventory;
-              //   hookBehaviour.SetOwner(_kartInventory.transform);
-                // StartCoroutine(AbilityCooldown());
-
+                hookBehaviour.OwnerKartInventory = _kartInventory;
+                hookBehaviour.SetOwner(_kartInventory.transform);
+                StartCoroutine(AbilityCooldown());
+                */
             }
         }
     }
