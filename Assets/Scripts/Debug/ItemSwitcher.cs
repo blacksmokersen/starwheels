@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using Items;
+using Bolt;
 
 namespace KBA.Debug
 {
     [RequireComponent(typeof(Inventory))]
-    public class ItemSwitcher : MonoBehaviour, IControllable
+    public class ItemSwitcher : EntityBehaviour, IControllable
     {
         private Item[] _itemsList;
         private Inventory _inventory;
@@ -18,7 +19,9 @@ namespace KBA.Debug
             _inventory = GetComponent<Inventory>();
         }
 
-        private void Update()
+        // BOLT
+
+        public override void SimulateController()
         {
             MapInputs();
         }
