@@ -2,6 +2,7 @@
 using Multiplayer;
 using Bolt;
 using ThrowingSystem;
+using System.Collections;
 
 namespace Items
 {
@@ -18,6 +19,7 @@ namespace Items
         public IntEvent OnItemCountChange;
 
         private ThrowableLauncher _projectileLauncher;
+        private bool _canUseItem = true;
 
         // CORE
 
@@ -52,11 +54,12 @@ namespace Items
 
         public void UseItem()
         {
-            if (CurrentItemCount > 0 || CurrentItem != null)
+            if (CurrentItemCount > 0 && CurrentItem != null && _canUseItem)
             {
                 InstantiateItem();
                 OnItemUse.Invoke(CurrentItem);
                 SetCount(CurrentItemCount - 1);
+                StartCoroutine(AntiSpamRoutine());
             }
         }
 
@@ -99,6 +102,13 @@ namespace Items
                 var throwable = instantiatedItem.GetComponent<Throwable>();
                 _projectileLauncher.Throw(throwable);
             }
+        }
+
+        private IEnumerator AntiSpamRoutine()
+        {
+            _canUseItem = false;
+            yield return new WaitForSeconds(0.5f);
+            _canUseItem = true;
         }
     }
 }

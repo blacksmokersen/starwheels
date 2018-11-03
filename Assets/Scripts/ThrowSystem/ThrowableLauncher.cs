@@ -5,7 +5,16 @@ namespace ThrowingSystem
     [RequireComponent(typeof(ThrowPositions))]
     public class ThrowableLauncher : MonoBehaviour
     {
-        public Direction ThrowingDirection
+        [Header("LaunchType: Straight")]
+        public float Speed;
+
+        [Header("LaunchType: Arc")]
+        public float ForwardThrowingForce;
+        public float TimesLongerThanHighThrow;
+
+
+        private ThrowPositions _itemPositions;
+        private Direction _throwingDirection
         {
             get
             {
@@ -19,15 +28,6 @@ namespace ThrowingSystem
                     return Direction.Default;
             }
         }
-
-        [Header("LaunchType: Straight")]
-        public float Speed;
-
-        [Header("LaunchType: Arc")]
-        public float ForwardThrowingForce;
-        public float TimesLongerThanHighThrow;
-
-        private ThrowPositions _itemPositions;
 
         // CORE
 
@@ -49,7 +49,7 @@ namespace ThrowingSystem
                     StraightThrow(throwable);
                     break;
                 case ThrowableType.Drop:
-                    if(ThrowingDirection == Direction.Forward)
+                    if (_throwingDirection == Direction.Forward)
                     {
                         ArcThrow(throwable);
                     }
@@ -68,14 +68,14 @@ namespace ThrowingSystem
             Rigidbody rb = throwable.GetComponent<Rigidbody>();
             Vector3 rot = Vector3.zero;
 
-            if (ThrowingDirection == Direction.Forward || ThrowingDirection == Direction.Default)
+            if (_throwingDirection == Direction.Forward || _throwingDirection == Direction.Default)
             {
                 throwable.transform.position = _itemPositions.FrontPosition.position;
                 rot = new Vector3(0, transform.rotation.eulerAngles.y, 0);
                 var aimVector = transform.forward;
                 rb.AddForce((aimVector + transform.up / TimesLongerThanHighThrow) * ForwardThrowingForce, ForceMode.Impulse);
             }
-            else if (ThrowingDirection == Direction.Backward)
+            else if (_throwingDirection == Direction.Backward)
             {
                 Drop(throwable);
             }
@@ -87,13 +87,13 @@ namespace ThrowingSystem
             Rigidbody rb = throwable.GetComponent<Rigidbody>();
             Vector3 rot = Vector3.zero;
 
-            if (ThrowingDirection == Direction.Forward || ThrowingDirection == Direction.Default)
+            if (_throwingDirection == Direction.Forward || _throwingDirection == Direction.Default)
             {
                 throwable.transform.position = _itemPositions.FrontPosition.position;
                 rot = new Vector3(0, transform.rotation.eulerAngles.y, 0);
                 rb.velocity = transform.forward.normalized * Speed;
             }
-            else if (ThrowingDirection == Direction.Backward)
+            else if (_throwingDirection == Direction.Backward)
             {
                 throwable.transform.position = _itemPositions.BackPosition.position;
                 rot = new Vector3(0, transform.rotation.eulerAngles.y + 180, 0);
@@ -104,11 +104,11 @@ namespace ThrowingSystem
 
         private void Drop(Throwable throwable)
         {
-            if (ThrowingDirection == Direction.Forward)
+            if (_throwingDirection == Direction.Forward)
             {
                 throwable.transform.position = _itemPositions.FrontPosition.position;
             }
-            else if (ThrowingDirection == Direction.Backward || ThrowingDirection == Direction.Default)
+            else if (_throwingDirection == Direction.Backward || _throwingDirection == Direction.Default)
             {
                 throwable.transform.position = _itemPositions.BackPosition.position;
             }
