@@ -384,7 +384,6 @@ namespace Photon.Lobby
                 BoltEntity entity = BoltNetwork.Instantiate(BoltPrefabs.PlayerInfo);
 
                 LobbyPhotonPlayer lobbyPlayer = entity.GetComponent<LobbyPhotonPlayer>();
-                DontDestroyOnLoad(lobbyPlayer.gameObject);
 
                 lobbyPlayer.connection = connection;
                 lobbyPlayer.SetPlayerID((int) connection.ConnectionId);
