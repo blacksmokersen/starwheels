@@ -9,7 +9,10 @@ namespace Items
         {
             if (BoltNetwork.isConnected)
             {
-                StartCoroutine(DelayedDestroy(timeBeforeDestroy));
+                if (timeBeforeDestroy != 0f)
+                    BoltEntity.Destroy(gameObject, timeBeforeDestroy);
+                else
+                    BoltNetwork.Destroy(gameObject);
             }
             else
             {
