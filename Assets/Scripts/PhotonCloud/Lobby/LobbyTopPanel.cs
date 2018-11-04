@@ -1,45 +1,47 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 namespace Photon.Lobby
 {
     public class LobbyTopPanel : MonoBehaviour
     {
-        public bool isInGame = false;
+        public bool IsInGame = false;
 
-        protected bool isDisplayed = true;
-        protected Image panelImage;
+        private bool _isDisplayed = true;
+        private Image _panelImage;
 
-        void Start()
+        // CORE
+
+        private void Start()
         {
-            panelImage = GetComponent<Image>();
+            _panelImage = GetComponent<Image>();
         }
 
-
-        void Update()
+        private void Update()
         {
-            if (!isInGame)
+            if (!IsInGame)
                 return;
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                ToggleVisibility(!isDisplayed);
+                ToggleVisibility(!_isDisplayed);
             }
-
         }
+
+        // PUBLIC
 
         public void ToggleVisibility(bool visible)
         {
-            isDisplayed = visible;
+            _isDisplayed = visible;
+
             foreach (Transform t in transform)
             {
-                t.gameObject.SetActive(isDisplayed);
+                t.gameObject.SetActive(_isDisplayed);
             }
 
-            if (panelImage != null)
+            if (_panelImage != null)
             {
-                panelImage.enabled = isDisplayed;
+                _panelImage.enabled = _isDisplayed;
             }
         }
     }

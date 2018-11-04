@@ -1,29 +1,28 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 namespace Photon.Lobby
 {
     public class LobbyInfoPanel : MonoBehaviour
     {
-        public Text infoText;
-        public Text buttonText;
-        public Button singleButton;
+        [SerializeField] private Text _infoText;
+        [SerializeField] private Text _buttonText;
+        [SerializeField] private Button _singleButton;
 
         public void Display(string info, string buttonInfo, UnityEngine.Events.UnityAction buttonClbk)
         {
-            infoText.text = info;
+            _infoText.text = info;
 
-            buttonText.text = buttonInfo;
+            _buttonText.text = buttonInfo;
 
-            singleButton.onClick.RemoveAllListeners();
+            _singleButton.onClick.RemoveAllListeners();
 
             if (buttonClbk != null)
             {
-                singleButton.onClick.AddListener(buttonClbk);
+                _singleButton.onClick.AddListener(buttonClbk);
             }
 
-            singleButton.onClick.AddListener(() => { gameObject.SetActive(false); });
+            _singleButton.onClick.AddListener(() => { gameObject.SetActive(false); });
 
             gameObject.SetActive(true);
         }

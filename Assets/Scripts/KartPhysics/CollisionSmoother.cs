@@ -39,7 +39,6 @@ namespace KartPhysics
                 if (_isStuck)
                 {
                     BounceOut(collision, 8f);
-                    Debug.Log("Bouncing out of of stuck state.");
                 }
             }
         }

@@ -1,15 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine;
 using Bolt.a2s;
-using UnityEngine;
 
-[BoltGlobalBehaviour("PhotonGame")]
-public class PhotonGameSceneController : Bolt.GlobalEventListener
+public class A2SExample : Bolt.GlobalEventListener
 {
     public override void SceneLoadLocalDone(string map)
     {
         BoltConsole.Write("Spawn Player on map " + map, Color.yellow);
-        //BomberPlayerController.Spawn();
 
         if (BoltNetwork.isServer)
         {
