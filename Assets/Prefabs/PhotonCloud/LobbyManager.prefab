@@ -626,7 +626,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &179948
 GameObject:
   m_ObjectHideFlags: 1
@@ -1173,7 +1173,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 22495014}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1548,7 +1548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 763992d85d3f6d4428454c2a968ce084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isInGame: 0
+  IsInGame: 0
 --- !u!114 &11426276
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1766,9 +1766,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d17c9f1a79cf43479d9ac49a7e77a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  infoText: {fileID: 11422884}
-  buttonText: {fileID: 11499128}
-  singleButton: {fileID: 11480484}
+  _infoText: {fileID: 11422884}
+  _buttonText: {fileID: 11499128}
+  _singleButton: {fileID: 11480484}
 --- !u!114 &11442388
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2361,28 +2361,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38de513803c5e60498ad31fbc327b120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LobbyPhotonPlayer: {fileID: 0}
-  lobbyScene:
-    sceneAsset: {fileID: 102900000, guid: 42d6ac873a5b84d439478f72d40c21ce, type: 3}
-    sceneName: bolt_samples/NEW-PhotonCloud/demo_lobby/Scenes/PhotonLobby
-  gameScene:
-    sceneAsset: {fileID: 102900000, guid: a92b0be0c29428541a1bd4dcb708bb3b, type: 3}
-    sceneName: bolt_samples/NEW-PhotonCloud/demo_lobby/Scenes/PhotonGame
-  minPlayers: 1
-  prematchCountdown: 5
-  mainGameMenu: {fileID: 0}
-  mapDropDownMenu: {fileID: 114306790696908604}
-  topPanel: {fileID: 11424994}
-  mainMenuPanel: {fileID: 22442386}
-  lobbyPanel: {fileID: 22443498}
-  infoPanel: {fileID: 11442006}
-  countdownPanel: {fileID: 11413810}
-  addPlayerButton: {fileID: 161020}
-  backButton: {fileID: 114213434210946312}
-  StartButton: {fileID: 11477488}
-  statusInfo: {fileID: 11415712}
-  hostInfo: {fileID: 11403930}
-  _playerSettings: {fileID: 0}
+  _lobbyScene:
+    sceneAsset: {fileID: 0}
+    sceneName: 
+  _gameScene:
+    sceneAsset: {fileID: 0}
+    sceneName: 
+  _prematchCountdown: 5
+  _mainGameMenu: {fileID: 148054}
+  _mapDropDownMenu: {fileID: 114306790696908604}
+  TopPanel: {fileID: 11424994}
+  _mainMenuPanel: {fileID: 22442386}
+  _lobbyPanel: {fileID: 22443498}
+  _infoPanel: {fileID: 11442006}
+  _countdownPanel: {fileID: 11413810}
+  _currentPanel: {fileID: 0}
+  _backButton: {fileID: 114213434210946312}
+  _addPlayerButton: {fileID: 161020}
+  _startButton: {fileID: 11477488}
+  _statusInfo: {fileID: 11415712}
+  _hostInfo: {fileID: 11403930}
 --- !u!114 &11476426
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2506,10 +2504,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fc8e7df4caaef14e97fb5dbb4825c5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobbyManager: {fileID: 11475086}
-  serverListRect: {fileID: 22417688}
-  serverEntryPrefab: {fileID: 104980, guid: 9a1af8c2b03c38c43a3e9c2b43db4483, type: 2}
-  noServerFound: {fileID: 198946}
+  _lobbyManager: {fileID: 0}
+  _serverListRect: {fileID: 0}
+  _serverEntryPrefab: {fileID: 0}
+  _noServerFound: {fileID: 0}
 --- !u!114 &11478402
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3006,9 +3004,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5156c0b327b8dd45a725d337f49b61c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerListContentTransform: {fileID: 22401550}
-  warningDirectPlayServer: {fileID: 199766}
-  addButtonRow: {fileID: 22459014}
+  _playerListContentTransform: {fileID: 22401550}
+  _warningDirectPlayServer: {fileID: 0}
+  _addButtonRow: {fileID: 22432700}
 --- !u!222 &22203258
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -3386,7 +3384,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.00006077071}
   m_SizeDelta: {x: -83, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &22402218
@@ -4261,7 +4259,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
