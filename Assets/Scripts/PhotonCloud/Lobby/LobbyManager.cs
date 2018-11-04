@@ -81,7 +81,7 @@ namespace Photon.Lobby
             _startButton.gameObject.SetActive(false);
             GetComponent<Canvas>().enabled = true;
 
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
             SetServerInfo("Offline", "None");
         }
 
