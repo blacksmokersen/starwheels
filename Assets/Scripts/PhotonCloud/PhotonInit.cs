@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 using System;
 using UdpKit;
 using Bolt;
@@ -9,9 +8,8 @@ using Bolt.photon;
 
 namespace Photon
 {
-    public class PhotonInit : Bolt.GlobalEventListener
+    public class PhotonInit : GlobalEventListener
     {
-        // helper enum and attribute to hold which mode application is running on
         enum State
         {
             SelectMode,
@@ -181,7 +179,7 @@ namespace Photon
                 {
                     ServerConnectToken connectToken = new ServerConnectToken
                     {
-                        data = "ConnectTokenData"
+                        Data = "ConnectTokenData"
                     };
 
                     BoltNetwork.Connect(photonSession, connectToken);

@@ -1,84 +1,88 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Networking;
-using UnityEngine.Networking.Match;
-using System.Collections;
-using System.Collections.Generic;
-using System;
+﻿using System;
+using UnityEngine;
 using UdpKit;
 
 namespace Photon.Lobby
 {
+    /*
+     * UI elements and logic of the server list
+     */
     public class LobbyServerList : Bolt.GlobalEventListener
     {
-        public LobbyManager lobbyManager;
+        [Header("Server list")]
+        [SerializeField] private LobbyManager _lobbyManager;
+        [SerializeField] private RectTransform _serverListRect;
+        [SerializeField] private GameObject _serverEntryPrefab;
+        [SerializeField] private GameObject _noServerFound;
 
-        public RectTransform serverListRect;
-        public GameObject serverEntryPrefab;
-        public GameObject noServerFound;
+        private int _currentPage = 0;
 
-        protected int currentPage = 0;
-        protected int previousPage = 0;
+        static Color OddServerColor = new Color(1.0f, 1.0f, 1.0f, 1.0f); // White
+        static Color EvenServerColor = new Color(.94f, .94f, .94f, 1.0f); // Slightly gray
 
-        static Color OddServerColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-        static Color EvenServerColor = new Color(.94f, .94f, .94f, 1.0f);
+        // CORE
 
-        new void OnEnable()
+        private new void OnEnable()
         {
             base.OnEnable();
 
-            currentPage = 0;
-            previousPage = 0;
+            _currentPage = 0;
 
-            foreach (Transform t in serverListRect)
+            foreach (Transform t in _serverListRect)
+            {
                 Destroy(t.gameObject);
+            }
 
-            noServerFound.SetActive(false);
+            _noServerFound.SetActive(false);
 
             RequestPage(0);
         }
 
-        public void ChangePage(int dir)
-        {
-            int newPage = Mathf.Max(0, currentPage + dir);
-
-            //if we have no server currently displayed, need we need to refresh page0 first instead of trying to fetch any other page
-            if (noServerFound.activeSelf)
-                newPage = 0;
-
-            RequestPage(newPage);
-        }
-
-        public void RequestPage(int page)
-        {
-            previousPage = currentPage;
-            currentPage = page;
-		}
+        // PUBLIC
 
         public override void SessionListUpdated(Map<Guid, UdpSession> matches)
         {
             if (matches.Count == 0)
             {
-                noServerFound.SetActive(true);
+                _noServerFound.SetActive(true);
                 return;
             }
 
-            noServerFound.SetActive(false);
-            foreach (Transform t in serverListRect)
+            _noServerFound.SetActive(false);
+            foreach (Transform t in _serverListRect)
+            {
                 Destroy(t.gameObject);
+            }
 
-            int i = 0;
+            int serverCount = 0;
             foreach (var pair in matches)
             {
                 UdpSession udpSession = pair.Value;
 
-                GameObject o = Instantiate(serverEntryPrefab) as GameObject;
+                GameObject serverEntry = Instantiate(_serverEntryPrefab) as GameObject;
 
-                o.GetComponent<LobbyServerEntry>().Populate(udpSession, lobbyManager, (i % 2 == 0) ? OddServerColor : EvenServerColor);
-                o.transform.SetParent(serverListRect, false);
+                serverEntry.GetComponent<LobbyServerEntry>().Populate(udpSession, _lobbyManager, (serverCount % 2 == 0) ? OddServerColor : EvenServerColor);
+                serverEntry.transform.SetParent(_serverListRect, false);
 
-                ++i;
+                ++serverCount;
             }
+        }
+
+        public void ChangePage(int dir)
+        {
+            int newPage = Mathf.Max(0, _currentPage + dir);
+
+            if (_noServerFound.activeSelf)
+                newPage = 0;
+
+            RequestPage(newPage);
+        }
+
+        // PRIVATE
+
+        private void RequestPage(int page)
+        {
+            _currentPage = page;
         }
     }
 }

@@ -4,51 +4,19 @@ using System.Collections;
 using Bolt;
 using UdpKit;
 using System;
-using UnityEngine.SceneManagement;
-using Multiplayer;
 using Utilities;
 
 namespace Photon.Lobby
 {
+    /*
+     * Logic code for the lobby
+     *
+     */
     public class LobbyManager : GlobalEventListener
     {
-        static public LobbyManager s_Singleton;
-        public LobbyPhotonPlayer LobbyPhotonPlayer;
+        static public LobbyManager Instance;
 
-        [Header("Lobby Configuration")]
-        public SceneField lobbyScene;
-        public SceneField gameScene;
-        public int minPlayers = 2;
-
-        [Header("UI Lobby")]
-        [Tooltip("Time in second between all players ready & match start")]
-        public float prematchCountdown = 5.0f;
-
-        [Space]
-        [Header("UI Reference")]
-        [SerializeField] private GameObject mainGameMenu;
-        [SerializeField] private Dropdown mapDropDownMenu;
-        public LobbyTopPanel topPanel;
-
-        public RectTransform mainMenuPanel;
-        public RectTransform lobbyPanel;
-
-        public LobbyInfoPanel infoPanel;
-        public LobbyCountdownPanel countdownPanel;
-        public GameObject addPlayerButton;
-
-        protected RectTransform currentPanel;
-
-        public Button backButton;
-        public Button StartButton;
-
-        public Text statusInfo;
-        public Text hostInfo;
-
-        protected bool _isCountdown = false;
-        protected string _matchName;
-
-        public string matchHost
+        public string MatchHost
         {
             get
             {
@@ -68,146 +36,64 @@ namespace Photon.Lobby
             }
         }
 
-        void Start()
-        {
-            s_Singleton = this;
-            currentPanel = mainMenuPanel;
+        [Header("Lobby Configuration")]
+        [SerializeField] private SceneField _lobbyScene;
+        [SerializeField] private SceneField _gameScene;
 
-            backButton.gameObject.SetActive(true);
-            StartButton.gameObject.SetActive(false);
+        [Header("UI Lobby")]
+        [Tooltip("Time in second between all players ready & match start")]
+        [SerializeField] private float _prematchCountdown = 5.0f;
+
+        [Space]
+        [Header("UI Reference")]
+        [SerializeField] private GameObject _mainGameMenu;
+        [SerializeField] private Dropdown _mapDropDownMenu;
+
+        [Header("Panels")]
+        public LobbyTopPanel TopPanel;
+        [SerializeField] private RectTransform _mainMenuPanel;
+        [SerializeField] private RectTransform _lobbyPanel;
+        [SerializeField] private LobbyInfoPanel _infoPanel;
+        [SerializeField] private LobbyCountdownPanel _countdownPanel;
+        [SerializeField] private RectTransform _currentPanel;
+
+        [Header("Buttons")]
+        [SerializeField] private Button _backButton;
+        [SerializeField] private GameObject _addPlayerButton;
+        [SerializeField] private Button _startButton;
+        public BackButtonDelegate BackDelegate;
+
+        [Header("Info Texts")]
+        [SerializeField] private Text _statusInfo;
+        [SerializeField] private Text _hostInfo;
+
+        private bool _countdownStarted = false;
+        private string _matchName;
+
+        // CORE
+
+        private void Start()
+        {
+            Instance = this;
+            _currentPanel = _mainMenuPanel;
+
+            _backButton.gameObject.SetActive(true);
+            _startButton.gameObject.SetActive(false);
             GetComponent<Canvas>().enabled = true;
 
-            DontDestroyOnLoad(gameObject);
-
+            //DontDestroyOnLoad(gameObject);
             SetServerInfo("Offline", "None");
-
-            Debug.Log("Lobby Scene: " + lobbyScene.SimpleSceneName);
-            Debug.Log("Game Scene: " + gameScene.SimpleSceneName);
         }
 
-        void FixedUpdate()
+        private void FixedUpdate()
         {
-            if (BoltNetwork.isServer && !_isCountdown)
+            if (BoltNetwork.isServer && !_countdownStarted)
             {
                 VerifyReady();
             }
         }
 
-        public override void SceneLoadLocalDone(string map)
-        {
-            BoltConsole.Write("New scene: " + map, Color.yellow);
-
-            try
-            {
-                if (lobbyScene.SimpleSceneName == map)
-                {
-                    ChangeTo(mainMenuPanel);
-                    topPanel.isInGame = false;
-                }
-                else if (gameScene.SimpleSceneName == map)
-                {
-                    ChangeTo(null);
-
-                    backDelegate = Stop;
-                    topPanel.isInGame = true;
-                    topPanel.ToggleVisibility(false);
-
-                    // Spawn Player
-                    // SpawnGamePlayer();
-                }
-
-            }
-            catch (Exception e)
-            {
-                BoltConsole.Write(e.Message, Color.red);
-                BoltConsole.Write(e.Source, Color.red);
-                BoltConsole.Write(e.StackTrace, Color.red);
-            }
-        }
-
-        public void ChangeTo(RectTransform newPanel)
-        {
-            if (currentPanel != null)
-            {
-                currentPanel.gameObject.SetActive(false);
-            }
-
-            if (newPanel != null)
-            {
-                newPanel.gameObject.SetActive(true);
-            }
-
-            currentPanel = newPanel;
-
-            if (currentPanel != mainMenuPanel)
-            {
-                backButton.gameObject.SetActive(true);
-            }
-            else
-            {
-                // backButton.gameObject.SetActive(false);
-                SetServerInfo("Offline", "None");
-            }
-        }
-
-        public void DisplayIsConnecting()
-        {
-            var _this = this;
-            infoPanel.Display("Connecting...", "Cancel", () => { _this.backDelegate(); });
-        }
-
-        public void SetServerInfo(string status, string host)
-        {
-            statusInfo.text = status;
-            hostInfo.text = host;
-        }
-
-        public delegate void BackButtonDelegate();
-        public BackButtonDelegate backDelegate;
-        public void GoBackButton()
-        {
-            if (currentPanel == mainMenuPanel)
-            {
-                gameObject.SetActive(false);
-                mainGameMenu.SetActive(true);
-            }
-            else
-            {
-                backDelegate();
-                topPanel.isInGame = false;
-            }
-        }
-
-        // ----------------- Server management
-
-        private void StartServer()
-        {
-            BoltLauncher.StartServer();
-        }
-
-        public void StartClient()
-        {
-            BoltLauncher.StartClient();
-        }
-
-        public void Stop()
-        {
-            if (BoltNetwork.isConnected)
-                BoltLauncher.Shutdown();
-        }
-
-        public void CreateMatch(string matchName, bool dedicated = false)
-        {
-            StartServer();
-            _matchName = matchName;
-        }
-
-        public void SimpleBackClbk()
-        {
-            ChangeTo(mainMenuPanel);
-        }
-
-        // ----------------- Server callbacks ------------------
+        // BOLT CALLBACKS
 
         public override void BoltStartBegin()
         {
@@ -232,10 +118,10 @@ namespace Photon.Lobby
                 BoltNetwork.SetServerInfo(_matchName, token);
 
                 // Setup Host
-                infoPanel.gameObject.SetActive(false);
-                ChangeTo(lobbyPanel);
+                _infoPanel.gameObject.SetActive(false);
+                ChangeTo(_lobbyPanel);
 
-                backDelegate = Stop;
+                BackDelegate = Shutdown;
                 SetServerInfo("Host", "");
 
                 // Build Server Entity
@@ -245,7 +131,7 @@ namespace Photon.Lobby
             }
             else if (BoltNetwork.isClient)
             {
-                backDelegate = Stop;
+                BackDelegate = Shutdown;
                 SetServerInfo("Client", "");
             }
         }
@@ -253,98 +139,42 @@ namespace Photon.Lobby
         public override void BoltShutdownBegin(AddCallback registerDoneCallback)
         {
             _matchName = "";
-
-            /*
-            if (BoltNetwork.isServer)
-            {
-                BoltNetwork.LoadScene(lobbyScene.SimpleSceneName);
-            }
-            else if (BoltNetwork.isClient)
-            {
-                SceneManager.LoadScene(lobbyScene.SimpleSceneName);
-            }
-
-
-            registerDoneCallback(() =>
-            {
-                Debug.Log("Shutdown Done");
-                ChangeTo(mainMenuPanel);
-            });
-            */
         }
 
-        // --- Countdown management
-
-        void VerifyReady()
+        public override void SceneLoadLocalDone(string map)
         {
-            if (!LobbyPlayerList.Ready) { return; }
+            BoltConsole.Write("Scene loaded : " + map, Color.yellow);
 
-            bool allReady = true;
-            int readyCount = 0;
-
-            foreach (LobbyPhotonPlayer player in LobbyPlayerList._instance.AllPlayers)
+            try
             {
-                allReady = allReady && player.IsReady;
-
-                if (!allReady) { break; }
-
-                readyCount++;
-            }
-
-            if (allReady && readyCount >= minPlayers)
-            {
-                _isCountdown = true;
-                StartButton.gameObject.SetActive(true);
-            }
-            else
-            {
-                StartButton.gameObject.SetActive(false);
-            }
-        }
-
-        public void StartGame()
-        {
-            StartCoroutine(ServerCountdownCoroutine());
-        }
-
-        public IEnumerator ServerCountdownCoroutine()
-        {
-            float remainingTime = prematchCountdown;
-            int floorTime = Mathf.FloorToInt(remainingTime);
-
-            LobbyCountdown countdown;
-
-            while (remainingTime > 0)
-            {
-                yield return null;
-
-                remainingTime -= Time.deltaTime;
-                int newFloorTime = Mathf.FloorToInt(remainingTime);
-
-                if (newFloorTime != floorTime)
+                if (_lobbyScene.SimpleSceneName == map)
                 {
-                    floorTime = newFloorTime;
-
-                    countdown = LobbyCountdown.Create(GlobalTargets.Everyone);
-                    countdown.Time = floorTime;
-                    countdown.Send();
+                    ChangeTo(_mainMenuPanel);
+                    TopPanel.IsInGame = false;
                 }
+                else if (_gameScene.SimpleSceneName == map)
+                {
+                    ChangeTo(null);
+
+                    BackDelegate = Shutdown;
+                    TopPanel.IsInGame = true;
+                    TopPanel.ToggleVisibility(false);
+                }
+
             }
-
-            countdown = LobbyCountdown.Create(GlobalTargets.Everyone);
-            countdown.Time = 0;
-            countdown.Send();
-
-
-            BoltNetwork.LoadScene(mapDropDownMenu.options[mapDropDownMenu.value].text);
+            catch (Exception e)
+            {
+                BoltConsole.Write(e.Message, Color.red);
+                BoltConsole.Write(e.Source, Color.red);
+                BoltConsole.Write(e.StackTrace, Color.red);
+            }
         }
 
-        // ----------------- Client callbacks ------------------
-
+        #region Client Callbacks
         public override void OnEvent(LobbyCountdown evnt)
         {
-            countdownPanel.UIText.text = "Match Starting in " + evnt.Time;
-            countdownPanel.gameObject.SetActive(evnt.Time != 0);
+            _countdownPanel.UIText.text = "Match Starting in " + evnt.Time;
+            _countdownPanel.gameObject.SetActive(evnt.Time != 0);
         }
 
         public override void EntityReceived(BoltEntity entity)
@@ -373,8 +203,8 @@ namespace Photon.Lobby
             {
                 BoltConsole.Write("Connected Client: " + connection, Color.blue);
 
-                infoPanel.gameObject.SetActive(false);
-                ChangeTo(lobbyPanel);
+                _infoPanel.gameObject.SetActive(false);
+                ChangeTo(_lobbyPanel);
 
             }
             else if (BoltNetwork.isServer)
@@ -385,8 +215,8 @@ namespace Photon.Lobby
 
                 LobbyPhotonPlayer lobbyPlayer = entity.GetComponent<LobbyPhotonPlayer>();
 
-                lobbyPlayer.connection = connection;
-                lobbyPlayer.SetPlayerID((int) connection.ConnectionId);
+                lobbyPlayer.Connection = connection;
+                lobbyPlayer.SetPlayerID((int)connection.ConnectionId);
 
                 connection.UserData = lobbyPlayer;
                 connection.SetStreamBandwidth(1024 * 1024);
@@ -408,13 +238,156 @@ namespace Photon.Lobby
 
         public override void ConnectFailed(UdpEndPoint endpoint, IProtocolToken token)
         {
+            // Do some stuff
+        }
+        #endregion
+
+        // PUBLIC
+
+        public void ChangeTo(RectTransform newPanel)
+        {
+            if (_currentPanel != null)
+            {
+                _currentPanel.gameObject.SetActive(false);
+            }
+
+            if (newPanel != null)
+            {
+                newPanel.gameObject.SetActive(true);
+            }
+
+            _currentPanel = newPanel;
+
+            if (_currentPanel != _mainMenuPanel)
+            {
+                _backButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                SetServerInfo("Offline", "None");
+            }
         }
 
-        // Spawners
+        public void DisplayIsConnecting()
+        {
+            var _this = this;
+            _infoPanel.Display("Connecting...", "Cancel", () => { _this.BackDelegate(); });
+        }
 
-        //private void SpawnGamePlayer()
-        //{
-        //    BomberPlayerController.Spawn();
-        //}
+        public void SetServerInfo(string status, string host)
+        {
+            _statusInfo.text = status;
+            _hostInfo.text = host;
+        }
+
+        public delegate void BackButtonDelegate();
+
+        public void GoBackButton()
+        {
+            if (_currentPanel == _mainMenuPanel)
+            {
+                gameObject.SetActive(false);
+                _mainGameMenu.SetActive(true);
+            }
+            else
+            {
+                BackDelegate();
+                TopPanel.IsInGame = false;
+            }
+        }
+
+        public void StartClient()
+        {
+            BoltLauncher.StartClient();
+        }
+
+        public void Shutdown()
+        {
+            if (BoltNetwork.isConnected)
+            {
+                BoltLauncher.Shutdown();
+            }
+        }
+
+        public void CreateMatch(string matchName, bool dedicated = false)
+        {
+            StartServer();
+            _matchName = matchName;
+        }
+
+        public void SimpleBackCallback()
+        {
+            ChangeTo(_mainMenuPanel);
+        }
+
+        // PRIVATE
+
+        private void VerifyReady()
+        {
+            if (!LobbyPlayerList.Ready) { return; }
+
+            bool allReady = true;
+            int readyCount = 0;
+
+            foreach (LobbyPhotonPlayer player in LobbyPlayerList.Instance.AllPlayers)
+            {
+                allReady = allReady && player.IsReady;
+
+                if (!allReady) { break; }
+
+                readyCount++;
+            }
+
+            if (allReady)
+            {
+                _countdownStarted = true;
+                _startButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                _startButton.gameObject.SetActive(false);
+            }
+        }
+
+        private void StartServer()
+        {
+            BoltLauncher.StartServer();
+        }
+
+        private void StartGame()
+        {
+            StartCoroutine(ServerCountdownCoroutine());
+        }
+
+        private IEnumerator ServerCountdownCoroutine()
+        {
+            float remainingTime = _prematchCountdown;
+            int floorTime = Mathf.FloorToInt(remainingTime);
+
+            LobbyCountdown countdown;
+
+            while (remainingTime > 0)
+            {
+                yield return null;
+
+                remainingTime -= Time.deltaTime;
+                int newFloorTime = Mathf.FloorToInt(remainingTime);
+
+                if (newFloorTime != floorTime)
+                {
+                    floorTime = newFloorTime;
+
+                    countdown = LobbyCountdown.Create(GlobalTargets.Everyone);
+                    countdown.Time = floorTime;
+                    countdown.Send();
+                }
+            }
+
+            countdown = LobbyCountdown.Create(GlobalTargets.Everyone);
+            countdown.Time = 0;
+            countdown.Send();
+
+            BoltNetwork.LoadScene(_mapDropDownMenu.options[_mapDropDownMenu.value].text);
+        }
     }
 }

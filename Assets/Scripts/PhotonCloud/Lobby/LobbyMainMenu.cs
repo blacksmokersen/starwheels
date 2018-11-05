@@ -1,89 +1,58 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 namespace Photon.Lobby
 {
-    //Main menu, mainly only a bunch of callback called by the UI (setup throught the Inspector)
-    public class LobbyMainMenu : MonoBehaviour 
+    /*
+     * Main menu, mainly only a bunch of callback called by the UI (setup throught the Inspector)
+     *
+     */
+    public class LobbyMainMenu : MonoBehaviour
     {
-        public LobbyManager lobbyManager;
+        [Header("Main menu elements")]
+        [SerializeField] private LobbyManager lobbyManager;
+        [SerializeField] private RectTransform lobbyServerList;
+        [SerializeField] private RectTransform lobbyPanel;
+        [SerializeField] private InputField matchNameInput;
 
-        public RectTransform lobbyServerList;
-        public RectTransform lobbyPanel;
-
-        public InputField matchNameInput;
+        // CORE
 
         public void OnEnable()
         {
-            lobbyManager.topPanel.ToggleVisibility(true);
+            lobbyManager.TopPanel.ToggleVisibility(true);
 
             matchNameInput.onEndEdit.RemoveAllListeners();
             matchNameInput.onEndEdit.AddListener(OnEndEditGameName);
         }
 
-        public void OnClickHost()
-        {
-            //lobbyManager.StartHost();
-        }
+        // PRIVATE
 
-        public void OnClickJoin()
-        {
-            //lobbyManager.ChangeTo(lobbyPanel);
-
-            //lobbyManager.networkAddress = ipInput.text;
-            //lobbyManager.StartClient();
-
-
-            //lobbyManager.backDelegate = lobbyManager.StopClientClbk;
-            //lobbyManager.DisplayIsConnecting();
-
-
-            //lobbyManager.SetServerInfo("Connecting...", lobbyManager.networkAddress);
-        }
-
-        public void OnClickDedicated()
-        {
-            //lobbyManager.ChangeTo(null);
-            //lobbyManager.StartServer();
-
-
-            //lobbyManager.backDelegate = lobbyManager.StopServerClbk;
-
-            //lobbyManager.SetServerInfo("Dedicated Server", lobbyManager.networkAddress);
-        }
-
-        public void OnClickCreateMatchmakingGame()
+        private void OnClickCreateMatchmakingGame()
         {
             lobbyManager.CreateMatch(matchNameInput.text);
-
-            lobbyManager.backDelegate = LobbyManager.s_Singleton.Stop;
+            lobbyManager.BackDelegate = LobbyManager.Instance.Shutdown;
             lobbyManager.DisplayIsConnecting();
-
-
-            lobbyManager.SetServerInfo("Matchmaker Host", LobbyManager.s_Singleton.matchHost);
+            lobbyManager.SetServerInfo("Matchmaker Host", LobbyManager.Instance.MatchHost);
         }
 
-        public void OnClickOpenServerList()
+        private void OnClickOpenServerList()
         {
             lobbyManager.StartClient();
-            lobbyManager.backDelegate = lobbyManager.SimpleBackClbk;
+            lobbyManager.BackDelegate = lobbyManager.SimpleBackCallback;
             lobbyManager.ChangeTo(lobbyServerList);
         }
 
-        public void OnClickJoinRandom()
+        private void OnClickJoinRandom()
         {
-            //lobbyManager.StartClient();
-            //lobbyManager.backDelegate = lobbyManager.SimpleBackClbk;
+            // TODO
         }
 
-        void OnEndEditGameName(string text)
+        private void OnEndEditGameName(string text)
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 OnClickCreateMatchmakingGame();
             }
         }
-
     }
 }

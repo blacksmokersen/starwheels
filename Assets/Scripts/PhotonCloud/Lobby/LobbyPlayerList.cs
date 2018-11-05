@@ -1,25 +1,29 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Photon.Lobby
 {
-    //List of players in the lobby
+    /*
+     * List of players in the lobby
+     *
+     */
     public class LobbyPlayerList : MonoBehaviour
     {
-        public static LobbyPlayerList _instance = null;
+        public static LobbyPlayerList Instance = null;
 
-        public RectTransform playerListContentTransform;
-        public GameObject warningDirectPlayServer;
-        public Transform addButtonRow;
+        [Header("UI Elements")]
+        [SerializeField] private RectTransform _playerListContentTransform;
+        [SerializeField] private GameObject _warningDirectPlayServer;
+        [SerializeField] private Transform _addButtonRow;
 
-        protected VerticalLayoutGroup _layout;
-        protected List<LobbyPhotonPlayer> _players = new List<LobbyPhotonPlayer>();
+        private VerticalLayoutGroup _layout;
+        private List<LobbyPhotonPlayer> _players = new List<LobbyPhotonPlayer>();
 
+        #region Properties
         public static bool Ready
         {
-            get {  return _instance != null; }
+            get { return Instance != null; }
         }
 
         public IEnumerable<LobbyPhotonPlayer> AllPlayers
@@ -44,34 +48,40 @@ namespace Photon.Lobby
 
             return null;
         }
+        #endregion
 
-        public void OnEnable()
+        // CORE
+
+        private void OnEnable()
         {
-            _instance = this;
+            Instance = this;
             _players = new List<LobbyPhotonPlayer>();
-            _layout = playerListContentTransform.GetComponent<VerticalLayoutGroup>();
+            _layout = _playerListContentTransform.GetComponent<VerticalLayoutGroup>();
         }
+
+        private void Update()
+        {
+            // Recompute the layout everyframe
+
+            if (_layout)
+            {
+                _layout.childAlignment = Time.frameCount % 2 == 0 ? TextAnchor.UpperCenter : TextAnchor.UpperLeft;
+            }
+        }
+
+        // PUBLIC
 
         public void DisplayDirectServerWarning(bool enabled)
         {
-            if(warningDirectPlayServer != null)
-                warningDirectPlayServer.SetActive(enabled);
-        }
-
-        void Update()
-        {
-            //this dirty the layout to force it to recompute evryframe (a sync problem between client/server
-            //sometime to child being assigned before layout was enabled/init, leading to broken layouting)
-
-            if(_layout)
-                _layout.childAlignment = Time.frameCount%2 == 0 ? TextAnchor.UpperCenter : TextAnchor.UpperLeft;
+            if(_warningDirectPlayServer != null)
+                _warningDirectPlayServer.SetActive(enabled);
         }
 
         public LobbyPhotonPlayer GetPlayer(BoltConnection connection)
         {
             foreach(var player in _players)
             {
-                if (player.connection == connection)
+                if (player.Connection == connection)
                     return player;
             }
             return null;
@@ -84,20 +94,20 @@ namespace Photon.Lobby
 
             _players.Add(player);
 
-            player.transform.SetParent(playerListContentTransform, false);
-            addButtonRow.transform.SetAsLastSibling();
+            player.transform.SetParent(_playerListContentTransform, false);
+            _addButtonRow.transform.SetAsLastSibling();
 
-            PlayerListModified();
+            OnPlayerListModified();
         }
 
         public void RemovePlayer(LobbyPhotonPlayer player)
         {
             _players.Remove(player);
 
-            PlayerListModified();
+            OnPlayerListModified();
         }
 
-        public void PlayerListModified()
+        public void OnPlayerListModified()
         {
             int i = 0;
             foreach (LobbyPhotonPlayer p in _players)
