@@ -15,16 +15,17 @@ namespace Multiplayer
         {
             if(evnt.ConnectionID == _playerSettings.ConnectionID)
             {
-                InstantiateKart(evnt.SpawnPosition);
+                InstantiateKart(evnt.SpawnPosition, evnt.SpawnRotation);
             }
         }
 
         // PRIVATE
 
-        private void InstantiateKart(Vector3 spawnPosition)
+        private void InstantiateKart(Vector3 spawnPosition, Quaternion spawnRotation)
         {
             var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart);
             myKart.transform.position = spawnPosition;
+            myKart.transform.rotation = spawnRotation;
         }
     }
 }

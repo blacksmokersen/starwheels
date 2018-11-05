@@ -157,7 +157,7 @@ namespace Photon
 
                 if (roomToken != null)
                 {
-                    sessionDescription += String.Format(" :: {0}", roomToken.ArbitraryData);
+                    sessionDescription += String.Format(" :: {0}", roomToken.RoomInfo);
                 }
 
                 object prop_type = -1;

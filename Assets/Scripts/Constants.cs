@@ -10,7 +10,8 @@
     // Tags
     public class Tag
     {
-        public const string Spawn = "Spawn";
+        public const string RedSpawn = "RedSpawn";
+        public const string BlueSpawn = "BlueSpawn";
         public const string Kart = "Kart";
         public const string KartTrigger = "KartTrigger";
         public const string KartCollider = "KartCollider";

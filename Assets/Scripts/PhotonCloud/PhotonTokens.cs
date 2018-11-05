@@ -5,20 +5,22 @@ namespace Photon
 {
     public class RoomProtocolToken : Bolt.IProtocolToken
     {
-        public String ArbitraryData;
-
-        private String _password;
+        public String RoomInfo;
+        public String Gamemode;
+        public int PlayersCount;
 
         public void Read(UdpPacket packet)
         {
-            ArbitraryData = packet.ReadString();
-            _password = packet.ReadString();
+            RoomInfo = packet.ReadString();
+            Gamemode = packet.ReadString();
+            PlayersCount = packet.ReadInt();
         }
 
         public void Write(UdpPacket packet)
         {
-            packet.WriteString(ArbitraryData);
-            packet.WriteString(_password);
+            packet.WriteString(RoomInfo);
+            packet.WriteString(Gamemode);
+            packet.WriteInt(PlayersCount);
         }
     }
 
