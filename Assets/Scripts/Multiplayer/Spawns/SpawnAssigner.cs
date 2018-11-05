@@ -7,84 +7,109 @@ namespace Multiplayer
     [BoltGlobalBehaviour(BoltNetworkModes.Server)]
     public class SpawnAssigner : GlobalEventListener
     {
-        public enum SpawnMode { Random, Deterministic }
-
-        private List<GameObject> _initialSpawns = new List<GameObject>();
-        private List<GameObject> _spawns = new List<GameObject>();
-        private SpawnMode _spawnMode = SpawnMode.Random;
+        private List<GameObject> _initialBlueSpawns = new List<GameObject>();
+        private List<GameObject> _initialRedSpawns = new List<GameObject>();
+        private List<GameObject> _blueSpawns = new List<GameObject>();
+        private List<GameObject> _redSpawns = new List<GameObject>();
+        private int _playersCount = -1;
+        private int _spawnsAssigned = 0;
+        private PlayerSettings _serverPlayerSettings;
 
         // CORE
 
-        // BOLT
-
-        public override void SceneLoadLocalDone(string map)
+        private void Awake()
         {
-            _initialSpawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.Spawn));
-            _spawns = _initialSpawns;
-
-            var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart);
-            myKart.transform.position = GetInitialSpawnPosition();
-            FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
+            _serverPlayerSettings = Resources.Load<PlayerSettings>("PlayerSettings");
         }
 
-        public override void SceneLoadRemoteDone(BoltConnection connection)
+        // BOLT
+
+        public override void SceneLoadLocalDone(string map, IProtocolToken token)
         {
-            PlayerSpawn playerSpawn = PlayerSpawn.Create();
-            playerSpawn.ConnectionID = (int) connection.ConnectionId;
-            playerSpawn.SpawnPosition = GetInitialSpawnPosition();
-            playerSpawn.Send();
+            _redSpawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.RedSpawn));
+            _initialRedSpawns = _redSpawns;
+            _blueSpawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.BlueSpawn));
+            _initialBlueSpawns = _blueSpawns;
+
+            var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart);
+            var serverColor = Teams.TeamsColors.GetTeamFromColor(_serverPlayerSettings.Team);
+            myKart.transform.position = GetInitialSpawnPosition(serverColor);
+            FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
+
+            var roomToken = (Photon.RoomProtocolToken)token;
+            if (System.Int32.TryParse(roomToken.RoomInfo, out _playersCount))
+            {
+                _spawnsAssigned++;
+                Debug.Log("Players count : " + _playersCount);
+            }
+        }
+
+        public override void SceneLoadRemoteDone(BoltConnection connection, IProtocolToken token)
+        {
+            var playerTeam = Teams.TeamsColors.GetTeamFromColor((Color)connection.UserData);
+            AssignSpawn((int)connection.ConnectionId, playerTeam);
+            _spawnsAssigned++;
         }
 
         public override void OnEvent(KartDestroyed evnt)
         {
-            RespawnPlayer(evnt.ConnectionID);
+            AssignSpawn(evnt.ConnectionID);
         }
 
         // PUBLIC
 
         // PRIVATE
 
-        private void RespawnPlayer(int connectionID)
+        private void AssignSpawn(int connectionID, Team team = Team.None)
         {
             PlayerSpawn playerSpawn = PlayerSpawn.Create();
             playerSpawn.ConnectionID = connectionID;
-            playerSpawn.SpawnPosition = GetSpawnPosition();
+            playerSpawn.SpawnPosition = GetInitialSpawnPosition(team);
             playerSpawn.Send();
         }
 
-        private Vector3 GetInitialSpawnPosition()
+        private Vector3 GetInitialSpawnPosition(Team team)
         {
-            if (_initialSpawns.Count > 0)
+            if (_initialRedSpawns.Count > 0)
             {
-                GameObject spawnPosition = _initialSpawns[0];
+                GameObject spawnPosition = null;
+                int randomIndex = 0;
 
-                if (_spawnMode == SpawnMode.Random)
+                switch (team)
                 {
-                    int randomIndex = Random.Range(0, _initialSpawns.Count - 1);
-                    spawnPosition = _initialSpawns[randomIndex];
+                    case Team.Blue:
+                        randomIndex = Random.Range(0, _initialBlueSpawns.Count - 1);
+                        spawnPosition = _initialBlueSpawns[randomIndex];
+                        _initialBlueSpawns.Remove(spawnPosition);
+                        break;
+                    case Team.Red:
+                        randomIndex = Random.Range(0, _initialRedSpawns.Count - 1);
+                        spawnPosition = _initialRedSpawns[randomIndex];
+                        _initialRedSpawns.Remove(spawnPosition);
+                        break;
                 }
-
-                _initialSpawns.Remove(spawnPosition);
                 return spawnPosition.transform.position;
             }
             return Vector3.zero;
         }
 
-        private Vector3 GetSpawnPosition()
+        private Vector3 GetSpawnPosition(Team team)
         {
-            if (_initialSpawns.Count > 0)
+            GameObject spawnPosition = null;
+            int randomIndex = 0;
+
+            switch (team)
             {
-                GameObject spawnPosition = _initialSpawns[0];
-
-                if (_spawnMode == SpawnMode.Random)
-                {
-                    int randomIndex = Random.Range(0, _initialSpawns.Count - 1);
-                    spawnPosition = _spawns[randomIndex];
-                }
-
-                return spawnPosition.transform.position;
+                case Team.Blue:
+                    randomIndex = Random.Range(0, _blueSpawns.Count - 1);
+                    spawnPosition = _blueSpawns[randomIndex];
+                    break;
+                case Team.Red:
+                    randomIndex = Random.Range(0, _redSpawns.Count - 1);
+                    spawnPosition = _redSpawns[randomIndex];
+                    break;
             }
-            return Vector3.zero;
+            return spawnPosition.transform.position;
         }
     }
 }
