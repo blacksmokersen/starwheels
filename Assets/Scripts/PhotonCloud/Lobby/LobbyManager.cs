@@ -231,7 +231,7 @@ namespace Photon.Lobby
             {
                 BoltLog.Info("Disconnected");
 
-                player.RemovePlayer();
+                //player.RemovePlayer();
             }
         }
 
