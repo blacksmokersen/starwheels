@@ -27,9 +27,13 @@ namespace Multiplayer
         public override void SceneLoadLocalDone(string map, IProtocolToken token)
         {
             _redSpawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.RedSpawn));
+            Debug.Log("Red spawns : " + _redSpawns.Count);
             _initialRedSpawns = _redSpawns;
+            Debug.Log("Red spawns : " + _initialRedSpawns.Count);
             _blueSpawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.BlueSpawn));
+            Debug.Log("Blue spawns : " + _blueSpawns.Count);
             _initialBlueSpawns = _blueSpawns;
+            Debug.Log("Blue spawns : " + _initialBlueSpawns.Count);
 
             var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart);
             var serverColor = Teams.TeamsColors.GetTeamFromColor(_serverPlayerSettings.Team);
@@ -40,7 +44,6 @@ namespace Multiplayer
             if (System.Int32.TryParse(roomToken.RoomInfo, out _playersCount))
             {
                 _spawnsAssigned++;
-                Debug.Log("Players count : " + _playersCount);
             }
         }
 
@@ -78,12 +81,12 @@ namespace Multiplayer
                 switch (team)
                 {
                     case Team.Blue:
-                        randomIndex = Random.Range(0, _initialBlueSpawns.Count - 1);
+                        randomIndex = Random.Range(0, _initialBlueSpawns.Count);
                         spawnPosition = _initialBlueSpawns[randomIndex];
                         _initialBlueSpawns.Remove(spawnPosition);
                         break;
                     case Team.Red:
-                        randomIndex = Random.Range(0, _initialRedSpawns.Count - 1);
+                        randomIndex = Random.Range(0, _initialRedSpawns.Count);
                         spawnPosition = _initialRedSpawns[randomIndex];
                         _initialRedSpawns.Remove(spawnPosition);
                         break;
@@ -101,11 +104,11 @@ namespace Multiplayer
             switch (team)
             {
                 case Team.Blue:
-                    randomIndex = Random.Range(0, _blueSpawns.Count - 1);
+                    randomIndex = Random.Range(0, _blueSpawns.Count);
                     spawnPosition = _blueSpawns[randomIndex];
                     break;
                 case Team.Red:
-                    randomIndex = Random.Range(0, _redSpawns.Count - 1);
+                    randomIndex = Random.Range(0, _redSpawns.Count);
                     spawnPosition = _redSpawns[randomIndex];
                     break;
             }
