@@ -18,7 +18,7 @@ namespace Photon.Lobby
 
         [Header("Lobby")]
         [SerializeField] private string _playerName = "";
-        [SerializeField] private Color _playerColor = TeamsColors.GetColorFromTeam(Team.Blue);
+        [SerializeField] private Color _playerColor = TeamsColors.GetColorFromTeam(Team.None);
         [SerializeField] private bool _isReady = false;
 
         [Header("Player Row UI")]
@@ -211,6 +211,10 @@ namespace Photon.Lobby
         {
             _playerColor = newColor;
             _colorButton.GetComponent<Image>().color = newColor;
+            if (entity.isOwner && Connection)
+            {
+                Connection.UserData = newColor;
+            }
         }
 
         private void OnColorClicked()

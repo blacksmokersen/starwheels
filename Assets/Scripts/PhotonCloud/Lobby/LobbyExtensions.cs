@@ -12,7 +12,7 @@ namespace Photon.Lobby
                 return LobbyPlayerList.Instance.ServerPlayer;
             }
 
-            return (LobbyPhotonPlayer)connection.UserData;
+            return null;// (LobbyPhotonPlayer)connection.UserData;
         }
 
         public static bool CanJoin(this UdpSession session)

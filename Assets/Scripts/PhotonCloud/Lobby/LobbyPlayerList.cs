@@ -26,7 +26,7 @@ namespace Photon.Lobby
             get { return Instance != null; }
         }
 
-        public IEnumerable<LobbyPhotonPlayer> AllPlayers
+        public List<LobbyPhotonPlayer> AllPlayers
         {
             get { return _players; }
         }
