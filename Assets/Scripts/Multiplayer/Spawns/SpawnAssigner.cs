@@ -13,6 +13,7 @@ namespace Multiplayer
         private List<GameObject> _redSpawns = new List<GameObject>();
         private int _playersCount = -1;
         private int _spawnsAssigned = 0;
+        private bool _gameIsReady = false;
         private PlayerSettings _serverPlayerSettings;
 
         // CORE
@@ -37,13 +38,15 @@ namespace Multiplayer
 
             var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart);
             var serverColor = Teams.TeamsColors.GetTeamFromColor(_serverPlayerSettings.Team);
-            myKart.transform.position = GetInitialSpawnPosition(serverColor);
+            var spawn = GetInitialSpawnPosition(serverColor);
+            myKart.transform.position = spawn.transform.position;
+            myKart.transform.rotation = spawn.transform.rotation;
             FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
 
             var roomToken = (Photon.RoomProtocolToken)token;
             if (System.Int32.TryParse(roomToken.RoomInfo, out _playersCount))
             {
-                _spawnsAssigned++;
+                IncreaseSpawnCount();
             }
         }
 
@@ -51,7 +54,7 @@ namespace Multiplayer
         {
             var playerTeam = Teams.TeamsColors.GetTeamFromColor((Color)connection.UserData);
             AssignSpawn((int)connection.ConnectionId, playerTeam);
-            _spawnsAssigned++;
+            IncreaseSpawnCount();
         }
 
         public override void OnEvent(KartDestroyed evnt)
@@ -67,33 +70,35 @@ namespace Multiplayer
         {
             PlayerSpawn playerSpawn = PlayerSpawn.Create();
             playerSpawn.ConnectionID = connectionID;
-            playerSpawn.SpawnPosition = GetInitialSpawnPosition(team);
+            var spawn = GetInitialSpawnPosition(team);
+            playerSpawn.SpawnPosition = spawn.transform.position;
+            playerSpawn.SpawnRotation = spawn.transform.rotation;
             playerSpawn.Send();
         }
 
-        private Vector3 GetInitialSpawnPosition(Team team)
+        private GameObject GetInitialSpawnPosition(Team team)
         {
             if (_initialRedSpawns.Count > 0)
             {
-                GameObject spawnPosition = null;
+                GameObject spawn = null;
                 int randomIndex = 0;
 
                 switch (team)
                 {
                     case Team.Blue:
                         randomIndex = Random.Range(0, _initialBlueSpawns.Count);
-                        spawnPosition = _initialBlueSpawns[randomIndex];
-                        _initialBlueSpawns.Remove(spawnPosition);
+                        spawn = _initialBlueSpawns[randomIndex];
+                        _initialBlueSpawns.Remove(spawn);
                         break;
                     case Team.Red:
                         randomIndex = Random.Range(0, _initialRedSpawns.Count);
-                        spawnPosition = _initialRedSpawns[randomIndex];
-                        _initialRedSpawns.Remove(spawnPosition);
+                        spawn = _initialRedSpawns[randomIndex];
+                        _initialRedSpawns.Remove(spawn);
                         break;
                 }
-                return spawnPosition.transform.position;
+                return spawn;
             }
-            return Vector3.zero;
+            return null;
         }
 
         private Vector3 GetSpawnPosition(Team team)
@@ -113,6 +118,15 @@ namespace Multiplayer
                     break;
             }
             return spawnPosition.transform.position;
+        }
+
+        private void IncreaseSpawnCount()
+        {
+            _spawnsAssigned++;
+            if(_spawnsAssigned >= _playersCount)
+            {
+                _gameIsReady = true;
+            }
         }
     }
 }
