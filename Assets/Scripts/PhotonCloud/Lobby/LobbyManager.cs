@@ -81,7 +81,6 @@ namespace Photon.Lobby
             _startButton.gameObject.SetActive(false);
             GetComponent<Canvas>().enabled = true;
 
-            //DontDestroyOnLoad(gameObject);
             SetServerInfo("Offline", "None");
         }
 
@@ -110,7 +109,7 @@ namespace Photon.Lobby
             {
                 RoomProtocolToken token = new RoomProtocolToken()
                 {
-                    ArbitraryData = "My DATA",
+                    RoomInfo = "My DATA",
                 };
 
                 BoltLog.Info("Starting Server");
@@ -387,7 +386,9 @@ namespace Photon.Lobby
             countdown.Time = 0;
             countdown.Send();
 
-            BoltNetwork.LoadScene(_mapDropDownMenu.options[_mapDropDownMenu.value].text);
+            var token = new RoomProtocolToken();
+            token.RoomInfo = "" + LobbyPlayerList.Instance.AllPlayers.Count;
+            BoltNetwork.LoadScene(_mapDropDownMenu.options[_mapDropDownMenu.value].text, token);
         }
     }
 }
