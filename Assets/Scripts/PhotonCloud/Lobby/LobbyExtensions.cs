@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UdpKit;
-using UnityEngine;
 
 namespace Photon.Lobby
 {
@@ -12,7 +9,7 @@ namespace Photon.Lobby
         {
             if (connection == null)
             {
-                return LobbyPlayerList._instance.ServerPlayer;
+                return LobbyPlayerList.Instance.ServerPlayer;
             }
 
             return (LobbyPhotonPlayer)connection.UserData;

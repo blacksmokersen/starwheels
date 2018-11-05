@@ -3,51 +3,52 @@ using System;
 
 namespace Photon
 {
-  public class RoomProtocolToken : Bolt.IProtocolToken
-  {
-    public String ArbitraryData;
-    public String password;
-
-    public void Read(UdpPacket packet)
+    public class RoomProtocolToken : Bolt.IProtocolToken
     {
-      ArbitraryData = packet.ReadString();
-      password = packet.ReadString();
+        public String ArbitraryData;
+
+        private String _password;
+
+        public void Read(UdpPacket packet)
+        {
+            ArbitraryData = packet.ReadString();
+            _password = packet.ReadString();
+        }
+
+        public void Write(UdpPacket packet)
+        {
+            packet.WriteString(ArbitraryData);
+            packet.WriteString(_password);
+        }
     }
 
-    public void Write(UdpPacket packet)
+    public class ServerAcceptToken : Bolt.IProtocolToken
     {
-      packet.WriteString(ArbitraryData);
-      packet.WriteString(password);
-    }
-  }
+        public String Data;
 
-  public class ServerAcceptToken : Bolt.IProtocolToken
-  {
-    public String data;
+        public void Read(UdpPacket packet)
+        {
+            Data = packet.ReadString();
+        }
 
-    public void Read(UdpPacket packet)
-    {
-      data = packet.ReadString();
-    }
-
-    public void Write(UdpPacket packet)
-    {
-      packet.WriteString(data);
-    }
-  }
-
-  public class ServerConnectToken : Bolt.IProtocolToken
-  {
-    public String data;
-
-    public void Read(UdpPacket packet)
-    {
-      data = packet.ReadString();
+        public void Write(UdpPacket packet)
+        {
+            packet.WriteString(Data);
+        }
     }
 
-    public void Write(UdpPacket packet)
+    public class ServerConnectToken : Bolt.IProtocolToken
     {
-      packet.WriteString(data);
+        public String Data;
+
+        public void Read(UdpPacket packet)
+        {
+            Data = packet.ReadString();
+        }
+
+        public void Write(UdpPacket packet)
+        {
+            packet.WriteString(Data);
+        }
     }
-  }
 }
