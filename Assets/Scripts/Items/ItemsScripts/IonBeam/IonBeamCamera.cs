@@ -18,6 +18,7 @@ public class IonBeamCamera : EntityBehaviour
 
     private float _currentTimer;
     private bool _showCrosshair;
+    private bool _isCameraOnTop = false;
 
     //CORE
 
@@ -52,6 +53,11 @@ public class IonBeamCamera : EntityBehaviour
         }
     }
 
+    public bool IsCameraOnTop()
+    {
+        return _isCameraOnTop;
+    }
+
     //PRIVATE
 
     private void OnGUI()
@@ -81,11 +87,13 @@ public class IonBeamCamera : EntityBehaviour
         transform.eulerAngles = new Vector3(90, transform.eulerAngles.y, transform.eulerAngles.z);
         composer.enabled = false;
         _showCrosshair = true;
+        _isCameraOnTop = true;
     }
 
     IEnumerator CameraIonBeamReset(float returnValueZ, float returnValueY, float boostDuration)
     {
         _showCrosshair = false;
+        _isCameraOnTop = false;
         float startDynamicCamValueX = transposer.m_FollowOffset.x;
         float startDynamicCamValueZ = transposer.m_FollowOffset.z;
         float startDynamicCamValueY = transposer.m_FollowOffset.y;
