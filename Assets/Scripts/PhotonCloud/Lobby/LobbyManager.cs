@@ -5,6 +5,7 @@ using Bolt;
 using UdpKit;
 using System;
 using Utilities;
+using TMPro;
 
 namespace Photon.Lobby
 {
@@ -47,7 +48,7 @@ namespace Photon.Lobby
         [Space]
         [Header("UI Reference")]
         [SerializeField] private GameObject _mainGameMenu;
-        [SerializeField] private Dropdown _mapDropDownMenu;
+        [SerializeField] private TMP_Dropdown _mapDropDownMenu;
 
         [Header("Panels")]
         public LobbyTopPanel TopPanel;
