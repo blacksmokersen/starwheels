@@ -9,7 +9,20 @@ namespace Multiplayer
 
         // CORE
 
+        private void Awake()
+        {
+            if (!BoltNetwork.isConnected)
+            {
+                BoltLauncher.StartServer();
+            }
+        }
+
         // BOLT
+
+        public override void BoltStartDone()
+        {
+            InstantiateKart(new Vector3(0, 10, 0), Quaternion.identity);
+        }
 
         public override void OnEvent(PlayerSpawn evnt)
         {

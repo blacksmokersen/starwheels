@@ -9,6 +9,8 @@ namespace Items
     [RequireComponent(typeof(ThrowableLauncher))]
     public class Inventory : EntityBehaviour<IKartState>, IControllable
     {
+        public bool CanUseItem = true;
+
         [Header("Current Item")]
         public Item CurrentItem;
         public int CurrentItemCount;
@@ -19,7 +21,6 @@ namespace Items
         public IntEvent OnItemCountChange;
 
         private ThrowableLauncher _projectileLauncher;
-        private bool _canUseItem = true;
 
         // CORE
 
@@ -54,7 +55,7 @@ namespace Items
 
         public void UseItem()
         {
-            if (CurrentItemCount > 0 && CurrentItem != null && _canUseItem)
+            if (CurrentItemCount > 0 && CurrentItem != null && CanUseItem)
             {
                 InstantiateItem();
                 OnItemUse.Invoke(CurrentItem);
@@ -106,9 +107,9 @@ namespace Items
 
         private IEnumerator AntiSpamRoutine()
         {
-            _canUseItem = false;
+            CanUseItem = false;
             yield return new WaitForSeconds(0.5f);
-            _canUseItem = true;
+            CanUseItem = true;
         }
     }
 }
