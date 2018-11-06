@@ -5,18 +5,24 @@ namespace CameraUtils
 {
     public class CameraTurnEffect : MonoBehaviour, IControllable
     {
+        private string _turnCamInputName = "RightJoystickHorizontal";
         private CinemachineOrbitalTransposer _orbiter;
         private CinemachineVirtualCamera _cinemachine;
+
+        private float _controlAxisValueMin;
+        private float _controlAxisValueMax;
 
         private void Awake()
         {
             _cinemachine = GetComponentInParent<CinemachineVirtualCamera>();
             _orbiter = _cinemachine.GetCinemachineComponent<CinemachineOrbitalTransposer>();
+            _controlAxisValueMin = _orbiter.m_XAxis.m_MinValue;
+            _controlAxisValueMax = _orbiter.m_XAxis.m_MaxValue;
         }
 
         private void Start()
         {
-            _orbiter.m_XAxis.m_InputAxisName = "RightJoystickHorizontal";
+            _orbiter.m_XAxis.m_InputAxisName = _turnCamInputName;
         }
 
         private void Update()
@@ -33,6 +39,25 @@ namespace CameraUtils
                 CameraReset();
             }
             TurnCamera(Input.GetAxis(Constants.Input.TurnCamera));
+        }
+
+        public void DisableTurnEffectInput()
+        {
+            _orbiter.m_XAxis.m_InputAxisName = "";
+            _orbiter.m_XAxis.m_MinValue = 0;
+            _orbiter.m_XAxis.m_MaxValue = 0;
+        }
+
+        public void EnableTurnEffectInput()
+        {
+            _orbiter.m_XAxis.m_InputAxisName = _turnCamInputName;
+            _orbiter.m_XAxis.m_MinValue = _controlAxisValueMin;
+            _orbiter.m_XAxis.m_MaxValue = _controlAxisValueMax;
+        }
+
+        public void CenterCamera()
+        {
+            _orbiter.m_XAxis.Value = 0;
         }
 
         // PRIVATE
