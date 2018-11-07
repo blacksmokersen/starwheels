@@ -70,6 +70,12 @@ public class IonBeamCamera : EntityBehaviour
         }
     }
 
+    private void ChangeRenderOnTaGGameobjects(bool state)
+    {
+        if (GameObject.FindGameObjectWithTag("IonBeamCamIgnore") != null)
+            GameObject.FindGameObjectWithTag("IonBeamCamIgnore").GetComponent<Renderer>().enabled = state;
+    }
+
     IEnumerator CameraIonBeamExpand(float endValueZ, float endValueY, float boostDuration)
     {
         float startDynamicCamValueZ = transposer.m_FollowOffset.z;
@@ -85,6 +91,7 @@ public class IonBeamCamera : EntityBehaviour
         }
         // transform.rotation = new Quaternion(Mathf.Lerp(transform.rotation.x, 90, _currentTimer / boostDuration), 0, 0, 0);
         transform.eulerAngles = new Vector3(90, transform.eulerAngles.y, transform.eulerAngles.z);
+        ChangeRenderOnTaGGameobjects(false);
         composer.enabled = false;
         _showCrosshair = true;
         _isCameraOnTop = true;
@@ -113,5 +120,6 @@ public class IonBeamCamera : EntityBehaviour
             // Security for lack of precision of Time.deltaTime
             cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(returnValueZ, returnValueY, 0.5f));
         }
+        ChangeRenderOnTaGGameobjects(true);
     }
 }
