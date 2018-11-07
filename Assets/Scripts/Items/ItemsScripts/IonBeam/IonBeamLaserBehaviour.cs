@@ -14,6 +14,7 @@ namespace Items
         [SerializeField] private Transform raycastTransformOrigin;
         [SerializeField] private AudioSource explosionSource;
 
+        private ParticleSystem _explosionParticleSystem;
         private Vector2 offset;
         private bool _damagePlayer = false;
         private Coroutine _laserBehaviour;
@@ -22,6 +23,7 @@ namespace Items
 
         private void Awake()
         {
+            _explosionParticleSystem = explosionParticles.GetComponent<ParticleSystem>();
             ionBeamLaserSettings.onExplode = true;
             // GameObject owner = GetComponent<Ownership>().gameObject;
             //float currentTimer = WarningPosition.transform.localScale.x;
@@ -86,12 +88,19 @@ namespace Items
 
         IEnumerator ParticuleEffect()
         {
-            explosionParticles.GetComponent<ParticleSystem>().Emit(3000);
             // MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(ExplosionSource);
+            var shape = _explosionParticleSystem.shape;
+            shape.radius = 10;
+            _explosionParticleSystem.Emit(500);
             _damagePlayer = true;
             yield return new WaitForSeconds(0.1f);
+            shape.radius = 20;
+            _explosionParticleSystem.Emit(500);
+            yield return new WaitForSeconds(0.1f);
+            shape.radius = 30;
+            _explosionParticleSystem.Emit(500);
             _damagePlayer = false;
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(2);
             BoltNetwork.Destroy(gameObject);
         }
 
