@@ -18,6 +18,7 @@ public class IonBeamCamera : EntityBehaviour
 
     private float _currentTimer;
     private bool _showCrosshair;
+    private bool _isCameraOnTop = false;
 
     //CORE
 
@@ -52,6 +53,11 @@ public class IonBeamCamera : EntityBehaviour
         }
     }
 
+    public bool IsCameraOnTop()
+    {
+        return _isCameraOnTop;
+    }
+
     //PRIVATE
 
     private void OnGUI()
@@ -62,6 +68,12 @@ public class IonBeamCamera : EntityBehaviour
             float yMin = (Screen.height / 2) - (crosshairIonBeam.height / 2);
             GUI.DrawTexture(new Rect(xMin, yMin, crosshairIonBeam.width, crosshairIonBeam.height), crosshairIonBeam);
         }
+    }
+
+    private void ChangeRenderOnTaGGameobjects(bool state)
+    {
+        if (GameObject.FindGameObjectWithTag("IonBeamCamIgnore") != null)
+            GameObject.FindGameObjectWithTag("IonBeamCamIgnore").GetComponent<Renderer>().enabled = state;
     }
 
     IEnumerator CameraIonBeamExpand(float endValueZ, float endValueY, float boostDuration)
@@ -79,13 +91,16 @@ public class IonBeamCamera : EntityBehaviour
         }
         // transform.rotation = new Quaternion(Mathf.Lerp(transform.rotation.x, 90, _currentTimer / boostDuration), 0, 0, 0);
         transform.eulerAngles = new Vector3(90, transform.eulerAngles.y, transform.eulerAngles.z);
+        ChangeRenderOnTaGGameobjects(false);
         composer.enabled = false;
         _showCrosshair = true;
+        _isCameraOnTop = true;
     }
 
     IEnumerator CameraIonBeamReset(float returnValueZ, float returnValueY, float boostDuration)
     {
         _showCrosshair = false;
+        _isCameraOnTop = false;
         float startDynamicCamValueX = transposer.m_FollowOffset.x;
         float startDynamicCamValueZ = transposer.m_FollowOffset.z;
         float startDynamicCamValueY = transposer.m_FollowOffset.y;
@@ -105,5 +120,6 @@ public class IonBeamCamera : EntityBehaviour
             // Security for lack of precision of Time.deltaTime
             cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(returnValueZ, returnValueY, 0.5f));
         }
+        ChangeRenderOnTaGGameobjects(true);
     }
 }

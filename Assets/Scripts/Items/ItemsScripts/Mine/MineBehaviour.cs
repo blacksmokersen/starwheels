@@ -9,6 +9,7 @@ namespace Items
         public float ActivationTime;
         public float ForwardThrowingForce;
         public float TimesLongerThanHighThrow;
+        public float LivingTime;
 
         [Header("Sounds")]
         public AudioSource LaunchSource;
@@ -26,14 +27,19 @@ namespace Items
 
         private void Start()
         {
+            
             StartCoroutine(MineActivationDelay());
             GetComponentInChildren<PlayerMineTrigger>().Ownership = _ownerShip;
             GetComponentInChildren<ItemMineTrigger>().Ownership = _ownerShip;
         }
 
+      
+
         IEnumerator MineActivationDelay()
         {
             yield return new WaitForSeconds(ActivationTime);
+           
+            
             GetComponentInChildren<PlayerMineTrigger>().Activated = true;
             GetComponentInChildren<ItemMineTrigger>().Activated = true;
         }
@@ -48,6 +54,12 @@ namespace Items
             }
         }
 
+        //PUBLIC
+
+        public void Update()
+        {
+            Destroy(this.gameObject, LivingTime);
+        }
         #region Audio
         public void PlayLaunchSound()
         {

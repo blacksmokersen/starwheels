@@ -7,6 +7,7 @@ namespace Steering
 {
     public class SteeringWheel : EntityBehaviour<IKartState>, IControllable
     {
+        public bool CanSteer = true;
         public enum TurnState { NotTurning, Left, Right }
 
         [Header("Turn Torques")]
@@ -40,6 +41,7 @@ namespace Steering
 
         public void MapInputs()
         {
+            if(CanSteer)
             _turnValue = Input.GetAxis(Constants.Input.TurnAxis);
         }
 
@@ -106,6 +108,10 @@ namespace Steering
             InversedDirections = !InversedDirections;
         }
 
+        public void ResetAxisValue()
+        {
+            _turnValue = 0;
+        }
         // PRIVATE
 
         private void TurnSlowDown(float turnAxis)
