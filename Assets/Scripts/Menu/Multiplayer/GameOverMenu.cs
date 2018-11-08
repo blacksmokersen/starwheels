@@ -13,6 +13,10 @@ namespace Menu
         private void Awake()
         {
             replayButton.onClick.AddListener(OnReplayButtonPressed);
+        }
+
+        private void OnEnable()
+        {
             replayButton.gameObject.SetActive(BoltNetwork.isServer);
         }
 

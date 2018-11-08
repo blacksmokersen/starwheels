@@ -46,7 +46,7 @@ namespace GameModes.Totem
 
         public void MapInputs()
         {
-            if (Input.GetButtonDown(Constants.Input.UseItem))
+            if (Input.GetButtonDown(Constants.Input.UseItem) && _totem)
             {
                 UseTotem();
             }
@@ -70,6 +70,7 @@ namespace GameModes.Totem
         {
             _totem.GetComponent<Rigidbody>().isKinematic = false;
             _totem.GetComponent<SphereCollider>().enabled = true;
+            _totem.GetComponent<TotemBehaviour>().StartSlowdown();
             _totem.transform.SetParent(null);
             _throwableLauncher.Throw(_totem);
             _totem = null;
