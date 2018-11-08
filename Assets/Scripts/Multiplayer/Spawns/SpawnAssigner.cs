@@ -55,7 +55,8 @@ namespace Multiplayer
 
         public override void OnEvent(KartDestroyed evnt)
         {
-            AssignSpawn(evnt.ConnectionID, Team.Blue, true);
+            var team = Teams.TeamsColors.GetTeamFromColor(evnt.Team);
+            AssignSpawn(evnt.ConnectionID, team, true);
         }
 
         // PUBLIC
