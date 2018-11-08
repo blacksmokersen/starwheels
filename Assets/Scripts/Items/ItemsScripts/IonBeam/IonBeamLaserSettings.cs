@@ -9,5 +9,5 @@ public class IonBeamLaserSettings : ScriptableObject
     public float SpeedOffset;
     public float GrowingWarningSpeed;
     public float MaxWarningScale;
-    public bool onExplode;
+   // public bool onExplode;
 }
