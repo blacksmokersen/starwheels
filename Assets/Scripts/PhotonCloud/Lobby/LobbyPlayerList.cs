@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Photon.Lobby
 {
@@ -13,6 +14,8 @@ namespace Photon.Lobby
         public static LobbyPlayerList Instance = null;
 
         [Header("UI Elements")]
+        [SerializeField] private TMP_Dropdown _mapDropdown;
+        [SerializeField] private TMP_Dropdown _gamemodeDropdown;
         [SerializeField] private RectTransform _playerListContentTransform;
         [SerializeField] private GameObject _warningDirectPlayServer;
         [SerializeField] private Transform _addButtonRow;
@@ -57,6 +60,8 @@ namespace Photon.Lobby
             Instance = this;
             _players = new List<LobbyPhotonPlayer>();
             _layout = _playerListContentTransform.GetComponent<VerticalLayoutGroup>();
+            _mapDropdown.enabled = BoltNetwork.isServer;
+            _gamemodeDropdown.enabled = BoltNetwork.isServer;
         }
 
         private void Update()

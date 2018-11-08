@@ -8,27 +8,28 @@ namespace Multiplayer
 
         public override void BoltStartDone()
         {
-            if (BoltNetwork.isServer)
-            {
-                SetupEntity();
-            }
+            SetupEntity();
         }
 
         public override void SceneLoadLocalDone(string map)
         {
-            if (BoltNetwork.isServer)
-            {
-                SetupEntity();
-            }
+            SetupEntity();
         }
 
         // PRIVATE
 
         private void SetupEntity()
         {
-            var entity = GetComponent<BoltEntity>();
-            BoltNetwork.Attach(entity.gameObject);
-            entity.TakeControl();
+            if (BoltNetwork.isServer)
+            {
+                var entity = GetComponent<BoltEntity>();
+                BoltNetwork.Attach(entity.gameObject);
+                entity.TakeControl();
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 }
