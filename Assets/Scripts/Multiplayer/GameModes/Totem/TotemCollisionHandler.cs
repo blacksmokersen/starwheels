@@ -41,13 +41,11 @@ namespace GameModes.Totem
 
                 if(state.Lives <= 0)
                 {
-                    var winningTeam = Team.Blue;
-
                     GameOver gameOverEvent = GameOver.Create();
-                    gameOverEvent.WinningTeam = TeamsColors.GetColorFromTeam(winningTeam);
+                    gameOverEvent.WinningTeam = TeamsColors.GetColorFromTeam(OwnerTeam.OppositeTeam());
                     gameOverEvent.Send();
 
-                    if (OnWallDestroyed != null) OnWallDestroyed.Invoke(winningTeam);
+                    if (OnWallDestroyed != null) OnWallDestroyed.Invoke(OwnerTeam);
 
                     BoltNetwork.Destroy(gameObject);
                 }
