@@ -38,7 +38,7 @@ namespace CameraUtils
             {
                 CameraReset();
             }
-            TurnCamera(Input.GetAxis(Constants.Input.TurnCamera));
+            WhenToRecenterEnableCam(Input.GetAxis(Constants.Input.TurnCamera));
         }
 
         public void DisableTurnEffectInput()
@@ -62,7 +62,7 @@ namespace CameraUtils
 
         // PRIVATE
 
-        private void TurnCamera(float value)
+        private void WhenToRecenterEnableCam(float value)
         {
             if (Mathf.Abs(_orbiter.m_XAxis.Value) >= 1f)
                 _orbiter.m_RecenterToTargetHeading.m_enabled = true;
