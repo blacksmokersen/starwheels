@@ -76,16 +76,16 @@ public class IonBeamCamera : EntityBehaviour
             GameObject.FindGameObjectWithTag("IonBeamCamIgnore").GetComponent<Renderer>().enabled = state;
     }
 
-    IEnumerator CameraIonBeamExpand(float endValueZ, float endValueY, float boostDuration)
+    IEnumerator CameraIonBeamExpand(float endValueZ, float endValueY, float expandDuration)
     {
         float startDynamicCamValueZ = transposer.m_FollowOffset.z;
         float startDynamicCamValueY = transposer.m_FollowOffset.y;
 
         _currentTimer = 0f;
-        while (_currentTimer < boostDuration)
+        while (_currentTimer < expandDuration)
         {
-            transposer.m_FollowOffset.z = Mathf.Lerp(startDynamicCamValueZ, endValueZ, _currentTimer / boostDuration);
-            transposer.m_FollowOffset.y = Mathf.Lerp(startDynamicCamValueY, endValueY, _currentTimer / boostDuration);
+            transposer.m_FollowOffset.z = Mathf.Lerp(startDynamicCamValueZ, endValueZ, _currentTimer / expandDuration);
+            transposer.m_FollowOffset.y = Mathf.Lerp(startDynamicCamValueY, endValueY, _currentTimer / expandDuration);
             _currentTimer += Time.deltaTime;
             yield return null;
         }
@@ -97,7 +97,7 @@ public class IonBeamCamera : EntityBehaviour
         _isCameraOnTop = true;
     }
 
-    IEnumerator CameraIonBeamReset(float returnValueZ, float returnValueY, float boostDuration)
+    IEnumerator CameraIonBeamReset(float returnValueZ, float returnValueY, float resetDuration)
     {
         _showCrosshair = false;
         _isCameraOnTop = false;
@@ -107,11 +107,11 @@ public class IonBeamCamera : EntityBehaviour
 
         _currentTimer = 0f;
 
-        while (_currentTimer < boostDuration)
+        while (_currentTimer < resetDuration)
         {
-            transposer.m_FollowOffset.x = Mathf.Lerp(startDynamicCamValueX, 0, _currentTimer / boostDuration);
-            transposer.m_FollowOffset.z = Mathf.Lerp(startDynamicCamValueZ, returnValueZ, _currentTimer / boostDuration);
-            transposer.m_FollowOffset.y = Mathf.Lerp(startDynamicCamValueY, returnValueY, _currentTimer / boostDuration);
+            transposer.m_FollowOffset.x = Mathf.Lerp(startDynamicCamValueX, 0, _currentTimer / resetDuration);
+            transposer.m_FollowOffset.z = Mathf.Lerp(startDynamicCamValueZ, returnValueZ, _currentTimer / resetDuration);
+            transposer.m_FollowOffset.y = Mathf.Lerp(startDynamicCamValueY, returnValueY, _currentTimer / resetDuration);
             _currentTimer += Time.deltaTime;
             yield return null;
         }
