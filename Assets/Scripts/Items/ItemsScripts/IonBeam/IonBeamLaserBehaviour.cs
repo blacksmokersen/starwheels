@@ -16,6 +16,7 @@ namespace Items
 
         private ParticleSystem _explosionParticleSystem;
         private Vector2 offset;
+        private bool _onExplode = false;
         private bool _damagePlayer = false;
         private Coroutine _laserBehaviour;
 
@@ -24,7 +25,7 @@ namespace Items
         private void Awake()
         {
             _explosionParticleSystem = explosionParticles.GetComponent<ParticleSystem>();
-            ionBeamLaserSettings.onExplode = true;
+            _onExplode = true;
             // GameObject owner = GetComponent<Ownership>().gameObject;
             //float currentTimer = WarningPosition.transform.localScale.x;
         }
@@ -50,7 +51,7 @@ namespace Items
                 }
                 else
                 {
-                    if (ionBeamLaserSettings.onExplode)
+                    if (_onExplode)
                         Explosion();
                 }
             }
@@ -66,7 +67,7 @@ namespace Items
 
         public void Explosion()
         {
-            if (ionBeamLaserSettings.onExplode)
+            if (_onExplode)
             {
                 RaycastHit hit;
                 if (Physics.Raycast(raycastTransformOrigin.position, Vector3.down, out hit, 1000, 1 << LayerMask.NameToLayer(Constants.Layer.Ground)))
@@ -75,7 +76,7 @@ namespace Items
                     Destroy(effectiveAOE);
                     Destroy(warningPosition);
                     _laserBehaviour = StartCoroutine(ParticuleEffect());
-                    ionBeamLaserSettings.onExplode = false;
+                    _onExplode = false;
                 }
                 else
                 {
