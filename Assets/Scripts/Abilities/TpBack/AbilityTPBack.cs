@@ -15,6 +15,7 @@ namespace Abilities
         [Header("Effects")]
         [SerializeField] private ParticleSystem reloadParticlePrefab;
         [SerializeField] private int reloadParticleNumber;
+        [SerializeField] private AudioSource useTpBackSound;
 
         private ParticleSystem _reloadEffect;
         private TPBackBehaviour _tpBack = null;
@@ -72,6 +73,7 @@ namespace Abilities
                 {
                     _rb.transform.position = _tpBack.transform.position;
                     _rb.transform.rotation = GetKartRotation();
+                    MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(useTpBackSound);
                     Destroy(_tpBack.gameObject);
                     StartCoroutine(AbilityCooldown(tPBackSettings.Cooldown));
                 }

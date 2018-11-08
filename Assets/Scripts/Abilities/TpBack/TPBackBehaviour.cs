@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Items
 {
@@ -13,25 +14,23 @@ namespace Items
         public float ForwardThrowingForce;
         public float TimesLongerThanHighThrow;
 
-        [Header("Sounds")]
-        public AudioClip LaunchSound;
+        public UnityEvent OnTpBackLaunch;
+        public UnityEvent OnTpBackFlight;
+        public UnityEvent OnTpBackActivated;
+        public UnityEvent OnTpBackIdle;
 
         private Quaternion _kartRotation;
-        private AudioSource _audioSource;
         private bool _canBeEnabled = false;
         private bool _enabled = false;
         private Transform _kart;
 
         // CORE
 
-        private void Awake()
-        {
-            _audioSource = GetComponent<AudioSource>();
-        }
-
         private void Start()
         {
             StartCoroutine(ActivationDelay());
+            OnTpBackLaunch.Invoke();
+            OnTpBackFlight.Invoke();
         }
 
         private void Update()
@@ -49,32 +48,9 @@ namespace Items
             return _enabled;
         }
 
-        public void Launch(Inventory kart, Direction direction)
-        {
-            _kart = kart.GetComponentInParent<Rigidbody>().transform;
-            _kartRotation = _kart.rotation;
-
-            if (direction == Direction.Forward || direction == Direction.Default)
-            {
-                //transform.position = kart.ItemPositions.FrontPosition.position;
-                GetComponent<Rigidbody>().AddForce((kart.transform.forward + kart.transform.up / TimesLongerThanHighThrow) * ForwardThrowingForce, ForceMode.Impulse);
-            }
-            else if (direction == Direction.Backward)
-            {
-                //transform.position = kart.ItemPositions.BackPosition.position;
-            }
-
-            PlayLaunchSound();
-        }
-
         public Quaternion GetKartRotation()
         {
             return _kartRotation;
-        }
-
-        public void PlayLaunchSound()
-        {
-            _audioSource.PlayOneShot(LaunchSound);
         }
 
         // PRIVATE
@@ -110,6 +86,8 @@ namespace Items
         {
             if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.Layer.Ground))
             {
+                OnTpBackActivated.Invoke();
+                OnTpBackIdle.Invoke();
                 Rigidbody rb = GetComponent<Rigidbody>();
                 rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
                 rb.freezeRotation = true;
