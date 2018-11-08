@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using Bolt;
 
 namespace KBA.Debug
 {
-    public class DebugTeleporter : MonoBehaviour, IControllable
+    public class DebugTeleporter : EntityBehaviour, IControllable
     {
         [Header("Teleport Settings")]
         [SerializeField] private GameObject _teleportTarget;
@@ -10,7 +11,7 @@ namespace KBA.Debug
 
         // CORE
 
-        void Update()
+        public override void SimulateController()
         {
             MapInputs();
         }

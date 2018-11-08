@@ -62,7 +62,6 @@ namespace Photon.Lobby
             state.AddCallback("Color", () =>
             {
                 OnColorChanged(state.Color);
-                _colorButton.GetComponent<Image>().color = state.Color;
             });
 
             state.AddCallback("Ready", () =>
