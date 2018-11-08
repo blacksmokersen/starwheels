@@ -19,23 +19,19 @@ namespace GameModes.Totem
 
         private void Awake()
         {
-            _throwPositions = GetComponent<ThrowPositions>();
             _inventory = GetComponent<Inventory>();
+            _throwableLauncher = GetComponent<ThrowableLauncher>();
+            _throwPositions = GetComponent<ThrowPositions>();
         }
 
         // MONOBEHAVIOUR
 
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider other)
         {
-            if (collision.gameObject.CompareTag(Constants.Tag.Totem))
+            if (other.CompareTag(Constants.Tag.Totem) && !_totem && other.isTrigger)
             {
-                Debug.Log("Got it !");
-                var totemObject = collision.gameObject;
-                totemObject.transform.SetParent(_throwPositions.BackPosition);
-                _totem = totemObject.GetComponent<Throwable>();
-
-                _inventory.StopAllCoroutines(); // Stop any anti-spam routine
-                _inventory.CanUseItem = false;
+                Debug.Log("Totem : " + other.gameObject.name);
+                SetTotem(other.gameObject);
             }
         }
 
@@ -58,9 +54,26 @@ namespace GameModes.Totem
 
         // PRIVATE
 
+        private void SetTotem(GameObject totem)
+        {
+            _totem = totem.GetComponentInParent<Throwable>();
+            _totem.GetComponent<Rigidbody>().isKinematic = true;
+            _totem.GetComponent<SphereCollider>().enabled = false;
+            _totem.transform.SetParent(_throwPositions.BackPosition);
+            _totem.transform.position = _throwPositions.BackPosition.position;
+
+            _inventory.StopAllCoroutines(); // Stop any anti-spam routine
+            _inventory.CanUseItem = false;
+        }
+
         private void UseTotem()
         {
+            _totem.GetComponent<Rigidbody>().isKinematic = false;
+            _totem.GetComponent<SphereCollider>().enabled = true;
+            _totem.transform.SetParent(null);
             _throwableLauncher.Throw(_totem);
+            _totem = null;
+
             _inventory.CanUseItem = true;
         }
     }

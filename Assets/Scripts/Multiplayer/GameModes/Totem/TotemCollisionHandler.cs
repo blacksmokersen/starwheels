@@ -14,6 +14,11 @@ namespace GameModes.Totem
         public IntEvent OnLifeLost;
         public TeamEvent OnWallDestroyed;
 
+        public override void ControlGained()
+        {
+            if (entity.isControllerOrOwner) state.Lives = RemainingLives;
+        }
+
         // MONOBEHAVIOUR
 
         private void OnCollisionEnter(Collision collision)
@@ -28,7 +33,9 @@ namespace GameModes.Totem
 
         private void LoseLife()
         {
-            if (entity.isOwner)
+            if (OnLifeLost != null) OnLifeLost.Invoke(state.Lives);
+
+            if (entity.isControllerOrOwner)
             {
                 state.Lives--;
 
@@ -45,7 +52,6 @@ namespace GameModes.Totem
                     BoltNetwork.Destroy(gameObject);
                 }
             }
-            if (OnLifeLost != null) OnLifeLost.Invoke(state.Lives);
         }
     }
 }

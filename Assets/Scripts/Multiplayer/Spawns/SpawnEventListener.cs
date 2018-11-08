@@ -11,7 +11,7 @@ namespace Multiplayer
 
         private void Awake()
         {
-            if (!BoltNetwork.isConnected)
+            if (!BoltNetwork.isConnected) // Used for In-Editor tests
             {
                 BoltLauncher.StartServer();
             }
@@ -19,9 +19,9 @@ namespace Multiplayer
 
         // BOLT
 
-        public override void BoltStartDone()
+        public override void BoltStartDone() // Used for In-Editor tests
         {
-            InstantiateKart(new Vector3(0, 10, 0), Quaternion.identity);
+            InstantiateKart(transform.position, Quaternion.identity); // Scene specific position
         }
 
         public override void OnEvent(PlayerSpawn evnt)
