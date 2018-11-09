@@ -1145,6 +1145,7 @@ GameObject:
   - component: {fileID: 114293661950101820}
   - component: {fileID: 65044690839908312}
   - component: {fileID: 114302205516542024}
+  - component: {fileID: 114236987930025460}
   m_Layer: 0
   m_Name: Inventory
   m_TagString: Untagged
@@ -6566,6 +6567,17 @@ MonoBehaviour:
   LifeBursts:
   - {fileID: 0}
   NumberOfParticles: 300
+--- !u!114 &114236987930025460
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1540390246441956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a493abe048d608d439358f85f9cf9283, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114241659848452430
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7061,9 +7073,9 @@ MonoBehaviour:
   m_Script: {fileID: -36112512, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneGuid: dac54c80-e720-41dc-afd2-51d88176d6f5
+  _sceneGuid: 24cc0169-5dc1-47b6-8274-1d6a5ae98a8c
   _serializerGuid: 3d46793e-7c24-4279-882f-df983ef4cb50
-  _prefabId: 10
+  _prefabId: 12
   _updateRate: 1
   _autoFreezeProxyFrames: 0
   _clientPredicted: 1
@@ -7126,6 +7138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 472f456062511404abbb2db86c295fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CanUseItem: 1
   CurrentItem: {fileID: 11400000, guid: 14aae97df4480b648b85662d30788680, type: 2}
   CurrentItemCount: 100
   OnItemGet:

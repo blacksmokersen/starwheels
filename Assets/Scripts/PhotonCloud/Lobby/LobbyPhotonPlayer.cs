@@ -39,6 +39,13 @@ namespace Photon.Lobby
         private Color ReadyColor = new Color(0.0f, 204.0f / 255.0f, 204.0f / 255.0f, 1.0f);
         private Color TransparentColor = new Color(0, 0, 0, 0);
 
+        // CORE
+
+        private void Awake()
+        {
+            _colorButton.GetComponent<Image>().color = TeamsColors.GetColorFromTeam(Team.None);
+        }
+
         // BOLT
 
         public override void Attached()
