@@ -4,7 +4,7 @@ using Multiplayer.Teams;
 
 namespace GameModes
 {
-    [BoltGlobalBehaviour(BoltNetworkModes.Server)]
+    [BoltGlobalBehaviour(BoltNetworkModes.Server, BoltScenes.FortBlock, BoltScenes.Pillars)]
     public class ClassicBattle : GameModeBase
     {
         [Header("Battle Settings")]
