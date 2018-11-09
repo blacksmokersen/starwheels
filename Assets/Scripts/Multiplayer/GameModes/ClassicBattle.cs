@@ -1,17 +1,14 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using Multiplayer;
 using Multiplayer.Teams;
 
 namespace GameModes
 {
-    [BoltGlobalBehaviour(BoltNetworkModes.Server)]
+    [BoltGlobalBehaviour(BoltNetworkModes.Server, BoltScenes.FortBlock, BoltScenes.Pillars)]
     public class ClassicBattle : GameModeBase
     {
-        [Header("GameMode Settings")]
+        [Header("Battle Settings")]
         public int MaxPlayersPerTeam;
-        public bool IsOver;
-        public Team WinnerTeam = Team.None;
 
         private int _redKartsAlive;
         private int _blueKartsAlive;
@@ -112,9 +109,6 @@ namespace GameModes
                         break;
                 }
             }
-
-            Debug.Log("Blue players : " + _blueKartsAlive);
-            Debug.Log("Red players : " + _redKartsAlive);
         }
 
         private void CheckIfOver()
@@ -136,20 +130,6 @@ namespace GameModes
                 IsOver = true;
                 WinnerTeam = Team.Red;
                 EndGame();
-            }
-        }
-
-        private void EndGame()
-        {
-            GameOver goEvent = GameOver.Create();
-            goEvent.WinningTeam = TeamsColors.GetColorFromTeam(WinnerTeam);
-            goEvent.Send();
-
-            var playerInputsList = FindObjectsOfType<MonoBehaviour>().OfType<IControllable>();
-
-            foreach(MonoBehaviour playerInputs in playerInputsList)
-            {
-                playerInputs.enabled = false;
             }
         }
     }

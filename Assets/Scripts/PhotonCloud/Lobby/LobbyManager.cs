@@ -48,7 +48,8 @@ namespace Photon.Lobby
         [Space]
         [Header("UI Reference")]
         [SerializeField] private GameObject _mainGameMenu;
-        [SerializeField] private TMP_Dropdown _mapDropDownMenu;
+        [SerializeField] private TMP_Dropdown _mapDropdown;
+        [SerializeField] private TMP_Dropdown _gamemodeDropdown;
 
         [Header("Panels")]
         public LobbyTopPanel TopPanel;
@@ -389,7 +390,8 @@ namespace Photon.Lobby
 
             var token = new RoomProtocolToken();
             token.RoomInfo = "" + LobbyPlayerList.Instance.AllPlayers.Count;
-            BoltNetwork.LoadScene(_mapDropDownMenu.options[_mapDropDownMenu.value].text, token);
+            token.Gamemode = _gamemodeDropdown.options[_gamemodeDropdown.value].text;
+            BoltNetwork.LoadScene(_mapDropdown.options[_mapDropdown.value].text, token);
         }
     }
 }

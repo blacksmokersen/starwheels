@@ -67,6 +67,7 @@ namespace Common.HUD
     }
 
     #if UNITY_EDITOR
+    /*
     [CustomEditor(typeof(NicknamePanel))]
     public class NicknamePanelEditor : Editor
     {
@@ -85,5 +86,6 @@ namespace Common.HUD
             nicknamePanel.SetFrameRendererColor(frameColor);
         }
     }
+    */
     #endif
 }

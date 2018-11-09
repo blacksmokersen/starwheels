@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using Bolt;
+using Multiplayer.Teams;
 
 namespace GameModes
 {
@@ -12,7 +14,10 @@ namespace GameModes
     {
         public static GameMode CurrentGameMode;
 
+        [Header("Game Mode")]
+        public Team WinnerTeam = Team.None;
         public bool GameStarted = false;
+        public bool IsOver = false;
 
         [Header("Events")]
         public UnityEvent OnGameReset;
@@ -21,16 +26,26 @@ namespace GameModes
 
         [SerializeField] private float countdownSeconds = 3f;
 
-        // CORE
-
-        // PUBLIC
-
         // PROTECTED
 
         protected virtual void InitializeGame()
         {
             // To Implement in concrete Game Modes
             OnGameStart.Invoke();
+        }
+
+        protected void EndGame()
+        {
+            GameOver goEvent = GameOver.Create();
+            goEvent.WinningTeam = TeamsColors.GetColorFromTeam(WinnerTeam);
+            goEvent.Send();
+
+            var playerInputsList = FindObjectsOfType<MonoBehaviour>().OfType<IControllable>();
+
+            foreach (MonoBehaviour playerInputs in playerInputsList)
+            {
+                playerInputs.enabled = false;
+            }
         }
 
         protected virtual void ResetGame()
