@@ -1,10 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace GameModes
+﻿namespace GameModes
 {
-    [BoltGlobalBehaviour(BoltNetworkModes.Server)]
+    [BoltGlobalBehaviour(BoltNetworkModes.Server, BoltScenes.CarapaceSquare, BoltScenes.CarapaceOvale)]
     public class TotemServer : GameModeBase
     {
         public override void OnEvent(WallHit evnt)
