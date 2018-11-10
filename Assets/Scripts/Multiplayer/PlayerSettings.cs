@@ -9,7 +9,8 @@ namespace Multiplayer
         public Color Team;
         public string Nickname;
         public int ConnectionID;
-        public Player LocalPlayer;
+        public int KartIndex;
+        public int AbilityIndex;
 
         // CORE
 
