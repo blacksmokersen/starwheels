@@ -30,19 +30,29 @@ namespace Items
             //float currentTimer = WarningPosition.transform.localScale.x;
         }
 
+        private void Start()
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(raycastTransformOrigin.position, Vector3.down, out hit, 1000, 1 << LayerMask.NameToLayer(Constants.Layer.Ground)))
+            {
+                effectiveAOE.transform.position = hit.point;
+                warningPosition.transform.position = hit.point;
+            }
+        }
+
         private void Update()
         {
             offset = new Vector2(0, Time.deltaTime * ionBeamLaserSettings.SpeedOffset);
-            if (effectiveAOE != null)
-                effectiveAOE.GetComponent<Renderer>().material.mainTextureOffset += offset;
+          //  if (effectiveAOE != null)
+              //  effectiveAOE.GetComponent<Renderer>().material.mainTextureOffset += offset;
 
             if (warningPosition != null)
             {
                 if (warningPosition.transform.localScale.x >= ionBeamLaserSettings.MaxWarningScale)
                 {
-                    if (warningPosition.transform.localScale.x >= ionBeamLaserSettings.MaxWarningScale / 2)
+                    if (warningPosition.transform.localScale.x >= ionBeamLaserSettings.MaxWarningScale / 10)
                     {
-                        GrowingAoeWarning(ionBeamLaserSettings.GrowingWarningSpeed / 2);
+                        GrowingAoeWarning(ionBeamLaserSettings.GrowingWarningSpeed / 10);
                     }
                     else
                     {
@@ -90,6 +100,11 @@ namespace Items
         IEnumerator ParticuleEffect()
         {
             // MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(ExplosionSource);
+            explosionParticles.SetActive(true);
+            _damagePlayer = true;
+            yield return new WaitForSeconds(0.2f);
+            _damagePlayer = false;
+            /*
             var shape = _explosionParticleSystem.shape;
             shape.radius = 10;
             _explosionParticleSystem.Emit(500);
@@ -101,6 +116,7 @@ namespace Items
             shape.radius = 30;
             _explosionParticleSystem.Emit(500);
             _damagePlayer = false;
+            */
             yield return new WaitForSeconds(2);
             BoltNetwork.Destroy(gameObject);
         }
