@@ -3,11 +3,9 @@ using UnityEngine;
 
 namespace Abilities
 {
-    public class AbilitySelectionInputs : EntityBehaviour<IKartState>, IControllable
+    public class AbilitySelectionInputs : EntityBehaviour, IControllable
     {
-        [SerializeField] private AbilitiesBehaviourSettings abilitiesBehaviourSettings;
-
-        private int _abilityNumber = 0;
+        [SerializeField] private AbilitySetter _abilitySetter;
 
         // BOLT
 
@@ -22,36 +20,13 @@ namespace Abilities
         {
             if (Input.GetKeyDown(KeyCode.J))
             {
-                _abilityNumber = 0;
-                ChangeAbility();
+                Debug.Log(_abilitySetter == null);
+                _abilitySetter.SetJumpingAbility();
             }
-            if (Input.GetKeyDown(KeyCode.H))
+            else if (Input.GetKeyDown(KeyCode.T))
             {
-                _abilityNumber = 1;
-                ChangeAbility();
-            }
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                _abilityNumber = 2;
-                ChangeAbility();
-            }
-        }
-
-        // PRIVATE
-
-        private void ChangeAbility()
-        {
-            switch (_abilityNumber)
-            {
-                case 0:
-                    abilitiesBehaviourSettings.ActiveAbility = "Jump";
-                    break;
-                case 1:
-                    abilitiesBehaviourSettings.ActiveAbility = "Hook";
-                    break;
-                case 2:
-                    abilitiesBehaviourSettings.ActiveAbility = "TPBack";
-                    break;
+                Debug.Log("T");
+                _abilitySetter.SetTPBackAbility();
             }
         }
     }
