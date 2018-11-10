@@ -6,6 +6,7 @@ using UdpKit;
 using System;
 using Utilities;
 using TMPro;
+using Multiplayer;
 
 namespace Photon.Lobby
 {
@@ -37,6 +38,8 @@ namespace Photon.Lobby
             }
         }
 
+        [SerializeField] private PlayerSettings _playerSettings;
+
         [Header("Lobby Configuration")]
         [SerializeField] private SceneField _lobbyScene;
         [SerializeField] private SceneField _gameScene;
@@ -50,6 +53,8 @@ namespace Photon.Lobby
         [SerializeField] private GameObject _mainGameMenu;
         [SerializeField] private TMP_Dropdown _mapDropdown;
         [SerializeField] private TMP_Dropdown _gamemodeDropdown;
+        [SerializeField] private TMP_Dropdown _kartDropdown;
+        [SerializeField] private TMP_Dropdown _abilityDropdown;
 
         [Header("Panels")]
         public LobbyTopPanel TopPanel;
@@ -82,6 +87,9 @@ namespace Photon.Lobby
             _backButton.gameObject.SetActive(true);
             _startButton.gameObject.SetActive(false);
             GetComponent<Canvas>().enabled = true;
+
+            _kartDropdown.onValueChanged.AddListener(delegate { _playerSettings.KartIndex = _kartDropdown.value; });
+            _abilityDropdown.onValueChanged.AddListener(delegate { _playerSettings.AbilityIndex = _abilityDropdown.value; });
 
             SetServerInfo("Offline", "None");
         }
@@ -232,7 +240,6 @@ namespace Photon.Lobby
             if (player != null)
             {
                 BoltLog.Info("Disconnected");
-
                 //player.RemovePlayer();
             }
         }

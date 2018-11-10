@@ -38,7 +38,7 @@ namespace Abilities.Jump
 
         public override void SimulateController()
         {
-            if (abilitiesBehaviourSettings.ActiveAbility == "Jump")
+            if (gameObject.activeInHierarchy)
                 MapInputs();
         }
 

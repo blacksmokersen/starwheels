@@ -39,7 +39,7 @@ namespace Abilities
 
         public override void SimulateController()
         {
-            if (abilitiesBehaviourSettings.ActiveAbility == "TPBack")
+            if (gameObject.activeInHierarchy)
                 MapInputs();
         }
 

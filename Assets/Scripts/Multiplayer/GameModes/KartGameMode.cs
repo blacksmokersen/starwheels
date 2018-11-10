@@ -16,7 +16,7 @@ namespace GameModes
 
         private void Awake()
         {
-            _endGameMenu = MonoBehaviour.Instantiate(Resources.Load<GameObject>(Constants.Prefab.EndGameMenu));
+            _endGameMenu = MonoBehaviour.Instantiate(Resources.Load<GameObject>(Constants.Resources.EndGameMenu));
             _endGameMenu.SetActive(false);
         }
 
