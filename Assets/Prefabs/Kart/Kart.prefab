@@ -422,6 +422,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4126607121165242}
   - component: {fileID: 114596180493556864}
+  - component: {fileID: 114695282169036156}
   m_Layer: 11
   m_Name: NicknamePanel
   m_TagString: Untagged
@@ -2378,7 +2379,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1146822068361766}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224515125964380446}
@@ -7421,6 +7422,21 @@ MonoBehaviour:
   - {fileID: 4490456506876336}
   - {fileID: 4059028053787120}
   - {fileID: 4327720265782332}
+--- !u!114 &114695282169036156
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1146822068361766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e02e5f5382a6a243aad93fed7037c14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetRenderer: {fileID: 212908051091630986}
+  _alwaysVisibleMaterial: {fileID: 2100000, guid: 49ba3fc24128a434a823b4273cacf200,
+    type: 2}
+  _defaultMaterial: {fileID: 0}
 --- !u!114 &114724077091325976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7572,8 +7588,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 6
-  m_fontSizeBase: 6
+  m_fontSize: 8
+  m_fontSizeBase: 8
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -40107,7 +40123,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 17af9b67b112f7d4bbfe3a67f0538adf, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -40131,8 +40147,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1367074612760220}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 0.5, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.12}
+  m_LocalScale: {x: 3, y: 0.65, z: 1}
   m_Children: []
   m_Father: {fileID: 4126607121165242}
   m_RootOrder: 1
