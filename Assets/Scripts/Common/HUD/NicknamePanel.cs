@@ -10,6 +10,7 @@ namespace Common.HUD
 {
     public class NicknamePanel : EntityBehaviour<IKartState>
     {
+        [Header("Elements")]
         [SerializeField] private TextMeshPro nameText;
         [SerializeField] private SpriteRenderer frameRenderer;
 
