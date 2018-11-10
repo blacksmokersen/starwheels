@@ -56,11 +56,10 @@
     }
 
     // Prefabs
-    public class Prefab
+    public class Resources
     {
-        public const string RoomPlayer = "Menu/RoomPlayer";
         public const string EndGameMenu = "Menu/EndGameMenu";
-        public const string HookObject = "Items/Hook";
+        public const string PlayerSettings = "PlayerSettings";
     }
 
     // GameObjects names
