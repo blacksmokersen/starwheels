@@ -7,6 +7,8 @@ namespace Multiplayer
     [BoltGlobalBehaviour(BoltNetworkModes.Server)]
     public class SpawnAssigner : GlobalEventListener
     {
+        public IProtocolToken RoomInfoToken;
+
         private List<GameObject> _initialBlueSpawns = new List<GameObject>();
         private List<GameObject> _initialRedSpawns = new List<GameObject>();
         private List<GameObject> _blueSpawns = new List<GameObject>();
@@ -27,6 +29,8 @@ namespace Multiplayer
 
         public override void SceneLoadLocalDone(string map, IProtocolToken token)
         {
+            Debug.Log("Scene LOADED");
+
             _redSpawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.RedSpawn));
             _initialRedSpawns = _redSpawns;
             _blueSpawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.BlueSpawn));
@@ -40,6 +44,8 @@ namespace Multiplayer
             FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
 
             var roomToken = (Photon.RoomProtocolToken)token;
+            RoomInfoToken = roomToken;
+
             if (System.Int32.TryParse(roomToken.RoomInfo, out _playersCount))
             {
                 IncreaseSpawnCount();

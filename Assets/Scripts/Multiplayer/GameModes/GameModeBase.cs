@@ -24,7 +24,22 @@ namespace GameModes
         public TeamEvent OnGameEnd;
         public UnityEvent OnGameStart;
 
+        protected int _redScore = 0;
+        protected int _blueScore = 0;
+
         [SerializeField] private float countdownSeconds = 3f;
+
+        // BOLT
+
+        public override void SceneLoadLocalDone(string scene)
+        {
+            ResetGame();
+        }
+
+        public override void SceneLoadLocalDone(string scene, IProtocolToken token)
+        {
+            ResetGame();
+        }
 
         // PROTECTED
 
@@ -48,10 +63,35 @@ namespace GameModes
             }
         }
 
-        protected virtual void ResetGame()
+        protected void ResetGame()
         {
-            // To Implement in concrete Game Modes
+            WinnerTeam = Team.None;
+            GameStarted = false;
+            IsOver = false;
+            _redScore = 0;
+            _blueScore = 0;
             OnGameReset.Invoke();
+        }
+
+        protected void IncreaseScore(Team team)
+        {
+            ScoreIncreased scoreIncreased = ScoreIncreased.Create();
+            scoreIncreased.Team = TeamsColors.GetColorFromTeam(team);
+            switch (team)
+            {
+                case Team.Blue:
+                    _blueScore++;
+                    scoreIncreased.Score = _blueScore;
+                    break;
+                case Team.Red:
+                    _redScore++;
+                    scoreIncreased.Score = _redScore;
+                    break;
+                default:
+                    Debug.LogError("Unknown team.");
+                    break;
+            }
+            scoreIncreased.Send();
         }
 
         // PRIVATE

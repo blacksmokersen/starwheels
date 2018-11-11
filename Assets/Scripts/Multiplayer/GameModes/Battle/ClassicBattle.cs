@@ -10,6 +10,7 @@ namespace GameModes
         [Header("Battle Settings")]
         public int MaxPlayersPerTeam;
 
+        private int _maxScore = 3;
         private int _redKartsAlive;
         private int _blueKartsAlive;
 
@@ -31,6 +32,9 @@ namespace GameModes
         public override void OnEvent(KartDestroyed evnt)
         {
             //KartDestroy(TeamsColors.GetTeamFromColor(evnt.Team));
+            var team = TeamsColors.GetTeamFromColor(evnt.Team).OppositeTeam();
+            IncreaseScore(team);
+            CheckScore();
         }
 
         public override void OnEvent(PlayerReady evnt)
@@ -67,7 +71,7 @@ namespace GameModes
                 default:
                     break;
             }
-            CheckIfOver();
+            CheckIfAnyKartsAlive();
         }
 
         // PROTECTED
@@ -78,14 +82,6 @@ namespace GameModes
             foreach(var kart in karts)
             {
                 // Do stuff ?
-            }
-        }
-
-        protected override void ResetGame()
-        {
-            if (BoltNetwork.isServer)
-            {
-                LevelManager.Instance.ResetLevel();
             }
         }
 
@@ -111,7 +107,7 @@ namespace GameModes
             }
         }
 
-        private void CheckIfOver()
+        private void CheckIfAnyKartsAlive()
         {
             if (_redKartsAlive <= 0 && _blueKartsAlive <= 0)
             {
@@ -126,6 +122,22 @@ namespace GameModes
                 EndGame();
             }
             else if (_blueKartsAlive <= 0)
+            {
+                IsOver = true;
+                WinnerTeam = Team.Red;
+                EndGame();
+            }
+        }
+
+        private void CheckScore()
+        {
+            if(_blueScore >= _maxScore)
+            {
+                IsOver = true;
+                WinnerTeam = Team.Blue;
+                EndGame();
+            }
+            else if(_redScore >= _maxScore)
             {
                 IsOver = true;
                 WinnerTeam = Team.Red;
