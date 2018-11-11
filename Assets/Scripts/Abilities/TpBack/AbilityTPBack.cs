@@ -64,6 +64,7 @@ namespace Abilities
                 if (_tpBack == null)
                 {
                     var instantiatedItem = BoltNetwork.Instantiate(tPBackSettings.Prefab);
+
                     var throwable = instantiatedItem.GetComponent<Throwable>();
                     _tpBack = instantiatedItem.GetComponent<TPBackBehaviour>();
                     throwableLauncher.Throw(throwable);
@@ -77,6 +78,9 @@ namespace Abilities
                 }
             }
         }
+
+        
+
         // PRIVATE
         IEnumerator AbilityCooldown(float Duration)
         {
