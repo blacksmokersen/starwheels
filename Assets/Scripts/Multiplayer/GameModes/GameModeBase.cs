@@ -24,10 +24,10 @@ namespace GameModes
         public TeamEvent OnGameEnd;
         public UnityEvent OnGameStart;
 
-        [SerializeField] private float countdownSeconds = 3f;
+        protected int _redScore = 0;
+        protected int _blueScore = 0;
 
-        private int _redScore = 0;
-        private int _blueScore = 0;
+        [SerializeField] private float countdownSeconds = 3f;
 
         // PROTECTED
 
