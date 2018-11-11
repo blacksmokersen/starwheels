@@ -18,8 +18,11 @@ namespace Engine
         private void Start()
         {
             _speedMeter = GameObject.Find(Constants.GameObjectName.Speedmeter);
-            _speedBar = _speedMeter.GetComponentInChildren<Image>();
-            _speedText = _speedMeter.GetComponentInChildren<Text>();
+            if (_speedMeter)
+            {
+                _speedBar = _speedMeter.GetComponentInChildren<Image>();
+                _speedText = _speedMeter.GetComponentInChildren<Text>();
+            }
         }
 
         private void Update()
