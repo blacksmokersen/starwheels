@@ -31,6 +31,8 @@ namespace GameModes
         public override void OnEvent(KartDestroyed evnt)
         {
             //KartDestroy(TeamsColors.GetTeamFromColor(evnt.Team));
+            var team = TeamsColors.GetTeamFromColor(evnt.Team).OppositeTeam();
+            IncreaseScore(team);
         }
 
         public override void OnEvent(PlayerReady evnt)
