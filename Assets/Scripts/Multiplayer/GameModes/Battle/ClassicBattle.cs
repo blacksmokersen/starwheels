@@ -10,7 +10,7 @@ namespace GameModes
         [Header("Battle Settings")]
         public int MaxPlayersPerTeam;
 
-        private int _maxScore = 2;
+        private int _maxScore = 3;
         private int _redKartsAlive;
         private int _blueKartsAlive;
 
