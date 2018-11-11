@@ -11,6 +11,9 @@ namespace Items
     {
         public bool CanUseItem = true;
 
+        [Header("Spam Prevention")]
+        [SerializeField] private float _antiSpamDuration;
+
         [Header("Current Item")]
         public Item CurrentItem;
         public int CurrentItemCount;
@@ -108,7 +111,7 @@ namespace Items
         private IEnumerator AntiSpamRoutine()
         {
             CanUseItem = false;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(_antiSpamDuration);
             CanUseItem = true;
         }
     }
