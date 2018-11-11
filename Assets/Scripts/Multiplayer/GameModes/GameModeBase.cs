@@ -26,6 +26,9 @@ namespace GameModes
 
         [SerializeField] private float countdownSeconds = 3f;
 
+        private int _redScore = 0;
+        private int _blueScore = 0;
+
         // PROTECTED
 
         protected virtual void InitializeGame()
@@ -52,6 +55,27 @@ namespace GameModes
         {
             // To Implement in concrete Game Modes
             OnGameReset.Invoke();
+        }
+
+        protected void IncreaseScore(Team team)
+        {
+            ScoreIncreased scoreIncreased = ScoreIncreased.Create();
+            scoreIncreased.Team = TeamsColors.GetColorFromTeam(team);
+            switch (team)
+            {
+                case Team.Blue:
+                    _blueScore++;
+                    scoreIncreased.Score = _blueScore;
+                    break;
+                case Team.Red:
+                    _redScore++;
+                    scoreIncreased.Score = _redScore;
+                    break;
+                default:
+                    Debug.LogError("Unknown team.");
+                    break;
+            }
+            scoreIncreased.Send();
         }
 
         // PRIVATE
