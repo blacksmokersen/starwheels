@@ -85,14 +85,6 @@ namespace GameModes
             }
         }
 
-        protected override void ResetGame()
-        {
-            if (BoltNetwork.isServer)
-            {
-                LevelManager.Instance.ResetLevel();
-            }
-        }
-
         // PRIVATE
 
         private void InitializePlayerCount()

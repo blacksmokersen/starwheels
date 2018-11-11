@@ -48,7 +48,12 @@ public class LevelManager : MonoBehaviour
     {
         if (BoltNetwork.isServer)
         {
-            BoltNetwork.LoadScene(SceneManager.GetActiveScene().name);
+            var roomToken = FindObjectOfType<Multiplayer.SpawnAssigner>().RoomInfoToken;
+
+            if(roomToken != null)
+                BoltNetwork.LoadScene(SceneManager.GetActiveScene().name, roomToken);
+            else
+                BoltNetwork.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 

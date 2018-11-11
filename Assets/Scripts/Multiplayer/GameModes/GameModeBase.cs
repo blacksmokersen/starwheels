@@ -29,6 +29,18 @@ namespace GameModes
 
         [SerializeField] private float countdownSeconds = 3f;
 
+        // BOLT
+
+        public override void SceneLoadLocalDone(string scene)
+        {
+            ResetGame();
+        }
+
+        public override void SceneLoadLocalDone(string scene, IProtocolToken token)
+        {
+            ResetGame();
+        }
+
         // PROTECTED
 
         protected virtual void InitializeGame()
@@ -51,9 +63,13 @@ namespace GameModes
             }
         }
 
-        protected virtual void ResetGame()
+        protected void ResetGame()
         {
-            // To Implement in concrete Game Modes
+            WinnerTeam = Team.None;
+            GameStarted = false;
+            IsOver = false;
+            _redScore = 0;
+            _blueScore = 0;
             OnGameReset.Invoke();
         }
 

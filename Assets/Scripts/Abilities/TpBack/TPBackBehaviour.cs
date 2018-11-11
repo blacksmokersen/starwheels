@@ -7,6 +7,10 @@ namespace Items
     [RequireComponent(typeof(Rigidbody))]
     public class TPBackBehaviour : MonoBehaviour
     {
+        [Header("Owner")]
+        public Transform _kart;
+        public Quaternion _kartRotation;
+
         [Header("TPBack parameters")]
         public float ActivationTime;
         public float AliveTime;
@@ -14,15 +18,14 @@ namespace Items
         public float ForwardThrowingForce;
         public float TimesLongerThanHighThrow;
 
+        [Header("Events")]
         public UnityEvent OnTpBackLaunch;
         public UnityEvent OnTpBackFlight;
         public UnityEvent OnTpBackActivated;
         public UnityEvent OnTpBackIdle;
 
-        private Quaternion _kartRotation;
         private bool _canBeEnabled = false;
         private bool _enabled = false;
-        private Transform _kart;
 
         // CORE
 
@@ -46,11 +49,6 @@ namespace Items
         public bool IsEnabled()
         {
             return _enabled;
-        }
-
-        public Quaternion GetKartRotation()
-        {
-            return _kartRotation;
         }
 
         // PRIVATE
