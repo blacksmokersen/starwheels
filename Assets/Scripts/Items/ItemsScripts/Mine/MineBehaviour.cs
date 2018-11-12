@@ -27,19 +27,19 @@ namespace Items
 
         private void Start()
         {
-            
+
             StartCoroutine(MineActivationDelay());
             GetComponentInChildren<PlayerMineTrigger>().Ownership = _ownerShip;
             GetComponentInChildren<ItemMineTrigger>().Ownership = _ownerShip;
         }
 
-      
+
 
         IEnumerator MineActivationDelay()
         {
             yield return new WaitForSeconds(ActivationTime);
-           
-            
+
+
             GetComponentInChildren<PlayerMineTrigger>().Activated = true;
             GetComponentInChildren<ItemMineTrigger>().Activated = true;
         }
@@ -58,7 +58,7 @@ namespace Items
 
         public void Update()
         {
-            Destroy(this.gameObject, LivingTime);
+            DestroyObject(LivingTime);
         }
         #region Audio
         public void PlayLaunchSound()
