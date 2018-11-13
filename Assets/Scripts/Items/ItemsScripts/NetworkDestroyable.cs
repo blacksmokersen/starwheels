@@ -11,7 +11,7 @@ namespace Items
             {
                 if (timeBeforeDestroy != 0f && entity.isOwner)
                     BoltEntity.Destroy(gameObject, timeBeforeDestroy);
-                else
+                else if(entity.isOwner)
                     BoltNetwork.Destroy(gameObject);
             }
             else
