@@ -25,47 +25,61 @@ namespace Items
 
         //PUBLIC
 
-        public void InstantiateShockwave(Transform position)
+        public void InstantiateShockwave(Vector3 position,Quaternion rotation,string itemName)
         {
-            ShockwavePrefab();
-            _shockwavePrefab.transform.position = position.position;
-            _shockwavePrefab.transform.rotation = position.rotation;
+            ShockwavePrefab(itemName);
+            _shockwavePrefab.transform.position = position;
+            _shockwavePrefab.transform.position = position;
             StartCoroutine(DisableDelay(_shockwavePrefab));
+            //   _shockwavePrefab.transform.rotation = position.rotation;
+            // StartCoroutine(DisableDelay(_shockwavePrefab));
+            /*
+            var launchEvent = PlayerLaunchItem.Create(entity);
+            launchEvent.GameObjectName = _shockwavePrefab.name;
+            launchEvent.Position = position.position;
+            launchEvent.Entity = GetComponentInParent<BoltEntity>();
+            launchEvent.Send();
+            */
         }
 
-        /*
         public override void OnEvent(PlayerLaunchItem playerLaunchItem)
         {
-            Debug.Log("test");
-            InstantiateShockwave(playerLaunchItem.Vector);
+            /*
+            Debug.Log(GameObject.Find(playerLaunchItem.GameObjectName));
+            GameObject TargetGameobject = GameObject.Find(playerLaunchItem.GameObjectName);
+            Debug.Log(TargetGameobject);
+            */
+            if (GetComponentInParent<BoltEntity>() == playerLaunchItem.Entity)
+            {
+                InstantiateShockwave(playerLaunchItem.Position,playerLaunchItem.Rotation,playerLaunchItem.ItemName);
+            }
         }
-        */
 
         //PRIVATE
 
-        private void ShockwavePrefab()
+        private void ShockwavePrefab(string itemName)
         {
-            _itemNameToDisplay = _inventory.CurrentItem.Name;
+            _itemNameToDisplay = itemName;
 
             switch (_itemNameToDisplay)
             {
-                case "Disk":
+                case "Disk(Clone)":
                     _shockwavePrefab = shockwaveGreen;
                     break;
 
-                case "Mine":
+                case "Mine(Clone)":
                     _shockwavePrefab = shockwaveGreen;
                     break;
 
-                case "Guile":
+                case "Guile(Clone)":
                     _shockwavePrefab = shockwaveYellow;
                     break;
 
-                case "Rocket":
+                case "Rocket(Clone)":
                     _shockwavePrefab = shockwaveBlue;
                     break;
 
-                case "IonBeam":
+                case "IonBeam(Clone)":
                     _shockwavePrefab = shockwaveYellow;
                     break;
             }
