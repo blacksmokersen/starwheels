@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using Bolt;
 
 namespace Items
@@ -18,11 +18,6 @@ namespace Items
             {
                 MonoBehaviour.Destroy(gameObject, timeBeforeDestroy);
             }
-        }
-
-        private void MultiplayerDestroy()
-        {
-            BoltNetwork.Destroy(gameObject);
         }
     }
 }

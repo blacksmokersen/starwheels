@@ -27,14 +27,16 @@ namespace Multiplayer
 
         // BOLT
 
+        #if UNITY_EDITOR
+        public override void BoltStartDone()
+        {
+            InitializeSpawns();
+        }
+        #endif
+
         public override void SceneLoadLocalDone(string map, IProtocolToken token)
         {
-            Debug.Log("Scene LOADED");
-
-            _redSpawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.RedSpawn));
-            _initialRedSpawns = _redSpawns;
-            _blueSpawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.BlueSpawn));
-            _initialBlueSpawns = _blueSpawns;
+            InitializeSpawns();
 
             var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart);
             var serverColor = Teams.TeamsColors.GetTeamFromColor(_serverPlayerSettings.Team);
@@ -68,6 +70,14 @@ namespace Multiplayer
         // PUBLIC
 
         // PRIVATE
+
+        private void InitializeSpawns()
+        {
+            _redSpawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.RedSpawn));
+            _initialRedSpawns = _redSpawns;
+            _blueSpawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.BlueSpawn));
+            _initialBlueSpawns = _blueSpawns;
+        }
 
         private void AssignSpawn(int connectionID, Team team, bool respawn = false)
         {
