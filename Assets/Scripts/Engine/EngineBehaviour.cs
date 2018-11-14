@@ -40,7 +40,7 @@ namespace Engine
         {
             CurrentSpeed = transform.InverseTransformDirection(_rb.velocity).z;
             CheckMovingDirection();
-            OnVelocityChange.Invoke(_rb.velocity.magnitude);
+            OnVelocityChange.Invoke(CurrentSpeed);
         }
 
         // PUBLIC
