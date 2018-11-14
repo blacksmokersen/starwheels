@@ -7,6 +7,8 @@ namespace Engine
         [Header("Engine")]
         public AudioSource MotorFullSource;
 
+        [SerializeField] private float minimumEnginePitch;
+        [SerializeField] private float maximumEnginePitch;
 
         private void Awake()
         {
@@ -15,7 +17,7 @@ namespace Engine
 
         public void SetMotorFullPitch(float pitch)
         {
-            MotorFullSource.pitch = (0.5f+0.35f * pitch) / 27;
+            MotorFullSource.pitch = (minimumEnginePitch + maximumEnginePitch * pitch) / 27;
         }
 
         private void PlayMotorFullSound()
