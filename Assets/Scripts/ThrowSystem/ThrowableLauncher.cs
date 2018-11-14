@@ -12,10 +12,11 @@ namespace ThrowingSystem
         public float ForwardThrowingForce;
         public float TimesLongerThanHighThrow;
 
+        [SerializeField] Items.ShockwaveEffectBehaviour shockwaveEffectBehaviour;
 
         private ThrowPositions _itemPositions;
 
-        
+
 
         // CORE
 
@@ -83,6 +84,7 @@ namespace ThrowingSystem
                 Drop(throwable);
             }
             throwable.transform.rotation = Quaternion.Euler(rot);
+            StartLaunchItemEvent(throwable.transform);
         }
 
         private void StraightThrow(Throwable throwable)
@@ -103,10 +105,12 @@ namespace ThrowingSystem
                 rb.velocity = -transform.forward.normalized * Speed;
             }
             throwable.transform.rotation = Quaternion.Euler(rot);
+            StartLaunchItemEvent(throwable.transform);
         }
 
         private void Drop(Throwable throwable)
         {
+            Vector3 rot = Vector3.zero;
             if (ThrowingDirection == Direction.Forward)
             {
                 throwable.transform.position = _itemPositions.FrontPosition.position;
@@ -115,6 +119,19 @@ namespace ThrowingSystem
             {
                 throwable.transform.position = _itemPositions.BackPosition.position;
             }
+            throwable.transform.rotation = Quaternion.Euler(rot);
+            StartLaunchItemEvent(throwable.transform);
+        }
+
+        private void StartLaunchItemEvent(Transform throwableTransform)
+        {
+            shockwaveEffectBehaviour.InstantiateShockwave(throwableTransform);
+
+
+          //  var launchEvent = PlayerLaunchItem.Create(entity);
+          //  launchEvent.Vector = throwableTransform.transform.position;
+          //  launchEvent.Quaternion = throwable.transform.rotation;
+          //   launchEvent.Send();
         }
     }
 }
