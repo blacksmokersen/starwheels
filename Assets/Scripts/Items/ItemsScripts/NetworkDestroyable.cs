@@ -7,7 +7,7 @@ namespace Items
     {
         public void DestroyObject(float timeBeforeDestroy = 0f)
         {
-            if (BoltNetwork.isConnected)
+            if (BoltNetwork.isConnected && entity.isAttached)
             {
                 if (timeBeforeDestroy != 0f && entity.isOwner)
                     BoltEntity.Destroy(gameObject, timeBeforeDestroy);

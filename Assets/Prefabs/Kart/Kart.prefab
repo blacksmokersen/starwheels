@@ -1384,9 +1384,9 @@ GameObject:
   - component: {fileID: 4512829137546966}
   - component: {fileID: 65192296257354708}
   - component: {fileID: 114420933529327842}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CollisionTrigger
-  m_TagString: CollisionHitBox
+  m_TagString: Health
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7593,12 +7593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29ca51aa1162c24fbc49a9c90b39285, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnCollision:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  ItemCollision: {fileID: 11400000, guid: afc14fe2112ec4d4bb0f87788274bead, type: 2}
+  _itemCollision: {fileID: 11400000, guid: afc14fe2112ec4d4bb0f87788274bead, type: 2}
 --- !u!114 &114457561451997724
 MonoBehaviour:
   m_ObjectHideFlags: 1
