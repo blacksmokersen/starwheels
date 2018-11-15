@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Items
@@ -17,22 +18,26 @@ namespace Items
         public AudioSource ExplosionSource;
 
         private Ownership _ownerShip;
-        private PlayerMineTrigger _playerMineTrigger;
+        private List<Collider> _triggers = new List<Collider>();
 
         // CORE
 
         private void Awake()
         {
-            _ownerShip = GetComponent<Ownership>();
+            _ownerShip = GetComponent<Ownership>();       
+            foreach(var col in GetComponentsInChildren<Collider>())
+            {
+                if (col.isTrigger)
+                {
+                    _triggers.Add(col);
+                    col.enabled = false;
+                }
+            }
         }
 
         private void Start()
         {
             StartCoroutine(MineActivationDelay());
-
-            _playerMineTrigger = GetComponentInChildren<PlayerMineTrigger>();
-            _playerMineTrigger.Ownership = _ownerShip;
-            _playerMineTrigger.enabled = false;
 
             DestroyObject(LivingTime);
         }
@@ -63,7 +68,8 @@ namespace Items
         {
             yield return new WaitForSeconds(ActivationTime);
 
-            GetComponentInChildren<PlayerMineTrigger>().enabled = true;
+            foreach (var trigger in _triggers)
+                trigger.enabled = true;
         }
 
         private void OnCollisionEnter(Collision collision)

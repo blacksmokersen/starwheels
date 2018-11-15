@@ -3,36 +3,35 @@ using Bolt;
 
 namespace Items
 {
-    public class KartCollisionTrigger : ItemCollisionTrigger
+    public class KartCollisionTrigger : EntityBehaviour<IKartState>
     {
-        private IKartState _kartState;
+        [SerializeField] private ItemCollision _itemCollision;
 
-        public override void Attached()
+        private void OnTriggerEnter(Collider other)
         {
-            _kartState = entity.GetState<IKartState>();
-        }
-
-        private new void OnTriggerEnter(Collider other)
-        {
-            if (BoltNetwork.isServer)
+            if (BoltNetwork.isServer && entity.isAttached)
             {
                 if (other.gameObject.CompareTag(Constants.Tag.CollisionHitBox))
                 {
-                    IItemState itemState = other.GetComponentInParent<BoltEntity>().GetState<IItemState>();
-                    Debug.Log("Item colliding with kart.");
+                    BoltEntity itemEntity = other.GetComponentInParent<BoltEntity>();
+                    IItemState itemState;
 
-                    if (itemState != null) // It is a concrete item
+                    if (itemEntity.TryFindState<IItemState>(out itemState)) // It is a concrete item
                     {
-                        if (itemState.Team != _kartState.Team || itemState.OwnerID == _kartState.OwnerID)
+                        if (itemState.Team != state.Team || itemState.OwnerID == state.OwnerID) // It's a hit
                         {
                             PlayerHit playerHitEvent = PlayerHit.Create();
                             playerHitEvent.PlayerEntity = entity;
                             playerHitEvent.Send();
                         }
-                    }                    
-                }
 
-                base.OnTriggerEnter(other);
+                        var otherItemCollision = other.GetComponent<ItemCollisionTrigger>().ItemCollision;
+                        if (otherItemCollision.ShouldBeDestroyed(_itemCollision)) // The item should be destroyed
+                        {
+                            BoltNetwork.Destroy(other.GetComponentInParent<BoltEntity>());
+                        }
+                    }
+                }
             }
         }
     }
