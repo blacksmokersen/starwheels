@@ -3,7 +3,7 @@
 namespace ThrowingSystem
 {
     [RequireComponent(typeof(ThrowPositions))]
-    public class ThrowableLauncher : MonoBehaviour
+    public class ThrowableLauncher : Bolt.EntityBehaviour
     {
         [Header("LaunchType: Straight")]
         public float Speed;
@@ -84,7 +84,7 @@ namespace ThrowingSystem
                 Drop(throwable);
             }
             throwable.transform.rotation = Quaternion.Euler(rot);
-            StartLaunchItemEvent(throwable.transform);
+            StartLaunchItemEvent(throwable.transform.position, throwable.transform.rotation, throwable.name);
         }
 
         private void StraightThrow(Throwable throwable)
@@ -105,7 +105,7 @@ namespace ThrowingSystem
                 rb.velocity = -transform.forward.normalized * Speed;
             }
             throwable.transform.rotation = Quaternion.Euler(rot);
-            StartLaunchItemEvent(throwable.transform);
+            StartLaunchItemEvent(throwable.transform.position, throwable.transform.rotation, throwable.name);
         }
 
         private void Drop(Throwable throwable)
@@ -120,18 +120,23 @@ namespace ThrowingSystem
                 throwable.transform.position = _itemPositions.BackPosition.position;
             }
             throwable.transform.rotation = Quaternion.Euler(rot);
-            StartLaunchItemEvent(throwable.transform);
+            StartLaunchItemEvent(throwable.transform.position,throwable.transform.rotation,throwable.name);
         }
 
-        private void StartLaunchItemEvent(Transform throwableTransform)
+        private void StartLaunchItemEvent(Vector3 position,Quaternion rotation, string itemName)
         {
-            shockwaveEffectBehaviour.InstantiateShockwave(throwableTransform);
+            //  shockwaveEffectBehaviour.InstantiateShockwave(throwableTransform);
+            var launchEvent = PlayerLaunchItem.Create(entity);
+            launchEvent.Position = position;
+            launchEvent.Rotation = rotation;
+            launchEvent.ItemName = itemName;
+            launchEvent.Entity = GetComponentInParent<BoltEntity>();
+            launchEvent.Send();
 
-
-          //  var launchEvent = PlayerLaunchItem.Create(entity);
-          //  launchEvent.Vector = throwableTransform.transform.position;
-          //  launchEvent.Quaternion = throwable.transform.rotation;
-          //   launchEvent.Send();
+            //  var launchEvent = PlayerLaunchItem.Create(entity);
+            //  launchEvent.Vector = throwableTransform.transform.position;
+            //  launchEvent.Quaternion = throwable.transform.rotation;
+            //   launchEvent.Send();
         }
     }
 }
