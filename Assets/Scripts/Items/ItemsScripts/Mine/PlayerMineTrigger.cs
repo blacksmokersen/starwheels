@@ -10,7 +10,7 @@ namespace Items
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == Constants.Tag.HealthHitBox && Activated)
+            if (other.gameObject.tag == Constants.Tag.CollisionHitBox && Activated)
             {
                 var otherPlayer = other.GetComponentInParent<Player>();
 

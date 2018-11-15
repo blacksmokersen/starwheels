@@ -73,11 +73,12 @@ GameObject:
   - component: {fileID: 114351782699924918}
   - component: {fileID: 114339185403583298}
   - component: {fileID: 114726411467732960}
+  - component: {fileID: 114489024169625112}
+  - component: {fileID: 114947596015643164}
   - component: {fileID: 82161074909822808}
   - component: {fileID: 82498890293220912}
   - component: {fileID: 82297415855988916}
   - component: {fileID: 82738048178511422}
-  - component: {fileID: 114489024169625112}
   m_Layer: 0
   m_Name: Disk
   m_TagString: Untagged
@@ -96,7 +97,7 @@ GameObject:
   - component: {fileID: 135831469022452736}
   - component: {fileID: 114806877320013462}
   m_Layer: 0
-  m_Name: PlayerTrigger
+  m_Name: CollisionTrigger
   m_TagString: Disk
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -162,7 +163,7 @@ GameObject:
   - component: {fileID: 4343291980117246}
   - component: {fileID: 135079340401835692}
   m_Layer: 0
-  m_Name: DiskPhysicalCollider
+  m_Name: PhysicalCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -292,8 +293,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1507300503580378}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -16.68, y: 4.69, z: -2.1347146}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4343291980117246}
@@ -853,7 +854,7 @@ Animator:
   m_GameObject: {fileID: 1873471499090438}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d842a0d485fc7ca428aea0dfba143e8a, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1023,7 +1024,7 @@ MonoBehaviour:
   m_Script: {fileID: -36112512, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneGuid: 
+  _sceneGuid: e63202d5-13f7-448c-b8de-b69d51c6bfd6
   _serializerGuid: 6612d789-ac7e-410d-bc9e-901586e209f5
   _prefabId: 7
   _updateRate: 1
@@ -1089,6 +1090,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f31a1c46652e3164aaf4306dbb4cacc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnCollision:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  ItemCollision: {fileID: 11400000, guid: 03cd553d80e02c44192a6068454a4702, type: 2}
+--- !u!114 &114947596015643164
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1507300503580378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f5e5d745b197304db0dd74a386c0347, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GravityForce: 20
+  UseWorldCoordinates: 1
 --- !u!135 &135079340401835692
 SphereCollider:
   m_ObjectHideFlags: 1
