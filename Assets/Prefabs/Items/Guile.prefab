@@ -122,9 +122,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4928421063608056}
   - component: {fileID: 136307829594525636}
-  - component: {fileID: 114452897881348176}
+  - component: {fileID: 114573192273696124}
   m_Layer: 9
-  m_Name: Trigger
+  m_Name: CollisionTrigger
   m_TagString: GuileItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -142,10 +142,10 @@ GameObject:
   - component: {fileID: 114305238291265940}
   - component: {fileID: 114938298749506902}
   - component: {fileID: 114268119908979466}
+  - component: {fileID: 114312127213964192}
   - component: {fileID: 82316524787443154}
   - component: {fileID: 82855826527264988}
   - component: {fileID: 82337798892220254}
-  - component: {fileID: 114312127213964192}
   m_Layer: 9
   m_Name: Guile
   m_TagString: Untagged
@@ -205,8 +205,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1815964786037566}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.37, y: 6.74, z: -1.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4928421063608056}
@@ -790,7 +790,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OwnerKartRoot: {fileID: 0}
   Team: 0
---- !u!114 &114452897881348176
+--- !u!114 &114573192273696124
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -798,9 +798,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1800600020838630}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 022d27b6ccbcead41a89245c6b486778, type: 3}
+  m_Script: {fileID: 11500000, guid: f31a1c46652e3164aaf4306dbb4cacc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnCollision:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  ItemCollision: {fileID: 11400000, guid: 8927757f4fc5043439b644d0ab07e8b9, type: 2}
 --- !u!114 &114938298749506902
 MonoBehaviour:
   m_ObjectHideFlags: 1

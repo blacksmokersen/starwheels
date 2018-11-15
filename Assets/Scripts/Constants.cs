@@ -20,7 +20,7 @@
         public const string GuileItem = "GuileItem";
         public const string RocketItem = "Rocket";
         public const string DiskItem = "Disk";
-        public const string HealthHitBox = "Health";
+        public const string CollisionHitBox = "Health";
         public const string Totem = "Totem";
     }
 
@@ -50,7 +50,6 @@
     public class Scene
     {
         public const string MainMenu = "Menu";
-        public const string GameHUD = "GameHUD";
         public const string FortBlock = "FortBlock";
         public const string Pillars = "Pillars";
     }

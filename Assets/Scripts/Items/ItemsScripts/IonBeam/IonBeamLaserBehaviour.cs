@@ -125,7 +125,7 @@ namespace Items
         {
             if (_damagePlayer)
             {
-                if (other.gameObject.CompareTag(Constants.Tag.HealthHitBox))
+                if (other.gameObject.CompareTag(Constants.Tag.CollisionHitBox))
                 {
                     Debug.Log("Hit");
                     //  CheckCollision(other.gameObject);
