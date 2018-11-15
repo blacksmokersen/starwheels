@@ -37,11 +37,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4390881638899614}
   - component: {fileID: 135805788480509074}
-  - component: {fileID: 114758672781050578}
   - component: {fileID: 114009805470492380}
   m_Layer: 0
   m_Name: ItemCollisionTrigger
-  m_TagString: Untagged
+  m_TagString: CollisionHitBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74,7 +73,7 @@ GameObject:
   - component: {fileID: 114786215687216046}
   m_Layer: 0
   m_Name: PlayerCollisionTrigger
-  m_TagString: Untagged
+  m_TagString: CollisionHitBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -702,7 +701,7 @@ MonoBehaviour:
   m_Script: {fileID: -36112512, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneGuid: 
+  _sceneGuid: 8d282d9c-c73f-48be-87c6-70eedc9b6c7c
   _serializerGuid: ffe9e53f-72a5-4574-af39-0fa608838337
   _prefabId: 11
   _updateRate: 1
@@ -719,19 +718,6 @@ MonoBehaviour:
   _entityBehaviourQueryOption: 0
   _entityPriorityCalculatorQueryOption: 0
   _entityReplicationFilterQueryOption: 0
---- !u!114 &114758672781050578
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1398991700797754}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af9782cfc60af2c4f9b9600e2b9f91b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Ownership: {fileID: 0}
-  Activated: 0
 --- !u!114 &114786215687216046
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -761,7 +747,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Ownership: {fileID: 0}
-  Activated: 0
 --- !u!135 &135771632487179650
 SphereCollider:
   m_ObjectHideFlags: 1

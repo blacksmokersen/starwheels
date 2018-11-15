@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Bolt;
 
 namespace Items
 {
@@ -6,7 +7,7 @@ namespace Items
     {
         private IKartState _kartState;
 
-        private void Awake()
+        public override void Attached()
         {
             _kartState = entity.GetState<IKartState>();
         }
@@ -17,11 +18,12 @@ namespace Items
             {
                 if (other.gameObject.CompareTag(Constants.Tag.CollisionHitBox))
                 {
-                    IItemState itemState = other.GetComponent<BoltEntity>().GetState<IItemState>();
+                    IItemState itemState = other.GetComponentInParent<BoltEntity>().GetState<IItemState>();
+                    Debug.Log("Item colliding with kart.");
 
                     if (itemState != null) // It is a concrete item
                     {
-                        if (itemState.Team != _kartState.Team || itemState.OwnerID == 1)
+                        if (itemState.Team != _kartState.Team || itemState.OwnerID == _kartState.OwnerID)
                         {
                             PlayerHit playerHitEvent = PlayerHit.Create();
                             playerHitEvent.PlayerEntity = entity;
