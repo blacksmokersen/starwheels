@@ -23,49 +23,55 @@ namespace Items
             _inventory = playerInventory;
         }
 
+        //BOLT
+
+        public override void OnEvent(PlayerLaunchItem playerLaunchItem)
+        {
+            if (GetComponentInParent<BoltEntity>() == playerLaunchItem.Entity)
+            {
+                InstantiateShockwave(playerLaunchItem.Position, playerLaunchItem.Rotation, playerLaunchItem.ItemName);
+            }
+        }
+
         //PUBLIC
 
-        public void InstantiateShockwave(Transform position)
+        public void InstantiateShockwave(Vector3 position,Quaternion rotation,string itemName)
         {
-            ShockwavePrefab();
-            _shockwavePrefab.transform.position = position.position;
-            _shockwavePrefab.transform.rotation = position.rotation;
+            ShockwavePrefab(itemName);
+            _shockwavePrefab.transform.position = position;
+            _shockwavePrefab.transform.rotation = rotation;
             StartCoroutine(DisableDelay(_shockwavePrefab));
         }
 
-        /*
-        public override void OnEvent(PlayerLaunchItem playerLaunchItem)
-        {
-            Debug.Log("test");
-            InstantiateShockwave(playerLaunchItem.Vector);
-        }
-        */
-
         //PRIVATE
 
-        private void ShockwavePrefab()
+        private void ShockwavePrefab(string itemName)
         {
-            _itemNameToDisplay = _inventory.CurrentItem.Name;
+            _itemNameToDisplay = itemName;
 
             switch (_itemNameToDisplay)
             {
-                case "Disk":
+                case "Disk(Clone)":
                     _shockwavePrefab = shockwaveGreen;
                     break;
 
-                case "Mine":
+                case "Mine(Clone)":
                     _shockwavePrefab = shockwaveGreen;
                     break;
 
-                case "Guile":
+                case "Guile(Clone)":
                     _shockwavePrefab = shockwaveYellow;
                     break;
 
-                case "Rocket":
+                case "Rocket(Clone)":
                     _shockwavePrefab = shockwaveBlue;
                     break;
 
-                case "IonBeam":
+                case "IonBeam(Clone)":
+                    _shockwavePrefab = shockwaveYellow;
+                    break;
+
+                case "TPBack(Clone)":
                     _shockwavePrefab = shockwaveYellow;
                     break;
             }
