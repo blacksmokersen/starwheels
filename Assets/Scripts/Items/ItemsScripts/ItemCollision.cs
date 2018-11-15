@@ -27,36 +27,37 @@ namespace Items
         public bool Totem;
         public bool Kart;
 
-        public void CheckCollision(ItemCollision itemCollision)
+        public bool ShouldBeDestroyed(ItemCollision itemCollision)
         {
             if (itemCollision.ItemName == ItemCollisionName.Disk && Disk)
             {
-
+                return true;
             }
             else if (itemCollision.ItemName == ItemCollisionName.Rocket && Rocket)
             {
-
+                return true;
             }
             else if (itemCollision.ItemName == ItemCollisionName.Guile && Guile)
             {
-
+                return true;
             }
             else if (itemCollision.ItemName == ItemCollisionName.IonBeam && IonBeam)
             {
-
+                return true;
             }
             else if (itemCollision.ItemName == ItemCollisionName.Totem && Totem)
             {
-
+                return true;
             }
             else if (itemCollision.ItemName == ItemCollisionName.Kart && Kart)
             {
-
+                return true;
             }
             else
             {
                 Debug.LogError("Unknown ItemCollision name.");
-            }            
+            }
+            return false;
         }
     }
 }

@@ -6,11 +6,10 @@ namespace Items
     public class PlayerMineTrigger : MonoBehaviour
     {
         public Ownership Ownership;
-        public bool Activated = false;
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == Constants.Tag.CollisionHitBox && Activated)
+            if (other.gameObject.tag == Constants.Tag.CollisionHitBox)
             {
                 var otherPlayer = other.GetComponentInParent<Player>();
 

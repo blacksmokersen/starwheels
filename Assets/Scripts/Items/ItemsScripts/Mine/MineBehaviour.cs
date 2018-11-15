@@ -17,6 +17,7 @@ namespace Items
         public AudioSource ExplosionSource;
 
         private Ownership _ownerShip;
+        private PlayerMineTrigger _playerMineTrigger;
 
         // CORE
 
@@ -27,39 +28,17 @@ namespace Items
 
         private void Start()
         {
-
             StartCoroutine(MineActivationDelay());
-            GetComponentInChildren<PlayerMineTrigger>().Ownership = _ownerShip;
-            GetComponentInChildren<ItemMineTrigger>().Ownership = _ownerShip;
-        }
 
+            _playerMineTrigger = GetComponentInChildren<PlayerMineTrigger>();
+            _playerMineTrigger.Ownership = _ownerShip;
+            _playerMineTrigger.enabled = false;
 
-
-        IEnumerator MineActivationDelay()
-        {
-            yield return new WaitForSeconds(ActivationTime);
-
-
-            GetComponentInChildren<PlayerMineTrigger>().Activated = true;
-            GetComponentInChildren<ItemMineTrigger>().Activated = true;
-        }
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.Layer.Ground))
-            {
-                GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-                GetComponent<Rigidbody>().freezeRotation = true;
-                PlayIdleSound();
-            }
+            DestroyObject(LivingTime);
         }
 
         //PUBLIC
 
-        public void Update()
-        {
-            DestroyObject(LivingTime);
-        }
         #region Audio
         public void PlayLaunchSound()
         {
@@ -77,5 +56,24 @@ namespace Items
             MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(ExplosionSource);
         }
         #endregion
+
+        // PRIVATE
+
+        private IEnumerator MineActivationDelay()
+        {
+            yield return new WaitForSeconds(ActivationTime);
+
+            GetComponentInChildren<PlayerMineTrigger>().enabled = true;
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.Layer.Ground))
+            {
+                GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                GetComponent<Rigidbody>().freezeRotation = true;
+                PlayIdleSound();
+            }
+        }
     }
 }

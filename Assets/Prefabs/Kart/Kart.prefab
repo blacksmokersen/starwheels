@@ -866,10 +866,9 @@ GameObject:
   - component: {fileID: 114994917259369108}
   - component: {fileID: 114156034432813912}
   - component: {fileID: 114457561451997724}
-  - component: {fileID: 65639728941430446}
   m_Layer: 0
   m_Name: Health
-  m_TagString: Health
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1371,6 +1370,23 @@ GameObject:
   m_Layer: 11
   m_Name: Base HumanRDigit11 1
   m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1608919839370874
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4512829137546966}
+  - component: {fileID: 65192296257354708}
+  - component: {fileID: 114380660221416008}
+  m_Layer: 0
+  m_Name: CollisionTrigger
+  m_TagString: CollisionHitBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3323,6 +3339,19 @@ Transform:
   m_Father: {fileID: 4725369991776876}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4512829137546966
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1608919839370874}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4821667778052482}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4514675635591424
 Transform:
   m_ObjectHideFlags: 1
@@ -3710,7 +3739,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1138407828072762}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.092, y: 0.586, z: -0.573}
+  m_LocalPosition: {x: 2.3, y: 2.12, z: 12.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4381460982689280}
@@ -3894,6 +3923,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4751566006419492}
+  - {fileID: 4512829137546966}
   m_Father: {fileID: 4745772536087832}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5612,6 +5642,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1, z: 2}
   m_Center: {x: 0, y: 0.45, z: 0}
+--- !u!65 &65192296257354708
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1608919839370874}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.35, y: 1, z: 2}
+  m_Center: {x: 0, y: 0.5, z: 0.15}
 --- !u!65 &65209227064178120
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -5624,18 +5666,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.2738309, z: 1.2642498}
   m_Center: {x: 0, y: 0.036604166, z: 0.11487579}
---- !u!65 &65639728941430446
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402166597443428}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.35, y: 1, z: 2}
-  m_Center: {x: 0, y: 0.5, z: 0.15}
 --- !u!65 &65932765275691828
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -7426,6 +7456,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FrontPosition: {fileID: 4754096688846648}
   BackPosition: {fileID: 4974318436861282}
+--- !u!114 &114380660221416008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1608919839370874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f31a1c46652e3164aaf4306dbb4cacc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnCollision:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  ItemCollision: {fileID: 11400000, guid: afc14fe2112ec4d4bb0f87788274bead, type: 2}
 --- !u!114 &114389345933178724
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7535,7 +7582,7 @@ MonoBehaviour:
   m_Script: {fileID: -36112512, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneGuid: 
+  _sceneGuid: 3a4e7263-ed62-4466-8a91-587fe1c93e3e
   _serializerGuid: 3d46793e-7c24-4279-882f-df983ef4cb50
   _prefabId: 13
   _updateRate: 1
@@ -8130,8 +8177,7 @@ MonoBehaviour:
   OnNicknameChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114290886908809486, guid: fc0420c939dd0dd48bfcedc31f9eb78d,
-          type: 2}
+      - m_Target: {fileID: 0}
         m_MethodName: SetName
         m_Mode: 0
         m_Arguments:
@@ -8157,8 +8203,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114290886908809486, guid: fc0420c939dd0dd48bfcedc31f9eb78d,
-          type: 2}
+      - m_Target: {fileID: 0}
         m_MethodName: SetFrameRendererTeam
         m_Mode: 0
         m_Arguments:

@@ -6,7 +6,6 @@
         {
             base.Start();
             rb.useGravity = false;
-            DestroyAfterHit = true;
             DestroyObject(10f);
         }
 
