@@ -23,36 +23,24 @@ namespace Items
             _inventory = playerInventory;
         }
 
+        //BOLT
+
+        public override void OnEvent(PlayerLaunchItem playerLaunchItem)
+        {
+            if (GetComponentInParent<BoltEntity>() == playerLaunchItem.Entity)
+            {
+                InstantiateShockwave(playerLaunchItem.Position, playerLaunchItem.Rotation, playerLaunchItem.ItemName);
+            }
+        }
+
         //PUBLIC
 
         public void InstantiateShockwave(Vector3 position,Quaternion rotation,string itemName)
         {
             ShockwavePrefab(itemName);
             _shockwavePrefab.transform.position = position;
-            _shockwavePrefab.transform.position = position;
+            _shockwavePrefab.transform.rotation = rotation;
             StartCoroutine(DisableDelay(_shockwavePrefab));
-            //   _shockwavePrefab.transform.rotation = position.rotation;
-            // StartCoroutine(DisableDelay(_shockwavePrefab));
-            /*
-            var launchEvent = PlayerLaunchItem.Create(entity);
-            launchEvent.GameObjectName = _shockwavePrefab.name;
-            launchEvent.Position = position.position;
-            launchEvent.Entity = GetComponentInParent<BoltEntity>();
-            launchEvent.Send();
-            */
-        }
-
-        public override void OnEvent(PlayerLaunchItem playerLaunchItem)
-        {
-            /*
-            Debug.Log(GameObject.Find(playerLaunchItem.GameObjectName));
-            GameObject TargetGameobject = GameObject.Find(playerLaunchItem.GameObjectName);
-            Debug.Log(TargetGameobject);
-            */
-            if (GetComponentInParent<BoltEntity>() == playerLaunchItem.Entity)
-            {
-                InstantiateShockwave(playerLaunchItem.Position,playerLaunchItem.Rotation,playerLaunchItem.ItemName);
-            }
         }
 
         //PRIVATE
@@ -80,6 +68,10 @@ namespace Items
                     break;
 
                 case "IonBeam(Clone)":
+                    _shockwavePrefab = shockwaveYellow;
+                    break;
+
+                case "TPBack(Clone)":
                     _shockwavePrefab = shockwaveYellow;
                     break;
             }
