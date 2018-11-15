@@ -70,7 +70,7 @@ namespace Abilities
                     _tpBack = instantiatedItem.GetComponent<TPBackBehaviour>();
                     throwableLauncher.Throw(throwable);
                 }
-                else //if (_tpBack.IsEnabled())
+                else if (_tpBack.IsEnabled())
                 {
                     _rb.transform.position = _tpBack.transform.position;
                     _rb.transform.rotation = GetKartRotation();
