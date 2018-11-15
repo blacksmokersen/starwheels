@@ -4,7 +4,7 @@ using Bolt;
 
 namespace Items
 {
-    public class ItemCollisionTrigger : MonoBehaviour
+    public class ItemCollisionTrigger : EntityBehaviour
     {
         [Header("Events")]
         public UnityEvent OnCollision;
@@ -12,14 +12,19 @@ namespace Items
         [Header("Me")]
         public ItemCollision ItemCollision;
 
-        private void OnTriggerEnter(Collider other)
+        protected void OnTriggerEnter(Collider other)
         {
             if (BoltNetwork.isServer)
             {
                 if (other.gameObject.CompareTag(Constants.Tag.CollisionHitBox))
                 {
-                    OnCollision.Invoke();
-                    ItemCollision.CheckCollision(other.GetComponent<ItemCollision>());
+                    var otherItemCollision = other.GetComponent<ItemCollision>();
+
+                    if (ItemCollision.ShouldBeDestroyed(otherItemCollision))
+                    {
+                        OnCollision.Invoke();
+                        DestroySelf();
+                    }
                 }
             }
         }

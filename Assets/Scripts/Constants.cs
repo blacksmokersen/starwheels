@@ -20,7 +20,7 @@
         public const string GuileItem = "GuileItem";
         public const string RocketItem = "Rocket";
         public const string DiskItem = "Disk";
-        public const string CollisionHitBox = "Health";
+        public const string CollisionHitBox = "CollisionHitBox";
         public const string Totem = "Totem";
     }
 

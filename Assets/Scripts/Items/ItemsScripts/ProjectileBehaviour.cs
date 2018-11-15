@@ -13,7 +13,6 @@ namespace Items
 
         [Header("Projectile parameters")]
         public float Speed;
-        public bool DestroyAfterHit = true;
 
         [Header("Ground parameters")]
         public float DistanceForGrounded;
@@ -116,10 +115,7 @@ namespace Items
         {
             CollisionParticles.Emit(ParticlesToEmitOnHit);
             PlayPlayerHitSound();
-            if (DestroyAfterHit)
-            {
-                DestroyObject();
-            }
+            DestroyObject();            
         }
 
         private IEnumerator StartOwnerImmunity()
