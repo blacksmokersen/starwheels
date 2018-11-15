@@ -7061,9 +7061,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 100
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -7096,7 +7096,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -8167,7 +8167,7 @@ MonoBehaviour:
   m_Script: {fileID: -36112512, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneGuid: 
+  _sceneGuid: 9a3b6559-f7a3-4f55-b33b-d23fc2ad1953
   _serializerGuid: 3d46793e-7c24-4279-882f-df983ef4cb50
   _prefabId: 13
   _updateRate: 1
@@ -8765,8 +8765,7 @@ MonoBehaviour:
   OnNicknameChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114290886908809486, guid: fc0420c939dd0dd48bfcedc31f9eb78d,
-          type: 2}
+      - m_Target: {fileID: 0}
         m_MethodName: SetName
         m_Mode: 0
         m_Arguments:
@@ -8792,8 +8791,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114290886908809486, guid: fc0420c939dd0dd48bfcedc31f9eb78d,
-          type: 2}
+      - m_Target: {fileID: 0}
         m_MethodName: SetFrameRendererTeam
         m_Mode: 0
         m_Arguments:
