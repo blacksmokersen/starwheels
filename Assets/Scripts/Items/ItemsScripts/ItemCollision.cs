@@ -37,6 +37,10 @@ namespace Items
             {
                 return true;
             }
+            else if (itemCollision.ItemName == ItemCollisionName.Mine && Mine)
+            {
+                return true;
+            }
             else if (itemCollision.ItemName == ItemCollisionName.Guile && Guile)
             {
                 return true;
@@ -55,9 +59,8 @@ namespace Items
             }
             else
             {
-                Debug.LogError("Unknown ItemCollision name.");
-            }
-            return false;
+                return false;
+            }            
         }
     }
 }

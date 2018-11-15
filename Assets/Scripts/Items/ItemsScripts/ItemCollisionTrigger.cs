@@ -18,7 +18,8 @@ namespace Items
             {
                 if (other.gameObject.CompareTag(Constants.Tag.CollisionHitBox))
                 {
-                    var otherItemCollision = other.GetComponent<ItemCollision>();
+                    var otherItemCollision = other.GetComponent<ItemCollisionTrigger>().ItemCollision;
+                    Debug.Log("Me : " + ItemCollision.ItemName + " | Other : " + otherItemCollision.ItemName);
 
                     if (ItemCollision.ShouldBeDestroyed(otherItemCollision))
                     {
@@ -31,7 +32,7 @@ namespace Items
 
         private void DestroySelf()
         {
-            BoltNetwork.Destroy(gameObject);
+            BoltNetwork.Destroy(entity);
         }
     }
 }
