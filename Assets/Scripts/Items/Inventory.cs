@@ -103,6 +103,9 @@ namespace Items
 
             if (CurrentItem.ItemType == ItemType.Throwable)
             {
+                var itemState = instantiatedItem.GetComponent<BoltEntity>().GetState<IItemState>();
+                itemState.Team = state.Team;
+                itemState.OwnerID = state.OwnerID;
                 var throwable = instantiatedItem.GetComponent<Throwable>();
                 _projectileLauncher.Throw(throwable);
             }
