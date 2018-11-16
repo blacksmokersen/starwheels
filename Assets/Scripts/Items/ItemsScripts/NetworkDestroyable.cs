@@ -7,12 +7,19 @@ namespace Items
     {
         public void DestroyObject(float timeBeforeDestroy = 0f)
         {
-            if (BoltNetwork.isConnected && entity.isAttached)
+            if (BoltNetwork.isConnected && entity.isAttached && BoltNetwork.isServer)
             {
-                if (timeBeforeDestroy != 0f && entity.isOwner)
+                Debug.Log("What");
+                if (timeBeforeDestroy != 0)
                     BoltEntity.Destroy(gameObject, timeBeforeDestroy);
-                else if(entity.isOwner)
+                else
+                {
+                    Debug.Log("is");
+                    entity.TakeControl();
+                    Debug.Log("up");
                     BoltNetwork.Destroy(gameObject);
+                    Debug.Log("man");
+                }
             }
             else
             {
