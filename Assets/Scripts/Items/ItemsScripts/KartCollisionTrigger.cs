@@ -28,7 +28,9 @@ namespace Items
                         var otherItemCollision = other.GetComponent<ItemCollisionTrigger>().ItemCollision;
                         if (otherItemCollision.ShouldBeDestroyed(_itemCollision)) // The item should be destroyed
                         {
-                            BoltNetwork.Destroy(other.GetComponentInParent<BoltEntity>());
+                            DestroyEntity destroyEntityEvent = DestroyEntity.Create();
+                            destroyEntityEvent.Entity = other.GetComponentInParent<BoltEntity>();
+                            destroyEntityEvent.Send();
                         }
                     }
                 }
