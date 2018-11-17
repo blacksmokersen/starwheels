@@ -21,7 +21,7 @@ namespace Items
                     Debug.Log("man");
                 }
             }
-            else
+            else if(!BoltNetwork.isConnected)
             {
                 MonoBehaviour.Destroy(gameObject, timeBeforeDestroy);
             }
