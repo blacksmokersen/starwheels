@@ -38,11 +38,19 @@ namespace Items
         private void Start()
         {
             StartCoroutine(MineActivationDelay());
-
-            if(BoltNetwork.isServer) DestroyObject(LivingTime);
         }
 
-        //PUBLIC
+        // BOLT
+
+        public override void ControlGained()
+        {
+            if (entity.isOwner)
+            {
+                BoltEntity.Destroy(entity, 10f);
+            }
+        }
+
+        // PUBLIC
 
         #region Audio
         public void PlayLaunchSound()
