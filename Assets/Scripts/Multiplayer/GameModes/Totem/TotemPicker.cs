@@ -8,7 +8,7 @@ namespace GameModes.Totem
     [RequireComponent(typeof(Inventory))]
     [RequireComponent(typeof(ThrowableLauncher))]
     [RequireComponent(typeof(ThrowPositions))]
-    public class TotemPicker : EntityBehaviour , IControllable
+    public class TotemPicker : EntityBehaviour<IKartState> , IControllable
     {
         private Inventory _inventory;
         private Throwable _totem;
@@ -28,19 +28,28 @@ namespace GameModes.Totem
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(Constants.Tag.Totem) && !_totem && other.isTrigger)
+            if (BoltNetwork.isServer)
             {
-                Debug.Log("Totem : " + other.gameObject.name);
-                SetTotem(other.gameObject);
+                if (other.CompareTag(Constants.Tag.Totem) && other.isTrigger)
+                {
+                    _totem.transform.SetParent(_throwPositions.BackPosition);
+                    _totem.transform.position = _throwPositions.BackPosition.position;
+
+                    TotemLost totemLostEvent = TotemLost.Create();
+                    totemLostEvent.NewOwnerID = 1;
+                    totemLostEvent.OldOwnerID = 2;
+                    totemLostEvent.Send();
+                }
             }
         }
+
 
         // BOLT
 
         public override void SimulateController()
         {
             MapInputs();
-        }
+        }        
 
         // PUBLIC
 
@@ -50,32 +59,34 @@ namespace GameModes.Totem
             {
                 UseTotem();
             }
-        }
+        }        
 
-        // PRIVATE
-
-        private void SetTotem(GameObject totem)
+        public void SetTotem(GameObject totem)
         {
             _totem = totem.GetComponentInParent<Throwable>();
             _totem.GetComponent<Rigidbody>().isKinematic = true;
-            _totem.GetComponent<SphereCollider>().enabled = false;
-            _totem.transform.SetParent(_throwPositions.BackPosition);
-            _totem.transform.position = _throwPositions.BackPosition.position;
+            _totem.GetComponent<SphereCollider>().enabled = false;            
 
             _inventory.StopAllCoroutines(); // Stop any anti-spam routine
             _inventory.CanUseItem = false;
         }
 
-        private void UseTotem()
+        public void UnsetTotem()
         {
             _totem.GetComponent<Rigidbody>().isKinematic = false;
             _totem.GetComponent<SphereCollider>().enabled = true;
             _totem.GetComponent<TotemBehaviour>().StartSlowdown();
             _totem.transform.SetParent(null);
-            _throwableLauncher.Throw(_totem);
-            _totem = null;
-
             _inventory.CanUseItem = true;
+
+            _totem = null;
+        }
+
+        // PRIVATE
+
+        public void UseTotem()
+        {            
+            _throwableLauncher.Throw(_totem);            
         }
     }
 }

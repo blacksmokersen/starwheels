@@ -4,7 +4,7 @@ using Bolt;
 
 namespace GameModes.Totem
 {
-    public class TotemBehaviour : EntityBehaviour<IThrowableState>
+    public class TotemBehaviour : EntityBehaviour<IItemState>
     {
         [Header("Slowdown Settings")]
         [SerializeField] private float _slowdownFactor = 0.98f;
@@ -20,24 +20,34 @@ namespace GameModes.Totem
             _rb = GetComponent<Rigidbody>();
         }
 
-        private void Update()
+        // BOLT
+
+        public override void Attached()
+        {
+            state.SetTransforms(state.Transform, transform);
+        }
+
+        public override void ControlGained()
+        {
+            _isSlowingDown = false;
+        }
+
+        public override void SimulateController()
         {
             if (_isSlowingDown)
             {
                 _rb.velocity *= _slowdownFactor;
             }
-            if(_rb.velocity.magnitude < _stopMagnitudeThreshold)
+            if (_rb.velocity.magnitude < _stopMagnitudeThreshold)
             {
                 _isSlowingDown = false;
                 _rb.velocity = Vector3.zero;
             }
         }
 
-        // BOLT
-
-        public override void ControlGained()
+        public override void ControlLost()
         {
-            state.SetTransforms(state.Transform, transform);
+
         }
 
         // PUBLIC

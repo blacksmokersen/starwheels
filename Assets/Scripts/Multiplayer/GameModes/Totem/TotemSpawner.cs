@@ -6,10 +6,12 @@ namespace GameModes.Totem
     {
         private bool _totemInstantiated = false;
 
+        #if UNITY_EDITOR
         public override void BoltStartDone()
         {
             InstantiateTotem();
         }
+        #endif
 
         public override void SceneLoadLocalDone(string map)
         {
