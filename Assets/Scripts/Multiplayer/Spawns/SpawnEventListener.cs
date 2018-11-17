@@ -21,7 +21,7 @@ namespace Multiplayer
 
         public override void BoltStartDone() // Used for In-Editor tests
         {
-            InstantiateKart(transform.position, Quaternion.identity); // Scene specific position
+            InstantiateKart(transform.position, transform.rotation); // Scene specific position
         }
 
         public override void OnEvent(PlayerSpawn evnt)

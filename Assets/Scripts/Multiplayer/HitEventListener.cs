@@ -10,4 +10,13 @@ public class HitEventListener : GlobalEventListener
             kartEntity.GetComponentInChildren<Health.Health>().LoseHealth();
         }
     }
+
+    public override void OnEvent(DestroyEntity evnt)
+    {
+        if (evnt.Entity != null
+            && evnt.Entity.isOwner)
+        {
+            BoltNetwork.Destroy(evnt.Entity);
+        }
+    }
 }
