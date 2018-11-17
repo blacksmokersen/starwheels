@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Bolt;
 
 namespace GameModes.Totem
 {
-    public class TotemBehaviour : MonoBehaviour
+    public class TotemBehaviour : EntityBehaviour<IThrowableState>
     {
         [Header("Slowdown Settings")]
         [SerializeField] private float _slowdownFactor = 0.98f;
@@ -11,6 +12,8 @@ namespace GameModes.Totem
 
         private Rigidbody _rb;
         private bool _isSlowingDown = false;
+
+        // CORE
 
         private void Awake()
         {
@@ -30,10 +33,21 @@ namespace GameModes.Totem
             }
         }
 
+        // BOLT
+
+        public override void ControlGained()
+        {
+            state.SetTransforms(state.Transform, transform);
+        }
+
+        // PUBLIC
+
         public void StartSlowdown()
         {
             StartCoroutine(SlowdownRoutine());
         }
+
+        // PRIVATE
 
         private IEnumerator SlowdownRoutine()
         {

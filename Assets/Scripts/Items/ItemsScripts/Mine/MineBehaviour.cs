@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Items
@@ -17,49 +18,37 @@ namespace Items
         public AudioSource ExplosionSource;
 
         private Ownership _ownerShip;
+        private List<Collider> _triggers = new List<Collider>();
 
         // CORE
 
         private void Awake()
         {
-            _ownerShip = GetComponent<Ownership>();
+            _ownerShip = GetComponent<Ownership>();       
+            foreach(var col in GetComponentsInChildren<Collider>())
+            {
+                if (col.isTrigger)
+                {
+                    _triggers.Add(col);
+                    col.enabled = false;
+                }
+            }
         }
 
         private void Start()
         {
-
             StartCoroutine(MineActivationDelay());
-            GetComponentInChildren<PlayerMineTrigger>().Ownership = _ownerShip;
-            GetComponentInChildren<ItemMineTrigger>().Ownership = _ownerShip;
         }
 
+        // BOLT
 
-
-        IEnumerator MineActivationDelay()
+        public override void Attached()
         {
-            yield return new WaitForSeconds(ActivationTime);
-
-
-            GetComponentInChildren<PlayerMineTrigger>().Activated = true;
-            GetComponentInChildren<ItemMineTrigger>().Activated = true;
+            DestroyObject(10f);
         }
 
-        private void OnCollisionEnter(Collision collision)
-        {
-            if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.Layer.Ground))
-            {
-                GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-                GetComponent<Rigidbody>().freezeRotation = true;
-                PlayIdleSound();
-            }
-        }
+        // PUBLIC
 
-        //PUBLIC
-
-        public void Update()
-        {
-            DestroyObject(LivingTime);
-        }
         #region Audio
         public void PlayLaunchSound()
         {
@@ -77,5 +66,25 @@ namespace Items
             MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(ExplosionSource);
         }
         #endregion
+
+        // PRIVATE
+
+        private IEnumerator MineActivationDelay()
+        {
+            yield return new WaitForSeconds(ActivationTime);
+
+            foreach (var trigger in _triggers)
+                trigger.enabled = true;
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.Layer.Ground))
+            {
+                GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                GetComponent<Rigidbody>().freezeRotation = true;
+                PlayIdleSound();
+            }
+        }
     }
 }

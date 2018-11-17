@@ -13,11 +13,9 @@ namespace Items
 
         [Header("Projectile parameters")]
         public float Speed;
-        public bool DestroyAfterHit = true;
 
         [Header("Ground parameters")]
         public float DistanceForGrounded;
-        public float LocalGravity;
 
         [Header("Particles Effects")]
         public ParticleSystem CollisionParticles;
@@ -57,7 +55,6 @@ namespace Items
         protected void FixedUpdate()
         {
             NormalizeSpeed();
-            ApplyLocalGravity();
         }
 
         // PUBLIC
@@ -118,10 +115,7 @@ namespace Items
         {
             CollisionParticles.Emit(ParticlesToEmitOnHit);
             PlayPlayerHitSound();
-            if (DestroyAfterHit)
-            {
-                DestroyObject();
-            }
+            DestroyObject();            
         }
 
         private IEnumerator StartOwnerImmunity()
@@ -143,13 +137,6 @@ namespace Items
             else
             {
                 rb.useGravity = true;
-            }
-        }
-        private void ApplyLocalGravity()
-        {
-            if (rb.useGravity == true)
-            {
-                rb.AddForce(Vector3.down * LocalGravity);
             }
         }
     }

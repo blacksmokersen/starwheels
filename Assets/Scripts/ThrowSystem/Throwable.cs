@@ -20,7 +20,6 @@ namespace ThrowingSystem
 
         public override void Attached()
         {
-            Debug.Log("Throwable Attached");
             state.SetTransforms(state.Transform, transform);
         }
     }

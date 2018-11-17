@@ -26,8 +26,8 @@ namespace Items
         //BOLT
 
         public override void OnEvent(PlayerLaunchItem playerLaunchItem)
-        {
-            if (GetComponentInParent<BoltEntity>() == playerLaunchItem.Entity)
+        {            
+            if (entity == playerLaunchItem.Entity)
             {
                 InstantiateShockwave(playerLaunchItem.Position, playerLaunchItem.Rotation, playerLaunchItem.ItemName);
             }
