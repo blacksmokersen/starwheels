@@ -16,7 +16,7 @@ namespace Items
                     BoltEntity itemEntity = other.GetComponentInParent<BoltEntity>();
                     IItemState itemState;
 
-                    if (itemEntity.TryFindState<IItemState>(out itemState)) // It is a concrete item
+                    if (itemEntity.isAttached && itemEntity.TryFindState<IItemState>(out itemState)) // It is a concrete item
                     {
                         if (itemState.Team != state.Team || itemState.OwnerID == state.OwnerID) // It's a hit
                         {
