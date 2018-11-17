@@ -39,7 +39,7 @@ namespace Items
         {
             StartCoroutine(MineActivationDelay());
 
-            DestroyObject(LivingTime);
+            if(BoltNetwork.isServer) DestroyObject(LivingTime);
         }
 
         //PUBLIC
