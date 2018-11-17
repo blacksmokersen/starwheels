@@ -5,18 +5,15 @@
         private new void Start()
         {
             base.Start();
-            rb.useGravity = false;            
+            rb.useGravity = false;
         }
 
         // We override it because we don't want to call CheckGrounded
         new void Update() { }
 
-        public override void ControlGained()
+        public override void Attached()
         {
-            if (entity.isOwner)
-            {
-                BoltEntity.Destroy(entity, 10f);
-            }
+            DestroyObject(10f);
         }
     }
 }
