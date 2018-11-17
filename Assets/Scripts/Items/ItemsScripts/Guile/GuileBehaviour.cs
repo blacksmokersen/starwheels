@@ -6,7 +6,7 @@
         {
             base.Start();
             rb.useGravity = false;
-            DestroyObject(10f);
+            if (BoltNetwork.isServer) DestroyObject(10f);
         }
 
         // We override it because we don't want to call CheckGrounded
