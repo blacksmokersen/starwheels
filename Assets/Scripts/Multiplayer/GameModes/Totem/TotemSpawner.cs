@@ -22,7 +22,8 @@ namespace GameModes.Totem
         {
             if(BoltNetwork.isConnected && BoltNetwork.isServer && !_totemInstantiated)
             {
-                BoltNetwork.Instantiate(BoltPrefabs.Totem, transform.position, transform.rotation);
+                var totem = BoltNetwork.Instantiate(BoltPrefabs.Totem, transform.position, transform.rotation);
+                totem.GetComponent<BoltEntity>().ReleaseControl();
                 _totemInstantiated = true;
             }
         }

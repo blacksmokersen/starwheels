@@ -16,6 +16,7 @@ namespace GameModes.Totem
                 {
                     other.GetComponent<Rigidbody>().velocity = Vector3.zero;
                     other.gameObject.transform.position = respawnPosition;
+                    other.gameObject.transform.SetParent(null);
                 }
             }
         }

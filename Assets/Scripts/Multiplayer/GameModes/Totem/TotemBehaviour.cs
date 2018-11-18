@@ -25,12 +25,17 @@ namespace GameModes.Totem
         public override void Attached()
         {
             state.SetTransforms(state.Transform, transform);
-            state.SetDynamic("OwnerID", -1);
+
+            if (entity.isOwner)
+            {
+                state.OwnerID = -1;
+            }
         }
 
         public override void ControlGained()
         {
             _isSlowingDown = false;
+            Debug.Log("Gained control on totem");
         }
 
         public override void SimulateController()
@@ -48,7 +53,7 @@ namespace GameModes.Totem
 
         public override void ControlLost()
         {
-
+            Debug.Log("Lost control on totem");
         }
 
         // PUBLIC

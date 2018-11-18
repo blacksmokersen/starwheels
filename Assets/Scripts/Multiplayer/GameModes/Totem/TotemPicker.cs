@@ -14,6 +14,7 @@ namespace GameModes.Totem
         private Throwable _totem;
         private ThrowableLauncher _throwableLauncher;
         private ThrowPositions _throwPositions;
+        private BoltEntity _totemEntity;
 
         // CORE
 
@@ -34,26 +35,26 @@ namespace GameModes.Totem
                 if (BoltNetwork.isServer)
                 {
                     var totem = other.GetComponentInParent<Throwable>();
-                    totem.transform.SetParent(_throwPositions.BackPosition);
-                    totem.transform.position = _throwPositions.BackPosition.position;
+                    
                     totem.GetComponent<Rigidbody>().isKinematic = true;
                     totem.GetComponent<SphereCollider>().enabled = false;
 
                     TotemLost totemLostEvent = TotemLost.Create();
                     totemLostEvent.NewOwnerID = state.OwnerID;
                     totemLostEvent.OldOwnerID = other.GetComponentInParent<BoltEntity>().GetState<IItemState>().OwnerID;
+                    Debug.Log("Old owner ID = " + totemLostEvent.OldOwnerID);
                     totemLostEvent.Send();
                 }
-            }            
+            }
         }
-
 
         // BOLT
 
         public override void SimulateController()
         {
             MapInputs();
-        }        
+            if(_totem) _totem.transform.position = _throwPositions.BackPosition.position;
+        }
 
         // PUBLIC
 
@@ -63,11 +64,12 @@ namespace GameModes.Totem
             {
                 UseTotem();
             }
-        }        
+        }
 
         public void SetTotem(GameObject totem)
         {
-            _totem = totem.GetComponentInParent<Throwable>();         
+            _totem = totem.GetComponentInParent<Throwable>();
+            _totemEntity = _totem.GetComponent<BoltEntity>();
 
             _inventory.StopAllCoroutines(); // Stop any anti-spam routine
             _inventory.CanUseItem = false;
@@ -76,10 +78,9 @@ namespace GameModes.Totem
         public void UnsetTotem()
         {
             _totem.GetComponent<Rigidbody>().isKinematic = false;
-            _totem.GetComponent<SphereCollider>().enabled = true;
-            _totem.GetComponent<TotemBehaviour>().StartSlowdown();
-            _totem.transform.SetParent(null);
-            _inventory.CanUseItem = true;            
+            _totem.GetComponent<SphereCollider>().enabled = true;                        
+
+            _inventory.CanUseItem = true;
         }
 
         // PRIVATE
@@ -88,6 +89,7 @@ namespace GameModes.Totem
         {
             UnsetTotem();
             _throwableLauncher.Throw(_totem);
+            _totem.GetComponent<TotemBehaviour>().StartSlowdown();
             _totem = null;
         }
     }
