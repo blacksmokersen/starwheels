@@ -28,19 +28,23 @@ namespace GameModes.Totem
 
         private void OnTriggerEnter(Collider other)
         {
-            if (BoltNetwork.isServer)
+
+            if (other.CompareTag(Constants.Tag.Totem) && other.isTrigger)
             {
-                if (other.CompareTag(Constants.Tag.Totem) && other.isTrigger)
+                if (BoltNetwork.isServer)
                 {
-                    _totem.transform.SetParent(_throwPositions.BackPosition);
-                    _totem.transform.position = _throwPositions.BackPosition.position;
+                    var totem = other.GetComponentInParent<Throwable>();
+                    totem.transform.SetParent(_throwPositions.BackPosition);
+                    totem.transform.position = _throwPositions.BackPosition.position;
+                    totem.GetComponent<Rigidbody>().isKinematic = true;
+                    totem.GetComponent<SphereCollider>().enabled = false;
 
                     TotemLost totemLostEvent = TotemLost.Create();
-                    totemLostEvent.NewOwnerID = 1;
-                    totemLostEvent.OldOwnerID = 2;
+                    totemLostEvent.NewOwnerID = state.OwnerID;
+                    totemLostEvent.OldOwnerID = other.GetComponentInParent<BoltEntity>().GetState<IItemState>().OwnerID;
                     totemLostEvent.Send();
                 }
-            }
+            }            
         }
 
 
@@ -63,9 +67,7 @@ namespace GameModes.Totem
 
         public void SetTotem(GameObject totem)
         {
-            _totem = totem.GetComponentInParent<Throwable>();
-            _totem.GetComponent<Rigidbody>().isKinematic = true;
-            _totem.GetComponent<SphereCollider>().enabled = false;            
+            _totem = totem.GetComponentInParent<Throwable>();         
 
             _inventory.StopAllCoroutines(); // Stop any anti-spam routine
             _inventory.CanUseItem = false;
@@ -77,16 +79,16 @@ namespace GameModes.Totem
             _totem.GetComponent<SphereCollider>().enabled = true;
             _totem.GetComponent<TotemBehaviour>().StartSlowdown();
             _totem.transform.SetParent(null);
-            _inventory.CanUseItem = true;
-
-            _totem = null;
+            _inventory.CanUseItem = true;            
         }
 
         // PRIVATE
 
         public void UseTotem()
-        {            
-            _throwableLauncher.Throw(_totem);            
+        {
+            UnsetTotem();
+            _throwableLauncher.Throw(_totem);
+            _totem = null;
         }
     }
 }
