@@ -1365,6 +1365,7 @@ GameObject:
   - component: {fileID: 65044690839908312}
   - component: {fileID: 114302205516542024}
   - component: {fileID: 114236987930025460}
+  - component: {fileID: 114341778747619164}
   m_Layer: 0
   m_Name: Inventory
   m_TagString: Untagged
@@ -4598,7 +4599,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1367496781025634}
   m_LocalRotation: {x: -0, y: 0.999962, z: 0.008726558, w: 0}
-  m_LocalPosition: {x: 0, y: 0.43913376, z: -1.0925033}
+  m_LocalPosition: {x: 0, y: 0.25, z: -1.0925033}
   m_LocalScale: {x: 1.5000036, y: 1.5000004, z: 1}
   m_Children:
   - {fileID: 4399221026597868}
@@ -8181,6 +8182,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 95579590234998320}
+--- !u!114 &114341778747619164
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1540390246441956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b97896df1e15fc409c6ebb22e54c2ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GreenMaterial: {fileID: 2100000, guid: 92cb28f4b83b2244fa5f0a5b5b211f18, type: 2}
+  PurpleMaterial: {fileID: 2100000, guid: abb2ed595ccd59b48958fc039740d371, type: 2}
+  GoldMaterial: {fileID: 2100000, guid: 8756763030079654b9fa2bccabf7d66f, type: 2}
+  DefaultMaterial: {fileID: 2100000, guid: 6a3364080fb751e4eaff05a403900b60, type: 2}
+  Emissive: {fileID: 1813658541759820}
 --- !u!114 &114370031336882382
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8303,7 +8320,7 @@ MonoBehaviour:
   m_Script: {fileID: -36112512, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneGuid: 
+  _sceneGuid: 485c0763-772a-4f23-9240-64f12a5b5ab3
   _serializerGuid: 3d46793e-7c24-4279-882f-df983ef4cb50
   _prefabId: 13
   _updateRate: 1
@@ -8411,6 +8428,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 114302205516542024}
+        m_MethodName: DisplayItem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 114341778747619164}
+        m_MethodName: DisplayEmissive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: Items.ItemEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   OnItemUse:
@@ -8429,6 +8468,17 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 114302205516542024}
         m_MethodName: HideItem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 114341778747619164}
+        m_MethodName: HideEmissive
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
