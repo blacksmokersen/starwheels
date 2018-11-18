@@ -25,6 +25,7 @@ namespace GameModes.Totem
         public override void Attached()
         {
             state.SetTransforms(state.Transform, transform);
+            state.SetDynamic("OwnerID", -1);
         }
 
         public override void ControlGained()
