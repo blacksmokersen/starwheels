@@ -14,12 +14,8 @@ namespace GameModes.Totem
             {
                 if (BoltNetwork.isServer)
                 {
-                    Debug.Log("Totem in gutter.");
                     other.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                    other.GetComponent<TotemBehaviour>().SetParent(null);
-                    other.GetComponent<TotemBehaviour>().SetTotemKinematic(false);
-                    other.transform.position = respawnPosition;
-                    other.GetComponent<BoltEntity>().GetState<IItemState>().OwnerID = -1;
+                    other.gameObject.transform.position = respawnPosition;
                 }
             }
         }
