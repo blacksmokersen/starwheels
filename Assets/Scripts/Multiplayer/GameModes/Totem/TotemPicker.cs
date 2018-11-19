@@ -17,7 +17,6 @@ namespace GameModes.Totem
         private Inventory _inventory;
         private ThrowPositions _throwPositions;
         private PlayerSettings _playerSettings;
-        private bool _canPickup = true;
 
         // CORE
 
@@ -33,16 +32,15 @@ namespace GameModes.Totem
         private void OnTriggerEnter(Collider other)
         {
 
-            if (other.CompareTag(Constants.Tag.Totem) && other.isTrigger && _canPickup)
+            if (BoltNetwork.isServer && other.CompareTag(Constants.Tag.Totem) && other.isTrigger)
             {
-                if (BoltNetwork.isServer)
+                var totemBehaviour = TotemEntity.GetComponent<TotemBehaviour>();
+                if (totemBehaviour.CanBePickedUp)
                 {
-                    Debug.Log("Someone got the totem !");
                     other.GetComponentInParent<BoltEntity>().GetState<IItemState>().OwnerID = state.OwnerID;
-                    TotemEntity.GetComponent<TotemBehaviour>().SetTotemKinematic(true);
-                    TotemEntity.GetComponent<TotemBehaviour>().SetParent(_throwPositions.BackPosition);
-                    StartCoroutine(AntiPickSpamRoutine());
-                }
+                    totemBehaviour.SetTotemKinematic(true);
+                    totemBehaviour.SetParent(_throwPositions.BackPosition);
+                }            
             }
         }
 
@@ -82,13 +80,6 @@ namespace GameModes.Totem
             TotemThrown totemThrownEvent = TotemThrown.Create();
             totemThrownEvent.OwnerID = state.OwnerID;
             totemThrownEvent.Send();
-        }
-
-        private IEnumerator AntiPickSpamRoutine()
-        {
-            _canPickup = false;
-            yield return new WaitForSeconds(1f);
-            _canPickup = true;
         }
     }
 }

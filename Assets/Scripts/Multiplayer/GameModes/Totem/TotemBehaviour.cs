@@ -6,6 +6,8 @@ namespace GameModes.Totem
 {
     public class TotemBehaviour : EntityBehaviour<IItemState>
     {
+        public bool CanBePickedUp = true;
+
         [Header("Slowdown Settings")]
         [SerializeField] private float _slowdownFactor = 0.98f;
         [SerializeField] private float _stopMagnitudeThreshold = 0.1f;
@@ -49,6 +51,7 @@ namespace GameModes.Totem
         public void SetParent(Transform parent)
         {
             _parent = parent;
+            StartCoroutine(AntiPickSpamRoutine());
         }
 
         public void StartSlowdown()
@@ -72,7 +75,6 @@ namespace GameModes.Totem
             }
         }
 
-
         // PRIVATE
 
         private IEnumerator SlowdownRoutine()
@@ -92,6 +94,13 @@ namespace GameModes.Totem
                 _isSlowingDown = false;
                 _rb.velocity = Vector3.zero;
             }
+        }
+
+        private IEnumerator AntiPickSpamRoutine()
+        {
+            CanBePickedUp = false;
+            yield return new WaitForSeconds(1f);
+            CanBePickedUp = true;
         }
     }
 }
