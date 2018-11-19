@@ -11,8 +11,9 @@ namespace GameModes.Totem
         [SerializeField] private float _stopMagnitudeThreshold = 0.1f;
 
         private bool _isPossessed = false;
-        
-        private Rigidbody _rb;        
+
+        private Transform _parent;
+        private Rigidbody _rb;
         private bool _isSlowingDown = false;
 
         // CORE
@@ -20,6 +21,7 @@ namespace GameModes.Totem
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
+            _isSlowingDown = false;
         }
 
         // BOLT
@@ -34,26 +36,20 @@ namespace GameModes.Totem
             }
         }
 
-        public override void ControlGained()
+        public override void SimulateOwner()
         {
-            Debug.Log("Gained control on totem");
-            _isSlowingDown = false;
-            SetTotemKinematic(true);
-        }
-
-        public override void SimulateController()
-        {
-
-        }
-
-        public override void ControlLost()
-        {            
-            gameObject.transform.SetParent(null);
-            SetTotemKinematic(false);
-            Debug.Log("Lost control on totem");
+            if (_parent)
+            {
+                transform.position = _parent.position;
+            }
         }
 
         // PUBLIC
+
+        public void SetParent(Transform parent)
+        {
+            _parent = parent;
+        }
 
         public void StartSlowdown()
         {
@@ -66,7 +62,7 @@ namespace GameModes.Totem
             {
                 Debug.Log("Totem is kinematic.");
                 GetComponent<Rigidbody>().isKinematic = true;
-                GetComponent<SphereCollider>().enabled = false;                
+                //GetComponent<SphereCollider>().enabled = false;                
             }
             else
             {

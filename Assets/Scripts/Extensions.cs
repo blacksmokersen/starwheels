@@ -52,6 +52,19 @@ namespace MyExtensions
 
     public static class KartExtensions
     {
+        public static GameObject GetKartWithID(int id)
+        {
+            var allKarts = GameObject.FindGameObjectsWithTag(Constants.Tag.Kart);
+            foreach (GameObject kart in allKarts)
+            {
+                if (kart.GetComponent<BoltEntity>().GetState<IKartState>().OwnerID == id)
+                {
+                    return kart;
+                }
+            }
+            return null;
+        }
+
         public static List<GameObject> GetTeamKarts(this Player playerSettings)
         {
             var teamKarts = new List<GameObject>();

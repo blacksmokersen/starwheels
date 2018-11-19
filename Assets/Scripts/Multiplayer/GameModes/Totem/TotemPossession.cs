@@ -2,6 +2,7 @@
 using UnityEngine;
 using Multiplayer;
 using Bolt;
+using ThrowingSystem;
 
 namespace GameModes.Totem
 {
@@ -10,7 +11,7 @@ namespace GameModes.Totem
     {
         public BoltEntity TotemEntity;
 
-        private ThrowingSystem.ThrowPositions _throwPositions;
+        private ThrowPositions _throwPositions;
         private TotemPicker _totemPicker;        
         private PlayerSettings _playerSettings;
 
@@ -18,7 +19,7 @@ namespace GameModes.Totem
 
         private void Awake()
         {
-            _throwPositions = GetComponent<ThrowingSystem.ThrowPositions>();
+            _throwPositions = GetComponent<ThrowPositions>();
             _totemPicker = GetComponent<TotemPicker>();
             _playerSettings = Resources.Load<PlayerSettings>(Constants.Resources.PlayerSettings);
         }
@@ -34,21 +35,24 @@ namespace GameModes.Totem
         {
             if(evnt.OldOwnerID == _playerSettings.ConnectionID)
             {
-                Debug.Log("I was old owner");
-                _totemPicker.UnsetTotem();
-                TotemEntity.ReleaseControl();
-                TotemEntity.transform.SetParent(null);                
+
             }
             else if(evnt.NewOwnerID == _playerSettings.ConnectionID)
             {
-                Debug.Log("I am new owner");
-                _totemPicker.SetTotem(TotemEntity.gameObject);
-                Debug.Log("Entity is controlled : " + TotemEntity.isControlled);
-                TotemEntity.TakeControl();
-                TotemEntity.transform.SetParent(_throwPositions.BackPosition);
-                TotemEntity.transform.localPosition = Vector3.zero;
+
             }
         }
+
+        public override void OnEvent(TotemThrown evnt)
+        {
+            if (BoltNetwork.isServer)
+            {
+                var kartThrowing = MyExtensions.KartExtensions.GetKartWithID(evnt.OwnerID);
+                kartThrowing.GetComponentInChildren<ThrowableLauncher>().Throw(TotemEntity.GetComponent<Throwable>());
+            }
+        }
+
+
 
         // PRIVATE
 
