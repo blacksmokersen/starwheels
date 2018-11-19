@@ -7,6 +7,8 @@ using System;
 using Utilities;
 using TMPro;
 using Multiplayer;
+using Menu;
+using UnityEngine.SceneManagement;
 
 namespace Photon.Lobby
 {
@@ -51,6 +53,7 @@ namespace Photon.Lobby
         [Space]
         [Header("UI Reference")]
         [SerializeField] private GameObject _mainGameMenu;
+        [SerializeField] private MainMenu _mainMenuUI;
         [SerializeField] private TMP_Dropdown _mapDropdown;
         [SerializeField] private TMP_Dropdown _gamemodeDropdown;
         [SerializeField] private TMP_Dropdown _kartDropdown;
@@ -294,13 +297,25 @@ namespace Photon.Lobby
         {
             if (_currentPanel == _mainMenuPanel)
             {
+                /*
                 gameObject.SetActive(false);
+                _mainMenuUI.UpdateMenu();
                 _mainGameMenu.SetActive(true);
+                */
+
+                //TEMP lobby rework
+                SceneManager.LoadScene("Menu");
+
             }
             else
             {
+                /*
                 BackDelegate();
                 TopPanel.IsInGame = false;
+                */
+                //TEMP lobby rework
+                SceneManager.LoadScene("Menu");
+
             }
         }
 
