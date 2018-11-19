@@ -17,8 +17,7 @@ namespace Photon.Lobby
         [SerializeField] private PlayerSettings _playerSettings;
 
         [Header("Lobby")]
-        [SerializeField] private string _playerName = "";
-        [SerializeField] private Color _playerColor = TeamsColors.GetColorFromTeam(Team.None);
+        [SerializeField] private string _playerName = "";        
         [SerializeField] private bool _isReady = false;
 
         [Header("Player Row UI")]
@@ -32,6 +31,8 @@ namespace Photon.Lobby
         [SerializeField] private GameObject _remoteIcon;
 
         // Colors
+        private Color _playerColor = TeamsColors.GetColorFromTeam(Team.Blue);
+
         private Color OddRowColor = new Color(250.0f / 255.0f, 250.0f / 255.0f, 250.0f / 255.0f, 1.0f);
         private Color EvenRowColor = new Color(180.0f / 255.0f, 180.0f / 255.0f, 180.0f / 255.0f, 1.0f);
         private Color JoinColor = new Color(255.0f / 255.0f, 0.0f, 101.0f / 255.0f, 1.0f);
@@ -43,24 +44,13 @@ namespace Photon.Lobby
 
         private void Awake()
         {
-            _colorButton.GetComponent<Image>().color = TeamsColors.GetColorFromTeam(Team.None);
+            _colorButton.GetComponent<Image>().color = _playerColor;
         }
 
         // BOLT
 
         public override void Attached()
         {
-            if (entity.isOwner)
-            {
-                state.Color = _playerColor;
-                state.Name = "Player #" + Random.Range(1, 100);
-
-                if (BoltNetwork.isClient)
-                {
-                    _playerSettings.ConnectionID = (int)Connection.ConnectionId;
-                }
-            }
-
             state.AddCallback("Name", () =>
             {
                 _nameInput.text = state.Name;
@@ -75,6 +65,17 @@ namespace Photon.Lobby
             {
                 OnClientReady(state.Ready);
             });
+
+            if (entity.isOwner)
+            {
+                state.Color = _playerColor;
+                state.Name = "Player #" + Random.Range(1, 100);
+
+                if (BoltNetwork.isClient)
+                {
+                    _playerSettings.ConnectionID = (int)Connection.ConnectionId;
+                }
+            }
         }
 
         public override void ControlGained()

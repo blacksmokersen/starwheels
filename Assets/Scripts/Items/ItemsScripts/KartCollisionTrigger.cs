@@ -14,7 +14,7 @@ namespace Items
                 if (other.gameObject.CompareTag(Constants.Tag.CollisionHitBox))
                 {
                     BoltEntity itemEntity = other.GetComponentInParent<BoltEntity>();
-                    IItemState itemState;
+                    IItemState itemState;                    
 
                     if (itemEntity.isAttached && itemEntity.TryFindState<IItemState>(out itemState)) // It is a concrete item
                     {
