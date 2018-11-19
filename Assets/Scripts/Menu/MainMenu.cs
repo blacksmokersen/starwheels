@@ -128,13 +128,15 @@ namespace Menu
             UpdateMenu();
         }
 
-        private void UpdateMenu()
+        public void UpdateMenu()
         {
+            Debug.Log(currentState);
             switch (currentState)
             {
                 case State.Main:
                     mainMenu.SetActive(true);
                     multiplayerMenu.gameObject.SetActive(false);
+                    mainGameMenu.SetActive(true);
                     backButton.interactable = false;
                     break;
                 case State.Multiplayer:
