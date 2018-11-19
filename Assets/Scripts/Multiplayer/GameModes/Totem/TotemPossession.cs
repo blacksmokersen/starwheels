@@ -47,12 +47,14 @@ namespace GameModes.Totem
         {
             if (BoltNetwork.isServer)
             {
+                Debug.Log("TotemThrown event sent from " + evnt.OwnerID);
                 var kartThrowing = MyExtensions.KartExtensions.GetKartWithID(evnt.OwnerID);
+                var totemBehaviour = TotemEntity.GetComponent<TotemBehaviour>();
+                totemBehaviour.SetParent(null);
+                totemBehaviour.SetTotemKinematic(false);
                 kartThrowing.GetComponentInChildren<ThrowableLauncher>().Throw(TotemEntity.GetComponent<Throwable>());
             }
         }
-
-
 
         // PRIVATE
 
