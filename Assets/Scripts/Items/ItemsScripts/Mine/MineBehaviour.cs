@@ -24,7 +24,7 @@ namespace Items
 
         private void Awake()
         {
-            _ownerShip = GetComponent<Ownership>();       
+            _ownerShip = GetComponent<Ownership>();
             foreach(var col in GetComponentsInChildren<Collider>())
             {
                 if (col.isTrigger)
