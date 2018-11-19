@@ -68,11 +68,6 @@ namespace GameModes.Totem
             _inventory.CanUseItem = false;
         }
 
-        public void UnsetTotem()
-        {            
-            _inventory.CanUseItem = true;
-        }
-
         // PRIVATE
 
         private void UseTotem()
