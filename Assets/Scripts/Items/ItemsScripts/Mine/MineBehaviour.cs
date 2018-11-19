@@ -44,7 +44,7 @@ namespace Items
 
         public override void Attached()
         {
-            DestroyObject(10f);
+            DestroyObject(LivingTime);
         }
 
         // PUBLIC
