@@ -44,6 +44,10 @@ namespace GameModes.Totem
             {
                 transform.position = _parent.position;
             }
+            else
+            {
+                Slowdown();
+            }
         }
 
         // PUBLIC
@@ -52,6 +56,15 @@ namespace GameModes.Totem
         {
             _parent = parent;
             StartCoroutine(AntiPickSpamRoutine());
+
+            if (parent == null)
+            {
+                _isSlowingDown = true;
+            }
+            else
+            {
+                _isSlowingDown = false;
+            }
         }
 
         public void StartSlowdown()
@@ -65,7 +78,7 @@ namespace GameModes.Totem
             {
                 Debug.Log("Totem is kinematic.");
                 GetComponent<Rigidbody>().isKinematic = true;
-                //GetComponent<SphereCollider>().enabled = false;                
+                //GetComponent<SphereCollider>().enabled = false;
             }
             else
             {
@@ -79,7 +92,7 @@ namespace GameModes.Totem
 
         private IEnumerator SlowdownRoutine()
         {
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1f);
             _isSlowingDown = true;
         }
 
