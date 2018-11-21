@@ -138,6 +138,11 @@ namespace Multiplayer
             {
                 _gameIsReady = true;
             }
+
+            if (_gameIsReady)
+            {
+                // LAUNCH GAME OR COUNTDOWN
+            }
         }
     }
 }

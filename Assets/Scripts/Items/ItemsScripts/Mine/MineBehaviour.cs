@@ -17,14 +17,12 @@ namespace Items
         public AudioSource IdleSource;
         public AudioSource ExplosionSource;
 
-        private Ownership _ownerShip;
         private List<Collider> _triggers = new List<Collider>();
 
         // CORE
 
         private void Awake()
         {
-            _ownerShip = GetComponent<Ownership>();
             foreach(var col in GetComponentsInChildren<Collider>())
             {
                 if (col.isTrigger)
