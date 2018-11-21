@@ -12,8 +12,6 @@ namespace GameModes.Totem
         [SerializeField] private float _slowdownFactor = 0.98f;
         [SerializeField] private float _stopMagnitudeThreshold = 0.1f;
 
-        private bool _isPossessed = false;
-
         private Transform _parent;
         private Rigidbody _rb;
         private bool _isSlowingDown = false;
@@ -33,7 +31,7 @@ namespace GameModes.Totem
             state.SetTransforms(state.Transform, transform);
 
             if (entity.isOwner)
-            {                
+            {
                 state.OwnerID = -1;
             }
         }
@@ -41,13 +39,9 @@ namespace GameModes.Totem
         public override void SimulateOwner()
         {
             if (_parent)
-            {
                 transform.position = _parent.position;
-            }
             else
-            {
                 Slowdown();
-            }
         }
 
         // PUBLIC
@@ -58,13 +52,9 @@ namespace GameModes.Totem
             StartCoroutine(AntiPickSpamRoutine());
 
             if (parent == null)
-            {
                 _isSlowingDown = true;
-            }
             else
-            {
                 _isSlowingDown = false;
-            }
         }
 
         public void StartSlowdown()

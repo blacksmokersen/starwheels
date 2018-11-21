@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
-using Multiplayer;
+﻿using UnityEngine;
 using Bolt;
 using ThrowingSystem;
 
@@ -9,26 +7,6 @@ namespace GameModes.Totem
     [RequireComponent(typeof(TotemPicker))]
     public class TotemPossession : GlobalEventListener
     {
-        public BoltEntity TotemEntity;
-
-        private ThrowPositions _throwPositions;
-        private TotemPicker _totemPicker;        
-        private PlayerSettings _playerSettings;
-
-        // CORE
-
-        private void Awake()
-        {
-            _throwPositions = GetComponent<ThrowPositions>();
-            _totemPicker = GetComponent<TotemPicker>();
-            _playerSettings = Resources.Load<PlayerSettings>(Constants.Resources.PlayerSettings);
-        }
-
-        private void Start()
-        {
-            StartCoroutine(LookForTotem());
-        }
-
         // BOLT
 
         public override void OnEvent(TotemThrown evnt)
@@ -37,33 +15,23 @@ namespace GameModes.Totem
             {
                 Debug.Log("TotemThrown event sent from " + evnt.OwnerID);
 
-                if (evnt.OwnerID == TotemEntity.GetState<IItemState>().OwnerID)
+                var totem = GameObject.FindGameObjectWithTag(Constants.Tag.Totem);
+                if (!totem)
+                {
+                    Debug.LogError("Totem was not found.");
+                }
+
+                var totemEntity = totem.GetComponent<BoltEntity>();
+                if (evnt.OwnerID == totemEntity.GetState<IItemState>().OwnerID)
                 {
                     var kartThrowing = MyExtensions.KartExtensions.GetKartWithID(evnt.OwnerID);
-                    var totemBehaviour = TotemEntity.GetComponent<TotemBehaviour>();
+                    var totemBehaviour = totem.GetComponent<TotemBehaviour>();
                     totemBehaviour.SetParent(null);
                     totemBehaviour.SetTotemKinematic(false);
-                    kartThrowing.GetComponentInChildren<ThrowableLauncher>().Throw(TotemEntity.GetComponent<Throwable>());
-                    TotemEntity.GetState<IItemState>().OwnerID = -1;
+                    kartThrowing.GetComponentInChildren<ThrowableLauncher>().Throw(totemEntity.GetComponent<Throwable>());
+                    totemEntity.GetState<IItemState>().OwnerID = -1;
                 }
             }
-        }
-
-        // PRIVATE
-
-        private IEnumerator LookForTotem()
-        {
-            while(TotemEntity == null)
-            {                
-                var totem = GameObject.FindGameObjectWithTag(Constants.Tag.Totem);
-                if (totem)
-                {
-                    TotemEntity = totem.GetComponent<BoltEntity>();
-                    _totemPicker.TotemEntity = TotemEntity;
-                }
-                yield return null;
-            }
-            Debug.Log("Found totem entity !");
         }
     }
 }
