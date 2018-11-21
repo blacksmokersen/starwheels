@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using Bolt;
 using ThrowingSystem;
 using Items;
-using Multiplayer;
 
 namespace GameModes.Totem
 {
@@ -12,11 +10,8 @@ namespace GameModes.Totem
     [RequireComponent(typeof(ThrowPositions))]
     public class TotemPicker : EntityBehaviour<IKartState> , IControllable
     {
-        public BoltEntity TotemEntity;
-
         private Inventory _inventory;
         private ThrowPositions _throwPositions;
-        private PlayerSettings _playerSettings;
 
         // CORE
 
@@ -24,7 +19,6 @@ namespace GameModes.Totem
         {
             _inventory = GetComponent<Inventory>();
             _throwPositions = GetComponent<ThrowPositions>();
-            _playerSettings = Resources.Load<PlayerSettings>(Constants.Resources.PlayerSettings);
         }
 
         // MONOBEHAVIOUR
@@ -32,18 +26,17 @@ namespace GameModes.Totem
         private void OnTriggerEnter(Collider other)
         {
 
-            if (BoltNetwork.isServer && other.CompareTag(Constants.Tag.Totem) && other.isTrigger)
+            if (BoltNetwork.isServer && other.CompareTag(Constants.Tag.Totem) && other.isTrigger) // Server sees a player collide with totem trigger
             {
-                var totemBehaviour = TotemEntity.GetComponent<TotemBehaviour>();
+                var totemBehaviour = other.GetComponent<TotemBehaviour>();
                 if (totemBehaviour.CanBePickedUp)
                 {
                     other.GetComponentInParent<BoltEntity>().GetState<IItemState>().OwnerID = state.OwnerID;
                     totemBehaviour.SetTotemKinematic(true);
                     totemBehaviour.SetParent(_throwPositions.BackPosition);
-                }            
+                }
             }
         }
-
 
         // BOLT
 
