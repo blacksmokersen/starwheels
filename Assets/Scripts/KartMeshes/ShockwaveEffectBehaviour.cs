@@ -1,10 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Items
 {
-
     public class ShockwaveEffectBehaviour : Bolt.EntityEventListener
     {
         [SerializeField] private GameObject shockwaveGreen;
@@ -14,14 +12,6 @@ namespace Items
 
         private GameObject _shockwavePrefab;
         private string _itemNameToDisplay;
-        private Inventory _inventory;
-
-        //CORE
-
-        public void Awake()
-        {
-            _inventory = playerInventory;
-        }
 
         //BOLT
 
@@ -77,7 +67,7 @@ namespace Items
             }
         }
 
-        IEnumerator DisableDelay(GameObject shockwaveGO)
+        private IEnumerator DisableDelay(GameObject shockwaveGO)
         {
             shockwaveGO.SetActive(true);
             yield return new WaitForSeconds(0.3f);
