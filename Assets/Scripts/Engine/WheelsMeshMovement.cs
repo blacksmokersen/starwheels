@@ -17,27 +17,27 @@ namespace Animations
 
         public void FrontWheelsTurn(float currentAngle)
         {
-            FrontWheelLeft.transform.localEulerAngles = new Vector3(0, currentAngle * 30, 0);
-            FrontWheelRight.transform.localEulerAngles = new Vector3(0, currentAngle * 30, 0);
+            var angleLeft = FrontWheelLeft.transform.localEulerAngles;
+            FrontWheelLeft.transform.localEulerAngles = new Vector3(angleLeft.x, currentAngle * 30, 0);
+            var angleRight = FrontWheelRight.transform.localEulerAngles;
+            FrontWheelRight.transform.localEulerAngles = new Vector3(angleRight.x, currentAngle * 30, 0);
         }
 
         public void FrontWheelsRotation(float playerVelocity)
-        {
-            _wheelsSpeed = -playerVelocity;
-            if (playerVelocity > 0.01f)
+        {            
+            if (Mathf.Abs(playerVelocity) > 0.01f)
             {
-                FrontWheelLeft.transform.Rotate(Vector3.right * _wheelsSpeed);
-                FrontWheelRight.transform.Rotate(Vector3.right * _wheelsSpeed);
+                FrontWheelLeft.transform.Rotate(Vector3.right * playerVelocity);
+                FrontWheelRight.transform.Rotate(Vector3.right * playerVelocity);
             }
         }
 
         public void BackWheelsRotation(float playerVelocity)
         {
-            _wheelsSpeed = playerVelocity;
-            if (playerVelocity > 0.01f)
+            if (Mathf.Abs(playerVelocity) > 0.01f)
             {
-                BackWheelsLeft.transform.Rotate(Vector3.right * _wheelsSpeed);
-                BackWheelsRight.transform.Rotate(Vector3.right * _wheelsSpeed);
+                BackWheelsLeft.transform.Rotate(Vector3.right * playerVelocity);
+                BackWheelsRight.transform.Rotate(Vector3.right * playerVelocity);
             }
         }
     }
