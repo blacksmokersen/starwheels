@@ -2,7 +2,7 @@
 
 namespace Drift
 {
-    public class DriftAnimation : MonoBehaviour
+    public class DriftAnimation : Bolt.EntityBehaviour<IKartState>
     {
         [SerializeField] private Animator _animator;
 
@@ -12,18 +12,20 @@ namespace Drift
 
         public void LeftDriftAnimation()
         {
-            Debug.Log("Left driftuuu");
-            Debug.LogFormat("Animator is null : {0}", (_animator == null));
+            state.DriftLeft = true;
             _animator.SetBool("DriftLeft", true);
         }
 
         public void RightDriftAnimation()
         {
+            state.DriftRight = true;
             _animator.SetBool("DriftRight", true);
         }
 
         public void NoDriftAnimation()
         {
+            state.DriftLeft = false;
+            state.DriftRight = false;
             _animator.SetBool("DriftLeft", false);
             _animator.SetBool("DriftRight", false);
         }
