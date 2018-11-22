@@ -36,8 +36,9 @@ namespace Multiplayer
 
         public override void SceneLoadLocalDone(string map, IProtocolToken token)
         {
-            /*
+
             InitializeSpawns();
+            /*
 
             var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart);
             var serverColor = Teams.TeamsColors.GetTeamFromColor(_serverPlayerSettings.Team);
