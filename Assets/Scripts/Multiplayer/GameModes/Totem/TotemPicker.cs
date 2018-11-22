@@ -5,21 +5,10 @@ using Items;
 
 namespace GameModes.Totem
 {
-    [RequireComponent(typeof(Inventory))]
-    [RequireComponent(typeof(ThrowableLauncher))]
-    [RequireComponent(typeof(ThrowPositions))]
     public class TotemPicker : EntityBehaviour<IKartState> , IControllable
     {
-        private Inventory _inventory;
-        private ThrowPositions _throwPositions;
-
-        // CORE
-
-        private void Awake()
-        {
-            _inventory = GetComponent<Inventory>();
-            _throwPositions = GetComponent<ThrowPositions>();
-        }
+        [SerializeField] private Inventory _inventory;
+        [SerializeField] private ThrowPositions _throwPositions;
 
         // MONOBEHAVIOUR
 
