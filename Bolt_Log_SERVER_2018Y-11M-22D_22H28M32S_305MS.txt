@@ -1,0 +1,36 @@
+Bolt starting with a simulation rate of 60 steps per second
+11/22/2018 10:28:32 PM: >>>> [PUNCH] >>>> Logger >>>> >>>> Requesting STUN info
+Creating Global Behaviour: 'BoltConsole'
+Creating Global Behaviour: 'BoltPoll'
+Creating Global Behaviour: 'BoltSend'
+Creating Global Behaviour: 'BoltSceneLoader'
+Creating Global Behaviour: 'Bolt.photon.PhotonCloudGlobalBehavior+PhotonBoltBehavior'
+Creating Global Behaviour: 'Bolt.photon.PhotonCloudGlobalBehavior'
+Creating Global Behaviour: 'BoltRuntimeConfigs'
+Creating Global Behaviour: 'GameModes.GameModeBase'
+Creating Global Behaviour: 'Multiplayer.SpawnAssigner'
+Creating Global Behaviour: 'Photon.PhotonServerCallbacks'
+11/22/2018 10:28:32 PM: Binding physical socket using platform 'PhotonPlatform'
+11/22/2018 10:28:32 PM: Physical socket bound to [EndPoint 0.0.0.0:0 | 0]
+11/22/2018 10:28:32 PM: LAN endpoint resolved as [EndPoint 192.168.1.26:0 | 0]
+11/22/2018 10:28:32 PM: >>>> [PUNCH] >>>> Logger >>>> >>>> Recvd Sun Info: 109.218.251.156:51741
+Attached [Entity [NetworkId 0-0-0-1-0-0-0-1] KartState] (Token: NULL)
+Attached [Entity [NetworkId 0-0-0-2-0-0-0-1] TotemWallState] (Token: NULL)
+Attached [Entity [NetworkId 0-0-0-3-0-0-0-1] TotemWallState] (Token: NULL)
+You are trying to access the state of [Entity [NetworkId 0-0-0-4-0-0-0-1] ThrowableState] as 'IItemState'
+You are trying to access the state of [Entity [NetworkId 0-0-0-4-0-0-0-1] ThrowableState] as 'IItemState'
+User code threw exception inside Attached callback
+System.NullReferenceException: Object reference not set to an instance of an object
+  at GameModes.Totem.TotemBehaviour.Attached () [0x0000d] in C:\Users\simon\Documents\UnityProjects\mkprototype\Assets\Scripts\Multiplayer\GameModes\Totem\TotemBehaviour.cs:32 
+  at Bolt.Entity.Attach () [0x00000] in <filename unknown>:0 
+Attached [Entity [NetworkId 0-0-0-4-0-0-0-1] ThrowableState] (Token: NULL)
+Bolt is shutting down
+Detached [Entity [NetworkId 0-0-0-1-0-0-0-1] KartState]
+Detached [Entity [NetworkId 0-0-0-2-0-0-0-1] TotemWallState]
+Detached [Entity [NetworkId 0-0-0-3-0-0-0-1] TotemWallState]
+Detached [Entity [NetworkId 0-0-0-4-0-0-0-1] ThrowableState]
+Behaviour not available in this dispatcher, ignoring call to Remove.
+Behaviour not available in this dispatcher, ignoring call to Remove.
+Behaviour not available in this dispatcher, ignoring call to Remove.
+Behaviour not available in this dispatcher, ignoring call to Remove.
+Behaviour not available in this dispatcher, ignoring call to Remove.

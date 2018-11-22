@@ -17,7 +17,17 @@ namespace Engine
 
         public void SetMotorFullPitch(float pitch)
         {
-            MotorFullSource.pitch = (minimumEnginePitch + maximumEnginePitch * pitch) / 27;
+            var resultingPitch = (minimumEnginePitch + maximumEnginePitch * pitch) / 27;
+
+            if (resultingPitch > 0)
+            {
+                MotorFullSource.pitch = resultingPitch;
+            }
+            else
+            {
+                Debug.LogError("Pitch cannot be negative or null.");
+                MotorFullSource.pitch = 0.5f;
+            }
         }
 
         private void PlayMotorFullSound()

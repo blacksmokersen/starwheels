@@ -1,20 +1,23 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using Bolt;
+using Photon;
 
 namespace Multiplayer
 {
     [BoltGlobalBehaviour(BoltNetworkModes.Server)]
     public class SpawnAssigner : GlobalEventListener
     {
-        public IProtocolToken RoomInfoToken;
+        public RoomProtocolToken RoomInfoToken;
 
         private List<GameObject> _initialBlueSpawns = new List<GameObject>();
         private List<GameObject> _initialRedSpawns = new List<GameObject>();
         private List<GameObject> _blueSpawns = new List<GameObject>();
         private List<GameObject> _redSpawns = new List<GameObject>();
+        private int _spawnsAssigned = 1;
+        private GameObject _serverSpawn;
+
         private int _playersCount = -1;
-        private int _spawnsAssigned = 0;
         private bool _gameIsReady = false;
         private PlayerSettings _serverPlayerSettings;
 
@@ -38,20 +41,11 @@ namespace Multiplayer
         {
             InitializeSpawns();
 
-            var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart);
-            var serverColor = Teams.TeamsColors.GetTeamFromColor(_serverPlayerSettings.Team);
-            var spawn = GetInitialSpawnPosition(serverColor);
-            myKart.transform.position = spawn.transform.position;
-            myKart.transform.rotation = spawn.transform.rotation;
-            FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
-
-            var roomToken = (Photon.RoomProtocolToken)token;
+            var roomToken = (RoomProtocolToken)token;
+            _playersCount = roomToken.PlayersCount;
             RoomInfoToken = roomToken;
-
-            if (System.Int32.TryParse(roomToken.RoomInfo, out _playersCount))
-            {
-                IncreaseSpawnCount();
-            }
+            Debug.Log("PlayerCount : " + _playersCount);
+            if (_playersCount == 1) IncreaseSpawnCount();
         }
 
         public override void SceneLoadRemoteDone(BoltConnection connection, IProtocolToken token)
@@ -81,11 +75,12 @@ namespace Multiplayer
 
         private void AssignSpawn(int connectionID, Team team, bool respawn = false)
         {
-            PlayerSpawn playerSpawn = PlayerSpawn.Create();
-            playerSpawn.ConnectionID = connectionID;
             GameObject spawn;
             if (respawn) spawn = GetSpawnPosition(team);
             else spawn = GetInitialSpawnPosition(team);
+
+            PlayerSpawn playerSpawn = PlayerSpawn.Create();
+            playerSpawn.ConnectionID = connectionID;
             playerSpawn.SpawnPosition = spawn.transform.position;
             playerSpawn.SpawnRotation = spawn.transform.rotation;
             playerSpawn.Send();
@@ -136,6 +131,14 @@ namespace Multiplayer
             _spawnsAssigned++;
             if(_spawnsAssigned >= _playersCount)
             {
+                // Instantiate server kart
+                var serverColor = Teams.TeamsColors.GetTeamFromColor(_serverPlayerSettings.Team);
+                _serverSpawn = GetInitialSpawnPosition(serverColor);
+                var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart, RoomInfoToken);
+                myKart.transform.position = _serverSpawn.transform.position;
+                myKart.transform.rotation = _serverSpawn.transform.rotation;
+                FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
+
                 _gameIsReady = true;
             }
 

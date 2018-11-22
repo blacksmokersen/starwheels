@@ -1,0 +1,87 @@
+Bolt starting with a simulation rate of 60 steps per second
+11/22/2018 10:47:25 PM: >>>> [PUNCH] >>>> Logger >>>> >>>> Requesting STUN info
+Creating Global Behaviour: 'BoltConsole'
+Creating Global Behaviour: 'BoltPoll'
+Creating Global Behaviour: 'BoltSend'
+Creating Global Behaviour: 'BoltSceneLoader'
+Creating Global Behaviour: 'Bolt.photon.PhotonCloudGlobalBehavior+PhotonBoltBehavior'
+Creating Global Behaviour: 'Bolt.photon.PhotonCloudGlobalBehavior'
+Creating Global Behaviour: 'BoltRuntimeConfigs'
+Creating Global Behaviour: 'GameModes.GameModeBase'
+Creating Global Behaviour: 'Multiplayer.SpawnAssigner'
+Creating Global Behaviour: 'Photon.PhotonServerCallbacks'
+Registered token class Photon.RoomProtocolToken as id 1
+Registered token class Photon.ServerAcceptToken as id 2
+Registered token class Photon.ServerConnectToken as id 3
+11/22/2018 10:47:25 PM: Binding physical socket using platform 'PhotonPlatform'
+11/22/2018 10:47:25 PM: Physical socket bound to [EndPoint 0.0.0.0:0 | 0]
+11/22/2018 10:47:25 PM: LAN endpoint resolved as [EndPoint 192.168.1.26:0 | 0]
+11/22/2018 10:47:25 PM: >>>> [PUNCH] >>>> Logger >>>> >>>> Recvd Sun Info: 109.218.251.156:56125
+Starting Server
+Attached [Entity [NetworkId 0-0-0-1-0-0-0-1] LobbyPlayerInfoState] (Token: NULL)
+Raising [LobbyCountdown Time=4]
+Raising [LobbyCountdown Time=3]
+Raising [LobbyCountdown Time=2]
+Raising [LobbyCountdown Time=1]
+Raising [LobbyCountdown Time=0]
+Loading Bolt.SceneLoadState (CarapaceSquare)
+Raising [LobbyCountdown Time=-1]
+Raising [LobbyCountdown Time=0]
+Detached [Entity [NetworkId 0-0-0-1-0-0-0-1] LobbyPlayerInfoState]
+Found 2 Scene Objects
+Attached [Entity [NetworkId 0-0-0-2-0-0-0-1] TotemWallState] (Token: NULL)
+Attached [Entity [NetworkId 0-0-0-3-0-0-0-1] TotemWallState] (Token: NULL)
+Attached [Entity [NetworkId 0-0-0-4-0-0-0-1] TotemWallState] (Token: NULL)
+Attached [Entity [NetworkId 0-0-0-5-0-0-0-1] TotemWallState] (Token: NULL)
+Attached [Entity [NetworkId 0-0-0-6-0-0-0-1] ItemState] (Token: NULL)
+Attached [Entity [NetworkId 0-0-0-7-0-0-0-1] KartState] (Token: Photon.RoomProtocolToken)
+Attached [Entity [NetworkId 0-0-0-8-0-0-0-1] ItemState] (Token: NULL)
+Raising [PlayerLaunchItem Rotation=(0.0, 0.0, 0.0, 1.0) Position=(-4.8, 3.9, 342.2) ItemName=Mine(Clone) Entity=[Entity [NetworkId 0-0-0-7-0-0-0-1] KartState]]
+Raising [TotemThrown OwnerID=0]
+Raising [PlayerLaunchItem Rotation=(0.0, 1.0, 0.0, 0.0) Position=(-5.1, 3.8, 333.6) ItemName=Totem(Clone) Entity=[Entity [NetworkId 0-0-0-7-0-0-0-1] KartState]]
+Raising [DestroyEntity Entity=[Entity [NetworkId 0-0-0-8-0-0-0-1] ItemState]]
+Detached [Entity [NetworkId 0-0-0-8-0-0-0-1] ItemState]
+Attached [Entity [NetworkId 0-0-0-9-0-0-0-1] ItemState] (Token: NULL)
+Raising [PlayerLaunchItem Rotation=(0.0, 0.0, 0.0, 1.0) Position=(-9.5, 3.9, -21.1) ItemName=Mine(Clone) Entity=[Entity [NetworkId 0-0-0-7-0-0-0-1] KartState]]
+Raising [TotemThrown OwnerID=0]
+Raising [PlayerLaunchItem Rotation=(0.0, 1.0, 0.0, 0.0) Position=(-9.5, 3.8, -29.6) ItemName=Totem(Clone) Entity=[Entity [NetworkId 0-0-0-7-0-0-0-1] KartState]]
+Detached [Entity [NetworkId 0-0-0-5-0-0-0-1] TotemWallState]
+Raising [GameOver WinningTeam=RGBA(0.200, 0.500, 1.000, 0.800)]
+Loading Bolt.SceneLoadState (CarapaceSquare)
+Detached [Entity [NetworkId 0-0-0-2-0-0-0-1] TotemWallState]
+User code threw exception inside Detach callback
+UnityEngine.MissingReferenceException: The object of type 'TotemCollisionHandler' has been destroyed but you are still trying to access it.
+Your script should either check if it is null or you should not destroy the object.
+  at (wrapper managed-to-native) UnityEngine.Behaviour:get_enabled ()
+  at Bolt.EntityBehaviour.Bolt.IEntityBehaviour.get_invoke () [0x00000] in <filename unknown>:0 
+  at Bolt.Entity.Detach () [0x00000] in <filename unknown>:0 
+Detached [Entity [NetworkId 0-0-0-3-0-0-0-1] TotemWallState]
+User code threw exception inside Detach callback
+UnityEngine.MissingReferenceException: The object of type 'TotemCollisionHandler' has been destroyed but you are still trying to access it.
+Your script should either check if it is null or you should not destroy the object.
+  at (wrapper managed-to-native) UnityEngine.Behaviour:get_enabled ()
+  at Bolt.EntityBehaviour.Bolt.IEntityBehaviour.get_invoke () [0x00000] in <filename unknown>:0 
+  at Bolt.Entity.Detach () [0x00000] in <filename unknown>:0 
+Detached [Entity [NetworkId 0-0-0-4-0-0-0-1] TotemWallState]
+Detached [Entity [NetworkId 0-0-0-6-0-0-0-1] ItemState]
+Detached [Entity [NetworkId 0-0-0-7-0-0-0-1] KartState]
+Detached [Entity [NetworkId 0-0-0-9-0-0-0-1] ItemState]
+Found 2 Scene Objects
+Attached [Entity [NetworkId 0-0-0-A-0-0-0-1] TotemWallState] (Token: NULL)
+Attached [Entity [NetworkId 0-0-0-B-0-0-0-1] TotemWallState] (Token: NULL)
+Attached [Entity [NetworkId 0-0-0-C-0-0-0-1] TotemWallState] (Token: NULL)
+Attached [Entity [NetworkId 0-0-0-D-0-0-0-1] TotemWallState] (Token: NULL)
+Attached [Entity [NetworkId 0-0-0-E-0-0-0-1] ItemState] (Token: NULL)
+Attached [Entity [NetworkId 0-0-0-F-0-0-0-1] KartState] (Token: Photon.RoomProtocolToken)
+Bolt is shutting down
+Detached [Entity [NetworkId 0-0-0-A-0-0-0-1] TotemWallState]
+Detached [Entity [NetworkId 0-0-0-B-0-0-0-1] TotemWallState]
+Detached [Entity [NetworkId 0-0-0-C-0-0-0-1] TotemWallState]
+Detached [Entity [NetworkId 0-0-0-D-0-0-0-1] TotemWallState]
+Detached [Entity [NetworkId 0-0-0-E-0-0-0-1] ItemState]
+Detached [Entity [NetworkId 0-0-0-F-0-0-0-1] KartState]
+Behaviour not available in this dispatcher, ignoring call to Remove.
+Behaviour not available in this dispatcher, ignoring call to Remove.
+Behaviour not available in this dispatcher, ignoring call to Remove.
+Behaviour not available in this dispatcher, ignoring call to Remove.
+Behaviour not available in this dispatcher, ignoring call to Remove.

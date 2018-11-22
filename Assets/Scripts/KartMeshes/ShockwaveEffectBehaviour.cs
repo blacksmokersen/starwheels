@@ -64,6 +64,9 @@ namespace Items
                 case "TPBack(Clone)":
                     _shockwavePrefab = shockwaveYellow;
                     break;
+                case "Totem(Clone)":
+                    _shockwavePrefab = shockwaveYellow;
+                    break;
             }
         }
 
