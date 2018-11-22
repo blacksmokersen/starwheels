@@ -58,11 +58,9 @@ namespace Multiplayer
 
         public override void SceneLoadRemoteDone(BoltConnection connection, IProtocolToken token)
         {
-            /*
             var playerTeam = Teams.TeamsColors.GetTeamFromColor((Color)connection.UserData);
             AssignSpawn((int)connection.ConnectionId, playerTeam);
             IncreaseSpawnCount();
-            */
         }
 
         public override void OnEvent(KartDestroyed evnt)
@@ -85,11 +83,12 @@ namespace Multiplayer
 
         private void AssignSpawn(int connectionID, Team team, bool respawn = false)
         {
-            PlayerSpawn playerSpawn = PlayerSpawn.Create();
-            playerSpawn.ConnectionID = connectionID;
             GameObject spawn;
             if (respawn) spawn = GetSpawnPosition(team);
             else spawn = GetInitialSpawnPosition(team);
+
+            PlayerSpawn playerSpawn = PlayerSpawn.Create();
+            playerSpawn.ConnectionID = connectionID;
             playerSpawn.SpawnPosition = spawn.transform.position;
             playerSpawn.SpawnRotation = spawn.transform.rotation;
             playerSpawn.Send();
