@@ -47,6 +47,7 @@ namespace Multiplayer
             myKart.transform.rotation = spawn.transform.rotation;
             FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
 
+            /*
             var roomToken = (Photon.RoomProtocolToken)token;
             RoomInfoToken = roomToken;
 
@@ -54,7 +55,7 @@ namespace Multiplayer
             {
                 IncreaseSpawnCount();
             }
-
+            */
         }
 
         public override void SceneLoadRemoteDone(BoltConnection connection, IProtocolToken token)
