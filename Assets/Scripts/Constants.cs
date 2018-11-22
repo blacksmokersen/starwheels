@@ -74,4 +74,11 @@
         public const string RedKart = "Materials/KartRedBody";
         public const string WhiteKart = "Materials/KartWhiteBody";
     }
+
+    // GameModes
+    public class GameModes
+    {
+        public const string Battle = "Battle";
+        public const string Totem = "Totem";
+    }
 }
