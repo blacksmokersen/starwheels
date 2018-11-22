@@ -38,7 +38,7 @@ namespace Multiplayer
         {
 
             InitializeSpawns();
-            /*
+
 
             var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart);
             var serverColor = Teams.TeamsColors.GetTeamFromColor(_serverPlayerSettings.Team);
@@ -54,7 +54,7 @@ namespace Multiplayer
             {
                 IncreaseSpawnCount();
             }
-            */
+
         }
 
         public override void SceneLoadRemoteDone(BoltConnection connection, IProtocolToken token)
