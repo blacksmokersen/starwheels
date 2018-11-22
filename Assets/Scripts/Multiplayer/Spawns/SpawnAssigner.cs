@@ -36,18 +36,18 @@ namespace Multiplayer
 
         public override void SceneLoadLocalDone(string map, IProtocolToken token)
         {
-
             InitializeSpawns();
-
 
             var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart);
             var serverColor = Teams.TeamsColors.GetTeamFromColor(_serverPlayerSettings.Team);
+            myKart.transform.position = new Vector3(0, 10, 0);
+            /*
             var spawn = GetInitialSpawnPosition(serverColor);
             myKart.transform.position = spawn.transform.position;
             myKart.transform.rotation = spawn.transform.rotation;
+            */
             FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
 
-            /*
             var roomToken = (Photon.RoomProtocolToken)token;
             RoomInfoToken = roomToken;
 
@@ -55,7 +55,6 @@ namespace Multiplayer
             {
                 IncreaseSpawnCount();
             }
-            */
         }
 
         public override void SceneLoadRemoteDone(BoltConnection connection, IProtocolToken token)
