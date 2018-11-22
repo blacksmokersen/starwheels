@@ -36,6 +36,7 @@ namespace Multiplayer
 
         public override void SceneLoadLocalDone(string map, IProtocolToken token)
         {
+            /*
             InitializeSpawns();
 
             var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart);
@@ -52,13 +53,16 @@ namespace Multiplayer
             {
                 IncreaseSpawnCount();
             }
+            */
         }
 
         public override void SceneLoadRemoteDone(BoltConnection connection, IProtocolToken token)
         {
+            /*
             var playerTeam = Teams.TeamsColors.GetTeamFromColor((Color)connection.UserData);
             AssignSpawn((int)connection.ConnectionId, playerTeam);
             IncreaseSpawnCount();
+            */
         }
 
         public override void OnEvent(KartDestroyed evnt)
