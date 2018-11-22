@@ -32,6 +32,7 @@ namespace Network
                 state.Team = _playerSettings.Team;
                 state.Nickname = _playerSettings.Nickname;
                 state.OwnerID = _playerSettings.ConnectionID;
+
                 PlayerReady playerReadyEvent = PlayerReady.Create();
                 playerReadyEvent.Team = state.Team;
                 playerReadyEvent.Send();

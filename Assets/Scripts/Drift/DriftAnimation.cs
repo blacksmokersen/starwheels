@@ -1,31 +1,21 @@
-﻿using UnityEngine;
-
-namespace Drift
+﻿namespace Drift
 {
-    public class DriftAnimation : MonoBehaviour
+    public class DriftAnimation : Bolt.EntityBehaviour<IKartState>
     {
-        [SerializeField] private Animator _animator;
-
-        // CORE
-
-        // PUBLIC
-
         public void LeftDriftAnimation()
         {
-            Debug.Log("Left driftuuu");
-            Debug.LogFormat("Animator is null : {0}", (_animator == null));
-            _animator.SetBool("DriftLeft", true);
+            state.DriftLeft = true;
         }
 
         public void RightDriftAnimation()
         {
-            _animator.SetBool("DriftRight", true);
+            state.DriftRight = true;
         }
 
         public void NoDriftAnimation()
         {
-            _animator.SetBool("DriftLeft", false);
-            _animator.SetBool("DriftRight", false);
+            state.DriftLeft = false;
+            state.DriftRight = false;
         }
     }
 }

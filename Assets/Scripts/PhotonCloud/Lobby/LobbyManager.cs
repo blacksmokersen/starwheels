@@ -411,7 +411,7 @@ namespace Photon.Lobby
             countdown.Send();
 
             var token = new RoomProtocolToken();
-            token.RoomInfo = "" + LobbyPlayerList.Instance.AllPlayers.Count;
+            token.PlayersCount = LobbyPlayerList.Instance.AllPlayers.Count;
             token.Gamemode = _gamemodeDropdown.options[_gamemodeDropdown.value].text;
             BoltNetwork.LoadScene(_mapDropdown.options[_mapDropdown.value].text, token);
         }

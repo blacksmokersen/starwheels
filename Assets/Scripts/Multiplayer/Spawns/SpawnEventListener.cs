@@ -7,6 +7,8 @@ namespace Multiplayer
     {
         [SerializeField] private PlayerSettings _playerSettings;
 
+        private Photon.RoomProtocolToken _roomToken;
+
         // CORE
 
         private void Awake()
@@ -24,6 +26,11 @@ namespace Multiplayer
             InstantiateKart(transform.position, transform.rotation); // Scene specific position
         }
 
+        public override void SceneLoadLocalBegin(string scene, IProtocolToken token)
+        {
+            _roomToken = (Photon.RoomProtocolToken) token;
+        }
+
         public override void OnEvent(PlayerSpawn evnt)
         {
             if(evnt.ConnectionID == _playerSettings.ConnectionID)
@@ -36,7 +43,18 @@ namespace Multiplayer
 
         private void InstantiateKart(Vector3 spawnPosition, Quaternion spawnRotation)
         {
-            var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart);
+            GameObject myKart;
+
+            if (_roomToken != null)
+            {
+                myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart, _roomToken);
+            }
+            else
+            {
+                Debug.LogError("RoomToken not set.");
+                myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart);
+            }
+
             myKart.transform.position = spawnPosition;
             myKart.transform.rotation = spawnRotation;
         }
