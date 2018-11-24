@@ -304,6 +304,7 @@ namespace Photon.Lobby
                 */
 
                 //TEMP lobby rework
+                BoltLauncher.Shutdown();
                 SceneManager.LoadScene("Menu");
 
             }
@@ -314,6 +315,7 @@ namespace Photon.Lobby
                 TopPanel.IsInGame = false;
                 */
                 //TEMP lobby rework
+                BoltLauncher.Shutdown();
                 SceneManager.LoadScene("Menu");
 
             }
