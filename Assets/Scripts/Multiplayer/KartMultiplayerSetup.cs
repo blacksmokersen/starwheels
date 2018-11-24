@@ -3,12 +3,14 @@ using Photon.Lobby;
 using Bolt;
 using Multiplayer;
 using Multiplayer.Teams;
+using System.Collections;
 
 namespace Network
 {
     public class KartMultiplayerSetup : EntityBehaviour<IKartState>
     {
         [SerializeField] private PlayerSettings _playerSettings;
+        [SerializeField] private float _delayBeforeDestroyKart;
 
         private void Awake()
         {
@@ -54,7 +56,7 @@ namespace Network
             {
                 //FindObjectOfType<CameraUtils.SpectatorControls>().Enabled = true;
                 //FindObjectOfType<CameraUtils.CameraPlayerSwitch>().SetCameraToRandomPlayer();
-                BoltNetwork.Destroy(gameObject);
+                StartCoroutine(DelayRoutine());
             }
         }
 
@@ -72,6 +74,13 @@ namespace Network
             GetComponent<Player>().Nickname = state.Nickname;
             var panel = GetComponentInChildren<Common.HUD.NicknamePanel>();
             if(panel) panel.SetName(state.Nickname);
+        }
+
+        IEnumerator DelayRoutine()
+        {
+            yield return new WaitForSeconds(_delayBeforeDestroyKart);
+            _playerSettings.SendKartDestroyedEvent();
+            BoltNetwork.Destroy(gameObject);
         }
     }
 }
