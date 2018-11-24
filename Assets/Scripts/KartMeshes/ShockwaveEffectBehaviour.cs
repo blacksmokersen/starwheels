@@ -18,14 +18,12 @@ namespace Items
         public override void OnEvent(PlayerLaunchItem playerLaunchItem)
         {
             if (entity == playerLaunchItem.Entity)
-            {
                 InstantiateShockwave(playerLaunchItem.Position, playerLaunchItem.Rotation, playerLaunchItem.ItemName);
-            }
         }
 
         //PUBLIC
 
-        public void InstantiateShockwave(Vector3 position,Quaternion rotation,string itemName)
+        public void InstantiateShockwave(Vector3 position, Quaternion rotation, string itemName)
         {
             ShockwavePrefab(itemName);
             _shockwavePrefab.transform.position = position;

@@ -203,6 +203,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1051802506308840
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4514366112915832}
+  - component: {fileID: 114542090952438210}
+  m_Layer: 0
+  m_Name: ExplosionOnHit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1073792044292164
 GameObject:
   m_ObjectHideFlags: 1
@@ -1751,9 +1767,8 @@ GameObject:
   - component: {fileID: 4170626419202476}
   - component: {fileID: 198175139793398306}
   - component: {fileID: 199911669408630172}
-  - component: {fileID: 114543138795357670}
   m_Layer: 0
-  m_Name: Energy ExpB
+  m_Name: ExplosionEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3150,15 +3165,15 @@ Transform:
   m_GameObject: {fileID: 1622171143484784}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.3, y: 0.30000013, z: 0.30000013}
   m_Children:
   - {fileID: 4202253534121014}
   - {fileID: 4671880386348502}
   - {fileID: 4800386317729986}
   - {fileID: 4476097016105934}
   - {fileID: 4997719241886444}
-  m_Father: {fileID: 4821667778052482}
-  m_RootOrder: 2
+  m_Father: {fileID: 4514366112915832}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!4 &4172385416631390
 Transform:
@@ -4021,6 +4036,20 @@ Transform:
   m_Father: {fileID: 4821667778052482}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4514366112915832
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1051802506308840}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4170626419202476}
+  m_Father: {fileID: 4821667778052482}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4514675635591424
 Transform:
   m_ObjectHideFlags: 1
@@ -4764,7 +4793,7 @@ Transform:
   m_Children:
   - {fileID: 4751566006419492}
   - {fileID: 4512829137546966}
-  - {fileID: 4170626419202476}
+  - {fileID: 4514366112915832}
   m_Father: {fileID: 4745772536087832}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8581,17 +8610,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ControlMaxSpeed: 40
   MaxSpeed: 40
---- !u!114 &114543138795357670
+--- !u!114 &114542090952438210
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1622171143484784}
+  m_GameObject: {fileID: 1051802506308840}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7c0ffd83d6d83c438834f227655b72d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _explosionEffect: {fileID: 1622171143484784}
+  _kartMeshes: {fileID: 1125758342767834}
+  _kartcolliders: {fileID: 1012400381141644}
 --- !u!114 &114562823632779928
 MonoBehaviour:
   m_ObjectHideFlags: 1
