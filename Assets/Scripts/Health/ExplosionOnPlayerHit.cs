@@ -5,7 +5,7 @@ using Bolt;
 
 public class ExplosionOnPlayerHit : GlobalEventListener
 {
-    public override void OnEvent(PlayerHit playerLaunchItem)
+    public override void OnEvent(PlayerHit playerHit)
     {
         Debug.Log("TETETETETET");
         gameObject.SetActive(true);
