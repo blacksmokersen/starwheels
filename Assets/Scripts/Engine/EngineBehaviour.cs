@@ -29,6 +29,9 @@ namespace Engine
         private float _backwardValue;
         private bool _enabled = true;
 
+        private float time = 0.1f;
+
+
         // CORE
 
         private void Awake()
@@ -51,9 +54,12 @@ namespace Engine
             {
                 _forwardValue = Input.GetAxis(Constants.Input.Accelerate);
                 _backwardValue = Input.GetAxis(Constants.Input.Decelerate);
+                if (Input.GetAxis(Constants.Input.Accelerate) <= 0.1f)
+                    time = 0;
             }
             else
             {
+                //  time = 0;
                 _forwardValue = 0f;
                 _backwardValue = 0f;
             }
@@ -94,8 +100,8 @@ namespace Engine
             else
             {
                 var rb = _rb;
-                rb = Accelerate(cmd.Input.Forward,rb);
-                rb = Decelerate(cmd.Input.Backward,rb);
+                rb = Accelerate(cmd.Input.Forward, rb);
+                rb = Decelerate(cmd.Input.Backward, rb);
                 cmd.Result.Velocity = rb.velocity;
             }
         }
@@ -109,26 +115,31 @@ namespace Engine
             _enabled = true;
         }
 
-
+        /*
         private void Accelerate(float value)
         {
             if (_groundCondition && !_groundCondition.Grounded) return;
             _rb.AddRelativeForce(Vector3.forward * value * Settings.SpeedForce, ForceMode.Force);
         }
-
+        */
         private Rigidbody Accelerate(float value, Rigidbody rb)
         {
+            var actualSpeedForce = Mathf.Lerp(0, Settings.SpeedForce, time);
+            time += 0.01f;
+
+            Debug.Log(actualSpeedForce);
+
             if (_groundCondition && !_groundCondition.Grounded) return rb;
-            rb.AddRelativeForce(Vector3.forward * value * Settings.SpeedForce, ForceMode.Force);
+            rb.AddRelativeForce(Vector3.forward * value * actualSpeedForce, ForceMode.Force);
             return rb;
         }
-
+        /*
         private void Decelerate(float value)
         {
             if (_groundCondition && !_groundCondition.Grounded) return;
             _rb.AddRelativeForce(Vector3.back * value * Settings.SpeedForce / Settings.DecelerationFactor, ForceMode.Force);
         }
-
+        */
         private Rigidbody Decelerate(float value, Rigidbody rb)
         {
             if (_groundCondition && !_groundCondition.Grounded) return rb;
@@ -138,15 +149,15 @@ namespace Engine
 
         private void CheckMovingDirection()
         {
-            if(CurrentSpeed > 0 && CurrentMovingDirection != MovingDirection.Forward)
+            if (CurrentSpeed > 0 && CurrentMovingDirection != MovingDirection.Forward)
             {
                 CurrentMovingDirection = MovingDirection.Forward;
             }
-            else if(CurrentSpeed < 0 && CurrentMovingDirection != MovingDirection.Backward)
+            else if (CurrentSpeed < 0 && CurrentMovingDirection != MovingDirection.Backward)
             {
                 CurrentMovingDirection = MovingDirection.Backward;
             }
-            else if(CurrentSpeed == 0 && CurrentMovingDirection != MovingDirection.NotMoving)
+            else if (CurrentSpeed == 0 && CurrentMovingDirection != MovingDirection.NotMoving)
             {
                 CurrentMovingDirection = MovingDirection.NotMoving;
             }
