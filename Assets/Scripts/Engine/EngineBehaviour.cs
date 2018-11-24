@@ -29,14 +29,20 @@ namespace Engine
         private float _backwardValue;
         private bool _enabled = true;
 
-        private float time = 0.1f;
-
+        private float _curveTime;
+        private float _startCurveTimer;
 
         // CORE
 
         private void Awake()
         {
             _rb = GetComponentInParent<Rigidbody>();
+            CurrentSpeed = 0;
+        }
+
+        private void Start()
+        {
+            _startCurveTimer = Time.time;
         }
 
         private void FixedUpdate()
@@ -54,12 +60,10 @@ namespace Engine
             {
                 _forwardValue = Input.GetAxis(Constants.Input.Accelerate);
                 _backwardValue = Input.GetAxis(Constants.Input.Decelerate);
-                if (Input.GetAxis(Constants.Input.Accelerate) <= 0.1f)
-                    time = 0;
+                CurveVelocityHandler();
             }
             else
             {
-                //  time = 0;
                 _forwardValue = 0f;
                 _backwardValue = 0f;
             }
@@ -115,35 +119,39 @@ namespace Engine
             _enabled = true;
         }
 
-        /*
-        private void Accelerate(float value)
+        private void CurveVelocityHandler()
         {
-            if (_groundCondition && !_groundCondition.Grounded) return;
-            _rb.AddRelativeForce(Vector3.forward * value * Settings.SpeedForce, ForceMode.Force);
+            if (Input.GetAxis(Constants.Input.Accelerate) <= 0.1f && CurrentSpeed < 25)
+            {
+                _startCurveTimer = Time.time;
+            }
+            else if (Input.GetAxis(Constants.Input.Accelerate) <= 0.1f && CurrentSpeed > 25)
+            {
+                _startCurveTimer = Time.time - Settings.CurveVelocity.length/2;
+                Debug.Log(Settings.CurveVelocity.length/2);
+            }
+            else if (Input.GetAxis(Constants.Input.Accelerate) > 0.1f)
+            {
+                _curveTime = Time.time - _startCurveTimer;
+            }
         }
-        */
+
         private Rigidbody Accelerate(float value, Rigidbody rb)
         {
-            var actualSpeedForce = Mathf.Lerp(0, Settings.SpeedForce, time);
-            time += 0.01f;
+            var curveVelocityValue = Settings.CurveVelocity.Evaluate(_curveTime);
+           // Debug.Log("CurveTimer = " + _curveTime);
+           // Debug.Log("CurveValue = "+curveVelocityValue);
 
-            Debug.Log(actualSpeedForce);
 
             if (_groundCondition && !_groundCondition.Grounded) return rb;
-            rb.AddRelativeForce(Vector3.forward * value * actualSpeedForce, ForceMode.Force);
+            rb.AddRelativeForce(Vector3.forward * value * curveVelocityValue, ForceMode.Force);
             return rb;
         }
-        /*
-        private void Decelerate(float value)
-        {
-            if (_groundCondition && !_groundCondition.Grounded) return;
-            _rb.AddRelativeForce(Vector3.back * value * Settings.SpeedForce / Settings.DecelerationFactor, ForceMode.Force);
-        }
-        */
+
         private Rigidbody Decelerate(float value, Rigidbody rb)
         {
             if (_groundCondition && !_groundCondition.Grounded) return rb;
-            rb.AddRelativeForce(Vector3.back * value * Settings.SpeedForce / Settings.DecelerationFactor, ForceMode.Force);
+            rb.AddRelativeForce(Vector3.back * value * Settings.BackSpeedForce / Settings.DecelerationFactor, ForceMode.Force);
             return rb;
         }
 
