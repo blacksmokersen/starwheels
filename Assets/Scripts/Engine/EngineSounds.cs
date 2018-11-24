@@ -25,7 +25,7 @@ namespace Engine
             }
             else
             {
-                Debug.LogError("Pitch cannot be negative or null.");
+              //  Debug.LogError("Pitch cannot be negative or null.");
                 MotorFullSource.pitch = 0.5f;
             }
         }
