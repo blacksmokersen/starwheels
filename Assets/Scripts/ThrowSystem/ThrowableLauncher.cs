@@ -12,6 +12,8 @@ namespace ThrowingSystem
         public float ForwardThrowingForce;
         public float TimesLongerThanHighThrow;
 
+        public bool _ThrowBackwards;
+
         [SerializeField] Items.ShockwaveEffectBehaviour shockwaveEffectBehaviour;
 
         private ThrowPositions _itemPositions;
@@ -23,6 +25,7 @@ namespace ThrowingSystem
         private void Awake()
         {
             _itemPositions = GetComponent<ThrowPositions>();
+            _ThrowBackwards = false;
         }
 
         // PUBLIC
@@ -35,7 +38,7 @@ namespace ThrowingSystem
 
                 if (directionAxis > 0.3f)
                     return Direction.Forward;
-                else if (directionAxis < -0.3f)
+                else if (directionAxis < -0.3f || _ThrowBackwards)
                     return Direction.Backward;
                 else
                     return Direction.Default;

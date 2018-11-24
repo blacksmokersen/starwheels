@@ -24,7 +24,7 @@ namespace Items
         public IntEvent OnItemCountChange;
 
         private ThrowableLauncher _projectileLauncher;
-
+        
         // CORE
 
         private void Awake()
@@ -48,6 +48,12 @@ namespace Items
             if (Input.GetButtonDown(Constants.Input.UseItem))
             {
                 UseItem();
+            }
+            if (Input.GetButtonDown(Constants.Input.UseItemBackward))
+            {
+                _projectileLauncher._ThrowBackwards = true;
+                UseItem();
+                _projectileLauncher._ThrowBackwards = false;
             }
         }
 
