@@ -115,7 +115,7 @@ namespace Items
         {
             CollisionParticles.Emit(ParticlesToEmitOnHit);
             PlayPlayerHitSound();
-            DestroyObject();            
+            DestroyObject();
         }
 
         private IEnumerator StartOwnerImmunity()
