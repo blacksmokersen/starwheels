@@ -7,6 +7,7 @@ namespace Engine
     {
         // public float SpeedForce;
         public AnimationCurve CurveVelocity;
+        public float SpeedInertiaLoss;
         public float BackSpeedForce;
         public float TurnSpeed;
         public float DecelerationFactor = 2f;
