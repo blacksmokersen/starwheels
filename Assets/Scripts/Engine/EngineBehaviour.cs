@@ -29,11 +29,20 @@ namespace Engine
         private float _backwardValue;
         private bool _enabled = true;
 
+        private float _curveTime;
+        private float _startCurveTimer;
+
         // CORE
 
         private void Awake()
         {
             _rb = GetComponentInParent<Rigidbody>();
+            CurrentSpeed = 0;
+        }
+
+        private void Start()
+        {
+            _startCurveTimer = Time.time;
         }
 
         private void FixedUpdate()
@@ -51,6 +60,7 @@ namespace Engine
             {
                 _forwardValue = Input.GetAxis(Constants.Input.Accelerate);
                 _backwardValue = Input.GetAxis(Constants.Input.Decelerate);
+                CurveVelocityHandler();
             }
             else
             {
@@ -94,8 +104,8 @@ namespace Engine
             else
             {
                 var rb = _rb;
-                rb = Accelerate(cmd.Input.Forward,rb);
-                rb = Decelerate(cmd.Input.Backward,rb);
+                rb = Accelerate(cmd.Input.Forward, rb);
+                rb = Decelerate(cmd.Input.Backward, rb);
                 cmd.Result.Velocity = rb.velocity;
             }
         }
@@ -109,44 +119,45 @@ namespace Engine
             _enabled = true;
         }
 
-
-        private void Accelerate(float value)
+        private void CurveVelocityHandler()
         {
-            if (_groundCondition && !_groundCondition.Grounded) return;
-            _rb.AddRelativeForce(Vector3.forward * value * Settings.SpeedForce, ForceMode.Force);
+            if (Input.GetAxis(Constants.Input.Accelerate) <= 0.1f && CurrentSpeed < 25)
+                _startCurveTimer = Time.time;
+            else if (Input.GetAxis(Constants.Input.Accelerate) <= 0.1f && CurrentSpeed > 25)
+                _startCurveTimer = Time.time - Settings.CurveVelocity.length / 2;
+            else if (Input.GetAxis(Constants.Input.Accelerate) > 0.1f)
+                _curveTime = Time.time - _startCurveTimer;
         }
 
         private Rigidbody Accelerate(float value, Rigidbody rb)
         {
-            if (_groundCondition && !_groundCondition.Grounded) return rb;
-            rb.AddRelativeForce(Vector3.forward * value * Settings.SpeedForce, ForceMode.Force);
-            return rb;
-        }
+            var curveVelocityValue = Settings.CurveVelocity.Evaluate(_curveTime);
+            // Debug.Log("CurveTimer = " + _curveTime);
+            // Debug.Log("CurveValue = "+curveVelocityValue);
 
-        private void Decelerate(float value)
-        {
-            if (_groundCondition && !_groundCondition.Grounded) return;
-            _rb.AddRelativeForce(Vector3.back * value * Settings.SpeedForce / Settings.DecelerationFactor, ForceMode.Force);
+            if (_groundCondition && !_groundCondition.Grounded) return rb;
+            rb.AddRelativeForce(Vector3.forward * value * curveVelocityValue, ForceMode.Force);
+            return rb;
         }
 
         private Rigidbody Decelerate(float value, Rigidbody rb)
         {
             if (_groundCondition && !_groundCondition.Grounded) return rb;
-            rb.AddRelativeForce(Vector3.back * value * Settings.SpeedForce / Settings.DecelerationFactor, ForceMode.Force);
+            rb.AddRelativeForce(Vector3.back * value * Settings.BackSpeedForce / Settings.DecelerationFactor, ForceMode.Force);
             return rb;
         }
 
         private void CheckMovingDirection()
         {
-            if(CurrentSpeed > 0 && CurrentMovingDirection != MovingDirection.Forward)
+            if (CurrentSpeed > 0 && CurrentMovingDirection != MovingDirection.Forward)
             {
                 CurrentMovingDirection = MovingDirection.Forward;
             }
-            else if(CurrentSpeed < 0 && CurrentMovingDirection != MovingDirection.Backward)
+            else if (CurrentSpeed < 0 && CurrentMovingDirection != MovingDirection.Backward)
             {
                 CurrentMovingDirection = MovingDirection.Backward;
             }
-            else if(CurrentSpeed == 0 && CurrentMovingDirection != MovingDirection.NotMoving)
+            else if (CurrentSpeed == 0 && CurrentMovingDirection != MovingDirection.NotMoving)
             {
                 CurrentMovingDirection = MovingDirection.NotMoving;
             }
