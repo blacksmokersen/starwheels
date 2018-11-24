@@ -122,26 +122,18 @@ namespace Engine
         private void CurveVelocityHandler()
         {
             if (Input.GetAxis(Constants.Input.Accelerate) <= 0.1f && CurrentSpeed < 25)
-            {
                 _startCurveTimer = Time.time;
-            }
             else if (Input.GetAxis(Constants.Input.Accelerate) <= 0.1f && CurrentSpeed > 25)
-            {
-                _startCurveTimer = Time.time - Settings.CurveVelocity.length/2;
-                Debug.Log(Settings.CurveVelocity.length/2);
-            }
+                _startCurveTimer = Time.time - Settings.CurveVelocity.length / 2;
             else if (Input.GetAxis(Constants.Input.Accelerate) > 0.1f)
-            {
                 _curveTime = Time.time - _startCurveTimer;
-            }
         }
 
         private Rigidbody Accelerate(float value, Rigidbody rb)
         {
             var curveVelocityValue = Settings.CurveVelocity.Evaluate(_curveTime);
-           // Debug.Log("CurveTimer = " + _curveTime);
-           // Debug.Log("CurveValue = "+curveVelocityValue);
-
+            // Debug.Log("CurveTimer = " + _curveTime);
+            // Debug.Log("CurveValue = "+curveVelocityValue);
 
             if (_groundCondition && !_groundCondition.Grounded) return rb;
             rb.AddRelativeForce(Vector3.forward * value * curveVelocityValue, ForceMode.Force);
