@@ -137,8 +137,8 @@ namespace Engine
         private Rigidbody Accelerate(float value, Rigidbody rb)
         {
             var curveVelocityValue = Settings.CurveVelocity.Evaluate(_curveTime);
-             Debug.Log("CurveTimer = " + _curveTime);
-             Debug.Log("CurveValue = "+curveVelocityValue);
+           //  Debug.Log("CurveTimer = " + _curveTime);
+           //  Debug.Log("CurveValue = "+curveVelocityValue);
 
             if (_groundCondition && !_groundCondition.Grounded) return rb;
             rb.AddRelativeForce(Vector3.forward * value * curveVelocityValue, ForceMode.Force);
