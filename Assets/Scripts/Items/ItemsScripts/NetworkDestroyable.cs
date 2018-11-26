@@ -16,8 +16,9 @@ namespace Items
                 }
                 else
                 {
-                    entity.TakeControl();
-                    BoltNetwork.Destroy(gameObject);
+                    DestroyEntity destroyEntityEvent = DestroyEntity.Create();
+                    destroyEntityEvent.Entity = entity;
+                    destroyEntityEvent.Send();
                 }
             }
             else if(!BoltNetwork.isConnected)

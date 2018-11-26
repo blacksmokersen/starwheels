@@ -64,10 +64,13 @@ namespace Items
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.Layer.Ground))
+            if (BoltNetwork.isServer)
             {
-                PlayCollisionSound();
-                DestroyObject();
+                if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.Layer.Ground))
+                {
+                    PlayCollisionSound();
+                    DestroyObject();
+                }
             }
         }
 

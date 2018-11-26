@@ -12,24 +12,27 @@ namespace GameModes.Totem
         public override void OnEvent(TotemThrown evnt)
         {
             var totem = GameObject.FindGameObjectWithTag(Constants.Tag.Totem);
-            if (!totem) Debug.LogError("Totem was not found.");
+            if (!totem) return;
 
-            totem.GetComponent<TotemBehaviour>().SetTotemKinematic(false);
-            totem.GetComponent<TotemBehaviour>().SetParent(null);
-
-            if (BoltNetwork.isServer)
+            var totemEntity = totem.GetComponent<BoltEntity>();
+            if (evnt.OwnerID == totemEntity.GetState<IItemState>().OwnerID) // The owner of the totem is throwing
             {
-                var totemEntity = totem.GetComponent<BoltEntity>();
-                if (evnt.OwnerID == totemEntity.GetState<IItemState>().OwnerID)
+                totem.GetComponent<TotemBehaviour>().SetTotemKinematic(false);
+                totem.GetComponent<TotemBehaviour>().SetParent(null);
+
+                if (BoltNetwork.isServer)
                 {
                     var kartThrowing = MyExtensions.KartExtensions.GetKartWithID(evnt.OwnerID);
-                    kartThrowing.GetComponentInChildren<ThrowableLauncher>().Throw(totemEntity.GetComponent<Throwable>());
+                    if (kartThrowing)
+                    {
+                        kartThrowing.GetComponentInChildren<ThrowableLauncher>().Throw(totemEntity.GetComponent<Throwable>());
+                    }
                     totemEntity.GetState<IItemState>().OwnerID = -1;
                 }
-            }
-            else
-            {
-                totem.GetComponent<BoltEntity>().ReleaseControl();
+                else
+                {
+                    totem.GetComponent<BoltEntity>().ReleaseControl();
+                }
             }
         }
 
