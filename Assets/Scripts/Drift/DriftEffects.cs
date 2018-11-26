@@ -4,86 +4,45 @@ namespace Drift
 {
     public class DriftEffects : MonoBehaviour
     {
+        [Header("Wheels Smoke Prefabs")]
+        [SerializeField] private GameObject _blueLeftSmoke;
+        [SerializeField] private GameObject _blueRightSmoke;
+        [SerializeField] private GameObject _redLeftSmoke;
+        [SerializeField] private GameObject _redRightSmoke;
 
-        [SerializeField] private ParticleSystem smokeLeftWheel;
-        [SerializeField] private ParticleSystem smokeRightWheel;
+        private GameObject _currentLeftSmoke;
+        private GameObject _currentRightSmoke;
 
-        private void Awake()
-        {
-            StopSmoke();
-
-            // LOGIC
-            /*
-            kartEvents.OnDriftStart += StartSmoke;
-            kartEvents.OnDriftStart += () => SetWheelsColor(Color.white);
-            kartEvents.OnDriftEnd += StopSmoke;
-
-            kartEvents.OnDriftOrange += () => SetWheelsColor(Color.yellow);
-            kartEvents.OnDriftRed += () => SetWheelsColor(Color.red);
-            kartEvents.OnDriftBoostStart += () => SetWheelsColor(Color.green);
-            kartEvents.OnDriftBoostEnd += StopSmoke;
-            */
-        }
+        // PUBLIC
 
         public void StopSmoke()
         {
-            //    if (kartStates.DriftState != Kart.DriftState.Turbo)
-            //    {
-            smokeLeftWheel.Stop(true);
-            smokeRightWheel.Stop(true);
-            //    }
+            if (_currentLeftSmoke) _currentLeftSmoke.SetActive(false);
+            _currentLeftSmoke = null;
+            if (_currentRightSmoke) _currentRightSmoke.SetActive(false);
+            _currentRightSmoke = null;
         }
+
         public void StartSmoke()
         {
-            if (!smokeLeftWheel.isPlaying)
-                smokeLeftWheel.Play(true);
-            if (!smokeRightWheel.isPlaying)
-                smokeRightWheel.Play(true);
-        }
-        /*
-        public void SetWheelsColor(Color color)
-        {
-            var leftWheelMain = smokeLeftWheel.main;
-            var rightWheelMain = smokeRightWheel.main;
-
-            leftWheelMain.startColor = color;
-            rightWheelMain.startColor = color;
-        }
-        */
-        public void SetWheelsWhite()
-        {
-            var leftWheelMain = smokeLeftWheel.main;
-            var rightWheelMain = smokeRightWheel.main;
-
-            leftWheelMain.startColor = Color.white;
-            rightWheelMain.startColor = Color.white;
+            if (_currentLeftSmoke) _currentLeftSmoke.SetActive(true);
+            if (_currentRightSmoke) _currentRightSmoke.SetActive(true);
         }
 
-        public void SetWheelsOrange()
+        public void SetWheelsBlue()
         {
-            var leftWheelMain = smokeLeftWheel.main;
-            var rightWheelMain = smokeRightWheel.main;
-
-            leftWheelMain.startColor = Color.yellow;
-            rightWheelMain.startColor = Color.yellow;
+            StopSmoke();
+            _currentLeftSmoke = _blueLeftSmoke;
+            _currentRightSmoke = _blueRightSmoke;
+            StartSmoke();
         }
 
         public void SetWheelsRed()
         {
-            var leftWheelMain = smokeLeftWheel.main;
-            var rightWheelMain = smokeRightWheel.main;
-
-            leftWheelMain.startColor = Color.red;
-            rightWheelMain.startColor = Color.red;
-        }
-
-        public void SetWheelsGreen()
-        {
-            var leftWheelMain = smokeLeftWheel.main;
-            var rightWheelMain = smokeRightWheel.main;
-
-            leftWheelMain.startColor = Color.green;
-            rightWheelMain.startColor = Color.green;
+            StopSmoke();
+            _currentLeftSmoke = _redLeftSmoke;
+            _currentRightSmoke = _redRightSmoke;
+            StartSmoke();
         }
     }
 }
