@@ -72,7 +72,7 @@ namespace Abilities
                     _tpBack = instantiatedItem.GetComponent<TPBackBehaviour>();
                     throwableLauncher.Throw(throwable);
                 }
-                else if (_tpBack.IsEnabled())
+                else // if (_tpBack.IsEnabled())
                 {
                     StartCoroutine(BlinkTpBack());
                     StartCoroutine(AbilityCooldown(tPBackSettings.Cooldown));
