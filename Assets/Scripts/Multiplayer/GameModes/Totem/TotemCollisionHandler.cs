@@ -6,6 +6,8 @@ namespace GameModes.Totem
 {
     public class TotemCollisionHandler : EntityBehaviour<ITotemWallState>
     {
+        [SerializeField] private Vector3 _respawnPosition;
+
         [Header("Data")]
         public int RemainingLives;
         public Team OwnerTeam;
@@ -39,7 +41,9 @@ namespace GameModes.Totem
             {
                 state.Lives--;
 
-                if(state.Lives <= 0)
+                FindObjectOfType<TotemGutter>().RespawnTotem();
+
+                if (state.Lives <= 0)
                 {
                     GameOver gameOverEvent = GameOver.Create();
                     gameOverEvent.WinningTeam = TeamsColors.GetColorFromTeam(OwnerTeam.OppositeTeam());
