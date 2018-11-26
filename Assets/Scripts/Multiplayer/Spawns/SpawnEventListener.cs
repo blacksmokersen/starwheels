@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using Bolt;
 using Photon;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace Multiplayer
 {
@@ -40,6 +42,14 @@ namespace Multiplayer
             }
         }
 
+        // PUBLIC
+
+        public void AskForRespawnInXSeconds(float x, Color team, int id)
+        {
+            StartCoroutine(AskForRespawnInXSecondsRoutine(x, team, id));
+        }
+
+
         // PRIVATE
 
         private void InstantiateKart(Vector3 spawnPosition, Quaternion spawnRotation, RoomProtocolToken roomProtocolToken)
@@ -58,6 +68,16 @@ namespace Multiplayer
 
             myKart.transform.position = spawnPosition;
             myKart.transform.rotation = spawnRotation;
+        }
+
+        private IEnumerator AskForRespawnInXSecondsRoutine(float x, Color team, int id)
+        {
+            yield return new WaitForSeconds(x);
+
+            KartDestroyed kartDestroyedEvent = KartDestroyed.Create();
+            kartDestroyedEvent.Team = team;
+            kartDestroyedEvent.ConnectionID = id;
+            kartDestroyedEvent.Send();
         }
     }
 }
