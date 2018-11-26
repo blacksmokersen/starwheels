@@ -175,7 +175,6 @@ namespace Items
             if (entity == showKartDisplayItem.Entity)
             {
                 _itemNameToDisplay = showKartDisplayItem.ItemName;
-                Debug.Log(_itemCountToDisplay);
                 _itemCountToDisplay = showKartDisplayItem.ItemCount;
                 _direction = Direction.Forward;
                 DisplayItem();
