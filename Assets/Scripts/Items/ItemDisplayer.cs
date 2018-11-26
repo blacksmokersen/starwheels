@@ -14,6 +14,7 @@ namespace Items
 
 
         private string _itemNameToDisplay;
+        private int _itemCountToDisplay;
         private Inventory _inventory;
         ThrowingSystem.ThrowableLauncher _throwableLauncher;
         private Direction _direction;
@@ -134,7 +135,12 @@ namespace Items
         {
             var hideDisplayEvent = HideKartDisplayItem.Create();
             hideDisplayEvent.Entity = GetComponentInParent<BoltEntity>();
-            hideDisplayEvent.Send();
+            if (_inventory.CurrentItem != null)
+            {
+                hideDisplayEvent.ItemName = _inventory.CurrentItem.Name;
+                hideDisplayEvent.ItemCount = _inventory.CurrentItemCount;
+                hideDisplayEvent.Send();
+            }
         }
 
         public override void OnEvent(HideKartDisplayItem hideKartDisplayItem)
@@ -143,6 +149,8 @@ namespace Items
 
             if (entity == hideKartDisplayItem.Entity)
             {
+                _itemNameToDisplay = hideKartDisplayItem.ItemName;
+                _itemCountToDisplay = hideKartDisplayItem.ItemCount;
                 HideItem();
             }
         }
@@ -151,7 +159,13 @@ namespace Items
         {
             var showDisplayEvent = ShowKartDisplayItem.Create();
             showDisplayEvent.Entity = GetComponentInParent<BoltEntity>();
-            showDisplayEvent.Send();
+            if (_inventory.CurrentItem != null)
+            {
+                showDisplayEvent.ItemName = _inventory.CurrentItem.Name;
+                showDisplayEvent.ItemCount = _inventory.CurrentItemCount;
+                //  showDisplayEvent.Direction = _throwableLauncher.ThrowingDirection.ToString();
+                showDisplayEvent.Send();
+            }
         }
 
         public override void OnEvent(ShowKartDisplayItem showKartDisplayItem)
@@ -160,15 +174,19 @@ namespace Items
 
             if (entity == showKartDisplayItem.Entity)
             {
+                _itemNameToDisplay = showKartDisplayItem.ItemName;
+                Debug.Log(_itemCountToDisplay);
+                _itemCountToDisplay = showKartDisplayItem.ItemCount;
+                _direction = Direction.Forward;
                 DisplayItem();
             }
         }
 
         public void DisplayItem()
         {
-            if (_inventory.CurrentItem != null)
-            {
-                _itemNameToDisplay = _inventory.CurrentItem.Name;
+        //    if (_itemCountToDisplay > 0)
+        //    {
+                //  _itemNameToDisplay = _inventory.CurrentItem.Name;
                 _direction = _throwableLauncher.ThrowingDirection;
 
                 switch (_itemNameToDisplay)
@@ -262,12 +280,12 @@ namespace Items
                         GoldItem.transform.GetChild(1).gameObject.SetActive(true); //Activating the back purple shield on the hierarchie
                         break;
                 }
-            }
+         //   }
         }
 
         public void HideItem()
         {
-            if (_inventory.CurrentItemCount == 1)
+            if (_itemCountToDisplay == 1)
             {
                 switch (_itemNameToDisplay)
                 {
