@@ -5,6 +5,7 @@ namespace CameraUtils
 {
     public class CamSpeedEffect : MonoBehaviour
     {
+        [SerializeField] private float _fov = 50f;
 
         private CinemachineVirtualCamera _cinemachine;
         private Rigidbody _rigidbody;
@@ -24,7 +25,7 @@ namespace CameraUtils
             if (_rigidbody)
             {
                 float clampCam = Mathf.Clamp(_rigidbody.velocity.magnitude / 5, 0, 20);
-                _cinemachine.m_Lens.FieldOfView = 50 + clampCam;
+                _cinemachine.m_Lens.FieldOfView = _fov + clampCam;
             }
         }
 
