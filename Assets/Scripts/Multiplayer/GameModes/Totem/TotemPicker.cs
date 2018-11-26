@@ -20,8 +20,12 @@ namespace GameModes.Totem
                 if (totemBehaviour.CanBePickedUp)
                 {
                     other.GetComponentInParent<BoltEntity>().GetState<IItemState>().OwnerID = state.OwnerID;
-                    totemBehaviour.SetTotemKinematic(true);
-                    totemBehaviour.SetParent(_throwPositions.BackPosition);
+                    //totemBehaviour.SetTotemKinematic(true);
+                    //totemBehaviour.SetParent(_throwPositions.BackPosition);
+
+                    TotemPicked totemPickedEvent = TotemPicked.Create();
+                    totemPickedEvent.NewOwnerID = state.OwnerID;
+                    totemPickedEvent.Send();
                 }
             }
         }
