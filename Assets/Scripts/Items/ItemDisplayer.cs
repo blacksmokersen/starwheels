@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using Bolt;
 
 namespace Items
 {
     [RequireComponent(typeof(Inventory))]
-    public class ItemDisplayer : MonoBehaviour
+    public class ItemDisplayer : GlobalEventListener
     {
         [Header("Shields")]
         public GameObject GreenItem;
@@ -13,16 +14,17 @@ namespace Items
 
 
         private string _itemNameToDisplay;
+        private int _itemCountToDisplay;
         private Inventory _inventory;
         ThrowingSystem.ThrowableLauncher _throwableLauncher;
         private Direction _direction;
-        
+
 
         public void Awake()
         {
             _inventory = GetComponent<Inventory>();
             _throwableLauncher = GetComponent<ThrowingSystem.ThrowableLauncher>();
-            
+
         }
         /*
         void Update()
@@ -42,13 +44,13 @@ namespace Items
 
                         if (_direction == Direction.Default || _direction == Direction.Forward)
                         {
-                            GreenItem.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.SetActive(true); //Activating in front the disk 
+                            GreenItem.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.SetActive(true); //Activating in front the disk
                             GreenItem.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.SetActive(false); //Desactivating the disk behind
                         }
                         else if (_direction == Direction.Backward)
                         {
                             GreenItem.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.SetActive(true); //Activating the disk behind
-                            GreenItem.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.SetActive(false); //Desctivating in front the disk 
+                            GreenItem.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.SetActive(false); //Desctivating in front the disk
                         }
                         break;
                     #endregion
@@ -59,17 +61,17 @@ namespace Items
                         GreenItem.transform.GetChild(0).gameObject.SetActive(true); //Activating the front green shield on the hierarchie
                         GreenItem.transform.GetChild(1).gameObject.SetActive(true); //Activating the back green shield on the hierarchie
 
-                        
+
                         if (_direction == Direction.Backward || _direction == Direction.Default)
                         {
- 
-                            GreenItem.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(false); //Desactivating in front the Mine 
+
+                            GreenItem.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(false); //Desactivating in front the Mine
                             GreenItem.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.SetActive(true); //Activating the mine behind
 
                         }
                         else if (_direction == Direction.Forward)
                         {
-                            GreenItem.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(true); //Activating in front the Mine 
+                            GreenItem.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(true); //Activating in front the Mine
                             GreenItem.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.SetActive(false); //Desactivating the Mine behind
                         }
                         break;
@@ -104,8 +106,8 @@ namespace Items
                         PurpleItem.transform.GetChild(1).gameObject.SetActive(true); ;
                         if (_direction == Direction.Forward || _direction == Direction.Default)
                         {
-                            PurpleItem.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.SetActive(true); //Activating in front the rocket 
-                            PurpleItem.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.SetActive(false); //Desactivating the rocket behind 
+                            PurpleItem.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.SetActive(true); //Activating in front the rocket
+                            PurpleItem.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.SetActive(false); //Desactivating the rocket behind
                         }
                         else if (_direction == Direction.Backward)
                         {
@@ -124,16 +126,66 @@ namespace Items
                         break;
                 }
             }
-                
-            
+
+
         }
       */
 
-            public void DisplayItem()
+        public void HideDisplayEvent()
         {
-            if(_inventory.CurrentItem != null)
+            var hideDisplayEvent = HideKartDisplayItem.Create();
+            hideDisplayEvent.Entity = GetComponentInParent<BoltEntity>();
+            if (_inventory.CurrentItem != null)
             {
-                _itemNameToDisplay = _inventory.CurrentItem.Name;
+                hideDisplayEvent.ItemName = _inventory.CurrentItem.Name;
+                hideDisplayEvent.ItemCount = _inventory.CurrentItemCount;
+                hideDisplayEvent.Send();
+            }
+        }
+
+        public override void OnEvent(HideKartDisplayItem hideKartDisplayItem)
+        {
+            var entity = GetComponentInParent<BoltEntity>();
+
+            if (entity == hideKartDisplayItem.Entity)
+            {
+                _itemNameToDisplay = hideKartDisplayItem.ItemName;
+                _itemCountToDisplay = hideKartDisplayItem.ItemCount;
+                HideItem();
+            }
+        }
+
+        public void ShowDisplayEvent()
+        {
+            var showDisplayEvent = ShowKartDisplayItem.Create();
+            showDisplayEvent.Entity = GetComponentInParent<BoltEntity>();
+            if (_inventory.CurrentItem != null)
+            {
+                showDisplayEvent.ItemName = _inventory.CurrentItem.Name;
+                showDisplayEvent.ItemCount = _inventory.CurrentItemCount;
+                //  showDisplayEvent.Direction = _throwableLauncher.ThrowingDirection.ToString();
+                showDisplayEvent.Send();
+            }
+        }
+
+        public override void OnEvent(ShowKartDisplayItem showKartDisplayItem)
+        {
+            var entity = GetComponentInParent<BoltEntity>();
+
+            if (entity == showKartDisplayItem.Entity)
+            {
+                _itemNameToDisplay = showKartDisplayItem.ItemName;
+                _itemCountToDisplay = showKartDisplayItem.ItemCount;
+                _direction = Direction.Forward;
+                DisplayItem();
+            }
+        }
+
+        public void DisplayItem()
+        {
+        //    if (_itemCountToDisplay > 0)
+        //    {
+                //  _itemNameToDisplay = _inventory.CurrentItem.Name;
                 _direction = _throwableLauncher.ThrowingDirection;
 
                 switch (_itemNameToDisplay)
@@ -146,13 +198,13 @@ namespace Items
 
                         if (_direction == Direction.Default || _direction == Direction.Forward)
                         {
-                            GreenItem.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.SetActive(true); //Activating in front the disk 
+                            GreenItem.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.SetActive(true); //Activating in front the disk
                             GreenItem.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.SetActive(false); //Desactivating the disk behind
                         }
                         else if (_direction == Direction.Backward)
                         {
                             GreenItem.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.SetActive(true); //Activating the disk behind
-                            GreenItem.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.SetActive(false); //Desctivating in front the disk 
+                            GreenItem.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.SetActive(false); //Desctivating in front the disk
                         }
                         break;
                     #endregion
@@ -163,17 +215,17 @@ namespace Items
                         GreenItem.transform.GetChild(0).gameObject.SetActive(true); //Activating the front green shield on the hierarchie
                         GreenItem.transform.GetChild(1).gameObject.SetActive(true); //Activating the back green shield on the hierarchie
 
-                        
+
                         if (_direction == Direction.Backward || _direction == Direction.Default)
                         {
- 
-                            GreenItem.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(false); //Desactivating in front the Mine 
+
+                            GreenItem.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(false); //Desactivating in front the Mine
                             GreenItem.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.SetActive(true); //Activating the mine behind
 
                         }
                         else if (_direction == Direction.Forward)
                         {
-                            GreenItem.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(true); //Activating in front the Mine 
+                            GreenItem.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(true); //Activating in front the Mine
                             GreenItem.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.SetActive(false); //Desactivating the Mine behind
                         }
                         break;
@@ -208,8 +260,8 @@ namespace Items
                         PurpleItem.transform.GetChild(1).gameObject.SetActive(true); ;
                         if (_direction == Direction.Forward || _direction == Direction.Default)
                         {
-                            PurpleItem.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.SetActive(true); //Activating in front the rocket 
-                            PurpleItem.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.SetActive(false); //Desactivating the rocket behind 
+                            PurpleItem.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.SetActive(true); //Activating in front the rocket
+                            PurpleItem.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.SetActive(false); //Desactivating the rocket behind
                         }
                         else if (_direction == Direction.Backward)
                         {
@@ -227,12 +279,12 @@ namespace Items
                         GoldItem.transform.GetChild(1).gameObject.SetActive(true); //Activating the back purple shield on the hierarchie
                         break;
                 }
-            }
+         //   }
         }
 
         public void HideItem()
         {
-            if (_inventory.CurrentItemCount == 1)
+            if (_itemCountToDisplay == 1)
             {
                 switch (_itemNameToDisplay)
                 {
