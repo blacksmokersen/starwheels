@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 using Bolt;
+using Photon;
 
 namespace Multiplayer
 {
     public class SpawnEventListener : GlobalEventListener
     {
         [SerializeField] private PlayerSettings _playerSettings;
-
-        private Photon.RoomProtocolToken _roomToken;
 
         // CORE
 
@@ -23,31 +22,33 @@ namespace Multiplayer
 
         public override void BoltStartDone() // Used for In-Editor tests
         {
-            InstantiateKart(transform.position, transform.rotation); // Scene specific position
-        }
+            RoomProtocolToken roomProtocolToken = new RoomProtocolToken()
+            {
+                Gamemode = Constants.GameModes.Totem,
+                PlayersCount = 1,
+                RoomInfo = "Solo"
+            };
 
-        public override void SceneLoadLocalBegin(string scene, IProtocolToken token)
-        {
-            _roomToken = (Photon.RoomProtocolToken) token;
+            InstantiateKart(transform.position, transform.rotation, roomProtocolToken); // Scene specific position
         }
 
         public override void OnEvent(PlayerSpawn evnt)
         {
             if(evnt.ConnectionID == _playerSettings.ConnectionID)
             {
-                InstantiateKart(evnt.SpawnPosition, evnt.SpawnRotation);
+                InstantiateKart(evnt.SpawnPosition, evnt.SpawnRotation, (RoomProtocolToken)evnt.RoomToken);
             }
         }
 
         // PRIVATE
 
-        private void InstantiateKart(Vector3 spawnPosition, Quaternion spawnRotation)
+        private void InstantiateKart(Vector3 spawnPosition, Quaternion spawnRotation, RoomProtocolToken roomProtocolToken)
         {
             GameObject myKart;
 
-            if (_roomToken != null)
+            if (roomProtocolToken != null)
             {
-                myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart, _roomToken);
+                myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart, roomProtocolToken);
             }
             else
             {

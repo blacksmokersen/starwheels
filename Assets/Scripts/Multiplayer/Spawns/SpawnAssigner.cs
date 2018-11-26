@@ -41,9 +41,8 @@ namespace Multiplayer
         {
             InitializeSpawns();
 
-            var roomToken = (RoomProtocolToken)token;
-            _playersCount = roomToken.PlayersCount;
-            RoomInfoToken = roomToken;
+            RoomInfoToken = (RoomProtocolToken)token;
+            _playersCount = RoomInfoToken.PlayersCount;
             Debug.Log("PlayerCount : " + _playersCount);
             if (_playersCount == 1) IncreaseSpawnCount();
         }
@@ -83,6 +82,7 @@ namespace Multiplayer
             playerSpawn.ConnectionID = connectionID;
             playerSpawn.SpawnPosition = spawn.transform.position;
             playerSpawn.SpawnRotation = spawn.transform.rotation;
+            playerSpawn.RoomToken = RoomInfoToken;
             playerSpawn.Send();
         }
 
