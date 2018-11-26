@@ -12,8 +12,6 @@ namespace GameModes.Totem
         [SerializeField] private float _slowdownFactor = 0.98f;
         [SerializeField] private float _stopMagnitudeThreshold = 0.1f;
 
-        private bool _isPossessed = false;
-
         private Transform _parent;
         private Rigidbody _rb;
         private bool _isSlowingDown = false;
@@ -41,7 +39,7 @@ namespace GameModes.Totem
         {
             if (_parent)
             {
-                transform.position = _parent.position;
+                //transform.position = _parent.position;
             }
             else
             {
@@ -54,6 +52,8 @@ namespace GameModes.Totem
         public void SetParent(Transform parent)
         {
             _parent = parent;
+            transform.SetParent(parent);
+
             StartCoroutine(AntiPickSpamRoutine());
 
             if (parent == null)
@@ -77,7 +77,7 @@ namespace GameModes.Totem
             {
                 Debug.Log("Totem is kinematic.");
                 GetComponent<Rigidbody>().isKinematic = true;
-                //GetComponent<SphereCollider>().enabled = false;
+                //GetComponent<SphereCollider>().enabled = false; //USE LAYERS
             }
             else
             {
