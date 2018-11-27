@@ -43,7 +43,7 @@ namespace Health
                 }
 
                 OnHealthLoss.Invoke(state.Health);
-                CheckIfIsDead();
+               // CheckIfIsDead();
                 SetInvincibilityForXSeconds(3f);
             }
         }

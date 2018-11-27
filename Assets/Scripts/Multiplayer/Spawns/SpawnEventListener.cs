@@ -43,12 +43,12 @@ namespace Multiplayer
         }
 
         // PUBLIC
-
+        /*
         public void AskForRespawnInXSeconds(float x, Color team, int id)
         {
             StartCoroutine(AskForRespawnInXSecondsRoutine(x, team, id));
         }
-
+        */
 
         // PRIVATE
 
@@ -70,14 +70,15 @@ namespace Multiplayer
             myKart.transform.rotation = spawnRotation;
         }
 
+        /*
         private IEnumerator AskForRespawnInXSecondsRoutine(float x, Color team, int id)
         {
             yield return new WaitForSeconds(x);
-
             KartDestroyed kartDestroyedEvent = KartDestroyed.Create();
             kartDestroyedEvent.Team = team;
             kartDestroyedEvent.ConnectionID = id;
             kartDestroyedEvent.Send();
         }
+        */
     }
 }
