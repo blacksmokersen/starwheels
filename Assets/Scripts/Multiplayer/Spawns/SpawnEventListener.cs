@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
 using Bolt;
 using Photon;
-using System.Collections.Generic;
-using System.Collections;
+
 
 namespace Multiplayer
 {
     public class SpawnEventListener : GlobalEventListener
     {
         [SerializeField] private PlayerSettings _playerSettings;
+
+        [Tooltip("GameModes are : 'Totem' and 'Battle'")]
+        [SerializeField] private string _gameMode;
 
         // CORE
 
@@ -26,7 +28,7 @@ namespace Multiplayer
         {
             RoomProtocolToken roomProtocolToken = new RoomProtocolToken()
             {
-                Gamemode = Constants.GameModes.Totem,
+                Gamemode = _gameMode,
                 PlayersCount = 1,
                 RoomInfo = "Solo"
             };
@@ -41,14 +43,6 @@ namespace Multiplayer
                 InstantiateKart(evnt.SpawnPosition, evnt.SpawnRotation, (RoomProtocolToken)evnt.RoomToken);
             }
         }
-
-        // PUBLIC
-        /*
-        public void AskForRespawnInXSeconds(float x, Color team, int id)
-        {
-            StartCoroutine(AskForRespawnInXSecondsRoutine(x, team, id));
-        }
-        */
 
         // PRIVATE
 
