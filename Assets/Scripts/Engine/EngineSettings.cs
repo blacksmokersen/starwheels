@@ -6,7 +6,8 @@ namespace Engine
     public class EngineSettings : ScriptableObject
     {
         // public float SpeedForce;
-        public AnimationCurve CurveVelocity;
+        public AnimationCurve AccelerationCurveVelocity;
+        public AnimationCurve DeccelerationCurveVelocity;
         public float SpeedInertiaLoss;
         public float BackSpeedForce;
         public float TurnSpeed;
