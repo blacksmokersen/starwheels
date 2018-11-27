@@ -17,8 +17,7 @@ namespace GameModes.Totem
             var totemEntity = totem.GetComponent<BoltEntity>();
             if (evnt.OwnerID == totemEntity.GetState<IItemState>().OwnerID) // The owner of the totem is throwing
             {
-                totem.GetComponent<TotemBehaviour>().SetTotemKinematic(false);
-                totem.GetComponent<TotemBehaviour>().SetParent(null);
+                totem.GetComponent<TotemBehaviour>().UnsetParent();
 
                 if (BoltNetwork.isServer)
                 {
@@ -27,11 +26,6 @@ namespace GameModes.Totem
                     {
                         kartThrowing.GetComponentInChildren<ThrowableLauncher>().Throw(totemEntity.GetComponent<Throwable>());
                     }
-                    totemEntity.GetState<IItemState>().OwnerID = -1;
-                }
-                else
-                {
-                    totem.GetComponent<BoltEntity>().ReleaseControl();
                 }
             }
         }
@@ -45,11 +39,8 @@ namespace GameModes.Totem
 
             if (kart)
             {
-                if(BoltNetwork.isClient) totem.GetComponent<BoltEntity>().TakeControl();
                 var backPosition = kart.GetComponentInChildren<ThrowPositions>().BackPosition;
-                totem.GetComponent<TotemBehaviour>().SetParent(backPosition);
-                totem.GetComponent<TotemBehaviour>().SetTotemKinematic(true);
-                totem.transform.localPosition = Vector3.zero;
+                totem.GetComponent<TotemBehaviour>().SetParent(backPosition, evnt.NewOwnerID);
             }
             else
             {

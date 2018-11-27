@@ -4,6 +4,7 @@ using Bolt;
 
 namespace GameModes.Totem
 {
+    [DisallowMultipleComponent]
     public class TotemBehaviour : EntityBehaviour<IItemState>
     {
         public bool CanBePickedUp = true;
@@ -12,7 +13,6 @@ namespace GameModes.Totem
         [SerializeField] private float _slowdownFactor = 0.98f;
         [SerializeField] private float _stopMagnitudeThreshold = 0.1f;
 
-        private Transform _parent;
         private Rigidbody _rb;
         private bool _isSlowingDown = false;
 
@@ -37,11 +37,7 @@ namespace GameModes.Totem
 
         public override void SimulateOwner()
         {
-            if (_parent)
-            {
-                //transform.position = _parent.position;
-            }
-            else
+            if (transform.parent == null)
             {
                 Slowdown();
             }
@@ -49,40 +45,42 @@ namespace GameModes.Totem
 
         // PUBLIC
 
-        public void SetParent(Transform parent)
+        public void SetParent(Transform parent, int newOwnerID)
         {
-            _parent = parent;
+            if(entity.isOwner) state.OwnerID = newOwnerID;
+
+            entity.TakeControl();
             transform.SetParent(parent);
-
+            transform.localPosition = Vector3.zero;
+            FreezeTotem(true);
+            _isSlowingDown = false;
             StartCoroutine(AntiPickSpamRoutine());
-
-            if (parent == null)
-            {
-                _isSlowingDown = true;
-            }
-            else
-            {
-                _isSlowingDown = false;
-            }
         }
 
-        public void StartSlowdown()
+        public void UnsetParent()
         {
-            StartCoroutine(SlowdownRoutine());
+            if (entity.isOwner) state.OwnerID = -1;
+            else entity.ReleaseControl();
+
+            CanBePickedUp = true;
+            transform.SetParent(null);
+            FreezeTotem(false);
+            StopAllCoroutines();
+            _isSlowingDown = true;
         }
 
-        public void SetTotemKinematic(bool b)
+        public void FreezeTotem(bool b)
         {
+            var rb = GetComponent<Rigidbody>();
             if (b)
             {
-                Debug.Log("Totem is kinematic.");
-                GetComponent<Rigidbody>().isKinematic = true;
+                rb.isKinematic = true;
                 //GetComponent<SphereCollider>().enabled = false; //USE LAYERS
             }
             else
             {
-                Debug.Log("Totem is NOT kinematic.");
-                GetComponent<Rigidbody>().isKinematic = false;
+                rb.isKinematic = false;
+                rb.velocity = Vector3.zero;
                 GetComponent<SphereCollider>().enabled = true;
             }
         }
