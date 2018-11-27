@@ -17,12 +17,10 @@ namespace GameModes.Totem
                 {
                     FindObjectOfType<TotemSpawner>().RespawnTotem();
                 }
-                /*
                 else
                 {
                     FindObjectOfType<TotemBehaviour>().UnsetParent();
                 }
-                */
             }
         }
     }
