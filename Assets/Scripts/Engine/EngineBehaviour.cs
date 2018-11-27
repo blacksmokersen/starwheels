@@ -128,12 +128,12 @@ namespace Engine
             if (Input.GetAxis(Constants.Input.Accelerate) <= 0.1f)
             {
                 _startAccCurveTimer = Time.time;
-                _curveTime = Mathf.Clamp((Time.time - _startDecCurveTimer), 0, Settings.DeccelerationCurveVelocity.length);
+                _curveTime = Mathf.Clamp((Time.time - _startDecCurveTimer), 0, Settings.DurationDeccelerationCurve);
                 _curveDecVelocityValue = Settings.DeccelerationCurveVelocity.Evaluate(_curveTime);
             }
             else
             {
-                _curveTime = Mathf.Clamp((Time.time - _startAccCurveTimer), 0, Settings.AccelerationCurveVelocity.length);
+                _curveTime = Mathf.Clamp((Time.time - _startAccCurveTimer), 0, Settings.DurationAccelerationCurve);
                 _curveAccVelocityValue = Settings.AccelerationCurveVelocity.Evaluate(_curveTime);
                 _startDecCurveTimer = Time.time;
             }
