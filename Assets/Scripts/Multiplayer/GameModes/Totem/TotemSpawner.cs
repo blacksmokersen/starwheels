@@ -8,6 +8,16 @@ namespace GameModes.Totem
     {
         private bool _totemInstantiated = false;
 
+        // DEBUG
+
+        private void Update()
+        {
+            if(BoltNetwork.isServer && Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                RespawnTotem();
+            }
+        }
+
         // BOLT
 
         public override void BoltStartDone()
