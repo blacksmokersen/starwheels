@@ -18,7 +18,11 @@ namespace Multiplayer
 
         public void SendKartDestroyedEvent()
         {
-            FindObjectOfType<SpawnEventListener>().AskForRespawnInXSeconds(2f, Team, ConnectionID);
+            // FindObjectOfType<SpawnEventListener>().AskForRespawnInXSeconds(2f, Team, ConnectionID);
+            KartDestroyed kartDestroyedEvent = KartDestroyed.Create();
+            kartDestroyedEvent.Team = Team;
+            kartDestroyedEvent.ConnectionID = ConnectionID;
+            kartDestroyedEvent.Send();
         }
     }
 }
