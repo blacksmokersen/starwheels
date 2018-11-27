@@ -2,6 +2,7 @@
 
 namespace GameModes.Totem
 {
+    [DisallowMultipleComponent]
     public class TotemGutter : MonoBehaviour
     {
         [SerializeField] private Vector3 _respawnPosition;
@@ -14,34 +15,15 @@ namespace GameModes.Totem
             {
                 if (BoltNetwork.isServer)
                 {
-                    Debug.Log("Totem fell in gutter.");
-                    RespawnTotem();
+                    FindObjectOfType<TotemSpawner>().RespawnTotem();
                 }
+                /*
                 else
                 {
-                    var totem = GameObject.FindGameObjectWithTag(Constants.Tag.Totem);
-                    totem.GetComponent<BoltEntity>().ReleaseControl();
-                    totem.GetComponent<TotemBehaviour>().SetParent(null);
-                    totem.GetComponent<TotemBehaviour>().SetTotemKinematic(false);
+                    FindObjectOfType<TotemBehaviour>().UnsetParent();
                 }
+                */
             }
-        }
-
-        // PUBLIC
-
-        public void RespawnTotem()
-        {
-            var totem = GameObject.FindGameObjectWithTag(Constants.Tag.Totem);
-            totem.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            totem.GetComponent<TotemBehaviour>().SetParent(null);
-            totem.GetComponent<TotemBehaviour>().SetTotemKinematic(false);
-            totem.transform.position = _respawnPosition;
-
-            TotemThrown totemThrownEvent = TotemThrown.Create();
-            totemThrownEvent.OwnerID = -1;
-            totemThrownEvent.Send();
-
-            totem.GetComponent<BoltEntity>().GetState<IItemState>().OwnerID = -1;
         }
     }
 }
