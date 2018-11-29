@@ -11,21 +11,18 @@ namespace Items
         public GameObject PurpleItem;
         public GameObject GoldItem;
 
-
-
         private string _itemNameToDisplay;
         private int _itemCountToDisplay;
         private Inventory _inventory;
-        ThrowingSystem.ThrowableLauncher _throwableLauncher;
+        private ThrowingSystem.ThrowableLauncher _throwableLauncher;
         private Direction _direction;
-
 
         public void Awake()
         {
             _inventory = GetComponent<Inventory>();
             _throwableLauncher = GetComponent<ThrowingSystem.ThrowableLauncher>();
-
         }
+
         /*
         void Update()
         {
@@ -186,7 +183,7 @@ namespace Items
         //    if (_itemCountToDisplay > 0)
         //    {
                 //  _itemNameToDisplay = _inventory.CurrentItem.Name;
-                _direction = _throwableLauncher.ThrowingDirection;
+                _direction = _throwableLauncher.GetThrowingDirection();
 
                 switch (_itemNameToDisplay)
                 {

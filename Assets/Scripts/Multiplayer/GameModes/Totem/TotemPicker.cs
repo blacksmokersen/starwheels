@@ -37,7 +37,9 @@ namespace GameModes.Totem
 
         public void MapInputs()
         {
-            if (Input.GetButtonDown(Constants.Input.UseItem))
+            if (Input.GetButtonDown(Constants.Input.UseItem) ||
+                Input.GetButtonDown(Constants.Input.UseItemForward) ||
+                Input.GetButtonDown(Constants.Input.UseItemBackward))
             {
                 UseTotem();
             }
