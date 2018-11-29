@@ -24,7 +24,7 @@ namespace Items
         public IntEvent OnItemCountChange;
 
         private ThrowableLauncher _projectileLauncher;
-        
+
         // CORE
 
         private void Awake()
@@ -45,15 +45,11 @@ namespace Items
 
         public void MapInputs()
         {
-            if (Input.GetButtonDown(Constants.Input.UseItem))
+            if (Input.GetButtonDown(Constants.Input.UseItem) ||
+                Input.GetButtonDown(Constants.Input.UseItemBackward) ||
+                Input.GetButtonDown(Constants.Input.UseItemForward))
             {
                 UseItem();
-            }
-            if (Input.GetButtonDown(Constants.Input.UseItemBackward))
-            {
-                _projectileLauncher._ThrowBackwards = true;
-                UseItem();
-                _projectileLauncher._ThrowBackwards = false;
             }
         }
 
@@ -113,7 +109,7 @@ namespace Items
                 itemState.Team = state.Team;
                 itemState.OwnerID = state.OwnerID;
                 var throwable = instantiatedItem.GetComponent<Throwable>();
-                _projectileLauncher.Throw(throwable);
+                _projectileLauncher.Throw(throwable, _projectileLauncher.GetThrowingDirection());
             }
         }
 
