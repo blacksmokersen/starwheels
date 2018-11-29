@@ -15,7 +15,7 @@ namespace GameModes.Totem
             if (!totem) return;
 
             var totemEntity = totem.GetComponent<BoltEntity>();
-            if (evnt.OwnerID == totemEntity.GetState<IItemState>().OwnerID) // The owner of the totem is throwing
+            if (evnt.OwnerID == totemEntity.GetState<IItemState>().OwnerID) // The owner of the totem is throwing it
             {
                 totem.GetComponent<TotemBehaviour>().UnsetParent();
 
@@ -24,7 +24,7 @@ namespace GameModes.Totem
                     var kartThrowing = MyExtensions.KartExtensions.GetKartWithID(evnt.OwnerID);
                     if (kartThrowing)
                     {
-                        kartThrowing.GetComponentInChildren<ThrowableLauncher>().Throw(totemEntity.GetComponent<Throwable>());
+                        kartThrowing.GetComponentInChildren<ThrowableLauncher>().Throw(totemEntity.GetComponent<Throwable>(), Direction.Forward);
                     }
                 }
             }

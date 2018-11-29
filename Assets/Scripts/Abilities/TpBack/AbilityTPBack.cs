@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 using Items;
 using ThrowingSystem;
 
@@ -8,33 +7,25 @@ namespace Abilities
 {
     public class AbilityTPBack : AbilitiesBehaviour, IControllable
     {
-        public UnityEvent OnTpBackEvent;
+        [SerializeField] private TPBackSettings _tPBackSettings;
+        [SerializeField] private ThrowableLauncher _throwableLauncher;
 
-        [SerializeField] private TPBackSettings tPBackSettings;
-        [SerializeField] private ThrowableLauncher throwableLauncher;
         [Header("Effects")]
-        [SerializeField] private ParticleSystem reloadParticlePrefab;
-        [SerializeField] private int reloadParticleNumber;
-        [SerializeField] private AudioSource useTpBackSound;
+        [SerializeField] private ParticleSystem _reloadParticlePrefab;
+        [SerializeField] private int _reloadParticleNumber;
+        [SerializeField] private AudioSource _useTpBackSound;
         [SerializeField] private GameObject _kartMeshes;
 
         private ParticleSystem _reloadEffect;
         private TPBackBehaviour _tpBack = null;
         private bool _canUseAbility = true;
         private Rigidbody _rb;
-        private float y;
 
         // CORE
 
         private void Awake()
         {
             _rb = GetComponentInParent<Rigidbody>();
-            /*
-            var instantiatedReloadEffect = BoltNetwork.Instantiate(tPBackSettings.ReloadParticlePrefab);
-            instantiatedReloadEffect.transform.parent = gameObject.transform;
-            instantiatedReloadEffect.transform.position = new Vector3(0, 0, 0);
-            _reloadEffect = instantiatedReloadEffect.GetComponent<ParticleSystem>();
-            */
         }
 
         // BOLT
@@ -66,43 +57,40 @@ namespace Abilities
             {
                 if (_tpBack == null)
                 {
-                    var instantiatedItem = BoltNetwork.Instantiate(tPBackSettings.Prefab);
+                    var instantiatedItem = BoltNetwork.Instantiate(_tPBackSettings.Prefab);
 
                     var throwable = instantiatedItem.GetComponent<Throwable>();
                     _tpBack = instantiatedItem.GetComponent<TPBackBehaviour>();
-                    throwableLauncher.Throw(throwable);
+                    _throwableLauncher.Throw(throwable, _throwableLauncher.GetThrowingDirection());
                 }
                 else // if (_tpBack.IsEnabled())
                 {
                     StartCoroutine(BlinkTpBack());
-                    StartCoroutine(AbilityCooldown(tPBackSettings.Cooldown));
+                    StartCoroutine(AbilityCooldown(_tPBackSettings.Cooldown));
                 }
             }
         }
 
-        IEnumerator BlinkTpBack()
+        // PRIVATE
+
+        private IEnumerator BlinkTpBack()
         {
             _kartMeshes.SetActive(false);
             yield return new WaitForSeconds(0.5f);
             _kartMeshes.SetActive(true);
-            y = _tpBack.transform.position.y + 5f;
+            var y = _tpBack.transform.position.y + 5f;
             _rb.transform.position = new Vector3(_tpBack.transform.position.x, y, _tpBack.transform.position.z);
-
             _rb.transform.rotation = GetKartRotation();
-            MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(useTpBackSound);
+            MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useTpBackSound);
             Destroy(_tpBack.gameObject);
         }
 
-
-        // PRIVATE
-        IEnumerator AbilityCooldown(float Duration)
+        private IEnumerator AbilityCooldown(float Duration)
         {
             _canUseAbility = false;
             yield return new WaitForSeconds(Duration);
             _canUseAbility = true;
-            //  _reloadEffect.Emit(abilitySettings.ReloadParticleNumber);
-            reloadParticlePrefab.Emit(reloadParticleNumber);
-            // OnTpBackEvent.Invoke();
+            _reloadParticlePrefab.Emit(_reloadParticleNumber);
         }
     }
 }
