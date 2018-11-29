@@ -35,7 +35,7 @@ namespace Controls
 
         public void MapInputs()
         {
-            if (Input.GetButtonDown(Constants.Input.UseItem))
+            if (Input.GetButtonDown(Constants.Input.UseItem) || Input.GetButtonDown(Constants.Input.UseItemForward))
             {
                 _ionBeamBehaviour.FireIonBeam();
             }
