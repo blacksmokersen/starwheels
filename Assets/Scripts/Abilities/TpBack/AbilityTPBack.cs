@@ -16,11 +16,13 @@ namespace Abilities
         [SerializeField] private ParticleSystem reloadParticlePrefab;
         [SerializeField] private int reloadParticleNumber;
         [SerializeField] private AudioSource useTpBackSound;
+        [SerializeField] private GameObject _kartMeshes;
 
         private ParticleSystem _reloadEffect;
         private TPBackBehaviour _tpBack = null;
         private bool _canUseAbility = true;
         private Rigidbody _rb;
+        private float y;
 
         // CORE
 
@@ -70,18 +72,27 @@ namespace Abilities
                     _tpBack = instantiatedItem.GetComponent<TPBackBehaviour>();
                     throwableLauncher.Throw(throwable);
                 }
-                else if (_tpBack.IsEnabled())
+                else // if (_tpBack.IsEnabled())
                 {
-                    _rb.transform.position = _tpBack.transform.position;
-                    _rb.transform.rotation = GetKartRotation();
-                    MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(useTpBackSound);
-                    Destroy(_tpBack.gameObject);
+                    StartCoroutine(BlinkTpBack());
                     StartCoroutine(AbilityCooldown(tPBackSettings.Cooldown));
                 }
             }
         }
 
-        
+        IEnumerator BlinkTpBack()
+        {
+            _kartMeshes.SetActive(false);
+            yield return new WaitForSeconds(0.5f);
+            _kartMeshes.SetActive(true);
+            y = _tpBack.transform.position.y + 5f;
+            _rb.transform.position = new Vector3(_tpBack.transform.position.x, y, _tpBack.transform.position.z);
+
+            _rb.transform.rotation = GetKartRotation();
+            MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(useTpBackSound);
+            Destroy(_tpBack.gameObject);
+        }
+
 
         // PRIVATE
         IEnumerator AbilityCooldown(float Duration)
