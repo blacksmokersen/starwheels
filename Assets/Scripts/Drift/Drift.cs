@@ -119,8 +119,6 @@ namespace Drift
 
         public void StopDrift()
         {
-            if (!IsDrifting()) return;
-
             if (DriftState == DriftState.Red && HasRequiredSpeed())
             {
                 OnDriftBoostStart.Invoke();
