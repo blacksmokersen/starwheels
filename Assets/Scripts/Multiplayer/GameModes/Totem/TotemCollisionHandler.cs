@@ -6,8 +6,6 @@ namespace GameModes.Totem
 {
     public class TotemCollisionHandler : EntityBehaviour<ITotemWallState>
     {
-        [SerializeField] private Vector3 _respawnPosition;
-
         [Header("Data")]
         public int RemainingLives;
         public Team OwnerTeam;
@@ -41,7 +39,7 @@ namespace GameModes.Totem
             {
                 state.Lives--;
 
-                FindObjectOfType<TotemGutter>().RespawnTotem();
+                FindObjectOfType<TotemSpawner>().RespawnTotem();
 
                 if (state.Lives <= 0)
                 {
