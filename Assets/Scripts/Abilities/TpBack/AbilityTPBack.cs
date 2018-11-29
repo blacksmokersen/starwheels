@@ -10,12 +10,13 @@ namespace Abilities
     {
         public UnityEvent OnTpBackEvent;
 
-        [SerializeField] private TPBackSettings tPBackSettings;
-        [SerializeField] private ThrowableLauncher throwableLauncher;
+        [SerializeField] private TPBackSettings _tPBackSettings;
+        [SerializeField] private ThrowableLauncher _throwableLauncher;
+
         [Header("Effects")]
-        [SerializeField] private ParticleSystem reloadParticlePrefab;
-        [SerializeField] private int reloadParticleNumber;
-        [SerializeField] private AudioSource useTpBackSound;
+        [SerializeField] private ParticleSystem _reloadParticlePrefab;
+        [SerializeField] private int _reloadParticleNumber;
+        [SerializeField] private AudioSource _useTpBackSound;
 
         private ParticleSystem _reloadEffect;
         private TPBackBehaviour _tpBack = null;
@@ -27,12 +28,6 @@ namespace Abilities
         private void Awake()
         {
             _rb = GetComponentInParent<Rigidbody>();
-            /*
-            var instantiatedReloadEffect = BoltNetwork.Instantiate(tPBackSettings.ReloadParticlePrefab);
-            instantiatedReloadEffect.transform.parent = gameObject.transform;
-            instantiatedReloadEffect.transform.position = new Vector3(0, 0, 0);
-            _reloadEffect = instantiatedReloadEffect.GetComponent<ParticleSystem>();
-            */
         }
 
         // BOLT
@@ -64,24 +59,24 @@ namespace Abilities
             {
                 if (_tpBack == null)
                 {
-                    var instantiatedItem = BoltNetwork.Instantiate(tPBackSettings.Prefab);
+                    var instantiatedItem = BoltNetwork.Instantiate(_tPBackSettings.Prefab);
 
                     var throwable = instantiatedItem.GetComponent<Throwable>();
                     _tpBack = instantiatedItem.GetComponent<TPBackBehaviour>();
-                    throwableLauncher.Throw(throwable);
+                    _throwableLauncher.Throw(throwable, _throwableLauncher.GetThrowingDirection());
                 }
                 else if (_tpBack.IsEnabled())
                 {
                     _rb.transform.position = _tpBack.transform.position;
                     _rb.transform.rotation = GetKartRotation();
-                    MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(useTpBackSound);
+                    MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useTpBackSound);
                     Destroy(_tpBack.gameObject);
-                    StartCoroutine(AbilityCooldown(tPBackSettings.Cooldown));
+                    StartCoroutine(AbilityCooldown(_tPBackSettings.Cooldown));
                 }
             }
         }
 
-        
+
 
         // PRIVATE
         IEnumerator AbilityCooldown(float Duration)
@@ -90,7 +85,7 @@ namespace Abilities
             yield return new WaitForSeconds(Duration);
             _canUseAbility = true;
             //  _reloadEffect.Emit(abilitySettings.ReloadParticleNumber);
-            reloadParticlePrefab.Emit(reloadParticleNumber);
+            _reloadParticlePrefab.Emit(_reloadParticleNumber);
             // OnTpBackEvent.Invoke();
         }
     }

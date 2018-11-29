@@ -28,7 +28,7 @@ namespace GameModes.Totem
                     var totemBehaviour = totem.GetComponent<TotemBehaviour>();
                     totemBehaviour.SetParent(null);
                     totemBehaviour.SetTotemKinematic(false);
-                    kartThrowing.GetComponentInChildren<ThrowableLauncher>().Throw(totemEntity.GetComponent<Throwable>());
+                    kartThrowing.GetComponentInChildren<ThrowableLauncher>().Throw(totemEntity.GetComponent<Throwable>(), Direction.Forward);
                     totemEntity.GetState<IItemState>().OwnerID = -1;
                 }
             }
