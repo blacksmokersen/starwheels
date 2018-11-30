@@ -50,17 +50,6 @@ namespace Photon.Lobby
 
         public override void Attached()
         {
-            if (entity.isOwner)
-            {
-                state.Color = _playerColor;
-                state.Name = "Player #" + Random.Range(1, 100);
-
-                if (BoltNetwork.isClient)
-                {
-                    _playerSettings.ConnectionID = (int)Connection.ConnectionId;
-                }
-            }
-
             state.AddCallback("Name", () =>
             {
                 _nameInput.text = state.Name;
@@ -75,6 +64,17 @@ namespace Photon.Lobby
             {
                 OnClientReady(state.Ready);
             });
+
+            if (entity.isOwner)
+            {
+                state.Color = _playerColor;
+                state.Name = "Player #" + Random.Range(1, 100);
+
+                if (BoltNetwork.isClient)
+                {
+                    _playerSettings.ConnectionID = (int)Connection.ConnectionId;
+                }
+            }
         }
 
         public override void ControlGained()
@@ -217,6 +217,7 @@ namespace Photon.Lobby
         {
             _playerColor = newColor;
             _colorButton.GetComponent<Image>().color = newColor;
+
             if (entity.isOwner && Connection)
             {
                 Connection.UserData = newColor;
