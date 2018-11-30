@@ -67,9 +67,9 @@ namespace Multiplayer
         private void InitializeSpawns()
         {
             _redSpawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.RedSpawn));
-            _initialRedSpawns = _redSpawns;
+            _initialRedSpawns = new List<GameObject>(_redSpawns);
             _blueSpawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.BlueSpawn));
-            _initialBlueSpawns = _blueSpawns;
+            _initialBlueSpawns = new List<GameObject>(_blueSpawns);
         }
 
         private void AssignSpawn(int connectionID, Team team, bool respawn = false)
@@ -94,9 +94,13 @@ namespace Multiplayer
             switch (team)
             {
                 case Team.Blue:
+                    Debug.Log("Initial : " + _initialBlueSpawns.Count);
+                    Debug.Log("Respawn : " + _blueSpawns.Count);
                     randomIndex = Random.Range(0, _initialBlueSpawns.Count);
                     spawn = _initialBlueSpawns[randomIndex];
                     _initialBlueSpawns.Remove(spawn);
+                    Debug.Log("Initial : " + _initialBlueSpawns.Count);
+                    Debug.Log("Respawn : " + _blueSpawns.Count);
                     break;
                 case Team.Red:
                     randomIndex = Random.Range(0, _initialRedSpawns.Count);
