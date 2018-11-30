@@ -5,6 +5,9 @@ namespace CameraUtils
 {
     public class BackCamera : MonoBehaviour, IControllable
     {
+        [SerializeField] CameraSettings _cameraSettings;
+        [SerializeField] float _backCamZPosition;
+
         private CinemachineTransposer _transposer;
         private CinemachineVirtualCamera _cinemachine;
 
@@ -42,11 +45,11 @@ namespace CameraUtils
         {
             if (activate)
             {
-                _transposer.m_FollowOffset.z = 9;
+                _transposer.m_FollowOffset.z = _backCamZPosition;
             }
             else
             {
-                _transposer.m_FollowOffset.z = -8.5f;
+                _transposer.m_FollowOffset.z = _cameraSettings.BaseCamPosition.z;
             }
         }
     }
