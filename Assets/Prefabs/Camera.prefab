@@ -587,6 +587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e628df7af1c7c14f94b72e31e6bee2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _fov: 50
 --- !u!114 &114246949737927122
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -908,10 +909,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd27ffb076282ea4596eb31f02315847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpeedCamMovements: 200
-  transposer: {fileID: 0}
-  composer: {fileID: 0}
-  crosshairIonBeam: {fileID: 2800000, guid: 93f5d256aa561204eb5055ec10541980, type: 3}
+  Transposer: {fileID: 0}
+  Composer: {fileID: 0}
+  _speedCamMovements: 200
+  _ionBeamCamZExpand: 0
+  _ionBeamCamYExpand: 200
+  _cameraSettings: {fileID: 11400000, guid: ef13b57ca9ba4974abf886534b3fa9ea, type: 2}
+  _crosshairIonBeam: {fileID: 2800000, guid: 93f5d256aa561204eb5055ec10541980, type: 3}
 --- !u!114 &114707741726061332
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -923,6 +927,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bad0b0e57b234a34aa7e454d29b9d993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraSettings: {fileID: 11400000, guid: ef13b57ca9ba4974abf886534b3fa9ea, type: 2}
+  _backCamZPosition: 9
 --- !u!114 &114726647596660244
 MonoBehaviour:
   m_ObjectHideFlags: 1
