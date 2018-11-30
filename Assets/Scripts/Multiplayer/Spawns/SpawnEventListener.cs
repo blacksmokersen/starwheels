@@ -63,16 +63,5 @@ namespace Multiplayer
             myKart.transform.position = spawnPosition;
             myKart.transform.rotation = spawnRotation;
         }
-
-        /*
-        private IEnumerator AskForRespawnInXSecondsRoutine(float x, Color team, int id)
-        {
-            yield return new WaitForSeconds(x);
-            KartDestroyed kartDestroyedEvent = KartDestroyed.Create();
-            kartDestroyedEvent.Team = team;
-            kartDestroyedEvent.ConnectionID = id;
-            kartDestroyedEvent.Send();
-        }
-        */
     }
 }
