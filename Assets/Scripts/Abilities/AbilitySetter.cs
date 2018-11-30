@@ -7,6 +7,7 @@ namespace Abilities
     {
         [SerializeField] private GameObject _jumpingAbility;
         [SerializeField] private GameObject _tpBackAbility;
+        [SerializeField] private GameObject _cloakAbility;
 
         private GameObject[] _abilities;
         private PlayerSettings _playerSettings;
@@ -15,7 +16,7 @@ namespace Abilities
         {
             _playerSettings = Resources.Load<PlayerSettings>(Constants.Resources.PlayerSettings);
 
-            _abilities = new GameObject[2] { _jumpingAbility, _tpBackAbility };
+            _abilities = new GameObject[3] { _jumpingAbility, _tpBackAbility, _cloakAbility };
 
             for(int i = 0; i < _abilities.Length; i++)
             {
@@ -38,6 +39,13 @@ namespace Abilities
             foreach (var ability in _abilities)
                 ability.SetActive(false);
             _tpBackAbility.SetActive(true);
+        }
+
+        public void SetCloakAbility()
+        {
+            foreach (var ability in _abilities)
+                ability.SetActive(false);
+            _cloakAbility.SetActive(true);
         }
     }
 }

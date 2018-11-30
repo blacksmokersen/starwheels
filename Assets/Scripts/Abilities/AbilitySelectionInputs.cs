@@ -28,6 +28,11 @@ namespace Abilities
                 Debug.Log("T");
                 _abilitySetter.SetTPBackAbility();
             }
+            else if (Input.GetKeyDown(KeyCode.C))
+            {
+                Debug.Log("C");
+                _abilitySetter.SetCloakAbility();
+            }
         }
     }
 }
