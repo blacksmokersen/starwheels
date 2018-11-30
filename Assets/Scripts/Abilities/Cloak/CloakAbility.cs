@@ -37,7 +37,6 @@ namespace Abilities {
             if (_canUseAbility)
             {
                 Debug.Log("used cloak");
-              //  _cloakEffect.SetActive(true);
                 _animator.SetTrigger("ActivateCloakEffect");
                 StartCoroutine(AbilityCooldown(_cloakSettings.CooldownDuration));
             }
