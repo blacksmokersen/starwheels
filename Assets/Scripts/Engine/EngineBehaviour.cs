@@ -177,13 +177,13 @@ namespace Engine
             if (_groundCondition && !_groundCondition.Grounded) return rb;
             if (_curveDecVelocityValue > _curveAccVelocityValue)
             {
-                Debug.Log("CurveDecValue = " + _curveDecVelocityValue);
+              // Debug.Log("CurveDecValue = " + _curveDecVelocityValue);
               //  _curveAccVelocityValue = Settings.AccelerationCurveVelocity.Evaluate(_curveTime);
                 rb.AddRelativeForce(Vector3.forward * value * _curveDecVelocityValue, ForceMode.Force);
             }
             else
             {
-                Debug.Log("CurveAccValue = " + _curveAccVelocityValue);
+               // Debug.Log("CurveAccValue = " + _curveAccVelocityValue);
                // _curveAccVelocityValue = Settings.AccelerationCurveVelocity.Evaluate(_curveTime);
                 rb.AddRelativeForce(Vector3.forward * value * _curveAccVelocityValue, ForceMode.Force);
             }
