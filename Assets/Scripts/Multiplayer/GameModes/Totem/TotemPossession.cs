@@ -15,7 +15,8 @@ namespace GameModes.Totem
             if (!totem) return;
 
             var totemEntity = totem.GetComponent<BoltEntity>();
-            if (evnt.OwnerID == totemEntity.GetState<IItemState>().OwnerID) // The owner of the totem is throwing it
+
+            if (evnt.OwnerID == totemEntity.GetState<IItemState>().OwnerID || evnt.OwnerID == -1) // The owner of the totem is throwing it || or it is a totem reset
             {
                 totem.GetComponent<TotemBehaviour>().UnsetParent();
 
