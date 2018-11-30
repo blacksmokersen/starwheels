@@ -11,7 +11,8 @@ namespace Items
         {
             if (BoltNetwork.isServer && entity.isAttached)
             {
-                if (other.gameObject.CompareTag(Constants.Tag.CollisionHitBox))
+                if (other.gameObject.CompareTag(Constants.Tag.CollisionHitBox) &&
+                    other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.Totem) // It is an item collision (except totem)
                 {
                     BoltEntity itemEntity = other.GetComponentInParent<BoltEntity>();
                     IItemState itemState;

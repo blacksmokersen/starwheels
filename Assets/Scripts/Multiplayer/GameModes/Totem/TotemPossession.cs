@@ -24,7 +24,8 @@ namespace GameModes.Totem
                     var kartThrowing = MyExtensions.KartExtensions.GetKartWithID(evnt.OwnerID);
                     if (kartThrowing)
                     {
-                        kartThrowing.GetComponentInChildren<ThrowableLauncher>().Throw(totemEntity.GetComponent<Throwable>(), Direction.Forward);
+                        Direction throwingDirection = evnt.ForwardDirection ? Direction.Forward : Direction.Backward;
+                        kartThrowing.GetComponentInChildren<ThrowableLauncher>().Throw(totemEntity.GetComponent<Throwable>(), throwingDirection);
                     }
                 }
             }
