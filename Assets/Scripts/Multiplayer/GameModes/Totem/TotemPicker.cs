@@ -57,6 +57,7 @@ namespace GameModes.Totem
         {
             TotemThrown totemThrownEvent = TotemThrown.Create();
             totemThrownEvent.OwnerID = state.OwnerID;
+            totemThrownEvent.ForwardDirection = Input.GetAxis(Constants.Input.UpAndDownAxis) >= 0f; // TO DO BETTER
             totemThrownEvent.Send();
         }
     }
