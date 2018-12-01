@@ -118,11 +118,13 @@ namespace Abilities.Jump
                     FirstJump();
                     _timeBetweenFirstAndSecondJump = StartCoroutine(TimeBetweenFirstAndSecondJump());
                 }
-                else if (!groundCondition.Grounded)
+                else if (_hasDoneFirstJump && !groundCondition.Grounded)
                 {
                     SecondJump(joystickValues);
-                    if (_timeBetweenFirstAndSecondJump != null) { }
-                    StopCoroutine(_timeBetweenFirstAndSecondJump);
+                    if (_timeBetweenFirstAndSecondJump != null)
+                    {
+                        StopCoroutine(_timeBetweenFirstAndSecondJump);
+                    }
                     StartCoroutine(Cooldown());
                 }
             }
