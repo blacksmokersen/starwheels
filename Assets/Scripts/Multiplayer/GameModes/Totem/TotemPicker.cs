@@ -14,7 +14,7 @@ namespace GameModes.Totem
 
         private void OnTriggerEnter(Collider other)
         {
-            if (BoltNetwork.isServer && other.CompareTag(Constants.Tag.Totem) && other.isTrigger) // Server sees a player collide with totem trigger
+            if (BoltNetwork.isServer && other.CompareTag(Constants.Tag.TotemPickup)) // Server sees a player collide with totem trigger
             {
                 var totemBehaviour = other.GetComponentInParent<TotemBehaviour>();
                 if (totemBehaviour.CanBePickedUp)

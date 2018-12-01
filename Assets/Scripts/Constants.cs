@@ -22,6 +22,7 @@
         public const string DiskItem = "Disk";
         public const string CollisionHitBox = "CollisionHitBox";
         public const string Totem = "Totem";
+        public const string TotemPickup = "TotemPickup";
     }
 
     // Inputs
