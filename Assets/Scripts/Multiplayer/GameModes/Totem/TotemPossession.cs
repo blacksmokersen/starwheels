@@ -12,11 +12,15 @@ namespace GameModes.Totem
         public override void OnEvent(TotemThrown evnt)
         {
             var totem = GameObject.FindGameObjectWithTag(Constants.Tag.Totem);
+            Debug.Log(totem.name);
             if (!totem) return;
 
             var totemEntity = totem.GetComponent<BoltEntity>();
 
-            if (evnt.OwnerID == totemEntity.GetState<IItemState>().OwnerID || evnt.OwnerID == -1) // The owner of the totem is throwing it || or it is a totem reset
+            if (evnt.OwnerID ==
+                totemEntity.GetState<IItemState>().
+                OwnerID ||
+                evnt.OwnerID == -1) // The owner of the totem is throwing it || or it is a totem reset
             {
                 totem.GetComponent<TotemBehaviour>().UnsetParent();
 
@@ -35,7 +39,7 @@ namespace GameModes.Totem
         public override void OnEvent(TotemPicked evnt)
         {
             var totem = GameObject.FindGameObjectWithTag(Constants.Tag.Totem);
-            if (!totem) Debug.LogError("Totem was not found.");
+            if (!totem) return;
 
             var kart = MyExtensions.KartExtensions.GetKartWithID(evnt.NewOwnerID);
 
