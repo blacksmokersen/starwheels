@@ -6,7 +6,7 @@ namespace Abilities {
     {
         [SerializeField] private CloakSettings _cloakSettings;
         [SerializeField] private GameObject _cloakEffect;
-        [SerializeField] private GameObject _kartMeshes;
+        [SerializeField] private GameObject[] _kartMeshes;
         [SerializeField] private Animator _animator;
 
         private bool _canUseAbility = true;
@@ -37,7 +37,9 @@ namespace Abilities {
             if (_canUseAbility)
             {
                 Debug.Log("used cloak");
+
                 _animator.SetTrigger("ActivateCloakEffect");
+                StartCoroutine(CloakDuration(2));
                 StartCoroutine(AbilityCooldown(_cloakSettings.CooldownDuration));
             }
         }
@@ -47,6 +49,25 @@ namespace Abilities {
             _canUseAbility = false;
             yield return new WaitForSeconds(Duration);
             _canUseAbility = true;
+        }
+
+        private IEnumerator CloakDuration(float Duration)
+        {
+            yield return new WaitForSeconds(1);
+
+            foreach (GameObject mesh in _kartMeshes)
+            {
+                mesh.SetActive(false);
+            }
+            _cloakEffect.SetActive(true);
+
+            yield return new WaitForSeconds(Duration);
+
+            _cloakEffect.SetActive(false);
+            foreach (GameObject mesh in _kartMeshes)
+            {
+                mesh.SetActive(true);
+            }
         }
     }
 }
