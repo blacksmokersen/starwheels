@@ -29,10 +29,12 @@ namespace Items
                             {
                                 _imunityTarget = other.gameObject;
                                 _imunity = true;
+                                Debug.LogError("imunity true");
                             }
 
                             if(/*other.gameObject == _imunityTarget &&*/ !_imunity)
                             {
+                                Debug.LogError("kill");
                                 PlayerHit playerHitEvent = PlayerHit.Create();
                                 playerHitEvent.PlayerEntity = entity;
                                 playerHitEvent.Send();
@@ -77,6 +79,7 @@ namespace Items
                         {
                             if (other.gameObject == _imunityTarget)
                             {
+                                Debug.LogError("imunity false");
                                 _imunity = false;
                             }
                         }
