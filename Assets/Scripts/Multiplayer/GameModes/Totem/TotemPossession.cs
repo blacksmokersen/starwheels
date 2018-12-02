@@ -54,5 +54,16 @@ namespace GameModes.Totem
                 totem.transform.SetParent(null);
             }
         }
+
+        public override void OnEvent(PlayerHit evnt)
+        {
+            var totem = GameObject.FindGameObjectWithTag(Constants.Tag.Totem);
+            var kartOwnerID = evnt.PlayerEntity.GetState<IKartState>().OwnerID;
+
+            if (totem.GetComponent<BoltEntity>().GetState<IItemState>().OwnerID == kartOwnerID)
+            {
+                totem.GetComponent<TotemBehaviour>().UnsetParent();
+            }
+        }
     }
 }
