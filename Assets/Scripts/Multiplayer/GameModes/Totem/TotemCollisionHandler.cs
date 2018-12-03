@@ -33,7 +33,7 @@ namespace GameModes.Totem
 
         private void LoseLife()
         {
-            if (OnLifeLost != null) OnLifeLost.Invoke(state.Lives);
+            if (OnLifeLost != null) OnLifeLost.Invoke(state.Lives); // Local event
 
             if (entity.isControllerOrOwner)
             {
