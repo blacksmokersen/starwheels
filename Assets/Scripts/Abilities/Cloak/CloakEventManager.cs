@@ -10,20 +10,19 @@ namespace Abilities
         [SerializeField] private GameObject _cloakAbilityGO;
         [SerializeField] private CloakAbility _cloakAbility;
 
-        /*
+
         public override void OnEvent(CloakAbilityEvent evnt)
         {
             var entity = GetComponentInParent<BoltEntity>();
-            Debug.LogError("onEventCloak");
-            if (entity == evnt.BoltEntity)
+
+            if (entity == evnt.Entity)
             {
                 _cloakAbilityGO.SetActive(true);
-                Debug.LogError("onEventCloakINIF");
-                cloakAbility.CanUseAbility = evnt.CanUseAbility;
-             //   cloakAbility.Entity = evnt.BoltEntity;
-                cloakAbility.Use();
+                _cloakAbility.CanUseAbility = evnt.ActivationBool;
+                _cloakAbility.BoltEntity = evnt.Entity;
+                _cloakAbility.Use();
             }
         }
-        */
+
     }
 }

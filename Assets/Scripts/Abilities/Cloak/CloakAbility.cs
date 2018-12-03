@@ -13,7 +13,8 @@ namespace Abilities
         [SerializeField] private Animator _animator;
 
         public bool CanUseAbility = true;
-      //  public BoltEntity Entity;
+        public BoltEntity BoltEntity;
+        //  public BoltEntity Entity;
 
         public override void SimulateController()
         {
@@ -27,7 +28,7 @@ namespace Abilities
             {
                 if (CanUseAbility)
                 {
-                  //  SendCloakEvent();
+                    SendCloakEvent();
                 }
             }
         }
@@ -37,7 +38,7 @@ namespace Abilities
             Debug.Log("used cloak");
 
             _animator.SetTrigger("ActivateCloakEffect");
-            StartCoroutine(CloakDuration(2));
+            StartCoroutine(CloakDuration(_cloakSettings.CloakDuration));
             StartCoroutine(AbilityCooldown(_cloakSettings.CooldownDuration));
         }
 
@@ -56,7 +57,7 @@ namespace Abilities
             {
                 mesh.SetActive(false);
             }
-            // if(GetComponentInParent<BoltEntity>() == entity)
+            //  if (GetComponentInParent<BoltEntity>() == BoltEntity)
             _cloakEffect.SetActive(true);
 
             yield return new WaitForSeconds(Duration);
@@ -67,15 +68,15 @@ namespace Abilities
                 mesh.SetActive(true);
             }
         }
-        /*
+
         public void SendCloakEvent()
         {
             Debug.Log("1");
             var cloakEvent = CloakAbilityEvent.Create();
-            cloakEvent.CanUseAbility = CanUseAbility;
-            cloakEvent.BoltEntity = entity;
+            cloakEvent.ActivationBool = CanUseAbility;
+            cloakEvent.Entity = entity;
             cloakEvent.Send();
         }
-        */
+
     }
 }
