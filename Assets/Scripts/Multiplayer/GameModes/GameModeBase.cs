@@ -10,7 +10,7 @@ namespace GameModes
     public enum GameMode { None, ClassicBattle, BankRobbery, GoldenTotem }
 
     [BoltGlobalBehaviour(BoltNetworkModes.Server)]
-    public class GameModeBase : GlobalEventListener
+    public abstract class GameModeBase : GlobalEventListener
     {
         public static GameMode CurrentGameMode;
 
@@ -33,6 +33,7 @@ namespace GameModes
 
         public override void SceneLoadLocalDone(string scene)
         {
+            Debug.Log("Hello");
             ResetGame();
         }
 
