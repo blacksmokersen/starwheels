@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using UnityEngine;
+using System;
+using Bolt;
 
-namespace Abilities {
+namespace Abilities
+{
     public class CloakAbility : AbilitiesBehaviour, IControllable
     {
         [SerializeField] private CloakSettings _cloakSettings;
@@ -9,13 +12,8 @@ namespace Abilities {
         [SerializeField] private GameObject[] _kartMeshes;
         [SerializeField] private Animator _animator;
 
-        private bool _canUseAbility = true;
-
-
-        private void Awake()
-        {
-
-        }
+        public bool CanUseAbility = true;
+      //  public BoltEntity Entity;
 
         public override void SimulateController()
         {
@@ -27,28 +25,27 @@ namespace Abilities {
         {
             if (Input.GetButtonDown(Constants.Input.UseAbility))
             {
-                Use();
+                if (CanUseAbility)
+                {
+                  //  SendCloakEvent();
+                }
             }
         }
 
-
-        private void Use()
+        public void Use()
         {
-            if (_canUseAbility)
-            {
-                Debug.Log("used cloak");
+            Debug.Log("used cloak");
 
-                _animator.SetTrigger("ActivateCloakEffect");
-                StartCoroutine(CloakDuration(2));
-                StartCoroutine(AbilityCooldown(_cloakSettings.CooldownDuration));
-            }
+            _animator.SetTrigger("ActivateCloakEffect");
+            StartCoroutine(CloakDuration(2));
+            StartCoroutine(AbilityCooldown(_cloakSettings.CooldownDuration));
         }
 
         private IEnumerator AbilityCooldown(float Duration)
         {
-            _canUseAbility = false;
+            CanUseAbility = false;
             yield return new WaitForSeconds(Duration);
-            _canUseAbility = true;
+            CanUseAbility = true;
         }
 
         private IEnumerator CloakDuration(float Duration)
@@ -59,6 +56,7 @@ namespace Abilities {
             {
                 mesh.SetActive(false);
             }
+            // if(GetComponentInParent<BoltEntity>() == entity)
             _cloakEffect.SetActive(true);
 
             yield return new WaitForSeconds(Duration);
@@ -69,5 +67,15 @@ namespace Abilities {
                 mesh.SetActive(true);
             }
         }
+        /*
+        public void SendCloakEvent()
+        {
+            Debug.Log("1");
+            var cloakEvent = CloakAbilityEvent.Create();
+            cloakEvent.CanUseAbility = CanUseAbility;
+            cloakEvent.BoltEntity = entity;
+            cloakEvent.Send();
+        }
+        */
     }
 }
