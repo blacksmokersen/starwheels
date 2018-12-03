@@ -43,6 +43,11 @@ namespace GameModes.Totem
             }
         }
 
+        public override void Detached()
+        {
+            entity.ReleaseControl();
+        }
+
         // PUBLIC
 
         public void SetParent(Transform parent, int newOwnerID)
@@ -89,7 +94,7 @@ namespace GameModes.Totem
 
         private void OnDestroy()
         {
-            entity.ReleaseControl();
+            transform.SetParent(null);
         }
 
         private IEnumerator SlowdownRoutine()
