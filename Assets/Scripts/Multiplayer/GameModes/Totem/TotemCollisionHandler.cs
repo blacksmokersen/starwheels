@@ -41,6 +41,10 @@ namespace GameModes.Totem
 
                 FindObjectOfType<TotemSpawner>().RespawnTotem();
 
+                TotemWallHit totemWallHitEvent = TotemWallHit.Create();
+                totemWallHitEvent.Team = TeamsColors.GetColorFromTeam(OwnerTeam);
+                totemWallHitEvent.Send();
+
                 if (state.Lives <= 0)
                 {
                     GameOver gameOverEvent = GameOver.Create();
