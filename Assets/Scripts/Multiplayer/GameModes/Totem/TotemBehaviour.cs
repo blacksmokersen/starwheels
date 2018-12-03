@@ -87,6 +87,11 @@ namespace GameModes.Totem
 
         // PRIVATE
 
+        private void OnDestroy()
+        {
+            entity.ReleaseControl();
+        }
+
         private IEnumerator SlowdownRoutine()
         {
             yield return new WaitForSeconds(1.5f);
