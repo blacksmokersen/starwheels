@@ -1,25 +1,17 @@
 ﻿using UnityEngine;
-using Bolt;
 
 namespace GameModes.Totem
 {
     [DisallowMultipleComponent]
-    public class TotemReleaseOnHit : EntityBehaviour<IKartState>
+    public class TotemReleaseOnHit : MonoBehaviour
     {
-        [SerializeField] private Health.Health _health;
-
-        private void Start()
+        private void OnDestroy()
         {
-            _health.OnHealthLoss.AddListener((i) => ReleaseTotem());
-        }
-
-        private void ReleaseTotem()
-        {
-            var totem = FindObjectOfType<TotemBehaviour>();
-
-            if (totem.GetComponent<BoltEntity>().GetState<IItemState>().OwnerID == state.OwnerID) // The owner of the totem was hit
+            if (transform.childCount == 1) // Totem is set
             {
-                totem.UnsetParent();
+                Debug.LogError("Unsetting totem");
+                var totem = transform.GetChild(0);
+                totem.GetComponent<TotemBehaviour>().UnsetParent();
             }
         }
     }

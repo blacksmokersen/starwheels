@@ -26,14 +26,13 @@ namespace Multiplayer
 
         public override void BoltStartDone() // Used for In-Editor tests
         {
-            RoomProtocolToken roomProtocolToken = new RoomProtocolToken()
+            RoomProtocolToken _roomProtocolToken = new RoomProtocolToken()
             {
                 Gamemode = _gameMode,
                 PlayersCount = 1,
                 RoomInfo = "Solo"
             };
-
-            InstantiateKart(transform.position, transform.rotation, roomProtocolToken); // Scene specific position
+            InstantiateKart(transform.position, transform.rotation, _roomProtocolToken); // Scene specific position
         }
 
         public override void OnEvent(PlayerSpawn evnt)

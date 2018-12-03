@@ -8,6 +8,7 @@ namespace GameModes.Totem
     public class TotemBehaviour : EntityBehaviour<IItemState>
     {
         public bool CanBePickedUp = true;
+        public int LocalOwnerID = -1;
 
         [Header("Slowdown Settings")]
         [SerializeField] private float _slowdownFactor = 0.98f;
@@ -15,6 +16,7 @@ namespace GameModes.Totem
 
         private Rigidbody _rb;
         private bool _isSlowingDown = false;
+        private Transform _parent;
 
         // CORE
 
@@ -37,29 +39,34 @@ namespace GameModes.Totem
 
         public override void SimulateOwner()
         {
-            if (transform.parent == null)
+            if (_parent == null)
             {
                 Slowdown();
+            }
+            else
+            {
+                transform.position = _parent.position;
             }
         }
 
         public override void Detached()
         {
-            entity.ReleaseControl();
+            Debug.LogError("Totem detached from game.");
         }
 
         // PUBLIC
 
         public void SetParent(Transform parent, int newOwnerID)
         {
-            if(entity.isOwner) state.OwnerID = newOwnerID;
+            if(entity.isOwner && entity.isAttached) state.OwnerID = newOwnerID;
 
+            LocalOwnerID = newOwnerID;
             entity.TakeControl();
-            transform.SetParent(parent);
-            transform.localPosition = Vector3.zero;
+            _parent = parent;
             FreezeTotem(true);
             _isSlowingDown = false;
             StartCoroutine(AntiPickSpamRoutine());
+            Debug.Log("Set totem locally.");
         }
 
         public void UnsetParent()
@@ -68,10 +75,11 @@ namespace GameModes.Totem
             else entity.ReleaseControl();
 
             CanBePickedUp = true;
-            transform.SetParent(null);
+            _parent = null;
             FreezeTotem(false);
             StopAllCoroutines();
             _isSlowingDown = true;
+            Debug.Log("Unset totem locally.");
         }
 
         public void FreezeTotem(bool b)
@@ -91,11 +99,6 @@ namespace GameModes.Totem
         }
 
         // PRIVATE
-
-        private void OnDestroy()
-        {
-            transform.SetParent(null);
-        }
 
         private IEnumerator SlowdownRoutine()
         {
