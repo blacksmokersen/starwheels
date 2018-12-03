@@ -230,6 +230,7 @@ namespace Items
                         GreenItem.transform.GetChild(1).gameObject.SetActive(false); //Activating the back green shield on the hierarchie
 
                         GreenItem.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.SetActive(false); //Activating the disk on the hierarchie
+                        GreenItem.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.SetActive(false); //Activating the Mine on the hierarchie
                         break;
 
                     case "Mine":
@@ -247,6 +248,7 @@ namespace Items
                         GreenItem.transform.GetChild(1).gameObject.SetActive(false); //Activating the back green shield on the hierarchie
 
                         GreenItem.transform.GetChild(0).gameObject.transform.GetChild(2).gameObject.SetActive(false); //Activating the Guile on the hierarchie
+                        GreenItem.transform.GetChild(1).gameObject.transform.GetChild(2).gameObject.SetActive(false); //Activating the Mine on the hierarchie
                         break;
 
                     case "Rocket":
@@ -266,10 +268,11 @@ namespace Items
 
         private void CheckAxis()
         {
-            if(Mathf.Abs(Input.GetAxis(Constants.Input.UpAndDownAxis)) > 0.3)
+            if(Mathf.Abs(Input.GetAxis(Constants.Input.UpAndDownAxis)) != 0.3)
             {
-                CheckDirection.Invoke();
-            }
+            CheckDirection.Invoke();
+
+        }
         }
     }
 }
