@@ -8,7 +8,6 @@ namespace GameModes.Totem
     public class TotemPicker : EntityBehaviour<IKartState> , IControllable
     {
         [SerializeField] private Inventory _inventory;
-        [SerializeField] private ThrowPositions _throwPositions;
 
         // MONOBEHAVIOUR
 

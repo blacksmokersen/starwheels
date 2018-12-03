@@ -7,6 +7,8 @@ namespace GameModes.Totem
     [RequireComponent(typeof(TotemPicker))]
     public class TotemPossession : GlobalEventListener
     {
+        [SerializeField] private Transform _totemSlot;
+
         // BOLT
 
         public override void OnEvent(TotemThrown evnt)
@@ -45,8 +47,7 @@ namespace GameModes.Totem
 
             if (kart)
             {
-                var backPosition = kart.GetComponentInChildren<ThrowPositions>().BackPosition;
-                totem.GetComponent<TotemBehaviour>().SetParent(backPosition, evnt.NewOwnerID);
+                totem.GetComponent<TotemBehaviour>().SetParent(_totemSlot, evnt.NewOwnerID);
             }
             else
             {
@@ -57,12 +58,15 @@ namespace GameModes.Totem
 
         public override void OnEvent(PlayerHit evnt)
         {
-            var totem = GameObject.FindGameObjectWithTag(Constants.Tag.Totem);
             var kartOwnerID = evnt.PlayerEntity.GetState<IKartState>().OwnerID;
+            var totemBehaviour = GameObject.FindGameObjectWithTag(Constants.Tag.Totem).GetComponent<TotemBehaviour>();
 
-            if (totem.GetComponent<BoltEntity>().GetState<IItemState>().OwnerID == kartOwnerID)
+            Debug.Log("Kart Owner ID  : " + kartOwnerID);
+            Debug.Log("Local totem Owner ID  : " + totemBehaviour.LocalOwnerID);
+
+            if (kartOwnerID == totemBehaviour.LocalOwnerID)
             {
-                totem.GetComponent<TotemBehaviour>().UnsetParent();
+                totemBehaviour.UnsetParent();
             }
         }
     }
