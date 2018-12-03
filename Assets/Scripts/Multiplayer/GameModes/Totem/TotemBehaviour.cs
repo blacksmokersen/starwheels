@@ -39,13 +39,13 @@ namespace GameModes.Totem
 
         public override void SimulateOwner()
         {
-            if (_parent == null)
+            if (_parent != null)
             {
-                Slowdown();
+                transform.position = _parent.position;
             }
             else
             {
-                transform.position = _parent.position;
+                Slowdown();
             }
         }
 
@@ -58,7 +58,7 @@ namespace GameModes.Totem
 
         public void SetParent(Transform parent, int newOwnerID)
         {
-            if(entity.isOwner && entity.isAttached) state.OwnerID = newOwnerID;
+            if(entity.isOwner) state.OwnerID = newOwnerID;
 
             LocalOwnerID = newOwnerID;
             entity.TakeControl();
@@ -74,6 +74,7 @@ namespace GameModes.Totem
             if (entity.isOwner) state.OwnerID = -1;
             else entity.ReleaseControl();
 
+            LocalOwnerID = -1;
             CanBePickedUp = true;
             _parent = null;
             FreezeTotem(false);

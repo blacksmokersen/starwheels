@@ -7,8 +7,6 @@ namespace GameModes.Totem
     [RequireComponent(typeof(TotemPicker))]
     public class TotemPossession : GlobalEventListener
     {
-        [SerializeField] private Transform _totemSlot;
-
         // BOLT
 
         public override void OnEvent(TotemThrown evnt)
@@ -47,7 +45,9 @@ namespace GameModes.Totem
 
             if (kart)
             {
-                totem.GetComponent<TotemBehaviour>().SetParent(_totemSlot, evnt.NewOwnerID);
+                var newOwnerKart = MyExtensions.KartExtensions.GetKartWithID(evnt.NewOwnerID);
+                var kartTotemSlot = newOwnerKart.GetComponentInChildren<TotemSlot>().transform;
+                totem.GetComponent<TotemBehaviour>().SetParent(kartTotemSlot, evnt.NewOwnerID);
             }
             else
             {
