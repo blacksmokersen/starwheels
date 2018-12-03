@@ -22,19 +22,19 @@ namespace Items
 
                     if (itemEntity.isAttached && itemEntity.TryFindState<IItemState>(out itemState)) // It is a concrete item
                     {
-                        if (itemState.OwnerID == state.OwnerID)
+                        if (itemState.OwnerID == state.OwnerID || itemState.OwnerID == 0)
                         {
 
                             if (!_imunity && _imunityTarget != other.gameObject)
                             {
                                 _imunityTarget = other.gameObject;
                                 _imunity = true;
-                                Debug.LogError("imunity true");
+                             //   Debug.LogError("imunity true");
                             }
 
                             if(/*other.gameObject == _imunityTarget &&*/ !_imunity)
                             {
-                                Debug.LogError("kill");
+                             //   Debug.LogError("kill");
                                 PlayerHit playerHitEvent = PlayerHit.Create();
                                 playerHitEvent.PlayerEntity = entity;
                                 playerHitEvent.Send();
@@ -77,9 +77,9 @@ namespace Items
                     {
                         if(itemState.OwnerID == state.OwnerID)
                         {
-                            if (other.gameObject == _imunityTarget)
+                            if (other.gameObject == _imunityTarget || itemState.OwnerID == 0 || itemState.OwnerID == 2)
                             {
-                                Debug.LogError("imunity false");
+                              //  Debug.LogError("imunity false");
                                 _imunity = false;
                             }
                         }
