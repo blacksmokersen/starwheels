@@ -10,7 +10,6 @@ namespace Abilities
         [SerializeField] private GameObject _cloakAbilityGO;
         [SerializeField] private CloakAbility _cloakAbility;
 
-
         public override void OnEvent(CloakAbilityEvent evnt)
         {
             var entity = GetComponentInParent<BoltEntity>();
@@ -23,6 +22,5 @@ namespace Abilities
                 _cloakAbility.Use();
             }
         }
-
     }
 }
