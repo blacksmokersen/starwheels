@@ -33,13 +33,17 @@ namespace GameModes.Totem
 
         private void LoseLife()
         {
-            if (OnLifeLost != null) OnLifeLost.Invoke(state.Lives);
+            if (OnLifeLost != null) OnLifeLost.Invoke(state.Lives); // Local event
 
             if (entity.isControllerOrOwner)
             {
                 state.Lives--;
 
                 FindObjectOfType<TotemSpawner>().RespawnTotem();
+
+                TotemWallHit totemWallHitEvent = TotemWallHit.Create();
+                totemWallHitEvent.Team = TeamsColors.GetColorFromTeam(OwnerTeam);
+                totemWallHitEvent.Send();
 
                 if (state.Lives <= 0)
                 {

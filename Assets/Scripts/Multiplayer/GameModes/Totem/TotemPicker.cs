@@ -8,13 +8,12 @@ namespace GameModes.Totem
     public class TotemPicker : EntityBehaviour<IKartState> , IControllable
     {
         [SerializeField] private Inventory _inventory;
-        [SerializeField] private ThrowPositions _throwPositions;
 
         // MONOBEHAVIOUR
 
         private void OnTriggerEnter(Collider other)
         {
-            if (BoltNetwork.isServer && other.CompareTag(Constants.Tag.Totem) && other.isTrigger) // Server sees a player collide with totem trigger
+            if (BoltNetwork.isServer && other.CompareTag(Constants.Tag.TotemPickup)) // Server sees a player collide with totem trigger
             {
                 var totemBehaviour = other.GetComponentInParent<TotemBehaviour>();
                 if (totemBehaviour.CanBePickedUp)
