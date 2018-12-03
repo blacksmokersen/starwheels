@@ -12,6 +12,9 @@ namespace Abilities
         [SerializeField] private GameObject[] _kartMeshes;
         [SerializeField] private Animator _animator;
 
+        [SerializeField] private AudioSource _useCloakSound;
+        [SerializeField] private AudioSource _endCloakSound;
+
         public bool CanUseAbility = true;
         public BoltEntity BoltEntity;
         //  public BoltEntity Entity;
@@ -52,7 +55,7 @@ namespace Abilities
         private IEnumerator CloakDuration(float Duration)
         {
             yield return new WaitForSeconds(1);
-
+            MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useCloakSound);
             foreach (GameObject mesh in _kartMeshes)
             {
                 mesh.SetActive(false);
@@ -63,6 +66,7 @@ namespace Abilities
             yield return new WaitForSeconds(Duration);
 
             _cloakEffect.SetActive(false);
+            MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_endCloakSound);
             foreach (GameObject mesh in _kartMeshes)
             {
                 mesh.SetActive(true);
@@ -71,7 +75,6 @@ namespace Abilities
 
         public void SendCloakEvent()
         {
-            Debug.Log("1");
             var cloakEvent = CloakAbilityEvent.Create();
             cloakEvent.ActivationBool = CanUseAbility;
             cloakEvent.Entity = entity;
