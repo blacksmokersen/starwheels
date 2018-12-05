@@ -1,14 +1,11 @@
 ﻿using UnityEngine;
 using Bolt;
 using ThrowingSystem;
-using Items;
 
 namespace GameModes.Totem
 {
     public class TotemPicker : EntityBehaviour<IKartState> , IControllable
     {
-        [SerializeField] private Inventory _inventory;
-
         // MONOBEHAVIOUR
 
         private void OnTriggerEnter(Collider other)
@@ -19,6 +16,7 @@ namespace GameModes.Totem
                 if (totemBehaviour.CanBePickedUp)
                 {
                     TotemPicked totemPickedEvent = TotemPicked.Create();
+                    totemPickedEvent.KartEntity = entity;
                     totemPickedEvent.NewOwnerID = state.OwnerID;
                     totemPickedEvent.Send();
                 }
@@ -46,15 +44,10 @@ namespace GameModes.Totem
 
         // PRIVATE
 
-        private void SetTotem(GameObject totem)
-        {
-            _inventory.StopAllCoroutines(); // Stop any anti-spam routine
-            _inventory.CanUseItem = false;
-        }
-
         private void UseTotem()
         {
             TotemThrown totemThrownEvent = TotemThrown.Create();
+            totemThrownEvent.KartEntity = entity;
             totemThrownEvent.OwnerID = state.OwnerID;
             totemThrownEvent.ForwardDirection = FindObjectOfType<ThrowableLauncher>().GetThrowingDirection() != Direction.Backward ; // TO DO BETTER
             totemThrownEvent.Send();
