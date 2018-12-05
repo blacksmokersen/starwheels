@@ -20,12 +20,12 @@ namespace Items
 
         private string _emissiveToDisplay;
         private int _itemCountToDisplay;
-        private Inventory _inventory;
+        //private Inventory _inventory;
 
 
         public void Awake()
         {
-            _inventory = GetComponent<Inventory>();
+            //_inventory = GetComponent<Inventory>();
             Emissive.GetComponent<MeshRenderer>();
 
         }

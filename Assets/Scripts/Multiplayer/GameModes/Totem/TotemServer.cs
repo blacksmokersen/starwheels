@@ -11,7 +11,7 @@ namespace GameModes.Totem
         public override void OnEvent(TotemWallHit evnt)
         {
             Debug.Log("TotemWallHit event received.");
-            var team = TeamsColors.GetTeamFromColor(evnt.Team);
+            var team = evnt.Team.GetTeam();
             IncreaseScore(team);
         }
     }

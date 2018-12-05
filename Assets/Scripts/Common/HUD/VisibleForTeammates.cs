@@ -27,8 +27,8 @@ namespace Common.HUD
 
         public override void Attached()
         {
-            var myTeam = TeamsColors.GetTeamFromColor(_playerSettings.Team);
-            var thisKartTeam = TeamsColors.GetTeamFromColor(state.Team);
+            var myTeam = _playerSettings.TeamColor.GetTeam();
+            var thisKartTeam = state.Team.GetTeam();
 
             if (myTeam == thisKartTeam)
             {

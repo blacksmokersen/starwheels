@@ -1,4 +1,7 @@
-﻿public static class TeamsExtensions
+﻿using UnityEngine;
+using Multiplayer.Teams;
+
+public static class TeamsExtensions
 {
     public static Team OppositeTeam(this Team team)
     {
@@ -11,5 +14,15 @@
             default:
                 return Team.None;
         }
+    }
+
+    public static Team GetTeam(this Color color)
+    {
+        return TeamsColors.GetTeamFromColor(color);
+    }
+
+    public static Color GetColor(this Team team)
+    {
+        return TeamsColors.TeamToColor[team];
     }
 }

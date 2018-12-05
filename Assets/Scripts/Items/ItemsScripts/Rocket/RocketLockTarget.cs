@@ -1,15 +1,16 @@
 ﻿using System.Collections;
 using UnityEngine;
 using Multiplayer;
+using Multiplayer.Teams;
+using Bolt;
 
 namespace Items
 {
     [RequireComponent(typeof(Collider))]
-    public class RocketLockTarget : MonoBehaviour
+    public class RocketLockTarget : EntityBehaviour<IItemState>
     {
         [Header("Targeting system")]
         public float SecondsBeforeSearchingTarget;
-        public Ownership Ownership;
         public GameObject ActualTarget = null;
 
         private float _actualTargetDistance = Mathf.Infinity;
@@ -25,7 +26,7 @@ namespace Items
             if (other.gameObject.tag == Constants.Tag.KartHealthHitBox && _activated && ActualTarget == null)
             {
                 var otherPlayer = other.GetComponentInParent<Player>();
-                if (Ownership.IsNotSameTeam(otherPlayer))
+                if (state.Team != otherPlayer.Team.GetColor())
                 {
                     ActualTarget = other.gameObject;
                     StartCoroutine(GetComponentInParent<RocketBehaviour>().StartQuickTurn());
@@ -38,7 +39,7 @@ namespace Items
             if (other.gameObject.tag == Constants.Tag.KartHealthHitBox && _activated)
             {
                 var otherPlayer = other.GetComponentInParent<Player>();
-                if (Ownership.IsNotSameTeam(otherPlayer))
+                if (state.Team != otherPlayer.Team.GetColor())
                 {
                     if (IsKartIsCloserThanActualTarget(other.gameObject) || ActualTarget == null)
                     {
