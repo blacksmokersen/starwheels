@@ -13,14 +13,10 @@
         public const string RedSpawn = "RedSpawn";
         public const string BlueSpawn = "BlueSpawn";
         public const string Kart = "Kart";
-        public const string KartTrigger = "KartTrigger";
-        public const string KartCollider = "KartCollider";
+        public const string KartHealthHitBox = "Health";
+        public const string ItemCollisionHitBox = "CollisionHitBox";
         public const string ItemBox = "ItemBox";
-        public const string GroundItem = "GroundItem";
-        public const string GuileItem = "GuileItem";
-        public const string RocketItem = "Rocket";
-        public const string DiskItem = "Disk";
-        public const string CollisionHitBox = "CollisionHitBox";
+        public const string IonBeamCamIgnore = "IonBeamCamIgnore";
         public const string Totem = "Totem";
         public const string TotemPickup = "TotemPickup";
     }
@@ -30,7 +26,6 @@
     {
         public const string Accelerate = "Accelerate";
         public const string Decelerate = "Decelerate";
-        public const string Fire = "Fire";
         public const string TurnAxis = "Turn";
         public const string UpAndDownAxis = "UpAndDown";
         public const string Drift = "Drift";
@@ -38,8 +33,6 @@
         public const string UseItemForward = "ItemForward";
         public const string UseItemBackward = "ItemBackward";
         public const string UseAbility = "Ability";
-        public const string ItemAimHorinzontal = "RightJoystickHorizontal";
-        public const string ItemAimVertical = "RightJoystickVertical";
         public const string BackCamera = "ClickLeftJoystick";
         public const string TurnCamera = "RightJoystickHorizontal";
         public const string ResetCamera = "ClickRightJoystick";
@@ -51,8 +44,6 @@
     public class Scene
     {
         public const string MainMenu = "Menu";
-        public const string FortBlock = "FortBlock";
-        public const string Pillars = "Pillars";
     }
 
     // Prefabs

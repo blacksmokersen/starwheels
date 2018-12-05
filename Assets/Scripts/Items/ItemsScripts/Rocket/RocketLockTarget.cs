@@ -22,7 +22,7 @@ namespace Items
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == Constants.Tag.KartTrigger && _activated && ActualTarget == null)
+            if (other.gameObject.tag == Constants.Tag.KartHealthHitBox && _activated && ActualTarget == null)
             {
                 var otherPlayer = other.GetComponentInParent<Player>();
                 if (Ownership.IsNotSameTeam(otherPlayer))
@@ -35,7 +35,7 @@ namespace Items
 
         private void OnTriggerStay(Collider other)
         {
-            if (other.gameObject.tag == Constants.Tag.KartTrigger && _activated)
+            if (other.gameObject.tag == Constants.Tag.KartHealthHitBox && _activated)
             {
                 var otherPlayer = other.GetComponentInParent<Player>();
                 if (Ownership.IsNotSameTeam(otherPlayer))
