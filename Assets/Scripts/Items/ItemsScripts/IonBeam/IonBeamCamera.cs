@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using Bolt;
+using CameraUtils;
 
 public class IonBeamCamera : EntityBehaviour
 {
+    [HideInInspector] public CinemachineTransposer Transposer;
+    [HideInInspector] public CinemachineComposer Composer;
 
-    public float SpeedCamMovements;
+    [SerializeField] private float _speedCamMovements;
+    [SerializeField] private float _ionBeamCamZExpand;
+    [SerializeField] private float _ionBeamCamYExpand;
+    [SerializeField] CameraSettings _cameraSettings;
+    [SerializeField] private Texture2D _crosshairIonBeam;
 
-    [HideInInspector] public CinemachineTransposer transposer;
-    [HideInInspector] public CinemachineComposer composer;
-
-    [SerializeField] private Texture2D crosshairIonBeam;
-    private CinemachineVirtualCamera cinemachine;
-    private Coroutine cameraIonBeamBehaviour;
+    private CinemachineVirtualCamera _cinemachine;
+    private Coroutine _cameraIonBeamBehaviour;
 
     private float _currentTimer;
     private bool _showCrosshair;
@@ -24,32 +27,32 @@ public class IonBeamCamera : EntityBehaviour
 
     private void Awake()
     {
-        cinemachine = GetComponent<CinemachineVirtualCamera>();
-        transposer = cinemachine.GetCinemachineComponent<CinemachineTransposer>();
-        composer = cinemachine.GetCinemachineComponent<CinemachineComposer>();
+        _cinemachine = GetComponent<CinemachineVirtualCamera>();
+        Transposer = _cinemachine.GetCinemachineComponent<CinemachineTransposer>();
+        Composer = _cinemachine.GetCinemachineComponent<CinemachineComposer>();
     }
 
     //PUBLIC
 
     public void IonBeamCameraControls(float horizontal, float vertical)
     {
-        transposer.m_FollowOffset.z += horizontal * SpeedCamMovements * Time.deltaTime;
-        transposer.m_FollowOffset.x += vertical * SpeedCamMovements * Time.deltaTime;
+        Transposer.m_FollowOffset.z += horizontal * _speedCamMovements * Time.deltaTime;
+        Transposer.m_FollowOffset.x += vertical * _speedCamMovements * Time.deltaTime;
     }
 
     public void IonBeamCameraBehaviour(bool direction)
     {
         if (direction)
         {
-            if (cameraIonBeamBehaviour != null)
-                StopCoroutine(cameraIonBeamBehaviour);
-            cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamExpand(0, 200, 1f));
+            if (_cameraIonBeamBehaviour != null)
+                StopCoroutine(_cameraIonBeamBehaviour);
+            _cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamExpand(_ionBeamCamZExpand, _ionBeamCamYExpand, 1f));
         }
         else
         {
-            if (cameraIonBeamBehaviour != null)
-                StopCoroutine(cameraIonBeamBehaviour);
-            cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(-8.5f, 3, 0.5f));
+            if (_cameraIonBeamBehaviour != null)
+                StopCoroutine(_cameraIonBeamBehaviour);
+            _cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(_cameraSettings.BaseCamPosition.z, _cameraSettings.BaseCamPosition.y, 0.5f));
         }
     }
 
@@ -64,9 +67,9 @@ public class IonBeamCamera : EntityBehaviour
     {
         if (_showCrosshair)
         {
-            float xMin = (Screen.width / 2) - (crosshairIonBeam.width / 2);
-            float yMin = (Screen.height / 2) - (crosshairIonBeam.height / 2);
-            GUI.DrawTexture(new Rect(xMin, yMin, crosshairIonBeam.width, crosshairIonBeam.height), crosshairIonBeam);
+            float xMin = (Screen.width / 2) - (_crosshairIonBeam.width / 2);
+            float yMin = (Screen.height / 2) - (_crosshairIonBeam.height / 2);
+            GUI.DrawTexture(new Rect(xMin, yMin, _crosshairIonBeam.width, _crosshairIonBeam.height), _crosshairIonBeam);
         }
     }
 
@@ -92,21 +95,21 @@ public class IonBeamCamera : EntityBehaviour
 
     IEnumerator CameraIonBeamExpand(float endValueZ, float endValueY, float expandDuration)
     {
-        float startDynamicCamValueZ = transposer.m_FollowOffset.z;
-        float startDynamicCamValueY = transposer.m_FollowOffset.y;
+        float startDynamicCamValueZ = Transposer.m_FollowOffset.z;
+        float startDynamicCamValueY = Transposer.m_FollowOffset.y;
 
         _currentTimer = 0f;
         while (_currentTimer < expandDuration)
         {
-            transposer.m_FollowOffset.z = Mathf.Lerp(startDynamicCamValueZ, endValueZ, _currentTimer / expandDuration);
-            transposer.m_FollowOffset.y = Mathf.Lerp(startDynamicCamValueY, endValueY, _currentTimer / expandDuration);
+            Transposer.m_FollowOffset.z = Mathf.Lerp(startDynamicCamValueZ, endValueZ, _currentTimer / expandDuration);
+            Transposer.m_FollowOffset.y = Mathf.Lerp(startDynamicCamValueY, endValueY, _currentTimer / expandDuration);
             _currentTimer += Time.deltaTime;
             yield return null;
         }
         // transform.rotation = new Quaternion(Mathf.Lerp(transform.rotation.x, 90, _currentTimer / boostDuration), 0, 0, 0);
         transform.eulerAngles = new Vector3(90, transform.eulerAngles.y, transform.eulerAngles.z);
         ChangeRenderOnTaGGameobjects(false);
-        composer.enabled = false;
+        Composer.enabled = false;
         _showCrosshair = true;
         _isCameraOnTop = true;
     }
@@ -115,24 +118,24 @@ public class IonBeamCamera : EntityBehaviour
     {
         _showCrosshair = false;
         _isCameraOnTop = false;
-        float startDynamicCamValueX = transposer.m_FollowOffset.x;
-        float startDynamicCamValueZ = transposer.m_FollowOffset.z;
-        float startDynamicCamValueY = transposer.m_FollowOffset.y;
+        float startDynamicCamValueX = Transposer.m_FollowOffset.x;
+        float startDynamicCamValueZ = Transposer.m_FollowOffset.z;
+        float startDynamicCamValueY = Transposer.m_FollowOffset.y;
 
         _currentTimer = 0f;
 
         while (_currentTimer < resetDuration)
         {
-            transposer.m_FollowOffset.x = Mathf.Lerp(startDynamicCamValueX, 0, _currentTimer / resetDuration);
-            transposer.m_FollowOffset.z = Mathf.Lerp(startDynamicCamValueZ, returnValueZ, _currentTimer / resetDuration);
-            transposer.m_FollowOffset.y = Mathf.Lerp(startDynamicCamValueY, returnValueY, _currentTimer / resetDuration);
+            Transposer.m_FollowOffset.x = Mathf.Lerp(startDynamicCamValueX, 0, _currentTimer / resetDuration);
+            Transposer.m_FollowOffset.z = Mathf.Lerp(startDynamicCamValueZ, returnValueZ, _currentTimer / resetDuration);
+            Transposer.m_FollowOffset.y = Mathf.Lerp(startDynamicCamValueY, returnValueY, _currentTimer / resetDuration);
             _currentTimer += Time.deltaTime;
             yield return null;
         }
-        if (transposer.m_FollowOffset.y > returnValueY)
+        if (Transposer.m_FollowOffset.y > returnValueY)
         {
             // Security for lack of precision of Time.deltaTime
-            cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(returnValueZ, returnValueY, 0.5f));
+            _cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(returnValueZ, returnValueY, 0.5f));
         }
         ChangeRenderOnTaGGameobjects(true);
     }

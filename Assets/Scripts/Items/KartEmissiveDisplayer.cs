@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Bolt;
 
 namespace Items
 {
 
     [RequireComponent(typeof(Inventory))]
-    public class KartEmissiveDisplayer : MonoBehaviour
+    public class KartEmissiveDisplayer : GlobalEventListener
     {
 
         [Header("Materials Emissives")]
@@ -18,6 +19,7 @@ namespace Items
         public GameObject Emissive;
 
         private string _emissiveToDisplay;
+        private int _itemCountToDisplay;
         private Inventory _inventory;
 
 
@@ -28,13 +30,38 @@ namespace Items
 
         }
 
-        
+
+
+
+        public override void OnEvent(HideKartDisplayItem hideKartDisplayItem)
+        {
+            var entity = GetComponentInParent<BoltEntity>();
+
+            if (entity == hideKartDisplayItem.Entity)
+            {
+                _emissiveToDisplay = hideKartDisplayItem.ItemName;
+                _itemCountToDisplay = hideKartDisplayItem.ItemCount;
+                HideEmissive();
+            }
+        }
+
+        public override void OnEvent(ShowKartDisplayItem showKartDisplayItem)
+        {
+            var entity = GetComponentInParent<BoltEntity>();
+
+            if (entity == showKartDisplayItem.Entity)
+            {
+                _emissiveToDisplay = showKartDisplayItem.ItemName;
+                _itemCountToDisplay = showKartDisplayItem.ItemCount;
+                DisplayEmissive();
+            }
+        }
 
         public void DisplayEmissive()
         {
-            if (_inventory.CurrentItem != null)
-            {
-                _emissiveToDisplay = _inventory.CurrentItem.Name;
+       //     if (_inventory.CurrentItem != null)
+       //     {
+              //  _emissiveToDisplay = _inventory.CurrentItem.Name;
 
                 switch (_emissiveToDisplay)
                 {
@@ -61,11 +88,12 @@ namespace Items
                         Emissive.GetComponent<MeshRenderer>().material = GoldMaterial;
                         break;
                 }
-            }
+       //     }
         }
+
         public void HideEmissive()
         {
-            if (_inventory.CurrentItemCount == 1)
+            if (_itemCountToDisplay == 1)
                 Emissive.GetComponent<MeshRenderer>().material = DefaultMaterial;
         }
     }

@@ -80,7 +80,10 @@ namespace Drift
 
         public void DriftTurns(float turnValue)
         {
-            if (!_groundCondition.Grounded) return;
+            if (!_groundCondition.Grounded)
+            {
+                StopDrift();
+            }
 
             if (DriftTurnState != TurnState.NotTurning && HasRequiredSpeed())
             {
@@ -119,8 +122,6 @@ namespace Drift
 
         public void StopDrift()
         {
-            if (!IsDrifting()) return;
-
             if (DriftState == DriftState.Red && HasRequiredSpeed())
             {
                 OnDriftBoostStart.Invoke();

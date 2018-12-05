@@ -156,7 +156,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &1979843612711940
 GameObject:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
@@ -190,7 +190,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &4249283856329038
 Transform:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1979843612711940}
@@ -377,7 +377,7 @@ Skybox:
   m_CustomSkybox: {fileID: 2100000, guid: e7471c7bc3e48f8408ba34ff15fec1e5, type: 2}
 --- !u!114 &114000564765989982
 MonoBehaviour:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1979843612711940}
@@ -402,7 +402,7 @@ MonoBehaviour:
   m_BiasY: 0
 --- !u!114 &114049775554121980
 MonoBehaviour:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1979843612711940}
@@ -412,7 +412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 3, z: -8.5}
+  m_FollowOffset: {x: 0, y: 2.1, z: -6.35}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0
@@ -587,6 +587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e628df7af1c7c14f94b72e31e6bee2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _fov: 50
 --- !u!114 &114246949737927122
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -727,7 +728,7 @@ MonoBehaviour:
   m_HeadingIsSlave: 1
 --- !u!114 &114350739645386522
 MonoBehaviour:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1979843612711940}
@@ -885,7 +886,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a6047edef92fa54d888b864fd1ae1a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camBoostSettings: {fileID: 0}
+  _camBoostSettings: {fileID: 11400000, guid: e8df48fea2948a446a4fe6373fe73d28, type: 2}
 --- !u!114 &114696540935886252
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -908,10 +909,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd27ffb076282ea4596eb31f02315847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpeedCamMovements: 200
-  transposer: {fileID: 0}
-  composer: {fileID: 0}
-  crosshairIonBeam: {fileID: 2800000, guid: 93f5d256aa561204eb5055ec10541980, type: 3}
+  Transposer: {fileID: 0}
+  Composer: {fileID: 0}
+  _speedCamMovements: 200
+  _ionBeamCamZExpand: 0
+  _ionBeamCamYExpand: 200
+  _cameraSettings: {fileID: 11400000, guid: ef13b57ca9ba4974abf886534b3fa9ea, type: 2}
+  _crosshairIonBeam: {fileID: 2800000, guid: 93f5d256aa561204eb5055ec10541980, type: 3}
 --- !u!114 &114707741726061332
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -923,6 +927,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bad0b0e57b234a34aa7e454d29b9d993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraSettings: {fileID: 11400000, guid: ef13b57ca9ba4974abf886534b3fa9ea, type: 2}
+  _backCamZPosition: 9
 --- !u!114 &114726647596660244
 MonoBehaviour:
   m_ObjectHideFlags: 1

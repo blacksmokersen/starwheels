@@ -43,8 +43,14 @@ namespace Multiplayer
 
             RoomInfoToken = (RoomProtocolToken)token;
             _playersCount = RoomInfoToken.PlayersCount;
-            Debug.Log("PlayerCount : " + _playersCount);
-            if (_playersCount == 1) IncreaseSpawnCount();
+
+            // Instantiate server kart
+            var serverColor = Teams.TeamsColors.GetTeamFromColor(_serverPlayerSettings.Team);
+            _serverSpawn = GetInitialSpawnPosition(serverColor);
+            var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart, RoomInfoToken);
+            myKart.transform.position = _serverSpawn.transform.position;
+            myKart.transform.rotation = _serverSpawn.transform.rotation;
+            FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
         }
 
         public override void SceneLoadRemoteDone(BoltConnection connection, IProtocolToken token)
@@ -67,9 +73,9 @@ namespace Multiplayer
         private void InitializeSpawns()
         {
             _redSpawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.RedSpawn));
-            _initialRedSpawns = _redSpawns;
+            _initialRedSpawns = new List<GameObject>(_redSpawns);
             _blueSpawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.BlueSpawn));
-            _initialBlueSpawns = _blueSpawns;
+            _initialBlueSpawns = new List<GameObject>(_blueSpawns);
         }
 
         private void AssignSpawn(int connectionID, Team team, bool respawn = false)
@@ -131,14 +137,6 @@ namespace Multiplayer
             _spawnsAssigned++;
             if(_spawnsAssigned >= _playersCount)
             {
-                // Instantiate server kart
-                var serverColor = Teams.TeamsColors.GetTeamFromColor(_serverPlayerSettings.Team);
-                _serverSpawn = GetInitialSpawnPosition(serverColor);
-                var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart, RoomInfoToken);
-                myKart.transform.position = _serverSpawn.transform.position;
-                myKart.transform.rotation = _serverSpawn.transform.rotation;
-                FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
-
                 _gameIsReady = true;
             }
 
