@@ -6,7 +6,7 @@ namespace Multiplayer
     public class PlayerSettings : ScriptableObject
     {
         [Header("Player Information")]
-        public Color Team;
+        public Color TeamColor;
         public string Nickname;
         public int ConnectionID;
         public int KartIndex;
@@ -18,9 +18,8 @@ namespace Multiplayer
 
         public void SendKartDestroyedEvent()
         {
-            // FindObjectOfType<SpawnEventListener>().AskForRespawnInXSeconds(2f, Team, ConnectionID);
             KartDestroyed kartDestroyedEvent = KartDestroyed.Create();
-            kartDestroyedEvent.Team = Team;
+            kartDestroyedEvent.Team = TeamColor;
             kartDestroyedEvent.ConnectionID = ConnectionID;
             kartDestroyedEvent.Send();
         }

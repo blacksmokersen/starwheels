@@ -33,7 +33,7 @@ namespace Menu
                     winnerTeamText.text = "Red team wins !";
                     break;
             }
-            panelImage.color = TeamsColors.GetColorFromTeam(team);
+            panelImage.color = team.GetColor();
         }
 
         // PRIVATE

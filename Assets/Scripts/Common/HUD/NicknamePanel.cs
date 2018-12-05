@@ -53,7 +53,7 @@ namespace Common.HUD
 
         public void SetFrameRendererTeam(Team team)
         {
-            SetFrameRendererColor(TeamsColors.GetColorFromTeam(team));
+            SetFrameRendererColor(team.GetColor());
         }
 
         public void ShowPanel()
