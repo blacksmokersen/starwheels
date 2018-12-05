@@ -14,7 +14,7 @@ namespace Items
         {
             if (BoltNetwork.isServer && entity.isAttached)
             {
-                if (other.gameObject.CompareTag(Constants.Tag.CollisionHitBox) &&
+                if (other.gameObject.CompareTag(Constants.Tag.ItemCollisionHitBox) &&
                     other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.Totem) // It is an item collision (except totem)
                 {
                     BoltEntity itemEntity = other.GetComponentInParent<BoltEntity>();
@@ -62,7 +62,7 @@ namespace Items
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.gameObject.CompareTag(Constants.Tag.CollisionHitBox) &&
+            if (other.gameObject.CompareTag(Constants.Tag.ItemCollisionHitBox) &&
                    other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.Totem) // It is an item collision (except totem)
             {
                 BoltEntity itemEntity = other.GetComponentInParent<BoltEntity>();

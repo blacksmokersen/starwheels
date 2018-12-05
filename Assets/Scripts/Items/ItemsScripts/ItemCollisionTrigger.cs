@@ -16,7 +16,7 @@ namespace Items
         {
             if (BoltNetwork.isServer)
             {
-                if (other.gameObject.CompareTag(Constants.Tag.CollisionHitBox))
+                if (other.gameObject.CompareTag(Constants.Tag.ItemCollisionHitBox))
                 {
                     var otherItemCollision = other.GetComponent<ItemCollisionTrigger>().ItemCollision;
 
