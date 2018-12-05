@@ -7,20 +7,20 @@ namespace GameModes.Totem
     [RequireComponent(typeof(TotemPicker))]
     public class TotemPossession : GlobalEventListener
     {
+        [SerializeField] private Items.Inventory _inventory;
+
+        private bool _canUseItems = true; // Local bool for possession
+
         // BOLT
 
         public override void OnEvent(TotemThrown evnt)
         {
             var totem = GameObject.FindGameObjectWithTag(Constants.Tag.Totem);
-            Debug.Log(totem.name);
             if (!totem) return;
 
             var totemEntity = totem.GetComponent<BoltEntity>();
 
-            if (evnt.OwnerID ==
-                totemEntity.GetState<IItemState>().
-                OwnerID ||
-                evnt.OwnerID == -1) // The owner of the totem is throwing it || or it is a totem reset
+            if (evnt.OwnerID == totemEntity.GetState<IItemState>().OwnerID || evnt.OwnerID == -1) // The owner of the totem is throwing it || or it is a totem reset
             {
                 totem.GetComponent<TotemBehaviour>().UnsetParent();
 
@@ -32,6 +32,11 @@ namespace GameModes.Totem
                         Direction throwingDirection = evnt.ForwardDirection ? Direction.Forward : Direction.Backward;
                         kartThrowing.GetComponentInChildren<ThrowableLauncher>().Throw(totemEntity.GetComponent<Throwable>(), throwingDirection);
                     }
+                }
+
+                if(!_canUseItems)
+                {
+                    CanUseItem(true);
                 }
             }
         }
@@ -54,6 +59,15 @@ namespace GameModes.Totem
                 Debug.LogError("Owner not found.");
                 totem.transform.SetParent(null);
             }
+
+            if (evnt.KartEntity.isOwner)
+            {
+                CanUseItem(false);
+            }
+            else if (!_canUseItems)
+            {
+                CanUseItem(true);
+            }
         }
 
         public override void OnEvent(PlayerHit evnt)
@@ -67,7 +81,21 @@ namespace GameModes.Totem
             if (kartOwnerID == totemBehaviour.LocalOwnerID)
             {
                 totemBehaviour.UnsetParent();
+                if (evnt.PlayerEntity.isOwner)
+                {
+                    CanUseItem(true);
+                }
             }
+        }
+
+        // PRIVATE
+
+        public void CanUseItem(bool b)
+        {
+            Debug.Log("Can use item : " + b);
+            _inventory.StopAllCoroutines(); // Stop any anti-spam routine
+            _inventory.CanUseItem = b;
+            _canUseItems = b;
         }
     }
 }
