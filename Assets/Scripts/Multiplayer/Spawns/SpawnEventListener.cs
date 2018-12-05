@@ -2,11 +2,15 @@
 using Bolt;
 using Photon;
 
+
 namespace Multiplayer
 {
     public class SpawnEventListener : GlobalEventListener
     {
         [SerializeField] private PlayerSettings _playerSettings;
+
+        [Tooltip("GameModes are : 'Totem' and 'Battle'")]
+        [SerializeField] private string _gameMode;
 
         // CORE
 
@@ -22,14 +26,13 @@ namespace Multiplayer
 
         public override void BoltStartDone() // Used for In-Editor tests
         {
-            RoomProtocolToken roomProtocolToken = new RoomProtocolToken()
+            RoomProtocolToken _roomProtocolToken = new RoomProtocolToken()
             {
-                Gamemode = Constants.GameModes.Totem,
+                Gamemode = _gameMode,
                 PlayersCount = 1,
                 RoomInfo = "Solo"
             };
-
-            InstantiateKart(transform.position, transform.rotation, roomProtocolToken); // Scene specific position
+            InstantiateKart(transform.position, transform.rotation, _roomProtocolToken); // Scene specific position
         }
 
         public override void OnEvent(PlayerSpawn evnt)

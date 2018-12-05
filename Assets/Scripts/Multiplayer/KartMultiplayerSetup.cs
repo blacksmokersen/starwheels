@@ -76,7 +76,7 @@ namespace Network
             if(panel) panel.SetName(state.Nickname);
         }
 
-        IEnumerator DelayRoutine()
+        private IEnumerator DelayRoutine()
         {
             yield return new WaitForSeconds(_delayBeforeDestroyKart);
             _playerSettings.SendKartDestroyedEvent();

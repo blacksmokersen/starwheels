@@ -4,17 +4,19 @@ using Bolt;
 
 namespace GameModes.Totem
 {
+    [DisallowMultipleComponent]
     public class TotemBehaviour : EntityBehaviour<IItemState>
     {
         public bool CanBePickedUp = true;
+        public int LocalOwnerID = -1;
 
         [Header("Slowdown Settings")]
         [SerializeField] private float _slowdownFactor = 0.98f;
         [SerializeField] private float _stopMagnitudeThreshold = 0.1f;
 
-        private Transform _parent;
         private Rigidbody _rb;
         private bool _isSlowingDown = false;
+        private Transform _parent;
 
         // CORE
 
@@ -37,9 +39,9 @@ namespace GameModes.Totem
 
         public override void SimulateOwner()
         {
-            if (_parent)
+            if (_parent != null)
             {
-                //transform.position = _parent.position;
+                transform.position = _parent.position;
             }
             else
             {
@@ -47,42 +49,52 @@ namespace GameModes.Totem
             }
         }
 
+        public override void Detached()
+        {
+            Debug.LogError("Totem detached from game.");
+        }
+
         // PUBLIC
 
-        public void SetParent(Transform parent)
+        public void SetParent(Transform parent, int newOwnerID)
         {
+            if(entity.isOwner) state.OwnerID = newOwnerID;
+
+            LocalOwnerID = newOwnerID;
+            entity.TakeControl();
             _parent = parent;
-            transform.SetParent(parent);
-
+            FreezeTotem(true);
+            _isSlowingDown = false;
             StartCoroutine(AntiPickSpamRoutine());
-
-            if (parent == null)
-            {
-                _isSlowingDown = true;
-            }
-            else
-            {
-                _isSlowingDown = false;
-            }
+            Debug.Log("Set totem locally.");
         }
 
-        public void StartSlowdown()
+        public void UnsetParent()
         {
-            StartCoroutine(SlowdownRoutine());
+            if (entity.isOwner) state.OwnerID = -1;
+            else entity.ReleaseControl();
+
+            LocalOwnerID = -1;
+            CanBePickedUp = true;
+            _parent = null;
+            FreezeTotem(false);
+            StopAllCoroutines();
+            _isSlowingDown = true;
+            Debug.Log("Unset totem locally.");
         }
 
-        public void SetTotemKinematic(bool b)
+        public void FreezeTotem(bool b)
         {
+            var rb = GetComponent<Rigidbody>();
             if (b)
             {
-                Debug.Log("Totem is kinematic.");
-                GetComponent<Rigidbody>().isKinematic = true;
+                rb.isKinematic = true;
                 //GetComponent<SphereCollider>().enabled = false; //USE LAYERS
             }
             else
             {
-                Debug.Log("Totem is NOT kinematic.");
-                GetComponent<Rigidbody>().isKinematic = false;
+                rb.isKinematic = false;
+                rb.velocity = Vector3.zero;
                 GetComponent<SphereCollider>().enabled = true;
             }
         }

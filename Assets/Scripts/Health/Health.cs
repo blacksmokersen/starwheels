@@ -43,7 +43,6 @@ namespace Health
                 }
 
                 OnHealthLoss.Invoke(state.Health);
-                CheckIfIsDead();
                 SetInvincibilityForXSeconds(3f);
             }
         }
@@ -64,7 +63,7 @@ namespace Health
         {
             if (state.Health <= 0)
             {
-                if (entity.isOwner)
+                if (entity.isOwner && !IsDead)
                 {
                     OnDeath.Invoke();
                 }
