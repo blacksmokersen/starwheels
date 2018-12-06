@@ -100,7 +100,7 @@ namespace Drift
         public void InitializeDrift(float angle)
         {
             if (IsDrifting()) return;
-            if (!HasRequiredSpeed() || !_groundCondition.Grounded || angle == 0) return;
+            if (!HasRequiredSpeed() || !_groundCondition.Grounded || angle == 0 || Input.GetButtonUp(Constants.Input.Drift)) return;
 
             ResetDrift();
 
