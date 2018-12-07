@@ -1,11 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
-using System;
-using Bolt;
 
 namespace Abilities
 {
-    public class CloakAbility : AbilitiesBehaviour, IControllable
+    public class CloakAbility : Ability, IControllable
     {
         [SerializeField] private CloakSettings _cloakSettings;
         [SerializeField] private GameObject _cloakEffect;
@@ -14,10 +12,6 @@ namespace Abilities
 
         [SerializeField] private AudioSource _useCloakSound;
         [SerializeField] private AudioSource _endCloakSound;
-
-        public bool CanUseAbility = true;
-        public BoltEntity BoltEntity;
-        //  public BoltEntity Entity;
 
         public override void SimulateController()
         {
@@ -38,18 +32,11 @@ namespace Abilities
 
         public void Use()
         {
-            Debug.Log("used cloak");
+            Debug.Log("Used cloak");
 
             _animator.SetTrigger("ActivateCloakEffect");
             StartCoroutine(CloakDuration(_cloakSettings.CloakDuration));
-            StartCoroutine(AbilityCooldown(_cloakSettings.CooldownDuration));
-        }
-
-        private IEnumerator AbilityCooldown(float Duration)
-        {
-            CanUseAbility = false;
-            yield return new WaitForSeconds(Duration);
-            CanUseAbility = true;
+            StartCoroutine(Cooldown());
         }
 
         private IEnumerator CloakDuration(float Duration)
@@ -60,7 +47,6 @@ namespace Abilities
             {
                 mesh.SetActive(false);
             }
-            //  if (GetComponentInParent<BoltEntity>() == BoltEntity)
             _cloakEffect.SetActive(true);
 
             yield return new WaitForSeconds(Duration);
@@ -80,6 +66,5 @@ namespace Abilities
             cloakEvent.Entity = entity;
             cloakEvent.Send();
         }
-
     }
 }

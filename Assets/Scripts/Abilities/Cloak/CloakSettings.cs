@@ -3,9 +3,6 @@
 [CreateAssetMenu(menuName = "Abilities Settings/Cloak")]
 public class CloakSettings : ScriptableObject
 {
-    [Header("Duration")]
+    [Header("Cloack")]
     public float CloakDuration;
-
-    [Header("Cooldown")]
-    public float CooldownDuration;
 }

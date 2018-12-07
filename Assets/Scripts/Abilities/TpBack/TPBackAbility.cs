@@ -5,7 +5,7 @@ using ThrowingSystem;
 
 namespace Abilities
 {
-    public class AbilityTPBack : AbilitiesBehaviour, IControllable
+    public class TPBackAbility : Ability, IControllable
     {
         [SerializeField] private TPBackSettings _tPBackSettings;
         [SerializeField] private ThrowableLauncher _throwableLauncher;
@@ -18,7 +18,6 @@ namespace Abilities
 
         private ParticleSystem _reloadEffect;
         private TPBackBehaviour _tpBack = null;
-        private bool _canUseAbility = true;
         private Rigidbody _rb;
 
         // CORE
@@ -53,7 +52,7 @@ namespace Abilities
 
         public void Use()
         {
-            if (_canUseAbility)
+            if (CanUseAbility)
             {
                 if (_tpBack == null)
                 {
@@ -66,7 +65,7 @@ namespace Abilities
                 else // if (_tpBack.IsEnabled())
                 {
                     StartCoroutine(BlinkTpBack());
-                    StartCoroutine(AbilityCooldown(_tPBackSettings.Cooldown));
+                    StartCoroutine(Cooldown());
                 }
             }
         }
@@ -83,14 +82,6 @@ namespace Abilities
             _rb.transform.rotation = GetKartRotation();
             MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useTpBackSound);
             Destroy(_tpBack.gameObject);
-        }
-
-        private IEnumerator AbilityCooldown(float Duration)
-        {
-            _canUseAbility = false;
-            yield return new WaitForSeconds(Duration);
-            _canUseAbility = true;
-            _reloadParticlePrefab.Emit(_reloadParticleNumber);
         }
     }
 }

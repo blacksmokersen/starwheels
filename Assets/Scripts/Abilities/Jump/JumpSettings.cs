@@ -3,12 +3,11 @@
 [CreateAssetMenu(menuName = "Abilities Settings/Jump")]
 public class JumpSettings : ScriptableObject
 {
-    [Header("Jump forces")]
+    [Header("Jump Forces")]
     public float FirstJumpForce;
     public float SecondJumpUpForce;
     public float SecondJumpLateralForces;
 
-    [Header("Cooldown")]
-    public float CooldownDuration;
+    [Header("Jump Cooldown")]
     public float MaxTimeBetweenFirstAndSecondJump;
 }
