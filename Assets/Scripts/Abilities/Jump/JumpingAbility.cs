@@ -5,7 +5,7 @@ using Common.PhysicsUtils;
 
 namespace Abilities.Jump
 {
-    public class JumpingAbility : AbilitiesBehaviour, IControllable
+    public class JumpingAbility : Ability, IControllable
     {
         [Header("Events")]
         public UnityEvent OnFirstJump;
@@ -13,16 +13,12 @@ namespace Abilities.Jump
         public UnityEvent OnJumpReload;
 
         [Header("Forces")]
-        [SerializeField] private JumpSettings jumpSettings;
+        [SerializeField] private JumpSettings _jumpSettings;
 
-        [SerializeField] private GroundCondition groundCondition;
-
-        [Header("Effects")]
-        [SerializeField] private ParticleSystem reloadParticlePrefab;
-        [SerializeField] private int reloadParticleNumber;
+        [Header("Conditions")]
+        [SerializeField] private GroundCondition _groundCondition;
 
         private Rigidbody _rb;
-        private bool _canUseAbility = true;
         private bool _hasDoneFirstJump = false;
         private bool _straightUpSecondJump = false;
         private Coroutine _timeBetweenFirstAndSecondJump;
@@ -46,7 +42,7 @@ namespace Abilities.Jump
 
         public void FirstJump()
         {
-            _rb.AddRelativeForce(Vector3.up * jumpSettings.FirstJumpForce, ForceMode.Impulse);
+            _rb.AddRelativeForce(Vector3.up * _jumpSettings.FirstJumpForce, ForceMode.Impulse);
             _hasDoneFirstJump = true;
             OnFirstJump.Invoke();
         }
@@ -85,8 +81,8 @@ namespace Abilities.Jump
                 _straightUpSecondJump = true;
             }
 
-            var forceUp = Vector3.up * jumpSettings.SecondJumpUpForce;
-            var forceDirectional = forceDirection * jumpSettings.SecondJumpLateralForces;
+            var forceUp = Vector3.up * _jumpSettings.SecondJumpUpForce;
+            var forceDirectional = forceDirection * _jumpSettings.SecondJumpLateralForces;
             if (_straightUpSecondJump)
                 _rb.AddRelativeForce(forceUp, ForceMode.Impulse);
             else
@@ -111,14 +107,14 @@ namespace Abilities.Jump
 
         private void UseAbility(JoystickValues joystickValues)
         {
-            if (_canUseAbility)
+            if (CanUseAbility)
             {
-                if (!_hasDoneFirstJump && groundCondition.Grounded)
+                if (!_hasDoneFirstJump && _groundCondition.Grounded)
                 {
                     FirstJump();
                     _timeBetweenFirstAndSecondJump = StartCoroutine(TimeBetweenFirstAndSecondJump());
                 }
-                else if (_hasDoneFirstJump && !groundCondition.Grounded)
+                else if (_hasDoneFirstJump && !_groundCondition.Grounded)
                 {
                     SecondJump(joystickValues);
                     if (_timeBetweenFirstAndSecondJump != null)
@@ -126,24 +122,15 @@ namespace Abilities.Jump
                         StopCoroutine(_timeBetweenFirstAndSecondJump);
                     }
                     StartCoroutine(Cooldown());
+                    _hasDoneFirstJump = false;
                 }
             }
         }
 
         private IEnumerator TimeBetweenFirstAndSecondJump()
         {
-            yield return new WaitForSeconds(jumpSettings.MaxTimeBetweenFirstAndSecondJump);
+            yield return new WaitForSeconds(_jumpSettings.MaxTimeBetweenFirstAndSecondJump);
             StartCoroutine(Cooldown());
-        }
-
-        private IEnumerator Cooldown()
-        {
-            _canUseAbility = false;
-            yield return new WaitForSeconds(jumpSettings.CooldownDuration);
-            _canUseAbility = true;
-            _hasDoneFirstJump = false;
-            reloadParticlePrefab.Emit(reloadParticleNumber);
-          //  OnJumpReload.Invoke();
         }
     }
 }
