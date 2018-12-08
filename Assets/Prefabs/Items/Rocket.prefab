@@ -66,7 +66,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4600417974812232}
-  - component: {fileID: 135957635746174168}
+  - component: {fileID: 136706003497860376}
   m_Layer: 0
   m_Name: PhysicalCollider
   m_TagString: Untagged
@@ -968,7 +968,7 @@ MonoBehaviour:
   m_Script: {fileID: -36112512, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneGuid: 
+  _sceneGuid: 0729a539-eeaf-4620-ab6c-0d177534c2e6
   _serializerGuid: ffe9e53f-72a5-4574-af39-0fa608838337
   _prefabId: 12
   _updateRate: 1
@@ -1067,8 +1067,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ThrowableType: 0
---- !u!135 &135957635746174168
-SphereCollider:
+--- !u!136 &136706003497860376
+CapsuleCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -1076,9 +1076,10 @@ SphereCollider:
   m_Material: {fileID: 13400000, guid: 7f5cb749e757d58478edd4b5b03e2c4c, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.4
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.39
+  m_Height: 2.51
+  m_Direction: 2
+  m_Center: {x: -0.01, y: 0.04, z: -1.38}
 --- !u!136 &136835068504489122
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -1088,10 +1089,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 1
-  m_Height: 4
+  m_Radius: 0.4
+  m_Height: 2.64
   m_Direction: 1
-  m_Center: {x: 0, y: -1.8, z: 0}
+  m_Center: {x: 0, y: -1.53, z: -0.04}
 --- !u!198 &198455233199157698
 ParticleSystem:
   m_ObjectHideFlags: 1
