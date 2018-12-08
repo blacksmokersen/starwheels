@@ -41,7 +41,7 @@ namespace KartPhysics
             {
                 var distance = Mathf.Clamp(hit.distance, 0, MaxExtensionDistance);
                 var compressionRatio = -distance + MaxExtensionDistance;
-                _rb.AddForceAtPosition(ComputeForceToAdd(compressionRatio), wheelTransform.position, ForceMode.Acceleration);
+                _rb.AddForceAtPosition(ComputeForceToAdd(compressionRatio), wheelTransform.position, ForceMode.VelocityChange);
             }
         }
 
