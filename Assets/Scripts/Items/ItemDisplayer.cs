@@ -19,12 +19,14 @@ namespace Items
         private ThrowingSystem.ThrowableLauncher _throwableLauncher;
         private Direction _direction;
 
+        private bool isForward;
         public UnityEvent CheckDirection;
 
         public void Awake()
         {
             _inventory = GetComponent<Inventory>();
             _throwableLauncher = GetComponent<ThrowingSystem.ThrowableLauncher>();
+            
         }
 
 
@@ -75,7 +77,7 @@ namespace Items
         public override void OnEvent(ShowKartDisplayItem showKartDisplayItem)
         {
             var entity = GetComponentInParent<BoltEntity>();
-
+            Debug.Log("Entered ?");
             if (entity == showKartDisplayItem.Entity)
             {
                 _itemNameToDisplay = showKartDisplayItem.ItemName;
@@ -83,6 +85,7 @@ namespace Items
                 _direction = Direction.Forward;
                 
                 DisplayItem();
+                Debug.Log("Entered in if");
             }
         }
 
@@ -266,10 +269,20 @@ namespace Items
         
         private void CheckAxis()
         {
-            if(Mathf.Abs(Input.GetAxis(Constants.Input.UpAndDownAxis)) != 0.3)
+            if (Input.GetAxis(Constants.Input.UpAndDownAxis) > 0.3f && isForward == false)
             {
-            CheckDirection.Invoke();
+                isForward = true;
+                CheckDirection.Invoke();
 
+            }
+            else if (Input.GetAxis(Constants.Input.UpAndDownAxis) < -0.3f && isForward == true)
+            {
+                isForward = false;
+                CheckDirection.Invoke();
+            }
+            else if(Math.Abs(Input.GetAxis(Constants.Input.UpAndDownAxis)) < 0.3f)
+            {
+                CheckDirection.Invoke();
             }
         
         }
