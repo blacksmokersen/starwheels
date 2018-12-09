@@ -12,12 +12,10 @@ namespace Abilities.Jump
         public DirectionEvent OnSecondJump;
         public UnityEvent OnJumpReload;
 
-        [Header("Forces")]
-        [SerializeField] private JumpSettings _jumpSettings;
-
         [Header("Conditions")]
         [SerializeField] private GroundCondition _groundCondition;
 
+        private JumpSettings _jumpSettings;
         private Rigidbody _rb;
         private bool _hasDoneFirstJump = false;
         private bool _straightUpSecondJump = false;
@@ -28,6 +26,7 @@ namespace Abilities.Jump
         private void Awake()
         {
             _rb = GetComponentInParent<Rigidbody>();
+            _jumpSettings = (JumpSettings) abilitySettings;
         }
 
         // BOLT

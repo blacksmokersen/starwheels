@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Abilities Settings/Jump")]
-public class JumpSettings : ScriptableObject
+namespace Abilities
 {
-    [Header("Jump Forces")]
-    public float FirstJumpForce;
-    public float SecondJumpUpForce;
-    public float SecondJumpLateralForces;
+    [CreateAssetMenu(menuName = "Abilities Settings/Jump")]
+    public class JumpSettings : AbilitySettings
+    {
+        [Header("Jump Forces")]
+        public float FirstJumpForce;
+        public float SecondJumpUpForce;
+        public float SecondJumpLateralForces;
 
-    [Header("Jump Cooldown")]
-    public float MaxTimeBetweenFirstAndSecondJump;
+        [Header("Jump Cooldown")]
+        public float MaxTimeBetweenFirstAndSecondJump;
+    }
 }
