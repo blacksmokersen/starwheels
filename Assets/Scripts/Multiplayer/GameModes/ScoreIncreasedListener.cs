@@ -14,7 +14,7 @@ namespace GameModes
 
         public override void OnEvent(ScoreIncreased evnt)
         {
-            var team = TeamsColors.GetTeamFromColor(evnt.Team);
+            var team = evnt.Team.GetTeam();
 
             switch (team)
             {

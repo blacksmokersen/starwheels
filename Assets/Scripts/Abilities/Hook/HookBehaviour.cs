@@ -76,10 +76,7 @@ namespace Abilities
             }
 
             // All items
-            else if (other.CompareTag(Constants.Tag.DiskItem)
-                || other.CompareTag(Constants.Tag.RocketItem)
-                || other.CompareTag(Constants.Tag.GuileItem)
-                || other.CompareTag(Constants.Tag.GroundItem))
+            else if (other.CompareTag(Constants.Tag.ItemCollisionHitBox))
             {
                 // _itemBehaviour = other.GetComponentInParent<NetworkDestroyable>();
 
@@ -96,7 +93,7 @@ namespace Abilities
             }
 
             // Kart
-            else if (other.CompareTag(Constants.Tag.KartTrigger))
+            else if (other.CompareTag(Constants.Tag.KartHealthHitBox))
             {
                 /*
                 var otherKartInventory = other.GetComponentInParent<Kart.KartHub>().kartInventory;

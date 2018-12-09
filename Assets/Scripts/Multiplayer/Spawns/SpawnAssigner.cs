@@ -45,8 +45,8 @@ namespace Multiplayer
             _playersCount = RoomInfoToken.PlayersCount;
 
             // Instantiate server kart
-            var serverColor = Teams.TeamsColors.GetTeamFromColor(_serverPlayerSettings.Team);
-            _serverSpawn = GetInitialSpawnPosition(serverColor);
+            var serverTeam = _serverPlayerSettings.TeamColor.GetTeam();
+            _serverSpawn = GetInitialSpawnPosition(serverTeam);
             var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart, RoomInfoToken);
             myKart.transform.position = _serverSpawn.transform.position;
             myKart.transform.rotation = _serverSpawn.transform.rotation;
@@ -55,14 +55,14 @@ namespace Multiplayer
 
         public override void SceneLoadRemoteDone(BoltConnection connection, IProtocolToken token)
         {
-            var playerTeam = Teams.TeamsColors.GetTeamFromColor((Color)connection.UserData);
+            var playerTeam = ((Color)connection.UserData).GetTeam();
             AssignSpawn((int)connection.ConnectionId, playerTeam);
             IncreaseSpawnCount();
         }
 
         public override void OnEvent(KartDestroyed evnt)
         {
-            var team = Teams.TeamsColors.GetTeamFromColor(evnt.Team);
+            var team = evnt.Team.GetTeam();
             AssignSpawn(evnt.ConnectionID, team, true);
         }
 

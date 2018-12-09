@@ -347,7 +347,7 @@ GameObject:
   - component: {fileID: 65612803266741954}
   m_Layer: 11
   m_Name: PhysicalCollider
-  m_TagString: KartCollider
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -962,7 +962,7 @@ GameObject:
   - component: {fileID: 65077781353660258}
   m_Layer: 11
   m_Name: Trigger
-  m_TagString: KartTrigger
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4263,6 +4263,10 @@ MonoBehaviour:
   CurrentHealth: 0
   IsDead: 0
   IsInvincible: 0
+  OnHealthLoss:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: IntEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   OnDeath:
     m_PersistentCalls:
       m_Calls:
@@ -4279,6 +4283,10 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  OnInvincibilityDuration:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: FloatEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114289093599170744
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4314,6 +4322,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb9cdd18ef0fa034d901dbf746a0e9db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerSettings: {fileID: 0}
+  _gameMode: 
 --- !u!114 &114356762029296630
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4502,6 +4512,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 472f456062511404abbb2db86c295fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CanUseItem: 1
+  _antiSpamDuration: 0
   CurrentItem: {fileID: 11400000, guid: 14aae97df4480b648b85662d30788680, type: 2}
   CurrentItemCount: 100
   OnItemGet:
@@ -4565,8 +4577,7 @@ MonoBehaviour:
   OnNicknameChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114290886908809486, guid: fc0420c939dd0dd48bfcedc31f9eb78d,
-          type: 2}
+      - m_Target: {fileID: 0}
         m_MethodName: SetName
         m_Mode: 0
         m_Arguments:
@@ -4592,8 +4603,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114290886908809486, guid: fc0420c939dd0dd48bfcedc31f9eb78d,
-          type: 2}
+      - m_Target: {fileID: 0}
         m_MethodName: SetFrameRendererTeam
         m_Mode: 0
         m_Arguments:
@@ -4620,6 +4630,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15b594daf18c45447a3fc28b33a8d699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerSettings: {fileID: 0}
+  _delayBeforeDestroyKart: 0
 --- !u!114 &114509105347079548
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4659,7 +4671,7 @@ MonoBehaviour:
   Speed: 60
   ForwardThrowingForce: 60
   TimesLongerThanHighThrow: 5
-  settings: {fileID: 0}
+  shockwaveEffectBehaviour: {fileID: 0}
 --- !u!114 &114665726295778816
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4683,11 +4695,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa5cf6b07c8e88a44803f53de49a4758, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CanSteer: 1
   Settings: {fileID: 11400000, guid: 56de6da549441da40b170a7e798ad10e, type: 2}
   TurningState: 0
   InversedDirections: 0
   _groundCondition: {fileID: 114178703113626698}
   _engine: {fileID: 114019687933707526}
+  OnTurnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: FloatEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114711784642176328
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4712,6 +4729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfbe232ca97b40d4ca8753d5ad41f1b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilitiesBehaviourSettings: {fileID: 0}
   OnFirstJump:
     m_PersistentCalls:
       m_Calls:
@@ -4771,8 +4789,10 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  Settings: {fileID: 11400000, guid: 46955ecddecfdb1488fc47f0dffd8e58, type: 2}
+  jumpSettings: {fileID: 0}
   groundCondition: {fileID: 114178703113626698}
+  reloadParticlePrefab: {fileID: 0}
+  reloadParticleNumber: 0
 --- !u!114 &114863030451149884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4784,6 +4804,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9dd1702f8fb20346a14f9207465c6ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
 --- !u!114 &114908753500878108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4809,8 +4830,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1462fc86855a7534cbb8f15f83a7d404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smokeLeftWheel: {fileID: 198213614062716188}
-  smokeRightWheel: {fileID: 198199415974046542}
+  _blueLeftSmoke: {fileID: 0}
+  _blueRightSmoke: {fileID: 0}
+  _redLeftSmoke: {fileID: 0}
+  _redRightSmoke: {fileID: 0}
 --- !u!114 &114964037329730662
 MonoBehaviour:
   m_ObjectHideFlags: 1

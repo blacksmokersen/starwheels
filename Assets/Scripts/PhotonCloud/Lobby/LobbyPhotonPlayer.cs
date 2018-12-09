@@ -18,7 +18,7 @@ namespace Photon.Lobby
 
         [Header("Lobby")]
         [SerializeField] private string _playerName = "";
-        [SerializeField] private Color _playerColor = TeamsColors.GetColorFromTeam(Team.None);
+        [SerializeField] private Color _playerColor = TeamsColors.NoTeamColor;
         [SerializeField] private bool _isReady = false;
 
         [Header("Player Row UI")]
@@ -43,7 +43,7 @@ namespace Photon.Lobby
 
         private void Awake()
         {
-            _colorButton.GetComponent<Image>().color = TeamsColors.GetColorFromTeam(Team.None);
+            _colorButton.GetComponent<Image>().color = TeamsColors.NoTeamColor;
         }
 
         // BOLT
@@ -226,13 +226,14 @@ namespace Photon.Lobby
 
         private void OnColorClicked()
         {
-            if(_playerColor == TeamsColors.GetColorFromTeam(Team.Blue))
-                _playerColor = TeamsColors.GetColorFromTeam(Team.Red);
-            else if (_playerColor == TeamsColors.GetColorFromTeam(Team.Red))
-                _playerColor = TeamsColors.GetColorFromTeam(Team.Blue);
+            if (_playerColor == TeamsColors.BlueColor)
+                _playerColor = TeamsColors.RedColor;
+            else if (_playerColor == TeamsColors.RedColor)
+                _playerColor = TeamsColors.BlueColor;
             else
-                _playerColor = TeamsColors.GetColorFromTeam(Team.Blue);
-            _playerSettings.Team = _playerColor;
+                _playerColor = TeamsColors.BlueColor;
+
+            _playerSettings.TeamColor = _playerColor;
         }
 
         private void OnReadyClicked()

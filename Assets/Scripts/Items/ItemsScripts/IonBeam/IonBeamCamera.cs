@@ -76,7 +76,7 @@ public class IonBeamCamera : EntityBehaviour
     private void ChangeRenderOnTaGGameobjects(bool state)
     {
         GameObject[] TaggedGameobjectsToIgnore;
-        TaggedGameobjectsToIgnore = GameObject.FindGameObjectsWithTag("IonBeamCamIgnore");
+        TaggedGameobjectsToIgnore = GameObject.FindGameObjectsWithTag(Constants.Tag.IonBeamCamIgnore);
 
         foreach(GameObject GoToIgnore in TaggedGameobjectsToIgnore)
         {

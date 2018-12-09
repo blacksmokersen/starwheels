@@ -14,17 +14,17 @@ namespace Items
         [SerializeField] private Transform raycastTransformOrigin;
         [SerializeField] private AudioSource explosionSource;
 
-        private ParticleSystem _explosionParticleSystem;
-        private Vector2 offset;
+        //private ParticleSystem _explosionParticleSystem;
+        //private Vector2 offset;
         private bool _onExplode = false;
         private bool _damagePlayer = false;
-        private Coroutine _laserBehaviour;
+        //private Coroutine _laserBehaviour;
 
         //CORE
 
         private void Awake()
         {
-            _explosionParticleSystem = explosionParticles.GetComponent<ParticleSystem>();
+            //_explosionParticleSystem = explosionParticles.GetComponent<ParticleSystem>();
             _onExplode = true;
             // GameObject owner = GetComponent<Ownership>().gameObject;
             //float currentTimer = WarningPosition.transform.localScale.x;
@@ -42,7 +42,6 @@ namespace Items
 
         private void Update()
         {
-            offset = new Vector2(0, Time.deltaTime * ionBeamLaserSettings.SpeedOffset);
           //  if (effectiveAOE != null)
               //  effectiveAOE.GetComponent<Renderer>().material.mainTextureOffset += offset;
 
@@ -85,7 +84,7 @@ namespace Items
                     explosionParticles.transform.position = hit.point;
                     Destroy(effectiveAOE);
                     Destroy(warningPosition);
-                    _laserBehaviour = StartCoroutine(ParticuleEffect());
+                    //_laserBehaviour = StartCoroutine(ParticuleEffect());
                     _onExplode = false;
                 }
                 else
@@ -125,7 +124,7 @@ namespace Items
         {
             if (_damagePlayer)
             {
-                if (other.gameObject.CompareTag(Constants.Tag.KartCollider))
+                if (other.gameObject.CompareTag(Constants.Tag.KartHealthHitBox))
                 {
                     Debug.Log("Hit");
                     //  CheckCollision(other.gameObject);

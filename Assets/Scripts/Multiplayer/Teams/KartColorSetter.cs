@@ -37,9 +37,9 @@ namespace Multiplayer.Teams
 
         public void SetKartColor(Color color)
         {
-            if(color == TeamsColors.GetColorFromTeam(Team.Blue))
+            if(color == TeamsColors.BlueColor)
                 targetKartRenderer.material = _blueKartMaterial;
-            else if (color == TeamsColors.GetColorFromTeam(Team.Red))
+            else if (color == TeamsColors.RedColor)
                 targetKartRenderer.material = _redKartMaterial;
             else
                 targetKartRenderer.material = _whiteKartMaterial;
