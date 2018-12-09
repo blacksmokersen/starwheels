@@ -4,23 +4,23 @@ using ThrowingSystem;
 
 namespace GameModes.Totem
 {
+    [DisallowMultipleComponent]
     [RequireComponent(typeof(TotemPicker))]
     public class TotemPossession : GlobalEventListener
     {
+        [SerializeField] private Items.Inventory _inventory;
+
+        private bool _canUseItems = true; // Local bool for possession
+
         // BOLT
 
         public override void OnEvent(TotemThrown evnt)
         {
-            var totem = GameObject.FindGameObjectWithTag(Constants.Tag.Totem);
-            Debug.Log(totem.name);
-            if (!totem) return;
+            var totem = GetTotem();
 
             var totemEntity = totem.GetComponent<BoltEntity>();
 
-            if (evnt.OwnerID ==
-                totemEntity.GetState<IItemState>().
-                OwnerID ||
-                evnt.OwnerID == -1) // The owner of the totem is throwing it || or it is a totem reset
+            if (evnt.OwnerID == totemEntity.GetState<IItemState>().OwnerID || evnt.OwnerID == -1) // The owner of the totem is throwing it || or it is a totem reset
             {
                 totem.GetComponent<TotemBehaviour>().UnsetParent();
 
@@ -33,41 +33,77 @@ namespace GameModes.Totem
                         kartThrowing.GetComponentInChildren<ThrowableLauncher>().Throw(totemEntity.GetComponent<Throwable>(), throwingDirection);
                     }
                 }
+
+                if(!_canUseItems)
+                {
+                    CanUseItem(true);
+                }
             }
         }
 
         public override void OnEvent(TotemPicked evnt)
         {
-            var totem = GameObject.FindGameObjectWithTag(Constants.Tag.Totem);
-            if (!totem) return;
-
             var kart = MyExtensions.KartExtensions.GetKartWithID(evnt.NewOwnerID);
 
             if (kart)
             {
                 var newOwnerKart = MyExtensions.KartExtensions.GetKartWithID(evnt.NewOwnerID);
                 var kartTotemSlot = newOwnerKart.GetComponentInChildren<TotemSlot>().transform;
-                totem.GetComponent<TotemBehaviour>().SetParent(kartTotemSlot, evnt.NewOwnerID);
+                GetTotem().GetComponent<TotemBehaviour>().SetParent(kartTotemSlot, evnt.NewOwnerID);
+
+                if (evnt.KartEntity.isOwner)
+                {
+                    CanUseItem(false);
+                }
+                else if (!_canUseItems)
+                {
+                    CanUseItem(true);
+                }
             }
             else
             {
-                Debug.LogError("Owner not found.");
-                totem.transform.SetParent(null);
+                Debug.LogError("Owner not found !");
             }
         }
 
         public override void OnEvent(PlayerHit evnt)
         {
             var kartOwnerID = evnt.PlayerEntity.GetState<IKartState>().OwnerID;
-            var totemBehaviour = GameObject.FindGameObjectWithTag(Constants.Tag.Totem).GetComponent<TotemBehaviour>();
-
-            Debug.Log("Kart Owner ID  : " + kartOwnerID);
-            Debug.Log("Local totem Owner ID  : " + totemBehaviour.LocalOwnerID);
+            var totemBehaviour = GetTotem().GetComponent<TotemBehaviour>();
 
             if (kartOwnerID == totemBehaviour.LocalOwnerID)
             {
                 totemBehaviour.UnsetParent();
+
+                if (evnt.PlayerEntity.isOwner)
+                {
+                    CanUseItem(true);
+                }
             }
+        }
+
+        // PRIVATE
+
+        private GameObject GetTotem()
+        {
+            var totem = GameObject.FindGameObjectWithTag(Constants.Tag.Totem);
+
+            if (totem)
+            {
+                return totem;
+            }
+            else
+            {
+                Debug.LogError("Totem was not found !");
+                return null;
+            }
+        }
+
+        private void CanUseItem(bool b)
+        {
+            _inventory.StopAllCoroutines(); // Stop any anti-spam routine
+            _inventory.CanUseItem = b;
+            _canUseItems = b;
         }
     }
 }
