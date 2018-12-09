@@ -7,15 +7,14 @@ namespace Abilities
 {
     public class TPBackAbility : Ability, IControllable
     {
-        [SerializeField] private TPBackSettings _tPBackSettings;
+        [Header("Launcher")]
         [SerializeField] private ThrowableLauncher _throwableLauncher;
 
         [Header("Effects")]
-        [SerializeField] private ParticleSystem _reloadParticlePrefab;
-        [SerializeField] private int _reloadParticleNumber;
         [SerializeField] private AudioSource _useTpBackSound;
         [SerializeField] private GameObject _kartMeshes;
 
+        private TPBackSettings _tPBackSettings;
         private ParticleSystem _reloadEffect;
         private TPBackBehaviour _tpBack = null;
         private Rigidbody _rb;
@@ -24,6 +23,7 @@ namespace Abilities
 
         private void Awake()
         {
+            _tPBackSettings = (TPBackSettings) abilitySettings;
             _rb = GetComponentInParent<Rigidbody>();
         }
 

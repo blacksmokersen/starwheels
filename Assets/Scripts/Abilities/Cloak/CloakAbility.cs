@@ -5,19 +5,31 @@ namespace Abilities
 {
     public class CloakAbility : Ability, IControllable
     {
-        [SerializeField] private CloakSettings _cloakSettings;
+        [Header("Meshes and Animation")]
         [SerializeField] private GameObject _cloakEffect;
         [SerializeField] private GameObject[] _kartMeshes;
         [SerializeField] private Animator _animator;
 
+        [Header("Audio Sources")]
         [SerializeField] private AudioSource _useCloakSound;
         [SerializeField] private AudioSource _endCloakSound;
+
+        private CloakSettings _cloakSettings;
+
+        private void Awake()
+        {
+            _cloakSettings = (CloakSettings) abilitySettings;
+        }
+
+        // BOLT
 
         public override void SimulateController()
         {
             if (gameObject.activeInHierarchy)
                 MapInputs();
         }
+
+        // PUBLIC
 
         public void MapInputs()
         {
@@ -39,6 +51,8 @@ namespace Abilities
             StartCoroutine(Cooldown());
         }
 
+        // PRIVATE
+
         private IEnumerator CloakDuration(float Duration)
         {
             yield return new WaitForSeconds(1);
@@ -59,7 +73,7 @@ namespace Abilities
             }
         }
 
-        public void SendCloakEvent()
+        private void SendCloakEvent()
         {
             var cloakEvent = CloakAbilityEvent.Create();
             cloakEvent.ActivationBool = CanUseAbility;

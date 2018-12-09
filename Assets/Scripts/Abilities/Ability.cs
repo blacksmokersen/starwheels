@@ -9,7 +9,7 @@ namespace Abilities
     {
         [Header("Ability Settings")]
         public bool CanUseAbility = true;
-        [SerializeField] private AbilitySettings _abilitySettings;
+        [SerializeField] protected AbilitySettings abilitySettings;
 
         [Header("Reload Effects")]
         [SerializeField] private ParticleSystem _particleSystem;
@@ -20,7 +20,7 @@ namespace Abilities
         protected IEnumerator Cooldown()
         {
             CanUseAbility = false;
-            yield return new WaitForSeconds(_abilitySettings.CooldownDuration);
+            yield return new WaitForSeconds(abilitySettings.CooldownDuration);
             CanUseAbility = true;
             OnAbilityReload.Invoke();
             ReloadEffects();
@@ -28,7 +28,7 @@ namespace Abilities
 
         protected void ReloadEffects()
         {
-            _particleSystem.Emit(_abilitySettings.ReloadParticleNumber);
+            _particleSystem.Emit(abilitySettings.ReloadParticleNumber);
         }
     }
 }

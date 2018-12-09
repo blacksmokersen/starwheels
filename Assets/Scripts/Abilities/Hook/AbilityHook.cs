@@ -21,7 +21,6 @@ namespace Abilities
 
         public override void SimulateController()
         {
-            if(AbilitySettings.ActiveAbility == "Hook")
             MapInputs();
         }
 
