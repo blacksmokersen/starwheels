@@ -24,7 +24,7 @@ namespace GameModes
 
         public override void OnEvent(GameOver evnt)
         {
-            var winningTeam = TeamsColors.GetTeamFromColor(evnt.WinningTeam);
+            var winningTeam = evnt.WinningTeam.GetTeam();
 
             _endGameMenu.SetActive(true);
             _endGameMenu.GetComponent<Menu.GameOverMenu>().SetWinnerTeam(winningTeam);

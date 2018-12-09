@@ -23,12 +23,6 @@ namespace Items
             _rocketLock = GetComponentInChildren<RocketLockTarget>();
         }
 
-        private new void Start()
-        {
-            base.Start();
-            _rocketLock.Ownership = Ownership;
-        }
-
         private new void FixedUpdate()
         {
             TurnTowardTarget();

@@ -53,7 +53,7 @@ namespace GameModes
         protected void EndGame()
         {
             GameOver goEvent = GameOver.Create();
-            goEvent.WinningTeam = TeamsColors.GetColorFromTeam(WinnerTeam);
+            goEvent.WinningTeam = WinnerTeam.GetColor();
             goEvent.Send();
 
             var playerInputsList = FindObjectsOfType<MonoBehaviour>().OfType<IControllable>();
@@ -77,7 +77,7 @@ namespace GameModes
         protected void IncreaseScore(Team team)
         {
             ScoreIncreased scoreIncreased = ScoreIncreased.Create();
-            scoreIncreased.Team = TeamsColors.GetColorFromTeam(team);
+            scoreIncreased.Team = team.GetColor();
             switch (team)
             {
                 case Team.Blue:

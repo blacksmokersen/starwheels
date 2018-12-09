@@ -2,18 +2,16 @@
 {
     public class GuileBehaviour : ProjectileBehaviour
     {
-        private new void Start()
+        private void Start()
         {
-            base.Start();
             rb.useGravity = false;
         }
 
-        // We override it because we don't want to call CheckGrounded
-        new void Update() { }
+        // BOLT
 
         public override void Attached()
         {
-            DestroyObject(10f);
+            DestroyObject(10f); // In case item goes OOB
         }
     }
 }

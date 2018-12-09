@@ -156,6 +156,7 @@ namespace Photon.Lobby
         public override void SceneLoadLocalDone(string map)
         {
             BoltConsole.Write("Scene loaded : " + map, Color.yellow);
+            Debug.Log("[Lobby] Scene loaded : " + map);
 
             try
             {

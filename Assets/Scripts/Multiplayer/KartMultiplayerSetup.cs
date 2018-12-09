@@ -31,7 +31,7 @@ namespace Network
 
             if (entity.isOwner)
             {
-                state.Team = _playerSettings.Team;
+                state.Team = _playerSettings.TeamColor;
                 state.Nickname = _playerSettings.Nickname;
                 state.OwnerID = _playerSettings.ConnectionID;
 
@@ -64,7 +64,7 @@ namespace Network
 
         private void ColorChanged()
         {
-            GetComponent<Player>().Team = TeamsColors.GetTeamFromColor(state.Team);
+            GetComponent<Player>().Team = state.Team.GetTeam();
             var panel = GetComponentInChildren<Common.HUD.NicknamePanel>();
             if (panel) panel.SetFrameRendererColor(state.Team);
         }

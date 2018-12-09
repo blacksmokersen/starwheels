@@ -42,13 +42,13 @@ namespace GameModes.Totem
                 FindObjectOfType<TotemSpawner>().RespawnTotem();
 
                 TotemWallHit totemWallHitEvent = TotemWallHit.Create();
-                totemWallHitEvent.Team = TeamsColors.GetColorFromTeam(OwnerTeam);
+                totemWallHitEvent.Team = OwnerTeam.GetColor();
                 totemWallHitEvent.Send();
 
                 if (state.Lives <= 0)
                 {
                     GameOver gameOverEvent = GameOver.Create();
-                    gameOverEvent.WinningTeam = TeamsColors.GetColorFromTeam(OwnerTeam.OppositeTeam());
+                    gameOverEvent.WinningTeam = OwnerTeam.OppositeTeam().GetColor();
                     gameOverEvent.Send();
 
                     if (OnWallDestroyed != null) OnWallDestroyed.Invoke(OwnerTeam);
