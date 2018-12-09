@@ -25,6 +25,19 @@ namespace GameModes.Totem
             _rb = GetComponent<Rigidbody>();
         }
 
+        private void FixedUpdate()
+        {
+            if (_parent != null)
+            {
+                Debug.Log("I am controller");
+                transform.position = _parent.position;
+            }
+            else
+            {
+                Slowdown();
+            }
+        }
+
         // BOLT
 
         public override void Attached()
@@ -34,18 +47,6 @@ namespace GameModes.Totem
             if (entity.isOwner)
             {
                 state.OwnerID = -1;
-            }
-        }
-
-        public override void SimulateOwner()
-        {
-            if (_parent != null)
-            {
-                transform.position = _parent.position;
-            }
-            else
-            {
-                Slowdown();
             }
         }
 
@@ -112,11 +113,12 @@ namespace GameModes.Totem
             if (_isSlowingDown)
             {
                 _rb.velocity *= _slowdownFactor;
-            }
-            if (_rb.velocity.magnitude < _stopMagnitudeThreshold)
-            {
-                _isSlowingDown = false;
-                _rb.velocity = Vector3.zero;
+
+                if (_rb.velocity.magnitude < _stopMagnitudeThreshold)
+                {
+                    _isSlowingDown = false;
+                    _rb.velocity = Vector3.zero;
+                }
             }
         }
 
