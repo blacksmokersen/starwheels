@@ -55,7 +55,9 @@ namespace Items
 
         public void DisplayItem(string itemNameToDisplay, int itemCountToDisplay, Direction direction)
         {
-            _direction = _throwableLauncher.GetThrowingDirection();
+            HideItem();
+
+            _direction = direction;
 
             if (_inventory.CurrentItemCount > 0)
             {
@@ -178,55 +180,13 @@ namespace Items
                         #endregion
                 }
             }
-            else
-            {
-               HideItem(itemNameToDisplay);
-            }
         }
 
-        public void HideItem(string itemNameToDisplay)
+        public void HideItem()
         {
-            switch (itemNameToDisplay)
-            {
-                case "Disk":
-                    GreenItem.SetActive(false); //Activating the empty game object green
-                    GreenItem.transform.GetChild(0).gameObject.SetActive(false); //Activating the front green shield on the hierarchie
-                    GreenItem.transform.GetChild(1).gameObject.SetActive(false); //Activating the back green shield on the hierarchie
-
-                    GreenItem.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.SetActive(false); //Activating the disk on the hierarchie
-                    GreenItem.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.SetActive(false); //Activating the Mine on the hierarchie
-                    break;
-
-                case "Mine":
-                    GreenItem.SetActive(false); //Activating the Green Shield
-                    GreenItem.transform.GetChild(0).gameObject.SetActive(false); //Activating the front green shield on the hierarchie
-                    GreenItem.transform.GetChild(1).gameObject.SetActive(false); //Activating the back green shield on the hierarchie
-
-                    GreenItem.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(false); //Activating the Mine on the hierarchie
-                    GreenItem.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.SetActive(false); //Activating the Mine on the hierarchie
-                    break;
-
-                case "Guile":
-                    GreenItem.SetActive(false); //Activating the Green Shield
-                    GreenItem.transform.GetChild(0).gameObject.SetActive(false); //Activating the front green shield on the hierarchie
-                    GreenItem.transform.GetChild(1).gameObject.SetActive(false); //Activating the back green shield on the hierarchie
-
-                    GreenItem.transform.GetChild(0).gameObject.transform.GetChild(2).gameObject.SetActive(false); //Activating the Guile on the hierarchie
-                    GreenItem.transform.GetChild(1).gameObject.transform.GetChild(2).gameObject.SetActive(false); //Activating the Mine on the hierarchie
-                    break;
-
-                case "Rocket":
-                    PurpleItem.SetActive(false); //Activating the Purple Shield
-                    PurpleItem.transform.GetChild(0).gameObject.SetActive(false); //Activating the front purple shield on the hierarchie
-                    PurpleItem.transform.GetChild(1).gameObject.SetActive(false); //Activating the back purple shield on the hierarchie
-                    break;
-
-                case "IonBeam":
-                    GoldItem.SetActive(false); //Activating the Purple Shield
-                    GoldItem.transform.GetChild(0).gameObject.SetActive(false); //Activating the front purple shield on the hierarchie
-                    GoldItem.transform.GetChild(1).gameObject.SetActive(false); //Activating the back purple shield on the hierarchie
-                    break;
-            }
+            GreenItem.SetActive(false); //Activating the empty game object green
+            PurpleItem.SetActive(false); //Activating the Purple Shield
+            GoldItem.SetActive(false); //Activating the Purple Shield
         }
 
         // PRIVATE
