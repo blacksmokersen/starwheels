@@ -30,10 +30,15 @@ namespace Engine
         private bool _enabled = true;
 
         private float _curveTime;
+        private float _DecCurveTime;
+        private float _DecCurveTimeSave;
+        private float _baseTimer;
+        private float _curveTimeSave;
         private float _startAccCurveTimer;
         private float _startDecCurveTimer;
         private float _curveAccVelocityValue;
         private float _curveDecVelocityValue;
+        private float _inertiaStart = 20;
 
         // CORE
 
@@ -125,6 +130,82 @@ namespace Engine
         private void CurveVelocityHandler()
         {
 
+            /*
+
+            if (Input.GetAxis(Constants.Input.Accelerate) <= 0.1f)
+            {
+                _startAccCurveTimer = Time.time;
+                _curveTime = Mathf.Clamp((_startDecCurveTimer - Time.time), 0, Settings.DurationDeccelerationCurve);
+                _curveDecVelocityValue = Settings.DeccelerationCurveVelocity.Evaluate(_curveTime);
+            }
+            else
+            {
+                _curveTime = Mathf.Clamp((Time.time - _startAccCurveTimer), 0, Settings.DurationAccelerationCurve);
+                _curveAccVelocityValue = Settings.AccelerationCurveVelocity.Evaluate(_curveTime);
+                _startDecCurveTimer = Time.time + Settings.DurationDeccelerationCurve;
+            }
+            */
+
+
+
+
+            if (Input.GetAxis(Constants.Input.Accelerate) <= 0.1f)
+            {
+                if (CurrentSpeed > 3)
+                {
+                    _curveTimeSave = _curveTime;
+                    _DecCurveTime = Mathf.Clamp(((Time.time) - _startDecCurveTimer), 0, Settings.DurationAccelerationCurve);
+                }
+                else
+                {
+                    _curveTime = 0;
+                    _curveTimeSave = 0;
+                    _DecCurveTime = 0;
+                    _DecCurveTimeSave = 0;
+                }
+                _startAccCurveTimer = Time.time;
+
+            }
+            else
+            {
+                _DecCurveTimeSave = _DecCurveTime;
+                //  _curveTime = Mathf.Clamp((Time.time - (_startAccCurveTimer - _DecCurveTime)), 0, Settings.DurationAccelerationCurve);
+                _curveTime = Mathf.Clamp((Time.time - (_startAccCurveTimer - (_curveTimeSave - _DecCurveTimeSave))), 0, Settings.DurationAccelerationCurve);
+                _startDecCurveTimer = Time.time;
+
+            }
+
+
+
+
+            #region OldStuff
+            /*
+            if (Input.GetAxis(Constants.Input.Accelerate) <= 0.1f)
+            {
+                _startAccCurveTimer = Time.time;
+                _baseTimer = Mathf.Clamp((Time.time - _startDecCurveTimer), 0, Settings.DurationDeccelerationCurve);
+                _curveTimeSave = _curveTime;
+                _curveTimeSave = _baseTimer;
+
+
+            }
+            else
+            {
+
+                //  _curveTime = Mathf.Clamp((Time.time - _startAccCurveTimer), 0, Settings.DurationAccelerationCurve);
+
+                // _baseTimer = Mathf.Clamp((Time.time - _startAccCurveTimer), 0, Settings.DurationAccelerationCurve);
+
+                _curveTime = Mathf.Clamp((Time.time - _startAccCurveTimer) + _curveTimeSave, 0, Settings.DurationAccelerationCurve);
+                _curveAccVelocityValue = Settings.AccelerationCurveVelocity.Evaluate(_curveTime);
+                _curveDecVelocityValue = Settings.DeccelerationCurveVelocity.Evaluate(Settings.DurationAccelerationCurve -_baseTimer);
+                _startDecCurveTimer = Time.time;
+            }
+            */
+
+
+
+            /*
             if (Input.GetAxis(Constants.Input.Accelerate) <= 0.1f)
             {
                 _startAccCurveTimer = Time.time;
@@ -137,6 +218,11 @@ namespace Engine
                 _curveAccVelocityValue = Settings.AccelerationCurveVelocity.Evaluate(_curveTime);
                 _startDecCurveTimer = Time.time;
             }
+            */
+
+
+
+
 
 
             /*
@@ -166,28 +252,80 @@ namespace Engine
                 _curveTime = Mathf.Clamp((Time.time - _startCurveTimer), 0, Settings.AccelerationCurveVelocity.length);
             }
             */
+            #endregion
         }
 
         private Rigidbody Accelerate(float value, Rigidbody rb)
         {
-         //   Debug.Log("CurveTimer = " + _curveTime);
-         //   Debug.Log("CurveValue = " + _curveAccVelocityValue);
-         //   Debug.Log("CurveValue = " + _curveDecVelocityValue);
+            Debug.Log("CurveTimer = " + _curveTime);
+            Debug.Log("_curveTimeSave = " + _DecCurveTime);
+            //  Debug.Log("_curveTimeSave = " + _curveTimeSave);
+            //Debug.Log("_deccurveTime = " + _DecCurveTimeSave);
+            // Debug.Log("BaseTimer = " + _baseTimer);
+            Debug.Log("ACCCurveValue = " + _curveAccVelocityValue);
+            //   Debug.Log("DECCurveValue = " + _curveDecVelocityValue);
+            //   Debug.Log("ACCCurveTimer = " + _startAccCurveTimer);
+            //   Debug.Log("DECCurveTimer = " + _startDecCurveTimer);
+
 
             if (_groundCondition && !_groundCondition.Grounded) return rb;
+
+
+            _curveAccVelocityValue = Settings.AccelerationCurveVelocity.Evaluate(_curveTime);
+            rb.AddRelativeForce(Vector3.forward * value * _curveAccVelocityValue, ForceMode.Force);
+
+
+            #region OldStuff2
+            /*
             if (_curveDecVelocityValue > _curveAccVelocityValue)
             {
-              // Debug.Log("CurveDecValue = " + _curveDecVelocityValue);
-              //  _curveAccVelocityValue = Settings.AccelerationCurveVelocity.Evaluate(_curveTime);
+                //  Debug.Log("CurveDecValue = " + _curveDecVelocityValue);
+                //  _curveAccVelocityValue = Settings.AccelerationCurveVelocity.Evaluate(_curveTime);
                 rb.AddRelativeForce(Vector3.forward * value * _curveDecVelocityValue, ForceMode.Force);
             }
             else
             {
-               // Debug.Log("CurveAccValue = " + _curveAccVelocityValue);
-               // _curveAccVelocityValue = Settings.AccelerationCurveVelocity.Evaluate(_curveTime);
+                //  Debug.Log("CurveAccValue = " + _curveAccVelocityValue);
+                // _curveAccVelocityValue = Settings.AccelerationCurveVelocity.Evaluate(_curveTime);
                 rb.AddRelativeForce(Vector3.forward * value * _curveAccVelocityValue, ForceMode.Force);
             }
+            */
+
+
+
+            /*
+            if (_baseTimer != 1)
+            {
+               // Debug.Log("CurveDecValue = " + _curveDecVelocityValue);
+                rb.AddRelativeForce(Vector3.forward * value * _curveDecVelocityValue, ForceMode.Force);
+            }
+            else
+            {
+              //  Debug.Log("CurveAccValue = " + _curveAccVelocityValue);
+                rb.AddRelativeForce(Vector3.forward * value * _curveAccVelocityValue, ForceMode.Force);
+            }
+            */
+
+
+            /*
+            if (_curveTimeSave > _curveTime)
+            {
+                  Debug.Log("CurveDecValue = " + _curveDecVelocityValue);
+                  _curveAccVelocityValue = Settings.AccelerationCurveVelocity.Evaluate(_curveTime);
+                rb.AddRelativeForce(Vector3.forward * value * _curveDecVelocityValue, ForceMode.Force);
+            }
+            else
+            {
+                  Debug.Log("CurveAccValue = " + _curveAccVelocityValue);
+                 _curveAccVelocityValue = Settings.AccelerationCurveVelocity.Evaluate(_curveTime);
+                rb.AddRelativeForce(Vector3.forward * value * _curveAccVelocityValue, ForceMode.Force);
+            }
+            */
+
+            #endregion
+
             return rb;
+
         }
 
         private Rigidbody Decelerate(float value, Rigidbody rb)
