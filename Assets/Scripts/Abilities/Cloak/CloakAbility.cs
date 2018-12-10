@@ -1,28 +1,39 @@
 ﻿using System.Collections;
 using UnityEngine;
-using System;
-using Bolt;
 
 namespace Abilities
 {
-    public class CloakAbility : AbilitiesBehaviour, IControllable
+    public class CloakAbility : Ability, IControllable
     {
-        [SerializeField] private CloakSettings _cloakSettings;
+        [Header("Meshes and Animation")]
         [SerializeField] private GameObject _cloakEffect;
         [SerializeField] private GameObject[] _kartMeshes;
         [SerializeField] private Animator _animator;
 
+        [Header("Audio Sources")]
         [SerializeField] private AudioSource _useCloakSound;
         [SerializeField] private AudioSource _endCloakSound;
 
-        public bool CanUseAbility = true;
-        public BoltEntity BoltEntity;
-        //  public BoltEntity Entity;
+        private CloakSettings _cloakSettings;
+
+        private void Awake()
+        {
+            _cloakSettings = (CloakSettings) abilitySettings;
+        }
+
+        // BOLT
 
         public override void SimulateController()
         {
             if (gameObject.activeInHierarchy)
                 MapInputs();
+        }
+
+        // PUBLIC
+
+        public new void Reload()
+        {
+            UnsetCloack();
         }
 
         public void MapInputs()
@@ -38,42 +49,24 @@ namespace Abilities
 
         public void Use()
         {
-            Debug.Log("used cloak");
+            Debug.Log("Used cloak");
 
             _animator.SetTrigger("ActivateCloakEffect");
             StartCoroutine(CloakDuration(_cloakSettings.CloakDuration));
-            StartCoroutine(AbilityCooldown(_cloakSettings.CooldownDuration));
+            StartCoroutine(Cooldown());
         }
 
-        private IEnumerator AbilityCooldown(float Duration)
-        {
-            CanUseAbility = false;
-            yield return new WaitForSeconds(Duration);
-            CanUseAbility = true;
-        }
+        // PRIVATE
 
         private IEnumerator CloakDuration(float Duration)
         {
             yield return new WaitForSeconds(1);
-            MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useCloakSound);
-            foreach (GameObject mesh in _kartMeshes)
-            {
-                mesh.SetActive(false);
-            }
-            //  if (GetComponentInParent<BoltEntity>() == BoltEntity)
-            _cloakEffect.SetActive(true);
-
+            SetCloack();
             yield return new WaitForSeconds(Duration);
-
-            _cloakEffect.SetActive(false);
-            MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_endCloakSound);
-            foreach (GameObject mesh in _kartMeshes)
-            {
-                mesh.SetActive(true);
-            }
+            UnsetCloack();
         }
 
-        public void SendCloakEvent()
+        private void SendCloakEvent()
         {
             var cloakEvent = CloakAbilityEvent.Create();
             cloakEvent.ActivationBool = CanUseAbility;
@@ -81,5 +74,24 @@ namespace Abilities
             cloakEvent.Send();
         }
 
+        private void SetCloack()
+        {
+            MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useCloakSound);
+            foreach (GameObject mesh in _kartMeshes)
+            {
+                mesh.SetActive(false);
+            }
+            _cloakEffect.SetActive(true);
+        }
+
+        private void UnsetCloack()
+        {
+            _cloakEffect.SetActive(false);
+            MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_endCloakSound);
+            foreach (GameObject mesh in _kartMeshes)
+            {
+                mesh.SetActive(true);
+            }
+        }
     }
 }

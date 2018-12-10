@@ -12,40 +12,42 @@ namespace Abilities
         private GameObject[] _abilities;
         private PlayerSettings _playerSettings;
 
+        // CORE
+
         private void Awake()
         {
             _playerSettings = Resources.Load<PlayerSettings>(Constants.Resources.PlayerSettings);
-
             _abilities = new GameObject[3] { _jumpingAbility, _tpBackAbility, _cloakAbility };
+            SetAbility(_playerSettings.AbilityIndex);
+        }
 
-            for(int i = 0; i < _abilities.Length; i++)
+        // PUBLIC
+
+        public void SetAbility(int index)
+        {
+            _playerSettings.AbilityIndex = index;
+
+            for (int i = 0; i < _abilities.Length; i++)
             {
                 if (i == _playerSettings.AbilityIndex)
+                {
                     _abilities[i].SetActive(true);
+                }
                 else
+                {
                     _abilities[i].SetActive(false);
+                }
             }
         }
 
-        public void SetJumpingAbility()
+        public Ability GetCurrentAbility()
         {
-            foreach (var ability in _abilities)
-                ability.SetActive(false);
-            _jumpingAbility.SetActive(true);
-        }
-
-        public void SetTPBackAbility()
-        {
-            foreach (var ability in _abilities)
-                ability.SetActive(false);
-            _tpBackAbility.SetActive(true);
-        }
-
-        public void SetCloakAbility()
-        {
-            foreach (var ability in _abilities)
-                ability.SetActive(false);
-            _cloakAbility.SetActive(true);
+            var ability = _abilities[_playerSettings.AbilityIndex].GetComponent<Ability>();
+            if (ability)
+                return ability;
+            else
+                Debug.LogError("Could not find current ability.");
+            return null;
         }
     }
 }

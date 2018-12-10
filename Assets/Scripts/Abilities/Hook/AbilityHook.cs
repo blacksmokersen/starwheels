@@ -3,7 +3,7 @@ using Items;
 
 namespace Abilities
 {
-    public class AbilityHook : AbilitiesBehaviour, IControllable
+    public class AbilityHook : Ability, IControllable
     {
         [SerializeField] private GameObject prefabHook;
         [SerializeField] private HookSettings hookSettings;
@@ -21,7 +21,6 @@ namespace Abilities
 
         public override void SimulateController()
         {
-            if(abilitiesBehaviourSettings.ActiveAbility == "Hook")
             MapInputs();
         }
 

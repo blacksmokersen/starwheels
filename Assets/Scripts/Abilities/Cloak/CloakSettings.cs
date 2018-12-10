@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Abilities Settings/Cloak")]
-public class CloakSettings : ScriptableObject
+namespace Abilities
 {
-    [Header("Duration")]
-    public float CloakDuration;
-
-    [Header("Cooldown")]
-    public float CooldownDuration;
+    [CreateAssetMenu(menuName = "Abilities Settings/Cloak")]
+    public class CloakSettings : AbilitySettings
+    {
+        [Header("Cloack")]
+        public float CloakDuration;
+    }
 }
