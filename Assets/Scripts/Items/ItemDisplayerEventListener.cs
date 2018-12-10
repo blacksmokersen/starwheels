@@ -20,12 +20,11 @@ namespace Items
         public override void OnEvent(ShowKartDisplayItem evnt)
         {
             var entity = GetComponentInParent<BoltEntity>();
-
-            Debug.Log("Received display event : " + evnt.ItemCount);
+            Debug.Log("Received event for : " + evnt.ItemName);
 
             if (entity == evnt.Entity)
             {
-                var direction = evnt.DisplayForward ? Direction.Forward : Direction.Backward;
+                Direction direction = (Direction) System.Enum.Parse(typeof(Direction), evnt.Direction);
                 _itemDisplayer.DisplayItem(evnt.ItemName, evnt.ItemCount, direction);
             }
         }
