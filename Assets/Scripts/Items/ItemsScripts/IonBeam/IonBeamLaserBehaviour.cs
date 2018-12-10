@@ -18,7 +18,7 @@ namespace Items
         //private Vector2 offset;
         private bool _onExplode = false;
         private bool _damagePlayer = false;
-        //private Coroutine _laserBehaviour;
+        private Coroutine _laserBehaviour;
 
         //CORE
 
@@ -84,7 +84,7 @@ namespace Items
                     explosionParticles.transform.position = hit.point;
                     Destroy(effectiveAOE);
                     Destroy(warningPosition);
-                    //_laserBehaviour = StartCoroutine(ParticuleEffect());
+                    _laserBehaviour = StartCoroutine(ParticuleEffect());
                     _onExplode = false;
                 }
                 else
