@@ -43,12 +43,12 @@ namespace Items
         {
             if (_inventory.CurrentItem != null)
             {
-                Debug.Log("Sending event : " + _inventory.CurrentItemCount);
+                Debug.Log("Sending event for item : " + _inventory.CurrentItem.Name);
                 var showDisplayEvent = ShowKartDisplayItem.Create();
                 showDisplayEvent.Entity = GetComponentInParent<BoltEntity>();
                 showDisplayEvent.ItemName = _inventory.CurrentItem.Name;
                 showDisplayEvent.ItemCount = _inventory.CurrentItemCount;
-                showDisplayEvent.DisplayForward = (_throwableLauncher.GetThrowingDirection() == Direction.Forward);
+                showDisplayEvent.Direction = _throwableLauncher.GetThrowingDirection().ToString();
                 showDisplayEvent.Send();
             }
         }
@@ -59,7 +59,7 @@ namespace Items
 
             _direction = direction;
 
-            if (_inventory.CurrentItemCount > 0)
+            if (itemCountToDisplay > 0)
             {
                 switch (itemNameToDisplay)
                 {
@@ -197,20 +197,20 @@ namespace Items
             {
                 _itemIsForward = true;
                 _itemIsBackward = false;
-                OnJoystickDirectionChanged.Invoke();
+                SendShowDisplayEvent();
 
             }
             else if (Input.GetAxis(Constants.Input.UpAndDownAxis) < -0.3f && _itemIsBackward == false)
             {
                 _itemIsBackward = true;
                 _itemIsForward = false;
-                OnJoystickDirectionChanged.Invoke();
+                SendShowDisplayEvent();
             }
             else if(Math.Abs(Input.GetAxis(Constants.Input.UpAndDownAxis)) < 0.3f && (_itemIsBackward || _itemIsForward))
             {
                 _itemIsForward = false;
                 _itemIsBackward = false;
-                OnJoystickDirectionChanged.Invoke();
+                SendShowDisplayEvent();
             }
         }
     }

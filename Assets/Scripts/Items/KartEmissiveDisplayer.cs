@@ -15,7 +15,6 @@ namespace Items
         public GameObject Emissive;
 
         private string _emissiveToDisplay;
-        private int _itemCountToDisplay;
         private Inventory _inventory;
 
         public void Awake()
@@ -31,7 +30,7 @@ namespace Items
             if (entity == evnt.Entity)
             {
                 _emissiveToDisplay = evnt.ItemName;
-                _itemCountToDisplay = evnt.ItemCount;
+
                 if (evnt.ItemCount > 0)
                 {
                     DisplayEmissive();
@@ -68,10 +67,7 @@ namespace Items
 
         public void HideEmissive()
         {
-            if (_itemCountToDisplay == 1)
-            {
-                Emissive.GetComponent<MeshRenderer>().material = DefaultMaterial;
-            }
+            Emissive.GetComponent<MeshRenderer>().material = DefaultMaterial;
         }
     }
 }
