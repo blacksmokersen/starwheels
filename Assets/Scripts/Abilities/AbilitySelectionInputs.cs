@@ -21,17 +21,17 @@ namespace Abilities
             if (Input.GetKeyDown(KeyCode.J))
             {
                 Debug.Log(_abilitySetter == null);
-                _abilitySetter.SetJumpingAbility();
+                _abilitySetter.SetAbility(0);
             }
             else if (Input.GetKeyDown(KeyCode.T))
             {
                 Debug.Log("T");
-                _abilitySetter.SetTPBackAbility();
+                _abilitySetter.SetAbility(1);
             }
             else if (Input.GetKeyDown(KeyCode.C))
             {
                 Debug.Log("C");
-                _abilitySetter.SetCloakAbility();
+                _abilitySetter.SetAbility(2);
             }
         }
     }

@@ -18,7 +18,6 @@ namespace Abilities
             {
                 _cloakAbilityGO.SetActive(true);
                 _cloakAbility.CanUseAbility = evnt.ActivationBool;
-                _cloakAbility.BoltEntity = evnt.Entity;
                 _cloakAbility.Use();
             }
         }

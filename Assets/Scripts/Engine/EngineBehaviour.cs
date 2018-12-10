@@ -257,12 +257,12 @@ namespace Engine
 
         private Rigidbody Accelerate(float value, Rigidbody rb)
         {
-            Debug.Log("CurveTimer = " + _curveTime);
-            Debug.Log("_curveTimeSave = " + _DecCurveTime);
+            // Debug.Log("CurveTimer = " + _curveTime);
+            // Debug.Log("_curveTimeSave = " + _DecCurveTime);
             //  Debug.Log("_curveTimeSave = " + _curveTimeSave);
             //Debug.Log("_deccurveTime = " + _DecCurveTimeSave);
             // Debug.Log("BaseTimer = " + _baseTimer);
-            Debug.Log("ACCCurveValue = " + _curveAccVelocityValue);
+            // Debug.Log("ACCCurveValue = " + _curveAccVelocityValue);
             //   Debug.Log("DECCurveValue = " + _curveDecVelocityValue);
             //   Debug.Log("ACCCurveTimer = " + _startAccCurveTimer);
             //   Debug.Log("DECCurveTimer = " + _startDecCurveTimer);

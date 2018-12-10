@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Bolt;
 using ThrowingSystem;
+using System.Collections;
 
 namespace GameModes.Totem
 {
@@ -8,9 +9,11 @@ namespace GameModes.Totem
     [RequireComponent(typeof(TotemPicker))]
     public class TotemPossession : GlobalEventListener
     {
+        [Header("Disallow on Totem Picking")]
         [SerializeField] private Items.Inventory _inventory;
+        [SerializeField] private Abilities.AbilitySetter _abilitySetter;
 
-        private bool _canUseItems = true; // Local bool for possession
+        private bool _canUseItemAndAbility = true; // Local bool for possession (to compensate lag)
 
         // BOLT
 
@@ -34,9 +37,9 @@ namespace GameModes.Totem
                     }
                 }
 
-                if(!_canUseItems)
+                if(!_canUseItemAndAbility) // I was the totem owner but threw it
                 {
-                    CanUseItem(true);
+                    StartCoroutine(CanUseItemAndAbility(true));
                 }
             }
         }
@@ -51,13 +54,13 @@ namespace GameModes.Totem
                 var kartTotemSlot = newOwnerKart.GetComponentInChildren<TotemSlot>().transform;
                 GetTotem().GetComponent<TotemBehaviour>().SetParent(kartTotemSlot, evnt.NewOwnerID);
 
-                if (evnt.KartEntity.isOwner)
+                if (evnt.KartEntity.isOwner) // If I am the new owner of the totem
                 {
-                    CanUseItem(false);
+                    StartCoroutine(CanUseItemAndAbility(false));
                 }
-                else if (!_canUseItems)
+                else if (!_canUseItemAndAbility) // If I was the old owner of the totem
                 {
-                    CanUseItem(true);
+                    StartCoroutine(CanUseItemAndAbility(true));
                 }
             }
             else
@@ -71,13 +74,13 @@ namespace GameModes.Totem
             var kartOwnerID = evnt.PlayerEntity.GetState<IKartState>().OwnerID;
             var totemBehaviour = GetTotem().GetComponent<TotemBehaviour>();
 
-            if (kartOwnerID == totemBehaviour.LocalOwnerID)
+            if (kartOwnerID == totemBehaviour.LocalOwnerID) // The totem owner has been hit
             {
                 totemBehaviour.UnsetParent();
 
-                if (evnt.PlayerEntity.isOwner)
+                if (evnt.PlayerEntity.isOwner) // If I was the totem owner
                 {
-                    CanUseItem(true);
+                    StartCoroutine(CanUseItemAndAbility(true));
                 }
             }
         }
@@ -99,11 +102,25 @@ namespace GameModes.Totem
             }
         }
 
-        private void CanUseItem(bool b)
+        private IEnumerator CanUseItemAndAbility(bool b)
         {
-            _inventory.StopAllCoroutines(); // Stop any anti-spam routine
+            var ability = _abilitySetter.GetCurrentAbility();
+
+            if (b == true)
+            {
+                yield return new WaitForSeconds(3f);
+            }
+            else
+            {
+                Debug.Log("Reloading");
+                _inventory.StopAllCoroutines(); // Stop any anti-spam routine
+                ability.StopAllCoroutines();
+                ability.Reload();
+            }
+
+            ability.CanUseAbility = b;
             _inventory.CanUseItem = b;
-            _canUseItems = b;
+            _canUseItemAndAbility = b;
         }
     }
 }
