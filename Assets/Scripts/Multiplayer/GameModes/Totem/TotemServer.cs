@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Multiplayer.Teams;
 
 namespace GameModes.Totem
 {
@@ -11,7 +10,7 @@ namespace GameModes.Totem
         public override void OnEvent(TotemWallHit evnt)
         {
             Debug.Log("TotemWallHit event received.");
-            var team = evnt.Team.GetTeam();
+            var team = evnt.Team.GetTeam().OppositeTeam();
             IncreaseScore(team);
         }
     }
