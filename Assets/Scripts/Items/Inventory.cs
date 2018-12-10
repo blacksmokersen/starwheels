@@ -63,8 +63,8 @@ namespace Items
             if (CurrentItemCount > 0 && CurrentItem != null && CanUseItem)
             {
                 InstantiateItem();
-                OnItemUse.Invoke(CurrentItem);
                 SetCount(CurrentItemCount - 1);
+                OnItemUse.Invoke(CurrentItem);
                 StartCoroutine(AntiSpamRoutine());
             }
         }
@@ -78,10 +78,9 @@ namespace Items
         public void SetItem(Item item, int count)
         {
             CurrentItem = item;
-            OnItemGet.Invoke(item);
             CurrentItemCount = count;
+            OnItemGet.Invoke(item);
             OnItemCountChange.Invoke(count);
-
         }
 
         public void SetCount(int count)
