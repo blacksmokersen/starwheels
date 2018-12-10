@@ -6,20 +6,23 @@ using System;
 namespace Items
 {
     [RequireComponent(typeof(Inventory))]
-    public class ItemDisplayer : GlobalEventListener
+    public class ItemDisplayer : EntityBehaviour<IKartState>
     {
         [Header("Shields")]
         public GameObject GreenItem;
         public GameObject PurpleItem;
         public GameObject GoldItem;
 
-        private string _itemNameToDisplay;
-        private int _itemCountToDisplay;
+        [Header("Events")]
+        public UnityEvent OnJoystickDirectionChanged;
+
         private Inventory _inventory;
         private ThrowingSystem.ThrowableLauncher _throwableLauncher;
         private Direction _direction;
+        private bool _itemIsForward = false;
+        private bool _itemIsBackward = false;
 
-        public UnityEvent CheckDirection;
+        // CORE
 
         public void Awake()
         {
@@ -27,75 +30,38 @@ namespace Items
             _throwableLauncher = GetComponent<ThrowingSystem.ThrowableLauncher>();
         }
 
+        // BOLT
 
-        public void Update()
+        public override void SimulateController()
         {
             CheckAxis();
         }
 
-        
+        // PUBLIC
 
-        public void HideDisplayEvent()
+        public void SendShowDisplayEvent()
         {
-            var hideDisplayEvent = HideKartDisplayItem.Create();
-            hideDisplayEvent.Entity = GetComponentInParent<BoltEntity>();
             if (_inventory.CurrentItem != null)
             {
-                hideDisplayEvent.ItemName = _inventory.CurrentItem.Name;
-                hideDisplayEvent.ItemCount = _inventory.CurrentItemCount;
-                hideDisplayEvent.Send();
-            }
-        }
-
-        public override void OnEvent(HideKartDisplayItem hideKartDisplayItem)
-        {
-            var entity = GetComponentInParent<BoltEntity>();
-
-            if (entity == hideKartDisplayItem.Entity)
-            {
-                _itemNameToDisplay = hideKartDisplayItem.ItemName;
-                _itemCountToDisplay = hideKartDisplayItem.ItemCount;
-                HideItem();
-            }
-        }
-
-        public void ShowDisplayEvent()
-        {
-            var showDisplayEvent = ShowKartDisplayItem.Create();
-            showDisplayEvent.Entity = GetComponentInParent<BoltEntity>();
-            if (_inventory.CurrentItem != null)
-            {
+                Debug.Log("Sending event for item : " + _inventory.CurrentItem.Name);
+                var showDisplayEvent = ShowKartDisplayItem.Create();
+                showDisplayEvent.Entity = GetComponentInParent<BoltEntity>();
                 showDisplayEvent.ItemName = _inventory.CurrentItem.Name;
                 showDisplayEvent.ItemCount = _inventory.CurrentItemCount;
-                //  showDisplayEvent.Direction = _throwableLauncher.ThrowingDirection.ToString();
+                showDisplayEvent.Direction = _throwableLauncher.GetThrowingDirection().ToString();
                 showDisplayEvent.Send();
             }
         }
 
-        public override void OnEvent(ShowKartDisplayItem showKartDisplayItem)
+        public void DisplayItem(string itemNameToDisplay, int itemCountToDisplay, Direction direction)
         {
-            var entity = GetComponentInParent<BoltEntity>();
+            HideItem();
 
-            if (entity == showKartDisplayItem.Entity)
+            _direction = direction;
+
+            if (itemCountToDisplay > 0)
             {
-                _itemNameToDisplay = showKartDisplayItem.ItemName;
-                _itemCountToDisplay = showKartDisplayItem.ItemCount;
-                _direction = Direction.Forward;
-                
-                DisplayItem();
-            }
-        }
-
-        public void DisplayItem()
-        {
-            if (_inventory.CurrentItemCount > 0)
-            {
-                //  _itemNameToDisplay = _inventory.CurrentItem.Name;
-                _direction = _throwableLauncher.GetThrowingDirection();
-
-
-
-                switch (_itemNameToDisplay)
+                switch (itemNameToDisplay)
                 {
                     #region Disk
                     case "Disk":
@@ -205,70 +171,46 @@ namespace Items
                         break;
                     #endregion
 
+                    #region IonBeam
                     case "IonBeam":
                         GoldItem.SetActive(true); //Activating the Purple Shield
                         GoldItem.transform.GetChild(0).gameObject.SetActive(true); //Activating the front purple shield on the hierarchie
                         GoldItem.transform.GetChild(1).gameObject.SetActive(true); //Activating the back purple shield on the hierarchie
                         break;
+                        #endregion
                 }
-            }
-            else
-            {
-                HideItem();
             }
         }
 
         public void HideItem()
         {
-            if (_itemCountToDisplay == 1)
-            {
-                switch (_itemNameToDisplay)
-                {
-                    case "Disk":
-                        GreenItem.SetActive(false); //Activating the empty game object green
-                        GreenItem.transform.GetChild(0).gameObject.SetActive(false); //Activating the front green shield on the hierarchie
-                        GreenItem.transform.GetChild(1).gameObject.SetActive(false); //Activating the back green shield on the hierarchie
-
-                        GreenItem.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.SetActive(false); //Activating the disk on the hierarchie
-                        break;
-
-                    case "Mine":
-                        GreenItem.SetActive(false); //Activating the Green Shield
-                        GreenItem.transform.GetChild(0).gameObject.SetActive(false); //Activating the front green shield on the hierarchie
-                        GreenItem.transform.GetChild(1).gameObject.SetActive(false); //Activating the back green shield on the hierarchie
-
-                        GreenItem.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(false); //Activating the Mine on the hierarchie
-                        GreenItem.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.SetActive(false); //Activating the Mine on the hierarchie
-                        break;
-
-                    case "Guile":
-                        GreenItem.SetActive(false); //Activating the Green Shield
-                        GreenItem.transform.GetChild(0).gameObject.SetActive(false); //Activating the front green shield on the hierarchie
-                        GreenItem.transform.GetChild(1).gameObject.SetActive(false); //Activating the back green shield on the hierarchie
-
-                        GreenItem.transform.GetChild(0).gameObject.transform.GetChild(2).gameObject.SetActive(false); //Activating the Guile on the hierarchie
-                        break;
-
-                    case "Rocket":
-                        PurpleItem.SetActive(false); //Activating the Purple Shield
-                        PurpleItem.transform.GetChild(0).gameObject.SetActive(false); //Activating the front purple shield on the hierarchie
-                        PurpleItem.transform.GetChild(1).gameObject.SetActive(false); //Activating the back purple shield on the hierarchie
-                        break;
-
-                    case "IonBeam":
-                        GoldItem.SetActive(false); //Activating the Purple Shield
-                        GoldItem.transform.GetChild(0).gameObject.SetActive(false); //Activating the front purple shield on the hierarchie
-                        GoldItem.transform.GetChild(1).gameObject.SetActive(false); //Activating the back purple shield on the hierarchie
-                        break;
-                }
-            }
+            GreenItem.SetActive(false); //Activating the empty game object green
+            PurpleItem.SetActive(false); //Activating the Purple Shield
+            GoldItem.SetActive(false); //Activating the Purple Shield
         }
+
+        // PRIVATE
 
         private void CheckAxis()
         {
-            if(Mathf.Abs(Input.GetAxis(Constants.Input.UpAndDownAxis)) > 0.3)
+            if (Input.GetAxis(Constants.Input.UpAndDownAxis) > 0.3f && _itemIsForward == false)
             {
-                CheckDirection.Invoke();
+                _itemIsForward = true;
+                _itemIsBackward = false;
+                SendShowDisplayEvent();
+
+            }
+            else if (Input.GetAxis(Constants.Input.UpAndDownAxis) < -0.3f && _itemIsBackward == false)
+            {
+                _itemIsBackward = true;
+                _itemIsForward = false;
+                SendShowDisplayEvent();
+            }
+            else if(Math.Abs(Input.GetAxis(Constants.Input.UpAndDownAxis)) < 0.3f && (_itemIsBackward || _itemIsForward))
+            {
+                _itemIsForward = false;
+                _itemIsBackward = false;
+                SendShowDisplayEvent();
             }
         }
     }
