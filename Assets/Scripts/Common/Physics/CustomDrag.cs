@@ -8,6 +8,8 @@ namespace Common.PhysicsUtils
         public float AngularDrag;
         public float SlipCompensationForce;
 
+        [SerializeField] private GroundCondition _groundCondition;
+
         private Rigidbody _rb;
         private float _initialDrag;
         private float _initialAngularDrag;
@@ -54,8 +56,11 @@ namespace Common.PhysicsUtils
 
         private void CompensateSlip()
         {
-            var sideVelocity = new Vector3(transform.InverseTransformDirection(_rb.velocity).x, 0, 0);
-            _rb.AddRelativeForce(-sideVelocity * SlipCompensationForce, ForceMode.Force);
+            if (_groundCondition.Grounded)
+            {
+                var sideVelocity = new Vector3(transform.InverseTransformDirection(_rb.velocity).x, 0, 0);
+                _rb.AddRelativeForce(-sideVelocity * SlipCompensationForce, ForceMode.Force);
+            }
         }
     }
 }
