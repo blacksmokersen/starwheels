@@ -31,6 +31,11 @@ namespace Abilities
 
         // PUBLIC
 
+        public new void Reload()
+        {
+            UnsetCloack();
+        }
+
         public void MapInputs()
         {
             if (Input.GetButtonDown(Constants.Input.UseAbility))
@@ -56,21 +61,9 @@ namespace Abilities
         private IEnumerator CloakDuration(float Duration)
         {
             yield return new WaitForSeconds(1);
-            MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useCloakSound);
-            foreach (GameObject mesh in _kartMeshes)
-            {
-                mesh.SetActive(false);
-            }
-            _cloakEffect.SetActive(true);
-
+            SetCloack();
             yield return new WaitForSeconds(Duration);
-
-            _cloakEffect.SetActive(false);
-            MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_endCloakSound);
-            foreach (GameObject mesh in _kartMeshes)
-            {
-                mesh.SetActive(true);
-            }
+            UnsetCloack();
         }
 
         private void SendCloakEvent()
@@ -79,6 +72,26 @@ namespace Abilities
             cloakEvent.ActivationBool = CanUseAbility;
             cloakEvent.Entity = entity;
             cloakEvent.Send();
+        }
+
+        private void SetCloack()
+        {
+            MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useCloakSound);
+            foreach (GameObject mesh in _kartMeshes)
+            {
+                mesh.SetActive(false);
+            }
+            _cloakEffect.SetActive(true);
+        }
+
+        private void UnsetCloack()
+        {
+            _cloakEffect.SetActive(false);
+            MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_endCloakSound);
+            foreach (GameObject mesh in _kartMeshes)
+            {
+                mesh.SetActive(true);
+            }
         }
     }
 }
