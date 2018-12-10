@@ -17,6 +17,15 @@ namespace Abilities
         [Header("Unity Events")]
         public UnityEvent OnAbilityReload;
 
+        // PUBLIC
+
+        public void Reload()
+        {
+            OnAbilityReload.Invoke();
+        }
+
+        // PROTECTED
+
         protected IEnumerator Cooldown()
         {
             CanUseAbility = false;
