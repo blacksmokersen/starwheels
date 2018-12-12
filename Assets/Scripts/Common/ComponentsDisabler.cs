@@ -16,7 +16,6 @@ namespace Common
         private void Start()
         {
             Assert.IsNotNull(TargetComponents, "There are no component to disable. Check the reference.");
-
             if (_onlyConsiderEnabledAtStart)
             {
                 for (var i = TargetComponents.Count - 1; i >= 0; i--)
