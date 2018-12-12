@@ -21,7 +21,7 @@ namespace GameModes.Totem
         public UnityEvent OnTotemGet;
         public UnityEvent OnTotemThrown;
 
-        private bool _canUseItemAndAbility = true; // Local bool for possession (to compensate lag)
+        private bool isLocalOwner = false; // Local bool for possession (to compensate lag)
 
         // BOLT
 
@@ -43,9 +43,9 @@ namespace GameModes.Totem
                     }
                 }
 
-                if(!_canUseItemAndAbility) // I was the totem owner but threw it
+                if(isLocalOwner) // I was the totem owner but threw it
                 {
-                    StartCoroutine(CanUseItemAndAbility(true));
+                    OnTotemThrown.Invoke();
                 }
             }
         }
@@ -60,13 +60,15 @@ namespace GameModes.Totem
                 var kartTotemSlot = newOwnerKart.GetComponentInChildren<TotemSlot>().transform;
                 GetTotem().GetComponent<Totem>().SetParent(kartTotemSlot, evnt.NewOwnerID);
 
-                if (evnt.KartEntity.isOwner && _canUseItemAndAbility) // If I am the new owner of the totem and ready to pick it up
+                if (evnt.KartEntity.isOwner && !isLocalOwner) // If I am the new owner of the totem and ready to pick it up
                 {
-                    StartCoroutine(CanUseItemAndAbility(false));
+                    isLocalOwner = true;
+                    OnTotemGet.Invoke();
                 }
-                else if (!_canUseItemAndAbility) // If I was the old owner of the totem
+                else if (isLocalOwner) // If I was the old owner of the totem
                 {
-                    StartCoroutine(CanUseItemAndAbility(true));
+                    isLocalOwner = false;
+                    OnTotemThrown.Invoke();
                 }
             }
             else
@@ -86,7 +88,8 @@ namespace GameModes.Totem
 
                 if (evnt.PlayerEntity.isOwner) // If I was the totem owner
                 {
-                    StartCoroutine(CanUseItemAndAbility(true));
+                    isLocalOwner = false;
+                    OnTotemThrown.Invoke();
                 }
             }
         }
@@ -135,7 +138,7 @@ namespace GameModes.Totem
 
             ability.CanUseAbility = b;
             _inventory.CanUseItem = b;
-            _canUseItemAndAbility = b;
+            isLocalOwner = b;
         }
     }
 }
