@@ -19,26 +19,24 @@ namespace Items
         {
             if (BoltNetwork.isServer)
             {
-                if (itemActivationBehaviour.Activated)
+                Debug.LogError("going to be destroyed");
+                if (other.gameObject.CompareTag(Constants.Tag.ItemCollisionHitBox))
                 {
-                    Debug.LogError("going to be destroyed");
-                    if (other.gameObject.CompareTag(Constants.Tag.ItemCollisionHitBox))
-                    {
-                        var otherItemCollision = other.GetComponent<ItemCollisionTrigger>().ItemCollision;
+                    var otherItemCollision = other.GetComponent<ItemCollisionTrigger>().ItemCollision;
 
-                        if (ItemCollision.ShouldBeDestroyed(otherItemCollision))
-                        {
-                            OnCollision.Invoke();
-                            DestroySelf();
-                        }
+                    if (ItemCollision.ShouldBeDestroyed(otherItemCollision))
+                    {
+                        OnCollision.Invoke();
+                        DestroySelf();
                     }
                 }
             }
+
         }
 
         private void OnTriggerExit(Collider other)
         {
-            Debug.LogError("item Activated");
+         //   Debug.LogError("IA");
             itemActivationBehaviour.Activated = true;
         }
 

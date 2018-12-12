@@ -9,12 +9,15 @@ namespace Items
         public int ReboundsBeforeEnd;
         public int ParticlesToEmit;
 
+        [SerializeField] ItemActivationBehaviour itemActivationBehaviour;
+
         private void OnCollisionEnter(Collision collision)
         {
             if (BoltNetwork.isServer)
             {
                 if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.Layer.Ground))
                 {
+                    itemActivationBehaviour.Activated = true;
                     Vector3 contactPoint = collision.contacts[0].point;
                     CollisionParticles.transform.position = contactPoint;
                     CollisionParticles.Emit(ParticlesToEmit);
