@@ -6,6 +6,9 @@ namespace Items
 {
     public class ItemCollisionTrigger : EntityBehaviour
     {
+
+        [SerializeField] ItemActivationBehaviour itemActivationBehaviour;
+
         [Header("Events")]
         public UnityEvent OnCollision;
 
@@ -16,18 +19,30 @@ namespace Items
         {
             if (BoltNetwork.isServer)
             {
-                if (other.gameObject.CompareTag(Constants.Tag.ItemCollisionHitBox))
+                if (itemActivationBehaviour.Activated)
                 {
-                    var otherItemCollision = other.GetComponent<ItemCollisionTrigger>().ItemCollision;
-
-                    if (ItemCollision.ShouldBeDestroyed(otherItemCollision))
+                    Debug.LogError("going to be destroyed");
+                    if (other.gameObject.CompareTag(Constants.Tag.ItemCollisionHitBox))
                     {
-                        OnCollision.Invoke();
-                        DestroySelf();
+                        var otherItemCollision = other.GetComponent<ItemCollisionTrigger>().ItemCollision;
+
+                        if (ItemCollision.ShouldBeDestroyed(otherItemCollision))
+                        {
+                            OnCollision.Invoke();
+                            DestroySelf();
+                        }
                     }
                 }
             }
         }
+
+        private void OnTriggerExit(Collider other)
+        {
+            Debug.LogError("item Activated");
+            itemActivationBehaviour.Activated = true;
+        }
+
+
 
         private void DestroySelf()
         {
