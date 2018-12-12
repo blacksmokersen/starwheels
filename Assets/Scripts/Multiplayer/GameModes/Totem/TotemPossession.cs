@@ -29,9 +29,7 @@ namespace GameModes.Totem
         {
             var totem = GetTotem();
 
-            var totemEntity = totem.GetComponent<BoltEntity>();
-
-            if (evnt.OwnerID == totemEntity.GetState<IItemState>().OwnerID || evnt.OwnerID == -1) // The owner of the totem is throwing it || or it is a totem reset
+            if (evnt.OwnerID == GetTotemOwnerID() || evnt.OwnerID == -1) // The owner of the totem is throwing it || or it is a totem reset
             {
                 totem.GetComponent<Totem>().UnsetParent();
 
@@ -41,7 +39,7 @@ namespace GameModes.Totem
                     if (kartThrowing)
                     {
                         Direction throwingDirection = evnt.ForwardDirection ? Direction.Forward : Direction.Backward;
-                        kartThrowing.GetComponentInChildren<ThrowableLauncher>().Throw(totemEntity.GetComponent<Throwable>(), throwingDirection);
+                        kartThrowing.GetComponentInChildren<ThrowableLauncher>().Throw(totem.GetComponent<Throwable>(), throwingDirection);
                     }
                 }
 
@@ -62,7 +60,7 @@ namespace GameModes.Totem
                 var kartTotemSlot = newOwnerKart.GetComponentInChildren<TotemSlot>().transform;
                 GetTotem().GetComponent<Totem>().SetParent(kartTotemSlot, evnt.NewOwnerID);
 
-                if (evnt.KartEntity.isOwner) // If I am the new owner of the totem
+                if (evnt.KartEntity.isOwner && _canUseItemAndAbility) // If I am the new owner of the totem and ready to pick it up
                 {
                     StartCoroutine(CanUseItemAndAbility(false));
                 }
@@ -110,6 +108,16 @@ namespace GameModes.Totem
             }
         }
 
+        private BoltEntity GetTotemEntity()
+        {
+            return GetTotem().GetComponent<BoltEntity>();
+        }
+
+        private int GetTotemOwnerID()
+        {
+            return GetTotemEntity().GetState<IItemState>().OwnerID;
+        }
+
         private IEnumerator CanUseItemAndAbility(bool b)
         {
             var ability = _abilitySetter.GetCurrentAbility();
@@ -120,7 +128,6 @@ namespace GameModes.Totem
             }
             else
             {
-                Debug.Log("Reloading");
                 _inventory.StopAllCoroutines(); // Stop any anti-spam routine
                 ability.StopAllCoroutines();
                 ability.Reload();
