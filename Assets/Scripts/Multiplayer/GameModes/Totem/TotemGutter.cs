@@ -19,7 +19,7 @@ namespace GameModes.Totem
                 }
                 else
                 {
-                    FindObjectOfType<TotemBehaviour>().UnsetParent();
+                    FindObjectOfType<Totem>().UnsetParent();
                 }
             }
         }

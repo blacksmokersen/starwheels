@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.Events;
 using Bolt;
 using ThrowingSystem;
-using System.Collections;
 
 namespace GameModes.Totem
 {
@@ -9,9 +10,16 @@ namespace GameModes.Totem
     [RequireComponent(typeof(TotemPicker))]
     public class TotemPossession : GlobalEventListener
     {
+        [Header("Settings")]
+        [SerializeField] private TotemSettings _totemSettings;
+
         [Header("Disallow on Totem Picking")]
         [SerializeField] private Items.Inventory _inventory;
         [SerializeField] private Abilities.AbilitySetter _abilitySetter;
+
+        [Header("Unity Events")]
+        public UnityEvent OnTotemGet;
+        public UnityEvent OnTotemThrown;
 
         private bool _canUseItemAndAbility = true; // Local bool for possession (to compensate lag)
 
@@ -25,7 +33,7 @@ namespace GameModes.Totem
 
             if (evnt.OwnerID == totemEntity.GetState<IItemState>().OwnerID || evnt.OwnerID == -1) // The owner of the totem is throwing it || or it is a totem reset
             {
-                totem.GetComponent<TotemBehaviour>().UnsetParent();
+                totem.GetComponent<Totem>().UnsetParent();
 
                 if (BoltNetwork.isServer)
                 {
@@ -52,7 +60,7 @@ namespace GameModes.Totem
             {
                 var newOwnerKart = MyExtensions.KartExtensions.GetKartWithID(evnt.NewOwnerID);
                 var kartTotemSlot = newOwnerKart.GetComponentInChildren<TotemSlot>().transform;
-                GetTotem().GetComponent<TotemBehaviour>().SetParent(kartTotemSlot, evnt.NewOwnerID);
+                GetTotem().GetComponent<Totem>().SetParent(kartTotemSlot, evnt.NewOwnerID);
 
                 if (evnt.KartEntity.isOwner) // If I am the new owner of the totem
                 {
@@ -72,7 +80,7 @@ namespace GameModes.Totem
         public override void OnEvent(PlayerHit evnt)
         {
             var kartOwnerID = evnt.PlayerEntity.GetState<IKartState>().OwnerID;
-            var totemBehaviour = GetTotem().GetComponent<TotemBehaviour>();
+            var totemBehaviour = GetTotem().GetComponent<Totem>();
 
             if (kartOwnerID == totemBehaviour.LocalOwnerID) // The totem owner has been hit
             {
