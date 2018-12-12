@@ -5,9 +5,10 @@ namespace GameModes.Totem
     [CreateAssetMenu(menuName = "Totem/Totem Settings")]
     public class TotemSettings : ScriptableObject
     {
-        [Header("Slowdown Settings")]
+        [Header("Totem Slowdown Settings")]
         public float SecondsBeforeSlowdown = 1f;
-        public float SlowdownFactor = 0.98f;
+        [Tooltip("1 means no slowdown and 0.9 quick slowdown")]
+        [Range(0.9f,1f)] public float SlowdownFactor = 0.98f;
         public float StopMagnitudeThreshold = 0.1f;
 
         [Header("Speed")]
@@ -18,6 +19,8 @@ namespace GameModes.Totem
         public float SecondsBeforeCanBePickedAgain;
 
         [Header("Owner")]
+        [Tooltip("1 equals full speed and 0 still")]
+        public float OwnerSpeedFactor = 0.6f;
         public bool CanUseAbilityWhenOwner;
         public float SecondsBeforeCanUseAbilityAgain;
         public bool CanUseItemsWhenOwner;

@@ -15,8 +15,8 @@ namespace GameModes.Totem
 
         private void Start()
         {
-            _sphereCollider.radius *= _totemSettings.Radius;
-            _meshTransform.localScale *= _totemSettings.Radius;
+            _sphereCollider.radius = _totemSettings.Radius;
+            _meshTransform.localScale = Vector3.one * 0.75f * _totemSettings.Radius;
         }
     }
 }

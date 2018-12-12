@@ -18,6 +18,7 @@ namespace GameModes.Totem
 
         [Header("Settings")]
         [SerializeField] private TotemSettings _totemSettings;
+        [SerializeField] private Collider _physicalCollider;
 
         private Rigidbody _rb;
         private bool _isSlowingDown = false;
@@ -104,7 +105,7 @@ namespace GameModes.Totem
             {
                 rb.isKinematic = false;
                 rb.velocity = Vector3.zero;
-                GetComponent<SphereCollider>().enabled = true;
+                _physicalCollider.enabled = true;
             }
         }
 
