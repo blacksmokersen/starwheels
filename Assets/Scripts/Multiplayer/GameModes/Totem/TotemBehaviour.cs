@@ -25,7 +25,7 @@ namespace GameModes.Totem
             _rb = GetComponent<Rigidbody>();
         }
 
-        private void FixedUpdate()
+        private void LateUpdate()
         {
             if (_parent != null)
             {
@@ -52,7 +52,7 @@ namespace GameModes.Totem
 
         public override void Detached()
         {
-            Debug.LogError("Totem detached from game.");
+            Debug.Log("Totem detached from game.");
         }
 
         // PUBLIC
