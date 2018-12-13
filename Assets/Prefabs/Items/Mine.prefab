@@ -327,6 +327,7 @@ GameObject:
   - component: {fileID: 4390881638899614}
   - component: {fileID: 135805788480509074}
   - component: {fileID: 114009805470492380}
+  - component: {fileID: 114851103314272884}
   m_Layer: 10
   m_Name: ItemCollisionTrigger
   m_TagString: CollisionHitBox
@@ -561,6 +562,7 @@ GameObject:
   - component: {fileID: 4073335399058026}
   - component: {fileID: 135771632487179650}
   - component: {fileID: 114786215687216046}
+  - component: {fileID: 114881442660990334}
   m_Layer: 0
   m_Name: PlayerCollisionTrigger
   m_TagString: CollisionHitBox
@@ -2957,6 +2959,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f31a1c46652e3164aaf4306dbb4cacc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemActivationBehaviour: {fileID: 114851103314272884}
   OnCollision:
     m_PersistentCalls:
       m_Calls: []
@@ -3045,12 +3048,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f31a1c46652e3164aaf4306dbb4cacc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemActivationBehaviour: {fileID: 114881442660990334}
   OnCollision:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   ItemCollision: {fileID: 11400000, guid: 8c95664035986254a9f7200ba402fa64, type: 2}
+--- !u!114 &114851103314272884
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1398991700797754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f79afb4fe5f77a14ea841d8c1c6dce0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Activated: 1
+--- !u!114 &114881442660990334
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1781708852576126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f79afb4fe5f77a14ea841d8c1c6dce0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Activated: 1
 --- !u!135 &135771632487179650
 SphereCollider:
   m_ObjectHideFlags: 1
