@@ -4,5 +4,6 @@
 public class MapData : ScriptableObject
 {
     public string MapName;
-    public string SceneName;
+    public int MaxPlayers;
+    public string ExclusiveGameMode;
 }
