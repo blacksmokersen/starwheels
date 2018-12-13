@@ -27,6 +27,7 @@ namespace Abilities.Jump
         {
             _rb = GetComponentInParent<Rigidbody>();
             _jumpSettings = (JumpSettings) abilitySettings;
+            _groundCondition.OnHitGround.AddListener(() => { _hasDoneFirstJump = false; });
         }
 
         // BOLT
