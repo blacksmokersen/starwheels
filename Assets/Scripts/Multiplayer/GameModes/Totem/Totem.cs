@@ -74,7 +74,6 @@ namespace GameModes.Totem
             StartCoroutine(AntiPickSpamRoutine());
 
             if (OnParentSet != null) OnParentSet.Invoke();
-            Debug.Log("Set totem locally.");
         }
 
         public void UnsetParent()
@@ -90,7 +89,6 @@ namespace GameModes.Totem
             _isSlowingDown = true;
 
             if (OnParentUnset != null) OnParentUnset.Invoke();
-            Debug.Log("Unset totem locally.");
         }
 
         public void FreezeTotem(bool b)

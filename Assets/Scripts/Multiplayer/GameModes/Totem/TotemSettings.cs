@@ -20,7 +20,7 @@ namespace GameModes.Totem
 
         [Header("Owner")]
         [Tooltip("1 equals full speed and 0 still")]
-        public float OwnerSpeedFactor = 0.6f;
+        public float OwnerSpeedReductionFactor = 0.6f;
         public bool CanUseAbilityWhenOwner;
         public float SecondsBeforeCanUseAbilityAgain;
         public bool CanUseItemsWhenOwner;
