@@ -24,15 +24,17 @@ namespace Items
                     {
                         if (itemState.OwnerID == state.OwnerID || itemState.OwnerID == 0 && itemState.Team == new Color(0,0,0,0))
                         {
+
                             if (other.GetComponentInChildren<ItemActivationBehaviour>().Activated)
                             {
                                // Debug.LogError("FriendlyFire");
-                                /*
+
                                 PlayerHit playerHitEvent = PlayerHit.Create();
                                 playerHitEvent.PlayerEntity = entity;
                                 playerHitEvent.Send();
-                                */
+
                             }
+
                         }
                         else if (itemState.Team != state.Team)
                         {
@@ -71,7 +73,7 @@ namespace Items
                     }
                     */
                         var otherItemCollision = other.GetComponent<ItemCollisionTrigger>().ItemCollision;
-                        if (otherItemCollision.ShouldBeDestroyed(_itemCollision)/* && !_imunity*/ && other.GetComponentInChildren<ItemActivationBehaviour>().Activated) // The item should be destroyed
+                        if (otherItemCollision.ShouldBeDestroyed(_itemCollision) && other.GetComponentInChildren<ItemActivationBehaviour>().Activated) // The item should be destroyed
                         {
                             DestroyEntity destroyEntityEvent = DestroyEntity.Create();
                             destroyEntityEvent.Entity = other.GetComponentInParent<BoltEntity>();
