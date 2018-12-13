@@ -22,19 +22,21 @@ namespace Items
 
                     if (itemEntity.isAttached && itemEntity.TryFindState<IItemState>(out itemState)) // It is a concrete item
                     {
-                        if (itemState.OwnerID == state.OwnerID || itemState.OwnerID == 0)
+                        if (itemState.OwnerID == state.OwnerID || itemState.OwnerID == 0 && itemState.Team == new Color(0,0,0,0))
                         {
                             if (other.GetComponentInChildren<ItemActivationBehaviour>().Activated)
                             {
-                                Debug.LogError("FriendlyFire");
+                               // Debug.LogError("FriendlyFire");
+                                /*
                                 PlayerHit playerHitEvent = PlayerHit.Create();
                                 playerHitEvent.PlayerEntity = entity;
                                 playerHitEvent.Send();
+                                */
                             }
                         }
                         else if (itemState.Team != state.Team)
                         {
-                            Debug.LogError("kill - " + itemState.Team + " - " + state.Team);
+                           // Debug.LogError("kill - " + itemState.Team + " - " + state.Team);
                             PlayerHit playerHitEvent = PlayerHit.Create();
                             playerHitEvent.PlayerEntity = entity;
                             playerHitEvent.Send();

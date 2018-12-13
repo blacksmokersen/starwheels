@@ -37,6 +37,7 @@ namespace Items
         private void OnTriggerExit(Collider other)
         {
          //   Debug.LogError("IA");
+         if(itemActivationBehaviour != null)
             itemActivationBehaviour.Activated = true;
         }
 
