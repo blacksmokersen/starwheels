@@ -19,7 +19,7 @@ namespace Items
         {
             if (BoltNetwork.isServer)
             {
-                Debug.LogError("going to be destroyed");
+               // Debug.LogError("going to be destroyed");
                 if (other.gameObject.CompareTag(Constants.Tag.ItemCollisionHitBox))
                 {
                     var otherItemCollision = other.GetComponent<ItemCollisionTrigger>().ItemCollision;
