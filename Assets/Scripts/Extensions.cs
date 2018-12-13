@@ -63,7 +63,7 @@ namespace MyExtensions
                     return kart;
                 }
             }
-            Debug.LogError("Owner not found.");
+            Debug.LogFormat("Owner with ID {0} was not found.", id);
             return null;
         }
 
