@@ -24,6 +24,25 @@ namespace Items
                     {
                         if (itemState.OwnerID == state.OwnerID || itemState.OwnerID == 0)
                         {
+                            if (other.GetComponentInChildren<ItemActivationBehaviour>().Activated)
+                            {
+                                Debug.LogError("FriendlyFire");
+                                PlayerHit playerHitEvent = PlayerHit.Create();
+                                playerHitEvent.PlayerEntity = entity;
+                                playerHitEvent.Send();
+                            }
+                        }
+                        else if (itemState.Team != state.Team)
+                        {
+                            Debug.LogError("kill - " + itemState.Team + " - " + state.Team);
+                            PlayerHit playerHitEvent = PlayerHit.Create();
+                            playerHitEvent.PlayerEntity = entity;
+                            playerHitEvent.Send();
+                        }
+
+                        /*
+                        if (itemState.OwnerID == state.OwnerID || itemState.OwnerID == 0)
+                        {
 
                             if (!_imunity && _imunityTarget != other.gameObject)
                             {
@@ -31,24 +50,26 @@ namespace Items
                                 _imunity = true;
                                 //   Debug.LogError("imunity true");
                             }
+                            */
 
-                            if (/*other.gameObject == _imunityTarget &&*/ !_imunity)
-                            {
-                                //   Debug.LogError("kill");
-                                PlayerHit playerHitEvent = PlayerHit.Create();
-                                playerHitEvent.PlayerEntity = entity;
-                                playerHitEvent.Send();
-                            }
-                        }
-                        else if (itemState.Team != state.Team) // It's a hit
-                        {
-                            PlayerHit playerHitEvent = PlayerHit.Create();
-                            playerHitEvent.PlayerEntity = entity;
-                            playerHitEvent.Send();
-                        }
+                        //   if (/*other.gameObject == _imunityTarget &&*/ !_imunity)
+                        /*
+                           {
+                               //   Debug.LogError("kill");
+                               PlayerHit playerHitEvent = PlayerHit.Create();
+                               playerHitEvent.PlayerEntity = entity;
+                               playerHitEvent.Send();
+                           }
 
+                    else if (itemState.Team != state.Team) // It's a hit
+                    {
+                        PlayerHit playerHitEvent = PlayerHit.Create();
+                        playerHitEvent.PlayerEntity = entity;
+                        playerHitEvent.Send();
+                    }
+                    */
                         var otherItemCollision = other.GetComponent<ItemCollisionTrigger>().ItemCollision;
-                        if (otherItemCollision.ShouldBeDestroyed(_itemCollision) && !_imunity) // The item should be destroyed
+                        if (otherItemCollision.ShouldBeDestroyed(_itemCollision)/* && !_imunity*/ && other.GetComponentInChildren<ItemActivationBehaviour>().Activated) // The item should be destroyed
                         {
                             DestroyEntity destroyEntityEvent = DestroyEntity.Create();
                             destroyEntityEvent.Entity = other.GetComponentInParent<BoltEntity>();
@@ -59,7 +80,7 @@ namespace Items
             }
         }
 
-
+        /*
         private void OnTriggerExit(Collider other)
         {
             if (other.gameObject.CompareTag(Constants.Tag.ItemCollisionHitBox) &&
@@ -84,5 +105,6 @@ namespace Items
                 }
             }
         }
+        */
     }
 }
