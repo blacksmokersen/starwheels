@@ -1,30 +1,62 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ClampSpeed : MonoBehaviour {
-
-    [Header("BaseMaxSpeed")]
-    public float ControlMaxSpeed;
-    [Header("ActualMaxSpeed(Dont touch that)")]
-    public float MaxSpeed;
-
-    private Rigidbody _rigidbody;
-
-    private void Awake()
+namespace Common.PhysicsUtils
+{
+    public class ClampSpeed : MonoBehaviour
     {
-        _rigidbody = GetComponentInParent<Rigidbody>();
-        ControlMaxSpeed = MaxSpeed;
-    }
+        [Header("Base Max Speed")]
+        public float ControlMaxSpeed;
+        [Header("Current Max Speed(Dont touch that)")]
+        [HideInInspector] public float CurrentMaxSpeed;
 
-    private void FixedUpdate()
-    {
-        ClampMagnitude();
-    }
+        private Rigidbody _rigidbody;
 
-    private void ClampMagnitude()
-    {
-        if (MaxSpeed > 0)
-            _rigidbody.velocity = Vector3.ClampMagnitude(_rigidbody.velocity, MaxSpeed);
+        // CORE
+
+        private void Awake()
+        {
+            _rigidbody = GetComponentInParent<Rigidbody>();
+            CurrentMaxSpeed = ControlMaxSpeed;
+        }
+
+        private void FixedUpdate()
+        {
+            ClampMagnitude();
+        }
+
+        // PUBLIC
+
+        public void SetClampMagnitude(float magnitude)
+        {
+            CurrentMaxSpeed = magnitude;
+        }
+
+        public void ClampForXSeconds(float magnitude, float seconds)
+        {
+            StartCoroutine(ClampForXSecondsRoutine(magnitude, seconds));
+        }
+
+        public void ResetClampMagnitude()
+        {
+            CurrentMaxSpeed = ControlMaxSpeed;
+        }
+
+        // PRIVATE
+
+        private void ClampMagnitude()
+        {
+            if (CurrentMaxSpeed > 0)
+            {
+                _rigidbody.velocity = Vector3.ClampMagnitude(_rigidbody.velocity, CurrentMaxSpeed);
+            }
+        }
+
+        private IEnumerator ClampForXSecondsRoutine(float magnitude, float seconds)
+        {
+            CurrentMaxSpeed = magnitude;
+            yield return new WaitForSeconds(seconds);
+            CurrentMaxSpeed = ControlMaxSpeed;
+        }
     }
 }
