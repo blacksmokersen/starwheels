@@ -47,10 +47,14 @@ namespace Abilities
 
         public new void Reload()
         {
-            Debug.Log("TP Back reload");
+            CanUseAbility = true;
             _kartMeshes.SetActive(true);
-            MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useTpBackSound);
-            Destroy(_tpBack.gameObject);
+
+            if (_tpBack)
+            {
+                MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useTpBackSound);
+                Destroy(_tpBack.gameObject);
+            }
         }
 
         public Quaternion GetKartRotation()

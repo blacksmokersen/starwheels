@@ -1,18 +1,24 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using Bolt;
 
 namespace GameModes.Totem
 {
     [DisallowMultipleComponent]
-    public class TotemBehaviour : EntityBehaviour<IItemState>
+    public class Totem : EntityBehaviour<IItemState>
     {
+        [Header("Ownership")]
         public bool CanBePickedUp = true;
         public int LocalOwnerID = -1;
 
-        [Header("Slowdown Settings")]
-        [SerializeField] private float _slowdownFactor = 0.98f;
-        [SerializeField] private float _stopMagnitudeThreshold = 0.1f;
+        [Header("Unity Events")]
+        public UnityEvent OnParentSet;
+        public UnityEvent OnParentUnset;
+
+        [Header("Settings")]
+        [SerializeField] private TotemSettings _totemSettings;
+        [SerializeField] private Collider _physicalCollider;
 
         private Rigidbody _rb;
         private bool _isSlowingDown = false;
@@ -29,7 +35,6 @@ namespace GameModes.Totem
         {
             if (_parent != null)
             {
-                Debug.Log("I am controller");
                 transform.position = _parent.position;
             }
             else
@@ -67,6 +72,8 @@ namespace GameModes.Totem
             FreezeTotem(true);
             _isSlowingDown = false;
             StartCoroutine(AntiPickSpamRoutine());
+
+            if (OnParentSet != null) OnParentSet.Invoke();
             Debug.Log("Set totem locally.");
         }
 
@@ -81,6 +88,8 @@ namespace GameModes.Totem
             FreezeTotem(false);
             StopAllCoroutines();
             _isSlowingDown = true;
+
+            if (OnParentUnset != null) OnParentUnset.Invoke();
             Debug.Log("Unset totem locally.");
         }
 
@@ -96,7 +105,7 @@ namespace GameModes.Totem
             {
                 rb.isKinematic = false;
                 rb.velocity = Vector3.zero;
-                GetComponent<SphereCollider>().enabled = true;
+                _physicalCollider.enabled = true;
             }
         }
 
@@ -112,9 +121,9 @@ namespace GameModes.Totem
         {
             if (_isSlowingDown)
             {
-                _rb.velocity *= _slowdownFactor;
+                _rb.velocity *= _totemSettings.SlowdownFactor;
 
-                if (_rb.velocity.magnitude < _stopMagnitudeThreshold)
+                if (_rb.velocity.magnitude < _totemSettings.StopMagnitudeThreshold)
                 {
                     _isSlowingDown = false;
                     _rb.velocity = Vector3.zero;
@@ -125,7 +134,7 @@ namespace GameModes.Totem
         private IEnumerator AntiPickSpamRoutine()
         {
             CanBePickedUp = false;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(_totemSettings.SecondsBeforeCanBePickedAgain);
             CanBePickedUp = true;
         }
     }
