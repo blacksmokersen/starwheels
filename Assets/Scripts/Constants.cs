@@ -19,6 +19,7 @@
         public const string IonBeamCamIgnore = "IonBeamCamIgnore";
         public const string Totem = "Totem";
         public const string TotemPickup = "TotemPickup";
+        public const string TotemRespawn = "TotemRespawn";
     }
 
     // Inputs

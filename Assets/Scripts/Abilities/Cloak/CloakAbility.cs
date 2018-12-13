@@ -33,6 +33,8 @@ namespace Abilities
 
         public new void Reload()
         {
+            CanUseAbility = true;
+            StopAllCoroutines();
             UnsetCloack();
         }
 

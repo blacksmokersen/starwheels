@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using Bolt;
 using ThrowingSystem;
-using System.Collections;
 
 namespace GameModes.Totem
 {
@@ -9,37 +9,38 @@ namespace GameModes.Totem
     [RequireComponent(typeof(TotemPicker))]
     public class TotemPossession : GlobalEventListener
     {
-        [Header("Disallow on Totem Picking")]
-        [SerializeField] private Items.Inventory _inventory;
-        [SerializeField] private Abilities.AbilitySetter _abilitySetter;
+        [Header("Settings")]
+        [SerializeField] private TotemSettings _totemSettings;
 
-        private bool _canUseItemAndAbility = true; // Local bool for possession (to compensate lag)
+        [Header("Unity Events")]
+        public UnityEvent OnTotemGet;
+        public UnityEvent OnTotemLost;
+
+        private bool isLocalOwner = false; // Local bool for possession (to compensate lag)
 
         // BOLT
 
         public override void OnEvent(TotemThrown evnt)
         {
-            var totem = GetTotem();
+            var totem = TotemHelpers.FindTotem();
 
-            var totemEntity = totem.GetComponent<BoltEntity>();
-
-            if (evnt.OwnerID == totemEntity.GetState<IItemState>().OwnerID || evnt.OwnerID == -1) // The owner of the totem is throwing it || or it is a totem reset
+            if (evnt.OwnerID == TotemHelpers.GetTotemOwnerID() || evnt.OwnerID == -1) // The owner of the totem is throwing it || or it is a totem reset
             {
-                totem.GetComponent<TotemBehaviour>().UnsetParent();
+                totem.GetComponent<Totem>().UnsetParent();
 
-                if (BoltNetwork.isServer)
+                if (BoltNetwork.isServer) // The server make the player throw the totem
                 {
                     var kartThrowing = MyExtensions.KartExtensions.GetKartWithID(evnt.OwnerID);
                     if (kartThrowing)
                     {
                         Direction throwingDirection = evnt.ForwardDirection ? Direction.Forward : Direction.Backward;
-                        kartThrowing.GetComponentInChildren<ThrowableLauncher>().Throw(totemEntity.GetComponent<Throwable>(), throwingDirection);
+                        kartThrowing.GetComponentInChildren<ThrowableLauncher>().Throw(totem.GetComponent<Throwable>(), throwingDirection);
                     }
                 }
 
-                if(!_canUseItemAndAbility) // I was the totem owner but threw it
+                if(isLocalOwner) // I was the totem owner but threw it
                 {
-                    StartCoroutine(CanUseItemAndAbility(true));
+                    OnTotemLost.Invoke();
                 }
             }
         }
@@ -50,29 +51,26 @@ namespace GameModes.Totem
 
             if (kart)
             {
-                var newOwnerKart = MyExtensions.KartExtensions.GetKartWithID(evnt.NewOwnerID);
-                var kartTotemSlot = newOwnerKart.GetComponentInChildren<TotemSlot>().transform;
-                GetTotem().GetComponent<TotemBehaviour>().SetParent(kartTotemSlot, evnt.NewOwnerID);
+                var kartTotemSlot = kart.GetComponentInChildren<TotemSlot>().transform;
+                TotemHelpers.GetTotemComponent().SetParent(kartTotemSlot, evnt.NewOwnerID);
 
-                if (evnt.KartEntity.isOwner) // If I am the new owner of the totem
+                if (evnt.KartEntity.isOwner && !isLocalOwner) // If I am the new owner of the totem and ready to pick it up
                 {
-                    StartCoroutine(CanUseItemAndAbility(false));
+                    isLocalOwner = true;
+                    OnTotemGet.Invoke();
                 }
-                else if (!_canUseItemAndAbility) // If I was the old owner of the totem
+                else if (isLocalOwner) // If I was the old owner of the totem
                 {
-                    StartCoroutine(CanUseItemAndAbility(true));
+                    isLocalOwner = false;
+                    OnTotemLost.Invoke();
                 }
-            }
-            else
-            {
-                Debug.LogError("Owner not found !");
             }
         }
 
         public override void OnEvent(PlayerHit evnt)
         {
             var kartOwnerID = evnt.PlayerEntity.GetState<IKartState>().OwnerID;
-            var totemBehaviour = GetTotem().GetComponent<TotemBehaviour>();
+            var totemBehaviour = TotemHelpers.GetTotemComponent();
 
             if (kartOwnerID == totemBehaviour.LocalOwnerID) // The totem owner has been hit
             {
@@ -80,47 +78,10 @@ namespace GameModes.Totem
 
                 if (evnt.PlayerEntity.isOwner) // If I was the totem owner
                 {
-                    StartCoroutine(CanUseItemAndAbility(true));
+                    isLocalOwner = false;
+                    OnTotemLost.Invoke();
                 }
             }
-        }
-
-        // PRIVATE
-
-        private GameObject GetTotem()
-        {
-            var totem = GameObject.FindGameObjectWithTag(Constants.Tag.Totem);
-
-            if (totem)
-            {
-                return totem;
-            }
-            else
-            {
-                Debug.LogError("Totem was not found !");
-                return null;
-            }
-        }
-
-        private IEnumerator CanUseItemAndAbility(bool b)
-        {
-            var ability = _abilitySetter.GetCurrentAbility();
-
-            if (b == true)
-            {
-                yield return new WaitForSeconds(3f);
-            }
-            else
-            {
-                Debug.Log("Reloading");
-                _inventory.StopAllCoroutines(); // Stop any anti-spam routine
-                ability.StopAllCoroutines();
-                ability.Reload();
-            }
-
-            ability.CanUseAbility = b;
-            _inventory.CanUseItem = b;
-            _canUseItemAndAbility = b;
         }
     }
 }

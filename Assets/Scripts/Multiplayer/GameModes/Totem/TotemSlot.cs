@@ -5,6 +5,6 @@ namespace GameModes.Totem
     [DisallowMultipleComponent]
     public class TotemSlot : MonoBehaviour
     {
-        // Used to find the slot paren
+        // Used as a tag to find the slot paren
     }
 }
