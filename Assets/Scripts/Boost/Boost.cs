@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Common.PhysicsUtils;
 
 namespace Boost
 {
@@ -39,7 +40,7 @@ namespace Boost
 
         public IEnumerator PhysicsBoost(float boostDuration, float magnitudeBoost, float speedBoost)
         {
-            clampSpeed.MaxSpeed = Mathf.Clamp(clampSpeed.MaxSpeed, 0, _controlMagnitude) + magnitudeBoost;
+            clampSpeed.CurrentMaxSpeed = Mathf.Clamp(clampSpeed.CurrentMaxSpeed, 0, _controlMagnitude) + magnitudeBoost;
 
             _currentTimer = 0f;
             while (_currentTimer < boostDuration)
@@ -52,7 +53,7 @@ namespace Boost
             _currentTimer = 0f;
             while (_currentTimer < boostDuration)
             {
-                clampSpeed.MaxSpeed = Mathf.Lerp(_controlMagnitude + magnitudeBoost, clampSpeed.ControlMaxSpeed, _currentTimer / boostDuration);
+                clampSpeed.CurrentMaxSpeed = Mathf.Lerp(_controlMagnitude + magnitudeBoost, clampSpeed.ControlMaxSpeed, _currentTimer / boostDuration);
                 _currentTimer += Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
             }

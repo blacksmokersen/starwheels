@@ -40,6 +40,7 @@ namespace GameModes.Totem
 
                 if(isLocalOwner) // I was the totem owner but threw it
                 {
+                    isLocalOwner = false;
                     OnTotemLost.Invoke();
                 }
             }
