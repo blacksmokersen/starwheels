@@ -11,7 +11,7 @@ namespace GameModes.Totem
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(Constants.Tag.Totem) && !other.isTrigger) // Physical collider
+            if (other.CompareTag(Constants.Tag.TotemRespawn)) // Physical collider
             {
                 if (BoltNetwork.isServer)
                 {
@@ -19,7 +19,7 @@ namespace GameModes.Totem
                 }
                 else
                 {
-                    FindObjectOfType<TotemBehaviour>().UnsetParent();
+                    FindObjectOfType<Totem>().UnsetParent();
                 }
             }
         }

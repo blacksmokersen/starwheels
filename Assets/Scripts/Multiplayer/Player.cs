@@ -24,13 +24,6 @@ namespace Multiplayer
             get { return _team; }
             set { _team = value; OnTeamChanged.Invoke(_team); }
         }
-
-        private int _score;
-        public int Score
-        {
-            get { return _score; }
-            set { _score = value; OnScoreChanged.Invoke(_score); }
-        }
         #endregion
 
         [Header("Events")]

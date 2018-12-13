@@ -17,6 +17,18 @@ namespace Abilities
         [Header("Unity Events")]
         public UnityEvent OnAbilityReload;
 
+        // MONOBEHAVIOUR
+
+        private void OnDisable()
+        {
+            Reload();
+        }
+
+        private void OnEnable()
+        {
+            Reload();
+        }
+
         // PUBLIC
 
         public void Reload()
