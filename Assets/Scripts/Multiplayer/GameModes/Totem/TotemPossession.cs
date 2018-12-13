@@ -12,10 +12,6 @@ namespace GameModes.Totem
         [Header("Settings")]
         [SerializeField] private TotemSettings _totemSettings;
 
-        [Header("Disallow on Totem Picking")]
-        [SerializeField] private Items.Inventory _inventory;
-        [SerializeField] private Abilities.AbilitySetter _abilitySetter;
-
         [Header("Unity Events")]
         public UnityEvent OnTotemGet;
         public UnityEvent OnTotemLost;
@@ -32,7 +28,7 @@ namespace GameModes.Totem
             {
                 totem.GetComponent<Totem>().UnsetParent();
 
-                if (BoltNetwork.isServer)
+                if (BoltNetwork.isServer) // The server make the player throw the totem
                 {
                     var kartThrowing = MyExtensions.KartExtensions.GetKartWithID(evnt.OwnerID);
                     if (kartThrowing)
@@ -55,8 +51,7 @@ namespace GameModes.Totem
 
             if (kart)
             {
-                var newOwnerKart = MyExtensions.KartExtensions.GetKartWithID(evnt.NewOwnerID);
-                var kartTotemSlot = newOwnerKart.GetComponentInChildren<TotemSlot>().transform;
+                var kartTotemSlot = kart.GetComponentInChildren<TotemSlot>().transform;
                 TotemHelpers.GetTotemComponent().SetParent(kartTotemSlot, evnt.NewOwnerID);
 
                 if (evnt.KartEntity.isOwner && !isLocalOwner) // If I am the new owner of the totem and ready to pick it up
@@ -69,10 +64,6 @@ namespace GameModes.Totem
                     isLocalOwner = false;
                     OnTotemLost.Invoke();
                 }
-            }
-            else
-            {
-                Debug.LogError("Owner not found !");
             }
         }
 
