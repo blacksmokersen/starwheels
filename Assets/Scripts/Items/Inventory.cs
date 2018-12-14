@@ -107,6 +107,9 @@ namespace Items
                 var itemState = instantiatedItem.GetComponent<BoltEntity>().GetState<IItemState>();
                 itemState.Team = state.Team;
                 itemState.OwnerID = state.OwnerID;
+                itemState.OwnerNickname = state.Nickname;
+                itemState.Name = CurrentItem.Name;
+
                 var throwable = instantiatedItem.GetComponent<Throwable>();
                 _projectileLauncher.Throw(throwable, _projectileLauncher.GetThrowingDirection());
             }
