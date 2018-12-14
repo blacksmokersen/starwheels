@@ -52,6 +52,7 @@
     {
         public const string EndGameMenu = "Menu/EndGameMenu";
         public const string PlayerSettings = "PlayerSettings";
+        public const string ItemListData = "Data/ItemList";
     }
 
     // GameObjects names
