@@ -15,12 +15,15 @@ namespace Common.HUD
         private void Awake()
         {
             Destroy(gameObject, 5f);
+            //GetComponent<RectTransform>().SetAsFirstSibling();
         }
 
         public void SetKillerNameAndColor(string name, Color teamColor)
         {
             _killerName.text = name;
-            _killerBackgroundPanel.color = teamColor;
+            var color = teamColor;
+            color.a = 0.5f;
+            _killerBackgroundPanel.color = color;
         }
 
         public void SetItemIcon(Sprite itemLogo)
@@ -31,7 +34,12 @@ namespace Common.HUD
         public void SetVictimNameAndColor(string name, Color teamColor)
         {
             _victimName.text = name;
-            _victimBackgroundPanel.color = teamColor;
+            var color = teamColor;
+            color.a = 0.5f;
+            _victimBackgroundPanel.color = color;
+
+            GetComponent<RectTransform>().position.Set(0, 0, 0);
+            GetComponent<RectTransform>().SetAsFirstSibling();
         }
     }
 }
