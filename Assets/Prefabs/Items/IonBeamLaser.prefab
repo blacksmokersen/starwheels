@@ -24,9 +24,11 @@ GameObject:
   - component: {fileID: 82331756838676912}
   - component: {fileID: 114954992984807780}
   - component: {fileID: 114232220731031222}
+  - component: {fileID: 114061607901269180}
+  - component: {fileID: 114082777990773278}
   m_Layer: 0
   m_Name: IonBeamLaser
-  m_TagString: Untagged
+  m_TagString: CollisionHitBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1273,6 +1275,36 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114061607901269180
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1039182035529638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f31a1c46652e3164aaf4306dbb4cacc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemActivationBehaviour: {fileID: 114082777990773278}
+  OnCollision:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  ItemCollision: {fileID: 11400000, guid: 3336c9c5be03cb741b6d0d034bca9677, type: 2}
+--- !u!114 &114082777990773278
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1039182035529638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f79afb4fe5f77a14ea841d8c1c6dce0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Activated: 1
 --- !u!114 &114232220731031222
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1413,7 +1445,7 @@ CapsuleCollider:
   m_Radius: 25
   m_Height: 400
   m_Direction: 1
-  m_Center: {x: -2.2155457, y: 1.8450184, z: 1.2173672}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!198 &198129789995276172
 ParticleSystem:
   m_ObjectHideFlags: 1

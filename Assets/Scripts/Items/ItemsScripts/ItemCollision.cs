@@ -8,7 +8,7 @@ namespace Items
         Rocket,
         Mine,
         Guile,
-        IonBeam,
+        IonBeamLaser,
         Totem,
         Kart
     }
@@ -23,7 +23,7 @@ namespace Items
         public bool Rocket;
         public bool Mine;
         public bool Guile;
-        public bool IonBeam;
+        public bool IonBeamLaser;
         public bool Totem;
         public bool Kart;
 
@@ -45,7 +45,7 @@ namespace Items
             {
                 return true;
             }
-            else if (itemCollision.ItemName == ItemCollisionName.IonBeam && IonBeam)
+            else if (itemCollision.ItemName == ItemCollisionName.IonBeamLaser && IonBeamLaser)
             {
                 return true;
             }
@@ -60,7 +60,7 @@ namespace Items
             else
             {
                 return false;
-            }            
+            }
         }
     }
 }
