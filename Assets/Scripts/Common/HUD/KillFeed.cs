@@ -33,13 +33,14 @@ namespace Common.HUD
 
         private void CreateEntry(PlayerHit evnt)
         {
-            var entry = Instantiate(_entryPrefab, transform).GetComponent<KillFeedEntry>();
+            var entry = Instantiate(_entryPrefab, transform, false).GetComponent<KillFeedEntry>();
 
             entry.SetKillerNameAndColor(evnt.KillerName, evnt.KillerTeamColor);
             entry.SetItemIcon(_itemListData.GetItemIconUsingName(evnt.Item));
             entry.SetVictimNameAndColor(evnt.VictimName, evnt.VictimTeamColor);
             entry.transform.localPosition = Vector3.zero;
 
+            LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
         }
     }
 }
