@@ -22,56 +22,19 @@ namespace Items
 
                     if (itemEntity.isAttached && itemEntity.TryFindState<IItemState>(out itemState)) // It is a concrete item
                     {
-                        if (itemState.OwnerID == state.OwnerID || itemState.OwnerID == 0 && itemState.Team == new Color(0,0,0,0))
+                        if (itemState.OwnerID == state.OwnerID || (itemState.OwnerID == 0 && itemState.Team == new Color(0,0,0,0)))
                         {
-
                             if (other.GetComponentInChildren<ItemActivationBehaviour>().Activated)
                             {
-                               // Debug.LogError("FriendlyFire");
-
-                                PlayerHit playerHitEvent = PlayerHit.Create();
-                                playerHitEvent.PlayerEntity = entity;
-                                playerHitEvent.Send();
-
+                                SendPlayerHitEvent(itemState);
                             }
-
                         }
+
                         else if (itemState.Team != state.Team)
                         {
-                           // Debug.LogError("kill - " + itemState.Team + " - " + state.Team);
-                            PlayerHit playerHitEvent = PlayerHit.Create();
-                            playerHitEvent.PlayerEntity = entity;
-                            playerHitEvent.Send();
+                            SendPlayerHitEvent(itemState);
                         }
 
-                        /*
-                        if (itemState.OwnerID == state.OwnerID || itemState.OwnerID == 0)
-                        {
-
-                            if (!_imunity && _imunityTarget != other.gameObject)
-                            {
-                                _imunityTarget = other.gameObject;
-                                _imunity = true;
-                                //   Debug.LogError("imunity true");
-                            }
-                            */
-
-                        //   if (/*other.gameObject == _imunityTarget &&*/ !_imunity)
-                        /*
-                           {
-                               //   Debug.LogError("kill");
-                               PlayerHit playerHitEvent = PlayerHit.Create();
-                               playerHitEvent.PlayerEntity = entity;
-                               playerHitEvent.Send();
-                           }
-
-                    else if (itemState.Team != state.Team) // It's a hit
-                    {
-                        PlayerHit playerHitEvent = PlayerHit.Create();
-                        playerHitEvent.PlayerEntity = entity;
-                        playerHitEvent.Send();
-                    }
-                    */
                         var otherItemCollision = other.GetComponent<ItemCollisionTrigger>().ItemCollision;
                         if (otherItemCollision.ShouldBeDestroyed(_itemCollision) && other.GetComponentInChildren<ItemActivationBehaviour>().Activated) // The item should be destroyed
                         {
@@ -84,31 +47,16 @@ namespace Items
             }
         }
 
-        /*
-        private void OnTriggerExit(Collider other)
+        private void SendPlayerHitEvent(IItemState itemState)
         {
-            if (other.gameObject.CompareTag(Constants.Tag.ItemCollisionHitBox) &&
-                   other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.Totem) // It is an item collision (except totem)
-            {
-                BoltEntity itemEntity = other.GetComponentInParent<BoltEntity>();
-                IItemState itemState;
-
-                if (itemEntity.isAttached && itemEntity.TryFindState<IItemState>(out itemState)) // It is a concrete item
-                {
-                    if (itemState.Team == state.Team || itemState.OwnerID == state.OwnerID) // It's a hit
-                    {
-                        if (itemState.OwnerID == state.OwnerID || itemState.OwnerID == 0)
-                        {
-                            if (other.gameObject == _imunityTarget)
-                            {
-                                //  Debug.LogError("imunity false");
-                                _imunity = false;
-                            }
-                        }
-                    }
-                }
-            }
+            PlayerHit playerHitEvent = PlayerHit.Create();
+            playerHitEvent.PlayerEntity = entity;
+            playerHitEvent.KillerName = itemState.OwnerNickname;
+            playerHitEvent.KillerTeamColor = itemState.Team;
+            playerHitEvent.Item = itemState.Name;
+            playerHitEvent.VictimName = state.Nickname;
+            playerHitEvent.VictimTeamColor = state.Team;
+            playerHitEvent.Send();
         }
-        */
     }
 }
