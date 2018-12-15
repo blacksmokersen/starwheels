@@ -7,8 +7,12 @@ namespace Common.Audio
     public class SnapshotController : MonoBehaviour
     {
         [Header("Mixer Parameters")]
-        [SerializeField] private string _snapshotName;
         [SerializeField] private AudioMixer _mixer;
+
+        [Header("Snapshot Parameters")]
+        [SerializeField] private string _snapshotName;
+        [SerializeField] private float _fadeInSeconds;
+        [SerializeField] private float _fadeOutSeconds;
 
         private AudioMixerSnapshot _snapshot;
         private AudioMixerSnapshot _defaultSnapshot;
@@ -26,12 +30,12 @@ namespace Common.Audio
 
         public void ActivateSnapshot()
         {
-            _snapshot.TransitionTo(0.5f);
+            _snapshot.TransitionTo(_fadeInSeconds);
         }
 
         public void StopSnapshot()
         {
-            _defaultSnapshot.TransitionTo(0.5f);
+            _defaultSnapshot.TransitionTo(_fadeOutSeconds);
         }
     }
 }
