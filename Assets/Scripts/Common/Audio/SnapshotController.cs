@@ -1,16 +1,31 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using FMOD.Studio;
+using FMODUnity;
 
-public class SnapshotController : MonoBehaviour {
+namespace Common.Audio
+{
+    public class SnapshotController : MonoBehaviour
+    {
+        [SerializeField] private string _snapshotName;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        private EventInstance _snapshot;
+        private ParameterInstance _parameter;
+
+        private void Start()
+        {
+            _snapshot = RuntimeManager.CreateInstance("snapshot:/" + _snapshotName);
+        }
+
+        // PUBLIC
+
+        public void ActivateSnapshot()
+        {
+            _snapshot.start();
+        }
+
+        public void StopSnapshot()
+        {
+            _snapshot.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
+    }
 }
