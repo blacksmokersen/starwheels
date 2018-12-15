@@ -20,7 +20,6 @@ namespace Items
         public override void OnEvent(ShowKartDisplayItem evnt)
         {
             var entity = GetComponentInParent<BoltEntity>();
-            Debug.Log("Received event for : " + evnt.ItemName);
 
             if (entity == evnt.Entity)
             {

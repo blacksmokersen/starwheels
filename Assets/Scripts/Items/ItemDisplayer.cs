@@ -43,7 +43,6 @@ namespace Items
         {
             if (_inventory.CurrentItem != null)
             {
-                Debug.Log("Sending event for item : " + _inventory.CurrentItem.Name);
                 var showDisplayEvent = ShowKartDisplayItem.Create();
                 showDisplayEvent.Entity = GetComponentInParent<BoltEntity>();
                 showDisplayEvent.ItemName = _inventory.CurrentItem.Name;
