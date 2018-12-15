@@ -75,4 +75,10 @@
         public const string Battle = "Battle";
         public const string Totem = "Totem";
     }
+
+    // Mixer
+    public class AudioMixer
+    {
+        public const string DefaultSnapshot = "Master";
+    }
 }
