@@ -1,31 +1,37 @@
 ﻿using UnityEngine;
-using FMOD.Studio;
-using FMODUnity;
+using UnityEngine.Assertions;
+using UnityEngine.Audio;
 
 namespace Common.Audio
 {
     public class SnapshotController : MonoBehaviour
     {
+        [Header("Mixer Parameters")]
         [SerializeField] private string _snapshotName;
+        [SerializeField] private AudioMixer _mixer;
 
-        private EventInstance _snapshot;
-        private ParameterInstance _parameter;
+        private AudioMixerSnapshot _snapshot;
+        private AudioMixerSnapshot _defaultSnapshot;
 
-        private void Start()
+        private void Awake()
         {
-            _snapshot = RuntimeManager.CreateInstance("snapshot:/" + _snapshotName);
+            Assert.IsNotNull(_mixer, "Mixer reference not set.");
+            Assert.AreNotEqual("", _snapshotName, "Snapshot name not set.");
+
+            _snapshot = _mixer.FindSnapshot(_snapshotName);
+            _defaultSnapshot = _mixer.FindSnapshot(Constants.AudioMixer.DefaultSnapshot);
         }
 
         // PUBLIC
 
         public void ActivateSnapshot()
         {
-            _snapshot.start();
+            _snapshot.TransitionTo(0.5f);
         }
 
         public void StopSnapshot()
         {
-            _snapshot.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            _defaultSnapshot.TransitionTo(0.5f);
         }
     }
 }
