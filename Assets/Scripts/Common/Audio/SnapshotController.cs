@@ -30,12 +30,18 @@ namespace Common.Audio
 
         public void ActivateSnapshot()
         {
-            _snapshot.TransitionTo(_fadeInSeconds);
+            if (_snapshot)
+            {
+                _snapshot.TransitionTo(_fadeInSeconds);
+            }
         }
 
         public void StopSnapshot()
         {
-            _defaultSnapshot.TransitionTo(_fadeOutSeconds);
+            if (_defaultSnapshot)
+            {
+                _defaultSnapshot.TransitionTo(_fadeOutSeconds);
+            }
         }
     }
 }
