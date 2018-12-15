@@ -79,6 +79,6 @@
     // Mixer
     public class AudioMixer
     {
-        public const string DefaultSnapshot = "Master";
+        public const string DefaultSnapshot = "Master 1";
     }
 }
