@@ -4,7 +4,6 @@ using Multiplayer;
 
 namespace Items
 {
-    [RequireComponent(typeof(AudioSource))]
     public class ProjectileBehaviour : NetworkDestroyable
     {
         [Header("Owner")]
