@@ -24,6 +24,7 @@ namespace Common.Audio
 
             _snapshot = _mixer.FindSnapshot(_snapshotName);
             _defaultSnapshot = _mixer.FindSnapshot(Constants.AudioMixer.DefaultSnapshot);
+            _defaultSnapshot.TransitionTo(0f);
         }
 
         // PUBLIC
