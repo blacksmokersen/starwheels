@@ -34,6 +34,11 @@ namespace Abilities
                 MapInputs();
         }
 
+        public override void Detached()
+        {
+            StopAllCoroutines();
+        }
+
         // PUBLIC
 
         public new void Reload()
@@ -103,7 +108,7 @@ namespace Abilities
                 mesh.SetActive(true);
             }
 
-            if (entity.isOwner)
+            if (entity.isAttached && entity.isOwner)
             {
                 OnOwnerCloackUnset.Invoke();
             }
