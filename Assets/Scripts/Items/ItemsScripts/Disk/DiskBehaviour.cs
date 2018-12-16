@@ -23,7 +23,6 @@ namespace Items
                     CollisionParticles.Emit(ParticlesToEmit);
                     ReboundsBeforeEnd--;
                     PlayCollisionSound();
-                    Debug.Log("Bounds left : " + ReboundsBeforeEnd);
 
                     if (ReboundsBeforeEnd <= 0)
                     {

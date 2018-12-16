@@ -1,10 +1,15 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Abilities
 {
     public class CloakAbility : Ability, IControllable
     {
+        [Header("Unity Events")]
+        public UnityEvent OnOwnerCloackSet;
+        public UnityEvent OnOwnerCloackUnset;
+
         [Header("Meshes and Animation")]
         [SerializeField] private GameObject _cloakEffect;
         [SerializeField] private GameObject[] _kartMeshes;
@@ -29,6 +34,11 @@ namespace Abilities
                 MapInputs();
         }
 
+        public override void Detached()
+        {
+            StopAllCoroutines();
+        }
+
         // PUBLIC
 
         public new void Reload()
@@ -51,8 +61,6 @@ namespace Abilities
 
         public void Use()
         {
-            Debug.Log("Used cloak");
-
             _animator.SetTrigger("ActivateCloakEffect");
             StartCoroutine(CloakDuration(_cloakSettings.CloakDuration));
             StartCoroutine(Cooldown());
@@ -84,6 +92,11 @@ namespace Abilities
                 mesh.SetActive(false);
             }
             _cloakEffect.SetActive(true);
+
+            if (entity.isOwner)
+            {
+                OnOwnerCloackSet.Invoke();
+            }
         }
 
         private void UnsetCloack()
@@ -93,6 +106,11 @@ namespace Abilities
             foreach (GameObject mesh in _kartMeshes)
             {
                 mesh.SetActive(true);
+            }
+
+            if (entity.isAttached && entity.isOwner)
+            {
+                OnOwnerCloackUnset.Invoke();
             }
         }
     }
