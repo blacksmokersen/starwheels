@@ -7,10 +7,6 @@ namespace Items
     {
         [SerializeField] private ItemCollision _itemCollision;
 
-        private bool _imunity;
-        private GameObject _imunityTarget;
-
-
         private void OnTriggerEnter(Collider other)
         {
             if (BoltNetwork.isServer && entity.isAttached)
@@ -20,26 +16,29 @@ namespace Items
                 {
                     BoltEntity itemEntity = other.GetComponentInParent<BoltEntity>();
                     IItemState itemState;
-
                     if (itemEntity.isAttached && itemEntity.TryFindState<IItemState>(out itemState)) // It is a concrete item
                     {
-                        if (itemState.OwnerID == state.OwnerID || (itemState.OwnerID == 0 && itemState.Team == new Color(0,0,0,0)))
+                        if (other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName == ItemCollisionName.IonBeamLaser)
                         {
-                            if (other.GetComponentInChildren<ItemActivationBehaviour>().Activated)
+                            SendPlayerHitEvent(itemState);
+                        }
+                        if (itemState.OwnerID == state.OwnerID || (itemState.OwnerID == 0 && itemState.Team == new Color(0, 0, 0, 0)))
+                        {
+                            if (other.GetComponentInChildren<ItemActivationBehaviour>().Activated
+                                && other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.IonBeamLaser)
                             {
-                             //   Debug.LogError("1");
                                 SendPlayerHitEvent(itemState);
                             }
                         }
 
                         else if (itemState.Team != state.Team)
                         {
-                          //  Debug.LogError("2");
                             SendPlayerHitEvent(itemState);
                         }
-
                         var otherItemCollision = other.GetComponent<ItemCollisionTrigger>().ItemCollision;
-                        if (otherItemCollision.ShouldBeDestroyed(_itemCollision) && other.GetComponentInChildren<ItemActivationBehaviour>().Activated) // The item should be destroyed
+                        if (otherItemCollision.ShouldBeDestroyed(_itemCollision)
+                            && other.GetComponentInChildren<ItemActivationBehaviour>().Activated
+                            && other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.IonBeamLaser) // The item should be destroyed
                         {
                             DestroyEntity destroyEntityEvent = DestroyEntity.Create();
                             destroyEntityEvent.Entity = other.GetComponentInParent<BoltEntity>();
@@ -49,6 +48,8 @@ namespace Items
                 }
             }
         }
+
+        // Laissez ça, c'est pour me souvenir de tester l'instakill au corps à corps via le Stay :)
 
         /*
         private void OnTriggerStay(Collider other)
@@ -82,7 +83,6 @@ namespace Items
             }
         }
         */
-
 
         private void SendPlayerHitEvent(IItemState itemState)
         {

@@ -8,7 +8,7 @@ using Bolt;
 
 namespace Items
 {
-    public class IonBeamBehaviour : EntityBehaviour
+    public class IonBeamBehaviour : EntityBehaviour<IItemState>
     {
         [SerializeField] private GameObject ionBeamLaserPrefab;
 
@@ -19,6 +19,9 @@ namespace Items
 
         [Header("Sounds")]
         public AudioSource LaunchSource;
+
+        public string OwnerNickname;
+        public string ItemName;
 
         //CORE
 
@@ -31,19 +34,13 @@ namespace Items
         public void Start()
         {
             _ionBeamOwner = GetComponent<Ownership>().OwnerKartRoot;
-
             if (entity.isOwner)
             {
                 _ionBeamCam.IonBeamCameraBehaviour(true);
                 EnableIonInputs();
             }
         }
-        /*
-        private void Update()
-        {
-            transform.position = _ionBeamCam.transposer.transform.position;
-        }
-        */
+
         public override void SimulateController()
         {
             transform.position = _ionBeamCam.Transposer.transform.position;
@@ -66,12 +63,14 @@ namespace Items
                 Vector3 camPosition = _ionBeamCam.Transposer.transform.position;
 
                 var IonBeam = BoltNetwork.Instantiate(ionBeamLaserPrefab, new Vector3(camPosition.x, 0, camPosition.z), Quaternion.identity);
+                var itemState = IonBeam.GetComponent<BoltEntity>().GetState<IItemState>();
 
-                Ownership IonOwnership = GetComponent<Ownership>();
-                Ownership itemOwnership = IonBeam.GetComponent<Ownership>();
+                itemState.Team = state.Team;
+                itemState.OwnerID = state.OwnerID;
+                itemState.OwnerNickname = OwnerNickname;
+                itemState.Name = ItemName;
 
-                itemOwnership.OwnerKartRoot = IonOwnership.OwnerKartRoot;
-                itemOwnership.Team = IonOwnership.Team;
+               // itemState.Name = GetComponent<BoltEntity>().GetState<IItemState>().Name;
 
                 IonBeam.transform.position = new Vector3(_ionBeamCam.transform.position.x, IonBeam.transform.position.y, _ionBeamCam.transform.position.z);
                 MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(LaunchSource);

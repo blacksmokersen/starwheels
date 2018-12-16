@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Bolt;
 
 namespace Items
 {
-    public class IonBeamLaserBehaviour : MonoBehaviour
+    public class IonBeamLaserBehaviour : EntityBehaviour<IItemState>
     {
-      //  [SerializeField] private ProjectileBehaviour projectileBehaviour;
-      //  [SerializeField] private IonBeamLaserSettings _ionBeamLaserSettings;
 
         [SerializeField] private GameObject _ionBeamCore;
+        [SerializeField] private Collider _ionBeamCollider;
         [SerializeField] private Transform raycastTransformOrigin;
 
         private bool _damagePlayer = false;
@@ -36,6 +36,7 @@ namespace Items
             RaycastHit hit;
             if (Physics.Raycast(raycastTransformOrigin.position, Vector3.down, out hit, 500, 1 << LayerMask.NameToLayer(Constants.Layer.Ground)))
             {
+                _ionBeamCollider.enabled = true;
                 _damagePlayer = true;
             }
             else
@@ -46,29 +47,13 @@ namespace Items
 
         public void AtEndDamageAnimation()
         {
+            _ionBeamCollider.enabled = false;
             _damagePlayer = false;
         }
 
         public void AtEndAnimation()
         {
             BoltNetwork.Destroy(gameObject);
-        }
-
-        //PRIVATE
-
-        private void OnTriggerStay(Collider other)
-        {
-            if (_damagePlayer)
-            {
-                if (other.gameObject.CompareTag(Constants.Tag.KartHealthHitBox))
-                {
-                    Debug.Log("Hit");
-                    //  CheckCollision(other.gameObject);
-                    PlayerHit playerHitEvent = PlayerHit.Create();
-                    playerHitEvent.PlayerEntity = other.GetComponentInParent<BoltEntity>();
-                    playerHitEvent.Send();
-                }
-            }
         }
     }
 }

@@ -113,6 +113,21 @@ namespace Items
                 var throwable = instantiatedItem.GetComponent<Throwable>();
                 _projectileLauncher.Throw(throwable, _projectileLauncher.GetThrowingDirection());
             }
+            else if (CurrentItem.ItemType == ItemType.Self)
+            {
+                var itemState = instantiatedItem.GetComponent<BoltEntity>().GetState<IItemState>();
+                itemState.Team = state.Team;
+                itemState.OwnerID = state.OwnerID;
+                itemState.OwnerNickname = state.Nickname;
+                itemState.Name = CurrentItem.Name;
+
+                if(instantiatedItem.GetComponent<IonBeamBehaviour>() != null)
+                {
+                    var ionBeanBehaviour = instantiatedItem.GetComponent<IonBeamBehaviour>();
+                    ionBeanBehaviour.OwnerNickname = state.Nickname;
+                    ionBeanBehaviour.ItemName = CurrentItem.Name;
+                }
+            }
         }
 
         private IEnumerator AntiSpamRoutine()

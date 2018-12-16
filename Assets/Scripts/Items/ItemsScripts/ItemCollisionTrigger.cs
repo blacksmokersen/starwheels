@@ -19,7 +19,6 @@ namespace Items
         {
             if (BoltNetwork.isServer)
             {
-               // Debug.LogError("going to be destroyed");
                 if (other.gameObject.CompareTag(Constants.Tag.ItemCollisionHitBox))
                 {
                     var otherItemCollision = other.GetComponent<ItemCollisionTrigger>().ItemCollision;
@@ -31,17 +30,13 @@ namespace Items
                     }
                 }
             }
-
         }
 
         private void OnTriggerExit(Collider other)
         {
-         //   Debug.LogError("IA");
          if(itemActivationBehaviour != null)
             itemActivationBehaviour.Activated = true;
         }
-
-
 
         private void DestroySelf()
         {
