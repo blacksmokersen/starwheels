@@ -166,12 +166,15 @@ namespace MyExtensions
     {
         public static void PlayClipObjectAndDestroy(AudioSource audioSource)
         {
+            Debug.Log("Creating new parent for audio source");
             GameObject oneShotObject = new GameObject("One shot sound from " + audioSource.name);
-            oneShotObject.transform.position = audioSource.transform.position;
-            ComponentExtensions.CopyAndPasteAudioSource(audioSource, oneShotObject);
-            var oneShotSource = oneShotObject.GetComponent<AudioSource>();
-            oneShotSource.Play();
-            MonoBehaviour.Destroy(oneShotObject, oneShotSource.clip.length);
+            audioSource.transform.SetParent(oneShotObject.transform);
+            foreach (var audio in audioSource.GetComponents<AudioSource>())
+            {
+                audio.Stop();
+            }
+            audioSource.Play();
+            MonoBehaviour.Destroy(oneShotObject, audioSource.clip.length + 1f);
         }
     }
 }

@@ -4,11 +4,10 @@ using Bolt;
 
 namespace Items
 {
+    [DisallowMultipleComponent]
+    [RequireComponent(typeof(Collider))]
     public class ItemCollisionTrigger : EntityBehaviour
     {
-
-        [SerializeField] ItemActivationBehaviour itemActivationBehaviour;
-
         [Header("Events")]
         public UnityEvent OnCollision;
 
@@ -30,12 +29,6 @@ namespace Items
                     }
                 }
             }
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-         if(itemActivationBehaviour != null)
-            itemActivationBehaviour.Activated = true;
         }
 
         private void DestroySelf()
