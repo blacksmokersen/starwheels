@@ -46,23 +46,23 @@ namespace Items
         }
 
         #region Audio
-        protected void PlayLaunchSound()
+        public void PlayLaunchSound()
         {
             LaunchSource.Play();
         }
 
-        protected void PlayFlySound()
+        public void PlayFlySound()
         {
             FlySource.loop = true;
             FlySource.Play();
         }
 
-        protected void PlayPlayerHitSound()
+        public void PlayPlayerHitSound()
         {
             MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(PlayerHitSource);
         }
 
-        protected void PlayCollisionSound()
+        public void PlayCollisionSound()
         {
             MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(CollisionSource);
         }
