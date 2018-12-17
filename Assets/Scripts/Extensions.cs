@@ -166,9 +166,15 @@ namespace MyExtensions
     {
         public static void PlayClipObjectAndDestroy(AudioSource audioSource)
         {
+            Debug.Log("Creating new parent for audio source");
             GameObject oneShotObject = new GameObject("One shot sound from " + audioSource.name);
             audioSource.transform.SetParent(oneShotObject.transform);
-            MonoBehaviour.Destroy(oneShotObject, audioSource.clip.length);
+            foreach (var audio in audioSource.GetComponents<AudioSource>())
+            {
+                audio.Stop();
+            }
+            audioSource.Play();
+            MonoBehaviour.Destroy(oneShotObject, audioSource.clip.length + 1f);
         }
     }
 }
