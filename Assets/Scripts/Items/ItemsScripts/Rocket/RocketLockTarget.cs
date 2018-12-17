@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
 using Multiplayer;
-using Multiplayer.Teams;
 using Bolt;
 
 namespace Items
@@ -21,11 +20,28 @@ namespace Items
             StartCoroutine(LookForTarget());
         }
 
+        public override void SimulateOwner()
+        {
+            try
+            {
+                if (ActualTarget == null || !ActualTarget.activeInHierarchy)
+                {
+                    ActualTarget = null;
+                }
+            }
+            catch (MissingReferenceException)
+            {
+                ActualTarget = null;
+                Debug.Log("Resetting rocket target.");
+            }
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.tag == Constants.Tag.KartHealthHitBox && _activated && ActualTarget == null)
             {
                 var otherPlayer = other.GetComponentInParent<Player>();
+
                 if (state.Team != otherPlayer.Team.GetColor())
                 {
                     ActualTarget = other.gameObject;
@@ -39,7 +55,8 @@ namespace Items
             if (other.gameObject.tag == Constants.Tag.KartHealthHitBox && _activated)
             {
                 var otherPlayer = other.GetComponentInParent<Player>();
-                if (state.Team != otherPlayer.Team.GetColor())
+
+                if (entity.isAttached && state.Team != otherPlayer.Team.GetColor())
                 {
                     if (IsKartIsCloserThanActualTarget(other.gameObject) || ActualTarget == null)
                     {
@@ -51,16 +68,16 @@ namespace Items
             }
         }
 
-        IEnumerator LookForTarget()
+        private bool IsKartIsCloserThanActualTarget(GameObject kart)
+        {
+            return Vector3.Distance(transform.position, kart.transform.position) < _actualTargetDistance;
+        }
+
+        private IEnumerator LookForTarget()
         {
             _activated = false;
             yield return new WaitForSeconds(SecondsBeforeSearchingTarget); // For X seconds the rocket goes straight forward
             _activated = true;
-        }
-
-        public bool IsKartIsCloserThanActualTarget(GameObject kart)
-        {
-            return Vector3.Distance(transform.position, kart.transform.position) < _actualTargetDistance;
         }
     }
 }
