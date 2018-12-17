@@ -367,6 +367,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1512731693212066
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4434481707660562}
+  - component: {fileID: 82978940118701718}
+  - component: {fileID: 82542590140184160}
+  - component: {fileID: 82193102268074902}
+  m_Layer: 0
+  m_Name: AudioSources
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1521564673869586
 GameObject:
   m_ObjectHideFlags: 1
@@ -600,9 +618,6 @@ GameObject:
   - component: {fileID: 114270967424691506}
   - component: {fileID: 114578968453696728}
   - component: {fileID: 114487436481830474}
-  - component: {fileID: 82203276807651212}
-  - component: {fileID: 82687528043077804}
-  - component: {fileID: 82086500504472776}
   m_Layer: 0
   m_Name: Mine
   m_TagString: GroundItem
@@ -934,6 +949,19 @@ Transform:
   m_Father: {fileID: 4560459600408272}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4434481707660562
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1512731693212066}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4560459600408272}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4466149390456118
 Transform:
   m_ObjectHideFlags: 1
@@ -1025,13 +1053,14 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1838917612140702}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 20.92, y: 4.55, z: -2.1347146}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4025953818774036}
   - {fileID: 4073335399058026}
   - {fileID: 4390881638899614}
   - {fileID: 4244714120504598}
+  - {fileID: 4434481707660562}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2570,12 +2599,12 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.8273926, y: 0.59033203, z: 0.8585093}
   m_Center: {x: -0.0018310547, y: 0.28, z: 0.005194187}
---- !u!82 &82086500504472776
+--- !u!82 &82193102268074902
 AudioSource:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1838917612140702}
+  m_GameObject: {fileID: 1512731693212066}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 243311884667392506, guid: 1d4c80e3d0275764f9ad01100870ce32,
@@ -2666,21 +2695,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &82203276807651212
+--- !u!82 &82542590140184160
 AudioSource:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1838917612140702}
+  m_GameObject: {fileID: 1512731693212066}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 243794843050554842, guid: 1d4c80e3d0275764f9ad01100870ce32,
+  OutputAudioMixerGroup: {fileID: 243192479459847332, guid: 1d4c80e3d0275764f9ad01100870ce32,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: a43738478a6971e4b8cc7bd4078be899, type: 3}
+  m_audioClip: {fileID: 8300000, guid: c147ae84b17fb3d498e55ba736f82009, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.6
+  m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -2762,21 +2791,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &82687528043077804
+--- !u!82 &82978940118701718
 AudioSource:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1838917612140702}
+  m_GameObject: {fileID: 1512731693212066}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 243192479459847332, guid: 1d4c80e3d0275764f9ad01100870ce32,
+  OutputAudioMixerGroup: {fileID: 243794843050554842, guid: 1d4c80e3d0275764f9ad01100870ce32,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: c147ae84b17fb3d498e55ba736f82009, type: 3}
+  m_audioClip: {fileID: 8300000, guid: a43738478a6971e4b8cc7bd4078be899, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -2962,7 +2991,18 @@ MonoBehaviour:
   itemActivationBehaviour: {fileID: 114851103314272884}
   OnCollision:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114270967424691506}
+        m_MethodName: PlayExplosion
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   ItemCollision: {fileID: 11400000, guid: 1c6c9d023db44da40bd357076da745c0, type: 2}
@@ -2981,9 +3021,9 @@ MonoBehaviour:
   ForwardThrowingForce: 50
   TimesLongerThanHighThrow: 5
   LivingTime: 80
-  LaunchSource: {fileID: 82203276807651212}
-  IdleSource: {fileID: 82687528043077804}
-  ExplosionSource: {fileID: 82086500504472776}
+  LaunchSource: {fileID: 82978940118701718}
+  IdleSource: {fileID: 82542590140184160}
+  ExplosionSource: {fileID: 82193102268074902}
 --- !u!114 &114487436481830474
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3020,7 +3060,7 @@ MonoBehaviour:
   m_Script: {fileID: -36112512, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneGuid: 
+  _sceneGuid: 2548f69c-4572-49bb-b470-091231618208
   _serializerGuid: ffe9e53f-72a5-4574-af39-0fa608838337
   _prefabId: 11
   _updateRate: 1
