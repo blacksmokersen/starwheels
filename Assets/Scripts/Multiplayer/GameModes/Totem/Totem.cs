@@ -91,6 +91,11 @@ namespace GameModes.Totem
             if (OnParentUnset != null) OnParentUnset.Invoke();
         }
 
+        public void StartAntiSpamCoroutine()
+        {
+            StartCoroutine(AntiPickSpamRoutine());
+        }
+
         public void FreezeTotem(bool b)
         {
             var rb = GetComponent<Rigidbody>();
