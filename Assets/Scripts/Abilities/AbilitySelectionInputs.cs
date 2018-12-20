@@ -7,11 +7,12 @@ namespace Abilities
     {
         [SerializeField] private AbilitySetter _abilitySetter;
 
-        // BOLT
-
-        public override void SimulateController()
+        private void Update()
         {
-            MapInputs();
+            if (entity.isControllerOrOwner)
+            {
+                MapInputs();
+            }
         }
 
         // PUBLIC

@@ -24,7 +24,7 @@ namespace Controls
 
         private void Update()
         {
-            if (entity.isOwner)
+            if (entity.isControllerOrOwner)
             {
                 MoveCam();
                 MapInputs();
