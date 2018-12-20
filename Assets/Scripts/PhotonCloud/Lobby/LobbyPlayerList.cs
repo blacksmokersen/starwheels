@@ -47,7 +47,7 @@ namespace Photon.Lobby
 
         public LobbyPhotonPlayer CreatePlayer()
         {
-            if (!BoltNetwork.isClient) { return null; }
+            if (!BoltNetwork.IsClient) { return null; }
 
             return null;
         }
@@ -60,8 +60,8 @@ namespace Photon.Lobby
             Instance = this;
             _players = new List<LobbyPhotonPlayer>();
             _layout = _playerListContentTransform.GetComponent<VerticalLayoutGroup>();
-            _mapDropdown.enabled = BoltNetwork.isServer;
-            _gamemodeDropdown.enabled = BoltNetwork.isServer;
+            _mapDropdown.enabled = BoltNetwork.IsServer;
+            _gamemodeDropdown.enabled = BoltNetwork.IsServer;
         }
 
         private void Update()

@@ -14,7 +14,7 @@ namespace Network
 
         private void Awake()
         {
-            if (!BoltNetwork.isConnected)
+            if (!BoltNetwork.IsConnected)
             {
                 BoltLauncher.StartServer();
             }

@@ -28,7 +28,7 @@ namespace GameModes.Totem
             {
                 totem.GetComponent<Totem>().UnsetParent();
 
-                if (BoltNetwork.isServer) // The server make the player throw the totem
+                if (BoltNetwork.IsServer) // The server make the player throw the totem
                 {
                     totem.GetComponent<Totem>().StartAntiSpamCoroutine();
 

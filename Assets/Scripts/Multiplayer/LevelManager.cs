@@ -46,7 +46,7 @@ public class LevelManager : MonoBehaviour
 
     public void ResetLevel()
     {
-        if (BoltNetwork.isServer)
+        if (BoltNetwork.IsServer)
         {
             var roomToken = FindObjectOfType<Multiplayer.SpawnAssigner>().RoomInfoToken;
 
