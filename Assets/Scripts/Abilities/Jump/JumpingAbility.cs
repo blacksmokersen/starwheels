@@ -40,7 +40,12 @@ namespace Abilities.Jump
 
         // PUBLIC
 
-        public void FirstJump()
+        public new void Reload()
+        {
+            CanUseAbility = true;
+        }
+
+            public void FirstJump()
         {
             _rb.AddRelativeForce(Vector3.up * _jumpSettings.FirstJumpForce, ForceMode.Impulse);
             _hasDoneFirstJump = true;
