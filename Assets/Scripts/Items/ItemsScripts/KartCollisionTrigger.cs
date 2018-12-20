@@ -87,10 +87,11 @@ namespace Items
         private void SendPlayerHitEvent(IItemState itemState)
         {
             PlayerHit playerHitEvent = PlayerHit.Create();
-            playerHitEvent.PlayerEntity = entity;
             playerHitEvent.KillerName = itemState.OwnerNickname;
             playerHitEvent.KillerTeamColor = itemState.Team;
             playerHitEvent.Item = itemState.Name;
+            playerHitEvent.VictimEntity = entity;
+            playerHitEvent.VictimID = state.OwnerID;
             playerHitEvent.VictimName = state.Nickname;
             playerHitEvent.VictimTeamColor = state.Team;
             playerHitEvent.Send();
