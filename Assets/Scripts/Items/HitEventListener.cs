@@ -5,7 +5,7 @@ public class HitEventListener : GlobalEventListener
     public override void OnEvent(PlayerHit evnt)
     {
         var kartEntity = GetComponent<BoltEntity>();
-        if (kartEntity == evnt.PlayerEntity)
+        if (kartEntity == evnt.VictimEntity)
         {
             kartEntity.GetComponentInChildren<Health.Health>().LoseHealth();
         }
