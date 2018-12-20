@@ -30,12 +30,12 @@ namespace Abilities.Jump
             _groundCondition.OnHitGround.AddListener(() => { _hasDoneFirstJump = false; });
         }
 
-        // BOLT
-
-        public override void SimulateController()
+        private void Update()
         {
-            if (gameObject.activeInHierarchy)
+            if (entity.isControllerOrOwner && gameObject.activeInHierarchy)
+            {
                 MapInputs();
+            }
         }
 
         // PUBLIC
