@@ -77,7 +77,7 @@ namespace Drift
             }
         }
 
-        private void FixedUpdate()
+        public override void SimulateController()
         {
             if (DriftTurnState != TurnState.NotTurning && HasRequiredSpeed())
             {
