@@ -114,7 +114,7 @@ public class BoltInit : Bolt.GlobalEventListener
 
     public override void BoltStartDone()
     {
-        if (BoltNetwork.isServer)
+        if (BoltNetwork.IsServer)
         {
             var id = Guid.NewGuid().ToString().Split('-')[0];
             var matchName = string.Format("{0} - {1}", id, map);

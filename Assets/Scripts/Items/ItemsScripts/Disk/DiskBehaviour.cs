@@ -13,7 +13,7 @@ namespace Items
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (BoltNetwork.isServer)
+            if (BoltNetwork.IsServer)
             {
                 if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.Layer.Ground))
                 {

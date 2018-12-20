@@ -9,7 +9,7 @@ namespace Items
 
         private void OnTriggerEnter(Collider other)
         {
-            if (BoltNetwork.isServer && entity.isAttached)
+            if (BoltNetwork.IsServer && entity.isAttached)
             {
                 if (other.gameObject.CompareTag(Constants.Tag.ItemCollisionHitBox) &&
                     other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.Totem) // It is an item collision (except totem)
@@ -54,7 +54,7 @@ namespace Items
         /*
         private void OnTriggerStay(Collider other)
         {
-            if (BoltNetwork.isServer && entity.isAttached)
+            if (BoltNetwork.IsServer && entity.isAttached)
             {
                 if (other.gameObject.CompareTag(Constants.Tag.ItemCollisionHitBox) &&
                     other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.Totem) // It is an item collision (except totem)
