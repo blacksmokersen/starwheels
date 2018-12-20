@@ -21,7 +21,10 @@ namespace Items
 
         private void Update()
         {
-            MapInputs();
+            if (entity.isControllerOrOwner)
+            {
+                MapInputs();
+            }
         }
 
         // PUBLIC
