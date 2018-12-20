@@ -34,11 +34,12 @@ namespace Items
             CurrentItemCount = 0;
         }
 
-        // BOLT
-
-        public override void SimulateController()
+        private void Update()
         {
-            MapInputs();
+            if (entity.isControllerOrOwner)
+            {
+                MapInputs();
+            }
         }
 
         // PUBLIC

@@ -9,11 +9,12 @@ namespace KBA.Debug
         [SerializeField] private GameObject _teleportTarget;
         [SerializeField] private Vector3 _teleportPosition;
 
-        // CORE
-
-        public override void SimulateController()
+        private void Update()
         {
-            MapInputs();
+            if (entity.isControllerOrOwner)
+            {
+                MapInputs();
+            }
         }
 
         // PUBLIC

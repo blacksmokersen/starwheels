@@ -28,10 +28,12 @@ namespace Abilities
 
         // BOLT
 
-        public override void SimulateController()
+        private void Update()
         {
-            if (gameObject.activeInHierarchy)
+            if (entity.isControllerOrOwner && gameObject.activeInHierarchy)
+            {
                 MapInputs();
+            }
         }
 
         public override void Detached()
