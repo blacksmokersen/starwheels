@@ -11,9 +11,6 @@ namespace GameModes.Totem
         [Range(0.9f,1f)] public float SlowdownFactor = 0.98f;
         public float StopMagnitudeThreshold = 0.1f;
 
-        [Header("Speed")]
-        public float Speed;
-
         [Header("Pick Up")]
         public float Radius;
         public float SecondsBeforeCanBePickedAgain;
