@@ -15,6 +15,7 @@ namespace ThrowingSystem
     public class Throwable : EntityBehaviour<IThrowableState>
     {
         public ThrowableType ThrowableType;
+        public FloatVariable Speed;
 
         // BOLT
 
