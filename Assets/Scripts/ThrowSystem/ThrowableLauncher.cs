@@ -5,14 +5,8 @@ namespace ThrowingSystem
     [RequireComponent(typeof(ThrowPositions))]
     public class ThrowableLauncher : Bolt.EntityBehaviour
     {
-        [Header("LaunchType: Straight")]
-        public float Speed;
-
         [Header("LaunchType: Arc")]
-        public float ForwardThrowingForce;
         public float TimesLongerThanHighThrow;
-
-        [SerializeField] Items.ShockwaveEffectBehaviour shockwaveEffectBehaviour;
 
         private ThrowPositions _itemPositions;
 
@@ -71,8 +65,8 @@ namespace ThrowingSystem
             {
                 throwable.transform.position = _itemPositions.FrontPosition.position;
                 rot = new Vector3(0, transform.rotation.eulerAngles.y, 0);
-                var aimVector = transform.forward;
-                rb.AddForce((aimVector + transform.up / TimesLongerThanHighThrow) * ForwardThrowingForce, ForceMode.Impulse);
+                var aimVector = transform.forward + transform.up / TimesLongerThanHighThrow;
+                rb.AddForce(aimVector  * throwable.Speed.Value, ForceMode.Impulse);
             }
             else if (throwingDirection == Direction.Backward)
             {
@@ -91,13 +85,13 @@ namespace ThrowingSystem
             {
                 throwable.transform.position = _itemPositions.FrontPosition.position;
                 rot = new Vector3(0, transform.rotation.eulerAngles.y, 0);
-                rb.velocity = transform.forward.normalized * Speed;
+                rb.velocity = transform.forward.normalized * throwable.Speed.Value;
             }
             else if (throwingDirection == Direction.Backward)
             {
                 throwable.transform.position = _itemPositions.BackPosition.position;
                 rot = new Vector3(0, transform.rotation.eulerAngles.y + 180, 0);
-                rb.velocity = -transform.forward.normalized * Speed;
+                rb.velocity = -transform.forward.normalized * throwable.Speed.Value;
             }
             throwable.transform.rotation = Quaternion.Euler(rot);
             StartLaunchItemEvent(throwable.transform.position, throwable.transform.rotation, throwable.name);
