@@ -17,7 +17,7 @@ namespace Items
 
         private void Update()
         {
-            if(_currentTargetTransform != null)
+            if (entity.isAttached && entity.isOwner && _currentTargetTransform != null)
             {
                 _crossHair.transform.position = _currentTargetTransform.position + new Vector3(0f, 0.5f, 0f);
             }
@@ -29,7 +29,7 @@ namespace Items
         {
             if (entity.isOwner)
             {
-                _crossHair = Instantiate(_crossHairReference);
+                _crossHair = Instantiate(_crossHairReference, transform, true);
                 _crossHair.SetActive(false);
             }
         }
@@ -101,11 +101,6 @@ namespace Items
                 SwitchTarget(null);
                 _crossHair.SetActive(false);
             }
-        }
-
-        private void OnDestroy()
-        {
-            Destroy(_crossHair);
         }
     }
 }
