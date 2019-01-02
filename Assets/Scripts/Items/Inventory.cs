@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 using Multiplayer;
 using Bolt;
 using ThrowingSystem;
@@ -23,8 +22,6 @@ namespace Items
         public ItemEvent OnItemGet;
         public ItemEvent OnItemUse;
         public IntEvent OnItemCountChange;
-        public UnityEvent OnTargetItemGet;
-        public UnityEvent OnTargetItemLost;
 
         private ThrowableLauncher _projectileLauncher;
 
@@ -79,15 +76,6 @@ namespace Items
             CurrentItemCount = count;
             OnItemGet.Invoke(item);
             OnItemCountChange.Invoke(count);
-
-            if(item != null && item.Name == "Rocket")
-            {
-                OnTargetItemGet.Invoke();
-            }
-            else
-            {
-                OnTargetItemLost.Invoke();
-            }
         }
 
         public void SetCount(int count)
