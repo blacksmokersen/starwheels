@@ -8,11 +8,11 @@ namespace Items
     public class KartTargetting : EntityBehaviour<IKartState>
     {
         public bool Targetting;
-
+        [SerializeField] private Inventory _inventory;
         [SerializeField] private GameObject _crossHairReference;
-        [SerializeField] private GameObject _crossHair;
         [SerializeField] private Transform _origin;
 
+        private GameObject _crossHair;
         private Transform _currentTargetTransform;
 
         private void Update()
@@ -35,6 +35,26 @@ namespace Items
         }
 
         // PUBLIC
+
+        public void CheckIfItemNeedsTarget(Item item)
+        {
+            if (item != null && item.Name == "Rocket")
+            {
+                Enable();
+            }
+            else
+            {
+                Disable();
+            }
+        }
+
+        public void CheckIfNoMoreAmmo(int count)
+        {
+            if (count == 0)
+            {
+                Disable();
+            }
+        }
 
         public void Enable()
         {
