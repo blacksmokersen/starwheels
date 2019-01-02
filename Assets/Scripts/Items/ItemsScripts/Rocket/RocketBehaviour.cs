@@ -43,13 +43,13 @@ namespace Items
 
         private void TurnTowardTarget()
         {
-            if (_rocketLock.ActualTarget != null)
+            if (_rocketLock.CurrentTarget != null)
             {
-                if (transform.InverseTransformPoint(_rocketLock.ActualTarget.transform.position).x < -AntiShakingThreshold) // If the target is on the left we turn to the left
+                if (transform.InverseTransformPoint(_rocketLock.CurrentTarget.transform.position).x < -AntiShakingThreshold) // If the target is on the left we turn to the left
                 {
                     transform.Rotate(Vector3.down * _actualTurnSpeed * Time.deltaTime);
                 }
-                else if (transform.InverseTransformPoint(_rocketLock.ActualTarget.transform.position).x > AntiShakingThreshold)  // If the target is on the right we turn to the right
+                else if (transform.InverseTransformPoint(_rocketLock.CurrentTarget.transform.position).x > AntiShakingThreshold)  // If the target is on the right we turn to the right
                 {
                     transform.Rotate(Vector3.up * _actualTurnSpeed * Time.deltaTime);
                 }
