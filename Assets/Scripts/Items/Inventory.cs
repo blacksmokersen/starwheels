@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using Multiplayer;
 using Bolt;
 using ThrowingSystem;
@@ -22,6 +23,8 @@ namespace Items
         public ItemEvent OnItemGet;
         public ItemEvent OnItemUse;
         public IntEvent OnItemCountChange;
+        public UnityEvent OnTargetItemGet;
+        public UnityEvent OnTargetItemLost;
 
         private ThrowableLauncher _projectileLauncher;
 
@@ -46,9 +49,9 @@ namespace Items
 
         public void MapInputs()
         {
-            if (Input.GetButtonDown(Constants.Input.UseItem) ||
-                Input.GetButtonDown(Constants.Input.UseItemBackward) ||
-                Input.GetButtonDown(Constants.Input.UseItemForward))
+            if (Input.GetButtonUp(Constants.Input.UseItem) ||
+                Input.GetButtonUp(Constants.Input.UseItemBackward) ||
+                Input.GetButtonUp(Constants.Input.UseItemForward))
             {
                 UseItem();
             }
@@ -70,18 +73,21 @@ namespace Items
             }
         }
 
-        public void SetItem(Item item)
-        {
-            CurrentItem = item;
-            OnItemGet.Invoke(item);
-        }
-
         public void SetItem(Item item, int count)
         {
             CurrentItem = item;
             CurrentItemCount = count;
             OnItemGet.Invoke(item);
             OnItemCountChange.Invoke(count);
+
+            if(item != null && item.Name == "Rocket")
+            {
+                OnTargetItemGet.Invoke();
+            }
+            else
+            {
+                OnTargetItemLost.Invoke();
+            }
         }
 
         public void SetCount(int count)
@@ -90,14 +96,16 @@ namespace Items
             OnItemCountChange.Invoke(CurrentItemCount);
 
             if (CurrentItemCount == 0)
-                SetItem(null);
+            {
+                SetItem(null, 0);
+            }
         }
 
         // PRIVATE
 
         private void InstantiateItem()
         {
-            var instantiatedItem = BoltNetwork.Instantiate(CurrentItem.itemPrefab);
+            var instantiatedItem = BoltNetwork.Instantiate(CurrentItem.ItemPrefab);
 
             var itemOwnership = instantiatedItem.GetComponent<Ownership>();
             var playerSettings = GetComponentInParent<Player>();
