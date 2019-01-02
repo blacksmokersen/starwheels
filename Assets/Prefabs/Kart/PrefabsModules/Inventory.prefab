@@ -63,13 +63,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5806685541933021242}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5800889849027874022}
   - {fileID: 5801104007485841084}
   - {fileID: 5800946888050289292}
+  - {fileID: 1049514376717575640}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -158,6 +159,38 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: IntEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnTargetItemGet:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8351832394777816664}
+        m_MethodName: Enable
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnTargetItemLost:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8351832394777816664}
+        m_MethodName: Disable
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &5838450407049599760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,10 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cbef99197f91444fbb0bc52e7b18822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 60
-  ForwardThrowingForce: 60
   TimesLongerThanHighThrow: 5
-  shockwaveEffectBehaviour: {fileID: 0}
 --- !u!114 &5838665382777420302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -604,3 +634,67 @@ Transform:
   m_Father: {fileID: 5809317536033656704}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9103752362549441695
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1049514376717575640}
+  - component: {fileID: 4219385668759910046}
+  - component: {fileID: 8351832394777816664}
+  m_Layer: 0
+  m_Name: KartTargetting
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1049514376717575640
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9103752362549441695}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 500, y: 500, z: 500}
+  m_Children: []
+  m_Father: {fileID: 5809317536033656704}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!64 &4219385668759910046
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9103752362549441695}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4300000, guid: 819dbd3d5c11e594cbcc2b3613ccfdc8, type: 3}
+--- !u!114 &8351832394777816664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9103752362549441695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e32599b586e4904eab69cd990f8bd70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Targetting: 0
+  _crossHairReference: {fileID: 4128178144660241995, guid: c42a1fc3059223c48ad0d086b9ef2309,
+    type: 3}
+  _crossHair: {fileID: 4128178144660241995, guid: c42a1fc3059223c48ad0d086b9ef2309,
+    type: 3}
+  _origin: {fileID: 0}
