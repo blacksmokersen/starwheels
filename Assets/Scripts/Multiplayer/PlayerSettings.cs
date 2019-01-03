@@ -2,7 +2,7 @@
 
 namespace Multiplayer
 {
-    [CreateAssetMenu(fileName = "Multiplayer/Player Settings")]
+    [CreateAssetMenu(menuName = "Multiplayer Settings/Player Settings")]
     public class PlayerSettings : ScriptableObject
     {
         [Header("Player Information")]

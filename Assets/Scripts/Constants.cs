@@ -83,4 +83,10 @@
     {
         public const string DefaultSnapshot = "Master 1";
     }
+
+    // Animations
+    public class Animations
+    {
+        public const string Knockout = "HitOnHighSpeed";
+    }
 }
