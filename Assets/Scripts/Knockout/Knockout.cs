@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Multiplayer
+namespace Knockout
 {
     public class Knockout : MonoBehaviour
     {
