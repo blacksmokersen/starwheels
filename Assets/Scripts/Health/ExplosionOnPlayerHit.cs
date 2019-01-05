@@ -6,14 +6,12 @@ namespace Health
     public class ExplosionOnPlayerHit : GlobalEventListener
     {
         [SerializeField] private GameObject _explosionEffect;
-        [SerializeField] private GameObject _kartMeshes;
-        [SerializeField] private GameObject _kartcolliders;
 
         public void HideKartMeshAndExplode()
         {
-            _kartMeshes.SetActive(false);
-            _kartcolliders.SetActive(false);
             _explosionEffect.SetActive(true);
+            _explosionEffect.GetComponent<SelfDestroyer>().StartCountdown();
+            _explosionEffect.transform.SetParent(null);
         }
     }
 }
