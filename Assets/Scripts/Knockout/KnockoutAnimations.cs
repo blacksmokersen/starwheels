@@ -9,6 +9,7 @@ namespace Knockout
 
         public void PlayKnockoutAnimation()
         {
+            Debug.Log("Playing anim");
             _animator.SetTrigger(Constants.Animations.Knockout);
         }
     }

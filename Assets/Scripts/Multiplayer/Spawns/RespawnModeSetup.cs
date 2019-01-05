@@ -6,6 +6,7 @@ namespace GameModes
 {
     public class RespawnModeSetup : EntityBehaviour
     {
+        [Header("Specifics")]
         [SerializeField] private GameObject _knockoutSpecifics;
         [SerializeField] private GameObject _destroyAndRespawnSpecifics;
 
