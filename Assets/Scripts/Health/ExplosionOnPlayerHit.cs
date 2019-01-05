@@ -9,16 +9,11 @@ namespace Health
         [SerializeField] private GameObject _kartMeshes;
         [SerializeField] private GameObject _kartcolliders;
 
-        public override void OnEvent(PlayerHit playerHit)
+        public void HideKartMeshAndExplode()
         {
-            var entity = GetComponentInParent<BoltEntity>();
-
-            if (entity == playerHit.VictimEntity)
-            {
-                _explosionEffect.SetActive(true);
-                _kartMeshes.SetActive(false);
-                _kartcolliders.SetActive(false);
-            }
+            _kartMeshes.SetActive(false);
+            _kartcolliders.SetActive(false);
+            _explosionEffect.SetActive(true);
         }
     }
 }

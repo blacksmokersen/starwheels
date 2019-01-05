@@ -87,6 +87,6 @@
     // Animations
     public class Animations
     {
-        public const string Knockout = "HitOnHighSpeed";
+        public const string Knockout = "HitHighSpeed";
     }
 }
