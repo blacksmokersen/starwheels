@@ -60,7 +60,7 @@ namespace Multiplayer
             IncreaseSpawnCount();
         }
 
-        public override void OnEvent(KartDestroyed evnt)
+        public override void OnEvent(RespawnRequest evnt)
         {
             var team = evnt.Team.GetTeam();
             AssignSpawn(evnt.ConnectionID, team, true);

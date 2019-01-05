@@ -22,15 +22,15 @@ namespace Multiplayer
         private IEnumerator CallForSpawnAfterXSeconds(float x, PlayerSettings player)
         {
             yield return new WaitForSeconds(x);
-            SendKartDestroyedEvent(player);
+            SendRespawnRequestEvent(player);
         }
 
-        private void SendKartDestroyedEvent(PlayerSettings player)
+        private void SendRespawnRequestEvent(PlayerSettings player)
         {
-            KartDestroyed kartDestroyedEvent = KartDestroyed.Create();
-            kartDestroyedEvent.Team = player.TeamColor;
-            kartDestroyedEvent.ConnectionID = player.ConnectionID;
-            kartDestroyedEvent.Send();
+            RespawnRequest respawnRequestEvent = RespawnRequest.Create();
+            respawnRequestEvent.Team = player.TeamColor;
+            respawnRequestEvent.ConnectionID = player.ConnectionID;
+            respawnRequestEvent.Send();
         }
     }
 }
