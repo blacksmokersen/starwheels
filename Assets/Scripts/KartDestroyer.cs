@@ -10,11 +10,8 @@ public class KartDestroyer : GlobalEventListener
     [Header("Player Settings")]
     [SerializeField] private PlayerSettings _settings;
 
-    public override void OnEvent(KartDestroyed evnt)
+    public void DestroyKart()
     {
-        if (evnt.ConnectionID == _settings.ConnectionID)
-        {
-            BoltNetwork.Destroy(_rootEntity);
-        }
+        BoltNetwork.Destroy(_rootEntity);
     }
 }

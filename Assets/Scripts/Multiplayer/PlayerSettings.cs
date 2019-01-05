@@ -11,17 +11,5 @@ namespace Multiplayer
         public int ConnectionID;
         public int KartIndex;
         public int AbilityIndex;
-
-        // CORE
-
-        // PLAYER RELATED EVENTS
-
-        public void SendKartDestroyedEvent()
-        {
-            KartDestroyed kartDestroyedEvent = KartDestroyed.Create();
-            kartDestroyedEvent.Team = TeamColor;
-            kartDestroyedEvent.ConnectionID = ConnectionID;
-            kartDestroyedEvent.Send();
-        }
     }
 }

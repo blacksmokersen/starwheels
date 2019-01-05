@@ -43,8 +43,8 @@ namespace Health
         public override void ControlGained()
         {
             state.SetDynamic("Health", CurrentHealth);
-            state.AddCallback("Health", CheckIfIsDead);
             state.AddCallback("Health", UpdateCurrentHealth);
+            state.AddCallback("Health", CheckIfIsDead);
         }
 
         // PUBLIC
