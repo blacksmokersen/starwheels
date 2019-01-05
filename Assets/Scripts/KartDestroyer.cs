@@ -2,7 +2,7 @@
 using Bolt;
 using Multiplayer;
 
-public class KartDestroyer : GlobalEventListener
+public class KartDestroyer : EntityBehaviour
 {
     [Header("Kart Root")]
     [SerializeField] private BoltEntity _rootEntity;
@@ -12,6 +12,9 @@ public class KartDestroyer : GlobalEventListener
 
     public void DestroyKart()
     {
-        BoltNetwork.Destroy(_rootEntity);
+        if (entity.isOwner)
+        {
+            BoltNetwork.Destroy(_rootEntity);
+        }
     }
 }
