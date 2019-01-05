@@ -60,6 +60,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3653748700313221910}
   - component: {fileID: 6990999873779930982}
+  - component: {fileID: 6760965888893266871}
   m_Layer: 11
   m_Name: DestroyAndRespawn
   m_TagString: Untagged
@@ -96,6 +97,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Enabled: 0
   _playerSettings: {fileID: 11400000, guid: d3786b31f0466fb4a97bd3941281e55a, type: 2}
+--- !u!114 &6760965888893266871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802234155249524391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7a8174843155d94a8f767ae26f562db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rootEntity: {fileID: 0}
+  _settings: {fileID: 11400000, guid: d3786b31f0466fb4a97bd3941281e55a, type: 2}
 --- !u!1 &1645804525146790486
 GameObject:
   m_ObjectHideFlags: 0
@@ -4861,6 +4876,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4641569226056041432}
+  - component: {fileID: 4548915601735960361}
   - component: {fileID: 1583608822701265907}
   - component: {fileID: 7883401883620891657}
   m_Layer: 0
@@ -4889,6 +4905,19 @@ Transform:
   m_Father: {fileID: 4285993353367645250}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &4548915601735960361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2844219538127786440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 657a84eb20d8ea04d933d9470c5721e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SecondsBeforeSelfDestruction: 5
 --- !u!198 &1583608822701265907
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -23988,5 +24017,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _explosionEffect: {fileID: 2844219538127786440}
-  _kartMeshes: {fileID: 0}
-  _kartcolliders: {fileID: 0}
+  _kartRoot: {fileID: 0}
