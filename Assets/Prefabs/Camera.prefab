@@ -151,8 +151,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1352335373918424}
-  m_LocalRotation: {x: -0.001180102, y: -0.000000017703794, z: -2.0892833e-11, w: 0.99999934}
-  m_LocalPosition: {x: 95.3675, y: -174.46396, z: -17.124472}
+  m_LocalRotation: {x: 0.036893528, y: 0.7061436, z: -0.036893535, w: 0.70614374}
+  m_LocalPosition: {x: 274.95984, y: -6.9250374, z: 65.62246}
   m_LocalScale: {x: 1.0449219, y: 1.0449216, z: 1.0449216}
   m_Children: []
   m_Father: {fileID: 4409278275421684}
@@ -464,6 +464,7 @@ GameObject:
   - component: {fileID: 114707741726061332}
   - component: {fileID: 114819061569261648}
   - component: {fileID: 114707109256323212}
+  - component: {fileID: 5954116329537128179}
   m_Layer: 0
   m_Name: PlayerCamera
   m_TagString: Untagged
@@ -478,8 +479,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1421337181609992}
-  m_LocalRotation: {x: -0.001180102, y: -0.000000017703794, z: -2.0892833e-11, w: 0.99999934}
-  m_LocalPosition: {x: 95.3675, y: -174.46396, z: -17.124472}
+  m_LocalRotation: {x: 0.036893528, y: 0.7061436, z: -0.036893535, w: 0.70614374}
+  m_LocalPosition: {x: 274.95984, y: -6.9250374, z: 65.62246}
   m_LocalScale: {x: 1.0449219, y: 1.0449212, z: 1.0449212}
   m_Children:
   - {fileID: 4249283856329038}
@@ -635,6 +636,36 @@ MonoBehaviour:
   _ionBeamCamYExpand: 200
   _cameraSettings: {fileID: 11400000, guid: ef13b57ca9ba4974abf886534b3fa9ea, type: 2}
   _crosshairIonBeam: {fileID: 2800000, guid: 93f5d256aa561204eb5055ec10541980, type: 3}
+--- !u!114 &5954116329537128179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1421337181609992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e501d18bb52cf8c40b1853ca4904654f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CollideAgainst:
+    serializedVersion: 2
+    m_Bits: 256
+  m_IgnoreTag: 
+  m_TransparentLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_MinimumDistanceFromTarget: 0.1
+  m_AvoidObstacles: 1
+  m_DistanceLimit: 0
+  m_MinimumOcclusionTime: 0
+  m_CameraRadius: 0.1
+  m_Strategy: 1
+  m_MaximumEffort: 4
+  m_SmoothingTime: 0
+  m_Damping: 0
+  m_DampingWhenOccluded: 0
+  m_OptimalTargetDistance: 0
 --- !u!1 &1510969177417544
 GameObject:
   m_ObjectHideFlags: 0

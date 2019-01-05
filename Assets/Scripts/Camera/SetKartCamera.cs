@@ -12,7 +12,7 @@ namespace CameraUtils
 
         private void Awake()
         {
-            _cinemachine = GetComponentInParent<CinemachineVirtualCamera>();
+            _cinemachine = GetComponent<CinemachineVirtualCamera>();
             if (_kartToFollow) SetKart(_kartToFollow);
         }
         /*
