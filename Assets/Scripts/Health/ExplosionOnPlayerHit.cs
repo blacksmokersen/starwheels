@@ -6,19 +6,17 @@ namespace Health
     public class ExplosionOnPlayerHit : GlobalEventListener
     {
         [SerializeField] private GameObject _explosionEffect;
-        [SerializeField] private GameObject _kartMeshes;
-        [SerializeField] private GameObject _kartcolliders;
 
-        public override void OnEvent(PlayerHit playerHit)
+        public void InvokeExplosion()
         {
-            var entity = GetComponentInParent<BoltEntity>();
+            _explosionEffect.SetActive(true);
+            _explosionEffect.GetComponent<SelfDestroyer>().StartCountdown();
+            _explosionEffect.transform.SetParent(null);
+        }
 
-            if (entity == playerHit.VictimEntity)
-            {
-                _explosionEffect.SetActive(true);
-                _kartMeshes.SetActive(false);
-                _kartcolliders.SetActive(false);
-            }
+        private void OnDestroy()
+        {
+            InvokeExplosion();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace GameModes.Totem
 
         private void Update()
         {
-            if (entity.isControllerOrOwner)
+            if (entity.isAttached && entity.isControllerOrOwner)
             {
                 MapInputs();
             }

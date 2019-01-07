@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1917514857341964
+--- !u!1 &706264416085621817
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,91 +8,111 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4542860684376320}
-  - component: {fileID: 114154161607451314}
-  - component: {fileID: 114011170284891586}
-  - component: {fileID: 82791731942225518}
-  - component: {fileID: 114070042825428462}
-  - component: {fileID: 114584384504514322}
-  m_Layer: 0
-  m_Name: IonBeam
+  - component: {fileID: 5068931204028312280}
+  - component: {fileID: 2198665269012482087}
+  - component: {fileID: 2373383455381733974}
+  - component: {fileID: 4512363313450485054}
+  - component: {fileID: 3019115119743713369}
+  - component: {fileID: 1573767089626013893}
+  m_Layer: 11
+  m_Name: Knockout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4542860684376320
+--- !u!4 &5068931204028312280
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1917514857341964}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_GameObject: {fileID: 706264416085621817}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 40, y: 100, z: 40}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114154161607451314
+--- !u!114 &2198665269012482087
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1917514857341964}
+  m_GameObject: {fileID: 706264416085621817}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -36112512, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
+  m_Script: {fileID: 11500000, guid: 78652fd116f38a749bdf14ba41d17dfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneGuid: 
-  _serializerGuid: ffe9e53f-72a5-4574-af39-0fa608838337
-  _prefabId: 7
-  _updateRate: 1
-  _autoFreezeProxyFrames: 0
-  _clientPredicted: 1
-  _allowInstantiateOnClient: 1
-  _persistThroughSceneLoads: 0
-  _sceneObjectDestroyOnDetach: 1
-  _sceneObjectAutoAttach: 1
-  _alwaysProxy: 0
-  _detachOnDisable: 1
-  _allowFirstReplicationWhenFrozen: 0
-  _autoRemoveChildEntities: 0
-  _entityBehaviourQueryOption: 0
-  _entityPriorityCalculatorQueryOption: 0
-  _entityReplicationFilterQueryOption: 0
---- !u!114 &114011170284891586
+  Enabled: 0
+  OnKnockout:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2373383455381733974}
+        m_MethodName: PlayKnockoutAnimation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4512363313450485054}
+        m_MethodName: PlayKnockoutSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &2373383455381733974
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1917514857341964}
+  m_GameObject: {fileID: 706264416085621817}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f8862acb4a5fca4cb8eec4882c6fbc9, type: 3}
+  m_Script: {fileID: 11500000, guid: 1666419311db63647a3bb8280b3eb2e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ionBeamLaserPrefab: {fileID: 1039182035529638, guid: efed87d509833704fb8c72e81802eb9d,
-    type: 3}
-  LaunchSource: {fileID: 82791731942225518}
-  OwnerNickname: 
-  ItemName: 
---- !u!82 &82791731942225518
+  _animator: {fileID: 0}
+--- !u!114 &4512363313450485054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706264416085621817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de8c53abd4f698f409d6835d0a750f1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _knockoutAudioSource: {fileID: 3019115119743713369}
+--- !u!82 &3019115119743713369
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1917514857341964}
+  m_GameObject: {fileID: 706264416085621817}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 243406293074342700, guid: 1d4c80e3d0275764f9ad01100870ce32,
+  OutputAudioMixerGroup: {fileID: 243514962471306484, guid: 1d4c80e3d0275764f9ad01100870ce32,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 40fd6afd71bf688438b654180eb7d075, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 68d973feb777c334aa33eb19ce28729c, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -103,9 +123,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 50
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -114,22 +134,22 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.9833336
       inSlope: 0
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: -1.0204082
+      outSlope: -1.0204082
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -138,7 +158,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -178,29 +198,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &114070042825428462
+--- !u!114 &1573767089626013893
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1917514857341964}
+  m_GameObject: {fileID: 706264416085621817}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: faf449d14c1b8214587b11af62a948e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e2bc674989e5bec42b7060e936c79071, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OwnerKartRoot: {fileID: 0}
-  Team: 0
---- !u!114 &114584384504514322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1917514857341964}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6dadcbddcdd072e4caa827b3c6aa84e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  TargetComponents: []
+  _disabledSeconds: 0
+  _onlyConsiderEnabledAtStart: 0

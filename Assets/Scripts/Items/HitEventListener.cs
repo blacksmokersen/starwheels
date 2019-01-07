@@ -1,22 +1,33 @@
-﻿using Bolt;
+﻿using UnityEngine;
+using UnityEngine.Events;
+using Bolt;
 
-public class HitEventListener : GlobalEventListener
+namespace Health
 {
-    public override void OnEvent(PlayerHit evnt)
+    [RequireComponent(typeof(Health))]
+    public class HitEventListener : GlobalEventListener
     {
-        var kartEntity = GetComponent<BoltEntity>();
-        if (kartEntity == evnt.VictimEntity)
-        {
-            kartEntity.GetComponentInChildren<Health.Health>().LoseHealth();
-        }
-    }
+        [Header("Events")]
+        public UnityEvent OnPlayerHit;
 
-    public override void OnEvent(DestroyEntity evnt)
-    {
-        if (evnt.Entity != null
-            && evnt.Entity.isOwner)
+        // BOLT
+
+        public override void OnEvent(PlayerHit evnt)
         {
-            BoltNetwork.Destroy(evnt.Entity);
+            var kartEntity = GetComponentInParent<BoltEntity>();
+            if (kartEntity == evnt.VictimEntity)
+            {
+                if(OnPlayerHit != null) OnPlayerHit.Invoke();
+            }
+        }
+
+        public override void OnEvent(DestroyEntity evnt)
+        {
+            if (evnt.Entity != null
+                && evnt.Entity.isOwner)
+            {
+                BoltNetwork.Destroy(evnt.Entity);
+            }
         }
     }
 }

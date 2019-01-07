@@ -74,11 +74,19 @@
     {
         public const string Battle = "Battle";
         public const string Totem = "Totem";
+        public const string RespawnModeOn = "RespawnMode";
+        public const string RespawnModeOff = "NoRespawnMode";
     }
 
     // Mixer
     public class AudioMixer
     {
         public const string DefaultSnapshot = "Master 1";
+    }
+
+    // Animations
+    public class Animations
+    {
+        public const string Knockout = "HitHighSpeed";
     }
 }
