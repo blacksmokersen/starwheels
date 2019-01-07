@@ -58,8 +58,6 @@ namespace Items
 
                 if (entity.isAttached && state.Team != otherPlayer.Team.GetColor())
                 {
-                    Debug.Log("Rocket lock : " + otherPlayer.Nickname);
-
                     if (CurrentTarget == null || IsKartIsCloserThanActualTarget(other.gameObject))
                     {
                         CurrentTarget = other.gameObject;
