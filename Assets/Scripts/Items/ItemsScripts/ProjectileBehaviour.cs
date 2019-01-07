@@ -10,7 +10,7 @@ namespace Items
         public Ownership Ownership;
 
         [Header("Projectile parameters")]
-        public float Speed;
+        [SerializeField] private FloatVariable _speed;
 
         [Header("Particles Effects")]
         public ParticleSystem CollisionParticles;
@@ -74,7 +74,7 @@ namespace Items
         {
             var newVelocity = rb.velocity;
             newVelocity.y = 0;
-            newVelocity = newVelocity.normalized * Speed;
+            newVelocity = newVelocity.normalized * _speed.Value;
             newVelocity.y = rb.velocity.y;
             rb.velocity = newVelocity;
         }

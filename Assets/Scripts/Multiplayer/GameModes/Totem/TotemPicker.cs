@@ -8,9 +8,17 @@ namespace GameModes.Totem
     {
         // MONOBEHAVIOUR
 
+        private void Update()
+        {
+            if (entity.isAttached && entity.isControllerOrOwner)
+            {
+                MapInputs();
+            }
+        }
+
         private void OnTriggerEnter(Collider other)
         {
-            if (BoltNetwork.isServer && other.CompareTag(Constants.Tag.TotemPickup)) // Server sees a player collide with totem trigger
+            if (BoltNetwork.IsServer && other.CompareTag(Constants.Tag.TotemPickup)) // Server sees a player collide with totem trigger
             {
                 var totemBehaviour = other.GetComponentInParent<Totem>();
                 if (totemBehaviour.CanBePickedUp)
@@ -21,13 +29,6 @@ namespace GameModes.Totem
                     totemPickedEvent.Send();
                 }
             }
-        }
-
-        // BOLT
-
-        public override void SimulateController()
-        {
-            MapInputs();
         }
 
         // PUBLIC

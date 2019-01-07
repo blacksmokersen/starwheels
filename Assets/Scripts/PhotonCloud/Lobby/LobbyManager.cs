@@ -24,14 +24,14 @@ namespace Photon.Lobby
         {
             get
             {
-                if (BoltNetwork.isRunning)
+                if (BoltNetwork.IsRunning)
                 {
-                    if (BoltNetwork.isServer)
+                    if (BoltNetwork.IsServer)
                     {
                         return "<server>";
                     }
 
-                    if (BoltNetwork.isClient)
+                    if (BoltNetwork.IsClient)
                     {
                         return "<client>";
                     }
@@ -99,7 +99,7 @@ namespace Photon.Lobby
 
         private void FixedUpdate()
         {
-            if (BoltNetwork.isServer && !_countdownStarted)
+            if (BoltNetwork.IsServer && !_countdownStarted)
             {
                 VerifyReady();
             }
@@ -116,9 +116,9 @@ namespace Photon.Lobby
 
         public override void BoltStartDone()
         {
-            if (!BoltNetwork.isRunning) { return; }
+            if (!BoltNetwork.IsRunning) { return; }
 
-            if (BoltNetwork.isServer)
+            if (BoltNetwork.IsServer)
             {
                 RoomProtocolToken token = new RoomProtocolToken()
                 {
@@ -141,7 +141,7 @@ namespace Photon.Lobby
                 entity.TakeControl();
 
             }
-            else if (BoltNetwork.isClient)
+            else if (BoltNetwork.IsClient)
             {
                 BackDelegate = Shutdown;
                 SetServerInfo("Client", "");
@@ -212,7 +212,7 @@ namespace Photon.Lobby
 
         public override void Connected(BoltConnection connection)
         {
-            if (BoltNetwork.isClient)
+            if (BoltNetwork.IsClient)
             {
                 BoltConsole.Write("Connected Client: " + connection, Color.blue);
 
@@ -220,7 +220,7 @@ namespace Photon.Lobby
                 ChangeTo(_lobbyPanel);
 
             }
-            else if (BoltNetwork.isServer)
+            else if (BoltNetwork.IsServer)
             {
                 BoltConsole.Write("Connected Server: " + connection, Color.blue);
 
@@ -329,7 +329,7 @@ namespace Photon.Lobby
 
         public void Shutdown()
         {
-            if (BoltNetwork.isConnected)
+            if (BoltNetwork.IsConnected)
             {
                 BoltLauncher.Shutdown();
             }

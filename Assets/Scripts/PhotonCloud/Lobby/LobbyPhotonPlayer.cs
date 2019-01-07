@@ -70,7 +70,7 @@ namespace Photon.Lobby
                 state.Color = _playerColor;
                 state.Name = "Player #" + Random.Range(1, 100);
 
-                if (BoltNetwork.isClient)
+                if (BoltNetwork.IsClient)
                 {
                     _playerSettings.ConnectionID = (int)Connection.ConnectionId;
                 }
@@ -127,7 +127,7 @@ namespace Photon.Lobby
 
         public void OnRemovePlayerClick()
         {
-            if (BoltNetwork.isServer)
+            if (BoltNetwork.IsServer)
             {
                 LobbyPlayerKick.Create(entity, EntityTargets.OnlyController).Send();
             }
@@ -146,8 +146,8 @@ namespace Photon.Lobby
 
             _nameInput.interactable = false;
 
-            _removePlayerButton.gameObject.SetActive(BoltNetwork.isServer);
-            _removePlayerButton.interactable = BoltNetwork.isServer;
+            _removePlayerButton.gameObject.SetActive(BoltNetwork.IsServer);
+            _removePlayerButton.interactable = BoltNetwork.IsServer;
 
             ChangeReadyButtonColor(NotReadyColor);
 

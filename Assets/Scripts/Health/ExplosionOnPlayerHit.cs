@@ -1,23 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Bolt;
 
-public class ExplosionOnPlayerHit : GlobalEventListener
+namespace Health
 {
-    [SerializeField] private GameObject _explosionEffect;
-    [SerializeField] private GameObject _kartMeshes;
-    [SerializeField] private GameObject _kartcolliders;
-
-    public override void OnEvent(PlayerHit playerHit)
+    public class ExplosionOnPlayerHit : GlobalEventListener
     {
-        var entity = GetComponentInParent<BoltEntity>();
+        [SerializeField] private GameObject _explosionEffect;
 
-        if (entity == playerHit.PlayerEntity)
+        public void InvokeExplosion()
         {
             _explosionEffect.SetActive(true);
-            _kartMeshes.SetActive(false);
-            _kartcolliders.SetActive(false);
+            _explosionEffect.GetComponent<SelfDestroyer>().StartCountdown();
+            _explosionEffect.transform.SetParent(null);
+        }
+
+        private void OnDestroy()
+        {
+            InvokeExplosion();
         }
     }
 }
