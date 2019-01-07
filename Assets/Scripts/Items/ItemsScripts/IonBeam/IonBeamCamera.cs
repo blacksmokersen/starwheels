@@ -9,6 +9,7 @@ public class IonBeamCamera : EntityBehaviour
 {
     [HideInInspector] public CinemachineTransposer Transposer;
     [HideInInspector] public CinemachineComposer Composer;
+    [HideInInspector] public CinemachineCollider Collider;
 
     [SerializeField] private float _speedCamMovements;
     [SerializeField] private float _ionBeamCamZExpand;
@@ -30,6 +31,7 @@ public class IonBeamCamera : EntityBehaviour
         _cinemachine = GetComponent<CinemachineVirtualCamera>();
         Transposer = _cinemachine.GetCinemachineComponent<CinemachineTransposer>();
         Composer = _cinemachine.GetCinemachineComponent<CinemachineComposer>();
+        Collider = GetComponent<CinemachineCollider>();
     }
 
     //PUBLIC
@@ -95,6 +97,7 @@ public class IonBeamCamera : EntityBehaviour
 
     IEnumerator CameraIonBeamExpand(float endValueZ, float endValueY, float expandDuration)
     {
+        Collider.enabled = false;
         float startDynamicCamValueZ = Transposer.m_FollowOffset.z;
         float startDynamicCamValueY = Transposer.m_FollowOffset.y;
 
@@ -137,6 +140,7 @@ public class IonBeamCamera : EntityBehaviour
             // Security for lack of precision of Time.deltaTime
             _cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(returnValueZ, returnValueY, 0.5f));
         }
+        Collider.enabled = true;
         ChangeRenderOnTaGGameobjects(true);
     }
 }
