@@ -48,18 +48,6 @@ namespace Network
             GetComponentInChildren<Items.ItemHUD>().enabled = entity.isOwner;
         }
 
-        // PUBLIC
-
-        public void DestroyKart()
-        {
-            if (entity.isOwner)
-            {
-                //FindObjectOfType<CameraUtils.SpectatorControls>().Enabled = true;
-                //FindObjectOfType<CameraUtils.CameraPlayerSwitch>().SetCameraToRandomPlayer();
-                StartCoroutine(DelayRoutine());
-            }
-        }
-
         // PRIVATE
 
         private void ColorChanged()
@@ -74,13 +62,6 @@ namespace Network
             GetComponent<Player>().Nickname = state.Nickname;
             var panel = GetComponentInChildren<Common.HUD.NicknamePanel>();
             if(panel) panel.SetName(state.Nickname);
-        }
-
-        private IEnumerator DelayRoutine()
-        {
-            yield return new WaitForSeconds(_delayBeforeDestroyKart);
-            _playerSettings.SendKartDestroyedEvent();
-            BoltNetwork.Destroy(gameObject);
         }
     }
 }

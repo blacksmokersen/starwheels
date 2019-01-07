@@ -30,7 +30,7 @@ namespace Abilities
 
         private void Update()
         {
-            if (entity.isControllerOrOwner && gameObject.activeInHierarchy)
+            if (entity.isAttached && entity.isControllerOrOwner && gameObject.activeInHierarchy)
             {
                 MapInputs();
             }
