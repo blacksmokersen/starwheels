@@ -59,7 +59,7 @@ namespace Health
                 }
 
                 OnHealthLoss.Invoke(state.Health);
-                SetInvincibilityForXSeconds(3f);
+                //SetInvincibilityForXSeconds(3f);
             }
         }
 

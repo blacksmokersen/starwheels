@@ -7,6 +7,9 @@ namespace Items
     {
         [SerializeField] private ItemCollision _itemCollision;
 
+        [Header("Invincibility Condition")]
+        [SerializeField] private Health.Health _health;
+
         private void OnTriggerEnter(Collider other)
         {
             if (BoltNetwork.IsServer && entity.isAttached)
@@ -18,23 +21,26 @@ namespace Items
                     IItemState itemState;
                     if (itemEntity.isAttached && itemEntity.TryFindState<IItemState>(out itemState)) // It is a concrete item
                     {
-                        if (other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName == ItemCollisionName.IonBeamLaser)
+                        if (!_health.IsInvincible) // The server checks that this kart is not invincible
                         {
-                            SendPlayerHitEvent(itemState);
-                        }
-                        if (itemState.OwnerID == state.OwnerID || (itemState.OwnerID == 0 && itemState.Team == new Color(0, 0, 0, 0)))
-                        {
-                            if (other.GetComponentInChildren<ItemActivationBehaviour>().Activated
-                                && other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.IonBeamLaser)
+                            if (other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName == ItemCollisionName.IonBeamLaser)
+                            {
+                                SendPlayerHitEvent(itemState);
+                            }
+                            if (itemState.OwnerID == state.OwnerID || (itemState.OwnerID == 0 && itemState.Team == new Color(0, 0, 0, 0)))
+                            {
+                                if (other.GetComponentInChildren<ItemActivationBehaviour>().Activated
+                                    && other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.IonBeamLaser)
+                                {
+                                    SendPlayerHitEvent(itemState);
+                                }
+                            }
+                            else if (itemState.Team != state.Team)
                             {
                                 SendPlayerHitEvent(itemState);
                             }
                         }
 
-                        else if (itemState.Team != state.Team)
-                        {
-                            SendPlayerHitEvent(itemState);
-                        }
                         var otherItemCollision = other.GetComponent<ItemCollisionTrigger>().ItemCollision;
                         if (otherItemCollision.ShouldBeDestroyed(_itemCollision)
                             && other.GetComponentInChildren<ItemActivationBehaviour>().Activated
