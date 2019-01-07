@@ -14,12 +14,28 @@ namespace Items
 
         private GameObject _crossHair;
         private Transform _currentTargetTransform;
+        private bool _needsDisabling = false;
 
         private void Update()
         {
-            if (entity.isAttached && entity.isOwner && _currentTargetTransform != null)
+            try
             {
-                _crossHair.transform.position = _currentTargetTransform.position + new Vector3(0f, 0.5f, 0f);
+                if (entity.isAttached && entity.isOwner)
+                {
+                    if (_currentTargetTransform != null)
+                    {
+                        _crossHair.transform.position = _currentTargetTransform.position + new Vector3(0f, 0.5f, 0f);
+                    }
+                    else if (_currentTargetTransform == null && _needsDisabling)
+                    {
+                        UnsetTarget();
+                    }
+                }
+            }
+            catch (MissingReferenceException)
+            {
+                Debug.Log("Missing reference.");
+                Disable();
             }
         }
 
@@ -64,8 +80,7 @@ namespace Items
         public void Disable()
         {
             Targetting = false;
-            _crossHair.SetActive(false);
-            _currentTargetTransform = null;
+            UnsetTarget();
         }
 
         // PRIVATE
@@ -74,6 +89,14 @@ namespace Items
         {
             _currentTargetTransform = newTargetTransform;
             _crossHair.SetActive(true);
+            _needsDisabling = true;
+        }
+
+        private void UnsetTarget()
+        {
+            _currentTargetTransform = null;
+            _crossHair.SetActive(false);
+            _needsDisabling = false;
         }
 
         private bool IsCloserThanCurrentTarget(Transform target)
