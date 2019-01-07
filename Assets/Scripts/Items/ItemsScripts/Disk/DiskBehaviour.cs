@@ -11,6 +11,13 @@ namespace Items
 
         [SerializeField] ItemActivationBehaviour itemActivationBehaviour;
 
+        //BOLT
+
+        public override void Attached()
+        {
+            DestroyObject(20);
+        }
+
         private void OnCollisionEnter(Collision collision)
         {
             if (BoltNetwork.IsServer)

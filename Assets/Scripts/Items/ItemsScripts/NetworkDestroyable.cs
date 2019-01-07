@@ -12,7 +12,7 @@ namespace Items
             {
                 if (timeBeforeDestroy != 0)
                 {
-                    StartCoroutine(DestroyAfterXSeconds(10f));
+                    StartCoroutine(DestroyAfterXSeconds(timeBeforeDestroy));
                 }
                 else
                 {
