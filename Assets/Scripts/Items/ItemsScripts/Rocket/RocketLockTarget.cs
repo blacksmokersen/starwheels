@@ -10,9 +10,9 @@ namespace Items
     {
         [Header("Targeting system")]
         public float SecondsBeforeSearchingTarget;
-        public GameObject ActualTarget = null;
+        public GameObject CurrentTarget = null;
+        [SerializeField] private Transform _origin;
 
-        private float _actualTargetDistance = Mathf.Infinity;
         private bool _activated = false;
 
         private void Start()
@@ -24,27 +24,27 @@ namespace Items
         {
             try
             {
-                if (ActualTarget == null || !ActualTarget.activeInHierarchy)
+                if (CurrentTarget == null || !CurrentTarget.activeInHierarchy)
                 {
-                    ActualTarget = null;
+                    CurrentTarget = null;
                 }
             }
             catch (MissingReferenceException)
             {
-                ActualTarget = null;
+                CurrentTarget = null;
                 Debug.Log("Resetting rocket target.");
             }
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == Constants.Tag.KartHealthHitBox && _activated && ActualTarget == null)
+            if (other.gameObject.tag == Constants.Tag.KartHealthHitBox && _activated && CurrentTarget == null)
             {
                 var otherPlayer = other.GetComponentInParent<Player>();
 
-                if (state.Team != otherPlayer.Team.GetColor())
+                if (entity.isAttached && state.Team != otherPlayer.Team.GetColor())
                 {
-                    ActualTarget = other.gameObject;
+                    CurrentTarget = other.gameObject;
                     StartCoroutine(GetComponentInParent<RocketBehaviour>().StartQuickTurn());
                 }
             }
@@ -58,10 +58,11 @@ namespace Items
 
                 if (entity.isAttached && state.Team != otherPlayer.Team.GetColor())
                 {
-                    if (IsKartIsCloserThanActualTarget(other.gameObject) || ActualTarget == null)
+                    Debug.Log("Rocket lock : " + otherPlayer.Nickname);
+
+                    if (CurrentTarget == null || IsKartIsCloserThanActualTarget(other.gameObject))
                     {
-                        ActualTarget = other.gameObject;
-                        _actualTargetDistance = Vector3.Distance(transform.position, ActualTarget.transform.position);
+                        CurrentTarget = other.gameObject;
                         StartCoroutine(GetComponentInParent<RocketBehaviour>().StartQuickTurn());
                     }
                 }
@@ -70,7 +71,7 @@ namespace Items
 
         private bool IsKartIsCloserThanActualTarget(GameObject kart)
         {
-            return Vector3.Distance(transform.position, kart.transform.position) < _actualTargetDistance;
+            return Vector3.Distance(_origin.position, kart.transform.position) < Vector3.Distance(_origin.position, CurrentTarget.transform.position);
         }
 
         private IEnumerator LookForTarget()

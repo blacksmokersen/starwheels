@@ -36,7 +36,6 @@ namespace Common
             Assert.IsNotNull(TargetComponents, "There are no component to disable. Check the reference.");
             foreach (var component in TargetComponents)
             {
-                component.StopAllCoroutines();
                 component.enabled = false;
             }
         }

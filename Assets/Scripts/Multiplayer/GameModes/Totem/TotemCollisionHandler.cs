@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using Bolt;
-using Multiplayer.Teams;
 
 namespace GameModes.Totem
 {
@@ -23,7 +22,7 @@ namespace GameModes.Totem
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.CompareTag(Constants.Tag.Totem))
+            if (entity.isAttached && collision.gameObject.CompareTag(Constants.Tag.Totem))
             {
                 LoseLife();
             }
@@ -35,7 +34,7 @@ namespace GameModes.Totem
         {
             if (OnLifeLost != null) OnLifeLost.Invoke(state.Lives); // Local event
 
-            if (entity.isControllerOrOwner)
+            if (entity.isAttached && entity.isControllerOrOwner)
             {
                 state.Lives--;
 

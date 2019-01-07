@@ -56,7 +56,7 @@ end tell'";
             BoltLog.Error("No map found to start from");
         }
 
-        if (!BoltNetwork.isClient && !BoltNetwork.isServer)
+        if (!BoltNetwork.IsClient && !BoltNetwork.IsServer)
         {
             BoltLog.Error("failed to start debug mode");
         }
@@ -64,7 +64,7 @@ end tell'";
 
     public override void BoltStartDone()
     {
-        if (BoltNetwork.isServer)
+        if (BoltNetwork.IsServer)
         {
             BoltNetwork.LoadScene(BoltRuntimeSettings.instance.debugStartMapName);
         }
