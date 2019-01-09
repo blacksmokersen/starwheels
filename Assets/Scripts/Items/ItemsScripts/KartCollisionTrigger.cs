@@ -9,6 +9,8 @@ namespace Items
 
         [Header("Invincibility Condition")]
         [SerializeField] private Health.Health _health;
+        private bool test = false;
+        private float objectID;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -27,33 +29,79 @@ namespace Items
                             {
                                 SendPlayerHitEvent(itemState);
                             }
+
                             if (itemState.OwnerID == state.OwnerID || (itemState.OwnerID == 0 && itemState.Team == new Color(0, 0, 0, 0)))
                             {
-                                if (other.GetComponentInChildren<ItemActivationBehaviour>().Activated
-                                    && other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.IonBeamLaser)
+                                if (other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.IonBeamLaser)
                                 {
-                                    SendPlayerHitEvent(itemState);
+                                    if (objectID == other.GetComponentInParent<Ownership>().ID && test)
+                                    {
+                                        SendPlayerHitEvent(itemState);
+                                        DestroyColliderObject(other);
+                                    }
                                 }
                             }
                             else if (itemState.Team != state.Team)
                             {
                                 SendPlayerHitEvent(itemState);
+                                DestroyColliderObject(other);
+
                             }
                         }
+                        test = false;
+                    }
+                }
+            }
+        }
 
-                        var otherItemCollision = other.GetComponent<ItemCollisionTrigger>().ItemCollision;
-                        if (otherItemCollision.ShouldBeDestroyed(_itemCollision)
-                            && other.GetComponentInChildren<ItemActivationBehaviour>().Activated
-                            && other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.IonBeamLaser) // The item should be destroyed
+
+        private void DestroyColliderObject(Collider other)
+        {
+            var otherItemCollision = other.GetComponent<ItemCollisionTrigger>().ItemCollision;
+            if (otherItemCollision.ShouldBeDestroyed(_itemCollision)
+                && other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.IonBeamLaser) // The item should be destroyed
+            {
+                DestroyEntity destroyEntityEvent = DestroyEntity.Create();
+                destroyEntityEvent.Entity = other.GetComponentInParent<BoltEntity>();
+                destroyEntityEvent.Send();
+            }
+        }
+
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (BoltNetwork.IsServer && entity.isAttached)
+            {
+                if (other.gameObject.CompareTag(Constants.Tag.ItemCollisionHitBox) &&
+                    other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.Totem) // It is an item collision (except totem)
+                {
+                    BoltEntity itemEntity = other.GetComponentInParent<BoltEntity>();
+                    IItemState itemState;
+                    if (itemEntity.isAttached && itemEntity.TryFindState<IItemState>(out itemState)) // It is a concrete item
+                    {
+                        if (!_health.IsInvincible) // The server checks that this kart is not invincible
                         {
-                            DestroyEntity destroyEntityEvent = DestroyEntity.Create();
-                            destroyEntityEvent.Entity = other.GetComponentInParent<BoltEntity>();
-                            destroyEntityEvent.Send();
+                            if (itemState.OwnerID == state.OwnerID || (itemState.OwnerID == 0 && itemState.Team == new Color(0, 0, 0, 0)))
+                            {
+                                if (other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.IonBeamLaser)
+                                {
+                                    objectID = other.GetComponentInParent<Ownership>().ID;
+                                    test = true;
+                                }
+                            }
+                            /*
+                            else
+                            {
+                                test = false;
+                            }
+                            */
                         }
                     }
                 }
             }
         }
+
+
 
         // Laissez ça, c'est pour me souvenir de tester l'instakill au corps à corps via le Stay :)
 
