@@ -7,6 +7,7 @@ namespace Photon
     {
         public String RoomInfo;
         public String Gamemode;
+        public String RespawnMode;
         public int PlayersCount;
 
         public void Read(UdpPacket packet)

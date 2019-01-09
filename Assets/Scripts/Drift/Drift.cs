@@ -16,14 +16,7 @@ namespace Drift
         public const float JoystickDeadZone1 = 0.1f;
         public const float JoystickDeadZone2 = 0.2f;
 
-        private bool _hasTurnedOtherSide = false;
-        private bool _driftedLongEnough = false;
-        private Coroutine _driftedLongEnoughTimer;
-        private Coroutine _physicsBoostCoroutine;
-        private Rigidbody _rigidBody;
-        [SerializeField] private SteeringWheel _steeringWheel;
-        [SerializeField] private GroundCondition _groundCondition;
-
+        [Header("States")]
         public TurnState TurningState = TurnState.NotTurning;
         public TurnState DriftTurnState = TurnState.NotTurning;
         public DriftState DriftState = DriftState.NotDrifting;
@@ -43,6 +36,16 @@ namespace Drift
         public UnityEvent OnDriftBoostStart;
         public UnityEvent OnDriftBoostEnd;
 
+        [SerializeField] private SteeringWheel _steeringWheel;
+        [SerializeField] private GroundCondition _groundCondition;
+
+        private float _currentTurnValue = 0f;
+        private bool _hasTurnedOtherSide = false;
+        private bool _driftedLongEnough = false;
+        private Coroutine _driftedLongEnoughTimer;
+        private Coroutine _physicsBoostCoroutine;
+        private Rigidbody _rigidBody;
+
         // CORE
 
         private void Awake()
@@ -50,30 +53,37 @@ namespace Drift
             _rigidBody = GetComponentInParent<Rigidbody>();
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
-            SetTurnState(Input.GetAxis(Constants.Input.TurnAxis));
-        }
+            if (entity.isControllerOrOwner)
+            {
+                SetTurnState(Input.GetAxis(Constants.Input.TurnAxis));
 
-        // BOLT
+                if (IsDriftSideDifferentFromTurnSide())
+                {
+                    _hasTurnedOtherSide = true;
+                }
+                if (IsDrifting() && !HasRequiredSpeed())
+                {
+                    StopDrift();
+                }
+
+                if (DriftTurnState != TurnState.NotTurning)
+                    _steeringWheel.enabled = false;
+                else
+                    _steeringWheel.enabled = true;
+
+                MapInputs();
+            }
+        }
 
         public override void SimulateController()
         {
-            MapInputs();
-
-            if (IsDriftSideDifferentFromTurnSide())
+            if (DriftTurnState != TurnState.NotTurning && HasRequiredSpeed())
             {
-                _hasTurnedOtherSide = true;
+                ApplyDriftTorque();
+                ApplyDriftSideForces();
             }
-            if (IsDrifting() && !HasRequiredSpeed())
-            {
-                StopDrift();
-            }
-
-            if (DriftTurnState != TurnState.NotTurning)
-                _steeringWheel.enabled = false;
-            else
-                _steeringWheel.enabled = true;
         }
 
         // PUBLIC
@@ -87,8 +97,6 @@ namespace Drift
 
             if (DriftTurnState != TurnState.NotTurning && HasRequiredSpeed())
             {
-                DriftTurn(turnValue);
-                DriftUsingForce();
                 CheckNewTurnDirection();
             }
             else if (DriftTurnState == TurnState.NotTurning && TurningState != TurnState.NotTurning)
@@ -166,7 +174,7 @@ namespace Drift
         #endregion
 
         #region DriftPhysics
-        public void DriftUsingForce()
+        public void ApplyDriftSideForces()
         {
             if (DriftTurnState == TurnState.Left)
             {
@@ -180,20 +188,20 @@ namespace Drift
             }
         }
 
-        public void DriftTurn(float turnValue)
+        public void ApplyDriftTorque()
         {
-            float turnValueRestrain = turnValue;
+            float turnValueRestrain = _currentTurnValue;
             if (DriftTurnState == TurnState.Left)
             {
-                turnValueRestrain = turnValue <= -JoystickDeadZone2 ? Settings.MaxInteriorAngle : turnValue >= JoystickDeadZone1 ? Settings.MaxExteriorAngle : 100;
-                turnValue = turnValue <= -JoystickDeadZone2 ? turnValue : turnValue >= JoystickDeadZone1 ? turnValue : 1;
-                _rigidBody.AddTorque(Vector3.up * (-turnValueRestrain * Mathf.Abs(turnValue)) * Settings.DriftTurnSpeed * Time.deltaTime);
+                turnValueRestrain = _currentTurnValue <= -JoystickDeadZone2 ? Settings.MaxInteriorAngle : _currentTurnValue >= JoystickDeadZone1 ? Settings.MaxExteriorAngle : 100;
+                _currentTurnValue = _currentTurnValue <= -JoystickDeadZone2 ? _currentTurnValue : _currentTurnValue >= JoystickDeadZone1 ? _currentTurnValue : 1;
+                _rigidBody.AddTorque(Vector3.up * (-turnValueRestrain * Mathf.Abs(_currentTurnValue)) * Settings.DriftTurnSpeed * Time.deltaTime);
             }
             else if (DriftTurnState == TurnState.Right)
             {
-                turnValueRestrain = turnValue <= -JoystickDeadZone2 ? Settings.MaxExteriorAngle : turnValue >= JoystickDeadZone1 ? Settings.MaxInteriorAngle : 100;
-                turnValue = turnValue <= -JoystickDeadZone2 ? turnValue : turnValue >= JoystickDeadZone1 ? turnValue : 1;
-                _rigidBody.AddTorque(Vector3.up * (turnValueRestrain * Mathf.Abs(turnValue)) * Settings.DriftTurnSpeed * Time.deltaTime);
+                turnValueRestrain = _currentTurnValue <= -JoystickDeadZone2 ? Settings.MaxExteriorAngle : _currentTurnValue >= JoystickDeadZone1 ? Settings.MaxInteriorAngle : 100;
+                _currentTurnValue = _currentTurnValue <= -JoystickDeadZone2 ? _currentTurnValue : _currentTurnValue >= JoystickDeadZone1 ? _currentTurnValue : 1;
+                _rigidBody.AddTorque(Vector3.up * (turnValueRestrain * Mathf.Abs(_currentTurnValue)) * Settings.DriftTurnSpeed * Time.deltaTime);
             }
         }
 
@@ -270,6 +278,8 @@ namespace Drift
             {
                 SetTurnState(TurnState.NotTurning);
             }
+
+            _currentTurnValue = turnValue;
         }
         #endregion
 

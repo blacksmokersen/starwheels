@@ -32,9 +32,9 @@ public class InGameMenu : GlobalEventListener
     private void QuitMatch()
     {
         Debug.Log("Quit Match");
-        if (BoltNetwork.isServer)
+        if (BoltNetwork.IsServer)
             StartCoroutine(HostDisconectLastSecurity());
-        else if (BoltNetwork.isClient)
+        else if (BoltNetwork.IsClient)
             BoltLauncher.Shutdown();
     }
 
@@ -73,12 +73,12 @@ public class InGameMenu : GlobalEventListener
     public override void BoltShutdownBegin(AddCallback registerDoneCallback)
     {
 
-        if (BoltNetwork.isServer)
+        if (BoltNetwork.IsServer)
         {
             Debug.Log("1");
             SceneManager.LoadScene("Menu");
         }
-        else if (BoltNetwork.isClient)
+        else if (BoltNetwork.IsClient)
         {
             Debug.Log("2");
             SceneManager.LoadScene("Menu");

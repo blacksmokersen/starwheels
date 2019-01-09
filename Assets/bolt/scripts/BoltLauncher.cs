@@ -6,8 +6,8 @@ using UnityEngine;
 
 /// <summary>
 /// Bolt launcher.
-/// 
-/// Use this class to quickly initialize your Bolt peer using the utility 
+///
+/// Use this class to quickly initialize your Bolt peer using the utility
 /// functions to start in Server, Client and Single Player modes.
 /// </summary>
 public static class BoltLauncher
@@ -153,15 +153,15 @@ public static class BoltLauncher
     /// </summary>
     public static void Shutdown()
     {
-        BoltNetworkInternal.Shutdown();
+        BoltNetwork.Shutdown();
     }
 
     // Platform Settings
 
     /// <summary>
     /// Set a custom UDP platform. Use this method only to set custom properties
-    /// to your desired platform. By default, there is no need to change 
-    /// the platform, this is handled internally by Bolt. 
+    /// to your desired platform. By default, there is no need to change
+    /// the platform, this is handled internally by Bolt.
     /// </summary>
     /// <param name="platform">Custom UdpPlatform</param>
     /// <example>

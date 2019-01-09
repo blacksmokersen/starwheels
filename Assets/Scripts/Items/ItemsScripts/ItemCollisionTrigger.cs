@@ -16,7 +16,7 @@ namespace Items
 
         protected void OnTriggerEnter(Collider other)
         {
-            if (BoltNetwork.isServer)
+            if (BoltNetwork.IsServer)
             {
                 if (other.gameObject.CompareTag(Constants.Tag.ItemCollisionHitBox))
                 {

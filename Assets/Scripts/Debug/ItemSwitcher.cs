@@ -19,11 +19,12 @@ namespace KBA.Debug
             _inventory = GetComponent<Inventory>();
         }
 
-        // BOLT
-
-        public override void SimulateController()
+        private void Update()
         {
-            MapInputs();
+            if (entity.isControllerOrOwner)
+            {
+                MapInputs();
+            }
         }
 
         // PUBLIC
