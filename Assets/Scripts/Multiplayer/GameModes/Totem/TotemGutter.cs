@@ -13,7 +13,7 @@ namespace GameModes.Totem
         {
             if (other.CompareTag(Constants.Tag.TotemRespawn)) // Physical collider
             {
-                if (BoltNetwork.isServer)
+                if (BoltNetwork.IsServer)
                 {
                     FindObjectOfType<TotemSpawner>().RespawnTotem();
                 }

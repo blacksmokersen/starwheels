@@ -30,17 +30,22 @@ namespace Abilities.Jump
             _groundCondition.OnHitGround.AddListener(() => { _hasDoneFirstJump = false; });
         }
 
-        // BOLT
-
-        public override void SimulateController()
+        private void Update()
         {
-            if (gameObject.activeInHierarchy)
+            if (entity.isAttached && entity.isControllerOrOwner && gameObject.activeInHierarchy)
+            {
                 MapInputs();
+            }
         }
 
         // PUBLIC
 
-        public void FirstJump()
+        public new void Reload()
+        {
+            CanUseAbility = true;
+        }
+
+            public void FirstJump()
         {
             _rb.AddRelativeForce(Vector3.up * _jumpSettings.FirstJumpForce, ForceMode.Impulse);
             _hasDoneFirstJump = true;

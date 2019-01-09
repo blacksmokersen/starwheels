@@ -28,7 +28,7 @@ namespace GameModes.Totem
             {
                 totem.GetComponent<Totem>().UnsetParent();
 
-                if (BoltNetwork.isServer) // The server make the player throw the totem
+                if (BoltNetwork.IsServer) // The server make the player throw the totem
                 {
                     totem.GetComponent<Totem>().StartAntiSpamCoroutine();
 
@@ -72,17 +72,19 @@ namespace GameModes.Totem
 
         public override void OnEvent(PlayerHit evnt)
         {
-            var kartOwnerID = evnt.PlayerEntity.GetState<IKartState>().OwnerID;
-            var totemBehaviour = TotemHelpers.GetTotemComponent();
-
-            if (kartOwnerID == totemBehaviour.LocalOwnerID) // The totem owner has been hit
+            if (evnt.VictimEntity != null && evnt.VictimEntity.isAttached) // Verify that the player hasn't been destroyed
             {
-                totemBehaviour.UnsetParent();
+                var totemBehaviour = TotemHelpers.GetTotemComponent();
 
-                if (evnt.PlayerEntity.isOwner) // If I was the totem owner
+                if (evnt.VictimID == totemBehaviour.LocalOwnerID) // The totem owner has been hit
                 {
-                    isLocalOwner = false;
-                    OnTotemLost.Invoke();
+                    totemBehaviour.UnsetParent();
+
+                    if (evnt.VictimEntity.isOwner) // If I was the totem owner
+                    {
+                        isLocalOwner = false;
+                        OnTotemLost.Invoke();
+                    }
                 }
             }
         }

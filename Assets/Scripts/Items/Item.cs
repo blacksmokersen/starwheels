@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 namespace Items
 {
@@ -10,7 +9,7 @@ namespace Items
         public int Count;
         public Texture2D Icon;
         public ItemType ItemType;
-        public GameObject itemPrefab;
+        public GameObject ItemPrefab;
         public Sprite InventoryTexture;
         public float Chances;
         public Color ItemColor;
