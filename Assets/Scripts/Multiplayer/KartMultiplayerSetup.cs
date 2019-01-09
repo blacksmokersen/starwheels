@@ -45,7 +45,6 @@ namespace Network
 
             GetComponentInChildren<Camera>().enabled = entity.isOwner;
             GetComponentInChildren<Engine.EngineHUD>().enabled = entity.isOwner;
-            GetComponentInChildren<Items.ItemHUD>().enabled = entity.isOwner;
         }
 
         // PRIVATE

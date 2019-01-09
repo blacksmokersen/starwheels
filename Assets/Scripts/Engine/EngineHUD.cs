@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Engine
 {
@@ -8,7 +9,7 @@ namespace Engine
         private Rigidbody _rb;
         private GameObject _speedMeter;
         private Image _speedBar;
-        private Text _speedText;
+        private TextMeshProUGUI _speedText;
 
         private void Awake()
         {
@@ -21,7 +22,7 @@ namespace Engine
             if (_speedMeter)
             {
                 _speedBar = _speedMeter.GetComponentInChildren<Image>();
-                _speedText = _speedMeter.GetComponentInChildren<Text>();
+                _speedText = _speedMeter.GetComponentInChildren<TextMeshProUGUI>();
             }
         }
 
