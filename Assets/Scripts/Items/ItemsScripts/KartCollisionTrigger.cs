@@ -30,11 +30,11 @@ namespace Items
                                 SendPlayerHitEvent(itemState);
                             }
 
-                            if (itemState.OwnerID == state.OwnerID || (itemState.OwnerID == 0 && itemState.Team == new Color(0, 0, 0, 0)))
+                            if (itemState.OwnerID == state.OwnerID)
                             {
-                                if (other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.IonBeamLaser)
+                                if (other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName == ItemCollisionName.Disk)
                                 {
-                                    if (objectID == other.GetComponentInParent<Ownership>().ID && test)
+                                    if (other.GetComponentInParent<DiskBehaviour>().CanHitOwner)
                                     {
                                         SendPlayerHitEvent(itemState);
                                         DestroyColliderObject(other);
@@ -45,10 +45,31 @@ namespace Items
                             {
                                 SendPlayerHitEvent(itemState);
                                 DestroyColliderObject(other);
+                            }
+
+                            /*
+                            if (itemState.OwnerID == state.OwnerID || (itemState.OwnerID == 0 && itemState.Team == new Color(0, 0, 0, 0)))
+                            {
+                                if (other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.IonBeamLaser)
+                                {
+
+                                    if (objectID == other.GetComponentInParent<Ownership>().ID && test)
+                                    {
+                                        SendPlayerHitEvent(itemState);
+                                        DestroyColliderObject(other);
+                                    }
+
+                                }
+                            }
+                            else if (itemState.Team != state.Team)
+                            {
+                                SendPlayerHitEvent(itemState);
+                                DestroyColliderObject(other);
 
                             }
+                            */
                         }
-                        test = false;
+                        //   test = false;
                     }
                 }
             }
@@ -67,7 +88,7 @@ namespace Items
             }
         }
 
-
+        /*
         private void OnTriggerExit(Collider other)
         {
             if (BoltNetwork.IsServer && entity.isAttached)
@@ -89,18 +110,12 @@ namespace Items
                                     test = true;
                                 }
                             }
-                            /*
-                            else
-                            {
-                                test = false;
-                            }
-                            */
                         }
                     }
                 }
             }
         }
-
+        */
 
 
         // Laissez ça, c'est pour me souvenir de tester l'instakill au corps à corps via le Stay :)
