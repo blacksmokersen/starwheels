@@ -6,65 +6,38 @@ namespace Engine
 {
     public class EngineHUD : MonoBehaviour
     {
-        private Rigidbody _rb;
-        private GameObject _speedMeter;
-        private Image _speedBar;
-        private TextMeshProUGUI _speedText;
+        [Header("HUD")]
+        [SerializeField] private GameObject _speedMeter;
+        [SerializeField] private Image _speedBar;
+        [SerializeField] private TextMeshProUGUI _speedText;
 
-        private void Awake()
-        {
-            _rb = GetComponentInParent<Rigidbody>();
-        }
+        // PUBLIC
 
-        private void Start()
+        public void ObserveKart(GameObject kartRoot)
         {
-            _speedMeter = GameObject.Find(Constants.GameObjectName.Speedmeter);
-            if (_speedMeter)
+            var engine = kartRoot.GetComponentInChildren<EngineBehaviour>();
+            if (engine)
             {
-                _speedBar = _speedMeter.GetComponentInChildren<Image>();
-                _speedText = _speedMeter.GetComponentInChildren<TextMeshProUGUI>();
+                engine.OnVelocityChange.AddListener(UpdateSpeedmeter);
             }
         }
 
-        private void Update()
+        public void UpdateSpeedmeter(float speed)
         {
-            if (_speedMeter)
-            {
-                UpdateSpeedmeter(_rb.velocity);
-            }
-        }
-
-        public void UpdateSpeedmeter(Vector3 kartVelocity)
-        {
-            var speed = Mathf.Round(kartVelocity.magnitude);
-            _speedBar.fillAmount = speed / 70;
+            _speedBar.fillAmount = speed / 80;
             _speedText.text = "" + speed * 2;
         }
 
+        // PRIVATE
+
         private void Show()
         {
-            if (_speedMeter)
-            {
-                _speedMeter.SetActive(true);
-            }
+            _speedMeter.SetActive(true);
         }
 
         private void Hide()
         {
-            if (_speedMeter)
-            {
-                _speedMeter.SetActive(false);
-            }
-        }
-
-        private void OnEnable()
-        {
-            Show();
-        }
-
-        private void OnDisable()
-        {
-            //Hide();
+            _speedMeter.SetActive(false);
         }
     }
 }
