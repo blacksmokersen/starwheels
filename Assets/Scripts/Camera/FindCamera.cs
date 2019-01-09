@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Bolt;
+using Items;
 
 namespace CameraUtils
 {
@@ -12,10 +13,17 @@ namespace CameraUtils
             {
                 setKartCamera.SetKart(gameObject);
             }
+
             CamSpeedEffect camSpeedEffect = FindObjectOfType<CamSpeedEffect>();
             if (camSpeedEffect)
             {
                 camSpeedEffect.SetRigidbody(GetComponent<Rigidbody>());
+            }
+
+            ItemHUD itemHUD = FindObjectOfType<ItemHUD>();
+            if (itemHUD)
+            {
+                itemHUD.ObserveKart(gameObject);
             }
         }
     }
