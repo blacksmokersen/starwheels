@@ -23,14 +23,15 @@ namespace Items
         public void ObserveKart(GameObject kartRoot)
         {
             var kartInventory = kartRoot.GetComponentInChildren<Inventory>();
-            UpdateItem(kartInventory.CurrentItem);
-            UpdateItemCount(kartInventory.CurrentItemCount);
+            if (kartInventory)
+            {
+                UpdateItem(kartInventory.CurrentItem);
+                UpdateItemCount(kartInventory.CurrentItemCount);
 
-            kartInventory.OnItemGet.AddListener(UpdateItem);
-            kartInventory.OnItemUse.AddListener(UpdateItem);
-            kartInventory.OnItemCountChange.AddListener(UpdateItemCount);
-
-            Debug.Log("Added listeners");
+                kartInventory.OnItemGet.AddListener(UpdateItem);
+                kartInventory.OnItemUse.AddListener(UpdateItem);
+                kartInventory.OnItemCountChange.AddListener(UpdateItemCount);
+            }
         }
 
         public void UpdateItem(Item item)
