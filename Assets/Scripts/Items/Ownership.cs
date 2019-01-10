@@ -7,6 +7,12 @@ namespace Items
     {
         public GameObject OwnerKartRoot;
         public Team Team;
+        public float ID;
+
+        private void Awake()
+        {
+            ID = Random.Range(0, 1000);
+        }
 
         public void Set(Player player)
         {
