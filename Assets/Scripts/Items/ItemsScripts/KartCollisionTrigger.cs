@@ -14,13 +14,14 @@ namespace Items
         {
             if (BoltNetwork.IsServer && entity.isAttached)
             {
-                if (other.gameObject.CompareTag(Constants.Tag.ItemCollisionHitBox) &&
-                    other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.Totem) // It is an item collision (except totem)
+                if (other.gameObject.CompareTag(Constants.Tag.ItemCollisionHitBox)) // It is an item collision
                 {
                     BoltEntity itemEntity = other.GetComponentInParent<BoltEntity>();
                     IItemState itemState;
+                    Debug.Log("Is attached ? ...");
                     if (itemEntity.isAttached && itemEntity.TryFindState<IItemState>(out itemState)) // It is a concrete item
                     {
+                        Debug.Log("Attached !");
                         if (!_health.IsInvincible) // The server checks that this kart is not invincible
                         {
                             if (other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName == ItemCollisionName.IonBeamLaser)
@@ -41,11 +42,13 @@ namespace Items
                             }
                         }
 
+                        Debug.Log("Should be destroyed ? ...");
                         var otherItemCollision = other.GetComponent<ItemCollisionTrigger>().ItemCollision;
                         if (otherItemCollision.ShouldBeDestroyed(_itemCollision)
                             && other.GetComponentInChildren<ItemActivationBehaviour>().Activated
                             && other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.IonBeamLaser) // The item should be destroyed
                         {
+                            Debug.Log("Yup !");
                             DestroyEntity destroyEntityEvent = DestroyEntity.Create();
                             destroyEntityEvent.Entity = other.GetComponentInParent<BoltEntity>();
                             destroyEntityEvent.Send();

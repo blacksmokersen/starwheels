@@ -10,6 +10,7 @@ namespace Items
         [Header("Events")]
         public UnityEvent OnLotteryStart;
         public UnityEvent OnLotteryStop;
+        public FloatEvent OnLotteryUpdate;
 
         [SerializeField] private Inventory _inventory;
 
@@ -44,14 +45,13 @@ namespace Items
             if (_lotteryStarted || !_inventory.IsEmpty()) yield break;
             OnLotteryStart.Invoke();
             _lotteryStarted = true;
-            var lotteryIndex = 0;
             var items = ItemsLottery.Items;
 
             while (_lotteryTimer < ItemsLottery.LotteryDuration && _shortenLottery == false)
             {
-                _inventory.OnItemGet.Invoke(items[(lotteryIndex++) % items.Length]);
                 yield return new WaitForSeconds(0.1f);
                 _lotteryTimer += 0.1f;
+                OnLotteryUpdate.Invoke(_lotteryTimer / ItemsLottery.LotteryDuration);
             }
 
             var Item = ItemsLottery.GetRandomItem();
