@@ -9955,6 +9955,7 @@ MonoBehaviour:
   CollisionSource: {fileID: 82377588218656050}
   ReboundsBeforeEnd: 7
   ParticlesToEmit: 300
+  CanHitOwner: 0
   itemActivationBehaviour: {fileID: 114928728358983750}
 --- !u!114 &114489024169625112
 MonoBehaviour:
@@ -9970,6 +9971,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OwnerKartRoot: {fileID: 0}
   Team: 0
+  ID: 0
 --- !u!114 &114947596015643164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19554,6 +19556,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4540307016684214}
     m_Modifications:
+    - target: {fileID: 6721548461296041892, guid: 5780a9715ec669a4aa00ce03243f8440,
+        type: 3}
+      propertyPath: m_Name
+      value: Graphics
+      objectReference: {fileID: 0}
     - target: {fileID: 6724985623268178046, guid: 5780a9715ec669a4aa00ce03243f8440,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -19608,11 +19615,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6721548461296041892, guid: 5780a9715ec669a4aa00ce03243f8440,
-        type: 3}
-      propertyPath: m_Name
-      value: Graphics
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5780a9715ec669a4aa00ce03243f8440, type: 3}
