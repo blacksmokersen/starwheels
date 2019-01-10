@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4750946848638774}
   - component: {fileID: 198856297611432986}
   - component: {fileID: 199217444477048504}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: LightningParticle2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4709,7 +4709,7 @@ GameObject:
   - component: {fileID: 4908487379118722}
   - component: {fileID: 198859800926821978}
   - component: {fileID: 199515031336961408}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: LightningParticle3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9409,7 +9409,7 @@ GameObject:
   - component: {fileID: 82901923781927856}
   - component: {fileID: 82228615556798478}
   - component: {fileID: 82377588218656050}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: AudioSources
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9834,7 +9834,7 @@ GameObject:
   - component: {fileID: 114726411467732960}
   - component: {fileID: 114489024169625112}
   - component: {fileID: 114947596015643164}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Disk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9955,6 +9955,7 @@ MonoBehaviour:
   CollisionSource: {fileID: 82377588218656050}
   ReboundsBeforeEnd: 7
   ParticlesToEmit: 300
+  CanHitOwner: 0
   itemActivationBehaviour: {fileID: 114928728358983750}
 --- !u!114 &114489024169625112
 MonoBehaviour:
@@ -9970,6 +9971,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OwnerKartRoot: {fileID: 0}
   Team: 0
+  ID: 0
 --- !u!114 &114947596015643164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9996,7 +9998,7 @@ GameObject:
   - component: {fileID: 135831469022452736}
   - component: {fileID: 114806877320013462}
   - component: {fileID: 114928728358983750}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: CollisionTrigger
   m_TagString: CollisionHitBox
   m_Icon: {fileID: 0}
@@ -10083,7 +10085,7 @@ GameObject:
   - component: {fileID: 4774983161376276}
   - component: {fileID: 198536982510801932}
   - component: {fileID: 199537664915123768}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: CollisionsParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14781,7 +14783,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4343291980117246}
   - component: {fileID: 135079340401835692}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: PhysicalCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14824,7 +14826,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4292043825789124}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14860,7 +14862,7 @@ GameObject:
   - component: {fileID: 4218656438486656}
   - component: {fileID: 198229923371514040}
   - component: {fileID: 199019477724637366}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: LightningParticle1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19559,6 +19561,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Graphics
       objectReference: {fileID: 0}
+    - target: {fileID: 6721548461296041892, guid: 5780a9715ec669a4aa00ce03243f8440,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 6724985623268178046, guid: 5780a9715ec669a4aa00ce03243f8440,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -19613,6 +19620,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720971835577200370, guid: 5780a9715ec669a4aa00ce03243f8440,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6721004004472144022, guid: 5780a9715ec669a4aa00ce03243f8440,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 908625893420561062, guid: 5780a9715ec669a4aa00ce03243f8440,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5780a9715ec669a4aa00ce03243f8440, type: 3}

@@ -36,7 +36,6 @@ namespace Common.HUD
 
         public void UpdateTimer(float seconds)
         {
-            Debug.Log("Updating");
             _timerUGUI.text = "" + ConvertSecondsToTime(seconds);
         }
 

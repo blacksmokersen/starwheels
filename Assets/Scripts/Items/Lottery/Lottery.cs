@@ -45,7 +45,6 @@ namespace Items
             if (_lotteryStarted || !_inventory.IsEmpty()) yield break;
             OnLotteryStart.Invoke();
             _lotteryStarted = true;
-            var items = ItemsLottery.Items;
 
             while (_lotteryTimer < ItemsLottery.LotteryDuration && _shortenLottery == false)
             {

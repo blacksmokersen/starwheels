@@ -18,45 +18,102 @@ namespace Items
                 {
                     BoltEntity itemEntity = other.GetComponentInParent<BoltEntity>();
                     IItemState itemState;
-                    Debug.Log("Is attached ? ...");
                     if (itemEntity.isAttached && itemEntity.TryFindState<IItemState>(out itemState)) // It is a concrete item
                     {
-                        Debug.Log("Attached !");
                         if (!_health.IsInvincible) // The server checks that this kart is not invincible
                         {
                             if (other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName == ItemCollisionName.IonBeamLaser)
                             {
                                 SendPlayerHitEvent(itemState);
                             }
-                            if (itemState.OwnerID == state.OwnerID || (itemState.OwnerID == 0 && itemState.Team == new Color(0, 0, 0, 0)))
+
+                            if (itemState.OwnerID == state.OwnerID)
                             {
-                                if (other.GetComponentInChildren<ItemActivationBehaviour>().Activated
-                                    && other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.IonBeamLaser)
+                                if (other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName == ItemCollisionName.Disk)
                                 {
-                                    SendPlayerHitEvent(itemState);
+                                    if (other.GetComponentInParent<DiskBehaviour>().CanHitOwner)
+                                    {
+                                        SendPlayerHitEvent(itemState);
+                                        DestroyColliderObject(other);
+                                    }
                                 }
                             }
                             else if (itemState.Team != state.Team)
                             {
                                 SendPlayerHitEvent(itemState);
+                                DestroyColliderObject(other);
                             }
-                        }
 
-                        Debug.Log("Should be destroyed ? ...");
-                        var otherItemCollision = other.GetComponent<ItemCollisionTrigger>().ItemCollision;
-                        if (otherItemCollision.ShouldBeDestroyed(_itemCollision)
-                            && other.GetComponentInChildren<ItemActivationBehaviour>().Activated
-                            && other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.IonBeamLaser) // The item should be destroyed
+                            /*
+                            if (itemState.OwnerID == state.OwnerID || (itemState.OwnerID == 0 && itemState.Team == new Color(0, 0, 0, 0)))
+                            {
+                                if (other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.IonBeamLaser)
+                                {
+
+                                    if (objectID == other.GetComponentInParent<Ownership>().ID && test)
+                                    {
+                                        SendPlayerHitEvent(itemState);
+                                        DestroyColliderObject(other);
+                                    }
+
+                                }
+                            }
+                            else if (itemState.Team != state.Team)
+                            {
+                                SendPlayerHitEvent(itemState);
+                                DestroyColliderObject(other);
+
+                            }
+                            */
+                        }
+                        //   test = false;
+                    }
+                }
+            }
+        }
+
+
+        private void DestroyColliderObject(Collider other)
+        {
+            var otherItemCollision = other.GetComponent<ItemCollisionTrigger>().ItemCollision;
+            if (otherItemCollision.ShouldBeDestroyed(_itemCollision)
+                && other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.IonBeamLaser) // The item should be destroyed
+            {
+                DestroyEntity destroyEntityEvent = DestroyEntity.Create();
+                destroyEntityEvent.Entity = other.GetComponentInParent<BoltEntity>();
+                destroyEntityEvent.Send();
+            }
+        }
+
+        /*
+        private void OnTriggerExit(Collider other)
+        {
+            if (BoltNetwork.IsServer && entity.isAttached)
+            {
+                if (other.gameObject.CompareTag(Constants.Tag.ItemCollisionHitBox) &&
+                    other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.Totem) // It is an item collision (except totem)
+                {
+                    BoltEntity itemEntity = other.GetComponentInParent<BoltEntity>();
+                    IItemState itemState;
+                    if (itemEntity.isAttached && itemEntity.TryFindState<IItemState>(out itemState)) // It is a concrete item
+                    {
+                        if (!_health.IsInvincible) // The server checks that this kart is not invincible
                         {
-                            Debug.Log("Yup !");
-                            DestroyEntity destroyEntityEvent = DestroyEntity.Create();
-                            destroyEntityEvent.Entity = other.GetComponentInParent<BoltEntity>();
-                            destroyEntityEvent.Send();
+                            if (itemState.OwnerID == state.OwnerID || (itemState.OwnerID == 0 && itemState.Team == new Color(0, 0, 0, 0)))
+                            {
+                                if (other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.IonBeamLaser)
+                                {
+                                    objectID = other.GetComponentInParent<Ownership>().ID;
+                                    test = true;
+                                }
+                            }
                         }
                     }
                 }
             }
         }
+        */
+
 
         // Laissez ça, c'est pour me souvenir de tester l'instakill au corps à corps via le Stay :)
 
