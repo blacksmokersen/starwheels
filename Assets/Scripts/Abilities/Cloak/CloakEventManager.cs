@@ -21,5 +21,17 @@ namespace Abilities
                 _cloakAbility.Use();
             }
         }
+
+        public override void OnEvent(UnCloakAbilityEvent evnt)
+        {
+            var entity = GetComponentInParent<BoltEntity>();
+
+            if (entity == evnt.Entity)
+            {
+              //  _cloakAbilityGO.SetActive(false);
+                _cloakAbility.CanDisableCloak = evnt.CanDisableCloak;
+                _cloakAbility.DisableCloak();
+            }
+        }
     }
 }
