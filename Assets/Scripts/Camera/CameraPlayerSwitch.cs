@@ -46,8 +46,9 @@ namespace CameraUtils
             _setKartCamera.SetKart(_currentTarget);
             //_currentTarget.GetComponentInChildren<Audio.KartSoundsScript>().SetAudioListenerActive(true);
 
-            var localHUD = Player.Me.GetComponentInChildren<Items.ItemHUD>();
+            var localHUD = FindObjectOfType<Items.ItemHUD>();
             localHUD.ObserveKart(_currentTarget);
+            Debug.Log("Observing kart");
         }
     }
 }
