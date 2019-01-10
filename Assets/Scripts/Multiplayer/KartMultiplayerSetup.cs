@@ -44,7 +44,6 @@ namespace Network
             if(lobby) lobby.SetActive(false);
 
             GetComponentInChildren<Camera>().enabled = entity.isOwner;
-            GetComponentInChildren<Engine.EngineHUD>().enabled = entity.isOwner;
         }
 
         // PRIVATE
