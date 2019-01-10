@@ -14,7 +14,7 @@ namespace Abilities
         [Header("Meshes and Animation")]
         [SerializeField] private GameObject _cloakEffect;
         [SerializeField] private GameObject[] _kartMeshes;
-     //   [SerializeField] private GameObject _kartNamePlate;
+        //   [SerializeField] private GameObject _kartNamePlate;
         [SerializeField] private Animator _animator;
 
         [Header("Audio Sources")]
@@ -63,12 +63,6 @@ namespace Abilities
                 if (CanUseAbility)
                     SendCloakEvent();
             }
-
-            if (Input.GetButtonDown(Constants.Input.UseItem))
-            {
-                if (CanDisableCloak)
-                    SendUnCloakEvent();
-            }
         }
 
         public void Use()
@@ -85,6 +79,17 @@ namespace Abilities
             if (_cloakRoutine != null)
                 StopCoroutine(_cloakRoutine);
             // _animator.SetTrigger("ActivateCloakEffect");
+        }
+
+        public void SendUnCloakEvent()
+        {
+            if (CanDisableCloak)
+            {
+                var unCloakEvent = UnCloakAbilityEvent.Create();
+                unCloakEvent.CanDisableCloak = CanDisableCloak;
+                unCloakEvent.Entity = entity;
+                unCloakEvent.Send();
+            }
         }
 
         // PRIVATE
@@ -107,13 +112,6 @@ namespace Abilities
             cloakEvent.Send();
         }
 
-        private void SendUnCloakEvent()
-        {
-            var unCloakEvent = UnCloakAbilityEvent.Create();
-            unCloakEvent.CanDisableCloak = CanDisableCloak;
-            unCloakEvent.Entity = entity;
-            unCloakEvent.Send();
-        }
 
         private void SetCloack()
         {
