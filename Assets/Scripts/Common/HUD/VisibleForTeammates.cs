@@ -38,12 +38,12 @@ namespace Common.HUD
 
         // PRIVATE
 
-        private void SetAlwaysVisble()
+        public void SetAlwaysVisble()
         {
             _targetRenderer.material = _alwaysVisibleMaterial;
         }
 
-        private void ResetToDefault()
+        public void ResetToDefault()
         {
             _targetRenderer.material = _defaultMaterial;
         }

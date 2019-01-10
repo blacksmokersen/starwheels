@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using Common.HUD;
 
 namespace Abilities
 {
@@ -13,6 +14,7 @@ namespace Abilities
         [Header("Meshes and Animation")]
         [SerializeField] private GameObject _cloakEffect;
         [SerializeField] private GameObject[] _kartMeshes;
+     //   [SerializeField] private GameObject _kartNamePlate;
         [SerializeField] private Animator _animator;
 
         [Header("Audio Sources")]
@@ -130,6 +132,7 @@ namespace Abilities
 
         private void UnsetCloack()
         {
+            CanDisableCloak = false;
             _cloakEffect.SetActive(false);
             MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_endCloakSound);
             foreach (GameObject mesh in _kartMeshes)
