@@ -23,7 +23,7 @@ namespace Engine
 
         public void UpdateSpeedmeter(float speed)
         {
-            _speedBar.fillAmount = speed / 40;
+            _speedBar.fillAmount = speed / 50;
             _speedText.text = "" + (int) speed * 2;
         }
 
