@@ -19,11 +19,15 @@ namespace Abilities
         [SerializeField] private AudioSource _useCloakSound;
         [SerializeField] private AudioSource _endCloakSound;
 
+
+        [HideInInspector] public bool CanDisableCloak;
+
         private CloakSettings _cloakSettings;
+        private Coroutine _cloakRoutine;
 
         private void Awake()
         {
-            _cloakSettings = (CloakSettings) abilitySettings;
+            _cloakSettings = (CloakSettings)abilitySettings;
         }
 
         // BOLT
@@ -55,17 +59,30 @@ namespace Abilities
             if (Input.GetButtonDown(Constants.Input.UseAbility))
             {
                 if (CanUseAbility)
-                {
                     SendCloakEvent();
-                }
+            }
+
+            if (Input.GetButtonDown(Constants.Input.UseItem))
+            {
+                if (CanDisableCloak)
+                    SendUnCloakEvent();
             }
         }
 
         public void Use()
         {
             _animator.SetTrigger("ActivateCloakEffect");
-            StartCoroutine(CloakDuration(_cloakSettings.CloakDuration));
+            _cloakRoutine = StartCoroutine(CloakDuration(_cloakSettings.CloakDuration));
             StartCoroutine(Cooldown());
+        }
+
+        public void DisableCloak()
+        {
+            UnsetCloack();
+            StartCoroutine(Cooldown());
+            if (_cloakRoutine != null)
+                StopCoroutine(_cloakRoutine);
+            // _animator.SetTrigger("ActivateCloakEffect");
         }
 
         // PRIVATE
@@ -73,8 +90,10 @@ namespace Abilities
         private IEnumerator CloakDuration(float Duration)
         {
             yield return new WaitForSeconds(1);
+            CanDisableCloak = true;
             SetCloack();
             yield return new WaitForSeconds(Duration);
+            CanDisableCloak = false;
             UnsetCloack();
         }
 
@@ -84,6 +103,14 @@ namespace Abilities
             cloakEvent.ActivationBool = CanUseAbility;
             cloakEvent.Entity = entity;
             cloakEvent.Send();
+        }
+
+        private void SendUnCloakEvent()
+        {
+            var unCloakEvent = UnCloakAbilityEvent.Create();
+            unCloakEvent.CanDisableCloak = CanDisableCloak;
+            unCloakEvent.Entity = entity;
+            unCloakEvent.Send();
         }
 
         private void SetCloack()
