@@ -31,7 +31,7 @@ namespace GameModes
 
         public override void OnEvent(PlayerHit evnt)
         {
-            var team = evnt.KillerTeamColor.GetTeam().OppositeTeam();
+            var team = evnt.KillerTeamColor.GetTeam();
             IncreaseScore(team);
             CheckScore();
         }
