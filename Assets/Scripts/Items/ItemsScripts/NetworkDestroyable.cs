@@ -8,11 +8,11 @@ namespace Items
     {
         public void DestroyObject(float timeBeforeDestroy = 0f)
         {
-            if (BoltNetwork.isConnected && entity.isAttached && BoltNetwork.isServer)
+            if (BoltNetwork.IsConnected && entity.isAttached && BoltNetwork.IsServer)
             {
                 if (timeBeforeDestroy != 0)
                 {
-                    StartCoroutine(DestroyAfterXSeconds(10f));
+                    StartCoroutine(DestroyAfterXSeconds(timeBeforeDestroy));
                 }
                 else
                 {
@@ -21,7 +21,7 @@ namespace Items
                     destroyEntityEvent.Send();
                 }
             }
-            else if(!BoltNetwork.isConnected)
+            else if(!BoltNetwork.IsConnected)
             {
                 MonoBehaviour.Destroy(gameObject, timeBeforeDestroy);
             }

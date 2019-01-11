@@ -14,7 +14,7 @@ namespace Network
 
         private void Awake()
         {
-            if (!BoltNetwork.isConnected)
+            if (!BoltNetwork.IsConnected)
             {
                 BoltLauncher.StartServer();
             }
@@ -44,20 +44,6 @@ namespace Network
             if(lobby) lobby.SetActive(false);
 
             GetComponentInChildren<Camera>().enabled = entity.isOwner;
-            GetComponentInChildren<Engine.EngineHUD>().enabled = entity.isOwner;
-            GetComponentInChildren<Items.ItemHUD>().enabled = entity.isOwner;
-        }
-
-        // PUBLIC
-
-        public void DestroyKart()
-        {
-            if (entity.isOwner)
-            {
-                //FindObjectOfType<CameraUtils.SpectatorControls>().Enabled = true;
-                //FindObjectOfType<CameraUtils.CameraPlayerSwitch>().SetCameraToRandomPlayer();
-                StartCoroutine(DelayRoutine());
-            }
         }
 
         // PRIVATE
@@ -74,13 +60,6 @@ namespace Network
             GetComponent<Player>().Nickname = state.Nickname;
             var panel = GetComponentInChildren<Common.HUD.NicknamePanel>();
             if(panel) panel.SetName(state.Nickname);
-        }
-
-        private IEnumerator DelayRoutine()
-        {
-            yield return new WaitForSeconds(_delayBeforeDestroyKart);
-            _playerSettings.SendKartDestroyedEvent();
-            BoltNetwork.Destroy(gameObject);
         }
     }
 }

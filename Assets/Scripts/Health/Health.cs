@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using Bolt;
+using Photon;
 
 namespace Health
 {
@@ -11,6 +12,7 @@ namespace Health
         public int MaxHealth = 3;
         public int CurrentHealth;
         public bool IsDead = false;
+        public bool CanLoseHealth = true;
         public bool IsInvincible = false;
 
         [Header("Events")]
@@ -25,9 +27,23 @@ namespace Health
 
         // BOLT
 
+        public override void Attached()
+        {
+            if (entity.attachToken != null)
+            {
+                var roomToken = (RoomProtocolToken)entity.attachToken;
+                CanLoseHealth = roomToken.Gamemode == Constants.GameModes.Battle;
+            }
+            else
+            {
+                Debug.LogError("Couldn't find the attached token to set the knockout mode.");
+            }
+        }
+
         public override void ControlGained()
         {
             state.SetDynamic("Health", CurrentHealth);
+            state.AddCallback("Health", UpdateCurrentHealth);
             state.AddCallback("Health", CheckIfIsDead);
         }
 
@@ -35,7 +51,7 @@ namespace Health
 
         public void LoseHealth()
         {
-            if (!IsInvincible)
+            if (CanLoseHealth && !IsInvincible)
             {
                 if (entity.isOwner)
                 {
@@ -43,7 +59,7 @@ namespace Health
                 }
 
                 OnHealthLoss.Invoke(state.Health);
-                SetInvincibilityForXSeconds(3f);
+                //SetInvincibilityForXSeconds(3f);
             }
         }
 
@@ -61,14 +77,16 @@ namespace Health
 
         private void CheckIfIsDead()
         {
-            if (state.Health <= 0)
+            if (state.Health <= 0 && !IsDead)
             {
-                if (entity.isOwner && !IsDead)
-                {
-                    OnDeath.Invoke();
-                }
                 IsDead = true;
+                OnDeath.Invoke();
             }
+        }
+
+        private void UpdateCurrentHealth()
+        {
+            CurrentHealth = state.Health;
         }
 
         private IEnumerator InvicibilityTime(float x)

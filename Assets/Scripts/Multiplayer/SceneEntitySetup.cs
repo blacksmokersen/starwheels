@@ -20,7 +20,7 @@ namespace Multiplayer
 
         private void SetupEntity()
         {
-            if (BoltNetwork.isServer)
+            if (BoltNetwork.IsServer)
             {
                 var entity = GetComponent<BoltEntity>();
                 BoltNetwork.Attach(entity.gameObject);

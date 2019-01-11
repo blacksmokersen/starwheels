@@ -29,10 +29,9 @@ namespace GameModes
             _blueKartsAlive = 0;
         }
 
-        public override void OnEvent(KartDestroyed evnt)
+        public override void OnEvent(PlayerHit evnt)
         {
-            //KartDestroy(TeamsColors.GetTeamFromColor(evnt.Team));
-            var team = evnt.Team.GetTeam().OppositeTeam();
+            var team = evnt.KillerTeamColor.GetTeam();
             IncreaseScore(team);
             CheckScore();
         }

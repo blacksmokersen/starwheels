@@ -17,7 +17,7 @@ namespace Menu
 
         private void OnEnable()
         {
-            replayButton.gameObject.SetActive(BoltNetwork.isServer);
+            replayButton.gameObject.SetActive(BoltNetwork.IsServer);
         }
 
         // PUBLIC
