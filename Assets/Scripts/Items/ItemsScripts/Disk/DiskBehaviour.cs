@@ -11,8 +11,6 @@ namespace Items
 
         [HideInInspector] public bool CanHitOwner;
 
-        [SerializeField] ItemActivationBehaviour itemActivationBehaviour;
-
         //BOLT
 
         public override void Attached()
@@ -27,7 +25,6 @@ namespace Items
                 if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.Layer.Ground))
                 {
                     CanHitOwner = true;
-                    itemActivationBehaviour.Activated = true;
                     Vector3 contactPoint = collision.contacts[0].point;
                     CollisionParticles.transform.position = contactPoint;
                     CollisionParticles.Emit(ParticlesToEmit);
