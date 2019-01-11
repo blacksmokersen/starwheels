@@ -34,20 +34,21 @@ namespace Items
             CurrentItemCount = 0;
         }
 
-        // BOLT
-
-        public override void SimulateController()
+        private void Update()
         {
-            MapInputs();
+            if (entity.isControllerOrOwner)
+            {
+                MapInputs();
+            }
         }
 
         // PUBLIC
 
         public void MapInputs()
         {
-            if (Input.GetButtonDown(Constants.Input.UseItem) ||
-                Input.GetButtonDown(Constants.Input.UseItemBackward) ||
-                Input.GetButtonDown(Constants.Input.UseItemForward))
+            if (Input.GetButtonUp(Constants.Input.UseItem) ||
+                Input.GetButtonUp(Constants.Input.UseItemBackward) ||
+                Input.GetButtonUp(Constants.Input.UseItemForward))
             {
                 UseItem();
             }
@@ -69,12 +70,6 @@ namespace Items
             }
         }
 
-        public void SetItem(Item item)
-        {
-            CurrentItem = item;
-            OnItemGet.Invoke(item);
-        }
-
         public void SetItem(Item item, int count)
         {
             CurrentItem = item;
@@ -89,14 +84,16 @@ namespace Items
             OnItemCountChange.Invoke(CurrentItemCount);
 
             if (CurrentItemCount == 0)
-                SetItem(null);
+            {
+                SetItem(null, 0);
+            }
         }
 
         // PRIVATE
 
         private void InstantiateItem()
         {
-            var instantiatedItem = BoltNetwork.Instantiate(CurrentItem.itemPrefab);
+            var instantiatedItem = BoltNetwork.Instantiate(CurrentItem.ItemPrefab);
 
             var itemOwnership = instantiatedItem.GetComponent<Ownership>();
             var playerSettings = GetComponentInParent<Player>();

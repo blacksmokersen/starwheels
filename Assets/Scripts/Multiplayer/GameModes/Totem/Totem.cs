@@ -64,13 +64,16 @@ namespace GameModes.Totem
 
         public void SetParent(Transform parent, int newOwnerID)
         {
-            if(entity.isOwner) state.OwnerID = newOwnerID;
+            if (entity.isOwner)
+            {
+                state.OwnerID = newOwnerID;
+                _isSlowingDown = false;
+            }
 
             LocalOwnerID = newOwnerID;
             entity.TakeControl();
             _parent = parent;
             FreezeTotem(true);
-            _isSlowingDown = false;
             StartCoroutine(AntiPickSpamRoutine());
 
             if (OnParentSet != null) OnParentSet.Invoke();
@@ -78,15 +81,20 @@ namespace GameModes.Totem
 
         public void UnsetParent()
         {
-            if (entity.isOwner) state.OwnerID = -1;
-            else entity.ReleaseControl();
+            if (entity.isOwner)
+            {
+                state.OwnerID = -1;
+                StartCoroutine(SlowdownRoutine());
+            }
+            else
+            {
+                entity.ReleaseControl();
+            }
 
             LocalOwnerID = -1;
             CanBePickedUp = true;
             _parent = null;
             FreezeTotem(false);
-            StopAllCoroutines();
-            _isSlowingDown = true;
 
             if (OnParentUnset != null) OnParentUnset.Invoke();
         }
@@ -116,7 +124,7 @@ namespace GameModes.Totem
 
         private IEnumerator SlowdownRoutine()
         {
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(_totemSettings.SecondsBeforeSlowdown);
             _isSlowingDown = true;
         }
 

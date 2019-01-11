@@ -16,7 +16,7 @@ namespace Multiplayer
 
         private void Awake()
         {
-            if (!BoltNetwork.isConnected) // Used for In-Editor tests
+            if (!BoltNetwork.IsConnected) // Used for In-Editor tests
             {
                 BoltLauncher.StartServer();
             }

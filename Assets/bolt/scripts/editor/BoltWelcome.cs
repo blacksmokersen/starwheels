@@ -18,7 +18,7 @@ public class BoltWelcome : EditorWindow
 
     static String FirstStartupKey
     {
-        get { return "$Bolt$First$Startup/" + BoltNetwork.Version.ToString(); }
+        get { return "$Bolt$First$Startup/" + BoltNetwork.CurrentVersion; }
     }
 
     static String ShowAtStartupKey
@@ -164,7 +164,7 @@ public class BoltWelcome : EditorWindow
         GUILayout.FlexibleSpace();
         GUILayout.BeginHorizontal();
 
-        GUILayout.Label(string.Format("Version: {0} v{1}", BoltNetwork.VersionDescription, BoltNetwork.Version), _textLabel);
+        GUILayout.Label(BoltNetwork.CurrentVersion, _textLabel);
 
         GUILayout.FlexibleSpace();
         EditorPrefs.SetBool(ShowAtStartupKey, GUILayout.Toggle(EditorPrefs.GetBool(ShowAtStartupKey, SHOW_AT_STARTUP_DEFAULT), "Always Show This On Startup"));
@@ -191,28 +191,20 @@ public class BoltWelcome : EditorWindow
         DrawMenuHeader("Packages");
         DrawMenuInstall("bolt_install", "Core Package", "Install core bolt package", PackageFlags.RunInitialSetup);
 
-        // SAMPLES
         EditorGUI.BeginDisabledGroup(MainPackageInstalled() == false);
-        DrawMenuInstall("bolt_samples", "Samples", "Install bolt samples", PackageFlags.WarnForProjectOverwrite);
-
-        // PHOTON CLOUD
-        //DrawMenuInstall("bolt_photon_cloud", "Photon Cloud", "Install Photon Cloud support");
-        EditorGUI.BeginDisabledGroup(CanInstallPhotonCloudSamples() == false);
-        //DrawMenuInstall("bolt_photon_cloud_samples", "Photon Cloud Samples", "Install Photon Cloud samples (requires 'Samples' and 'Photon Cloud' packages)", PackageFlags.WarnForProjectOverwrite);
-        DrawMenuInstall("bolt_photon_cloud_samples", "Photon Cloud Samples", "Install Photon Cloud samples (requires 'Samples' and 'Core' packages)", PackageFlags.WarnForProjectOverwrite);
-        EditorGUI.EndDisabledGroup();
 
         // MOBILE
         DrawMenuInstall("bolt_mobile_plugins", "Mobile Plugins", "Install iOS/Android socket plugins");
+		
+        // SAMPLES
+        DrawMenuInstall("bolt_samples", "Samples", "Install bolt samples", PackageFlags.WarnForProjectOverwrite);
 
-        // STEAM
-        DrawMenuInstall("bolt_steam", "Steam", "Install Steam support");
-        EditorGUI.BeginDisabledGroup(CanInstallSteamSamples() == false);
-        DrawMenuInstall("bolt_steam_samples", "Steam Samples", "Install Steam samples (requires 'Samples' and 'Steam' packages)", PackageFlags.WarnForProjectOverwrite);
-        EditorGUI.EndDisabledGroup();
+        // XBox One
+        DrawMenuInstall("bolt_xb1", "XBox One", "Install XB1 support");
 
-        // SERVER MONITOR
-        DrawMenuInstall("bolt_servermonitor", "Server Monitor", "Install server monitor example");
+        // PS4
+        DrawMenuInstall("bolt_ps4", "Playstation 4", "Install PS4 support");
+
         EditorGUI.EndDisabledGroup();
 
         GUILayout.Space(16);
@@ -294,13 +286,29 @@ public class BoltWelcome : EditorWindow
 
     protected void DrawMenuInstall(String packageName, String title, String description, PackageFlags packageFlags = default(PackageFlags))
     {
-        if (PackageExists(packageName))
-        {
-            DrawMenuOption(_samplesIcon, new GUIContent(title), new GUIContent(description), InstallPackage(packageName, packageFlags));
-        }
+		bool packageExists = PackageExists(packageName);
+
+		Action ignoredAction;
+		if(packageExists == true)
+		{
+			ignoredAction = () => { ShowNotification(new GUIContent("One of the dependencies is missing")); };
+		}
+		else
+		{
+			ignoredAction = () => { ShowNotification(new GUIContent("Please contact us at developer@photonengine.com")); };
+
+			EditorGUI.BeginDisabledGroup(true);
+		}
+
+        DrawMenuOption(_samplesIcon, new GUIContent(title), new GUIContent(description), InstallPackage(packageName, packageFlags), ignoredAction);
+
+		if(packageExists == false)
+		{
+			EditorGUI.EndDisabledGroup();
+		}
     }
 
-    protected void DrawMenuOption(Texture2D icon, GUIContent header, GUIContent text, System.Action callback = null)
+    protected void DrawMenuOption(Texture2D icon, GUIContent header, GUIContent text, System.Action callback = null, Action ignoredCallback = null)
     {
         GUILayout.Space(16);
         GUILayout.BeginHorizontal();
@@ -317,15 +325,25 @@ public class BoltWelcome : EditorWindow
 
         var rect = GUILayoutUtility.GetLastRect();
         EditorGUIUtility.AddCursorRect(rect, MouseCursor.Link);
-
-        if (Event.current.type == EventType.MouseDown && rect.Contains(Event.current.mousePosition))
+		
+		if (rect.Contains(Event.current.mousePosition))
         {
-            if (callback != null)
-            {
-                callback();
-            }
+            if (Event.current.type == EventType.MouseDown)
+			{
+				if (callback != null)
+				{
+					callback();
+				}
 
-            GUIUtility.ExitGUI();
+				GUIUtility.ExitGUI();
+			}
+			else if (Event.current.type == EventType.Ignore && Event.current.rawType == EventType.MouseDown)
+			{
+				if (ignoredCallback != null)
+				{
+					ignoredCallback();
+				}
+			}
         }
     }
 
@@ -351,12 +369,7 @@ public class BoltWelcome : EditorWindow
 
     protected Boolean SamplesPackageInstalled()
     {
-        return Directory.Exists("Assets/bolt_samples");
-    }
-
-    protected Boolean PhotonCloudPackageInstalled()
-    {
-        return File.Exists("Assets/Plugins/Photon3DotNet.dll");
+        return Directory.Exists("Assets/samples");
     }
 
     protected Boolean SteamPackageInstalled()
@@ -367,31 +380,6 @@ public class BoltWelcome : EditorWindow
     protected Boolean MobilePackageInstalled()
     {
         return Directory.Exists("Assets/Plugins/iOS") && Directory.Exists("Assets/Plugins/Android");
-    }
-
-    protected Boolean SteamSamplesPackageInstalled()
-    {
-        return Directory.Exists("Assets/bolt_samples/bolt-steam");
-    }
-
-    protected Boolean PhotonSamplesPackageInstalled()
-    {
-        return Directory.Exists("Assets/bolt_samples/PhotonCloud");
-    }
-
-    protected Boolean MonitorPackageInstalled()
-    {
-        return Directory.Exists("Assets/bolt_samples/NEW-ServerMonitor");
-    }
-
-    protected Boolean CanInstallPhotonCloudSamples()
-    {
-        return SamplesPackageInstalled() && PhotonCloudPackageInstalled();
-    }
-
-    protected Boolean CanInstallSteamSamples()
-    {
-        return SamplesPackageInstalled() && SteamPackageInstalled();
     }
 
     protected Action InstallPackage(String packageName, PackageFlags packageFlags)
@@ -425,7 +413,7 @@ public class BoltWelcome : EditorWindow
 
         if (!AssetDatabase.LoadAssetAtPath(SETTINGS_PATH, typeof(BoltRuntimeSettings)))
         {
-            BoltRuntimeSettings settings = BoltRuntimeSettings.CreateInstance<BoltRuntimeSettings>();
+            BoltRuntimeSettings settings = CreateInstance<BoltRuntimeSettings>();
             settings.masterServerGameId = Guid.NewGuid().ToString().ToUpperInvariant();
 
             AssetDatabase.CreateAsset(settings, SETTINGS_PATH);
@@ -434,7 +422,7 @@ public class BoltWelcome : EditorWindow
 
         if (!AssetDatabase.LoadAssetAtPath(PREFABDB_PATH, typeof(Bolt.PrefabDatabase)))
         {
-            AssetDatabase.CreateAsset(Bolt.PrefabDatabase.CreateInstance<Bolt.PrefabDatabase>(), PREFABDB_PATH);
+            AssetDatabase.CreateAsset(CreateInstance<Bolt.PrefabDatabase>(), PREFABDB_PATH);
             AssetDatabase.ImportAsset(PREFABDB_PATH, ImportAssetOptions.Default);
         }
 

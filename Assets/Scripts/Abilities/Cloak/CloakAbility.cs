@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using Common.HUD;
 
 namespace Abilities
 {
@@ -13,25 +14,32 @@ namespace Abilities
         [Header("Meshes and Animation")]
         [SerializeField] private GameObject _cloakEffect;
         [SerializeField] private GameObject[] _kartMeshes;
+        //   [SerializeField] private GameObject _kartNamePlate;
         [SerializeField] private Animator _animator;
 
         [Header("Audio Sources")]
         [SerializeField] private AudioSource _useCloakSound;
         [SerializeField] private AudioSource _endCloakSound;
 
+
+        [HideInInspector] public bool CanDisableCloak;
+
         private CloakSettings _cloakSettings;
+        private Coroutine _cloakRoutine;
 
         private void Awake()
         {
-            _cloakSettings = (CloakSettings) abilitySettings;
+            _cloakSettings = (CloakSettings)abilitySettings;
         }
 
         // BOLT
 
-        public override void SimulateController()
+        private void Update()
         {
-            if (gameObject.activeInHierarchy)
+            if (entity.isAttached && entity.isControllerOrOwner && gameObject.activeInHierarchy)
+            {
                 MapInputs();
+            }
         }
 
         public override void Detached()
@@ -53,17 +61,35 @@ namespace Abilities
             if (Input.GetButtonDown(Constants.Input.UseAbility))
             {
                 if (CanUseAbility)
-                {
                     SendCloakEvent();
-                }
             }
         }
 
         public void Use()
         {
             _animator.SetTrigger("ActivateCloakEffect");
-            StartCoroutine(CloakDuration(_cloakSettings.CloakDuration));
+            _cloakRoutine = StartCoroutine(CloakDuration(_cloakSettings.CloakDuration));
             StartCoroutine(Cooldown());
+        }
+
+        public void DisableCloak()
+        {
+            UnsetCloack();
+            StartCoroutine(Cooldown());
+            if (_cloakRoutine != null)
+                StopCoroutine(_cloakRoutine);
+            // _animator.SetTrigger("ActivateCloakEffect");
+        }
+
+        public void SendUnCloakEvent()
+        {
+            if (CanDisableCloak)
+            {
+                var unCloakEvent = UnCloakAbilityEvent.Create();
+                unCloakEvent.CanDisableCloak = CanDisableCloak;
+                unCloakEvent.Entity = entity;
+                unCloakEvent.Send();
+            }
         }
 
         // PRIVATE
@@ -71,8 +97,10 @@ namespace Abilities
         private IEnumerator CloakDuration(float Duration)
         {
             yield return new WaitForSeconds(1);
+            CanDisableCloak = true;
             SetCloack();
             yield return new WaitForSeconds(Duration);
+            CanDisableCloak = false;
             UnsetCloack();
         }
 
@@ -83,6 +111,7 @@ namespace Abilities
             cloakEvent.Entity = entity;
             cloakEvent.Send();
         }
+
 
         private void SetCloack()
         {
@@ -101,6 +130,7 @@ namespace Abilities
 
         private void UnsetCloack()
         {
+            CanDisableCloak = false;
             _cloakEffect.SetActive(false);
             MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_endCloakSound);
             foreach (GameObject mesh in _kartMeshes)

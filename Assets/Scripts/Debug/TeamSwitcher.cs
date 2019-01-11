@@ -1,16 +1,38 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using Bolt;
+using Multiplayer.Teams;
 
-public class TeamSwitch : MonoBehaviour {
+namespace KBA.Debug
+{
+    public class TeamSwitcher : EntityBehaviour<IKartState>, IControllable
+    {
+        // CORE
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        private void Update()
+        {
+            if (entity.isAttached && entity.isOwner)
+            {
+                MapInputs();
+            }
+        }
+
+        // PUBLIC
+
+        public void MapInputs()
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha8))
+            {
+                SwitchTeam();
+            }
+        }
+
+        public void SwitchTeam()
+        {
+            if (entity.isAttached && entity.isOwner)
+            {
+                UnityEngine.Debug.Log("Switching");
+                state.Team = state.Team.GetNextTeamColor();
+            }
+        }
+    }
 }

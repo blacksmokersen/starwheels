@@ -31,7 +31,7 @@ namespace KBA.Debug
         private void InstantiateKart(GameObject kart)
         {
             var spawnPosition = transform.position;
-            MonoBehaviour.Instantiate(kart, spawnPosition, Quaternion.identity);
+            BoltNetwork.Instantiate(kart, spawnPosition, Quaternion.identity);
         }
     }
 }

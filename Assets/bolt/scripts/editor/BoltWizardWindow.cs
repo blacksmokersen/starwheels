@@ -2,16 +2,14 @@
 using UnityEditor;
 using System;
 using System.Collections.Generic;
-using System.Threading;
-using System.Linq;
-using System.Text.RegularExpressions;
+using System.Diagnostics;
+using System.Net;
 
 [InitializeOnLoad]
 public partial class BoltWizardWindow : EditorWindow
 {
     BoltSetupStage currentStage = BoltSetupStage.SetupIntro;
-    bool corePackagesShow = true;
-    bool extraPackagesShow = false;
+    static Stopwatch watch = new Stopwatch();
 
     static Boolean? ready;
     static Single? firstCall;
@@ -23,6 +21,8 @@ public partial class BoltWizardWindow : EditorWindow
 
     static Vector2 WindowSize;
     static Vector2 WindowPosition;
+
+    static string AppIdOrEmail = "";
 
     [NonSerialized]
     Func<bool> beforeNextCallback;
@@ -146,13 +146,16 @@ public partial class BoltWizardWindow : EditorWindow
     [MenuItem("Window/Bolt/Wizard")]
     public static void Open()
     {
-        if (Application.isPlaying) {
+        if (Application.isPlaying)
+        {
             return;
         }
 
         BoltWizardWindow window = GetWindow<BoltWizardWindow>(true, BoltWizardText.WINDOW_TITLE, true);
         window.position = new Rect(WindowPosition, WindowSize);
         window.Show();
+
+        watch.Start();
     }
 
     static void ReOpen()
@@ -167,7 +170,7 @@ public partial class BoltWizardWindow : EditorWindow
 
     void OnEnable()
     {
-        WindowSize = new Vector2(600, 550);
+        WindowSize = new Vector2(600, 600);
 
         minSize = WindowSize;
 
@@ -334,13 +337,24 @@ public partial class BoltWizardWindow : EditorWindow
             },
 
             {
-                BoltInstalls.Steam,
+                BoltInstalls.XB1,
                 new BoltPackage()
                 {
-                    name = "bolt_steam",
-                    title = "Steam",
-                    installTest = SteamPackageInstalled,
-                    description = "Install Steam support"
+                    name = "bolt_xb1",
+                    title = "XBox One",
+                    installTest = XB1PackageInstalled,
+                    description = "Install XB1 support"
+                }
+            },
+
+            {
+                BoltInstalls.PS4,
+                new BoltPackage()
+                {
+                    name = "bolt_ps4",
+                    title = "Playstation 4",
+                    installTest = PS4PackageInstalled,
+                    description = "Install PS4 support"
                 }
             },
 
@@ -354,43 +368,14 @@ public partial class BoltWizardWindow : EditorWindow
                     installTest = SamplesPackageInstalled,
                     packageFlags = PackageFlags.WarnForProjectOverwrite
                 }
-            },
-
-            {
-                BoltInstalls.PhotonSamples,
-                new BoltPackage()
-                {
-                    name = "bolt_photon_cloud_samples",
-                    title = "Photon Cloud Samples",
-                    description = "Install Photon Cloud samples",
-                    installTest = PhotonSamplesPackageInstalled,
-                    packageFlags = PackageFlags.WarnForProjectOverwrite
-                }
-            },
-
-            {
-                BoltInstalls.SteamSamples,
-                new BoltPackage()
-                {
-                    name = "bolt_steam_samples",
-                    title = "Steam Samples",
-                    description = "Install Steam samples",
-                    installTest = SteamSamplesPackageInstalled,
-                    packageFlags = PackageFlags.WarnForProjectOverwrite
-                }
-            },
-
-            {
-                BoltInstalls.Monitor,
-                new BoltPackage()
-                {
-                    name = "bolt_servermonitor",
-                    title = "Server Monitor",
-                    installTest = MonitorPackageInstalled,
-                    description = "Install server monitor example"
-                }
             }
         };
+
+        // App ID
+        if (IsAppId(BoltRuntimeSettings.instance.photonAppId))
+        {
+            AppIdOrEmail = BoltRuntimeSettings.instance.photonAppId;
+        }
 
         ready = true;
     }
@@ -473,63 +458,28 @@ public partial class BoltWizardWindow : EditorWindow
         }, false);
         GUILayout.Space(15);
 
-        corePackagesShow = EditorGUILayout.Foldout(corePackagesShow, "Core Packages", true);
+        DrawInstallOption(BoltInstalls.Core);
 
-        if (corePackagesShow)
-        {
-            extraPackagesShow = false;
+        EditorGUI.BeginDisabledGroup(!IsInstalled(BoltInstalls.Core));
 
-            DrawInstallOption(BoltInstalls.Core);
 
-            EditorGUI.BeginDisabledGroup(!IsInstalled(BoltInstalls.Core));
+        // SAMPLES
+        DrawInstallOption(BoltInstalls.Samples);
 
-            // MOBILE
-            DrawInstallOption(BoltInstalls.Mobile);
+        scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
 
-            // STEAM
-            DrawInstallOption(BoltInstalls.Steam);
+        // MOBILE
+        DrawInstallOption(BoltInstalls.Mobile);
 
-            EditorGUI.EndDisabledGroup();
-        }
-        else
-        {
-            extraPackagesShow = true;
-        }
+        // XB1
+        DrawInstallOption(BoltInstalls.XB1);
 
-        extraPackagesShow = EditorGUILayout.Foldout(extraPackagesShow, "Extra Packages", true);
+        // PS4
+        DrawInstallOption(BoltInstalls.PS4);
 
-        if (extraPackagesShow)
-        {
-            corePackagesShow = false;
+        EditorGUILayout.EndScrollView();
 
-            // SAMPLES
-            EditorGUI.BeginDisabledGroup(!IsInstalled(BoltInstalls.Core));
-
-            DrawInstallOption(BoltInstalls.Samples);
-
-            // PHOTON CLOUD
-
-            EditorGUI.BeginDisabledGroup(!IsInstalled(BoltInstalls.Core, BoltInstalls.Samples));
-
-            DrawInstallOption(BoltInstalls.PhotonSamples);
-
-            EditorGUI.EndDisabledGroup();
-
-            EditorGUI.BeginDisabledGroup(!IsInstalled(BoltInstalls.Core, BoltInstalls.Steam, BoltInstalls.Samples));
-
-            DrawInstallOption(BoltInstalls.SteamSamples);
-
-            EditorGUI.EndDisabledGroup();
-
-            // SERVER MONITOR
-            DrawInstallOption(BoltInstalls.Monitor);
-
-            EditorGUI.EndDisabledGroup();
-        }
-        else
-        {
-            corePackagesShow = true;
-        }
+        EditorGUI.EndDisabledGroup();
 
         // Action
 
@@ -570,37 +520,20 @@ public partial class BoltWizardWindow : EditorWindow
 
         BoltRuntimeSettings settings = BoltRuntimeSettings.instance;
 
-        DrawInputWithLabel("Photon Bolt App ID", () =>
+        DrawInputWithLabel("Photon Bolt App ID or Email", () =>
         {
             GUILayout.BeginVertical();
 
-            settings.photonAppId = EditorGUILayout.TextField(settings.photonAppId, centerInputText);
+            AppIdOrEmail = EditorGUILayout.TextField(AppIdOrEmail, centerInputText);
 
             GUILayout.EndVertical();
 
-        }, false, true);
+        }, false, true, 300);
 
-        DrawInputWithLabel("Connection Mode", () =>
+        DrawInputWithLabel("Region", () =>
         {
-            settings.photonUseOnPremise = BoltEditorGUI.ToggleDropdown("Custom Hosted", "Photon Cloud", settings.photonUseOnPremise);
+            settings.photonCloudRegionIndex = EditorGUILayout.Popup(settings.photonCloudRegionIndex, BoltRuntimeSettings.photonCloudRegions);
         }, true, true);
-
-        if (settings.photonUseOnPremise)
-        {
-            DrawInputWithLabel("Master Server IP Address", () =>
-            {
-                GUILayout.BeginVertical();
-                settings.photonOnPremiseIpAddress = EditorGUILayout.TextField(settings.photonOnPremiseIpAddress);
-                GUILayout.EndVertical();
-            }, true, true);
-        }
-        else
-        {
-            DrawInputWithLabel("Region", () =>
-            {
-                settings.photonCloudRegionIndex = EditorGUILayout.Popup(settings.photonCloudRegionIndex, BoltRuntimeSettings.photonCloudRegions);
-            }, true, true);
-        }
 
         DrawInputWithLabel("NAT Punchthrough Enabled", () =>
         {
@@ -613,13 +546,46 @@ public partial class BoltWizardWindow : EditorWindow
         {
             beforeNextCallback = () =>
             {
-                if (!IsAppId(settings.photonAppId))
+                if (IsEmail(AppIdOrEmail))
                 {
-                    ShowNotification(new GUIContent("Please specify a valid Bolt App ID."));
-                    return false;
+                    try
+                    {
+                        EditorUtility.DisplayProgressBar(BoltWizardText.CONNECTION_TITLE, BoltWizardText.CONNECTION_INFO, 0.5f);
+                        BoltLog.Info("Starting request");
+
+                        string result = new AccountService().RegisterByEmail(AppIdOrEmail);
+
+                        if (!string.IsNullOrEmpty(result) && IsAppId(result))
+                        {
+                            settings.photonAppId = result;
+                            AppIdOrEmail = result;
+
+                            BoltLog.Info("You new App ID: {0}", settings.photonAppId);
+                            return true;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        EditorUtility.DisplayDialog("Error", ex.Message, "ok");
+                        //ShowNotification(new GUIContent(ex.Message));
+                    }
+                    finally
+                    {
+                        EditorUtility.ClearProgressBar();
+                        BoltLog.Info("Finished request");
+                    }
+                }
+                else if (IsAppId(AppIdOrEmail))
+                {
+                    settings.photonAppId = AppIdOrEmail;
+                    return true;
+                }
+                else
+                {
+                    ShowNotification(new GUIContent("Please specify a valid Bolt App ID or Email."));
                 }
 
-                return true;
+                return false;
             };
         }
     }
@@ -659,7 +625,7 @@ public partial class BoltWizardWindow : EditorWindow
                        active: currentStage == BoltSetupStage.SetupSupport); // callback: () => currentStage = BoltSetupStage.SetupSupport
 
         GUILayout.FlexibleSpace();
-        GUILayout.Label(string.Format("Bolt {0} v{1}", BoltNetwork.VersionDescription, BoltNetwork.Version), textLabel);
+        GUILayout.Label(BoltNetwork.CurrentVersion, textLabel);
         GUILayout.Space(5);
     }
 
@@ -713,8 +679,14 @@ public partial class BoltWizardWindow : EditorWindow
 
     private void Save()
     {
-        EditorUtility.SetDirty(BoltRuntimeSettings.instance);
-        AssetDatabase.SaveAssets();
+        if (watch.ElapsedMilliseconds > 5000)
+        {
+            watch.Reset();
+            watch.Start();
+
+            EditorUtility.SetDirty(BoltRuntimeSettings.instance);
+            AssetDatabase.SaveAssets();
+        }
     }
 
     void DrawMenuHeader(String text)
@@ -728,7 +700,7 @@ public partial class BoltWizardWindow : EditorWindow
         GUILayout.EndHorizontal();
     }
 
-    void DrawInputWithLabel(String label, Action gui, bool horizontal = true, bool box = false)
+    void DrawInputWithLabel(String label, Action gui, bool horizontal = true, bool box = false, int labelSize = 220)
     {
         GUILayout.Space(10);
 
@@ -755,8 +727,8 @@ public partial class BoltWizardWindow : EditorWindow
             }
         }
 
-        GUILayout.Label(label, headerStyle, GUILayout.Width(220));
-        GUILayout.Space(5);
+        GUILayout.Label(label, headerStyle, GUILayout.Width(labelSize));
+        //GUILayout.Space(5);
 
         gui();
 
@@ -780,20 +752,36 @@ public partial class BoltWizardWindow : EditorWindow
         {
             if (package.installTest())
             {
-                Debug.LogWarning("Package already installed");
+                ShowNotification(new GUIContent("Package already installed"));
                 return;
             }
 
             Install(package);
         };
 
-        if (PackageExists(package.name))
+        bool packageExists = PackageExists(package.name);
+
+        Action ignoredAction;
+        if (packageExists == true)
         {
-            DrawStepOption(samplesIcon, new GUIContent(package.title), new GUIContent(package.description), package.installTest(), action);
+            ignoredAction = () => { ShowNotification(new GUIContent("One of the dependencies is missing")); };
+        }
+        else
+        {
+            ignoredAction = () => { ShowNotification(new GUIContent("Please contact us at developer@photonengine.com")); };
+
+            EditorGUI.BeginDisabledGroup(true);
+        }
+
+        DrawStepOption(samplesIcon, new GUIContent(package.title), new GUIContent(package.description), package.installTest(), action, ignoredAction);
+
+        if (packageExists == false)
+        {
+            EditorGUI.EndDisabledGroup();
         }
     }
 
-    void DrawStepOption(Texture2D icon, GUIContent header, GUIContent description = null, bool? active = null, System.Action callback = null)
+    void DrawStepOption(Texture2D icon, GUIContent header, GUIContent description = null, bool? active = null, Action callback = null, Action ignoredCallback = null)
     {
         GUILayout.BeginHorizontal(stepStyle);
 
@@ -833,10 +821,20 @@ public partial class BoltWizardWindow : EditorWindow
             var rect = GUILayoutUtility.GetLastRect();
             EditorGUIUtility.AddCursorRect(rect, MouseCursor.Link);
 
-            if (Event.current.type == EventType.MouseDown && rect.Contains(Event.current.mousePosition))
+            if (rect.Contains(Event.current.mousePosition))
             {
-                callback();
-                GUIUtility.ExitGUI();
+                if (Event.current.type == EventType.MouseDown)
+                {
+                    callback();
+                    GUIUtility.ExitGUI();
+                }
+                else if (Event.current.type == EventType.Ignore && Event.current.rawType == EventType.MouseDown)
+                {
+                    if (ignoredCallback != null)
+                    {
+                        ignoredCallback();
+                    }
+                }
             }
         }
     }

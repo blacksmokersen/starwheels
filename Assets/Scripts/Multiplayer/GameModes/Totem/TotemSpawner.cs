@@ -12,7 +12,7 @@ namespace GameModes.Totem
 
         private void Update()
         {
-            if(BoltNetwork.isServer && Input.GetKeyDown(KeyCode.Alpha5))
+            if(BoltNetwork.IsServer && Input.GetKeyDown(KeyCode.Alpha5))
             {
                 RespawnTotem();
             }
@@ -45,7 +45,7 @@ namespace GameModes.Totem
 
         private void InstantiateTotem()
         {
-            if(BoltNetwork.isConnected && BoltNetwork.isServer && !_totemInstantiated)
+            if(BoltNetwork.IsConnected && BoltNetwork.IsServer && !_totemInstantiated)
             {
                 BoltNetwork.Instantiate(BoltPrefabs.Totem, transform.position, transform.rotation);
                 _totemInstantiated = true;

@@ -9,15 +9,22 @@ namespace Items
         public int ReboundsBeforeEnd;
         public int ParticlesToEmit;
 
-        [SerializeField] ItemActivationBehaviour itemActivationBehaviour;
+        [HideInInspector] public bool CanHitOwner;
+
+        //BOLT
+
+        public override void Attached()
+        {
+            DestroyObject(30f);
+        }
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (BoltNetwork.isServer)
+            if (BoltNetwork.IsServer)
             {
                 if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.Layer.Ground))
                 {
-                    itemActivationBehaviour.Activated = true;
+                    CanHitOwner = true;
                     Vector3 contactPoint = collision.contacts[0].point;
                     CollisionParticles.transform.position = contactPoint;
                     CollisionParticles.Emit(ParticlesToEmit);
