@@ -454,7 +454,7 @@ SphereCollider:
   m_GameObject: {fileID: 1781708852576126}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 1.07
   m_Center: {x: 0, y: 0, z: 0}
@@ -472,7 +472,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnCollision:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114270967424691506}
+        m_MethodName: PlayExplosion
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   ItemCollision: {fileID: 11400000, guid: 8c95664035986254a9f7200ba402fa64, type: 2}
@@ -593,6 +604,8 @@ MonoBehaviour:
   LaunchSource: {fileID: 82978940118701718}
   IdleSource: {fileID: 82542590140184160}
   ExplosionSource: {fileID: 82193102268074902}
+  _triggers:
+  - {fileID: 135771632487179650}
 --- !u!114 &114578968453696728
 MonoBehaviour:
   m_ObjectHideFlags: 0

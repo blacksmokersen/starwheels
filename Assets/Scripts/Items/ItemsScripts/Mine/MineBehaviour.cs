@@ -17,21 +17,10 @@ namespace Items
         public AudioSource IdleSource;
         public AudioSource ExplosionSource;
 
-        private List<Collider> _triggers = new List<Collider>();
+        [Header("Triggers To Activate")]
+        [SerializeField] private List<Collider> _triggers;
 
         // CORE
-
-        private void Awake()
-        {
-            foreach(var col in GetComponentsInChildren<Collider>())
-            {
-                if (col.isTrigger)
-                {
-                    _triggers.Add(col);
-                    col.enabled = false;
-                }
-            }
-        }
 
         private void Start()
         {
@@ -72,7 +61,9 @@ namespace Items
             yield return new WaitForSeconds(ActivationTime);
 
             foreach (var trigger in _triggers)
+            {
                 trigger.enabled = true;
+            }
         }
 
         private void OnCollisionEnter(Collision collision)
