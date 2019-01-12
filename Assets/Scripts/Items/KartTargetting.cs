@@ -121,15 +121,15 @@ namespace Items
         {
             if (Targetting && other.CompareTag(Constants.Tag.KartHealthHitBox))
             {
-                if (_currentTargetTransform == null)
-                {
-                    SwitchTarget(other.transform);
-                }
-                else if (other.transform != _currentTargetTransform && IsCloserThanCurrentTarget(other.transform))
-                {
-                    var otherPlayer = other.GetComponentInParent<Player>();
+                var otherPlayer = other.GetComponentInParent<Player>();
 
-                    if (state.Team != otherPlayer.Team.GetColor())
+                if (state.Team != otherPlayer.Team.GetColor())
+                {
+                    if (_currentTargetTransform == null)
+                    {
+                        SwitchTarget(other.transform);
+                    }
+                    else if (other.transform != _currentTargetTransform && IsCloserThanCurrentTarget(other.transform))
                     {
                         SwitchTarget(other.transform);
                     }
