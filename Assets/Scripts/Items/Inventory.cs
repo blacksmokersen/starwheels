@@ -6,13 +6,16 @@ using System.Collections;
 
 namespace Items
 {
-    [RequireComponent(typeof(ThrowableLauncher))]
     public class Inventory : EntityBehaviour<IKartState>, IControllable
     {
         public bool CanUseItem = true;
 
         [Header("Spam Prevention")]
         [SerializeField] private float _antiSpamDuration;
+
+        [Header("Throwing System")]
+        [SerializeField] private ThrowableLauncher _projectileLauncher;
+        [SerializeField] private ThrowingDirection _throwingDirection;
 
         [Header("Current Item")]
         public Item CurrentItem;
@@ -23,13 +26,10 @@ namespace Items
         public ItemEvent OnItemUse;
         public IntEvent OnItemCountChange;
 
-        private ThrowableLauncher _projectileLauncher;
-
         // CORE
 
         private void Awake()
         {
-            _projectileLauncher = GetComponent<ThrowableLauncher>();
             CurrentItem = null;
             CurrentItemCount = 0;
         }
@@ -108,7 +108,7 @@ namespace Items
                 itemState.Name = CurrentItem.Name;
 
                 var throwable = instantiatedItem.GetComponent<Throwable>();
-                _projectileLauncher.Throw(throwable, _projectileLauncher.GetThrowingDirection());
+                _projectileLauncher.Throw(throwable, _throwingDirection.LastDirectionUp);
             }
             else if (CurrentItem.ItemType == ItemType.Self)
             {

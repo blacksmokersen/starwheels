@@ -9,6 +9,7 @@ namespace Abilities
     {
         [Header("Launcher")]
         [SerializeField] private ThrowableLauncher _throwableLauncher;
+        [SerializeField] private ThrowingDirection _throwingDirection;
 
         [Header("Effects")]
         [SerializeField] private AudioSource _useTpBackSound;
@@ -72,7 +73,7 @@ namespace Abilities
 
                     var throwable = instantiatedItem.GetComponent<Throwable>();
                     _tpBack = instantiatedItem.GetComponent<TPBackBehaviour>();
-                    _throwableLauncher.Throw(throwable, _throwableLauncher.GetThrowingDirection());
+                    _throwableLauncher.Throw(throwable, _throwingDirection.CurrentDirection);
                 }
                 else // if (_tpBack.IsEnabled())
                 {

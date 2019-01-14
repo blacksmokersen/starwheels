@@ -6,6 +6,9 @@ namespace GameModes.Totem
 {
     public class TotemPicker : EntityBehaviour<IKartState> , IControllable
     {
+        [Header("Throwing System")]
+        [SerializeField] private ThrowingDirection _throwingDirection;
+
         // MONOBEHAVIOUR
 
         private void Update()
@@ -50,7 +53,7 @@ namespace GameModes.Totem
             TotemThrown totemThrownEvent = TotemThrown.Create();
             totemThrownEvent.KartEntity = entity;
             totemThrownEvent.OwnerID = state.OwnerID;
-            totemThrownEvent.ForwardDirection = FindObjectOfType<ThrowableLauncher>().GetThrowingDirection() != Direction.Backward ; // TO DO BETTER
+            totemThrownEvent.ForwardDirection = _throwingDirection.LastDirectionUp != Direction.Backward ; // TO DO BETTER
             totemThrownEvent.Send();
         }
     }

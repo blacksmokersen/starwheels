@@ -15,11 +15,9 @@ namespace Items
         public GameObject Emissive;
 
         private string _emissiveToDisplay;
-        private Inventory _inventory;
 
         public void Awake()
         {
-            //_inventory = GetComponent<Inventory>();
             Emissive.GetComponent<MeshRenderer>();
         }
 

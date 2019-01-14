@@ -42,18 +42,6 @@ namespace ThrowingSystem
             }
         }
 
-        public Direction GetThrowingDirection() // TO DO BETTER
-        {
-            Direction direction = Direction.Default;
-
-            if (Input.GetButton(Constants.Input.UseItemForward)) direction = Direction.Forward;
-            else if (Input.GetButton(Constants.Input.UseItemBackward)) direction = Direction.Backward;
-            else if (Input.GetAxis(Constants.Input.UpAndDownAxis) > 0.3f) direction = Direction.Forward;
-            else if (Input.GetAxis(Constants.Input.UpAndDownAxis) < -0.3f) direction = Direction.Backward;
-
-            return direction;
-        }
-
         // PRIVATE
 
         private void ArcThrow(Throwable throwable, Direction throwingDirection)
