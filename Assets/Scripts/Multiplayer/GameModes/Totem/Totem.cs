@@ -148,5 +148,22 @@ namespace GameModes.Totem
             yield return new WaitForSeconds(_totemSettings.SecondsBeforeCanBePickedAgain);
             CanBePickedUp = true;
         }
+
+        private IEnumerator SynchronizationRoutine()
+        {
+            while (Application.isPlaying)
+            {
+                yield return new WaitForSeconds(0.5f);
+                SynchronizeTotemOwner();
+            }
+        }
+
+        private void SynchronizeTotemOwner()
+        {
+            if(LocalOwnerID != state.OwnerID)
+            {
+                LocalOwnerID = state.OwnerID;
+            }
+        }
     }
 }
