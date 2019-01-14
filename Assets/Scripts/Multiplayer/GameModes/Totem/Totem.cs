@@ -11,6 +11,7 @@ namespace GameModes.Totem
         [Header("Ownership")]
         public bool CanBePickedUp = true;
         public int LocalOwnerID = -1;
+        public int ServerOwnerID { get { return state.OwnerID; } }
 
         [Header("Unity Events")]
         public UnityEvent OnParentSet;
@@ -61,6 +62,11 @@ namespace GameModes.Totem
         }
 
         // PUBLIC
+
+        public bool IsSynchronized()
+        {
+            return LocalOwnerID == ServerOwnerID;
+        }
 
         public void SetParent(Transform parent, int newOwnerID)
         {
