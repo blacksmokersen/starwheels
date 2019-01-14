@@ -2,6 +2,7 @@
 using UnityEngine.Events;
 using Bolt;
 using ThrowingSystem;
+using System.Collections;
 
 namespace GameModes.Totem
 {
@@ -16,7 +17,14 @@ namespace GameModes.Totem
         public UnityEvent OnTotemGet;
         public UnityEvent OnTotemLost;
 
-        private bool isLocalOwner = false; // Local bool for possession (to compensate lag)
+        private bool _isLocalOwner = false; // Local bool for possession (to compensate lag)
+
+        // CORE
+
+        private void Start()
+        {
+            StartCoroutine(SynchronizationRoutine());
+        }
 
         // BOLT
 
@@ -40,9 +48,9 @@ namespace GameModes.Totem
                     }
                 }
 
-                if(isLocalOwner) // I was the totem owner but threw it
+                if(_isLocalOwner) // I was the totem owner but threw it
                 {
-                    isLocalOwner = false;
+                    _isLocalOwner = false;
                     OnTotemLost.Invoke();
                 }
             }
@@ -57,14 +65,14 @@ namespace GameModes.Totem
                 var kartTotemSlot = kart.GetComponentInChildren<TotemSlot>().transform;
                 TotemHelpers.GetTotemComponent().SetParent(kartTotemSlot, evnt.NewOwnerID);
 
-                if (evnt.KartEntity.isOwner && !isLocalOwner) // If I am the new owner of the totem and ready to pick it up
+                if (evnt.KartEntity.isOwner && !_isLocalOwner) // If I am the new owner of the totem and ready to pick it up
                 {
-                    isLocalOwner = true;
+                    _isLocalOwner = true;
                     OnTotemGet.Invoke();
                 }
-                else if (isLocalOwner) // If I was the old owner of the totem
+                else if (_isLocalOwner) // If I was the old owner of the totem
                 {
-                    isLocalOwner = false;
+                    _isLocalOwner = false;
                     OnTotemLost.Invoke();
                 }
             }
@@ -82,8 +90,60 @@ namespace GameModes.Totem
 
                     if (evnt.VictimEntity.isOwner) // If I was the totem owner
                     {
-                        isLocalOwner = false;
+                        _isLocalOwner = false;
                         OnTotemLost.Invoke();
+                    }
+                }
+            }
+        }
+
+        // PRIVATE
+
+        private IEnumerator SynchronizationRoutine()
+        {
+            while (Application.isPlaying)
+            {
+                yield return new WaitForSeconds(0.2f);
+                SynchronizeTotemOwner();
+            }
+        }
+
+        private void SynchronizeTotemOwner()
+        {
+            var totem = TotemHelpers.FindTotem();
+
+            if (totem)
+            {
+                Debug.Log("Totem is found.");
+                var totemLocalOwnerID = totem.GetComponent<Totem>().LocalOwnerID;
+                var totemServerOwnerID = TotemHelpers.GetTotemOwnerID();
+
+
+                Debug.LogFormat("Local Owner {0} || Server Owner {1}", totemLocalOwnerID, totemServerOwnerID);
+                if (totemLocalOwnerID != totemServerOwnerID)
+                {
+                    Debug.Log("DIFFERENCE!");
+                    var kart = MyExtensions.KartExtensions.GetKartWithID(totemServerOwnerID);
+
+                    if (kart)
+                    {
+                        var kartTotemSlot = kart.GetComponentInChildren<TotemSlot>().transform;
+                        totem.GetComponent<Totem>().SetParent(kartTotemSlot, totemServerOwnerID);
+
+                        if (kart.GetComponent<BoltEntity>().isOwner && !_isLocalOwner) // If I am the new owner of the totem and ready to pick it up
+                        {
+                            _isLocalOwner = true;
+                            OnTotemGet.Invoke();
+                        }
+                        else if (_isLocalOwner) // If I was the old owner of the totem
+                        {
+                            _isLocalOwner = false;
+                            OnTotemLost.Invoke();
+                        }
+                    }
+                    else
+                    {
+                        totem.GetComponent<Totem>().UnsetParent();
                     }
                 }
             }
