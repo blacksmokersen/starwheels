@@ -23,6 +23,8 @@ namespace GameModes.Totem
         [SerializeField] private Totem _totemBehaviour;
         [SerializeField] private GameObject _totemObjectRoot;
 
+        private bool _referencesSet = false;
+
         // CORE
 
         private void Start()
@@ -34,7 +36,7 @@ namespace GameModes.Totem
 
         public override void OnEvent(TotemThrown evnt)
         {
-            if (evnt.OwnerID == _totemBehaviour.ServerOwnerID || evnt.OwnerID == -1) // The owner of the totem is throwing it || or it is a totem reset
+            if (_referencesSet && (evnt.OwnerID == _totemBehaviour.ServerOwnerID || evnt.OwnerID == -1)) // The owner of the totem is throwing it || or it is a totem reset
             {
                 _totemBehaviour.UnsetParent();
 
@@ -65,7 +67,7 @@ namespace GameModes.Totem
 
         public override void OnEvent(PlayerHit evnt)
         {
-            if (evnt.VictimEntity != null && evnt.VictimEntity.isAttached) // Verify that the player hasn't been destroyed
+            if (_referencesSet && evnt.VictimEntity != null && evnt.VictimEntity.isAttached) // Verify that the player hasn't been destroyed
             {
                 if (evnt.VictimID == _totemBehaviour.LocalOwnerID) // The totem owner has been hit
                 {
@@ -138,6 +140,7 @@ namespace GameModes.Totem
             else if(_totemObjectRoot && !_totemBehaviour)
             {
                 _totemBehaviour = _totemObjectRoot.GetComponent<Totem>();
+                _referencesSet = true;
             }
         }
     }
