@@ -10,6 +10,8 @@ namespace Items
         [Header("Invincibility Condition")]
         [SerializeField] private Health.Health _health;
 
+       // private bool _ionBeamMultiHitProtection = false;
+
         private void OnTriggerEnter(Collider other)
         {
             if (BoltNetwork.IsServer && entity.isAttached)
@@ -22,12 +24,19 @@ namespace Items
                     {
                         if (!_health.IsInvincible) // The server checks that this kart is not invincible
                         {
+                            /*
                             if (other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName == ItemCollisionName.IonBeamLaser)
                             {
-                                SendPlayerHitEvent(itemState);
+                             //   if (!_ionBeamMultiHitProtection)
+                             //   {
+                                    Debug.LogWarning("HitIonBeam");
+                                    SendPlayerHitEvent(itemState);
+                                 //   _ionBeamMultiHitProtection = true;
+                             //   }
                             }
+                            */
 
-                            if (itemState.OwnerID == state.OwnerID)
+                             if (itemState.OwnerID == state.OwnerID)
                             {
                                 if (other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName == ItemCollisionName.Disk)
                                 {
@@ -40,8 +49,10 @@ namespace Items
                             }
                             else if (itemState.Team != state.Team)
                             {
+                                Debug.LogWarning("HitIonBeam");
                                 SendPlayerHitEvent(itemState);
                                 DestroyColliderObject(other);
+                             //   _ionBeamMultiHitProtection = true;
                             }
                         }
                     }
