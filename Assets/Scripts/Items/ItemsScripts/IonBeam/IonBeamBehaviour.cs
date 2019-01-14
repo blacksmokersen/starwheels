@@ -61,8 +61,6 @@ namespace Items
         {
             _ionBeamCam.GetComponent<IonBeamCamera>().enabled = false;
             _ionBeamInputs.enabled = false;
-            _ionBeamOwner.GetComponentInChildren<SteeringWheel>().CanSteer = true;
-            _ionBeamOwner.GetComponentInChildren<EngineBehaviour>().enabled = true;
             _ionBeamCam.GetComponent<CameraTurnEffect>().EnableTurnEffectInput();
             BoltNetwork.Destroy(gameObject);
         }
