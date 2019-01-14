@@ -4,8 +4,9 @@ using UnityEngine;
 using Cinemachine;
 using Bolt;
 using CameraUtils;
+using Items;
 
-public class IonBeamCamera : EntityBehaviour
+public class IonBeamCamera : GlobalEventListener
 {
     [HideInInspector] public CinemachineTransposer Transposer;
     [HideInInspector] public CinemachineComposer Composer;
@@ -23,6 +24,7 @@ public class IonBeamCamera : EntityBehaviour
     private float _currentTimer;
     private bool _showCrosshair;
     private bool _isCameraOnTop = false;
+    private IonBeamBehaviour _ionBeamBehaviour;
 
     //CORE
 
@@ -34,7 +36,20 @@ public class IonBeamCamera : EntityBehaviour
         Collider = GetComponent<CinemachineCollider>();
     }
 
+    //BOLT
+
+    public override void OnEvent(PlayerHit evnt)
+    {
+        CameraReset();
+        _ionBeamBehaviour.DisableIonBeam();
+    }
+
     //PUBLIC
+
+    public void GetIonBeamBehaviour(IonBeamBehaviour ionBeamBehaviour)
+    {
+        _ionBeamBehaviour = ionBeamBehaviour;
+    }
 
     public void IonBeamCameraControls(float horizontal, float vertical)
     {
@@ -56,6 +71,17 @@ public class IonBeamCamera : EntityBehaviour
                 StopCoroutine(_cameraIonBeamBehaviour);
             _cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(_cameraSettings.BaseCamPosition.z, _cameraSettings.BaseCamPosition.y, 0.5f));
         }
+    }
+
+    public void CameraReset()
+    {
+        StopAllCoroutines();
+        Composer.enabled = true;
+        _showCrosshair = false;
+        _isCameraOnTop = false;
+        Transposer.m_FollowOffset.x = 0;
+        Transposer.m_FollowOffset.z = _cameraSettings.BaseCamPosition.z;
+        Transposer.m_FollowOffset.y = _cameraSettings.BaseCamPosition.y;
     }
 
     public bool IsCameraOnTop()

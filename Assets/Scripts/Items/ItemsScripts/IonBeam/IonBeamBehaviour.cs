@@ -36,6 +36,7 @@ namespace Items
             _ionBeamOwner = GetComponent<Ownership>().OwnerKartRoot;
             if (entity.isOwner)
             {
+                _ionBeamCam.GetIonBeamBehaviour(this);
                 _ionBeamCam.IonBeamCameraBehaviour(true);
                 EnableIonInputs();
             }
@@ -54,6 +55,16 @@ namespace Items
             _ionBeamCam.GetComponent<CameraTurnEffect>().DisableTurnEffectInput();
             _ionBeamCam.GetComponent<CameraTurnEffect>().CenterCamera();
             StartCoroutine(DelayBeforeDisablePlayerInputs());
+        }
+
+        public void DisableIonBeam()
+        {
+            _ionBeamCam.GetComponent<IonBeamCamera>().enabled = false;
+            _ionBeamInputs.enabled = false;
+            _ionBeamOwner.GetComponentInChildren<SteeringWheel>().CanSteer = true;
+            _ionBeamOwner.GetComponentInChildren<EngineBehaviour>().enabled = true;
+            _ionBeamCam.GetComponent<CameraTurnEffect>().EnableTurnEffectInput();
+            BoltNetwork.Destroy(gameObject);
         }
 
         public void FireIonBeam()
