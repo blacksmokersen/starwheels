@@ -13,12 +13,10 @@ namespace Items
         public GameObject PurpleItem;
         public GameObject GoldItem;
 
-        [Header("Events")]
-        public UnityEvent OnJoystickDirectionChanged;
+        [Header("Throwing System")]
+        [SerializeField] private ThrowingSystem.ThrowingDirection _throwingDirection;
 
         private Inventory _inventory;
-        private ThrowingSystem.ThrowableLauncher _throwableLauncher;
-        private Direction _direction;
         private bool _itemIsForward = false;
         private bool _itemIsBackward = false;
 
@@ -27,7 +25,6 @@ namespace Items
         public void Awake()
         {
             _inventory = GetComponent<Inventory>();
-            _throwableLauncher = GetComponent<ThrowingSystem.ThrowableLauncher>();
         }
 
         // BOLT
@@ -47,7 +44,7 @@ namespace Items
                 showDisplayEvent.Entity = GetComponentInParent<BoltEntity>();
                 showDisplayEvent.ItemName = _inventory.CurrentItem.Name;
                 showDisplayEvent.ItemCount = _inventory.CurrentItemCount;
-                showDisplayEvent.Direction = _throwableLauncher.GetThrowingDirection().ToString();
+                showDisplayEvent.Direction = _throwingDirection.LastDirectionUp.ToString();
                 showDisplayEvent.Send();
             }
         }
@@ -56,8 +53,6 @@ namespace Items
         {
             HideItem();
 
-            _direction = direction;
-
             if (itemCountToDisplay > 0)
             {
                 switch (itemNameToDisplay)
@@ -65,7 +60,7 @@ namespace Items
                     #region Disk
                     case "Disk":
                         GreenItem.SetActive(true); //Activating the empty game object green
-                        if (_direction == Direction.Default || _direction == Direction.Forward)
+                        if (direction == Direction.Default || direction == Direction.Forward)
                         {
                             GreenItem.transform.GetChild(0).gameObject.SetActive(true); //Activating the front green shield on the hierarchie
                             GreenItem.transform.GetChild(1).gameObject.SetActive(false); //Desactivating the back green shield on the hierarchie
@@ -73,7 +68,7 @@ namespace Items
                             GreenItem.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.SetActive(true); //Activating in front the disk
                             GreenItem.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.SetActive(false); //Desactivating the disk behind
                         }
-                        else if (_direction == Direction.Backward)
+                        else if (direction == Direction.Backward)
                         {
                             GreenItem.transform.GetChild(0).gameObject.SetActive(false); //Desactivating the front green shield on the hierarchie
                             GreenItem.transform.GetChild(1).gameObject.SetActive(true); //Activating the back green shield on the hierarchie
@@ -88,7 +83,7 @@ namespace Items
                     #region Mine
                     case "Mine":
                         GreenItem.SetActive(true); //Activating the Green Shield
-                        if (_direction == Direction.Backward || _direction == Direction.Default)
+                        if (direction == Direction.Backward || direction == Direction.Default)
                         {
 
                             GreenItem.transform.GetChild(0).gameObject.SetActive(false); //Activating the front green shield on the hierarchie
@@ -99,7 +94,7 @@ namespace Items
 
                         }
 
-                        else if (_direction == Direction.Forward)
+                        else if (direction == Direction.Forward)
                         {
 
                             GreenItem.transform.GetChild(0).gameObject.SetActive(true); //Activating the front green shield on the hierarchie
@@ -116,7 +111,7 @@ namespace Items
                     #region Guile
                     case "Guile":
                         GreenItem.SetActive(true); //Activating the Green Shield
-                        if (_direction == Direction.Forward || _direction == Direction.Default)
+                        if (direction == Direction.Forward || direction == Direction.Default)
                         {
                             GreenItem.transform.GetChild(0).gameObject.SetActive(true); //Activating the front green shield on the hierarchie
                             GreenItem.transform.GetChild(1).gameObject.SetActive(false); //Desactivating the back green shield on the hierarchie
@@ -127,7 +122,7 @@ namespace Items
                         }
 
 
-                        else if (_direction == Direction.Backward)
+                        else if (direction == Direction.Backward)
                         {
                             GreenItem.transform.GetChild(0).gameObject.SetActive(false); //Desactivating the front green shield on the hierarchie
                             GreenItem.transform.GetChild(1).gameObject.SetActive(true); //Activating the back green shield on the hierarchie
@@ -146,7 +141,7 @@ namespace Items
 
 
 
-                        if (_direction == Direction.Forward || _direction == Direction.Default)
+                        if (direction == Direction.Forward || direction == Direction.Default)
                         {
 
                             PurpleItem.transform.GetChild(0).gameObject.SetActive(true);
@@ -155,7 +150,7 @@ namespace Items
                             PurpleItem.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.SetActive(true); //Activating in front the rocket
                             PurpleItem.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.SetActive(false); //Desactivating the rocket behind
                         }
-                        else if (_direction == Direction.Backward)
+                        else if (direction == Direction.Backward)
                         {
 
                             PurpleItem.transform.GetChild(0).gameObject.SetActive(false);
