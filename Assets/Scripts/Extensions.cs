@@ -66,6 +66,16 @@ namespace MyExtensions
             return null;
         }
 
+        public static GameObject GetKartRoot(Component component)
+        {
+            GameObject result = component.GetComponentInParent<Player>().gameObject;
+            if(result == null)
+            {
+                Debug.LogError("Could not find the kart root. The component may not be from the kart prefab.");
+            }
+            return result;
+        }
+
         public static List<GameObject> GetTeamKarts(this Player playerSettings)
         {
             var teamKarts = new List<GameObject>();

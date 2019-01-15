@@ -40,8 +40,11 @@ public class IonBeamCamera : GlobalEventListener
 
     public override void OnEvent(PlayerHit evnt)
     {
-        CameraReset();
-        _ionBeamBehaviour.DisableIonBeam();
+        if (_ionBeamBehaviour)
+        {
+            CameraReset();
+            _ionBeamBehaviour.DisableIonBeam();
+        }
     }
 
     //PUBLIC
