@@ -73,6 +73,16 @@ namespace Health
             StartCoroutine(InvicibilityTime(x));
         }
 
+        public void SetInvincibility()
+        {
+            IsInvincible = true;
+        }
+
+        public void UnsetInvincibility()
+        {
+            IsInvincible = false;
+        }
+
         // PRIVATE
 
         private void CheckIfIsDead()
