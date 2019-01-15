@@ -11,6 +11,9 @@ namespace Abilities
         public UnityEvent OnOwnerCloackSet;
         public UnityEvent OnOwnerCloackUnset;
 
+        public UnityEvent OnCloackSet;
+        public UnityEvent OnCloackUnset;
+
         [Header("Meshes and Animation")]
         [SerializeField] private GameObject _cloakEffect;
         [SerializeField] private GameObject[] _kartMeshes;
@@ -115,6 +118,7 @@ namespace Abilities
 
         private void SetCloack()
         {
+            OnCloackSet.Invoke();
             MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useCloakSound);
             foreach (GameObject mesh in _kartMeshes)
             {
@@ -130,6 +134,7 @@ namespace Abilities
 
         private void UnsetCloack()
         {
+            OnCloackUnset.Invoke();
             CanDisableCloak = false;
             _cloakEffect.SetActive(false);
             MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_endCloakSound);
