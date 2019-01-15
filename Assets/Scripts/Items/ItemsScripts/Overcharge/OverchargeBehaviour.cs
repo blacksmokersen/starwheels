@@ -34,7 +34,6 @@ namespace Items
         private void Setup()
         {
             _ownerKart = MyExtensions.KartExtensions.GetKartWithID(state.OwnerID);
-            Debug.Log("Setup Owner : " + state.OwnerID);
 
             if (_ownerKart)
             {
@@ -83,7 +82,6 @@ namespace Items
         {
             if (entity.isAttached && entity.isOwner && other.CompareTag(Constants.Tag.KartHealthHitBox))
             {
-                Debug.Log("Kart entered the trigger");
                 TryAddToLists(other);
             }
         }
@@ -92,7 +90,6 @@ namespace Items
         {
             if (entity.isAttached && entity.isOwner && other.CompareTag(Constants.Tag.KartHealthHitBox))
             {
-                Debug.Log("Kart stays on the trigger");
                 TryAddToLists(other);
                 IncreaseStayTimer(other);
             }
@@ -102,7 +99,6 @@ namespace Items
         {
             if (entity.isAttached && entity.isOwner && other.CompareTag(Constants.Tag.KartHealthHitBox))
             {
-                Debug.Log("Kart left the trigger");
                 TryRemoveFromLists(other);
             }
         }
@@ -136,7 +132,6 @@ namespace Items
                     {
                         _kartsInRange.Add(other.gameObject);
                         _kartsInRangeTimer.Add(other.gameObject, 0f);
-                        Debug.Log("Kart added to list");
                     }
                 }
             }
@@ -146,8 +141,6 @@ namespace Items
         {
             if (_kartsInRange.Contains(other.gameObject))
             {
-                Debug.Log("Kart removed from list");
-
                 _kartsInRange.Remove(other.gameObject);
                 _kartsInRangeTimer.Remove(other.gameObject);
             }
