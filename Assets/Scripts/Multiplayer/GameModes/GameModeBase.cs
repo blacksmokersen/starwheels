@@ -33,7 +33,6 @@ namespace GameModes
 
         public override void SceneLoadLocalDone(string scene)
         {
-            Debug.Log("Hello");
             ResetGame();
         }
 
