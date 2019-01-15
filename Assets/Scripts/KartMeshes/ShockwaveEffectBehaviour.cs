@@ -31,6 +31,12 @@ namespace Items
             StartCoroutine(DisableDelay(_shockwavePrefab));
         }
 
+        public void InstantShockwaveGODisabler() //used for TpBack
+        {
+            if (_shockwavePrefab != null)
+                _shockwavePrefab.SetActive(false);
+        }
+
         //PRIVATE
 
         private void ShockwavePrefab(string itemName)
