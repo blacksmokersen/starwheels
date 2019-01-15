@@ -2,11 +2,15 @@
 using UnityEngine;
 using Items;
 using ThrowingSystem;
+using UnityEngine.Events;
 
 namespace Abilities
 {
     public class TPBackAbility : Ability, IControllable
     {
+        [Header("Unity Events")]
+        public UnityEvent OnBlinkActivated;
+
         [Header("Launcher")]
         [SerializeField] private ThrowableLauncher _throwableLauncher;
         [SerializeField] private ThrowingDirection _throwingDirection;
@@ -77,8 +81,8 @@ namespace Abilities
                 }
                 else // if (_tpBack.IsEnabled())
                 {
-                    StartCoroutine(BlinkTpBack());
                     StartCoroutine(Cooldown());
+                    StartCoroutine(BlinkTpBack());
                 }
             }
         }
@@ -87,6 +91,7 @@ namespace Abilities
 
         private IEnumerator BlinkTpBack()
         {
+            OnBlinkActivated.Invoke();
             _kartMeshes.SetActive(false);
             yield return new WaitForSeconds(0.5f);
             _kartMeshes.SetActive(true);

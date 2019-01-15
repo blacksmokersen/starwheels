@@ -178,7 +178,6 @@ namespace MyExtensions
         {
             if (audioSource != null)
             {
-                Debug.Log("Creating new parent for audio source");
                 GameObject oneShotObject = new GameObject("One shot sound from " + audioSource.name);
                 audioSource.transform.SetParent(oneShotObject.transform);
                 foreach (var audio in audioSource.GetComponents<AudioSource>())
@@ -190,7 +189,7 @@ namespace MyExtensions
             }
             else
             {
-                Debug.Log("Cannot play an audio source that has been destroyed");
+              //  Debug.Log("Cannot play an audio source that has been destroyed");
             }
         }
     }
