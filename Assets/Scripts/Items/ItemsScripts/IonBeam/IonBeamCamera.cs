@@ -12,6 +12,10 @@ public class IonBeamCamera : GlobalEventListener
     [HideInInspector] public CinemachineComposer Composer;
     [HideInInspector] public CinemachineCollider Collider;
 
+    [Space]
+    [Header("This Component Should Stay Inactive")]
+    [Space]
+
     [SerializeField] private float _speedCamMovements;
     [SerializeField] private float _ionBeamCamZExpand;
     [SerializeField] private float _ionBeamCamYExpand;
