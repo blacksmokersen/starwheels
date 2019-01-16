@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5838371585441885078}
   - component: {fileID: 5838420469217815682}
   - component: {fileID: 5838430279523773668}
+  - component: {fileID: 8125338353520819165}
   - component: {fileID: 5798121234586514438}
   m_Layer: 0
   m_Name: Inventory
@@ -247,11 +248,6 @@ MonoBehaviour:
   PurpleItem: {fileID: 0}
   GoldItem: {fileID: 0}
   _throwingDirection: {fileID: 0}
-  OnJoystickDirectionChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &5838420469217815682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,6 +277,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a97a4701ce45e949bd74944f7130e46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8125338353520819165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5806685541933021242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029890f750caab64d9e2bb160695162f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _secondsBeforeMerging: {fileID: 11400000, guid: 6362278ebca7c904aa4539d5a198f61e,
+    type: 2}
+  _inventory: {fileID: 5838649154409820254}
+  _boost: {fileID: 0}
+  _boostSettings: {fileID: 11400000, guid: c599c944b5b41b446ab1e3ef29a19b81, type: 2}
+  OnItemMerging:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!65 &5798121234586514438
 BoxCollider:
   m_ObjectHideFlags: 0
