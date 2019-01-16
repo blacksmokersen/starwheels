@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using Bolt;
+using Items;
+using Multiplayer;
 
 namespace Common.HUD
 {
@@ -10,11 +12,13 @@ namespace Common.HUD
         [Header("Entry")]
         [SerializeField] private GameObject _entryPrefab;
 
-        private Items.ItemListData _itemListData;
+        private ItemListData _itemListData;
+        private PlayerSettings _playerSettings;
 
         private void Awake()
         {
-            _itemListData = Resources.Load<Items.ItemListData>(Constants.Resources.ItemListData);
+            _itemListData = Resources.Load<ItemListData>(Constants.Resources.ItemListData);
+            _playerSettings = Resources.Load<PlayerSettings>(Constants.Resources.PlayerSettings);
         }
 
         // BOLT
@@ -30,9 +34,9 @@ namespace Common.HUD
         {
             var entry = Instantiate(_entryPrefab, transform, false).GetComponent<KillFeedEntry>();
 
-            entry.SetKillerNameAndColor(evnt.KillerName, evnt.KillerTeamColor);
+            entry.SetKillerNameAndColor(evnt.KillerName, evnt.KillerTeamColor, evnt.KillerName == _playerSettings.Nickname);
             entry.SetItemIcon(_itemListData.GetItemIconUsingName(evnt.Item));
-            entry.SetVictimNameAndColor(evnt.VictimName, evnt.VictimTeamColor);
+            entry.SetVictimNameAndColor(evnt.VictimName, evnt.VictimTeamColor, evnt.VictimName == _playerSettings.Nickname);
             entry.transform.localPosition = Vector3.zero;
 
             LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
