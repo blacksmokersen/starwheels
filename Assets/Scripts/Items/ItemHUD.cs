@@ -6,13 +6,19 @@ namespace Items
 {
     public class ItemHUD : MonoBehaviour
     {
-        [Header("HUD")]
+        [Header("Item HUD")]
         [SerializeField] private TextMeshProUGUI _itemCountText;
         [SerializeField] private Image _itemTexture;
+
+        [Header("Merge HUD")]
+        [SerializeField] private GameObject _fullBoostImage;
+        [SerializeField] private GameObject _lowBoostImage;
 
         [Header("Initializing State")]
         [SerializeField] private Image _initializingSprite;
         [SerializeField] private Image _loadingGauge;
+
+        private Item _currentItem;
 
         // CORE
 
@@ -35,6 +41,7 @@ namespace Items
                 kartInventory.OnItemGet.AddListener(UpdateItem);
                 kartInventory.OnItemUse.AddListener(UpdateItem);
                 kartInventory.OnItemCountChange.AddListener(UpdateItemCount);
+                kartInventory.OnItemCountChange.AddListener(UpdateMergeLogo);
             }
 
             var kartLottery = kartRoot.GetComponentInChildren<Lottery>();
@@ -53,11 +60,16 @@ namespace Items
             {
                 _itemTexture.sprite = null;
                 _itemTexture.enabled = false;
+                _currentItem = null;
             }
             else
             {
                 _itemTexture.sprite = item.InventoryTexture;
                 _itemTexture.enabled = true;
+                if (_currentItem == null)
+                {
+                    _currentItem = item;
+                }
             }
         }
 
@@ -81,6 +93,25 @@ namespace Items
         private void UpdateLoadingGauge(float percentage)
         {
             _loadingGauge.fillAmount = percentage;
+        }
+
+        private void UpdateMergeLogo(int count)
+        {
+            if(count == 0)
+            {
+                _fullBoostImage.SetActive(false);
+                _lowBoostImage.SetActive(false);
+            }
+            else if(count == _currentItem.Count)
+            {
+                _fullBoostImage.SetActive(true);
+                _lowBoostImage.SetActive(false);
+            }
+            else
+            {
+                _fullBoostImage.SetActive(false);
+                _lowBoostImage.SetActive(true);
+            }
         }
     }
 }

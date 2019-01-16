@@ -2016,8 +2016,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 8196979849942569497}
   - {fileID: 4262416657757633929}
+  - {fileID: 8196979849942569497}
   m_Father: {fileID: 298648939585486952}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2038,12 +2038,12 @@ GameObject:
   - component: {fileID: 6042701807835669019}
   - component: {fileID: 3606296064446411270}
   m_Layer: 0
-  m_Name: Empty
+  m_Name: Low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8196979849942569497
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2056,7 +2056,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 214692163218614666}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3125,6 +3125,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _itemCountText: {fileID: 4504896586865049743}
   _itemTexture: {fileID: 299893879292770184}
+  _fullBoostImage: {fileID: 7686416533462468346}
+  _lowBoostImage: {fileID: 188552267190685160}
   _initializingSprite: {fileID: 3362730635441932565}
   _loadingGauge: {fileID: 765233157396454752}
 --- !u!1 &6562410946785853187
@@ -3303,7 +3305,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 214692163218614666}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
