@@ -8,7 +8,7 @@ namespace Common.PhysicsUtils
         [Header("Base Max Speed")]
         public float ControlMaxSpeed;
         [Header("Current Max Speed(Dont touch that)")]
-        [HideInInspector] public float CurrentMaxSpeed;
+         public float CurrentMaxSpeed;
 
         private Rigidbody _rigidbody;
 
