@@ -7,23 +7,26 @@ namespace Common.HUD
     public class KillFeedEntry : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _killerName;
-        [SerializeField] private Image _killerBackgroundPanel;
         [SerializeField] private Image _itemLogo;
         [SerializeField] private TextMeshProUGUI _victimName;
-        [SerializeField] private Image _victimBackgroundPanel;
 
         private void Awake()
         {
             Destroy(gameObject, 5f);
-            //GetComponent<RectTransform>().SetAsFirstSibling();
         }
 
-        public void SetKillerNameAndColor(string name, Color teamColor)
+        public void SetKillerNameAndColor(string name, Color teamColor, bool highlight)
         {
             _killerName.text = name;
-            var color = teamColor;
-            color.a = 0.5f;
-            _killerBackgroundPanel.color = color;
+            if (highlight)
+            {
+                _killerName.fontStyle = FontStyles.Bold;
+                _killerName.color = Color.yellow;
+            }
+            else
+            {
+                _killerName.color = teamColor;
+            }
         }
 
         public void SetItemIcon(Sprite itemLogo)
@@ -31,12 +34,18 @@ namespace Common.HUD
             _itemLogo.sprite = itemLogo;
         }
 
-        public void SetVictimNameAndColor(string name, Color teamColor)
+        public void SetVictimNameAndColor(string name, Color teamColor, bool highlight)
         {
             _victimName.text = name;
-            var color = teamColor;
-            color.a = 0.5f;
-            _victimBackgroundPanel.color = color;
+            if (highlight)
+            {
+                _victimName.fontStyle = FontStyles.Bold;
+                _victimName.color = Color.yellow;
+            }
+            else
+            {
+                _victimName.color = teamColor;
+            }
 
             GetComponent<RectTransform>().position.Set(0, 0, 0);
             GetComponent<RectTransform>().SetAsFirstSibling();
