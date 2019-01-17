@@ -21,6 +21,10 @@ namespace Engine
         [Header("Options")]
         [SerializeField] private GroundCondition _groundCondition;
 
+        [Header("BoostMode")]
+        [SerializeField] private BoolVariable _boostModeActivated;
+        [SerializeField] private FloatVariable _boostModeValue;
+
         [HideInInspector] public float CurrentSpeed;
 
         private Rigidbody _rb;
@@ -273,6 +277,10 @@ namespace Engine
 
             _curveAccVelocityValue = Settings.AccelerationCurveVelocity.Evaluate(_curveTime);
             rb.AddRelativeForce(Vector3.forward * value * _curveAccVelocityValue, ForceMode.Force);
+            if (_boostModeActivated.Value)
+            {
+                rb.AddRelativeForce(Vector3.forward * value * _boostModeValue.Value, ForceMode.Force);
+            }
 
 
             #region OldStuff2

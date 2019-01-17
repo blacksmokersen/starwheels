@@ -7,6 +7,7 @@ namespace GameModes.Totem
     public class TotemOwnerSlower : MonoBehaviour
     {
         [Header("Speed Reduction")]
+        [SerializeField] private ClampSpeedSettings _clampSpeedSettings;
         [SerializeField] private ClampSpeed _ownerClampSpeed;
 
         [Header("Settings")]
@@ -18,7 +19,7 @@ namespace GameModes.Totem
         {
             if (!_ownerIsSlowed)
             {
-                var targetMagnitude = _ownerClampSpeed.ControlMaxSpeed * _totemSettings.OwnerSpeedReductionFactor;
+                var targetMagnitude = _clampSpeedSettings.BaseMaxSpeed * _totemSettings.OwnerSpeedReductionFactor;
 
                 _ownerClampSpeed.SetClampMagnitude(targetMagnitude);
                 _ownerIsSlowed = true;
