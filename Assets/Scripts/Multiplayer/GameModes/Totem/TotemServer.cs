@@ -2,7 +2,7 @@
 
 namespace GameModes.Totem
 {
-    [BoltGlobalBehaviour(BoltNetworkModes.Server, BoltScenes.CarapaceDebug, BoltScenes.CarapaceOvale, BoltScenes.CarapaceSquare)]
+    [BoltGlobalBehaviour(BoltNetworkModes.Server, BoltScenes.CarapaceDebug, BoltScenes.CarapaceOvale, BoltScenes.CarapaceSquare, BoltScenes.CarapaceSquare_V2)]
     public class TotemServer : GameModeBase
     {
         // BOLT
