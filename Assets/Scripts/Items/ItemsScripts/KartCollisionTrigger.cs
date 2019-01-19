@@ -18,41 +18,47 @@ namespace Items
             {
                 if (other.gameObject.CompareTag(Constants.Tag.ItemCollisionHitBox)) // It is an item collision
                 {
-                    BoltEntity itemEntity = other.GetComponentInParent<BoltEntity>();
-                    IItemState itemState;
-                    if (itemEntity.isAttached && itemEntity.TryFindState<IItemState>(out itemState)) // It is a concrete item
-                    {
-                        if (!_health.IsInvincible) // The server checks that this kart is not invincible
-                        {
-                            /*
-                            if (other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName == ItemCollisionName.IonBeamLaser)
-                            {
-                             //   if (!_ionBeamMultiHitProtection)
-                             //   {
-                                    Debug.LogWarning("HitIonBeam");
-                                    SendPlayerHitEvent(itemState);
-                                 //   _ionBeamMultiHitProtection = true;
-                             //   }
-                            }
-                            */
+                    var itemCollisionTrigger = other.GetComponent<ItemCollisionTrigger>();
 
-                             if (itemState.OwnerID == state.OwnerID)
+                    if (itemCollisionTrigger.ItemCollision.HitsPlayer) // It is an item that damages the player
+                    {
+                        BoltEntity itemEntity = other.GetComponentInParent<BoltEntity>();
+                        IItemState itemState;
+
+                        if (itemEntity.isAttached && itemEntity.TryFindState<IItemState>(out itemState)) // It is a concrete item & it is attached
+                        {
+                            if (!_health.IsInvincible) // The server checks that this kart is not invincible
                             {
-                                if (other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName == ItemCollisionName.Disk)
+                                /*
+                                if (other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName == ItemCollisionName.IonBeamLaser)
                                 {
-                                    if (other.GetComponentInParent<DiskBehaviour>().CanHitOwner)
-                                    {
+                                 //   if (!_ionBeamMultiHitProtection)
+                                 //   {
+                                        Debug.LogWarning("HitIonBeam");
                                         SendPlayerHitEvent(itemState);
-                                        DestroyColliderObject(other);
+                                     //   _ionBeamMultiHitProtection = true;
+                                 //   }
+                                }
+                                */
+
+                                if (itemState.OwnerID == state.OwnerID)
+                                {
+                                    if (itemCollisionTrigger.ItemCollision.ItemName == ItemCollisionName.Disk)
+                                    {
+                                        if (other.GetComponentInParent<DiskBehaviour>().CanHitOwner)
+                                        {
+                                            SendPlayerHitEvent(itemState);
+                                            DestroyColliderObject(other);
+                                        }
                                     }
                                 }
-                            }
-                            else if (itemState.Team != state.Team)
-                            {
-                                Debug.LogWarning("HitIonBeam");
-                                SendPlayerHitEvent(itemState);
-                                DestroyColliderObject(other);
-                             //   _ionBeamMultiHitProtection = true;
+                                else if (itemState.Team != state.Team)
+                                {
+                                    Debug.LogWarning("HitIonBeam");
+                                    SendPlayerHitEvent(itemState);
+                                    DestroyColliderObject(other);
+                                    //   _ionBeamMultiHitProtection = true;
+                                }
                             }
                         }
                     }
