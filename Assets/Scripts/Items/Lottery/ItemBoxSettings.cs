@@ -16,6 +16,7 @@ namespace Items.Lottery
     {
         [Header("Colors")]
         public Color SphereColor;
+        public Color SphereCenterColor;
         public Color SphereSurroundingParticlesColor;
         public Color CenterLightColor;
 

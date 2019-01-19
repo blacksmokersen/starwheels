@@ -11,6 +11,7 @@ namespace Items.Lottery
 
         [Header("Colors")]
         [SerializeField] private ParticleSystem _sphere;
+        [SerializeField] private ParticleSystem _sphereCenter;
         [SerializeField] private ParticleSystem _sphereSurroundings;
         [SerializeField] private Light _centerLight;
 
@@ -60,6 +61,7 @@ namespace Items.Lottery
             {
                 StopCoroutine(_upgradeCoroutine);
             }
+            CurrentSettings = _firstSettings;
         }
 
         private void Show()
@@ -76,6 +78,8 @@ namespace Items.Lottery
             sphereMain.startColor = settings.SphereColor;
             var sphereSurroundingsMain = _sphereSurroundings.main;
             sphereSurroundingsMain.startColor = settings.SphereSurroundingParticlesColor;
+            var sphereCenterMain = _sphereCenter.main;
+            sphereCenterMain.startColor = settings.SphereCenterColor;
             _centerLight.color = settings.CenterLightColor;
 
             CurrentSettings = settings;
