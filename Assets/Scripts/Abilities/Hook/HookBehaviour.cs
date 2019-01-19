@@ -86,7 +86,7 @@ namespace Abilities
             // ItemBox
             else if (other.CompareTag(Constants.Tag.ItemBox))
             {
-                var itemBox = other.GetComponent<ItemBox>();
+                var itemBox = other.GetComponent<Items.Lottery.ItemBox>();
                 itemBox.StartCoroutine(itemBox.StartCooldown());
                 //OwnerKartInventory.StartItemLottery();
                 SetTarget(other.transform);

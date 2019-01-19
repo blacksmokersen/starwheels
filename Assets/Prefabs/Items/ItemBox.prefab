@@ -48,6 +48,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSphere: {fileID: 1150503316115428}
   cooldown: 2
+  _sphere: {fileID: 198005028829093252}
+  _sphereSurroundings: {fileID: 198916540169968580}
+  _centerLight: {fileID: 2282325539305014265}
+  CurrentSettings: {fileID: 0}
+  _firstSettings: {fileID: 11400000, guid: a01296815be22f24f81c9b9722bd5e45, type: 2}
 --- !u!65 &65356133436487720
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -144,6 +149,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1175682743221288393, guid: eb4daf9a40eb1cc4393709f10463b675,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 955848629984715700, guid: eb4daf9a40eb1cc4393709f10463b675,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 955848629984715700, guid: eb4daf9a40eb1cc4393709f10463b675,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 955848629984715700, guid: eb4daf9a40eb1cc4393709f10463b675,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7588676120320713993, guid: eb4daf9a40eb1cc4393709f10463b675,
         type: 3}
       propertyPath: m_Intensity
@@ -153,11 +178,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LightShadowCasterMode
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1175682743221288393, guid: eb4daf9a40eb1cc4393709f10463b675,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb4daf9a40eb1cc4393709f10463b675, type: 3}
@@ -170,6 +190,24 @@ Transform:
 --- !u!1 &1150503316115428 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1150873826925048276, guid: eb4daf9a40eb1cc4393709f10463b675,
+    type: 3}
+  m_PrefabInstance: {fileID: 1151988867731111472}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &198916540169968580 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 954233498293954036, guid: eb4daf9a40eb1cc4393709f10463b675,
+    type: 3}
+  m_PrefabInstance: {fileID: 1151988867731111472}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &198005028829093252 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 955848629984715700, guid: eb4daf9a40eb1cc4393709f10463b675,
+    type: 3}
+  m_PrefabInstance: {fileID: 1151988867731111472}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &2282325539305014265 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 1175682743221288393, guid: eb4daf9a40eb1cc4393709f10463b675,
     type: 3}
   m_PrefabInstance: {fileID: 1151988867731111472}
   m_PrefabAsset: {fileID: 0}
