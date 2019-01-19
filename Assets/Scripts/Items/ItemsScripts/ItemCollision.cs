@@ -18,6 +18,9 @@ namespace Items
     {
         public ItemCollisionName ItemName;
 
+        [Header("Player Collision")]
+        public bool HitsPlayer;
+
         [Header("Destroy myself when hitting ...")]
         public bool Disk;
         public bool Rocket;
