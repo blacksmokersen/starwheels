@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Bolt;
 
-namespace Items
+namespace Items.Lottery
 {
     public class Lottery : EntityBehaviour, IControllable
     {
@@ -40,7 +40,7 @@ namespace Items
 
         // PRIVATE
 
-        private IEnumerator GetLotteryItem()
+        private IEnumerator GetLotteryItem(ItemBoxSettings settings)
         {
             if (_lotteryStarted || !_inventory.IsEmpty()) yield break;
             OnLotteryStart.Invoke();
@@ -53,7 +53,7 @@ namespace Items
                 OnLotteryUpdate.Invoke(_lotteryTimer / ItemsLottery.LotteryDuration);
             }
 
-            var Item = ItemsLottery.GetRandomItem();
+            var Item = ItemsLottery.GetRandomItem(settings);
             _inventory.SetItem(Item, Item.Count);
 
             OnLotteryStop.Invoke();
@@ -73,7 +73,8 @@ namespace Items
             {
                 if (entity.isControllerOrOwner)
                 {
-                    this.StartCoroutine(GetLotteryItem());
+                    var itemsChancesSettings = other.GetComponent<ItemBox>().CurrentSettings;
+                    this.StartCoroutine(GetLotteryItem(itemsChancesSettings));
                 }
 
                 other.GetComponent<ItemBox>().Activate();

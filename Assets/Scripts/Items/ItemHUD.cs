@@ -44,7 +44,7 @@ namespace Items
                 kartInventory.OnItemCountChange.AddListener(UpdateMergeLogo);
             }
 
-            var kartLottery = kartRoot.GetComponentInChildren<Lottery>();
+            var kartLottery = kartRoot.GetComponentInChildren<Lottery.Lottery>();
             if (kartLottery)
             {
                 kartLottery.OnLotteryStart.AddListener(ShowInitializingState);
