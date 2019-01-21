@@ -11,7 +11,8 @@ namespace Boost
         [SerializeField] private BoostSettings _settings;
 
         [Header("Boost Dependencies")]
-        [SerializeField] private ClampSpeedSettings _clampSpeedSettings;
+      //  [SerializeField] private ClampSpeedSettings _clampSpeedSettings;
+        [SerializeField] private ClampSpeed _clampSpeedSettings;
         [SerializeField] private Rigidbody _rb;
 
         [Header("KartSpecific Boost Dependencies")]
@@ -33,7 +34,7 @@ namespace Boost
 
         public void StartTurbo()
         {
-            _controlClampSpeed = _clampSpeedSettings.BaseMaxSpeed;
+            _controlClampSpeed = _clampSpeedSettings.BaseClampSpeed;
             //   StartCoroutine(EnterTurbo());
         }
 
@@ -79,7 +80,7 @@ namespace Boost
                 if (_constantXBoostForXSeconds != null)
                     StopCoroutine(_constantXBoostForXSeconds);
 
-                _clampSpeedSettings.CurrentMaxSpeed = _clampSpeedSettings.BaseMaxSpeed;
+                _clampSpeedSettings.CurrentClampSpeed = _clampSpeedSettings.BaseClampSpeed;
 
                 if (settings.HasADirectImpulse)
                     _uniqueImpulseXBoostWithXMaxClampSpeed = StartCoroutine(UniqueImpulseXBoostWithXMaxClampSpeedCoRoutine(settings.DIPower,
@@ -157,7 +158,7 @@ namespace Boost
 
         private IEnumerator UniqueImpulseXBoostWithXMaxClampSpeedCoRoutine(float boostPower, float maxClampSpeed, float maxClampSpeedDuration, float returnToBaseValueDuration)
         {
-            _clampSpeedSettings.CurrentMaxSpeed += Mathf.Clamp(_clampSpeedSettings.CurrentMaxSpeed, 0, _controlClampSpeed) + maxClampSpeed;
+            _clampSpeedSettings.CurrentClampSpeed += Mathf.Clamp(_clampSpeedSettings.CurrentClampSpeed, 0, _controlClampSpeed) + maxClampSpeed;
 
             var _currentTimer = 0f;
             while (_currentTimer < 0.5f)
@@ -174,7 +175,7 @@ namespace Boost
 
         private IEnumerator ConstantXBoostForXSecondsCoroutine(float boostPercentageMultiplicator, float duration, float maxClampSpeed, float returnToBaseValueDuration)
         {
-            _clampSpeedSettings.CurrentMaxSpeed += maxClampSpeed;
+            _clampSpeedSettings.CurrentClampSpeed += maxClampSpeed;
 
             var _currentTimer = 0f;
             while (_currentTimer < duration)
@@ -189,7 +190,7 @@ namespace Boost
 
         private IEnumerator XBoostOnAccelerationForXSecondsCoroutine(float boostPower, float duration, float maxClampSpeed, float returnToBaseValueDuration)
         {
-            _clampSpeedSettings.CurrentMaxSpeed += Mathf.Clamp(_clampSpeedSettings.CurrentMaxSpeed, 0, _controlClampSpeed) + maxClampSpeed;
+            _clampSpeedSettings.CurrentClampSpeed += Mathf.Clamp(_clampSpeedSettings.CurrentClampSpeed, 0, _controlClampSpeed) + maxClampSpeed;
             _boostModeActivated.Value = true;
             _boostModeValue.Value = boostPower;
             yield return new WaitForSeconds(duration);
@@ -206,7 +207,7 @@ namespace Boost
             int i = 0;
             while (i < stepNumber)
             {
-                _clampSpeedSettings.CurrentMaxSpeed -= clampSpeedValueToDecrease / stepNumber;
+                _clampSpeedSettings.CurrentClampSpeed -= clampSpeedValueToDecrease / stepNumber;
                 yield return new WaitForSeconds(stepDuration);
                 i++;
             }
