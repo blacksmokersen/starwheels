@@ -14,6 +14,9 @@ namespace Common.HUD
         [SerializeField] private TextMeshPro nameText;
         [SerializeField] private SpriteRenderer frameRenderer;
 
+        [Header("Color settings")]
+        [SerializeField] private TeamColorSettings colorSettings;
+
         // CORE
 
         private void Update()
@@ -66,27 +69,4 @@ namespace Common.HUD
             gameObject.SetActive(false);
         }
     }
-
-    #if UNITY_EDITOR
-    /*
-    [CustomEditor(typeof(NicknamePanel))]
-    public class NicknamePanelEditor : Editor
-    {
-        Color frameColor;
-        public override void OnInspectorGUI()
-        {
-            DrawDefaultInspector();
-
-            NicknamePanel nicknamePanel = (NicknamePanel)target;
-            if (GUILayout.Button("Show Panel"))
-                nicknamePanel.ShowPanel();
-            if (GUILayout.Button("Hide Panel"))
-                nicknamePanel.HidePanel();
-
-            frameColor = EditorGUILayout.ColorField("Change color", frameColor);
-            nicknamePanel.SetFrameRendererColor(frameColor);
-        }
-    }
-    */
-    #endif
 }
