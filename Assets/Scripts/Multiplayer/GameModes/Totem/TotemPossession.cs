@@ -17,7 +17,7 @@ namespace GameModes.Totem
         public UnityEvent OnTotemGet;
         public UnityEvent OnTotemLost;
 
-        private bool _isLocalOwner = false; // Local bool for possession (to compensate lag)
+        public bool _isLocalOwner = false; // Local bool for possession (to compensate lag)
 
         [Header("Totem References (Debug)")]
         [SerializeField] private Totem _totemBehaviour;
