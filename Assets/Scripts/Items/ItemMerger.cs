@@ -55,7 +55,7 @@ namespace Items
         private void MergeItem()
         {
             var numberOfCharge = _inventory.CurrentItemCount / _inventory.CurrentItem.Count;
-            _boost.StartTurbo();
+            _boost.CustomBoostFromBoostSettings(_boostSettings);
             _inventory.SetItem(null, 0);
 
             if (OnItemMerging != null)

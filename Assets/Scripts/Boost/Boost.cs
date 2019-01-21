@@ -27,21 +27,21 @@ namespace Boost
         private Coroutine _returnToClampSpeedBaseValue;
         private float _controlClampSpeed;
         private float _currentClampSpeed;
-      //  private float _currentTimer;
+        //  private float _currentTimer;
 
         // PUBLIC
 
         public void StartTurbo()
         {
             _controlClampSpeed = _clampSpeedSettings.BaseMaxSpeed;
-            StartCoroutine(EnterTurbo());
+            //   StartCoroutine(EnterTurbo());
         }
 
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Keypad1))
             {
-                ConstantXBoostForXSeconds(0.5f, 3, 10, 1);
+                ConstantXBoostForXSeconds(0.5f, 3, 10, 2);
             }
             if (Input.GetKeyDown(KeyCode.Keypad2))
             {
@@ -55,50 +55,72 @@ namespace Boost
 
         public void UniqueImpulseXBoostWithXMaxClampSpeed(float boostPower, float maxClampSpeed, float maxClampSpeedDuration, float returnToBaseValueDuration)
         {
-          //  _controlClampSpeed = _clampSpeedSettings.BaseMaxSpeed;
-            /*
-            if (_uniqueImpulseXBoostWithXMaxClampSpeed != null)
-                StopCoroutine(_uniqueImpulseXBoostWithXMaxClampSpeed);
-            if (_returnToClampSpeedBaseValue != null)
-                StopCoroutine(_returnToClampSpeedBaseValue);
-                */
             StartCoroutine(UniqueImpulseXBoostWithXMaxClampSpeedCoRoutine(boostPower, maxClampSpeed, maxClampSpeedDuration, returnToBaseValueDuration));
         }
 
-
         public void ConstantXBoostForXSeconds(float boostPowerMultiplicator, float duration, float maxClampSpeed, float returnToBaseValueDuration)
         {
-           // _controlClampSpeed = _clampSpeedSettings.BaseMaxSpeed;
-            /*
-            if (_constantXBoostForXSeconds != null)
-                StopCoroutine(_constantXBoostForXSeconds);
-            if (_returnToClampSpeedBaseValue != null)
-                StopCoroutine(_returnToClampSpeedBaseValue);
-                */
             StartCoroutine(ConstantXBoostForXSecondsCoroutine(boostPowerMultiplicator, duration, maxClampSpeed, returnToBaseValueDuration));
         }
 
         public void XBoostOnAccelerationForXSeconds(float boostPower, float duration, float maxClampSpeed, float returnToBaseValueDuration)
         {
-          //  _controlClampSpeed = _clampSpeedSettings.BaseMaxSpeed;
-
-            /*
-            if (_constantXBoostForXSeconds != null)
-                StopCoroutine(_constantXBoostForXSeconds);
-            if (_returnToClampSpeedBaseValue != null)
-                StopCoroutine(_returnToClampSpeedBaseValue);
-                */
-
             StartCoroutine(XBoostOnAccelerationForXSecondsCoroutine(boostPower, duration, maxClampSpeed, returnToBaseValueDuration));
         }
 
         public void CustomBoostFromBoostSettings(BoostSettings settings)
         {
+            if (settings.IsNotStackable)
+            {
+                if (_uniqueImpulseXBoostWithXMaxClampSpeed != null)
+                    StopCoroutine(_uniqueImpulseXBoostWithXMaxClampSpeed);
+                if (_xBoostOnAccelerationForXSecondsCoroutine != null)
+                    StopCoroutine(_xBoostOnAccelerationForXSecondsCoroutine);
+                if (_constantXBoostForXSeconds != null)
+                    StopCoroutine(_constantXBoostForXSeconds);
 
+                _clampSpeedSettings.CurrentMaxSpeed = _clampSpeedSettings.BaseMaxSpeed;
+
+                if (settings.HasADirectImpulse)
+                    _uniqueImpulseXBoostWithXMaxClampSpeed = StartCoroutine(UniqueImpulseXBoostWithXMaxClampSpeedCoRoutine(settings.DIPower,
+                        settings.DIClampSpeedIncrease,
+                        settings.DIClampSpeedIncreaseDuration,
+                        settings.DIClampSpeedDecreaseDuration));
+
+                if (settings.IsEngineBoostActivated)
+                    _xBoostOnAccelerationForXSecondsCoroutine = StartCoroutine(XBoostOnAccelerationForXSecondsCoroutine(settings.EngineBoostValue,
+                        settings.BoostDuration,
+                        settings.ClampSpeedIncrease,
+                        settings.SecondsToDecreaseClampSpeed));
+
+                _constantXBoostForXSeconds = StartCoroutine(ConstantXBoostForXSecondsCoroutine(settings.BoostPercentagMultiplicator,
+                    settings.BoostDuration,
+                    settings.ClampSpeedIncrease,
+                    settings.SecondsToDecreaseClampSpeed));
+            }
+            else
+            {
+                if (settings.HasADirectImpulse)
+                    StartCoroutine(UniqueImpulseXBoostWithXMaxClampSpeedCoRoutine(settings.DIPower,
+                        settings.DIClampSpeedIncrease,
+                        settings.DIClampSpeedIncreaseDuration,
+                        settings.DIClampSpeedDecreaseDuration));
+
+                if (settings.IsEngineBoostActivated)
+                    StartCoroutine(XBoostOnAccelerationForXSecondsCoroutine(settings.EngineBoostValue,
+                        settings.BoostDuration,
+                        settings.ClampSpeedIncrease,
+                        settings.SecondsToDecreaseClampSpeed));
+
+                StartCoroutine(ConstantXBoostForXSecondsCoroutine(settings.BoostPercentagMultiplicator,
+                    settings.BoostDuration,
+                    settings.ClampSpeedIncrease,
+                    settings.SecondsToDecreaseClampSpeed));
+            }
         }
 
         // PRIVATE
-
+        /*
         private IEnumerator EnterTurbo()
         {
             if (_physicsBoostCoroutine != null)
@@ -109,7 +131,8 @@ namespace Boost
 
             yield return new WaitForSeconds(_settings.BoostDuration);
         }
-
+        */
+        /*
         private IEnumerator PhysicsBoost(float boostDuration, float magnitudeBoost)
         {
             _clampSpeedSettings.CurrentMaxSpeed = Mathf.Clamp(_clampSpeedSettings.CurrentMaxSpeed, 0, _controlClampSpeed) + magnitudeBoost;
@@ -130,13 +153,9 @@ namespace Boost
                 yield return new WaitForFixedUpdate();
             }
         }
+        */
 
-
-
-
-
-
-        private IEnumerator UniqueImpulseXBoostWithXMaxClampSpeedCoRoutine(float boostPower, float maxClampSpeed, float maxClampSpeedDuration , float returnToBaseValueDuration)
+        private IEnumerator UniqueImpulseXBoostWithXMaxClampSpeedCoRoutine(float boostPower, float maxClampSpeed, float maxClampSpeedDuration, float returnToBaseValueDuration)
         {
             _clampSpeedSettings.CurrentMaxSpeed += Mathf.Clamp(_clampSpeedSettings.CurrentMaxSpeed, 0, _controlClampSpeed) + maxClampSpeed;
 
@@ -148,20 +167,19 @@ namespace Boost
                 yield return new WaitForFixedUpdate();
             }
 
-
             _rb.AddRelativeForce(Vector3.forward * boostPower);
             yield return new WaitForSeconds(maxClampSpeedDuration);
             StartCoroutine(ReturnToClampSpeedBaseValue(maxClampSpeed, returnToBaseValueDuration));
         }
 
-        private IEnumerator ConstantXBoostForXSecondsCoroutine(float boostPower, float duration, float maxClampSpeed, float returnToBaseValueDuration)
+        private IEnumerator ConstantXBoostForXSecondsCoroutine(float boostPercentageMultiplicator, float duration, float maxClampSpeed, float returnToBaseValueDuration)
         {
-            _clampSpeedSettings.CurrentMaxSpeed += Mathf.Clamp(_clampSpeedSettings.CurrentMaxSpeed, 0, _controlClampSpeed) + maxClampSpeed;
+            _clampSpeedSettings.CurrentMaxSpeed += maxClampSpeed;
 
-           var _currentTimer = 0f;
+            var _currentTimer = 0f;
             while (_currentTimer < duration)
             {
-                _rb.AddRelativeForce(Vector3.forward * boostPower, ForceMode.VelocityChange);
+                _rb.AddRelativeForce(Vector3.forward * boostPercentageMultiplicator, ForceMode.VelocityChange);
                 _currentTimer += Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
             }
@@ -183,16 +201,15 @@ namespace Boost
 
         private IEnumerator ReturnToClampSpeedBaseValue(float clampSpeedValueToDecrease, float returnDuration)
         {
-            Debug.Log("return1");
-            var _currentTimer = 0f;
-            while (_currentTimer < returnDuration)
+            var stepDuration = returnDuration / 100;
+            var stepNumber = 100;
+            int i = 0;
+            while (i < stepNumber)
             {
-                Debug.Log("return2");
-                _clampSpeedSettings.CurrentMaxSpeed = Mathf.Lerp(_controlClampSpeed + clampSpeedValueToDecrease, _clampSpeedSettings.CurrentMaxSpeed, _currentTimer / returnDuration);
-                _currentTimer += Time.fixedDeltaTime;
-                yield return new WaitForFixedUpdate();
+                _clampSpeedSettings.CurrentMaxSpeed -= clampSpeedValueToDecrease / stepNumber;
+                yield return new WaitForSeconds(stepDuration);
+                i++;
             }
-            Debug.Log("return3");
         }
     }
 }
