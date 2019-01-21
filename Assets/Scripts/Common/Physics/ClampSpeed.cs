@@ -5,7 +5,11 @@ namespace Common.PhysicsUtils
 {
     public class ClampSpeed : MonoBehaviour
     {
-        [SerializeField] private ClampSpeedSettings _clampSpeedSettings;
+      //  [SerializeField] private ClampSpeedSettings _clampSpeedSettings;
+
+        public float BaseClampSpeed;
+        public float CurrentClampSpeed;
+
 
         private Rigidbody _rigidbody;
 
@@ -14,7 +18,7 @@ namespace Common.PhysicsUtils
         private void Awake()
         {
             _rigidbody = GetComponentInParent<Rigidbody>();
-            _clampSpeedSettings.CurrentMaxSpeed = _clampSpeedSettings.BaseMaxSpeed;
+            CurrentClampSpeed = BaseClampSpeed;
         }
 
         private void FixedUpdate()
@@ -26,7 +30,7 @@ namespace Common.PhysicsUtils
 
         public void SetClampMagnitude(float magnitude)
         {
-            _clampSpeedSettings.CurrentMaxSpeed = magnitude;
+            CurrentClampSpeed = magnitude;
         }
 
         public void ClampForXSeconds(float magnitude, float seconds)
@@ -36,24 +40,24 @@ namespace Common.PhysicsUtils
 
         public void ResetClampMagnitude()
         {
-            _clampSpeedSettings.CurrentMaxSpeed = _clampSpeedSettings.BaseMaxSpeed;
+            CurrentClampSpeed = BaseClampSpeed;
         }
 
         // PRIVATE
 
         private void ClampMagnitude()
         {
-            if (_clampSpeedSettings.CurrentMaxSpeed > 0)
+            if (CurrentClampSpeed > 0)
             {
-                _rigidbody.velocity = Vector3.ClampMagnitude(_rigidbody.velocity, _clampSpeedSettings.CurrentMaxSpeed);
+                _rigidbody.velocity = Vector3.ClampMagnitude(_rigidbody.velocity, CurrentClampSpeed);
             }
         }
 
         private IEnumerator ClampForXSecondsRoutine(float magnitude, float seconds)
         {
-            _clampSpeedSettings.CurrentMaxSpeed = magnitude;
+            CurrentClampSpeed = magnitude;
             yield return new WaitForSeconds(seconds);
-            _clampSpeedSettings.CurrentMaxSpeed = _clampSpeedSettings.BaseMaxSpeed;
+            CurrentClampSpeed = BaseClampSpeed;
         }
     }
 }

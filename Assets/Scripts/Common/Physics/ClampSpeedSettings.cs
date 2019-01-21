@@ -6,8 +6,8 @@ namespace Common.PhysicsUtils
     public class ClampSpeedSettings : ScriptableObject
     {
         [Header("ClampSpeed")]
-        public float BaseMaxSpeed;
+        public float BaseClampSpeed;
         [Header("Dont Change That Value")]
-        public float CurrentMaxSpeed;
+        public float CurrentClampSpeed;
     }
 }
