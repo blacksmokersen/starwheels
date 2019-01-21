@@ -2,24 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LotterieSounds : MonoBehaviour {
-
-    public AudioSource LotteryAudio;
-    public AudioSource GetItemAudio;
-
-    public void PlayLotteryAudio()
+namespace Items.Lottery
+{
+    public class LotterieSounds : MonoBehaviour
     {
-        LotteryAudio.Play();
-    }
 
-    public void StopLotteryAudio()
-    {
-        LotteryAudio.Stop();
-    }
+        public AudioSource LotteryAudio;
+        public AudioSource GetItemAudio;
 
-    public void PlayGetItemAudio()
-    {
-        GetItemAudio.Play();
-    }
+        public void PlayLotteryAudio()
+        {
+            LotteryAudio.Play();
+        }
 
+        public void StopLotteryAudio()
+        {
+            LotteryAudio.Stop();
+        }
+
+        public void PlayGetItemAudio()
+        {
+            GetItemAudio.Play();
+        }
+
+    }
 }
