@@ -61,8 +61,8 @@ namespace Items
 
         private void SetOwnerNewSpeed()
         {
-            var speedClamper = _ownerKart.GetComponentInChildren<ClampSpeed>();
-            speedClamper.ClampForXSeconds(120,_settings.OverchargeDuration);
+          //  var speedClamper = _ownerKart.GetComponentInChildren<ClampSpeed>();
+          //  speedClamper.ClampForXSeconds(120,_settings.OverchargeDuration);
         }
 
         private void SetOwnerInvincibility()
