@@ -5,10 +5,7 @@ namespace Common.PhysicsUtils
 {
     public class ClampSpeed : MonoBehaviour
     {
-        [Header("Base Max Speed")]
-        public float ControlMaxSpeed;
-        [Header("Current Max Speed(Dont touch that)")]
-        [HideInInspector] public float CurrentMaxSpeed;
+        [SerializeField] private ClampSpeedSettings _clampSpeedSettings;
 
         private Rigidbody _rigidbody;
 
@@ -17,7 +14,7 @@ namespace Common.PhysicsUtils
         private void Awake()
         {
             _rigidbody = GetComponentInParent<Rigidbody>();
-            CurrentMaxSpeed = ControlMaxSpeed;
+            _clampSpeedSettings.CurrentMaxSpeed = _clampSpeedSettings.BaseMaxSpeed;
         }
 
         private void FixedUpdate()
@@ -29,7 +26,7 @@ namespace Common.PhysicsUtils
 
         public void SetClampMagnitude(float magnitude)
         {
-            CurrentMaxSpeed = magnitude;
+            _clampSpeedSettings.CurrentMaxSpeed = magnitude;
         }
 
         public void ClampForXSeconds(float magnitude, float seconds)
@@ -39,24 +36,24 @@ namespace Common.PhysicsUtils
 
         public void ResetClampMagnitude()
         {
-            CurrentMaxSpeed = ControlMaxSpeed;
+            _clampSpeedSettings.CurrentMaxSpeed = _clampSpeedSettings.BaseMaxSpeed;
         }
 
         // PRIVATE
 
         private void ClampMagnitude()
         {
-            if (CurrentMaxSpeed > 0)
+            if (_clampSpeedSettings.CurrentMaxSpeed > 0)
             {
-                _rigidbody.velocity = Vector3.ClampMagnitude(_rigidbody.velocity, CurrentMaxSpeed);
+                _rigidbody.velocity = Vector3.ClampMagnitude(_rigidbody.velocity, _clampSpeedSettings.CurrentMaxSpeed);
             }
         }
 
         private IEnumerator ClampForXSecondsRoutine(float magnitude, float seconds)
         {
-            CurrentMaxSpeed = magnitude;
+            _clampSpeedSettings.CurrentMaxSpeed = magnitude;
             yield return new WaitForSeconds(seconds);
-            CurrentMaxSpeed = ControlMaxSpeed;
+            _clampSpeedSettings.CurrentMaxSpeed = _clampSpeedSettings.BaseMaxSpeed;
         }
     }
 }
