@@ -7,7 +7,5 @@ namespace Common.PhysicsUtils
     {
         [Header("ClampSpeed")]
         public float BaseClampSpeed;
-        [Header("Dont Change That Value")]
-        public float CurrentClampSpeed;
     }
 }
