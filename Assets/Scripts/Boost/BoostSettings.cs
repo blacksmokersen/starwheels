@@ -15,9 +15,6 @@ namespace Boost
         [Header("ReturnToBaseClampSpeed")]
         [Range(0, 20)] public float SecondsToDecreaseClampSpeed;
 
-        [Header("CanStack")]
-        public bool IsNotStackable;
-
         [Header("EngineBoostMode")]
         public bool IsEngineBoostActivated;
         [Range(0, 5000)] public float EngineBoostValue;
