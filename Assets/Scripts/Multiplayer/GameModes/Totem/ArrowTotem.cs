@@ -8,15 +8,13 @@ namespace GameModes.Totem
     public class ArrowTotem : EntityBehaviour
     {
         [SerializeField] private TotemPossession _totemPossession;
+        [SerializeField] private Renderer _arrowTotem;
 
         private Transform _totemPosition;
-        private Renderer _arrowTotem;
-        
-        // Start is called before the first frame update
+
         void Start()
         {
             _totemPosition = TotemHelpers.GetTotemEntity().transform;
-            _arrowTotem = GetComponent<Renderer>();
         }
 
         public override void Attached()
@@ -24,7 +22,6 @@ namespace GameModes.Totem
             gameObject.SetActive(entity.isOwner);
         }
 
-        // Update is called once per frame
         void Update()
         {
             // Inverted lookAt
@@ -34,7 +31,7 @@ namespace GameModes.Totem
             {
                 _arrowTotem.enabled = false;
             }
-            else 
+            else
             {
                 _arrowTotem.enabled = true;
             }
