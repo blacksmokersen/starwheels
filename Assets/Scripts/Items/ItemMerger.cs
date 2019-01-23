@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using Common.PhysicsUtils;
 using Bolt;
 
 namespace Items
@@ -13,8 +14,8 @@ namespace Items
         [SerializeField] private Inventory _inventory;
 
         [Header("Boost")]
-        [SerializeField] private Boost.Boost _boost;
-        [SerializeField] private Boost.BoostSettings _boostSettings;
+        [SerializeField] private Boost _boost;
+        [SerializeField] private BoostSettings _boostSettings;
 
         [Header("Unity Events")]
         public UnityEvent OnItemMerging;
