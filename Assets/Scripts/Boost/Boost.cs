@@ -3,7 +3,7 @@ using UnityEngine;
 using Common.PhysicsUtils;
 using Engine;
 
-namespace Boost
+namespace Common.PhysicsUtils
 {
     public class Boost : MonoBehaviour
     {
@@ -66,11 +66,17 @@ namespace Boost
                 settings.SecondsToDecreaseClampSpeed));
         }
 
+        public void StopAllCurrentCustomBoost(BoostSettings settings)
+        {
+            StopAllCoroutines();
+            _clampSpeed.CurrentClampSpeed = _clampSpeed.BaseClampSpeed;
+        }
+
         //PRIVATE
 
         private IEnumerator UniqueImpulseXBoostWithXMaxClampSpeedCoRoutine(float boostPower, float maxClampSpeed, float maxClampSpeedDuration, float returnToBaseValueDuration)
         {
-            _clampSpeed.CurrentClampSpeed += Mathf.Clamp(_clampSpeed.CurrentClampSpeed, 0, _controlClampSpeed) + maxClampSpeed;
+            _clampSpeed.CurrentClampSpeed += maxClampSpeed;
 
             var _currentTimer = 0f;
             while (_currentTimer < 0.5f)
@@ -96,13 +102,12 @@ namespace Boost
                 _currentTimer += Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
             }
-
             StartCoroutine(ReturnToClampSpeedBaseValue(maxClampSpeed, returnToBaseValueDuration));
         }
 
         private IEnumerator XBoostOnAccelerationForXSecondsCoroutine(float boostPower, float duration, float maxClampSpeed, float returnToBaseValueDuration)
         {
-            _clampSpeed.CurrentClampSpeed += Mathf.Clamp(_clampSpeed.CurrentClampSpeed, 0, _controlClampSpeed) + maxClampSpeed;
+            _clampSpeed.CurrentClampSpeed += maxClampSpeed;
             _boostModeActivated.Value = true;
             _boostModeValue.Value = boostPower;
             yield return new WaitForSeconds(duration);

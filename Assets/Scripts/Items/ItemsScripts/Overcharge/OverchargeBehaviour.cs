@@ -12,6 +12,9 @@ namespace Items
         [Header("Settings")]
         [SerializeField] private OverchargeSettings _settings;
 
+        [Header("Settings")]
+        [SerializeField] private BoostSettings _overchargeBoostSettings;
+
         [Header("Unity Events")]
         public UnityEvent OnActivation;
         public UnityEvent OnDeactivation;
@@ -61,8 +64,8 @@ namespace Items
 
         private void SetOwnerNewSpeed()
         {
-          //  var speedClamper = _ownerKart.GetComponentInChildren<ClampSpeed>();
-          //  speedClamper.ClampForXSeconds(120,_settings.OverchargeDuration);
+            var kartBoost = _ownerKart.GetComponentInChildren<Boost>();
+            kartBoost.CustomBoostFromBoostSettings(_overchargeBoostSettings);
         }
 
         private void SetOwnerInvincibility()

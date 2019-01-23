@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Boost
+namespace Common.PhysicsUtils
 {
     [CreateAssetMenu(menuName = "Tools Settings/Boost")]
     public class BoostSettings : ScriptableObject
