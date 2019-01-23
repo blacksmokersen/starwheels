@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Boost
+namespace Common.PhysicsUtils
 {
     [CreateAssetMenu(menuName = "Tools Settings/Boost")]
     public class BoostSettings : ScriptableObject
@@ -14,9 +14,6 @@ namespace Boost
 
         [Header("ReturnToBaseClampSpeed")]
         [Range(0, 20)] public float SecondsToDecreaseClampSpeed;
-
-        [Header("CanStack")]
-        public bool IsNotStackable;
 
         [Header("EngineBoostMode")]
         public bool IsEngineBoostActivated;

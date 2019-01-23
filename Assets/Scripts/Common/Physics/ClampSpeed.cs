@@ -5,11 +5,10 @@ namespace Common.PhysicsUtils
 {
     public class ClampSpeed : MonoBehaviour
     {
-      //  [SerializeField] private ClampSpeedSettings _clampSpeedSettings;
+        [SerializeField] private ClampSpeedSettings _clampSpeedSettings;
 
-        public float BaseClampSpeed;
-        public float CurrentClampSpeed;
-
+        [HideInInspector] public float BaseClampSpeed;
+        [HideInInspector] public float CurrentClampSpeed;
 
         private Rigidbody _rigidbody;
 
@@ -18,6 +17,7 @@ namespace Common.PhysicsUtils
         private void Awake()
         {
             _rigidbody = GetComponentInParent<Rigidbody>();
+            BaseClampSpeed = _clampSpeedSettings.BaseClampSpeed;
             CurrentClampSpeed = BaseClampSpeed;
         }
 
