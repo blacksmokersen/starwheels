@@ -14,9 +14,9 @@ namespace Items.Lottery
 
         [SerializeField] private Inventory _inventory;
 
+        [HideInInspector] public bool LotteryStarted = false;
         private float _lotteryTimer = 0f;
         private bool _shortenLottery = false;
-        private bool _lotteryStarted = false;
 
         // CORE
 
@@ -32,19 +32,28 @@ namespace Items.Lottery
 
         public void MapInputs()
         {
-            if(Input.GetButtonDown(Constants.Input.UseItem) && _lotteryStarted && _lotteryTimer > 2f)
+            if(Input.GetButtonDown(Constants.Input.UseItem) && LotteryStarted && _lotteryTimer > 2f)
             {
                 _shortenLottery = true;
             }
+        }
+
+        public void ResetLottery()
+        {
+            _lotteryTimer = 0f;
+            LotteryStarted = false;
+            _shortenLottery = false;
+
+            OnLotteryStop.Invoke();
         }
 
         // PRIVATE
 
         private IEnumerator GetLotteryItem(ItemBoxSettings settings)
         {
-            if (_lotteryStarted || !_inventory.IsEmpty()) yield break;
+            if (LotteryStarted || !_inventory.IsEmpty()) yield break;
             OnLotteryStart.Invoke();
-            _lotteryStarted = true;
+            LotteryStarted = true;
 
             while (_lotteryTimer < ItemsLottery.LotteryDuration && _shortenLottery == false)
             {
@@ -58,13 +67,6 @@ namespace Items.Lottery
 
             OnLotteryStop.Invoke();
             ResetLottery();
-        }
-
-        private void ResetLottery()
-        {
-            _lotteryTimer = 0f;
-            _lotteryStarted = false;
-            _shortenLottery = false;
         }
 
         private void OnTriggerEnter(Collider other)
