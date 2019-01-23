@@ -66,7 +66,7 @@ namespace Common.PhysicsUtils
                 settings.SecondsToDecreaseClampSpeed));
         }
 
-        public void StopAllCurrentCustomBoost(BoostSettings settings)
+        public void StopAllCurrentCustomBoost()
         {
             StopAllCoroutines();
             _clampSpeed.CurrentClampSpeed = _clampSpeed.BaseClampSpeed;
