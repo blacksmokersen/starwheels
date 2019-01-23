@@ -12,6 +12,7 @@ namespace Items
 
         [Header("Item Source")]
         [SerializeField] private Inventory _inventory;
+        [SerializeField] private Lottery.Lottery _lottery;
 
         [Header("Boost")]
         [SerializeField] private Boost _boost;
@@ -40,7 +41,7 @@ namespace Items
             {
                 _timer += Time.deltaTime;
 
-                if (_timer > _secondsBeforeMerging.Value && _inventory.CurrentItem != null)
+                if (_timer > _secondsBeforeMerging.Value)
                 {
                     MergeItem();
                 }
@@ -55,13 +56,27 @@ namespace Items
 
         private void MergeItem()
         {
-            var numberOfCharge = _inventory.CurrentItemCount / _inventory.CurrentItem.Count;
-            _boost.CustomBoostFromBoostSettings(_boostSettings);
-            _inventory.SetItem(null, 0);
-
-            if (OnItemMerging != null)
+            if (_inventory.CurrentItem != null)
             {
-                OnItemMerging.Invoke();
+                var numberOfCharge = _inventory.CurrentItemCount / _inventory.CurrentItem.Count;
+                _boost.CustomBoostFromBoostSettings(_boostSettings);
+                _inventory.SetItem(null, 0);
+
+                if (OnItemMerging != null)
+                {
+                    OnItemMerging.Invoke();
+                }
+            }
+            else if (_lottery.LotteryStarted)
+            {
+                _lottery.StopAllCoroutines();
+                _lottery.ResetLottery();
+                _boost.CustomBoostFromBoostSettings(_boostSettings);
+
+                if (OnItemMerging != null)
+                {
+                    OnItemMerging.Invoke();
+                }
             }
         }
     }
