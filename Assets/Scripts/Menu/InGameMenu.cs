@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 using Bolt;
+using TMPro;
 
 public class InGameMenu : GlobalEventListener
 {
@@ -27,23 +28,30 @@ public class InGameMenu : GlobalEventListener
     [Header("Options Menu Buttons")]
     [SerializeField] private Button audioMenuButton;
     [SerializeField] private Button videoMenuButton;
+    [SerializeField] private Button hudMenuButton;
+    [SerializeField] private Button keyBindingMenuButton;
+    [SerializeField] private Button backMenuButton;
 
     [Header("Options Menu Panels")]
     [SerializeField] private GameObject audioMenuPanel;
     [SerializeField] private GameObject videoMenuPanel;
+    [SerializeField] private GameObject hudMenuPanel;
+    [SerializeField] private GameObject keyBindMenuPanel;
 
     [Header("Audio Panel Settings")]
-
     [SerializeField] private AudioMixer audioMixer;
     [SerializeField] private Slider muteVolumeSlider;
     [SerializeField] private Slider musicVolumeSlider;
     [SerializeField] private Slider sfxVolumeSlider;
 
     [Header("Video Panel Settings")]
-    [SerializeField] private Toggle fullscreenToggle;
-    [SerializeField] private Dropdown resolutionPickerDropDown;
-    [SerializeField] private Dropdown graphicQualityDropDown;
+    [SerializeField] private Slider fullscreenToggle;
+    [SerializeField] private TMP_Dropdown resolutionPickerDropDown;
+    [SerializeField] private TMP_Dropdown graphicQualityDropDown;
 
+    [Header("HUD Panel Settings")]
+    [SerializeField] private TMP_Dropdown hudPositionDropDown;
+    [SerializeField] private Slider hudSizeSlider;
 
     private bool _isGameFullscreen = true;
     private bool _menuEnabled = false;
@@ -51,17 +59,21 @@ public class InGameMenu : GlobalEventListener
 
     private void Awake()
     {
+
         _currentMenu = MenuState.NONE;
 
         quitButton.onClick.AddListener(QuitMatch);
         allToMenu.onClick.AddListener(AllToMenu);
         optionsButton.onClick.AddListener(OpenOptionsMenu);
 
+        backMenuButton.onClick.AddListener(CloseOptionsMenu);
         audioMenuButton.onClick.AddListener(OpenAudioPanel);
         videoMenuButton.onClick.AddListener(OpenVideoPanel);
+        hudMenuButton.onClick.AddListener(OpenHudPanel);
+        keyBindingMenuButton.onClick.AddListener(OpenKeyBindPanel);
+        
 
-
-        // Audio Sliders
+        // Audio Settings
         muteVolumeSlider.onValueChanged.AddListener(MuteSound);
         musicVolumeSlider.onValueChanged.AddListener(SetMusicVolume);
         sfxVolumeSlider.onValueChanged.AddListener(SetSfxVolume);
@@ -71,12 +83,21 @@ public class InGameMenu : GlobalEventListener
         resolutionPickerDropDown.onValueChanged.AddListener(SetScreenResolution);
         graphicQualityDropDown.onValueChanged.AddListener(SetGraphicQuality);
 
+        //HUD Settings
+
+
+        //Keybind Settings
+
+
+
+
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+
             if(_currentMenu == MenuState.NONE )
             {
                 Debug.Log("MAIN IN!");
@@ -93,11 +114,7 @@ public class InGameMenu : GlobalEventListener
             }
             else if(_currentMenu == MenuState.OPTIONS)
             {
-                Debug.Log("OPTIONS OUT!");
-                _optionsVisible = !_optionsVisible;
-                optionsPanel.SetActive(false);
-                inGameMenuPanel.SetActive(true);
-                _currentMenu = MenuState.MAIN;
+                CloseOptionsMenu();
             }
         }
     }
@@ -131,6 +148,16 @@ public class InGameMenu : GlobalEventListener
 
     }
 
+    private void CloseOptionsMenu()
+    {
+        Debug.Log("OPTIONS OUT!");
+        _optionsVisible = !_optionsVisible;
+        optionsPanel.SetActive(false);
+        inGameMenuPanel.SetActive(true);
+        _currentMenu = MenuState.MAIN;
+    }
+
+
     // OPTIONS FUNCTIONS
 
     private void OpenAudioPanel()
@@ -138,6 +165,9 @@ public class InGameMenu : GlobalEventListener
         Debug.Log("AUDIO MENU");
         audioMenuPanel.SetActive(true);
         videoMenuPanel.SetActive(false);
+        hudMenuPanel.SetActive(false);
+        keyBindMenuPanel.SetActive(false);
+
     }
 
     private void OpenVideoPanel()
@@ -145,7 +175,28 @@ public class InGameMenu : GlobalEventListener
         Debug.Log("VIDEO MENU");
         audioMenuPanel.SetActive(false);
         videoMenuPanel.SetActive(true);
+        hudMenuPanel.SetActive(false);
+        keyBindMenuPanel.SetActive(false);
     }
+
+    private void OpenHudPanel()
+    {
+        Debug.Log("HUD MENU");
+        audioMenuPanel.SetActive(false);
+        videoMenuPanel.SetActive(false);
+        hudMenuPanel.SetActive(true);
+        keyBindMenuPanel.SetActive(false);
+    }
+
+    private void OpenKeyBindPanel()
+    {
+        Debug.Log("KEYBIND MENU");
+        audioMenuPanel.SetActive(false);
+        videoMenuPanel.SetActive(false);
+        hudMenuPanel.SetActive(false);
+        keyBindMenuPanel.SetActive(true);
+    }
+
 
     private void SetSfxVolume(float value)
     {
@@ -177,9 +228,9 @@ public class InGameMenu : GlobalEventListener
 
     //VIDEO OPTIONS
 
-    private void SetFullScreen(bool value)
+    private void SetFullScreen(float value)
     {
-        if(value)
+        if(value == 1)
         {
             Screen.fullScreen = true;
             _isGameFullscreen = true;
