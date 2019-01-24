@@ -19,6 +19,9 @@ namespace Abilities
         [SerializeField] private AudioSource _useTpBackSound;
         [SerializeField] private GameObject _kartMeshes;
 
+        [Header("Invicibility")]
+        [SerializeField] private Health.Health _health;
+
         private TPBackSettings _tPBackSettings;
         private ParticleSystem _reloadEffect;
         private TPBackBehaviour _tpBack = null;
@@ -54,6 +57,7 @@ namespace Abilities
         {
             CanUseAbility = true;
             _kartMeshes.SetActive(true);
+            _health.UnsetInvincibility();
 
             if (_tpBack)
             {
@@ -93,8 +97,10 @@ namespace Abilities
         {
             OnBlinkActivated.Invoke();
             _kartMeshes.SetActive(false);
+            _health.SetInvincibility();
             yield return new WaitForSeconds(0.5f);
             _kartMeshes.SetActive(true);
+            _health.UnsetInvincibility();
             var y = _tpBack.transform.position.y + 5f;
             _rb.transform.position = new Vector3(_tpBack.transform.position.x, y, _tpBack.transform.position.z);
             _rb.transform.rotation = GetKartRotation();
