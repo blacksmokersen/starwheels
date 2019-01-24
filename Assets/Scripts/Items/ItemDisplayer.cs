@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using Bolt;
-using UnityEngine.Events;
 using System;
 
 namespace Items
@@ -36,17 +35,22 @@ namespace Items
 
         // PUBLIC
 
+        public void CheckItemCount(int count)
+        {
+            if(count <= 0)
+            {
+                HideItem();
+            }
+        }
+
         public void SendShowDisplayEvent()
         {
-            if (_inventory.CurrentItem != null)
-            {
-                var showDisplayEvent = ShowKartDisplayItem.Create();
-                showDisplayEvent.Entity = GetComponentInParent<BoltEntity>();
-                showDisplayEvent.ItemName = _inventory.CurrentItem.Name;
-                showDisplayEvent.ItemCount = _inventory.CurrentItemCount;
-                showDisplayEvent.Direction = _throwingDirection.LastDirectionUp.ToString();
-                showDisplayEvent.Send();
-            }
+            var showDisplayEvent = ShowKartDisplayItem.Create();
+            showDisplayEvent.Entity = GetComponentInParent<BoltEntity>();
+            showDisplayEvent.ItemName = _inventory.CurrentItem != null ? _inventory.CurrentItem.Name : "";
+            showDisplayEvent.ItemCount = _inventory.CurrentItemCount;
+            showDisplayEvent.Direction = _throwingDirection.LastDirectionUp.ToString();
+            showDisplayEvent.Send();
         }
 
         public void DisplayItem(string itemNameToDisplay, int itemCountToDisplay, Direction direction)
@@ -170,6 +174,14 @@ namespace Items
                         GoldItem.SetActive(true); //Activating the Purple Shield
                         GoldItem.transform.GetChild(0).gameObject.SetActive(true); //Activating the front purple shield on the hierarchie
                         GoldItem.transform.GetChild(1).gameObject.SetActive(true); //Activating the back purple shield on the hierarchie
+                        break;
+                    #endregion
+
+                    #region Overcharge
+                    case "Overcharge":
+                        PurpleItem.SetActive(true); //Activating the Purple Shield
+                        PurpleItem.transform.GetChild(0).gameObject.SetActive(true); //Activating the front purple shield on the hierarchie
+                        PurpleItem.transform.GetChild(1).gameObject.SetActive(true); //Activating the back purple shield on the hierarchie
                         break;
                         #endregion
                 }
