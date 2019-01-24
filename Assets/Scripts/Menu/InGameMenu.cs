@@ -39,8 +39,13 @@ public class InGameMenu : GlobalEventListener
     [SerializeField] private Slider musicVolumeSlider;
     [SerializeField] private Slider sfxVolumeSlider;
 
+    [Header("Video Panel Settings")]
+    [SerializeField] private Toggle fullscreenToggle;
+    [SerializeField] private Dropdown resolutionPickerDropDown;
+    [SerializeField] private Dropdown graphicQualityDropDown;
 
 
+    private bool _isGameFullscreen = true;
     private bool _menuEnabled = false;
     private bool _optionsVisible = false;
 
@@ -60,9 +65,11 @@ public class InGameMenu : GlobalEventListener
         muteVolumeSlider.onValueChanged.AddListener(MuteSound);
         musicVolumeSlider.onValueChanged.AddListener(SetMusicVolume);
         sfxVolumeSlider.onValueChanged.AddListener(SetSfxVolume);
-        
 
-
+        //Video Settings
+        fullscreenToggle.onValueChanged.AddListener(SetFullScreen);
+        resolutionPickerDropDown.onValueChanged.AddListener(SetScreenResolution);
+        graphicQualityDropDown.onValueChanged.AddListener(SetGraphicQuality);
 
     }
 
@@ -150,8 +157,6 @@ public class InGameMenu : GlobalEventListener
         audioMixer.SetFloat("MasterMusic", value);
     }
 
-
-
     private void MuteSound(float value)
     {
         Debug.Log("MUTE SOUND : " + value);
@@ -165,7 +170,61 @@ public class InGameMenu : GlobalEventListener
             audioMixer.SetFloat("Master", -4);
         }
         
-        
+    }
+
+    //
+
+
+    //VIDEO OPTIONS
+
+    private void SetFullScreen(bool value)
+    {
+        if(value)
+        {
+            Screen.fullScreen = true;
+            _isGameFullscreen = true;
+        }
+        else
+        {
+            Screen.fullScreen = false;
+            _isGameFullscreen = false;
+        }
+    }
+
+    private void SetScreenResolution(int value)
+    {
+        switch (value)
+        {
+            case 0:
+                Screen.SetResolution(1920, 1080, _isGameFullscreen);
+                break;
+            case 1:
+                Screen.SetResolution(1366, 768, _isGameFullscreen);
+                break;
+            case 2:
+                Screen.SetResolution(1280, 720, _isGameFullscreen);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void SetGraphicQuality(int value)
+    {
+        switch (value)
+        {
+            case 0:
+                QualitySettings.SetQualityLevel(0);
+                break;
+            case 1:
+                QualitySettings.SetQualityLevel(1);
+                break;
+            case 2:
+                QualitySettings.SetQualityLevel(2);
+                break;
+            default:
+                break;
+        }
     }
 
     //
