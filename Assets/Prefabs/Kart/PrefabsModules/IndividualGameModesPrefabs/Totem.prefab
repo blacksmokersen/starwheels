@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 6058140080658608087}
   - component: {fileID: 6057409765090743145}
   - component: {fileID: 6687914346056628858}
+  - component: {fileID: 2292216838672508570}
   - component: {fileID: 6155671645727115321}
   m_Layer: 11
   m_Name: Totem
@@ -282,6 +283,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2292216838672508570}
+        m_MethodName: FullyDischarge
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   _isLocalOwner: 0
@@ -334,6 +346,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _kartRoot: {fileID: 0}
+--- !u!114 &2292216838672508570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6161096272583477527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e37b00a08d39a07439e5ca2d7fc3e911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _secondsDischarged: {fileID: 11400000, guid: 3e284fa8f2cd6c748bd8be2c1dbf0c67, type: 2}
+  OnFullyCharged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnFullyDischarged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!65 &6155671645727115321
 BoxCollider:
   m_ObjectHideFlags: 0
