@@ -17,7 +17,6 @@ namespace GameModes.Totem
 
         public void SlowOwner()
         {
-
             if (!_ownerIsSlowed)
             {
                 var targetMagnitude = _clampSpeedSettings.BaseClampSpeed * _totemSettings.OwnerSpeedReductionFactor;
@@ -25,7 +24,6 @@ namespace GameModes.Totem
                 _ownerClampSpeed.SetClampMagnitude(targetMagnitude);
                 _ownerIsSlowed = true;
             }
-
         }
 
         public void ResetOwnerSpeed()
