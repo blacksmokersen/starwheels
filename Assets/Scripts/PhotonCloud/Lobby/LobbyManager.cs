@@ -40,15 +40,13 @@ namespace Photon.Lobby
             }
         }
 
+        [Header("Settings")]
+        [SerializeField] private LobbySettings _lobbySettings;
         [SerializeField] private PlayerSettings _playerSettings;
 
         [Header("Lobby Configuration")]
         [SerializeField] private SceneField _lobbyScene;
         [SerializeField] private SceneField _gameScene;
-
-        [Header("UI Lobby")]
-        [Tooltip("Time in second between all players ready & match start")]
-        [SerializeField] private float _prematchCountdown = 5.0f;
 
         [Space]
         [Header("UI Reference")]
@@ -387,31 +385,33 @@ namespace Photon.Lobby
 
         private IEnumerator ServerCountdownCoroutine()
         {
-            float remainingTime = _prematchCountdown;
-            int floorTime = Mathf.FloorToInt(remainingTime);
-
-            LobbyCountdown countdown;
-
-            while (remainingTime > 0)
+            if (_lobbySettings.Countdown)
             {
-                yield return null;
+                float remainingTime = _lobbySettings.CountdownSeconds;
+                int floorTime = Mathf.FloorToInt(remainingTime);
 
-                remainingTime -= Time.deltaTime;
-                int newFloorTime = Mathf.FloorToInt(remainingTime);
+                LobbyCountdown countdown;
 
-                if (newFloorTime != floorTime)
+                while (remainingTime > 0)
                 {
-                    floorTime = newFloorTime;
+                    yield return null;
 
-                    countdown = LobbyCountdown.Create(GlobalTargets.Everyone);
-                    countdown.Time = floorTime;
-                    countdown.Send();
+                    remainingTime -= Time.deltaTime;
+                    int newFloorTime = Mathf.FloorToInt(remainingTime);
+
+                    if (newFloorTime != floorTime)
+                    {
+                        floorTime = newFloorTime;
+
+                        countdown = LobbyCountdown.Create(GlobalTargets.Everyone);
+                        countdown.Time = floorTime;
+                        countdown.Send();
+                    }
                 }
+                countdown = LobbyCountdown.Create(GlobalTargets.Everyone);
+                countdown.Time = 0;
+                countdown.Send();
             }
-
-            countdown = LobbyCountdown.Create(GlobalTargets.Everyone);
-            countdown.Time = 0;
-            countdown.Send();
 
             var token = new RoomProtocolToken();
             token.PlayersCount = LobbyPlayerList.Instance.AllPlayers.Count;

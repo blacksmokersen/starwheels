@@ -2,69 +2,98 @@
 using UnityEngine;
 using Bolt;
 using Photon;
+using System.Collections;
 
 namespace Multiplayer
 {
-    [BoltGlobalBehaviour(BoltNetworkModes.Server)]
     public class SpawnAssigner : GlobalEventListener
     {
+        [Header("Settings")]
+        [SerializeField] private FloatVariable _countdownSeconds;
+        [SerializeField] private PlayerSettings _serverPlayerSettings;
+
         public RoomProtocolToken RoomInfoToken;
 
         private List<GameObject> _initialBlueSpawns = new List<GameObject>();
         private List<GameObject> _initialRedSpawns = new List<GameObject>();
         private List<GameObject> _blueSpawns = new List<GameObject>();
         private List<GameObject> _redSpawns = new List<GameObject>();
-        private int _spawnsAssigned = 1;
         private GameObject _serverSpawn;
 
+        private int _spawnsAssigned = 0;
         private int _playersCount = -1;
         private bool _gameIsReady = false;
-        private PlayerSettings _serverPlayerSettings;
-
-        // CORE
-
-        private void Awake()
-        {
-            _serverPlayerSettings = Resources.Load<PlayerSettings>("PlayerSettings");
-        }
 
         // BOLT
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         public override void BoltStartDone()
         {
-            InitializeSpawns();
+            if (BoltNetwork.IsServer)
+            {
+                InitializeSpawns();
+            }
         }
-        #endif
+#endif
 
         public override void SceneLoadLocalDone(string map, IProtocolToken token)
         {
-            InitializeSpawns();
+            if (BoltNetwork.IsServer)
+            {
+                InitializeSpawns();
 
-            RoomInfoToken = (RoomProtocolToken)token;
-            _playersCount = RoomInfoToken.PlayersCount;
+                RoomInfoToken = (RoomProtocolToken)token;
+                _playersCount = RoomInfoToken.PlayersCount;
 
-            // Instantiate server kart
-            var serverTeam = _serverPlayerSettings.TeamColor.GetTeam();
-            _serverSpawn = GetInitialSpawnPosition(serverTeam);
-            var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart, RoomInfoToken);
-            myKart.transform.position = _serverSpawn.transform.position;
-            myKart.transform.rotation = _serverSpawn.transform.rotation;
-            FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
+                // Instantiate server kart
+                var serverTeam = _serverPlayerSettings.TeamColor.GetTeam();
+                _serverSpawn = GetInitialSpawnPosition(serverTeam);
+                var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart, RoomInfoToken);
+                myKart.transform.position = _serverSpawn.transform.position;
+                myKart.transform.rotation = _serverSpawn.transform.rotation;
+                FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
+                IncreaseSpawnCount();
+            }
         }
 
         public override void SceneLoadRemoteDone(BoltConnection connection, IProtocolToken token)
         {
-            var playerTeam = ((Color)connection.UserData).GetTeam();
-            AssignSpawn((int)connection.ConnectionId, playerTeam);
-            IncreaseSpawnCount();
+            if (BoltNetwork.IsServer)
+            {
+                var playerTeam = ((Color)connection.UserData).GetTeam();
+                AssignSpawn((int)connection.ConnectionId, playerTeam);
+                IncreaseSpawnCount();
+            }
         }
 
         public override void OnEvent(RespawnRequest evnt)
         {
-            var team = evnt.Team.GetTeam();
-            AssignSpawn(evnt.ConnectionID, team, true);
+            if (BoltNetwork.IsServer)
+            {
+                var team = evnt.Team.GetTeam();
+                AssignSpawn(evnt.ConnectionID, team, true);
+            }
         }
+
+        #region Clients Callbacks
+
+        public override void Connected(BoltConnection connection)
+        {
+            if (BoltNetwork.IsServer)
+            {
+                _playersCount++;
+            }
+        }
+
+        public override void Disconnected(BoltConnection connection)
+        {
+            if (BoltNetwork.IsServer)
+            {
+                _playersCount--;
+            }
+        }
+
+        #endregion
 
         // PUBLIC
 
@@ -135,15 +164,46 @@ namespace Multiplayer
         private void IncreaseSpawnCount()
         {
             _spawnsAssigned++;
-            if(_spawnsAssigned >= _playersCount)
+            if (_spawnsAssigned >= _playersCount)
             {
                 _gameIsReady = true;
             }
 
             if (_gameIsReady)
             {
-                // LAUNCH GAME OR COUNTDOWN
+                StartCoroutine(CountdownCoroutine());
             }
+        }
+
+        private IEnumerator CountdownCoroutine()
+        {
+            float remainingTime = _countdownSeconds.Value;
+            int floorTime = Mathf.FloorToInt(remainingTime);
+
+            LobbyCountdown countdownEvent;
+
+            while (remainingTime > 0)
+            {
+                remainingTime -= Time.deltaTime;
+                int newFloorTime = Mathf.FloorToInt(remainingTime);
+
+                if (newFloorTime != floorTime)
+                {
+                    floorTime = newFloorTime;
+
+                    countdownEvent = LobbyCountdown.Create(GlobalTargets.Everyone);
+                    countdownEvent.Time = floorTime;
+                    countdownEvent.Send();
+                }
+                yield return null;
+            }
+
+            countdownEvent = LobbyCountdown.Create(GlobalTargets.Everyone);
+            countdownEvent.Time = 0;
+            countdownEvent.Send();
+
+            GameReady gameReadyEvent = GameReady.Create(GlobalTargets.Everyone);
+            gameReadyEvent.Send();
         }
     }
 }
