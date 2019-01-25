@@ -39,6 +39,11 @@ namespace GameModes.Totem
             if(OnFullyDischarged != null) OnFullyDischarged.Invoke();
         }
 
+        public void FullyDischargeForXSeconds(float seconds)
+        {
+            StartCoroutine(FullyDischargeForXSecondsRoutine(seconds));
+        }
+
         public void FullyCharge()
         {
             if (entity.isAttached && entity.isOwner)
@@ -53,6 +58,13 @@ namespace GameModes.Totem
         private IEnumerator RechargeEnergy()
         {
             yield return new WaitForSeconds(_secondsDischarged.Value);
+            FullyCharge();
+        }
+
+        private IEnumerator FullyDischargeForXSecondsRoutine(float seconds)
+        {
+            FullyDischarge();
+            yield return new WaitForSeconds(seconds);
             FullyCharge();
         }
     }
