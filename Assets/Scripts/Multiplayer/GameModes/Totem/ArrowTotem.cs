@@ -14,7 +14,7 @@ namespace GameModes.Totem
 
         void Start()
         {
-            _totemPosition = TotemHelpers.GetTotemEntity().transform;
+
         }
 
         public override void Attached()
@@ -24,16 +24,22 @@ namespace GameModes.Totem
 
         void Update()
         {
-            // Inverted lookAt
-            this.transform.LookAt(2 * transform.position - _totemPosition.position);
-
-            if (_totemPossession._isLocalOwner)
+            if (!_totemPosition)
             {
-                _arrowTotem.enabled = false;
+                _totemPosition = TotemHelpers.GetTotemEntity().transform;
             }
             else
             {
-                _arrowTotem.enabled = true;
+                this.transform.LookAt(2 * transform.position - _totemPosition.position);
+
+                if (_totemPossession._isLocalOwner)
+                {
+                    _arrowTotem.enabled = false;
+                }
+                else
+                {
+                    _arrowTotem.enabled = true;
+                }
             }
         }
     }
