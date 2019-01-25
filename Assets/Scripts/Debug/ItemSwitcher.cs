@@ -7,6 +7,13 @@ namespace KBA.Debug
     [RequireComponent(typeof(Inventory))]
     public class ItemSwitcher : EntityBehaviour, IControllable
     {
+        [SerializeField] private bool _enabled = true;
+        public bool Enabled
+        {
+            get { return _enabled; }
+            set { _enabled = value; }
+        }
+
         private Item[] _itemsList;
         private Inventory _inventory;
         private int _actualItemIndex = 0;
@@ -31,7 +38,7 @@ namespace KBA.Debug
 
         public void MapInputs()
         {
-            if (Input.GetKeyDown(KeyCode.Alpha2))
+            if (Enabled && Input.GetKeyDown(KeyCode.Alpha2))
             {
                 SwitchToNextItem();
             }

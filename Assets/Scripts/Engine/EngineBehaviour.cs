@@ -9,6 +9,13 @@ namespace Engine
 
     public class EngineBehaviour : EntityBehaviour<IKartState>, IControllable
     {
+        [SerializeField] private bool _enabled = true;
+        public bool Enabled
+        {
+            get { return _enabled; }
+            set { _enabled = value; }
+        }
+
         [Header("Forces")]
         public EngineSettings Settings;
 
@@ -31,7 +38,6 @@ namespace Engine
 
         private float _forwardValue;
         private float _backwardValue;
-        private bool _enabled = true;
 
         private float _curveTime;
         private float _DecCurveTime;

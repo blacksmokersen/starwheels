@@ -5,6 +5,13 @@ namespace CameraUtils
 {
     public class CameraTurnEffect : MonoBehaviour, IControllable
     {
+        [SerializeField] private bool _enabled = true;
+        public bool Enabled
+        {
+            get { return _enabled; }
+            set { _enabled = value; }
+        }
+
         private string _turnCamInputName = "RightJoystickHorizontal";
         private CinemachineOrbitalTransposer _orbiter;
         private CinemachineVirtualCamera _cinemachine;
@@ -34,11 +41,14 @@ namespace CameraUtils
 
         public void MapInputs()
         {
-            if (Input.GetButtonDown(Constants.Input.ResetCamera))
+            if (Enabled)
             {
-                CameraReset();
+                if (Input.GetButtonDown(Constants.Input.ResetCamera))
+                {
+                    CameraReset();
+                }
+                WhenToRecenterEnableCam(Input.GetAxis(Constants.Input.TurnCamera));
             }
-            WhenToRecenterEnableCam(Input.GetAxis(Constants.Input.TurnCamera));
         }
 
         public void DisableTurnEffectInput()
