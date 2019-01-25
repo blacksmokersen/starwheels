@@ -7,6 +7,13 @@ namespace Abilities.Jump
 {
     public class JumpingAbility : Ability, IControllable
     {
+        [SerializeField] private bool _enabled = true;
+        public bool Enabled
+        {
+            get { return _enabled; }
+            set { _enabled = value; }
+        }
+
         [Header("Events")]
         public UnityEvent OnFirstJump;
         public DirectionEvent OnSecondJump;
@@ -97,7 +104,7 @@ namespace Abilities.Jump
 
         public void MapInputs()
         {
-            if (Input.GetButtonDown(Constants.Input.UseAbility))
+            if (Enabled && Input.GetButtonDown(Constants.Input.UseAbility))
             {
                 JoystickValues joystickValues = new JoystickValues()
                 {

@@ -12,6 +12,13 @@ namespace Drift
 
     public class Drift : EntityBehaviour<IKartState>, IControllable
     {
+        [SerializeField] private bool _enabled = true;
+        public bool Enabled
+        {
+            get { return _enabled; }
+            set { _enabled = value; }
+        }
+
         public DriftSettings Settings;
         public const float JoystickDeadZone1 = 0.1f;
         public const float JoystickDeadZone2 = 0.2f;
@@ -287,7 +294,7 @@ namespace Drift
 
         public void MapInputs()
         {
-            if (Input.GetButtonDown(Constants.Input.Drift))
+            if (Enabled && Input.GetButtonDown(Constants.Input.Drift))
             {
                 InitializeDrift(Input.GetAxis(Constants.Input.TurnAxis));
                 OnDriftStart.Invoke();

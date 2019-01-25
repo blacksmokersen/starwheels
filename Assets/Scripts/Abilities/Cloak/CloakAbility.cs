@@ -7,6 +7,13 @@ namespace Abilities
 {
     public class CloakAbility : Ability, IControllable
     {
+        [SerializeField] private bool _enabled = true;
+        public bool Enabled
+        {
+            get { return _enabled; }
+            set { _enabled = value; }
+        }
+
         [Header("Unity Events")]
         public UnityEvent OnOwnerCloackSet;
         public UnityEvent OnOwnerCloackUnset;
@@ -61,7 +68,7 @@ namespace Abilities
 
         public void MapInputs()
         {
-            if (Input.GetButtonDown(Constants.Input.UseAbility))
+            if (Enabled && Input.GetButtonDown(Constants.Input.UseAbility))
             {
                 if (CanUseAbility)
                     SendCloakEvent();

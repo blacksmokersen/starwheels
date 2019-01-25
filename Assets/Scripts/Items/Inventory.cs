@@ -8,6 +8,13 @@ namespace Items
 {
     public class Inventory : EntityBehaviour<IKartState>, IControllable
     {
+        [SerializeField] private bool _enabled = true;
+        public bool Enabled
+        {
+            get { return _enabled; }
+            set { _enabled = value; }
+        }
+
         public bool CanUseItem = true;
 
         [Header("Spam Prevention")]
@@ -46,11 +53,14 @@ namespace Items
 
         public void MapInputs()
         {
-            if (Input.GetButtonUp(Constants.Input.UseItem) ||
-                Input.GetButtonUp(Constants.Input.UseItemBackward) ||
-                Input.GetButtonUp(Constants.Input.UseItemForward))
+            if (Enabled)
             {
-                UseItem();
+                if (Input.GetButtonUp(Constants.Input.UseItem) ||
+                    Input.GetButtonUp(Constants.Input.UseItemBackward) ||
+                    Input.GetButtonUp(Constants.Input.UseItemForward))
+                {
+                    UseItem();
+                }
             }
         }
 

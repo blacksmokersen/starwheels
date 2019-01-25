@@ -5,6 +5,13 @@ namespace KBA.Debug
 {
     public class DebugTeleporter : EntityBehaviour, IControllable
     {
+        [SerializeField] private bool _enabled = true;
+        public bool Enabled
+        {
+            get { return _enabled; }
+            set { _enabled = value; }
+        }
+
         [Header("Teleport Settings")]
         [SerializeField] private GameObject _teleportTarget;
         [SerializeField] private Vector3 _teleportPosition;
@@ -21,7 +28,7 @@ namespace KBA.Debug
 
         public void MapInputs()
         {
-            if (Input.GetKeyDown(KeyCode.Alpha9))
+            if (Enabled && Input.GetKeyDown(KeyCode.Alpha9))
             {
                 _teleportTarget.transform.position = _teleportPosition;
             }

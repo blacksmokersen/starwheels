@@ -5,6 +5,13 @@ namespace CameraUtils
 {
     public class BackCamera : MonoBehaviour, IControllable
     {
+        [SerializeField] private bool _enabled = true;
+        public bool Enabled
+        {
+            get { return _enabled; }
+            set { _enabled = value; }
+        }
+
         [SerializeField] CameraSettings _cameraSettings;
         [SerializeField] float _backCamZPosition;
 
@@ -28,7 +35,7 @@ namespace CameraUtils
 
         public void MapInputs()
         {
-            if (Input.GetButtonDown(Constants.Input.BackCamera))
+            if (Enabled && Input.GetButtonDown(Constants.Input.BackCamera))
             {
                 BackCameraSwitch(true);
                 //  kartEvents.OnBackCameraStart(true);

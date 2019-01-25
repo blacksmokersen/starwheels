@@ -5,6 +5,13 @@ namespace Abilities
 {
     public class AbilityHook : Ability, IControllable
     {
+        [SerializeField] private bool _enabled = true;
+        public bool Enabled
+        {
+            get { return _enabled; }
+            set { _enabled = value; }
+        }
+
         [SerializeField] private GameObject prefabHook;
         [SerializeField] private HookSettings hookSettings;
 
@@ -28,8 +35,7 @@ namespace Abilities
 
         public void MapInputs()
         {
-            //   throw new System.NotImplementedException();
-            if (Input.GetButtonDown(Constants.Input.UseAbility))
+            if (Enabled && Input.GetButtonDown(Constants.Input.UseAbility))
             {
                 var xAxis = Input.GetAxis(Constants.Input.TurnAxis);
                 var yAxis = Input.GetAxis(Constants.Input.UpAndDownAxis);

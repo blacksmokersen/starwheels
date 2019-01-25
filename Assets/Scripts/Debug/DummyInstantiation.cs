@@ -5,6 +5,13 @@ namespace KBA.Debug
 {
     public class DummyInstantiation : MonoBehaviour, IControllable
     {
+        [SerializeField] private bool _enabled = true;
+        public bool Enabled
+        {
+            get { return _enabled; }
+            set { _enabled = value; }
+        }
+
         [Header("Karts")]
         [SerializeField] private GameObject blueKart;
         [SerializeField] private GameObject redKart;
@@ -20,10 +27,17 @@ namespace KBA.Debug
 
         public void MapInputs()
         {
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-                Instantiate(blueKart);
-            if (Input.GetKeyDown(KeyCode.Alpha4))
-                Instantiate(redKart);
+            if (Enabled)
+            {
+                if (Input.GetKeyDown(KeyCode.Alpha3))
+                {
+                    Instantiate(blueKart);
+                }
+                if (Input.GetKeyDown(KeyCode.Alpha4))
+                {
+                    Instantiate(redKart);
+                }
+            }
         }
 
         // PRIVATE

@@ -7,6 +7,13 @@ namespace Steering
 {
     public class SteeringWheel : EntityBehaviour<IKartState>, IControllable
     {
+        [SerializeField] private bool _enabled = true;
+        public bool Enabled
+        {
+            get { return _enabled; }
+            set { _enabled = value; }
+        }
+
         public bool CanSteer = true;
         public enum TurnState { NotTurning, Left, Right }
 
@@ -41,8 +48,10 @@ namespace Steering
 
         public void MapInputs()
         {
-            if(CanSteer)
-            _turnValue = Input.GetAxis(Constants.Input.TurnAxis);
+            if (Enabled && CanSteer)
+            {
+                _turnValue = Input.GetAxis(Constants.Input.TurnAxis);
+            }
         }
 
         public override void Attached()

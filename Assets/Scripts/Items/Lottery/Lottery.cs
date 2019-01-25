@@ -7,6 +7,13 @@ namespace Items.Lottery
 {
     public class Lottery : EntityBehaviour, IControllable
     {
+        [SerializeField] private bool _enabled = true;
+        public bool Enabled
+        {
+            get { return _enabled; }
+            set { _enabled = value; }
+        }
+
         [Header("Events")]
         public UnityEvent OnLotteryStart;
         public UnityEvent OnLotteryStop;
@@ -32,7 +39,7 @@ namespace Items.Lottery
 
         public void MapInputs()
         {
-            if(Input.GetButtonDown(Constants.Input.UseItem) && LotteryStarted && _lotteryTimer > 2f)
+            if(Enabled && Input.GetButtonDown(Constants.Input.UseItem) && LotteryStarted && _lotteryTimer > 2f)
             {
                 _shortenLottery = true;
             }

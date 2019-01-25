@@ -7,6 +7,13 @@ namespace Items
 {
     public class ItemMerger : EntityBehaviour<IKartState>, IControllable
     {
+        [SerializeField] private bool _enabled = true;
+        public bool Enabled
+        {
+            get { return _enabled; }
+            set { _enabled = value; }
+        }
+
         [Tooltip("Seconds with button pressed before merging the item")]
         [SerializeField] private FloatVariable _secondsBeforeMerging;
 
@@ -37,18 +44,21 @@ namespace Items
 
         public void MapInputs()
         {
-            if (Input.GetButton(Constants.Input.UseItem) || Input.GetButton(Constants.Input.UseItemBackward) || Input.GetButton(Constants.Input.UseItemForward))
+            if (Enabled)
             {
-                _timer += Time.deltaTime;
-
-                if (_timer > _secondsBeforeMerging.Value)
+                if (Input.GetButton(Constants.Input.UseItem) || Input.GetButton(Constants.Input.UseItemBackward) || Input.GetButton(Constants.Input.UseItemForward))
                 {
-                    MergeItem();
+                    _timer += Time.deltaTime;
+
+                    if (_timer > _secondsBeforeMerging.Value)
+                    {
+                        MergeItem();
+                    }
                 }
-            }
-            if (Input.GetButtonUp(Constants.Input.UseItem) || Input.GetButtonUp(Constants.Input.UseItemBackward) || Input.GetButtonUp(Constants.Input.UseItemForward))
-            {
-                _timer = 0f;
+                if (Input.GetButtonUp(Constants.Input.UseItem) || Input.GetButtonUp(Constants.Input.UseItemBackward) || Input.GetButtonUp(Constants.Input.UseItemForward))
+                {
+                    _timer = 0f;
+                }
             }
         }
 

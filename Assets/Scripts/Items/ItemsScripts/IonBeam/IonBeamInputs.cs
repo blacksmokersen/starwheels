@@ -9,6 +9,13 @@ namespace Controls
     {
         //public static bool IonBeamControlMode;
 
+        [SerializeField] private bool _enabled = true;
+        public bool Enabled
+        {
+            get { return _enabled; }
+            set { _enabled = value; }
+        }
+
         private float _horizontalAxis;
         private float _verticalAxis;
         private IonBeamBehaviour _ionBeamBehaviour;
@@ -35,7 +42,7 @@ namespace Controls
 
         public void MapInputs()
         {
-            if (Input.GetButtonDown(Constants.Input.UseItem) || Input.GetButtonDown(Constants.Input.UseItemForward))
+            if (Enabled && Input.GetButtonDown(Constants.Input.UseItem) || Input.GetButtonDown(Constants.Input.UseItemForward))
             {
                 _ionBeamBehaviour.FireIonBeam();
             }

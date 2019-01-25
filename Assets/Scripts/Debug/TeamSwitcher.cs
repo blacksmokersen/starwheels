@@ -1,11 +1,17 @@
 ﻿using UnityEngine;
 using Bolt;
-using Multiplayer.Teams;
 
 namespace KBA.Debug
 {
     public class TeamSwitcher : EntityBehaviour<IKartState>, IControllable
     {
+        [SerializeField] private bool _enabled = true;
+        public bool Enabled
+        {
+            get { return _enabled; }
+            set { _enabled = value; }
+        }
+
         // CORE
 
         private void Update()
@@ -20,7 +26,7 @@ namespace KBA.Debug
 
         public void MapInputs()
         {
-            if (Input.GetKeyDown(KeyCode.Alpha8))
+            if (Enabled && Input.GetKeyDown(KeyCode.Alpha8))
             {
                 SwitchTeam();
             }
@@ -30,7 +36,6 @@ namespace KBA.Debug
         {
             if (entity.isAttached && entity.isOwner)
             {
-                UnityEngine.Debug.Log("Switching");
                 state.Team = state.Team.GetNextTeamColor();
             }
         }

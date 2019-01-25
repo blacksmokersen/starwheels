@@ -6,6 +6,13 @@ namespace GameModes.Totem
 {
     public class TotemPicker : EntityBehaviour<IKartState> , IControllable
     {
+        [SerializeField] private bool _enabled = true;
+        public bool Enabled
+        {
+            get { return _enabled; }
+            set { _enabled = value; }
+        }
+
         [Header("Throwing System")]
         [SerializeField] private ThrowingDirection _throwingDirection;
 
@@ -39,11 +46,14 @@ namespace GameModes.Totem
 
         public void MapInputs()
         {
-            if (Input.GetButtonDown(Constants.Input.UseItem) ||
-                Input.GetButtonDown(Constants.Input.UseItemForward) ||
-                Input.GetButtonDown(Constants.Input.UseItemBackward))
+            if (Enabled)
             {
-                UseTotem();
+                if (Input.GetButtonDown(Constants.Input.UseItem) ||
+                    Input.GetButtonDown(Constants.Input.UseItemForward) ||
+                    Input.GetButtonDown(Constants.Input.UseItemBackward))
+                {
+                    UseTotem();
+                }
             }
         }
 
