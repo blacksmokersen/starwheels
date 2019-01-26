@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 using Common.PhysicsUtils;
 using Bolt;
 
-namespace Items
+namespace Items.Merge
 {
     public class ItemMerger : EntityBehaviour<IKartState>, IControllable
     {
@@ -14,6 +13,7 @@ namespace Items
             set { _enabled = value; }
         }
 
+        [Header("Settings")]
         [Tooltip("Seconds with button pressed before merging the item")]
         [SerializeField] private FloatVariable _secondsBeforeMerging;
 
@@ -21,14 +21,14 @@ namespace Items
         [SerializeField] private Inventory _inventory;
         [SerializeField] private Lottery.Lottery _lottery;
 
-        [Header("Boost")]
+        [Header("Bonuses References")]
         [SerializeField] private Boost _boost;
         [SerializeField] private BoostSettings _boostSettings;
-
-        [Header("Unity Events")]
-        public UnityEvent OnItemMerging;
+        [SerializeField] private Health.Health _health;
 
         private float _timer = 0f;
+
+        private enum MergeMode { Full, Small };
 
         // CORE
 
@@ -52,7 +52,7 @@ namespace Items
 
                     if (_timer > _secondsBeforeMerging.Value)
                     {
-                        MergeItem();
+                        ConsumeItem();
                     }
                 }
                 if (Input.GetButtonUp(Constants.Input.UseItem) || Input.GetButtonUp(Constants.Input.UseItemBackward) || Input.GetButtonUp(Constants.Input.UseItemForward))
@@ -64,30 +64,37 @@ namespace Items
 
         // PRIVATE
 
-        private void MergeItem()
+        private void ConsumeItem()
         {
             if (_inventory.CurrentItem != null)
             {
-                var numberOfCharge = _inventory.CurrentItemCount / _inventory.CurrentItem.Count;
-                _boost.CustomBoostFromBoostSettings(_boostSettings);
+                var mergeMode = _inventory.CurrentItemCount == _inventory.CurrentItem.Count ? MergeMode.Full : MergeMode.Small;
                 _inventory.SetItem(null, 0);
-
-                if (OnItemMerging != null)
-                {
-                    OnItemMerging.Invoke();
-                }
+                GrantBoosts(mergeMode);
             }
             else if (_lottery.LotteryStarted)
             {
                 _lottery.StopAllCoroutines();
                 _lottery.ResetLottery();
-                _boost.CustomBoostFromBoostSettings(_boostSettings);
-
-                if (OnItemMerging != null)
-                {
-                    OnItemMerging.Invoke();
-                }
+                GrantBoosts(MergeMode.Full);
             }
+        }
+
+        private void GrantBoosts(MergeMode mode)
+        {
+            ItemMerging itemMergingEvent = ItemMerging.Create();
+            itemMergingEvent.Entity = entity;
+            switch (mode)
+            {
+                case MergeMode.Full:
+                    _boost.CustomBoostFromBoostSettings(_boostSettings);
+                    itemMergingEvent.Full = true;
+                    break;
+                case MergeMode.Small:
+                    itemMergingEvent.Full = false;
+                    break;
+            }
+            itemMergingEvent.Send();
         }
     }
 }
