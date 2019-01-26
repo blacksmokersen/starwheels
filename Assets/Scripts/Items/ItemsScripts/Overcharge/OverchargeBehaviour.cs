@@ -47,6 +47,7 @@ namespace Items
                     StartCoroutine(SelfDeactivationCoroutine());
                 }
                 SetOwnerInvincibility();
+                DisableOwnerInventory();
             }
             else
             {
@@ -73,6 +74,16 @@ namespace Items
             var health = _ownerKart.GetComponentInChildren<Health.Health>();
             health.SetInvincibilityForXSeconds(_settings.OverchargeDuration);
             _ownerKartHitBox = health.GetComponentInChildren<KartCollisionTrigger>().gameObject;
+        }
+
+        private void DisableOwnerInventory()
+        {
+            _ownerKart.GetComponentInChildren<Inventory>().Enabled = false;
+        }
+
+        private void EnableOwnerInventory()
+        {
+            _ownerKart.GetComponentInChildren<Inventory>().Enabled = true;
         }
 
         private IEnumerator SelfDeactivationCoroutine()
@@ -170,6 +181,11 @@ namespace Items
                 Debug.LogError("Could not find the victim's attached state.");
             }
             TryRemoveFromLists(other);
+        }
+
+        private void OnDestroy()
+        {
+            EnableOwnerInventory();
         }
     }
 }

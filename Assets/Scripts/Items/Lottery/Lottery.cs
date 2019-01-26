@@ -78,7 +78,7 @@ namespace Items.Lottery
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(Constants.Tag.ItemBox) && _inventory.CurrentItem == null)
+            if (other.CompareTag(Constants.Tag.ItemBox) && _inventory.Enabled && _inventory.CurrentItem == null)
             {
                 if (entity.isControllerOrOwner)
                 {
