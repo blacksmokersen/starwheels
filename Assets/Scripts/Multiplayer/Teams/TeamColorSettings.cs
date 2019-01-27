@@ -2,7 +2,8 @@
 
 namespace Multiplayer.Teams
 {
-    public class TeamColorSettings : MonoBehaviour
+    [CreateAssetMenu(fileName = "TeamColorsSettings", menuName ="Team Settings/Team Colors")]
+    public class TeamColorSettings : ScriptableObject
     {
         [Header("Colors")]
         public Color BoltColor;
