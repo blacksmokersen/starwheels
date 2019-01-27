@@ -34,6 +34,7 @@ namespace Photon.Lobby
         [SerializeField] private GameObject _remoteIcon;
 
         private TeamColorSettings _currentColorSettings;
+        private LobbyGameSettingsUpdater _lobbyUpdater;
 
         // Colors
         private Color OddRowColor = new Color(250.0f / 255.0f, 250.0f / 255.0f, 250.0f / 255.0f, 1.0f);
@@ -48,10 +49,18 @@ namespace Photon.Lobby
         private void Awake()
         {
             _colorButton.GetComponent<Image>().color = TeamsColors.NoTeamColor;
+            _gameSettings = Resources.Load<GameSettings>("GameSettings");
+        }
+
+        private void Start()
+        {
+            _lobbyUpdater = FindObjectOfType<LobbyGameSettingsUpdater>();
+            _lobbyUpdater.OnGameModeUpdated.AddListener(ChangeColorToFirst);
         }
 
         // BOLT
 
+        #region Bolt
         public override void Attached()
         {
             state.AddCallback("Name", () =>
@@ -121,6 +130,7 @@ namespace Photon.Lobby
                 state.Ready = lobbyCommand.Input.Ready;
             }
         }
+        #endregion
 
         // PUBLIC
 
@@ -205,6 +215,11 @@ namespace Photon.Lobby
             _readyButton.onClick.AddListener(OnReadyClicked);
 
             OnClientReady(state.Ready);
+        }
+
+        private void ChangeColorToFirst()
+        {
+            OnColorChanged(_gameSettings.TeamsListSettings.GetFirst().MenuColor);
         }
 
         private void ChangeReadyButtonColor(Color c)
