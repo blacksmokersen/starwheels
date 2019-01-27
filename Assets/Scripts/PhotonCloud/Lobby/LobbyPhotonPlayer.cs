@@ -14,7 +14,9 @@ namespace Photon.Lobby
         {
             get { return state.Ready; }
         }
+
         [SerializeField] private PlayerSettings _playerSettings;
+        [SerializeField] private GameSettings _gameSettings;
 
         [Header("Lobby")]
         [SerializeField] private string _playerName = "";
@@ -30,6 +32,8 @@ namespace Photon.Lobby
         [Header("Icons")]
         [SerializeField] private GameObject _localIcon;
         [SerializeField] private GameObject _remoteIcon;
+
+        private TeamColorSettings _currentColorSettings;
 
         // Colors
         private Color OddRowColor = new Color(250.0f / 255.0f, 250.0f / 255.0f, 250.0f / 255.0f, 1.0f);
@@ -226,13 +230,8 @@ namespace Photon.Lobby
 
         private void OnColorClicked()
         {
-            if (_playerColor == TeamsColors.BlueColor)
-                _playerColor = TeamsColors.RedColor;
-            else if (_playerColor == TeamsColors.RedColor)
-                _playerColor = TeamsColors.BlueColor;
-            else
-                _playerColor = TeamsColors.BlueColor;
-
+            _currentColorSettings = _gameSettings.TeamsListSettings.GetNext(_currentColorSettings);
+            _playerColor = _currentColorSettings.MenuColor;
             _playerSettings.TeamColor = _playerColor;
         }
 
