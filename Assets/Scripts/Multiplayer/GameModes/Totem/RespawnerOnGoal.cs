@@ -40,11 +40,13 @@ namespace Totem
             {
                 var teleportTarget = _blueSpawns[Random.Range(0, _blueSpawns.Count - 1)];
                 _kartRoot.transform.position = teleportTarget.transform.position;
+                _kartRoot.transform.rotation = teleportTarget.transform.rotation;
             }
             else if (_playerSettings.TeamColor == TeamsColors.RedColor)
             {
                 var teleportTarget = _redSpawns[Random.Range(0, _redSpawns.Count - 1)];
                 _kartRoot.transform.position = teleportTarget.transform.position;
+                _kartRoot.transform.rotation = teleportTarget.transform.rotation;
             }
             else
             {
