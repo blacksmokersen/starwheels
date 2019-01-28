@@ -3,6 +3,7 @@ using UnityEngine.Events;
 using Bolt;
 using TMPro;
 using MyExtensions;
+using Multiplayer.Teams;
 
 namespace Photon.Lobby
 {
@@ -11,6 +12,11 @@ namespace Photon.Lobby
         [Header("UI Elements")]
         [SerializeField] private TMP_Dropdown _gameModeDropdown;
         [SerializeField] private TMP_Dropdown _mapDropdown;
+
+        [Header("Teams for Gamemodes")]
+        [SerializeField] private TeamsListSettings _totemTeamList;
+        [SerializeField] private TeamsListSettings _FFATeamList;
+        [SerializeField] private TeamsListSettings _battleTeamList;
 
         [Header("Unity Events")]
         public UnityEvent OnGameModeUpdated;
@@ -52,7 +58,8 @@ namespace Photon.Lobby
             state.AddCallback("PublicGame", UpdatePublicGame);
 
             state.GameMode = _gameModeDropdown.options[_gameModeDropdown.value].text;
-            state.Map = _mapDropdown.options[_gameModeDropdown.value].text;
+            state.Map = _mapDropdown.options[_mapDropdown.value].text;
+
         }
 
         // PRIVATE
@@ -62,8 +69,25 @@ namespace Photon.Lobby
             Debug.Log("Updating game mode");
             _gameModeDropdown.ChangeTMProDropdownValue(state.GameMode);
             _gameSettings.GameMode = state.GameMode;
+            UpdateColorsAccordingToGameMode();
 
             if(OnGameModeUpdated != null) OnGameModeUpdated.Invoke();
+        }
+
+        private void UpdateColorsAccordingToGameMode()
+        {
+            switch (state.GameMode)
+            {
+                case Constants.GameModes.Battle:
+                    _gameSettings.TeamsListSettings = _battleTeamList;
+                    break;
+                case Constants.GameModes.Totem:
+                    _gameSettings.TeamsListSettings = _battleTeamList;
+                    break;
+                case Constants.GameModes.FFA:
+                    _gameSettings.TeamsListSettings = _FFATeamList;
+                    break;
+            }
         }
 
         private void UpdateMap()
