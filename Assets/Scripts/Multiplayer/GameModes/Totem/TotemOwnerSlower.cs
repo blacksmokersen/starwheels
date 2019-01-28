@@ -8,6 +8,7 @@ namespace GameModes.Totem
     {
         [Header("Speed Reduction")]
         [SerializeField] private ClampSpeedSettings _clampSpeedSettings;
+        [SerializeField] private Boost _ownerBoost;
         [SerializeField] private ClampSpeed _ownerClampSpeed;
 
         [Header("Settings")]
@@ -19,6 +20,7 @@ namespace GameModes.Totem
         {
             if (!_ownerIsSlowed)
             {
+                _ownerBoost.StopAllCoroutines();
                 var targetMagnitude = _clampSpeedSettings.BaseClampSpeed * _totemSettings.OwnerSpeedReductionFactor;
 
                 _ownerClampSpeed.SetClampMagnitude(targetMagnitude);
@@ -30,6 +32,7 @@ namespace GameModes.Totem
         {
             if (_ownerIsSlowed)
             {
+                _ownerBoost.StopAllCoroutines();
                 _ownerClampSpeed.ResetClampMagnitude();
                 _ownerIsSlowed = false;
             }
