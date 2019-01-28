@@ -44,7 +44,7 @@ public class IonBeamCamera : GlobalEventListener
 
     public override void OnEvent(PlayerHit evnt)
     {
-        if (_ionBeamBehaviour)
+        if (_ionBeamBehaviour && evnt.VictimEntity.isOwner)
         {
             CameraReset();
             _ionBeamBehaviour.DisableIonBeam();
