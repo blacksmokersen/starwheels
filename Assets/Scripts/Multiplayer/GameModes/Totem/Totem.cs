@@ -32,15 +32,19 @@ namespace GameModes.Totem
             _rb = GetComponent<Rigidbody>();
         }
 
+        private void FixedUpdate()
+        {
+            if (_parent == null)
+            {
+                Slowdown();
+            }
+        }
+
         private void LateUpdate()
         {
             if (_parent != null)
             {
                 transform.position = _parent.position;
-            }
-            else
-            {
-                Slowdown();
             }
         }
 
