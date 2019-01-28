@@ -58,7 +58,7 @@ namespace Items
 
                 if (entity.isAttached && state.Team != otherPlayer.Team.GetColor())
                 {
-                    if (CurrentTarget == null || IsKartIsCloserThanActualTarget(other.gameObject))
+                    if (CurrentTarget == null) // || IsKartIsCloserThanActualTarget(other.gameObject))
                     {
                         CurrentTarget = other.gameObject;
                         StartCoroutine(GetComponentInParent<RocketBehaviour>().StartQuickTurn());
