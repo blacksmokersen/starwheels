@@ -42,8 +42,6 @@ namespace GameModes.Totem
 
                 if (BoltNetwork.IsServer) // The server make the player throw the totem
                 {
-                    _totemBehaviour.StartAntiSpamCoroutine();
-
                     var kartThrowing = MyExtensions.KartExtensions.GetKartWithID(evnt.OwnerID);
                     if (kartThrowing)
                     {
