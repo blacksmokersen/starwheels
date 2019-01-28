@@ -1,4 +1,5 @@
-﻿using Bolt;
+﻿using UnityEngine;
+using Bolt;
 
 namespace Multiplayer
 {
@@ -8,15 +9,23 @@ namespace Multiplayer
 
         public override void BoltStartDone()
         {
+            Debug.Log("BoltStart");
             SetupEntity();
         }
 
         public override void SceneLoadLocalDone(string map)
         {
+            Debug.Log("Sceneloaded");
             SetupEntity();
         }
 
         // PRIVATE
+
+        private new void OnEnable()
+        {
+            Debug.Log("OnEnable");
+            SetupEntity();
+        }
 
         private void SetupEntity()
         {

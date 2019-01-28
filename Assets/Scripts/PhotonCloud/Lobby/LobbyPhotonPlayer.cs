@@ -88,6 +88,8 @@ namespace Photon.Lobby
                     _playerSettings.ConnectionID = (int)Connection.ConnectionId;
                 }
             }
+
+            ChangeColorToFirst();
         }
 
         public override void ControlGained()
@@ -219,7 +221,8 @@ namespace Photon.Lobby
 
         private void ChangeColorToFirst()
         {
-            OnColorChanged(_gameSettings.TeamsListSettings.GetFirst().MenuColor);
+            _currentColorSettings = _gameSettings.TeamsListSettings.GetFirst();
+            OnColorChanged(_currentColorSettings.MenuColor);
         }
 
         private void ChangeReadyButtonColor(Color c)
@@ -245,7 +248,11 @@ namespace Photon.Lobby
 
         private void OnColorClicked()
         {
+            Debug.Log("Actual");
+            Debug.Log(_currentColorSettings == null);
             _currentColorSettings = _gameSettings.TeamsListSettings.GetNext(_currentColorSettings);
+            Debug.Log("Next");
+            Debug.Log(_currentColorSettings == null);
             _playerColor = _currentColorSettings.MenuColor;
             _playerSettings.TeamColor = _playerColor;
         }
