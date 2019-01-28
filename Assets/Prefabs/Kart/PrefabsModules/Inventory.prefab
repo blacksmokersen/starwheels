@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5838420469217815682}
   - component: {fileID: 5838430279523773668}
   - component: {fileID: 8125338353520819165}
+  - component: {fileID: 4737033111114505037}
   - component: {fileID: 5798121234586514438}
   m_Layer: 0
   m_Name: Inventory
@@ -311,7 +312,25 @@ MonoBehaviour:
   _lottery: {fileID: 5838665382777420302}
   _boost: {fileID: 0}
   _boostSettings: {fileID: 11400000, guid: c599c944b5b41b446ab1e3ef29a19b81, type: 2}
-  OnItemMerging:
+  _health: {fileID: 0}
+--- !u!114 &4737033111114505037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5806685541933021242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b42f4201499e27c4ba9f14ff7a07fcd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnFullItemMerging:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnSmallItemMerging:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
