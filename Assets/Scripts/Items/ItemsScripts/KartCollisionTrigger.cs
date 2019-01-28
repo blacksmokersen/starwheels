@@ -27,38 +27,40 @@ namespace Items
 
                         if (itemEntity.isAttached && itemEntity.TryFindState<IItemState>(out itemState)) // It is a concrete item & it is attached
                         {
-                            if (!_health.IsInvincible) // The server checks that this kart is not invincible
+                            /*
+                            if (other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName == ItemCollisionName.IonBeamLaser)
                             {
-                                /*
-                                if (other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName == ItemCollisionName.IonBeamLaser)
-                                {
-                                 //   if (!_ionBeamMultiHitProtection)
-                                 //   {
-                                        Debug.LogWarning("HitIonBeam");
-                                        SendPlayerHitEvent(itemState);
-                                     //   _ionBeamMultiHitProtection = true;
-                                 //   }
-                                }
-                                */
-
-                                if (itemState.OwnerID == state.OwnerID)
-                                {
-                                    if (itemCollisionTrigger.ItemCollision.ItemName == ItemCollisionName.Disk)
-                                    {
-                                        if (other.GetComponentInParent<DiskBehaviour>().CanHitOwner)
-                                        {
-                                            SendPlayerHitEvent(itemState);
-                                            DestroyColliderObject(other);
-                                        }
-                                    }
-                                }
-                                else if (itemState.Team != state.Team)
-                                {
+                                //   if (!_ionBeamMultiHitProtection)
+                                //   {
                                     Debug.LogWarning("HitIonBeam");
                                     SendPlayerHitEvent(itemState);
-                                    DestroyColliderObject(other);
                                     //   _ionBeamMultiHitProtection = true;
+                                //   }
+                            }
+                            */
+
+                            if (itemState.OwnerID == state.OwnerID)
+                            {
+                                if (itemCollisionTrigger.ItemCollision.ItemName == ItemCollisionName.Disk)
+                                {
+                                    if (other.GetComponentInParent<DiskBehaviour>().CanHitOwner)
+                                    {
+                                        if (!_health.IsInvincible) // The server checks that this kart is not invincible
+                                        {
+                                            SendPlayerHitEvent(itemState);
+                                        }
+                                        DestroyColliderObject(other);
+                                    }
                                 }
+                            }
+                            else if (itemState.Team != state.Team)
+                            {
+                                if (!_health.IsInvincible) // The server checks that this kart is not invincible
+                                {
+                                    SendPlayerHitEvent(itemState);
+                                }
+                                DestroyColliderObject(other);
+                                //   _ionBeamMultiHitProtection = true;
                             }
                         }
                     }
