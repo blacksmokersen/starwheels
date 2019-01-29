@@ -21,6 +21,8 @@ namespace Abilities
         public UnityEvent OnCloackSet;
         public UnityEvent OnCloackUnset;
 
+        public KartMeshDisabler KartMeshDisabler;
+
         [Header("Meshes and Animation")]
         [SerializeField] private GameObject _cloakEffect;
         [SerializeField] private GameObject[] _kartMeshes;
@@ -33,13 +35,14 @@ namespace Abilities
 
 
         [HideInInspector] public bool CanDisableCloak;
-        [HideInInspector] public bool CanUsePortals;
+        [HideInInspector] public bool CanUsePortals = true;
 
         private CloakSettings _cloakSettings;
         private Coroutine _cloakRoutine;
 
         private void Awake()
         {
+            CanUsePortals = true;
             _cloakSettings = (CloakSettings)abilitySettings;
         }
 
@@ -128,10 +131,7 @@ namespace Abilities
         {
             OnCloackSet.Invoke();
             MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useCloakSound);
-            foreach (GameObject mesh in _kartMeshes)
-            {
-                mesh.SetActive(false);
-            }
+            KartMeshDisabler.DisableKartMeshes(true);
             _cloakEffect.SetActive(true);
 
             if (entity.isOwner)
@@ -146,10 +146,7 @@ namespace Abilities
             CanDisableCloak = false;
             _cloakEffect.SetActive(false);
             MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_endCloakSound);
-            foreach (GameObject mesh in _kartMeshes)
-            {
-                mesh.SetActive(true);
-            }
+            KartMeshDisabler.EnableKartMeshes(true);
 
             if (entity.isAttached && entity.isOwner)
             {
