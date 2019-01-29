@@ -106,6 +106,28 @@ namespace Abilities
             }
         }
 
+        public void EnableCloakPortals()
+        {
+            GameObject[] portalsToActivate;
+            portalsToActivate = GameObject.FindGameObjectsWithTag(Constants.Tag.CloakPortals);
+
+            foreach (GameObject portal in portalsToActivate)
+            {
+                portal.GetComponent<CloakPortalsActivator>().EnablePortals();
+            }
+        }
+
+        public void DisableCloakPortals()
+        {
+            GameObject[] portalsToDisable;
+            portalsToDisable = GameObject.FindGameObjectsWithTag(Constants.Tag.CloakPortals);
+
+            foreach (GameObject portal in portalsToDisable)
+            {
+                portal.GetComponent<CloakPortalsActivator>().DisablePortals();
+            }
+        }
+
         // PRIVATE
 
         private IEnumerator CloakDuration(float Duration)
@@ -125,7 +147,6 @@ namespace Abilities
             cloakEvent.Entity = entity;
             cloakEvent.Send();
         }
-
 
         private void SetCloack()
         {

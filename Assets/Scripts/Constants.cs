@@ -17,6 +17,7 @@
         public const string ItemCollisionHitBox = "CollisionHitBox";
         public const string ItemBox = "ItemBox";
         public const string IonBeamCamIgnore = "IonBeamCamIgnore";
+        public const string CloakPortals = "CloakPortals";
         public const string Totem = "Totem";
         public const string TotemPickup = "TotemPickup";
         public const string TotemRespawn = "TotemRespawn";
