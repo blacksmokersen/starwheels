@@ -107,7 +107,7 @@ VisualEffectResource:
       VFX_USE_SEED_CURRENT\n        seed = WangHash(particleIndex ^ systemSeed);\n#endif\n
       \       \n        {\n            SetAttribute_2466DCF5( /*inout */lifetime,
       \ /*inout */seed, (float)1, (float)3);\n        }\n        {\n            PositionCircle_0(
-      /*inout */position,  /*inout */seed,  /*inout */direction, float3(0,0,0), (float)1,
+      /*inout */position,  /*inout */seed,  /*inout */direction, float3(0,0,0), (float)2,
       (float)6.283185, (float)1);\n        }\n        \n\n\n#if VFX_USE_ALIVE_CURRENT\n
       \       if (alive)\n        {\n\t\t\tuint deadIndex = deadListIn.DecrementCounter();\n
       \           uint index = deadListIn[deadIndex];\n            attributeBuffer.Store((index
@@ -335,48 +335,48 @@ VisualEffectResource:
         data[1]: -1
         data[2]: -1
         data[3]: 14
-      - op: 1
+      - op: 6
         valueIndex: 2
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 1
-      - op: 6
+        data[3]: -1
+      - op: 1
         valueIndex: 3
         data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: -1
+        data[3]: 1
       - op: 1
         valueIndex: 4
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 1
-      - op: 45
+      - op: 1
         valueIndex: 5
-        data[0]: 1
+        data[0]: -1
         data[1]: -1
         data[2]: -1
-        data[3]: 0
+        data[3]: 1
       - op: 1
         valueIndex: 6
         data[0]: -1
         data[1]: -1
         data[2]: -1
         data[3]: 7
-      - op: 44
+      - op: 45
         valueIndex: 8
+        data[0]: 1
+        data[1]: -1
+        data[2]: -1
+        data[3]: 0
+      - op: 44
+        valueIndex: 9
         data[0]: 0
         data[1]: -1
         data[2]: -1
         data[3]: 0
-      - op: 1
-        valueIndex: 12
-        data[0]: -1
-        data[1]: -1
-        data[2]: -1
-        data[3]: 1
       - op: 1
         valueIndex: 13
         data[0]: -1
@@ -425,28 +425,36 @@ VisualEffectResource:
         data[1]: -1
         data[2]: -1
         data[3]: 1
+      - op: 1
+        valueIndex: 25
+        data[0]: -1
+        data[1]: -1
+        data[2]: -1
+        data[3]: 1
       m_NeedsLocalToWorld: 0
       m_NeedsWorldToLocal: 0
     m_PropertySheet:
       m_Float:
         m_Array:
-        - m_ExpressionIndex: 2
-          m_Value: 0.03
+        - m_ExpressionIndex: 3
+          m_Value: 0.5
         - m_ExpressionIndex: 4
           m_Value: 10
-        - m_ExpressionIndex: 8
-          m_Value: 0.5
+        - m_ExpressionIndex: 5
+          m_Value: 0.03
         - m_ExpressionIndex: 10
           m_Value: 1
         - m_ExpressionIndex: 11
           m_Value: 10000
         - m_ExpressionIndex: 13
-          m_Value: 0.46
-        - m_ExpressionIndex: 14
-          m_Value: 5
-        - m_ExpressionIndex: 15
           m_Value: 3
+        - m_ExpressionIndex: 14
+          m_Value: 0.46
+        - m_ExpressionIndex: 15
+          m_Value: 5
         - m_ExpressionIndex: 16
+          m_Value: 2
+        - m_ExpressionIndex: 17
           m_Value: 6.2831855
       m_Vector2f:
         m_Array: []
@@ -744,7 +752,7 @@ VisualEffectResource:
         index: 3
       values:
       - nameId: deltaTime_a
-        index: 3
+        index: 2
       params: []
       processor: {fileID: 0}
       shaderSourceIndex: 1
@@ -754,9 +762,9 @@ VisualEffectResource:
         index: 0
       values:
       - nameId: Scale_d
-        index: 7
+        index: 8
       - nameId: gradient_e
-        index: 5
+        index: 7
       - nameId: mainTexture
         index: 6
       params:
@@ -3085,7 +3093,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614622}
   - {fileID: 8926484042661614628}
   m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
+  m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_MasterSlot: {fileID: 8926484042661614621}
   m_MasterData:
@@ -3094,7 +3102,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.ArcCircle, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"circle":{"center":{"x":0.0,"y":0.0,"z":0.0},"radius":1.0},"arc":6.2831854820251469}'
+      m_SerializableObject: '{"circle":{"center":{"x":0.0,"y":0.0,"z":0.0},"radius":2.0},"arc":6.2831854820251469}'
     m_Space: 0
   m_Property:
     name: ArcCircle
@@ -3127,7 +3135,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614623}
   - {fileID: 8926484042661614627}
   m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
+  m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_MasterSlot: {fileID: 8926484042661614621}
   m_MasterData:
