@@ -16,11 +16,13 @@ namespace Abilities
 
         private KartMeshDisabler _kartMeshDisabler;
         private Health.Health _health;
+        private Rigidbody _kartRigidbody;
 
         public void TeleportPlayerToTargetPortal(GameObject kart,GameObject targetPortal)
         {
             _kartMeshDisabler = kart.GetComponentInChildren<CloakAbility>().KartMeshDisabler;
             _health = kart.GetComponentInChildren<Health.Health>();
+            _kartRigidbody = kart.GetComponentInChildren<Rigidbody>();
             StartCoroutine(PortalTravelBehaviour(kart, targetPortal));
         }
 
@@ -28,10 +30,12 @@ namespace Abilities
         {
             if (other.CompareTag(Constants.Tag.Kart))
             {
-                Debug.Log(other.transform.root.gameObject);
-                if (other.transform.root.gameObject.GetComponentInChildren<CloakAbility>().CanUsePortals)
+                if (other.transform.root.gameObject.GetComponentInChildren<CloakAbility>() != null)
                 {
-                    TeleportPlayerToTargetPortal(other.transform.root.gameObject, _targetPortal);
+                    if (other.transform.root.gameObject.GetComponentInChildren<CloakAbility>().CanUsePortals)
+                    {
+                        TeleportPlayerToTargetPortal(other.transform.root.gameObject, _targetPortal);
+                    }
                 }
             }
         }
@@ -40,14 +44,18 @@ namespace Abilities
         {
             _kartMeshDisabler.DisableKartMeshes(false);
             _health.SetInvincibility();
+
+            var y = _targetPortal.transform.position.y + 5f;
+            _kartRigidbody.transform.position = new Vector3(_targetPortal.transform.position.x, y, _targetPortal.transform.position.z);
+          //  _kartRigidbody.transform.rotation = GetKartRotation();
+
             yield return new WaitForSeconds(0.5f);
+
+
             _kartMeshDisabler.EnableKartMeshes(false);
             _health.UnsetInvincibility();
-            /*
-            var y = _tpBack.transform.position.y + 5f;
-            _rb.transform.position = new Vector3(_tpBack.transform.position.x, y, _tpBack.transform.position.z);
-            _rb.transform.rotation = GetKartRotation();
-            */
+
+
         }
 
     }
