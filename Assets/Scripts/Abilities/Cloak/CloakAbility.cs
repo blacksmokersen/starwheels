@@ -33,6 +33,7 @@ namespace Abilities
 
 
         [HideInInspector] public bool CanDisableCloak;
+        [HideInInspector] public bool CanUsePortals;
 
         private CloakSettings _cloakSettings;
         private Coroutine _cloakRoutine;
