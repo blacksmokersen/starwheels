@@ -30,7 +30,10 @@ namespace GameModes.Totem
             }
             else
             {
-                this.transform.LookAt(2 * transform.position - _totemPosition.position);
+                //this.transform.LookAt(2 * transform.position - _totemPosition.position);
+
+                //Arrow stick to the ground
+                this.transform.forward = new Vector3(-(_totemPosition.transform.position.x - this.transform.position.x), 0, -(_totemPosition.transform.position.z - this.transform.position.z));
 
                 if (_totemPossession._isLocalOwner)
                 {
