@@ -17,6 +17,18 @@ namespace Abilities
         private KartMeshDisabler _kartMeshDisabler;
         private Health.Health _health;
         private Rigidbody _kartRigidbody;
+        private LineRenderer _lineRenderer;
+
+        private void Awake()
+        {
+            _lineRenderer = GetComponent<LineRenderer>();
+        }
+
+        private void Start()
+        {
+            _lineRenderer.SetPosition(0,transform.position);
+            _lineRenderer.SetPosition(1,_targetPortal.transform.position);
+        }
 
         public void TeleportPlayerToTargetPortal(GameObject kart,GameObject targetPortal)
         {
