@@ -21,6 +21,9 @@ namespace Abilities
         private Coroutine _cloakPortalCoroutine;
         private LineRenderer _lineRenderer;
 
+        private GameObject _fakeKartVisualInPortal;
+        private CloakPortalCameraBehaviour _portalCamera;
+
         private void Awake()
         {
             _lineRenderer = GetComponent<LineRenderer>();
@@ -29,11 +32,11 @@ namespace Abilities
 
         private void Start()
         {
-            _lineRenderer.SetPosition(0,transform.position);
-            _lineRenderer.SetPosition(1,_targetPortal.transform.position);
+            _lineRenderer.SetPosition(0, transform.position);
+            _lineRenderer.SetPosition(1, _targetPortal.transform.position);
         }
 
-        public void TeleportPlayerToTargetPortal(GameObject kart,GameObject targetPortal)
+        public void TeleportPlayerToTargetPortal(GameObject kart, GameObject targetPortal)
         {
             _health = kart.GetComponentInChildren<Health.Health>();
             _kartRigidbody = kart.GetComponentInChildren<Rigidbody>();
@@ -60,7 +63,7 @@ namespace Abilities
 
         private void PortalCameraSwitch()
         {
-
+            _portalCamera = GameObject.Find("PlayerCamera").GetComponent<CloakPortalCameraBehaviour>();
         }
 
 
@@ -68,16 +71,36 @@ namespace Abilities
         {
             kart.GetComponentInChildren<CloakAbility>().CanUsePortals = false;
             kart.GetComponent<Common.ControllableDisabler>().DisableAllInChildren();
+
+            PortalCameraSwitch();
+
             _kartMeshDisabler.DisableKartMeshes(false);
             kart.GetComponentInChildren<CloakAbility>().CloakEffect.SetActive(false);
             _health.SetInvincibility();
 
-            yield return new WaitForSeconds(_cloakPortalActivator.TravelTime);
+
+
+            var _currentTimer = 0f;
+
+            _fakeKartVisualInPortal = _cloakPortalActivator.FakeKartVisualInPortal;
+            _fakeKartVisualInPortal.SetActive(true);
+            _fakeKartVisualInPortal.transform.position = Vector3.zero;
+
+            while (_currentTimer < _cloakPortalActivator.TravelTime)
+            {
+                Debug.Log(_currentTimer);
+                _fakeKartVisualInPortal.transform.position = Vector3.Lerp(this.transform.position, _targetPortal.transform.position, _currentTimer / _cloakPortalActivator.TravelTime);
+                _currentTimer += Time.deltaTime;
+                yield return null;
+            }
+
+            _fakeKartVisualInPortal.SetActive(false);
+            // yield return new WaitForSeconds(_cloakPortalActivator.TravelTime);
 
             var y = _targetPortal.transform.position.y + 0f;
             _kartRigidbody.transform.position = new Vector3(_targetPortal.transform.position.x, y, _targetPortal.transform.position.z);
             _kartRigidbody.transform.rotation = transform.rotation;
-            _kartRigidbody.AddRelativeForce( new Vector3(0, 15000, 15000));
+            _kartRigidbody.AddRelativeForce(new Vector3(0, 15000, 15000));
 
             _kartMeshDisabler.EnableKartMeshes(false);
             _health.UnsetInvincibility();
