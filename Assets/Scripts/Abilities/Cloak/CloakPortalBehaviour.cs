@@ -97,7 +97,7 @@ namespace Abilities
                 yield return null;
             }
 
-            _portalCamera.StopPortalTransferCamAnimation();
+            _portalCamera.StopPortalTransferCamAnimation(kart);
 
             _fakeKartVisualInPortal.SetActive(false);
             // yield return new WaitForSeconds(_cloakPortalActivator.TravelTime);
