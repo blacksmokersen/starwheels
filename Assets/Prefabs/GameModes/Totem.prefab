@@ -744,6 +744,7 @@ GameObject:
   - component: {fileID: 114674416082429730}
   - component: {fileID: 114512136705228060}
   - component: {fileID: 114015210551217176}
+  - component: {fileID: 153259331929340410}
   m_Layer: 15
   m_Name: Totem
   m_TagString: Totem
@@ -887,6 +888,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 153259331929340410}
+        m_MethodName: FullyDischargeTotem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 153259331929340410}
+        m_MethodName: StartCharging
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnParentUnset:
@@ -903,10 +926,65 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 153259331929340410}
+        m_MethodName: FullyDischargeTotem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 153259331929340410}
+        m_MethodName: StartCharging
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   _totemSettings: {fileID: 11400000, guid: 9f6ce33577d972c4f9494dd71799c0c4, type: 2}
   _physicalCollider: {fileID: 135549709688801646}
+--- !u!114 &153259331929340410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772060832756568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d306b2f0c71c9134bac8bc85ef91dde6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _totemRenderer: {fileID: 8019413632187793713}
+  OnFullyDischarged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnChargingEnergy:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: FloatEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnFullyCharged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  _shaderParameterName: _EmssiveAparition
+  _minValue: 0
+  _maxValue: 10
+  _chargingDuration: 1.5
+  _chargingStep: 0.1
+  _totemMaterial: {fileID: 0}
 --- !u!1001 &4629463453150594480
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -923,6 +1001,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624779067630979864, guid: 7a8aca3145e29c340ad148058ffc7ee0,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.8125
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624779067630979864, guid: 7a8aca3145e29c340ad148058ffc7ee0,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.8125
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624779067630979864, guid: 7a8aca3145e29c340ad148058ffc7ee0,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.8125
+      objectReference: {fileID: 0}
+    - target: {fileID: 3419787162240631937, guid: 7a8aca3145e29c340ad148058ffc7ee0,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4160397543902728760, guid: 7a8aca3145e29c340ad148058ffc7ee0,
         type: 3}
@@ -989,11 +1087,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 15
       objectReference: {fileID: 0}
-    - target: {fileID: 4628134853670560764, guid: 7a8aca3145e29c340ad148058ffc7ee0,
-        type: 3}
-      propertyPath: m_Layer
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 4641885120219959114, guid: 7a8aca3145e29c340ad148058ffc7ee0,
         type: 3}
       propertyPath: m_Materials.Array.size
@@ -1004,6 +1097,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: b76879565d10b7e47a77f4ad91dfae35, type: 2}
+    - target: {fileID: 4628134853670560764, guid: 7a8aca3145e29c340ad148058ffc7ee0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a8aca3145e29c340ad148058ffc7ee0, type: 3}
 --- !u!4 &8756013613900830600 stripped
@@ -1015,6 +1113,12 @@ Transform:
 --- !u!4 &4974691026423464 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4624779067630979864, guid: 7a8aca3145e29c340ad148058ffc7ee0,
+    type: 3}
+  m_PrefabInstance: {fileID: 4629463453150594480}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8019413632187793713 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3419787162240631937, guid: 7a8aca3145e29c340ad148058ffc7ee0,
     type: 3}
   m_PrefabInstance: {fileID: 4629463453150594480}
   m_PrefabAsset: {fileID: 0}
