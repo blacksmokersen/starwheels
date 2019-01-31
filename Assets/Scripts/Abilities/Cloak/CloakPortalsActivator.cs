@@ -4,6 +4,7 @@ public class CloakPortalsActivator : MonoBehaviour
 {
     public float TravelTime;
     public float TimeToUseThisPortalAgain;
+    public GameObject FakeKartVisualInPortal;
 
     [SerializeField] GameObject _portal1;
     [SerializeField] GameObject _portal2;
