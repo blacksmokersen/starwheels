@@ -56,10 +56,20 @@ namespace Abilities
             }
         }
 
+
+
+        private void PortalCameraSwitch()
+        {
+
+        }
+
+
         private IEnumerator PortalTravelBehaviour(GameObject kart, GameObject targetPortal)
         {
-             kart.GetComponentInChildren<CloakAbility>().CanUsePortals = false;
+            kart.GetComponentInChildren<CloakAbility>().CanUsePortals = false;
+            kart.GetComponent<Common.ControllableDisabler>().DisableAllInChildren();
             _kartMeshDisabler.DisableKartMeshes(false);
+            kart.GetComponentInChildren<CloakAbility>().CloakEffect.SetActive(false);
             _health.SetInvincibility();
 
             yield return new WaitForSeconds(_cloakPortalActivator.TravelTime);
@@ -69,16 +79,14 @@ namespace Abilities
             _kartRigidbody.transform.rotation = transform.rotation;
             _kartRigidbody.AddRelativeForce( new Vector3(0, 15000, 15000));
 
-
-
             _kartMeshDisabler.EnableKartMeshes(false);
             _health.UnsetInvincibility();
-
+            kart.GetComponent<Common.ControllableDisabler>().EnableAllInChildren();
+            kart.GetComponentInChildren<CloakAbility>().CloakEffect.SetActive(true);
 
             yield return new WaitForSeconds(_cloakPortalActivator.TimeToUseThisPortalAgain);
             kart.GetComponentInChildren<CloakAbility>().CanUsePortals = true;
 
         }
-
     }
 }

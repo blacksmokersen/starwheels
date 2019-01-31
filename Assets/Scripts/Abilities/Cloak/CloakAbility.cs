@@ -24,7 +24,7 @@ namespace Abilities
         public KartMeshDisabler KartMeshDisabler;
 
         [Header("Meshes and Animation")]
-        [SerializeField] private GameObject _cloakEffect;
+        public GameObject CloakEffect;
         [SerializeField] private GameObject[] _kartMeshes;
         //   [SerializeField] private GameObject _kartNamePlate;
         [SerializeField] private Animator _animator;
@@ -153,7 +153,7 @@ namespace Abilities
             OnCloackSet.Invoke();
             MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useCloakSound);
             KartMeshDisabler.DisableKartMeshes(true);
-            _cloakEffect.SetActive(true);
+            CloakEffect.SetActive(true);
 
             if (entity.isOwner)
             {
@@ -165,7 +165,7 @@ namespace Abilities
         {
             OnCloackUnset.Invoke();
             CanDisableCloak = false;
-            _cloakEffect.SetActive(false);
+            CloakEffect.SetActive(false);
             MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_endCloakSound);
             KartMeshDisabler.EnableKartMeshes(true);
 
