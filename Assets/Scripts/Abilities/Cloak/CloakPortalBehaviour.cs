@@ -42,7 +42,7 @@ namespace Abilities
             _kartRigidbody = kart.GetComponentInChildren<Rigidbody>();
             _kartMeshDisabler = kart.GetComponentInChildren<CloakAbility>().KartMeshDisabler;
 
-            _cloakPortalCoroutine = StartCoroutine(PortalTravelBehaviour(kart, targetPortal));
+            StartCoroutine(PortalTravelBehaviour(kart, targetPortal));
         }
 
         private void OnTriggerEnter(Collider other)
@@ -88,7 +88,7 @@ namespace Abilities
             _fakeKartVisualInPortal.transform.rotation = transform.rotation;
 
 
-            _portalCamera.StartPortalTransferCamAnimation(_fakeKartVisualInPortal);
+            _portalCamera.StartPortalTransferCamAnimation(_fakeKartVisualInPortal, kart, _cloakPortalActivator.CameraDistanceInPortal);
 
             while (_currentTimer < _cloakPortalActivator.TravelTime)
             {
@@ -97,7 +97,7 @@ namespace Abilities
                 yield return null;
             }
 
-            _portalCamera.StopPortalTransferCamAnimation(kart);
+            _portalCamera.StopPortalTransferCamAnimation();
 
             _fakeKartVisualInPortal.SetActive(false);
             // yield return new WaitForSeconds(_cloakPortalActivator.TravelTime);

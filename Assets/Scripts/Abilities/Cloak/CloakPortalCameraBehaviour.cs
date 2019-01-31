@@ -16,6 +16,10 @@ public class CloakPortalCameraBehaviour : MonoBehaviour
     private CinemachineCollider _collider;
     private CinemachineTransposer _transposer;
 
+    private GameObject _cameraOwnerSave;
+    private float _cameraDistanceInPortalSave;
+
+
 
 
     private void Awake()
@@ -35,21 +39,24 @@ public class CloakPortalCameraBehaviour : MonoBehaviour
       //  StartCoroutine(PortalCameraRoutine(origin,target,transferDuration));
     }
 
-    public void StartPortalTransferCamAnimation(GameObject targetToFollow)
+    public void StartPortalTransferCamAnimation(GameObject targetToFollow, GameObject cameraOwner, float cameraDistanceInPortal)
     {
+        _cameraOwnerSave = cameraOwner;
+        _cameraDistanceInPortalSave = cameraDistanceInPortal;
+
         _cinemachine.Follow = targetToFollow.transform;
         _cinemachine.LookAt = targetToFollow.transform;
 
         _collider.enabled = false;
-        _transposer.m_FollowOffset.y += 50;
+        _transposer.m_FollowOffset.y += _cameraDistanceInPortalSave;
     }
 
-    public void StopPortalTransferCamAnimation(GameObject kartCameraOwner)
+    public void StopPortalTransferCamAnimation()
     {
-        _cinemachine.Follow= kartCameraOwner.transform;
-        _cinemachine.LookAt = kartCameraOwner.transform;
+        _cinemachine.Follow= _cameraOwnerSave.transform;
+        _cinemachine.LookAt = _cameraOwnerSave.transform;
         _collider.enabled = true;
-        _transposer.m_FollowOffset.y -= 50;
+        _transposer.m_FollowOffset.y -= _cameraDistanceInPortalSave;
     }
 
 
