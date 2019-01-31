@@ -85,14 +85,19 @@ namespace Abilities
             _fakeKartVisualInPortal = _cloakPortalActivator.FakeKartVisualInPortal;
             _fakeKartVisualInPortal.SetActive(true);
             _fakeKartVisualInPortal.transform.position = Vector3.zero;
+            _fakeKartVisualInPortal.transform.rotation = transform.rotation;
+
+
+            _portalCamera.StartPortalTransferCamAnimation(_fakeKartVisualInPortal);
 
             while (_currentTimer < _cloakPortalActivator.TravelTime)
             {
-                Debug.Log(_currentTimer);
                 _fakeKartVisualInPortal.transform.position = Vector3.Lerp(this.transform.position, _targetPortal.transform.position, _currentTimer / _cloakPortalActivator.TravelTime);
                 _currentTimer += Time.deltaTime;
                 yield return null;
             }
+
+            _portalCamera.StopPortalTransferCamAnimation(kart);
 
             _fakeKartVisualInPortal.SetActive(false);
             // yield return new WaitForSeconds(_cloakPortalActivator.TravelTime);
