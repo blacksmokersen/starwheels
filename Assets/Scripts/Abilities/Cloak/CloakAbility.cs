@@ -35,7 +35,7 @@ namespace Abilities
 
 
         [HideInInspector] public bool CanDisableCloak;
-        [HideInInspector] public bool CanUsePortals = true;
+        public bool CanUsePortals = true;
 
         private CloakSettings _cloakSettings;
         private Coroutine _cloakRoutine;
@@ -126,9 +126,10 @@ namespace Abilities
             {
                 portal.GetComponent<CloakPortalsActivator>().DisablePortals();
             }
+            CanUsePortals = true;
         }
 
-        // PRIVATE
+        // PRIVATEs
 
         private IEnumerator CloakDuration(float Duration)
         {

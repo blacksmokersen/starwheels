@@ -15,6 +15,7 @@ public class CloakPortalTransferBehaviour : MonoBehaviour
 
     IEnumerator LerpingCoroutine(float duration)
     {
+        _portalEffect.SetActive(true);
         var _currentTimer = 0f;
 
         while (_currentTimer < duration)
@@ -31,5 +32,6 @@ public class CloakPortalTransferBehaviour : MonoBehaviour
             yield return null;
         }
         _portalEffect.transform.position = _startPos.transform.position;
+        _portalEffect.SetActive(false);
     }
 }
