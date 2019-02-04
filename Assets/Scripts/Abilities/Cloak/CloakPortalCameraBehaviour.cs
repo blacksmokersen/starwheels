@@ -47,11 +47,20 @@ public class CloakPortalCameraBehaviour : EntityBehaviour<IKartState>
             _cameraOwnerSave = cameraOwner;
             _cameraDistanceInPortalSave = cameraDistanceInPortal;
 
-            _cinemachine.Follow = targetToFollow.transform;
-            _cinemachine.LookAt = targetToFollow.transform;
+           // _cinemachine.Follow = targetToFollow.transform;
+           // _cinemachine.LookAt = targetToFollow.transform;
+            _cinemachine.Follow = null;
+            _cinemachine.LookAt = null;
+
+            GetComponentInParent<Transform>().position = targetToFollow.transform.position;
 
             _collider.enabled = false;
-            _transposer.m_FollowOffset.y += _cameraDistanceInPortalSave;
+           // _transposer.m_FollowOffset.y += _cameraDistanceInPortalSave;
+            _transposer.m_FollowOffset.y = 0;
+            _transposer.m_FollowOffset.z = 0;
+
+            transform.position = targetToFollow.transform.position;
+            transform.rotation = targetToFollow.transform.rotation;
         }
     }
 
@@ -61,8 +70,13 @@ public class CloakPortalCameraBehaviour : EntityBehaviour<IKartState>
         {
             _cinemachine.Follow = _cameraOwnerSave.transform;
             _cinemachine.LookAt = _cameraOwnerSave.transform;
+
+            _transposer.m_FollowOffset.y = 2.2f;
+            _transposer.m_FollowOffset.x = 0;
+            _transposer.m_FollowOffset.z = -6.35f;
+
             _collider.enabled = true;
-            _transposer.m_FollowOffset.y -= _cameraDistanceInPortalSave;
+           // _transposer.m_FollowOffset.y -= _cameraDistanceInPortalSave;
         }
     }
 

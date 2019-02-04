@@ -24,10 +24,13 @@ namespace Abilities
         private GameObject _fakeKartVisualInPortal;
         private CloakPortalCameraBehaviour _portalCamera;
 
+        private GameObject _camPos;
+
         private void Awake()
         {
             _lineRenderer = GetComponent<LineRenderer>();
             _cloakPortalActivator = GetComponentInParent<CloakPortalsActivator>();
+            _camPos = GameObject.FindWithTag("CloakPortalCamPos");
         }
 
         private void Start()
@@ -80,15 +83,27 @@ namespace Abilities
 
 
 
-            var _currentTimer = 0f;
-
             _fakeKartVisualInPortal = _cloakPortalActivator.FakeKartVisualInPortal;
             _fakeKartVisualInPortal.SetActive(true);
             _fakeKartVisualInPortal.transform.position = Vector3.zero;
             _fakeKartVisualInPortal.transform.rotation = transform.rotation;
 
 
-            _portalCamera.StartPortalTransferCamAnimation(_fakeKartVisualInPortal, kart, _cloakPortalActivator.CameraDistanceInPortal);
+            _portalCamera.StartPortalTransferCamAnimation(_camPos, kart, _cloakPortalActivator.CameraDistanceInPortal);
+
+
+
+
+
+            _camPos.GetComponentInParent<CloakPortalTransferBehaviour>().StartLerping(_cloakPortalActivator.TravelTime);
+
+
+            yield return new WaitForSeconds(_cloakPortalActivator.TravelTime);
+
+
+            /*
+
+             var _currentTimer = 0f;
 
             while (_currentTimer < _cloakPortalActivator.TravelTime)
             {
@@ -96,11 +111,13 @@ namespace Abilities
                 _currentTimer += Time.deltaTime;
                 yield return null;
             }
+            */
+
 
             _portalCamera.StopPortalTransferCamAnimation(kart);
 
             _fakeKartVisualInPortal.SetActive(false);
-            // yield return new WaitForSeconds(_cloakPortalActivator.TravelTime);
+           //  yield return new WaitForSeconds(_cloakPortalActivator.TravelTime);
 
             var y = _targetPortal.transform.position.y + 0f;
             _kartRigidbody.transform.position = new Vector3(_targetPortal.transform.position.x, y, _targetPortal.transform.position.z);
