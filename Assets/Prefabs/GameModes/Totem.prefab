@@ -504,6 +504,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4993985143616608}
   - component: {fileID: 135879849441599216}
+  - component: {fileID: 8378396071863801717}
+  - component: {fileID: 4934581036025443898}
   m_Layer: 15
   m_Name: PickupTrigger
   m_TagString: TotemPickup
@@ -538,6 +540,32 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 3.75
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8378396071863801717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267211294733920}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4505bddf4d1f9943b667cd79e8149fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: 4c886612750f28a45b80c5f7d8095e6e, type: 2}
+--- !u!114 &4934581036025443898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267211294733920}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4505bddf4d1f9943b667cd79e8149fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: e250ed7091d97a542909029ae500ccb3, type: 2}
 --- !u!1 &1504158930287398
 GameObject:
   m_ObjectHideFlags: 0
@@ -952,6 +980,10 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   _totemSettings: {fileID: 11400000, guid: 9f6ce33577d972c4f9494dd71799c0c4, type: 2}
   _physicalCollider: {fileID: 135549709688801646}
+  _sizeIncreaseHitbox: {fileID: 8378396071863801717}
+  _sizeIncreaseGraphic: {fileID: 4991627313038175105}
+  _sizeDecreaseHitbox: {fileID: 4934581036025443898}
+  _sizeDecreaseGraphic: {fileID: 2218895524112698635}
 --- !u!114 &153259331929340410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -985,6 +1017,32 @@ MonoBehaviour:
   _chargingDuration: 1.5
   _chargingStep: 0.1
   _totemMaterial: {fileID: 0}
+--- !u!114 &2218895524112698635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981505452616460}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4505bddf4d1f9943b667cd79e8149fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: 451ae18690875604998a9343efef7725, type: 2}
+--- !u!114 &4991627313038175105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981505452616460}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4505bddf4d1f9943b667cd79e8149fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: 389a1228b6672614aaba01076a89b6e8, type: 2}
 --- !u!1001 &4629463453150594480
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1119,6 +1177,12 @@ Transform:
 --- !u!23 &8019413632187793713 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 3419787162240631937, guid: 7a8aca3145e29c340ad148058ffc7ee0,
+    type: 3}
+  m_PrefabInstance: {fileID: 4629463453150594480}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1981505452616460 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4627486346820087484, guid: 7a8aca3145e29c340ad148058ffc7ee0,
     type: 3}
   m_PrefabInstance: {fileID: 4629463453150594480}
   m_PrefabAsset: {fileID: 0}

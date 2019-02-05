@@ -19,6 +19,11 @@ public class SizeIncrease : MonoBehaviour
         _increaseRatio = settings.TargetSize - settings.StartSize;
     }
 
+    private void OnEnable()
+    {
+        _timer = 0f;
+    }
+
     private void Update()
     {
         if (_timer < settings.SecondsBeforeFullSize)
