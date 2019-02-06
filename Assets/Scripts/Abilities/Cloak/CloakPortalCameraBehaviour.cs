@@ -7,6 +7,8 @@ using Cinemachine;
 public class CloakPortalCameraBehaviour : EntityBehaviour<IKartState>
 {
 
+    [SerializeField] private Camera _kartCamera;
+
     private CinemachineVirtualCamera _cinemachine;
 
     private GameObject _originPortal;
@@ -29,6 +31,28 @@ public class CloakPortalCameraBehaviour : EntityBehaviour<IKartState>
         _collider = GetComponent<CinemachineCollider>();
         _transposer = _cinemachine.GetCinemachineComponent<CinemachineTransposer>();
     }
+
+
+
+
+    // Turn on the bit using an OR operation:
+    public void ShowPortals()
+    {
+        _kartCamera.cullingMask |= 1 << LayerMask.NameToLayer("CloakPortals");
+    }
+
+    // Turn off the bit using an AND operation with the complement of the shifted int:
+    public void HidePortals()
+    {
+        _kartCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("CloakPortals"));
+    }
+
+    // Toggle the bit using a XOR operation:
+    public void TogglePortals()
+    {
+        _kartCamera.cullingMask ^= 1 << LayerMask.NameToLayer("CloakPortals");
+    }
+
 
 
 
