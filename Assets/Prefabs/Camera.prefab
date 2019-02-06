@@ -153,8 +153,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1352335373918424}
-  m_LocalRotation: {x: 0.052175324, y: 0.008249142, z: -0.00043100343, w: 0.9986038}
-  m_LocalPosition: {x: 136.04916, y: 5.301564, z: 270.78104}
+  m_LocalRotation: {x: 0.036893528, y: 0.7061436, z: -0.036893535, w: 0.70614374}
+  m_LocalPosition: {x: 274.95984, y: -6.9250374, z: 65.62246}
   m_LocalScale: {x: 1.0449219, y: 1.0449216, z: 1.0449216}
   m_Children: []
   m_Father: {fileID: 4409278275421684}
@@ -184,13 +184,13 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 50.01031
+  field of view: 50
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 130871
   m_RenderingPath: 3
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -593,6 +593,7 @@ GameObject:
   - component: {fileID: 114306472253382052}
   - component: {fileID: 114707741726061332}
   - component: {fileID: 114819061569261648}
+  - component: {fileID: 7327552170519599849}
   - component: {fileID: 114707109256323212}
   - component: {fileID: 5954116329537128179}
   m_Layer: 0
@@ -721,6 +722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4856103365212e44991e543beef37520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enabled: 1
 --- !u!114 &114707741726061332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -733,6 +735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bad0b0e57b234a34aa7e454d29b9d993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enabled: 1
   _cameraSettings: {fileID: 11400000, guid: ef13b57ca9ba4974abf886534b3fa9ea, type: 2}
   _backCamZPosition: 9
 --- !u!114 &114819061569261648
@@ -747,6 +750,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335ccab7b90ae1e41be3bc58a7c9b61e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7327552170519599849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1421337181609992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19dbafbad786324185a3606644ae878, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _kartCamera: {fileID: 20552691307183388}
 --- !u!114 &114707109256323212
 MonoBehaviour:
   m_ObjectHideFlags: 0
