@@ -35,15 +35,19 @@ namespace Abilities
 
 
         [HideInInspector] public bool CanDisableCloak;
-        public bool CanUsePortals = true;
+        public bool CanUsePortals = false;
 
         private CloakSettings _cloakSettings;
         private Coroutine _cloakRoutine;
 
+        private CloakPortalCameraBehaviour _portalCamera;
+
         private void Awake()
         {
-            CanUsePortals = true;
             _cloakSettings = (CloakSettings)abilitySettings;
+
+            if(GameObject.Find("PlayerCamera").GetComponent<CloakPortalCameraBehaviour>() != null)
+            _portalCamera = GameObject.Find("PlayerCamera").GetComponent<CloakPortalCameraBehaviour>();
         }
 
         // BOLT
@@ -106,8 +110,18 @@ namespace Abilities
             }
         }
 
+        public void DisableCanUsePortalForXSeconds(float duration)
+        {
+            StartCoroutine(DisableCanUsePortalForXSecondsCoroutine(duration));
+        }
+
+
         public void EnableCloakPortals()
         {
+            CanUsePortals = true;
+
+            _portalCamera.ShowPortals();
+            /*
             GameObject[] portalsToActivate;
             portalsToActivate = GameObject.FindGameObjectsWithTag(Constants.Tag.CloakPortals);
 
@@ -115,10 +129,15 @@ namespace Abilities
             {
                 portal.GetComponent<CloakPortalsActivator>().EnablePortals();
             }
+            */
         }
 
         public void DisableCloakPortals()
         {
+            CanUsePortals = false;
+
+            _portalCamera.HidePortals();
+            /*
             GameObject[] portalsToDisable;
             portalsToDisable = GameObject.FindGameObjectsWithTag(Constants.Tag.CloakPortals);
 
@@ -127,9 +146,18 @@ namespace Abilities
                 portal.GetComponent<CloakPortalsActivator>().DisablePortals();
             }
             CanUsePortals = true;
+            */
         }
 
         // PRIVATEs
+
+            private IEnumerator DisableCanUsePortalForXSecondsCoroutine(float duration)
+        {
+            CanUsePortals = false;
+            yield return new WaitForSeconds(duration);
+            CanUsePortals = true;
+        }
+
 
         private IEnumerator CloakDuration(float Duration)
         {
