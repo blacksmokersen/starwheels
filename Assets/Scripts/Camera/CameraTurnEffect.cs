@@ -14,6 +14,7 @@ namespace CameraUtils
 
         private string _turnCamInputName = "RightJoystickHorizontal";
         private CinemachineOrbitalTransposer _orbiter;
+        private CinemachineComposer _composer;
         private CinemachineVirtualCamera _cinemachine;
 
         private float _controlAxisValueMin;
@@ -23,6 +24,7 @@ namespace CameraUtils
         {
             _cinemachine = GetComponentInParent<CinemachineVirtualCamera>();
             _orbiter = _cinemachine.GetCinemachineComponent<CinemachineOrbitalTransposer>();
+            _composer = _cinemachine.GetCinemachineComponent<CinemachineComposer>();
             _controlAxisValueMin = _orbiter.m_XAxis.m_MinValue;
             _controlAxisValueMax = _orbiter.m_XAxis.m_MaxValue;
         }
@@ -47,6 +49,23 @@ namespace CameraUtils
                 {
                     CameraReset();
                 }
+
+
+                if (Input.GetAxis(Constants.Input.UpAndDownCamera) >= 0.1f)
+                {
+                    if (Mathf.Abs(_composer.m_TrackedObjectOffset.y) <= 3)
+                        _composer.m_TrackedObjectOffset.y += 0.2f;
+                }
+                else if (Input.GetAxis(Constants.Input.UpAndDownCamera) <= -0.1f)
+                {
+                    if (Mathf.Abs(_composer.m_TrackedObjectOffset.y) <= 3)
+                        _composer.m_TrackedObjectOffset.y -= 0.2f;
+                }
+                else
+                {
+                    _composer.m_TrackedObjectOffset.y = 0;
+                }
+
                 WhenToRecenterEnableCam(Input.GetAxis(Constants.Input.TurnCamera));
             }
         }
