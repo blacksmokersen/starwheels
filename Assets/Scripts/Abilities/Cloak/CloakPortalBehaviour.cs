@@ -50,7 +50,7 @@ namespace Abilities
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(Constants.Tag.Kart))
+            if (other.CompareTag(Constants.Tag.KartCollider))
             {
                 if (other.transform.root.gameObject.GetComponentInChildren<CloakAbility>() != null)
                 {
