@@ -13,6 +13,7 @@
         public const string RedSpawn = "RedSpawn";
         public const string BlueSpawn = "BlueSpawn";
         public const string Kart = "Kart";
+        public const string KartCollider = "KartCollider";
         public const string KartHealthHitBox = "Health";
         public const string ItemCollisionHitBox = "CollisionHitBox";
         public const string ItemBox = "ItemBox";
