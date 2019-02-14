@@ -15,10 +15,28 @@ namespace Items
 
         private bool _activated = false;
 
+        public float _targetTime = 2f;
+        public bool _startTimer = false;
+        public bool _notFinalDirection = true;
+
         private void Start()
         {
             StartCoroutine(LookForTarget());
         }
+
+        private void Update()
+        {
+            if (_startTimer) { }
+            _targetTime -= Time.deltaTime;
+
+            if (_targetTime <= 0.0f && _notFinalDirection)
+            {
+                Debug.Log("RocketTimerEnd");
+                timerEnded();
+                _notFinalDirection = false;
+            }
+        }
+
 
         public override void SimulateOwner()
         {
@@ -44,14 +62,17 @@ namespace Items
 
                 if (entity.isAttached && state.Team != otherPlayer.Team.GetColor())
                 {
+                    _startTimer = true;
                     CurrentTarget = other.gameObject;
                     StartCoroutine(GetComponentInParent<RocketBehaviour>().StartQuickTurn());
                 }
+
             }
         }
 
         private void OnTriggerStay(Collider other)
         {
+
             if (other.gameObject.tag == Constants.Tag.KartHealthHitBox && _activated)
             {
                 var otherPlayer = other.GetComponentInParent<Player>();
@@ -66,6 +87,12 @@ namespace Items
                 }
             }
         }
+
+        private void timerEnded()
+        {
+            GetComponentInParent<RocketBehaviour>().NoCircleSecurityQuickTurn();
+        }
+
 
         private bool IsKartIsCloserThanActualTarget(GameObject kart)
         {
