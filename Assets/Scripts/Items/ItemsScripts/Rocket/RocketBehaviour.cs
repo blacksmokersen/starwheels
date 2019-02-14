@@ -32,6 +32,11 @@ namespace Items
 
         // PUBLIC
 
+        public void NoCircleSecurityQuickTurn()
+        {
+            _actualTurnSpeed = 1000;
+        }
+
         // PRIVATE
 
         private void SetVelocityForward()
