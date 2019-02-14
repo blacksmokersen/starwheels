@@ -12,13 +12,17 @@ public class CloakPortalsActivator : MonoBehaviour
 
     public void EnablePortals()
     {
+        /*
         _portal1.SetActive(true);
         _portal2.SetActive(true);
+        */
     }
 
     public void DisablePortals()
     {
+        /*
         _portal1.SetActive(false);
         _portal2.SetActive(false);
+        */
     }
 }
