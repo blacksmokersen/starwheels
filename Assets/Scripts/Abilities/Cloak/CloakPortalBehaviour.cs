@@ -28,15 +28,15 @@ namespace Abilities
 
         private void Awake()
         {
-            _lineRenderer = GetComponent<LineRenderer>();
+          //  _lineRenderer = GetComponent<LineRenderer>();
             _cloakPortalActivator = GetComponentInParent<CloakPortalsActivator>();
             _camPos = GameObject.FindWithTag("CloakPortalCamPos");
         }
 
         private void Start()
         {
-            _lineRenderer.SetPosition(0, transform.position);
-            _lineRenderer.SetPosition(1, _targetPortal.transform.position);
+         //   _lineRenderer.SetPosition(0, transform.position);
+         //   _lineRenderer.SetPosition(1, _targetPortal.transform.position);
         }
 
         public void TeleportPlayerToTargetPortal(GameObject kart, GameObject targetPortal)
@@ -85,12 +85,12 @@ namespace Abilities
             _health.SetInvincibility();
 
 
-
+            /*
             _fakeKartVisualInPortal = _cloakPortalActivator.FakeKartVisualInPortal;
             _fakeKartVisualInPortal.SetActive(true);
             _fakeKartVisualInPortal.transform.position = Vector3.zero;
             _fakeKartVisualInPortal.transform.rotation = transform.rotation;
-
+            */
 
             _portalCamera.StartPortalTransferCamAnimation(_camPos, kart, _cloakPortalActivator.CameraDistanceInPortal);
 
@@ -119,12 +119,12 @@ namespace Abilities
 
             _portalCamera.StopPortalTransferCamAnimation(kart);
 
-            _fakeKartVisualInPortal.SetActive(false);
+          //  _fakeKartVisualInPortal.SetActive(false);
            //  yield return new WaitForSeconds(_cloakPortalActivator.TravelTime);
 
             var y = _targetPortal.transform.position.y + 0f;
             _kartRigidbody.transform.position = new Vector3(_targetPortal.transform.position.x, y, _targetPortal.transform.position.z);
-            _kartRigidbody.transform.rotation = transform.rotation;
+            _kartRigidbody.transform.rotation = _targetPortal.transform.rotation;
 
             var _currentTimer = 0f;
             while (_currentTimer < 0.5f)
