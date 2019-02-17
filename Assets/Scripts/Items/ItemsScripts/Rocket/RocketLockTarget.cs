@@ -15,43 +15,11 @@ namespace Items
 
         private bool _activated = false;
 
-        public float _targetTime = 2f;
-        public bool _startTimer = false;
-        public bool _notFinalDirection = true;
+        // MONO
 
         private void Start()
         {
             StartCoroutine(LookForTarget());
-        }
-
-        private void Update()
-        {
-            if (_startTimer) { }
-            _targetTime -= Time.deltaTime;
-
-            if (_targetTime <= 0.0f && _notFinalDirection)
-            {
-                Debug.Log("RocketTimerEnd");
-                timerEnded();
-                _notFinalDirection = false;
-            }
-        }
-
-
-        public override void SimulateOwner()
-        {
-            try
-            {
-                if (CurrentTarget == null || !CurrentTarget.activeInHierarchy)
-                {
-                    CurrentTarget = null;
-                }
-            }
-            catch (MissingReferenceException)
-            {
-                CurrentTarget = null;
-                Debug.Log("Resetting rocket target.");
-            }
         }
 
         private void OnTriggerEnter(Collider other)
@@ -62,11 +30,9 @@ namespace Items
 
                 if (entity.isAttached && state.Team != otherPlayer.Team.GetColor())
                 {
-                    _startTimer = true;
                     CurrentTarget = other.gameObject;
                     StartCoroutine(GetComponentInParent<RocketBehaviour>().StartQuickTurn());
                 }
-
             }
         }
 
@@ -88,11 +54,26 @@ namespace Items
             }
         }
 
-        private void timerEnded()
+        // BOLT
+
+        public override void SimulateOwner()
         {
-            GetComponentInParent<RocketBehaviour>().NoCircleSecurityQuickTurn();
+            try
+            {
+                if (CurrentTarget == null || !CurrentTarget.activeInHierarchy)
+                {
+                    CurrentTarget = null;
+                }
+            }
+            catch (MissingReferenceException)
+            {
+                CurrentTarget = null;
+                Debug.Log("Resetting rocket target.");
+            }
         }
 
+
+        // PRIVATE
 
         private bool IsKartIsCloserThanActualTarget(GameObject kart)
         {
