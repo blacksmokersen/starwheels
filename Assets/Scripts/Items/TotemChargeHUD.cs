@@ -1,48 +1,70 @@
-﻿using UnityEngine.UI;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
-public class TotemChargeHUD : MonoBehaviour
+namespace GameModes.Totem
 {
-    [SerializeField] private GameObject _charging;
-    [SerializeField] private GameObject _dicharging;
-
-    public void ShowChargingHUD()
+    public class TotemChargeHUD : MonoBehaviour, IObserver
     {
-        StopAllCoroutines();
-        StartCoroutine(ShowChargingRoutine());
-    }
+        [Header("HUD Elements")]
+        [SerializeField] private GameObject _charging;
+        [SerializeField] private GameObject _dicharging;
 
-    public void ShowDischargingHUD()
-    {
-        StopAllCoroutines();
-        StartCoroutine(ShowDischargingRoutine());
-    }
+        // PUBLIC
 
-    public void HideChargingHUD()
-    {
-        _charging.SetActive(false);
-    }
+        public void Observe(GameObject gameObject)
+        {
+            var totemPossession = gameObject.GetComponentInChildren<TotemPossession>();
+            if (totemPossession)
+            {
+                totemPossession.OnTotemGet.AddListener(ShowDischargingHUD);
+                totemPossession.OnTotemGet.AddListener(HideChargingHUD);
+                totemPossession.OnTotemLost.AddListener(ShowChargingHUD);
+                totemPossession.OnTotemLost.AddListener(HideDischargingHUD);
+            }
+            else
+            {
+                Debug.Log("TotemPossession component not found.");
+            }
+        }
 
-    public void HideDischargingHUD()
-    {
-        _dicharging.SetActive(false);
-    }
+        public void ShowChargingHUD()
+        {
+            StopAllCoroutines();
+            StartCoroutine(ShowChargingRoutine());
+        }
 
+        public void ShowDischargingHUD()
+        {
+            StopAllCoroutines();
+            StartCoroutine(ShowDischargingRoutine());
+        }
 
-    private IEnumerator ShowChargingRoutine()
-    {
-        _dicharging.SetActive(false);
-        _charging.SetActive(true);
-        yield return new WaitForSeconds(3);
-        _charging.SetActive(false);
-    }
+        public void HideChargingHUD()
+        {
+            _charging.SetActive(false);
+        }
 
-    private IEnumerator ShowDischargingRoutine()
-    {
-        _charging.SetActive(false);
-        _dicharging.SetActive(true);
-        yield return new WaitForSeconds(3);
-        _dicharging.SetActive(false);
+        public void HideDischargingHUD()
+        {
+            _dicharging.SetActive(false);
+        }
+
+        // PRIVATE
+
+        private IEnumerator ShowChargingRoutine()
+        {
+            _dicharging.SetActive(false);
+            _charging.SetActive(true);
+            yield return new WaitForSeconds(3);
+            _charging.SetActive(false);
+        }
+
+        private IEnumerator ShowDischargingRoutine()
+        {
+            _charging.SetActive(false);
+            _dicharging.SetActive(true);
+            yield return new WaitForSeconds(3);
+            _dicharging.SetActive(false);
+        }
     }
 }
