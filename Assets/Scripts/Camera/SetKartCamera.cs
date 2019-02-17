@@ -3,16 +3,24 @@ using Cinemachine;
 
 namespace CameraUtils
 {
-    public class SetKartCamera : MonoBehaviour
+    public class SetKartCamera : MonoBehaviour, IObserver
     {
         private GameObject _kartToFollow;
-
         private CinemachineVirtualCamera _cinemachine;
+
+        // CORE
 
         private void Awake()
         {
             _cinemachine = GetComponent<CinemachineVirtualCamera>();
             if (_kartToFollow) SetKart(_kartToFollow);
+        }
+
+        // PUBLIC
+
+        public void Observe(GameObject gameObject)
+        {
+            SetKart(gameObject);
         }
 
         public void SetKart(GameObject kart)

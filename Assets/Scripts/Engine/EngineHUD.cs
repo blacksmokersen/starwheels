@@ -4,7 +4,7 @@ using TMPro;
 
 namespace Engine
 {
-    public class EngineHUD : MonoBehaviour
+    public class EngineHUD : MonoBehaviour, IObserver
     {
         [Header("HUD")]
         [SerializeField] private Image _speedBar;
@@ -12,7 +12,7 @@ namespace Engine
 
         // PUBLIC
 
-        public void ObserveKart(GameObject kartRoot)
+        public void Observe(GameObject kartRoot)
         {
             var engine = kartRoot.GetComponentInChildren<EngineBehaviour>();
             if (engine)

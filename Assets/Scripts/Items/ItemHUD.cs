@@ -4,7 +4,7 @@ using TMPro;
 
 namespace Items
 {
-    public class ItemHUD : MonoBehaviour
+    public class ItemHUD : MonoBehaviour, IObserver
     {
         [Header("Item HUD")]
         [SerializeField] private TextMeshProUGUI _itemCountText;
@@ -30,7 +30,7 @@ namespace Items
 
         // PUBLIC
 
-        public void ObserveKart(GameObject kartRoot)
+        public void Observe(GameObject kartRoot)
         {
             var kartInventory = kartRoot.GetComponentInChildren<Inventory>();
             if (kartInventory)
