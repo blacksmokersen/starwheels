@@ -26,6 +26,19 @@ namespace GameModes.Totem
             }
         }
 
+        public override void ControlGained()
+        {
+            TotemChargeHUD totemChargeHUD = FindObjectOfType<TotemChargeHUD>();
+            if (totemChargeHUD)
+            {
+                totemChargeHUD.Observe(gameObject);
+            }
+            else
+            {
+                Debug.Log("TotemChargeHUD HUD not found (maybe gamemode is not totem).");
+            }
+        }
+
         // PUBLIC
 
         public void FullyDischarge()

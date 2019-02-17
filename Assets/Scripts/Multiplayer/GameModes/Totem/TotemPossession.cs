@@ -25,14 +25,11 @@ namespace GameModes.Totem
 
         private bool _referencesSet = false;
 
-        private TotemChargeHUD _totemChargeHUD;
-
         // CORE
 
         private void Start()
         {
             StartCoroutine(SynchronizationRoutine());
-            _totemChargeHUD = GameObject.Find("TotemCharge").GetComponent<TotemChargeHUD>();
         }
 
         // BOLT
@@ -58,7 +55,6 @@ namespace GameModes.Totem
                 {
                     _isLocalOwner = false;
                     OnTotemLost.Invoke();
-                    _totemChargeHUD.ShowChargingHUD();
                 }
             }
         }
@@ -80,7 +76,6 @@ namespace GameModes.Totem
                     {
                         _isLocalOwner = false;
                         OnTotemLost.Invoke();
-                        _totemChargeHUD.ShowChargingHUD();
                     }
                 }
             }
@@ -122,13 +117,11 @@ namespace GameModes.Totem
                 {
                     _isLocalOwner = true;
                     OnTotemGet.Invoke();
-                    _totemChargeHUD.ShowDischargingHUD();
                 }
                 else if (_isLocalOwner) // If I was the old owner of the totem
                 {
                     _isLocalOwner = false;
                     OnTotemLost.Invoke();
-                    _totemChargeHUD.ShowChargingHUD();
                 }
             }
             else

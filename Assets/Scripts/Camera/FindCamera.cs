@@ -2,6 +2,7 @@
 using Bolt;
 using Items;
 using Engine;
+using GameModes.Totem;
 
 namespace CameraUtils
 {
