@@ -1,4 +1,5 @@
-﻿using UnityEngine.Events;
+﻿using UnityEngine;
+using UnityEngine.Events;
 
 [System.Serializable]
 public class FloatEvent : UnityEvent<float> { }
@@ -11,3 +12,6 @@ public class StringEvent : UnityEvent<string> { }
 
 [System.Serializable]
 public class BoolEvent : UnityEvent<bool> { }
+
+[System.Serializable]
+public class ColorEvent : UnityEvent<Color> { }
