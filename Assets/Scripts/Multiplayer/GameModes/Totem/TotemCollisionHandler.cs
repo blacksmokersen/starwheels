@@ -38,7 +38,7 @@ namespace GameModes.Totem
             {
                 state.Lives--;
 
-                // FindObjectOfType<TotemSpawner>().RespawnTotem();
+                FindObjectOfType<TotemSpawner>().RespawnTotem();
 
                 TotemWallHit totemWallHitEvent = TotemWallHit.Create();
                 totemWallHitEvent.Team = OwnerTeam.GetColor();
