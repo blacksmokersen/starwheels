@@ -94,18 +94,30 @@ namespace Steering
                 SetTurnState(turnValue);
                 turnValue = InversedTurnValue(turnValue);
 
+                // TurnSpeed Limiter
+                var ActualTurnTorque = Settings.TurnTorque;
+
+                if (Mathf.Abs(turnValue) <= 0.3f)
+                    ActualTurnTorque = Settings.TurnTorque/4;
+                else if (Mathf.Abs(turnValue) >= 0.3f && Mathf.Abs(turnValue) <= 0.6f)
+                    ActualTurnTorque = Settings.TurnTorque/2;
+                else if (Mathf.Abs(turnValue) >= 0.6f && Mathf.Abs(turnValue) <= 0.8f)
+                    ActualTurnTorque = Settings.TurnTorque / 1.5f;
+                else
+                    ActualTurnTorque = Settings.TurnTorque;
+
                 OnTurnValueChanged.Invoke(_turnValue);
 
                 if (_groundCondition != null)
                 {
                     if (_groundCondition.Grounded)
                     {
-                        rb.AddRelativeTorque(Vector3.up * turnValue * Settings.TurnTorque, ForceMode.Force);
+                        rb.AddRelativeTorque(Vector3.up * turnValue * ActualTurnTorque, ForceMode.Force);
                     }
                 }
                 else
                 {
-                    rb.AddRelativeTorque(Vector3.up * turnValue * Settings.TurnTorque, ForceMode.Force);
+                    rb.AddRelativeTorque(Vector3.up * turnValue * ActualTurnTorque, ForceMode.Force);
                     OnTurn.Invoke(TurningState);
                 }
             }
