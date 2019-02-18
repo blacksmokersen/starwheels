@@ -45,7 +45,7 @@ namespace Multiplayer
             _playersCount = RoomInfoToken.PlayersCount;
 
             // Instantiate server kart
-            var serverTeam = _serverPlayerSettings.TeamColor.GetTeam();
+            var serverTeam = _serverPlayerSettings.ColorSettings.TeamEnum;
             _serverSpawn = GetInitialSpawnPosition(serverTeam);
             var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart, RoomInfoToken);
             myKart.transform.position = _serverSpawn.transform.position;

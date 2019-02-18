@@ -26,7 +26,7 @@ namespace Totem
         public override void OnEvent(TotemWallHit evnt)
         {
             var scorerColor = evnt.Team.GetTeam().OppositeTeam().GetColor();
-            if (_kartRoot.isOwner && scorerColor == _playerSettings.TeamColor)
+            if (_kartRoot.isOwner && scorerColor == _playerSettings.ColorSettings.BoltColor)
             {
                 TeleportOnSpawn();
             }
@@ -36,12 +36,12 @@ namespace Totem
 
         private void TeleportOnSpawn()
         {
-            if (_playerSettings.TeamColor == TeamsColors.BlueColor)
+            if (_playerSettings.ColorSettings.BoltColor == TeamsColors.BlueColor)
             {
                 var teleportTarget = _blueSpawns[Random.Range(0, _blueSpawns.Count - 1)];
                 _kartRoot.transform.position = teleportTarget.transform.position;
             }
-            else if (_playerSettings.TeamColor == TeamsColors.RedColor)
+            else if (_playerSettings.ColorSettings.BoltColor == TeamsColors.RedColor)
             {
                 var teleportTarget = _redSpawns[Random.Range(0, _redSpawns.Count - 1)];
                 _kartRoot.transform.position = teleportTarget.transform.position;

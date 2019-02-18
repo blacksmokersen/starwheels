@@ -254,7 +254,7 @@ namespace Photon.Lobby
             Debug.Log("Next");
             Debug.Log(_currentColorSettings == null);
             _playerColor = _currentColorSettings.MenuColor;
-            _playerSettings.TeamColor = _playerColor;
+            //_playerSettings.ColorSettings.BoltColor = _playerColor;
         }
 
         private void OnReadyClicked()

@@ -28,7 +28,7 @@ namespace Multiplayer
         private void SendRespawnRequestEvent(PlayerSettings player)
         {
             RespawnRequest respawnRequestEvent = RespawnRequest.Create();
-            respawnRequestEvent.Team = player.TeamColor;
+            respawnRequestEvent.Team = player.ColorSettings.BoltColor;
             respawnRequestEvent.ConnectionID = player.ConnectionID;
             respawnRequestEvent.Send();
         }
