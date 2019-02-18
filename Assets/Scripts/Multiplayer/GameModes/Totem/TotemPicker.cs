@@ -32,7 +32,7 @@ namespace GameModes.Totem
             if (BoltNetwork.IsServer && other.CompareTag(Constants.Tag.TotemPickup)) // Server sees a player collide with totem trigger
             {
                 var totemBehaviour = other.GetComponentInParent<Totem>();
-                if (totemBehaviour.CanBePickedUp && state.CanPickTotem)
+                if (totemBehaviour.CanBePickedUp && state.CanPickTotem && totemBehaviour.LocalOwnerID != state.OwnerID)
                 {
                     TotemPicked totemPickedEvent = TotemPicked.Create();
                     totemPickedEvent.KartEntity = entity;

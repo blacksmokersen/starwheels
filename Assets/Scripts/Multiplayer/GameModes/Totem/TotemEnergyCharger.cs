@@ -10,6 +10,7 @@ namespace GameModes
 
         [Header("Unity Events")]
         public UnityEvent OnFullyDischarged;
+        public UnityEvent OnStartChargingEnergy;
         public FloatEvent OnChargingEnergy;
         public UnityEvent OnFullyCharged;
 
@@ -30,40 +31,38 @@ namespace GameModes
 
         private void Awake()
         {
-            _totemMaterial = _totemRenderer.material;            
+            _totemMaterial = _totemRenderer.material;
         }
 
         // PUBLIC
 
         public void FullyDischargeTotem()
         {
-            if (_chargeCoroutine != null)
-            {
-                StopCoroutine(_chargeCoroutine);
-            }
+            StopAllCoroutines();
             UpdateShaderApparition(_minValue);
 
             if (OnFullyDischarged != null)
             {
                 OnFullyDischarged.Invoke();
+                Debug.Log("Fully Discharged");
             }
         }
 
         public void FullyChargeTotem()
         {
-            if (_chargeCoroutine != null)
-            {
-                StopCoroutine(_chargeCoroutine);
-            }
+            StopAllCoroutines();
             UpdateShaderApparition(_maxValue);
+
             if (OnFullyCharged != null)
             {
                 OnFullyCharged.Invoke();
+                Debug.Log("Fully Charged");
             }
         }
-        
+
         public void StartCharging()
         {
+            StopAllCoroutines();
             _chargeCoroutine = StartCoroutine(ChargeTotemRoutine());
         }
 
@@ -76,8 +75,10 @@ namespace GameModes
 
         private IEnumerator ChargeTotemRoutine()
         {
-            OnChargingEnergy.Invoke(0f);
+            yield return new WaitForSeconds(1.5f);
+            OnStartChargingEnergy.Invoke();
 
+            OnChargingEnergy.Invoke(0f);
             var currentDuration = 0f;
             while (currentDuration < _chargingDuration)
             {
@@ -88,6 +89,7 @@ namespace GameModes
                 OnChargingEnergy.Invoke(currentDuration/_chargingStep);
             }
             _currentEnergyValue = _maxValue;
+            OnFullyCharged.Invoke();
         }
     }
 }
