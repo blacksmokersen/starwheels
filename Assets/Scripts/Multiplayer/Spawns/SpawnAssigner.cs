@@ -32,6 +32,9 @@ namespace Multiplayer
             if (BoltNetwork.IsServer)
             {
                 InitializeSpawns();
+
+                GameReady gameReadyEvent = GameReady.Create(GlobalTargets.Everyone);
+                gameReadyEvent.Send();
             }
         }
 #endif
