@@ -36,24 +36,24 @@ namespace Common
 
         // PUBLIC
 
-        public void DisableAllForXSeconds(float seconds)
+        public void DisableAllForXSeconds(FloatVariable seconds)
         {
-            StartCoroutine(DisableAllForXSecondsRoutine(seconds));
+            StartCoroutine(DisableAllForXSecondsRoutine(seconds.Value));
         }
 
-        public void EnableAllAfterXSeconds(float seconds)
+        public void EnableAllAfterXSeconds(FloatVariable seconds)
         {
-            StartCoroutine(DisableAllForXSecondsRoutine(seconds));
+            StartCoroutine(DisableAllForXSecondsRoutine(seconds.Value));
         }
 
-        public void DisableAllInChildrenForXSeconds(float seconds)
+        public void DisableAllInChildrenForXSeconds(FloatVariable seconds)
         {
-            StartCoroutine(DisableAllInChildrenForXSecondsRoutine(seconds));
+            StartCoroutine(DisableAllInChildrenForXSecondsRoutine(seconds.Value));
         }
 
-        public void EnableAllInChildrenAfterXSeconds(float seconds)
+        public void EnableAllInChildrenAfterXSeconds(FloatVariable seconds)
         {
-            StartCoroutine(DisableAllInChildrenForXSecondsRoutine(seconds));
+            StartCoroutine(DisableAllInChildrenForXSecondsRoutine(seconds.Value));
         }
 
         public void DisableAll()
