@@ -4,13 +4,15 @@
  * May have to synchronize the size with a throwable state
  *
  */
-public class SizeIncrease : MonoBehaviour
+public class ScaleModifier : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] private SizeIncreaseSettings settings;
+    [SerializeField] private ScaleModifierSettings settings;
 
     private float _timer = 0f;
+    private bool _modifyingScale = false;
     private Vector3 _increaseRatio;
+    private Vector3 _startSize;
 
     // CORE
 
@@ -26,11 +28,29 @@ public class SizeIncrease : MonoBehaviour
 
     private void Update()
     {
-        if (_timer < settings.SecondsBeforeFullSize)
+        if (_timer < settings.SecondsBeforeFullSize && _modifyingScale)
         {
             _timer += Time.deltaTime;
             IncreaseSize();
         }
+    }
+
+    // PUBLIC
+
+    public void ResetScale()
+    {
+        Debug.Log("Resetting scale");
+        Debug.Log("Local scale before : " + transform.localScale);
+        _modifyingScale = false;
+        _timer = 0f;
+        transform.localScale = settings.StartSize;
+        Debug.Log("Local scale after : " + transform.localScale);
+    }
+
+    public void StartIncreasing()
+    {
+        _timer = 0f;
+        _modifyingScale = true;
     }
 
     // PRIVATE

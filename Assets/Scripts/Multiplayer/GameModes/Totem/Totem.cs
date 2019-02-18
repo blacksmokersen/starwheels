@@ -21,13 +21,6 @@ namespace GameModes.Totem
         [SerializeField] private TotemSettings _totemSettings;
         [SerializeField] private Collider _physicalCollider;
 
-        [SerializeField] private SizeIncrease _sizeIncreaseHitbox;
-        [SerializeField] private SizeIncrease _sizeIncreaseGraphic;
-
-        [SerializeField] private SizeIncrease _sizeDecreaseHitbox;
-        [SerializeField] private SizeIncrease _sizeDecreaseGraphic;
-
-
         private Rigidbody _rb;
         private bool _isSlowingDown = false;
         private Transform _parent;
@@ -108,8 +101,6 @@ namespace GameModes.Totem
                 entity.ReleaseControl();
             }
 
-            StartCoroutine(TotemLoosePower());
-            
             LocalOwnerID = -1;
             CanBePickedUp = true;
             _parent = null;
@@ -163,36 +154,9 @@ namespace GameModes.Totem
 
         private IEnumerator AntiPickSpamRoutine()
         {
-            _sizeIncreaseHitbox.enabled = true;
-            _sizeIncreaseGraphic.enabled = true;
-
             CanBePickedUp = false;
             yield return new WaitForSeconds(_totemSettings.SecondsBeforeCanBePickedAgain);
             CanBePickedUp = true;
-
-            //Size increase
-
-            yield return new WaitForSeconds(2.0f);
-
-            _sizeIncreaseHitbox.enabled = false;
-            _sizeIncreaseGraphic.enabled = false;
-
         }
-
-        private IEnumerator TotemLoosePower()
-        {
-
-            yield return new WaitForSeconds(1.0f);
-
-            _sizeDecreaseHitbox.enabled = true;
-            _sizeDecreaseGraphic.enabled = true;
-
-            yield return new WaitForSeconds(1.0f);
-
-            _sizeDecreaseHitbox.enabled = false;
-            _sizeDecreaseGraphic.enabled = false;
-
-        }
-
     }
 }

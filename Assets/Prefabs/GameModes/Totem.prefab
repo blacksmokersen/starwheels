@@ -505,7 +505,6 @@ GameObject:
   - component: {fileID: 4993985143616608}
   - component: {fileID: 135879849441599216}
   - component: {fileID: 8378396071863801717}
-  - component: {fileID: 4934581036025443898}
   m_Layer: 15
   m_Name: PickupTrigger
   m_TagString: TotemPickup
@@ -547,25 +546,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1267211294733920}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4505bddf4d1f9943b667cd79e8149fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: 4c886612750f28a45b80c5f7d8095e6e, type: 2}
---- !u!114 &4934581036025443898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1267211294733920}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4505bddf4d1f9943b667cd79e8149fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  settings: {fileID: 11400000, guid: e250ed7091d97a542909029ae500ccb3, type: 2}
 --- !u!1 &1504158930287398
 GameObject:
   m_ObjectHideFlags: 0
@@ -768,10 +754,10 @@ GameObject:
   - component: {fileID: 4039392584572474}
   - component: {fileID: 114257669005785006}
   - component: {fileID: 54922600011451460}
+  - component: {fileID: 114015210551217176}
   - component: {fileID: 114445911255527568}
   - component: {fileID: 114674416082429730}
   - component: {fileID: 114512136705228060}
-  - component: {fileID: 114015210551217176}
   - component: {fileID: 153259331929340410}
   m_Layer: 15
   m_Name: Totem
@@ -845,49 +831,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &114445911255527568
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1772060832756568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05da5082f6c1fb643801679d94caf256, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ThrowableType: 0
-  Speed: {fileID: 11400000, guid: 906cd35c7d41a144b9fab1e4aaf720fb, type: 2}
---- !u!114 &114674416082429730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1772060832756568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4aa3a13364b36a4caada4fff4cc864f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _groundLayerName: Ground
-  _hoveringHeight: 1.5
---- !u!114 &114512136705228060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1772060832756568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfc5ccc2596e7b84bbd2588ba9a970c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _totemSettings: {fileID: 11400000, guid: 9f6ce33577d972c4f9494dd71799c0c4, type: 2}
-  _sphereCollider: {fileID: 135879849441599216}
-  _meshTransform: {fileID: 4974691026423464}
 --- !u!114 &114015210551217176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -980,10 +923,49 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   _totemSettings: {fileID: 11400000, guid: 9f6ce33577d972c4f9494dd71799c0c4, type: 2}
   _physicalCollider: {fileID: 135549709688801646}
-  _sizeIncreaseHitbox: {fileID: 8378396071863801717}
-  _sizeIncreaseGraphic: {fileID: 4991627313038175105}
-  _sizeDecreaseHitbox: {fileID: 4934581036025443898}
-  _sizeDecreaseGraphic: {fileID: 2218895524112698635}
+--- !u!114 &114445911255527568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772060832756568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05da5082f6c1fb643801679d94caf256, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ThrowableType: 0
+  Speed: {fileID: 11400000, guid: 906cd35c7d41a144b9fab1e4aaf720fb, type: 2}
+--- !u!114 &114674416082429730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772060832756568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4aa3a13364b36a4caada4fff4cc864f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _groundLayerName: Ground
+  _hoveringHeight: 1.5
+--- !u!114 &114512136705228060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772060832756568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfc5ccc2596e7b84bbd2588ba9a970c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _totemSettings: {fileID: 11400000, guid: 9f6ce33577d972c4f9494dd71799c0c4, type: 2}
+  _sphereCollider: {fileID: 135879849441599216}
+  _meshTransform: {fileID: 4974691026423464}
 --- !u!114 &153259331929340410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -999,7 +981,56 @@ MonoBehaviour:
   _totemRenderer: {fileID: 8019413632187793713}
   OnFullyDischarged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4991627313038175105}
+        m_MethodName: ResetScale
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8378396071863801717}
+        m_MethodName: ResetScale
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnStartChargingEnergy:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8378396071863801717}
+        m_MethodName: StartIncreasing
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4991627313038175105}
+        m_MethodName: StartIncreasing
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnChargingEnergy:
@@ -1014,22 +1045,9 @@ MonoBehaviour:
   _shaderParameterName: _EmssiveAparition
   _minValue: 0
   _maxValue: 10
-  _chargingDuration: 1.5
+  _chargingDuration: 2
   _chargingStep: 0.1
   _totemMaterial: {fileID: 0}
---- !u!114 &2218895524112698635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1981505452616460}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4505bddf4d1f9943b667cd79e8149fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  settings: {fileID: 11400000, guid: 451ae18690875604998a9343efef7725, type: 2}
 --- !u!114 &4991627313038175105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1037,7 +1055,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1981505452616460}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4505bddf4d1f9943b667cd79e8149fa, type: 3}
   m_Name: 
@@ -1162,9 +1180,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a8aca3145e29c340ad148058ffc7ee0, type: 3}
---- !u!4 &8756013613900830600 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4160397543902728760, guid: 7a8aca3145e29c340ad148058ffc7ee0,
+--- !u!1 &1981505452616460 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4627486346820087484, guid: 7a8aca3145e29c340ad148058ffc7ee0,
     type: 3}
   m_PrefabInstance: {fileID: 4629463453150594480}
   m_PrefabAsset: {fileID: 0}
@@ -1180,9 +1198,9 @@ MeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 4629463453150594480}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1981505452616460 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4627486346820087484, guid: 7a8aca3145e29c340ad148058ffc7ee0,
+--- !u!4 &8756013613900830600 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4160397543902728760, guid: 7a8aca3145e29c340ad148058ffc7ee0,
     type: 3}
   m_PrefabInstance: {fileID: 4629463453150594480}
   m_PrefabAsset: {fileID: 0}

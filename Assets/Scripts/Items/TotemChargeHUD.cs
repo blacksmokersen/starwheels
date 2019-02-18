@@ -17,9 +17,7 @@ namespace GameModes.Totem
             if (totemPossession)
             {
                 totemPossession.OnTotemGet.AddListener(ShowDischargingHUD);
-                totemPossession.OnTotemGet.AddListener(HideChargingHUD);
                 totemPossession.OnTotemLost.AddListener(ShowChargingHUD);
-                totemPossession.OnTotemLost.AddListener(HideDischargingHUD);
             }
             else
             {
@@ -55,7 +53,7 @@ namespace GameModes.Totem
         {
             _dicharging.SetActive(false);
             _charging.SetActive(true);
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(3f);
             _charging.SetActive(false);
         }
 
@@ -63,7 +61,7 @@ namespace GameModes.Totem
         {
             _charging.SetActive(false);
             _dicharging.SetActive(true);
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(3f);
             _dicharging.SetActive(false);
         }
     }
