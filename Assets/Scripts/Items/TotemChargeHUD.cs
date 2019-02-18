@@ -34,7 +34,9 @@ namespace GameModes.Totem
         public void ShowDischargingHUD()
         {
             StopAllCoroutines();
-            StartCoroutine(ShowDischargingRoutine());
+            //StartCoroutine(ShowDischargingRoutine());
+            HideChargingHUD();
+            _dicharging.SetActive(true);
         }
 
         public void HideChargingHUD()
@@ -51,7 +53,7 @@ namespace GameModes.Totem
 
         private IEnumerator ShowChargingRoutine()
         {
-            _dicharging.SetActive(false);
+            HideDischargingHUD();
             _charging.SetActive(true);
             yield return new WaitForSeconds(3f);
             _charging.SetActive(false);
@@ -59,7 +61,7 @@ namespace GameModes.Totem
 
         private IEnumerator ShowDischargingRoutine()
         {
-            _charging.SetActive(false);
+            HideChargingHUD();
             _dicharging.SetActive(true);
             yield return new WaitForSeconds(3f);
             _dicharging.SetActive(false);

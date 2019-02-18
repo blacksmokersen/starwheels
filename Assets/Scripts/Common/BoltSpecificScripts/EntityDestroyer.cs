@@ -7,7 +7,7 @@ namespace Common.Bolt
     public class EntityDestroyer : EntityBehaviour
     {
         [Header("Entity")]
-        [SerializeField] private BoltEntity _entity;
+        [SerializeField] private BoltEntity _targetEntity;
 
         // PUBLIC
 
@@ -15,7 +15,7 @@ namespace Common.Bolt
         {
             if (entity.isOwner)
             {
-                BoltNetwork.Destroy(_entity);
+                BoltNetwork.Destroy(_targetEntity);
             }
         }
 
