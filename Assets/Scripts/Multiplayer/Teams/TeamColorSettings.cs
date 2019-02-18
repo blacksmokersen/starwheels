@@ -5,6 +5,10 @@ namespace Multiplayer.Teams
     [CreateAssetMenu(fileName = "TeamColorsSettings", menuName ="Team Settings/Team Colors")]
     public class TeamColorSettings : ScriptableObject
     {
+        [Header("Team Name")]
+        public string TeamName;
+        public Team TeamEnum;
+
         [Header("Colors")]
         public Color BoltColor;
         public Color MenuColor;

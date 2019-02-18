@@ -31,7 +31,7 @@ namespace Network
 
             if (entity.isOwner)
             {
-                state.Team = _playerSettings.TeamColor;
+                state.Team = _playerSettings.ColorSettings.BoltColor;
                 state.Nickname = _playerSettings.Nickname;
                 state.OwnerID = _playerSettings.ConnectionID;
 
