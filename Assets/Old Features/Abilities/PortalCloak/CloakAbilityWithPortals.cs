@@ -5,7 +5,7 @@ using Common.HUD;
 
 namespace Abilities
 {
-    public class CloakAbility : Ability, IControllable
+    public class CloakAbilityWithPortals : Ability, IControllable
     {
         [SerializeField] private bool _enabled = true;
         public bool Enabled
@@ -35,6 +35,7 @@ namespace Abilities
 
 
         [HideInInspector] public bool CanDisableCloak;
+        public bool CanUsePortals = false;
 
         private CloakSettings _cloakSettings;
         private Coroutine _cloakRoutine;
@@ -109,7 +110,54 @@ namespace Abilities
             }
         }
 
-        // PRIVATES
+        public void DisableCanUsePortalForXSeconds(float duration)
+        {
+            StartCoroutine(DisableCanUsePortalForXSecondsCoroutine(duration));
+        }
+
+
+        public void EnableCloakPortals()
+        {
+            CanUsePortals = true;
+
+            _portalCamera.ShowPortals();
+            /*
+            GameObject[] portalsToActivate;
+            portalsToActivate = GameObject.FindGameObjectsWithTag(Constants.Tag.CloakPortals);
+
+            foreach (GameObject portal in portalsToActivate)
+            {
+                portal.GetComponent<CloakPortalsActivator>().EnablePortals();
+            }
+            */
+        }
+
+        public void DisableCloakPortals()
+        {
+            CanUsePortals = false;
+
+            _portalCamera.HidePortals();
+            /*
+            GameObject[] portalsToDisable;
+            portalsToDisable = GameObject.FindGameObjectsWithTag(Constants.Tag.CloakPortals);
+
+            foreach (GameObject portal in portalsToDisable)
+            {
+                portal.GetComponent<CloakPortalsActivator>().DisablePortals();
+            }
+            CanUsePortals = true;
+            */
+        }
+
+        // PRIVATEs
+
+            private IEnumerator DisableCanUsePortalForXSecondsCoroutine(float duration)
+        {
+            CanUsePortals = false;
+            yield return new WaitForSeconds(duration);
+            CanUsePortals = true;
+        }
+
 
         private IEnumerator CloakDuration(float Duration)
         {
