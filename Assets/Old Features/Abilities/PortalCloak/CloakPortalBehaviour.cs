@@ -54,7 +54,7 @@ namespace Abilities
             {
                 if (other.transform.root.gameObject.GetComponentInChildren<CloakAbility>() != null)
                 {
-                    if (other.transform.root.gameObject.GetComponentInChildren<CloakAbility>().CanUsePortals)
+                    if (other.transform.root.gameObject.GetComponentInChildren<CloakAbilityWithPortals>().CanUsePortals)
                     {
                         TeleportPlayerToTargetPortal(other.transform.root.gameObject, _targetPortal);
                     }
@@ -74,7 +74,7 @@ namespace Abilities
         {
             //   kart.GetComponentInChildren<CloakAbility>().CanUsePortals = false;
 
-            kart.GetComponentInChildren<CloakAbility>().DisableCanUsePortalForXSeconds(_cloakPortalActivator.TravelTime + 1);
+            kart.GetComponentInChildren<CloakAbilityWithPortals>().DisableCanUsePortalForXSeconds(_cloakPortalActivator.TravelTime + 1);
 
             kart.GetComponent<Common.ControllableDisabler>().DisableAllInChildren();
 
