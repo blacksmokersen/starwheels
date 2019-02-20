@@ -52,13 +52,15 @@ namespace Abilities
         {
             if (other.CompareTag(Constants.Tag.KartCollider))
             {
+                /*
                 if (other.transform.root.gameObject.GetComponentInChildren<CloakAbility>() != null)
                 {
                     if (other.transform.root.gameObject.GetComponentInChildren<CloakAbilityWithPortals>().CanUsePortals)
                     {
-                        TeleportPlayerToTargetPortal(other.transform.root.gameObject, _targetPortal);
                     }
                 }
+                */
+                TeleportPlayerToTargetPortal(other.transform.root.gameObject, _targetPortal);
             }
         }
 
@@ -137,7 +139,7 @@ namespace Abilities
             _kartMeshDisabler.EnableKartMeshes(false);
             _health.UnsetInvincibility();
             kart.GetComponent<Common.ControllableDisabler>().EnableAllInChildren();
-            kart.GetComponentInChildren<CloakAbility>().CloakEffect.SetActive(true);
+            //kart.GetComponentInChildren<CloakAbility>().CloakEffect.SetActive(true);
 
 
             /*
