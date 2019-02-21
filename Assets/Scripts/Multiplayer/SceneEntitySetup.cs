@@ -35,10 +35,12 @@ namespace Multiplayer
                 BoltNetwork.Attach(entity.gameObject);
                 entity.TakeControl();
             }
+            /*
             else
             {
                 gameObject.SetActive(false);
             }
+            */
         }
     }
 }

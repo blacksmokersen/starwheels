@@ -242,7 +242,7 @@ namespace Photon.Lobby
 
             if (entity.isOwner && Connection)
             {
-                Connection.UserData = newColor;
+                Connection.UserData = _currentColorSettings.TeamEnum;
             }
         }
 
@@ -251,6 +251,7 @@ namespace Photon.Lobby
             Debug.Log("Actual");
             Debug.Log(_currentColorSettings == null);
             _currentColorSettings = _gameSettings.TeamsListSettings.GetNext(_currentColorSettings);
+            _playerSettings.ColorSettings = _currentColorSettings;
             Debug.Log("Next");
             Debug.Log(_currentColorSettings == null);
             _playerColor = _currentColorSettings.MenuColor;

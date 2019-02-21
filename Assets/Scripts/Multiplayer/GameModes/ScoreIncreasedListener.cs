@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using Bolt;
-using Multiplayer.Teams;
 using TMPro;
 
 namespace GameModes
@@ -25,7 +24,7 @@ namespace GameModes
                     _redScoreText.text = "" + evnt.Score;
                     break;
                 default:
-                    Debug.LogError("Unknown team.");
+                    Debug.LogWarning("Unknown team.");
                     break;
             }
         }

@@ -10,10 +10,8 @@ namespace Multiplayer
     {
         public RoomProtocolToken RoomInfoToken;
 
-        private List<GameObject> _initialBlueSpawns = new List<GameObject>();
-        private List<GameObject> _initialRedSpawns = new List<GameObject>();
-        private List<GameObject> _blueSpawns = new List<GameObject>();
-        private List<GameObject> _redSpawns = new List<GameObject>();
+        private List<TeamSpawn> _initialSpawns = new List<TeamSpawn>();
+        private List<TeamSpawn> _respawns = new List<TeamSpawn>();
         private int _spawnsAssigned = 1;
         private GameObject _serverSpawn;
 
@@ -46,6 +44,7 @@ namespace Multiplayer
 
             // Instantiate server kart
             var serverTeam = _serverPlayerSettings.ColorSettings.TeamEnum;
+            Debug.Log("Server Team : " + serverTeam);
             _serverSpawn = GetInitialSpawnPosition(serverTeam);
             var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart, RoomInfoToken);
             myKart.transform.position = _serverSpawn.transform.position;
@@ -55,14 +54,14 @@ namespace Multiplayer
 
         public override void SceneLoadRemoteDone(BoltConnection connection, IProtocolToken token)
         {
-            var playerTeam = ((Color)connection.UserData).GetTeam();
+            var playerTeam = (Team)connection.UserData;
             AssignSpawn((int)connection.ConnectionId, playerTeam);
             IncreaseSpawnCount();
         }
 
         public override void OnEvent(RespawnRequest evnt)
         {
-            var team = evnt.Team.GetTeam();
+            var team = (Team)System.Enum.Parse(typeof(Team),evnt.Team);
             AssignSpawn(evnt.ConnectionID, team, true);
         }
 
@@ -72,17 +71,23 @@ namespace Multiplayer
 
         private void InitializeSpawns()
         {
-            _redSpawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.RedSpawn));
-            _initialRedSpawns = new List<GameObject>(_redSpawns);
-            _blueSpawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.BlueSpawn));
-            _initialBlueSpawns = new List<GameObject>(_blueSpawns);
+            var spawns = FindObjectsOfType<TeamSpawn>();
+            _initialSpawns = new List<TeamSpawn>(spawns);
+            _respawns = new List<TeamSpawn>(spawns);
         }
 
         private void AssignSpawn(int connectionID, Team team, bool respawn = false)
         {
             GameObject spawn;
-            if (respawn) spawn = GetSpawnPosition(team);
-            else spawn = GetInitialSpawnPosition(team);
+
+            if (respawn)
+            {
+                spawn = GetRespawnPosition(team);
+            }
+            else
+            {
+                spawn = GetInitialSpawnPosition(team);
+            }
 
             PlayerSpawn playerSpawn = PlayerSpawn.Create();
             playerSpawn.ConnectionID = connectionID;
@@ -94,42 +99,34 @@ namespace Multiplayer
 
         private GameObject GetInitialSpawnPosition(Team team)
         {
-            GameObject spawn = null;
-            int randomIndex = 0;
-
-            switch (team)
-            {
-                case Team.Blue:
-                    randomIndex = Random.Range(0, _initialBlueSpawns.Count);
-                    spawn = _initialBlueSpawns[randomIndex];
-                    _initialBlueSpawns.Remove(spawn);
-                    break;
-                case Team.Red:
-                    randomIndex = Random.Range(0, _initialRedSpawns.Count);
-                    spawn = _initialRedSpawns[randomIndex];
-                    _initialRedSpawns.Remove(spawn);
-                    break;
-            }
-            return spawn;
+            return GetRandomSpawnFromList(team, _initialSpawns);
         }
 
-        private GameObject GetSpawnPosition(Team team)
+        private GameObject GetRespawnPosition(Team team)
         {
-            GameObject spawnPosition = null;
-            int randomIndex = 0;
+            return GetRandomSpawnFromList(team, _respawns);
+        }
 
-            switch (team)
+        private GameObject GetRandomSpawnFromList(Team team, List<TeamSpawn> spawnList)
+        {
+            var validSpawns = new List<GameObject>();
+
+            foreach (var spawn in spawnList)
             {
-                case Team.Blue:
-                    randomIndex = Random.Range(0, _blueSpawns.Count);
-                    spawnPosition = _blueSpawns[randomIndex];
-                    break;
-                case Team.Red:
-                    randomIndex = Random.Range(0, _redSpawns.Count);
-                    spawnPosition = _redSpawns[randomIndex];
-                    break;
+                if (spawn.Team == team)
+                {
+                    validSpawns.Add(spawn.gameObject);
+                }
             }
-            return spawnPosition;
+
+            if(validSpawns.Count > 0)
+            {
+                return validSpawns[Random.Range(0, validSpawns.Count)];
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private void IncreaseSpawnCount()

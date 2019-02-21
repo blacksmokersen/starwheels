@@ -231,7 +231,7 @@ namespace Photon.Lobby
                 lobbyPlayer.Connection = connection;
                 lobbyPlayer.SetPlayerID((int)connection.ConnectionId);
 
-                connection.UserData = lobbyPlayer;
+                //connection.UserData = lobbyPlayer;
                 connection.SetStreamBandwidth(1024 * 1024);
 
                 entity.AssignControl(connection);
