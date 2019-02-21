@@ -32,7 +32,7 @@ namespace Photon.Lobby
         private void Awake()
         {
             _gameSettings = Resources.Load<GameSettings>("GameSettings");
-            Debug.Log(_gameSettings == null);
+            UpdateColorsAccordingToGameMode(_gameModeDropdown.options[_gameModeDropdown.value].text);
 
             if (BoltNetwork.IsServer)
             {
@@ -57,9 +57,11 @@ namespace Photon.Lobby
             state.AddCallback("MaxPlayerCount", UpdateMaxPlayerCount);
             state.AddCallback("PublicGame", UpdatePublicGame);
 
-            state.GameMode = _gameModeDropdown.options[_gameModeDropdown.value].text;
-            state.Map = _mapDropdown.options[_mapDropdown.value].text;
-
+            if (entity.isOwner)
+            {
+                state.GameMode = _gameModeDropdown.options[_gameModeDropdown.value].text;
+                //state.Map = _mapDropdown.options[_mapDropdown.value].text;
+            }
         }
 
         // PRIVATE
@@ -69,14 +71,14 @@ namespace Photon.Lobby
             Debug.Log("Updating game mode");
             _gameModeDropdown.ChangeTMProDropdownValue(state.GameMode);
             _gameSettings.GameMode = state.GameMode;
-            UpdateColorsAccordingToGameMode();
+            UpdateColorsAccordingToGameMode(state.GameMode);
 
             if(OnGameModeUpdated != null) OnGameModeUpdated.Invoke();
         }
 
-        private void UpdateColorsAccordingToGameMode()
+        private void UpdateColorsAccordingToGameMode(string gameMode)
         {
-            switch (state.GameMode)
+            switch (gameMode)
             {
                 case Constants.GameModes.Battle:
                     _gameSettings.TeamsListSettings = _battleTeamList;

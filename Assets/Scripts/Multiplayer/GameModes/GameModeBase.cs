@@ -88,7 +88,7 @@ namespace GameModes
                     scoreIncreased.Score = _redScore;
                     break;
                 default:
-                    Debug.LogError("Unknown team.");
+                    Debug.LogWarning("Unknown team.");
                     break;
             }
             scoreIncreased.Send();

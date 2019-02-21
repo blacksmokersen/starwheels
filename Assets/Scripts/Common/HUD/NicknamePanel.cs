@@ -1,9 +1,5 @@
-﻿#if UNITY_EDITOR
-using UnityEditor;
-#endif
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
-using Multiplayer.Teams;
 using Bolt;
 
 namespace Common.HUD
@@ -13,9 +9,6 @@ namespace Common.HUD
         [Header("Elements")]
         [SerializeField] private TextMeshPro nameText;
         [SerializeField] private SpriteRenderer frameRenderer;
-
-        [Header("Color settings")]
-        [SerializeField] private TeamColorSettings colorSettings;
 
         // CORE
 
