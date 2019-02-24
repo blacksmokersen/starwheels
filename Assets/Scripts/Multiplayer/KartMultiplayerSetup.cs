@@ -41,7 +41,10 @@ namespace Network
             }
 
             var lobby = GameObject.Find("LobbyManager");
-            if(lobby) lobby.SetActive(false);
+            if (lobby != null)
+            {
+                lobby.SetActive(false);
+            }
 
             GetComponentInChildren<Camera>().enabled = entity.isOwner;
         }
