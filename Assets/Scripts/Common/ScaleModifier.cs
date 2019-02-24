@@ -39,12 +39,9 @@ public class ScaleModifier : MonoBehaviour
 
     public void ResetScale()
     {
-     //   Debug.Log("Resetting scale");
-     //   Debug.Log("Local scale before : " + transform.localScale);
         _modifyingScale = false;
         _timer = 0f;
         transform.localScale = settings.StartSize;
-     //   Debug.Log("Local scale after : " + transform.localScale);
     }
 
     public void StartIncreasing()
