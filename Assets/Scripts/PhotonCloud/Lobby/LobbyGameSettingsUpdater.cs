@@ -59,7 +59,6 @@ namespace Photon.Lobby
 
             if (entity.isOwner)
             {
-                DontDestroyOnLoad(gameObject);
                 state.GameMode = _gameModeDropdown.options[_gameModeDropdown.value].text;
                 //state.Map = _mapDropdown.options[_mapDropdown.value].text;
             }
