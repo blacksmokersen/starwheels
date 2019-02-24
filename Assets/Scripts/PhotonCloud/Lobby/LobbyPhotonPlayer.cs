@@ -251,7 +251,6 @@ namespace Photon.Lobby
             _currentColorSettings = _gameSettings.TeamsListSettings.GetNext(_currentColorSettings);
             if (Connection)
             {
-                Debug.LogError("Connexion data : " + _currentColorSettings.TeamEnum);
                 Connection.UserData = _currentColorSettings.TeamEnum;
             }
 
