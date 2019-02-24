@@ -68,15 +68,15 @@ namespace Items.Merge
         {
             if (_inventory.CurrentItem != null)
             {
-                var mergeMode = _inventory.CurrentItemCount == _inventory.CurrentItem.Count ? MergeMode.Full : MergeMode.Small;
+                //var mergeMode = _inventory.CurrentItemCount == _inventory.CurrentItem.Count ? MergeMode.Full : MergeMode.Small;
                 _inventory.SetItem(null, 0);
-                GrantBoosts(mergeMode);
+                GrantBoosts(MergeMode.Full);
             }
             else if (_lottery.LotteryStarted)
             {
                 _lottery.StopAllCoroutines();
                 _lottery.ResetLottery();
-                GrantBoosts(MergeMode.Full);
+                GrantBoosts(MergeMode.Small);
             }
         }
 
@@ -87,11 +87,11 @@ namespace Items.Merge
             switch (mode)
             {
                 case MergeMode.Full:
-                    _boost.CustomBoostFromBoostSettings(_boostSettings);
                     itemMergingEvent.Full = true;
                     break;
                 case MergeMode.Small:
                     itemMergingEvent.Full = false;
+                    _boost.CustomBoostFromBoostSettings(_boostSettings);
                     break;
             }
             itemMergingEvent.Send();
