@@ -9,13 +9,11 @@ namespace Multiplayer
 
         public override void BoltStartDone()
         {
-            Debug.Log("BoltStart");
             SetupEntity();
         }
 
         public override void SceneLoadLocalDone(string map)
         {
-            Debug.Log("Sceneloaded");
             SetupEntity();
         }
 
@@ -23,24 +21,17 @@ namespace Multiplayer
 
         private new void OnEnable()
         {
-            Debug.Log("OnEnable");
             SetupEntity();
         }
 
         private void SetupEntity()
         {
-            if (BoltNetwork.IsServer)
+            var entity = GetComponent<BoltEntity>();
+            if (BoltNetwork.IsServer && !entity.isAttached)
             {
-                var entity = GetComponent<BoltEntity>();
                 BoltNetwork.Attach(entity.gameObject);
                 entity.TakeControl();
             }
-            /*
-            else
-            {
-                gameObject.SetActive(false);
-            }
-            */
         }
     }
 }

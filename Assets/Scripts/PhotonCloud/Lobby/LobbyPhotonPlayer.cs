@@ -50,6 +50,7 @@ namespace Photon.Lobby
         {
             _colorButton.GetComponent<Image>().color = TeamsColors.NoTeamColor;
             _gameSettings = Resources.Load<GameSettings>("GameSettings");
+            _playerSettings = Resources.Load<PlayerSettings>(Constants.Resources.PlayerSettings);
         }
 
         private void Start()
@@ -76,6 +77,16 @@ namespace Photon.Lobby
             state.AddCallback("Ready", () =>
             {
                 OnClientReady(state.Ready);
+            });
+
+            state.AddCallback("Team", () =>
+            {
+                Debug.LogError("Team changning");
+                if (entity.isOwner && Connection)
+                {
+                    Debug.LogError("OnColorChanged Owner");
+                    Connection.UserData = (Team)System.Enum.Parse(typeof(Team), state.Team);
+                }
             });
 
             if (entity.isOwner)
@@ -237,25 +248,21 @@ namespace Photon.Lobby
 
         private void OnColorChanged(Color newColor)
         {
-            _playerColor = newColor;
-            _colorButton.GetComponent<Image>().color = newColor;
-
-            if (entity.isOwner && Connection)
+            _currentColorSettings = _gameSettings.TeamsListSettings.GetNext(_currentColorSettings);
+            if (Connection)
             {
+                Debug.LogError("Connexion data : " + _currentColorSettings.TeamEnum);
                 Connection.UserData = _currentColorSettings.TeamEnum;
             }
+
+            _playerColor = newColor;
+            _colorButton.GetComponent<Image>().color = newColor;
         }
 
         private void OnColorClicked()
         {
-            Debug.Log("Actual");
-            Debug.Log(_currentColorSettings == null);
-            _currentColorSettings = _gameSettings.TeamsListSettings.GetNext(_currentColorSettings);
             _playerSettings.ColorSettings = _currentColorSettings;
-            Debug.Log("Next");
-            Debug.Log(_currentColorSettings == null);
             _playerColor = _currentColorSettings.MenuColor;
-            //_playerSettings.ColorSettings.BoltColor = _playerColor;
         }
 
         private void OnReadyClicked()
