@@ -33,7 +33,7 @@ namespace Items.Lottery
 
         private void Start()
         {
-            _upgradeCoroutine = StartCoroutine(UpgradeSelfRoutine());
+            //_upgradeCoroutine = StartCoroutine(UpgradeSelfRoutine());
         }
 
         // PUBLIC
@@ -50,26 +50,38 @@ namespace Items.Lottery
             Show();
         }
 
+        public void UpgradeToNext()
+        {
+            if (CurrentSettings.NextUpgradeSettings)
+            {
+                UpgradeSelf(CurrentSettings.NextUpgradeSettings);
+            }
+        }
+
+        public void ResetToFirstUpgrade()
+        {
+            UpgradeSelf(_firstSettings);
+
+            if (_upgradeCoroutine != null)
+            {
+                StopCoroutine(_upgradeCoroutine);
+                //_upgradeCoroutine = StartCoroutine(UpgradeSelfRoutine());
+            }
+        }
+
         // PRIVATE
 
         private void Hide()
         {
             _boxCollider.enabled = false;
             itemSphere.SetActive(false);
-
-            if (_upgradeCoroutine != null)
-            {
-                StopCoroutine(_upgradeCoroutine);
-            }
-            CurrentSettings = _firstSettings;
         }
 
         private void Show()
         {
             _boxCollider.enabled = true;
             itemSphere.SetActive(true);
-
-            _upgradeCoroutine = StartCoroutine(UpgradeSelfRoutine());
+            ResetToFirstUpgrade();
         }
 
         private void UpgradeSelf(ItemBoxSettings settings)
@@ -91,8 +103,8 @@ namespace Items.Lottery
 
             if (CurrentSettings.NextUpgradeSettings)
             {
-                UpgradeSelf(CurrentSettings.NextUpgradeSettings);
-                StartCoroutine(UpgradeSelfRoutine());
+                UpgradeToNext();
+                _upgradeCoroutine = StartCoroutine(UpgradeSelfRoutine());
             }
         }
 
