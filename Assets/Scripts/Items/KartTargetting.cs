@@ -7,6 +7,8 @@ namespace Items
     [RequireComponent(typeof(Collider))]
     public class KartTargetting : EntityBehaviour<IKartState>
     {
+        public string ItemName;
+
         public bool Targetting;
         [SerializeField] private Inventory _inventory;
         [SerializeField] private GameObject _crossHairReference;
@@ -54,7 +56,7 @@ namespace Items
 
         public void CheckIfItemNeedsTarget(Item item)
         {
-            if (item != null && item.Name == "Rocket")
+            if (item != null && item.Name == ItemName)
             {
                 Enable();
             }
