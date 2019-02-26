@@ -27,6 +27,7 @@ namespace Items.Merge
         [SerializeField] private Health.Health _health;
 
         private float _timer = 0f;
+        private bool _canMerge = true;
 
         private enum MergeMode { Full, Small };
 
@@ -50,14 +51,17 @@ namespace Items.Merge
                 {
                     _timer += Time.deltaTime;
 
-                    if (_timer > _secondsBeforeMerging.Value)
+                    if (_timer > _secondsBeforeMerging.Value && _canMerge)
                     {
                         ConsumeItem();
+                        _timer = 0f;
+                        _canMerge = false;
                     }
                 }
                 if (Input.GetButtonUp(Constants.Input.UseItem) || Input.GetButtonUp(Constants.Input.UseItemBackward) || Input.GetButtonUp(Constants.Input.UseItemForward))
                 {
                     _timer = 0f;
+                    _canMerge = true;
                 }
             }
         }
@@ -69,7 +73,7 @@ namespace Items.Merge
             if (_inventory.CurrentItem != null)
             {
                 //var mergeMode = _inventory.CurrentItemCount == _inventory.CurrentItem.Count ? MergeMode.Full : MergeMode.Small;
-                _inventory.SetItem(null, 0);
+                _inventory.SetCount(_inventory.CurrentItemCount - 1);
                 GrantBoosts(MergeMode.Full);
             }
             else if (_lottery.LotteryStarted)

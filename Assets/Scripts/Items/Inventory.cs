@@ -17,6 +17,10 @@ namespace Items
 
         public bool CanUseItem = true;
 
+        [Header("Merging")]
+        [Tooltip("Seconds with button pressed before merging the item")]
+        [SerializeField] private FloatVariable _secondsBeforeMerging;
+
         [Header("Spam Prevention")]
         [SerializeField] private float _antiSpamDuration;
 
@@ -32,6 +36,8 @@ namespace Items
         public ItemEvent OnItemGet;
         public ItemEvent OnItemUse;
         public IntEvent OnItemCountChange;
+
+        private float _timer = 0f;
 
         // CORE
 
@@ -55,11 +61,17 @@ namespace Items
         {
             if (Enabled)
             {
-                if (Input.GetButtonUp(Constants.Input.UseItem) ||
-                    Input.GetButtonUp(Constants.Input.UseItemBackward) ||
-                    Input.GetButtonUp(Constants.Input.UseItemForward))
+                if (Input.GetButton(Constants.Input.UseItem) || Input.GetButton(Constants.Input.UseItemBackward) || Input.GetButton(Constants.Input.UseItemForward))
                 {
-                    UseItem();
+                    _timer += Time.deltaTime;
+                }
+                if (Input.GetButtonUp(Constants.Input.UseItem) || Input.GetButtonUp(Constants.Input.UseItemBackward) || Input.GetButtonUp(Constants.Input.UseItemForward))
+                {
+                    if (_timer < _secondsBeforeMerging.Value)
+                    {
+                        UseItem();
+                    }
+                    _timer = 0f;
                 }
             }
         }
