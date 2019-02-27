@@ -1,5 +1,12 @@
 ﻿public class Constants
 {
+    // Steam Stats
+    public class SteamStats
+    {
+        public const string Experience = "experience";
+        public const string Money = "money";
+    }
+
     // Layers
     public class Layer
     {
