@@ -13,7 +13,7 @@ namespace Audio
 
         private void Awake()
         {
-            muteButton.onClick.AddListener(ToggleMute);
+          //  muteButton.onClick.AddListener(ToggleMute);
 
             if (instance == null)
             {
