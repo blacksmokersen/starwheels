@@ -90,6 +90,5 @@ namespace Menu
                 Debug.LogWarning("Couldn't fetch player avatar.");
             }
         }
-
     }
 }
