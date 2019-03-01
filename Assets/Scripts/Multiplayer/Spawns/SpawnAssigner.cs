@@ -3,9 +3,11 @@ using UnityEngine;
 using Bolt;
 using Photon;
 using System.Collections;
+using Multiplayer.Teams;
 
 namespace Multiplayer
 {
+    [RequireComponent(typeof(TeamAssigner))]
     public class SpawnAssigner : GlobalEventListener
     {
         [Header("Settings")]
@@ -19,10 +21,18 @@ namespace Multiplayer
         private List<GameObject> _blueSpawns = new List<GameObject>();
         private List<GameObject> _redSpawns = new List<GameObject>();
         private GameObject _serverSpawn;
+        private TeamAssigner _teamAssigner;
 
         private int _spawnsAssigned = 0;
         private int _playersCount = -1;
         private bool _gameIsReady = false;
+
+        // CORE
+
+        private void Awake()
+        {
+            _teamAssigner = GetComponent<TeamAssigner>();
+        }
 
         // BOLT
 
@@ -49,13 +59,8 @@ namespace Multiplayer
                 _playersCount = RoomInfoToken.PlayersCount;
 
                 // Instantiate server kart
-                var serverTeam = _serverPlayerSettings.TeamColor.GetTeam();
-                _serverSpawn = GetInitialSpawnPosition(serverTeam);
-                var myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart, RoomInfoToken);
-                myKart.transform.position = _serverSpawn.transform.position;
-                myKart.transform.rotation = _serverSpawn.transform.rotation;
-                FindObjectOfType<CameraUtils.SetKartCamera>().SetKart(myKart);
-                IncreaseSpawnCount();
+                var serverTeam = _teamAssigner.PickAvailableTeam();
+                AssignSpawn(0, serverTeam);
             }
         }
 
@@ -63,9 +68,16 @@ namespace Multiplayer
         {
             if (BoltNetwork.IsServer)
             {
-                var playerTeam = ((Color)connection.UserData).GetTeam();
+                Team playerTeam = Teams.TeamsColors.BlueColor.GetTeam();
+                if (connection.UserData != null)
+                {
+                    playerTeam = ((Color)connection.UserData).GetTeam();
+                }
+                else
+                {
+                    playerTeam = _teamAssigner.PickAvailableTeam();
+                }
                 AssignSpawn((int)connection.ConnectionId, playerTeam);
-                IncreaseSpawnCount();
             }
         }
 
@@ -121,7 +133,10 @@ namespace Multiplayer
             playerSpawn.SpawnPosition = spawn.transform.position;
             playerSpawn.SpawnRotation = spawn.transform.rotation;
             playerSpawn.RoomToken = RoomInfoToken;
+            playerSpawn.TeamEnum = team.ToString();
             playerSpawn.Send();
+
+            IncreaseSpawnCount();
         }
 
         private GameObject GetInitialSpawnPosition(Team team)

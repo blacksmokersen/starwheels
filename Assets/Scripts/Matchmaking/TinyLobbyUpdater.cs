@@ -21,7 +21,7 @@ namespace SW.Matchmaking
         {
             _lookingForGameText.gameObject.SetActive(true);
             _currentPlayerCountText.gameObject.SetActive(false);
-            _startGameButton.gameObject.SetActive(false);
+            _startGameButton.gameObject.SetActive(true);
         }
 
         // BOLT
@@ -52,7 +52,8 @@ namespace SW.Matchmaking
         {
             if (BoltNetwork.IsServer)
             {
-                BoltNetwork.LoadScene(_lobbyData.ChosenMapName);
+                var roomToken = new Photon.RoomProtocolToken() { Gamemode = _lobbyData.ChosenGamemode };
+                BoltNetwork.LoadScene(_lobbyData.ChosenMapName, roomToken);
             }
             else
             {

@@ -23,11 +23,11 @@ namespace SW.Matchmaking
 
             foreach (var toggle in toggles)
             {
-                var mapName = toggle.GetComponentInChildren<TextMeshProUGUI>().text;
+                var mapName = toggle.GetComponent<MapLabel>().MapData.MapName;
                 var gameModeName = toggle.GetComponentInParent<GamemodeGroupLabel>().Label.Value;
                 toggle.onValueChanged.AddListener((b) =>
                 {
-                    UpdateMapPool(toggle.name, gameModeName, toggle.isOn);
+                    UpdateMapPool(mapName, gameModeName, toggle.isOn);
                 });
 
                 if (toggle.isOn)

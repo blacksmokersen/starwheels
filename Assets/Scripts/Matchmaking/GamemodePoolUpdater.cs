@@ -29,7 +29,10 @@ namespace SW.Matchmaking
             foreach (var toggle in gamemodesToggles)
             {
                 var gameModeName = toggle.GetComponentInChildren<TextMeshProUGUI>().text;
-                _lobbyData.GamemodePool.Add(gameModeName);
+                if (toggle.isOn)
+                {
+                    _lobbyData.GamemodePool.Add(gameModeName);
+                }
                 _lobbyData.MapPool.Add(gameModeName, new List<string>());
 
                 toggle.onValueChanged.AddListener((b) =>
