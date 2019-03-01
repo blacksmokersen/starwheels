@@ -1,6 +1,7 @@
 ﻿using System;
 using SW.Matchmaking;
 using UnityEngine;
+using Bolt;
 
 public static class SWMatchmaking
 {
@@ -64,9 +65,9 @@ public static class SWMatchmaking
         }
     }
 
-    public static void JoinLobby(Guid id)
+    public static void JoinLobby(Guid id, IProtocolToken connectToken = null)
     {
-        BoltNetwork.Connect(BoltNetwork.SessionList[id]);
+        BoltNetwork.Connect(BoltNetwork.SessionList[id], connectToken);
     }
 
     public static void JoinRandomGame()

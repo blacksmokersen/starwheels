@@ -32,20 +32,21 @@ namespace Multiplayer
                 PlayersCount = 1,
                 RoomInfo = "Solo"
             };
-            InstantiateKart(transform.position, transform.rotation, _roomProtocolToken); // Scene specific position
+            InstantiateKart(transform.position, transform.rotation, Team.Blue, _roomProtocolToken); // Scene specific position
         }
 
         public override void OnEvent(PlayerSpawn evnt)
         {
             if(evnt.ConnectionID == _playerSettings.ConnectionID)
             {
-                InstantiateKart(evnt.SpawnPosition, evnt.SpawnRotation, (RoomProtocolToken)evnt.RoomToken);
+                Team teamEnum = (Team) System.Enum.Parse(typeof(Team), evnt.TeamEnum);
+                InstantiateKart(evnt.SpawnPosition, evnt.SpawnRotation, teamEnum, (RoomProtocolToken)evnt.RoomToken);
             }
         }
 
         // PRIVATE
 
-        private void InstantiateKart(Vector3 spawnPosition, Quaternion spawnRotation, RoomProtocolToken roomProtocolToken)
+        private void InstantiateKart(Vector3 spawnPosition, Quaternion spawnRotation, Team team, RoomProtocolToken roomProtocolToken)
         {
             GameObject myKart;
 
@@ -61,6 +62,7 @@ namespace Multiplayer
 
             myKart.transform.position = spawnPosition;
             myKart.transform.rotation = spawnRotation;
+            myKart.GetComponent<Player>().Team = team;
         }
     }
 }

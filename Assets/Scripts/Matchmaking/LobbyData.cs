@@ -22,6 +22,7 @@ namespace SW.Matchmaking
         public void SetRandomGamemode()
         {
             ChosenGamemode = PickRandomGamemodeFromPool();
+            Debug.Log("Random gamemode set : " + ChosenGamemode);
         }
 
         public string PickRandomGamemodeFromPool()
@@ -32,11 +33,20 @@ namespace SW.Matchmaking
         public void SetRandomMap()
         {
             ChosenMapName = PickRandomMapNameFromPool(ChosenGamemode);
+            Debug.Log("Random gamemode set : " + ChosenMapName);
         }
 
         public string PickRandomMapNameFromPool(string gamemode)
         {
-            return MapPool[gamemode][Random.Range(0, MapPool[gamemode].Count)];
+            if (MapPool[gamemode].Count > 0)
+            {
+                return MapPool[gamemode][Random.Range(0, MapPool[gamemode].Count)];
+            }
+            else
+            {
+                Debug.LogError("MapPool is empty!");
+                return null;
+            }
         }
     }
 }
