@@ -110,6 +110,7 @@ namespace Photon.Lobby
             BoltNetwork.RegisterTokenClass<RoomProtocolToken>();
             BoltNetwork.RegisterTokenClass<ServerAcceptToken>();
             BoltNetwork.RegisterTokenClass<ServerConnectToken>();
+            BoltNetwork.RegisterTokenClass<SW.Matchmaking.LobbyToken>();
         }
 
         public override void BoltStartDone()
