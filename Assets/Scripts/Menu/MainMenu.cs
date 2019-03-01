@@ -80,7 +80,7 @@ namespace Menu
         public override void BoltStartDone()
         {
             base.BoltStartDone();
-            BoltNetwork.LoadScene(mapChoiceSolo.options[mapChoiceSolo.value].text);
+            //BoltNetwork.LoadScene(mapChoiceSolo.options[mapChoiceSolo.value].text);
         }
 
         private void Multi()
@@ -130,7 +130,6 @@ namespace Menu
 
         public void UpdateMenu()
         {
-            Debug.Log(currentState);
             switch (currentState)
             {
                 case State.Main:
