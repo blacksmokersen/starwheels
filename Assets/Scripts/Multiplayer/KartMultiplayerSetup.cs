@@ -31,9 +31,10 @@ namespace Network
 
             if (entity.isOwner)
             {
-                state.Team = _playerSettings.TeamColor;
+                //state.Team = _playerSettings.TeamColor;
                 state.Nickname = _playerSettings.Nickname;
-                state.OwnerID = _playerSettings.ConnectionID;
+                //state.OwnerID = _playerSettings.ConnectionID;
+                state.OwnerID = SWMatchmaking.GetMyBoltId();
 
                 PlayerReady playerReadyEvent = PlayerReady.Create();
                 playerReadyEvent.Team = state.Team;

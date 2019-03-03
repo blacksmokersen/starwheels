@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using SW.Matchmaking;
 using UnityEngine;
 using Bolt;
@@ -73,6 +74,26 @@ public static class SWMatchmaking
     public static void JoinRandomGame()
     {
 
+    }
+
+    public static int GetMyBoltId() // En faire une extension de boltnetwork
+    {
+        if (BoltNetwork.IsConnected)
+        {
+            if (BoltNetwork.IsServer) // We are the server
+            {
+                return 0;
+            }
+            else // We are a client
+            {
+                return (int)BoltNetwork.Server.ConnectionId;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Can't get your Bolt ID if you are not connected to Bolt.");
+            return -1;
+        }
     }
 }
 

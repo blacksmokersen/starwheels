@@ -37,7 +37,8 @@ namespace Multiplayer
 
         public override void OnEvent(PlayerSpawn evnt)
         {
-            if(evnt.ConnectionID == _playerSettings.ConnectionID)
+            Debug.LogError("My Bolt ID : " + SWMatchmaking.GetMyBoltId());
+            if(evnt.ConnectionID == SWMatchmaking.GetMyBoltId())
             {
                 Team teamEnum = (Team) System.Enum.Parse(typeof(Team), evnt.TeamEnum);
                 InstantiateKart(evnt.SpawnPosition, evnt.SpawnRotation, teamEnum, (RoomProtocolToken)evnt.RoomToken);
@@ -62,7 +63,7 @@ namespace Multiplayer
 
             myKart.transform.position = spawnPosition;
             myKart.transform.rotation = spawnRotation;
-            myKart.GetComponent<Player>().Team = team;
+            myKart.GetComponent<BoltEntity>().GetState<IKartState>().Team = team.GetColor();
         }
     }
 }
