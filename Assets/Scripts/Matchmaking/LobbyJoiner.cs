@@ -24,7 +24,10 @@ namespace SW.Matchmaking
                 BoltNetwork.RegisterTokenClass<Photon.ServerConnectToken>();
                 BoltNetwork.RegisterTokenClass<SW.Matchmaking.LobbyToken>();
             }
+
         }
+
+
 
         public override void BoltStartDone()
         {

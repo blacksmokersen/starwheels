@@ -60,7 +60,8 @@ namespace Multiplayer
 
                 // Instantiate server kart
                 var serverTeam = _teamAssigner.PickAvailableTeam();
-                AssignSpawn(0, serverTeam);
+                AssignSpawn(SWMatchmaking.GetMyBoltId(), serverTeam);
+                _teamAssigner.AddPlayer(serverTeam, SWMatchmaking.GetMyBoltId());
             }
         }
 
@@ -78,6 +79,7 @@ namespace Multiplayer
                     playerTeam = _teamAssigner.PickAvailableTeam();
                 }
                 AssignSpawn((int)connection.ConnectionId, playerTeam);
+                _teamAssigner.AddPlayer(playerTeam, (int)connection.ConnectionId);
             }
         }
 

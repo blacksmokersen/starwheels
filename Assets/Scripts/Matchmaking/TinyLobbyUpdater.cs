@@ -36,6 +36,7 @@ namespace SW.Matchmaking
 
         public override void Connected(BoltConnection connection)
         {
+
             Debug.Log("A player joined the lobby.");
             UpdateCurrentPlayerCount();
         }
