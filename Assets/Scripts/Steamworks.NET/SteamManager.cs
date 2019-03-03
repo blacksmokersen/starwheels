@@ -12,6 +12,7 @@
 #if !DISABLESTEAMWORKS
 
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 using Steamworks;
 
@@ -23,6 +24,7 @@ using Steamworks;
 public class SteamManager : MonoBehaviour
 {
     public bool SteamEnabled;
+    public UnityEvent OnSteamInitialized;
 
 	private static SteamManager s_instance;
 	private static SteamManager Instance {
@@ -124,6 +126,8 @@ public class SteamManager : MonoBehaviour
             }
 
             s_EverInitialized = true;
+
+            OnSteamInitialized.Invoke();
         }
         else
         {
