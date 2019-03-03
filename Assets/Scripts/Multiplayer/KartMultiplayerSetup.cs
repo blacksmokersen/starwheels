@@ -51,9 +51,15 @@ namespace Network
 
         private void ColorChanged()
         {
+            _playerSettings.TeamColor = state.Team;
+            Debug.Log("New team color : " + _playerSettings.TeamColor);
+
             GetComponent<Player>().Team = state.Team.GetTeam();
             var panel = GetComponentInChildren<Common.HUD.NicknamePanel>();
-            if (panel) panel.SetFrameRendererColor(state.Team);
+            if (panel)
+            {
+                panel.SetFrameRendererColor(state.Team);
+            }
         }
 
         private void NameChanged()

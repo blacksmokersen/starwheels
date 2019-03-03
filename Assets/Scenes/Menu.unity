@@ -639,7 +639,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0, g: 0.5726497, b: 1, a: 1}
-    m_PressedColor: {r: 0, g: 0.43311167, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.05
@@ -1490,7 +1490,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0, g: 0.5726497, b: 1, a: 1}
-    m_PressedColor: {r: 0, g: 0.43311167, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.05
@@ -1931,6 +1931,7 @@ GameObject:
   - component: {fileID: 449484084}
   - component: {fileID: 449484083}
   - component: {fileID: 449484082}
+  - component: {fileID: 449484080}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -1938,6 +1939,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &449484080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449484079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 660629d7b4c5ee44f9062620e18c45a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &449484081
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3545,7 +3558,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0, g: 0.5726497, b: 1, a: 1}
-    m_PressedColor: {r: 0, g: 0.43311167, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.05
@@ -4264,9 +4277,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1048250195}
+      - m_Target: {fileID: 1933231542}
         m_MethodName: CreateLobby
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1048250191}
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4395,6 +4419,17 @@ MonoBehaviour:
       - m_Target: {fileID: 1933231541}
         m_MethodName: ConnectAsClient
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2009003510}
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4714,7 +4749,6 @@ GameObject:
   - component: {fileID: 1048250192}
   - component: {fileID: 1048250194}
   - component: {fileID: 1048250193}
-  - component: {fileID: 1048250195}
   - component: {fileID: 1048250196}
   m_Layer: 5
   m_Name: MatchmakingPanel
@@ -4782,35 +4816,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1048250191}
   m_CullTransparentMesh: 0
---- !u!114 &1048250195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1048250191}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54bf560f38d163e4397fcafd5aefaf56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _lobbyData: {fileID: 11400000, guid: 930191bbcbab87e4f98912baee12eddc, type: 2}
-  OnConnectedAsServer:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 686222878}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1048250196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10099,6 +10104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1933231540}
   - component: {fileID: 1933231541}
+  - component: {fileID: 1933231542}
   m_Layer: 5
   m_Name: Main
   m_TagString: Untagged
@@ -10145,9 +10151,38 @@ MonoBehaviour:
   OnConnectedAsClient:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 686222878}
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 686222882}
+        m_MethodName: SetLookingForGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &1933231542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1933231539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54bf560f38d163e4397fcafd5aefaf56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lobbyData: {fileID: 11400000, guid: 930191bbcbab87e4f98912baee12eddc, type: 2}
+  OnConnectedAsServer:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 686222882}
+        m_MethodName: SetLookingForPlayers
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -14227,7 +14262,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0, g: 0.5726497, b: 1, a: 1}
-    m_PressedColor: {r: 0, g: 0.43311167, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.05

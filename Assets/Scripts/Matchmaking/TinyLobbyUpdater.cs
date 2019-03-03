@@ -15,27 +15,6 @@ namespace SW.Matchmaking
         [SerializeField] private TextMeshProUGUI _currentPlayerCountText;
         [SerializeField] private Button _startGameButton;
 
-        // CORE
-
-        private new void OnEnable()
-        {
-            base.OnEnable();
-
-            if (BoltNetwork.IsConnected)
-            {
-                if (BoltNetwork.IsServer)
-                {
-                    SetLookingForGame(false);
-                    _startGameButton.gameObject.SetActive(true);
-                }
-                else
-                {
-                    SetLookingForGame(true);
-                    _startGameButton.gameObject.SetActive(false);
-                }
-            }
-        }
-
         // BOLT
 
         public override void BoltShutdownBegin(AddCallback registerDoneCallback)
@@ -57,6 +36,22 @@ namespace SW.Matchmaking
         }
 
         // PUBLIC
+
+        public void SetLookingForGame()
+        {
+            gameObject.SetActive(true);
+            _lookingForGameText.gameObject.SetActive(true);
+            _currentPlayerCountText.gameObject.SetActive(false);
+            _startGameButton.gameObject.SetActive(false);
+        }
+
+        public void SetLookingForPlayers()
+        {
+            gameObject.SetActive(true);
+            _lookingForGameText.gameObject.SetActive(false);
+            _currentPlayerCountText.gameObject.SetActive(true);
+            _startGameButton.gameObject.SetActive(true);
+        }
 
         public void LaunchGame()
         {
@@ -82,12 +77,6 @@ namespace SW.Matchmaking
         {
             var playerCount = 1 + SWMatchmaking.GetCurrentLobbyPlayerCount();
             _currentPlayerCountText.text = playerCount + " players";
-        }
-
-        private void SetLookingForGame(bool b)
-        {
-            _lookingForGameText.gameObject.SetActive(b);
-            _currentPlayerCountText.gameObject.SetActive(!b);
         }
 
         private void OnApplicationQuit()
