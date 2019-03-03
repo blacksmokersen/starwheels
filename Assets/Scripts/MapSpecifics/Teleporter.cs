@@ -16,9 +16,6 @@ namespace MapsSpecifics
                 kartRoot.transform.rotation = _out.transform.rotation;
                 var kartRb = kartRoot.GetComponent<Rigidbody>();
                 var newVelocity = kartRb.velocity.magnitude * _out.transform.forward.normalized;
-                Debug.Log("Old velocity : " + kartRb.velocity);
-                Debug.Log("New velocity : " + newVelocity);
-                Debug.Log("Orientation : " +  _out.transform.rotation.eulerAngles.normalized);
                 kartRb.velocity = newVelocity;
             }
         }
