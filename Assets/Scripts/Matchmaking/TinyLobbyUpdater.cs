@@ -71,6 +71,11 @@ namespace SW.Matchmaking
             }
         }
 
+        public void QuitLobby()
+        {
+            BoltLauncher.Shutdown();
+        }
+
         // PRIVATE
 
         private void UpdateCurrentPlayerCount()
@@ -83,6 +88,11 @@ namespace SW.Matchmaking
         {
             _lookingForGameText.gameObject.SetActive(b);
             _currentPlayerCountText.gameObject.SetActive(!b);
+        }
+
+        private void OnApplicationQuit()
+        {
+            QuitLobby();
         }
     }
 }

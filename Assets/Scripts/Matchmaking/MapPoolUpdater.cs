@@ -10,7 +10,14 @@ namespace SW.Matchmaking
         [Header("Lobby Info")]
         [SerializeField] private LobbyData _lobbyData;
 
+        // CORE
+
         private void Start()
+        {
+            InitializeMapPoolAndListener();
+        }
+
+        private void OnEnable()
         {
             InitializeMapPoolAndListener();
         }
