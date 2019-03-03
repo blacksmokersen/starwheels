@@ -42,10 +42,14 @@ namespace SW.Matchmaking
             StartCoroutine(LobbyCountDebug());
         }
 
+        public override void BoltShutdownBegin(AddCallback registerDoneCallback)
+        {
+            StopAllCoroutines();
+        }
+
         public override void SessionListUpdated(Map<Guid, UdpSession> sessionList)
         {
-            Debug.LogError("Session count : " + sessionList.Count);
-            FindLobby();
+            Debug.LogError("Session count updated : " + sessionList.Count);
         }
 
         // PUBLIC
