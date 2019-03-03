@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
 using UnityEngine.Assertions;
 using Bolt;
 
@@ -9,6 +9,9 @@ namespace SW.Matchmaking
     {
         [Header("Lobby Info")]
         [SerializeField] private LobbyData _lobbyData;
+
+        [Header("Events")]
+        public UnityEvent OnConnectedAsServer;
 
         // BOLT
 
@@ -32,6 +35,8 @@ namespace SW.Matchmaking
                 _lobbyData.SetRandomGamemode();
                 _lobbyData.SetRandomMap();
                 SWMatchmaking.SetLobbyData(_lobbyData);
+
+                OnConnectedAsServer.Invoke();
             }
         }
 
