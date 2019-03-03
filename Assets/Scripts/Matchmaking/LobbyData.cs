@@ -25,6 +25,22 @@ namespace SW.Matchmaking
             Debug.Log("Random gamemode set : " + ChosenGamemode);
         }
 
+        public void AddGamemode(string gamemode)
+        {
+            if (!GamemodePool.Contains(gamemode))
+            {
+                GamemodePool.Add(gamemode);
+            }
+        }
+
+        public void RemoveGamemode(string gamemode)
+        {
+            if (GamemodePool.Contains(gamemode))
+            {
+                GamemodePool.Remove(gamemode);
+            }
+        }
+
         public string PickRandomGamemodeFromPool()
         {
             return GamemodePool[Random.Range(0, GamemodePool.Count)];
@@ -34,6 +50,22 @@ namespace SW.Matchmaking
         {
             ChosenMapName = PickRandomMapNameFromPool(ChosenGamemode);
             Debug.Log("Random gamemode set : " + ChosenMapName);
+        }
+
+        public void AddMap(string gamemode, string map)
+        {
+            if (MapPool.ContainsKey(gamemode) && !MapPool[gamemode].Contains(map))
+            {
+                MapPool[gamemode].Add(map);
+            }
+        }
+
+        public void RemoveMap(string gamemode, string map)
+        {
+            if (MapPool.ContainsKey(gamemode) && MapPool[gamemode].Contains(map))
+            {
+                MapPool[gamemode].Remove(map);
+            }
         }
 
         public string PickRandomMapNameFromPool(string gamemode)

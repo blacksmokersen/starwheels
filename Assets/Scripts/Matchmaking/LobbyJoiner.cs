@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Bolt;
 using System;
 using UdpKit;
@@ -11,6 +12,9 @@ namespace SW.Matchmaking
     {
         [Header("Lobby Info")]
         [SerializeField] private LobbyData _lobbyData;
+
+        [Header("Events")]
+        public UnityEvent OnConnectedAsClient;
 
         // BOLT
 
@@ -24,15 +28,13 @@ namespace SW.Matchmaking
                 BoltNetwork.RegisterTokenClass<Photon.ServerConnectToken>();
                 BoltNetwork.RegisterTokenClass<SW.Matchmaking.LobbyToken>();
             }
-
         }
-
-
 
         public override void BoltStartDone()
         {
             if (BoltNetwork.IsClient)
             {
+                OnConnectedAsClient.Invoke();
                 Debug.Log("Bolt now running as client.");
                 FindLobby();
             }

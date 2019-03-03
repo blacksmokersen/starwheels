@@ -41,11 +41,11 @@ namespace SW.Matchmaking
         {
             if (toggleIsOn)
             {
-                _lobbyData.MapPool[gameModeName].Add(mapName);
+                _lobbyData.AddMap(gameModeName, mapName);
             }
             else
             {
-                _lobbyData.MapPool[gameModeName].Remove(mapName);
+                _lobbyData.RemoveMap(gameModeName, mapName);
             }
         }
     }

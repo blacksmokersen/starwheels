@@ -18,6 +18,11 @@ namespace SW.Matchmaking
             InitializeGamemodePoolAndListeners();
         }
 
+        private void OnEnable()
+        {
+            InitializeGamemodePoolAndListeners();
+        }
+
         // PRIVATE
 
         private void InitializeGamemodePoolAndListeners()
@@ -29,6 +34,7 @@ namespace SW.Matchmaking
             foreach (var toggle in gamemodesToggles)
             {
                 var gameModeName = toggle.GetComponentInChildren<TextMeshProUGUI>().text;
+
                 if (toggle.isOn)
                 {
                     _lobbyData.GamemodePool.Add(gameModeName);
@@ -46,11 +52,11 @@ namespace SW.Matchmaking
         {
             if (toggleIsOn)
             {
-                _lobbyData.GamemodePool.Add(gameMode);
+                _lobbyData.AddGamemode(gameMode);
             }
             else
             {
-                _lobbyData.GamemodePool.Remove(gameMode);
+                _lobbyData.RemoveGamemode(gameMode);
             }
         }
     }

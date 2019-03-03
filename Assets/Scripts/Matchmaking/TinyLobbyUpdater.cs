@@ -17,21 +17,30 @@ namespace SW.Matchmaking
 
         // CORE
 
-        private void Awake()
+        private new void OnEnable()
         {
-            _lookingForGameText.gameObject.SetActive(true);
-            _currentPlayerCountText.gameObject.SetActive(false);
-            _startGameButton.gameObject.SetActive(true);
+            base.OnEnable();
+
+            if (BoltNetwork.IsConnected)
+            {
+                if (BoltNetwork.IsServer)
+                {
+                    SetLookingForGame(false);
+                    _startGameButton.gameObject.SetActive(true);
+                }
+                else
+                {
+                    SetLookingForGame(true);
+                    _startGameButton.gameObject.SetActive(false);
+                }
+            }
         }
 
         // BOLT
 
-        public override void BoltStartDone()
+        public override void BoltShutdownBegin(AddCallback registerDoneCallback)
         {
-            if (BoltNetwork.IsServer)
-            {
-                SetLookingForGame(false);
-            }
+            gameObject.SetActive(false);
         }
 
         public override void Connected(BoltConnection connection)
