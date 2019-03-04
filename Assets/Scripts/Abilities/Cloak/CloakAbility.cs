@@ -92,7 +92,7 @@ namespace Abilities
         public void DisableCloak()
         {
             UnsetCloack();
-            StartCoroutine(Cooldown());
+           // StartCoroutine(Cooldown());
             if (_cloakRoutine != null)
                 StopCoroutine(_cloakRoutine);
             // _animator.SetTrigger("ActivateCloakEffect");
