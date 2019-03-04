@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1120142644817526
+--- !u!1 &581
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,10 +8,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4109045533817178}
-  - component: {fileID: 820922559247094484}
-  - component: {fileID: 82456684176031596}
-  - component: {fileID: 1806494851697439893}
+  - component: {fileID: 1168}
+  - component: {fileID: 2744}
+  - component: {fileID: 1869}
+  - component: {fileID: 1887}
   m_Layer: 0
   m_Name: AudioSources
   m_TagString: Untagged
@@ -19,41 +19,41 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4109045533817178
+--- !u!4 &1168
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1120142644817526}
+  m_GameObject: {fileID: 581}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4039392584572474}
+  m_Father: {fileID: 1150}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &820922559247094484
+--- !u!114 &2744
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1120142644817526}
+  m_GameObject: {fileID: 581}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14759a81ec69a0c40b6b2760df869133, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _activationAudioSource: {fileID: 82456684176031596}
-  _deactivationAudioSource: {fileID: 1806494851697439893}
---- !u!82 &82456684176031596
+  _activationAudioSource: {fileID: 1869}
+  _deactivationAudioSource: {fileID: 1887}
+--- !u!82 &1869
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1120142644817526}
+  m_GameObject: {fileID: 581}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 243892638063512860, guid: 1d4c80e3d0275764f9ad01100870ce32,
@@ -144,13 +144,13 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &1806494851697439893
+--- !u!82 &1887
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1120142644817526}
+  m_GameObject: {fileID: 581}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 243892638063512860, guid: 1d4c80e3d0275764f9ad01100870ce32,
@@ -241,7 +241,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &1267211294733920
+--- !u!1 &655
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -249,8 +249,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4993985143616608}
-  - component: {fileID: 135879849441599216}
+  - component: {fileID: 1423}
+  - component: {fileID: 1933}
   m_Layer: 0
   m_Name: KartTrigger
   m_TagString: Untagged
@@ -258,34 +258,34 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!4 &4993985143616608
+--- !u!4 &1423
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1267211294733920}
+  m_GameObject: {fileID: 655}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4039392584572474}
+  m_Father: {fileID: 1150}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &135879849441599216
+--- !u!135 &1933
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1267211294733920}
+  m_GameObject: {fileID: 655}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &1772060832756568
+--- !u!1 &842
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -293,12 +293,12 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4039392584572474}
-  - component: {fileID: 114257669005785006}
-  - component: {fileID: 5826601841721451242}
-  - component: {fileID: 5701882039200974950}
-  - component: {fileID: 4945694417177616091}
-  - component: {fileID: 7120059638053360894}
+  - component: {fileID: 1150}
+  - component: {fileID: 2511}
+  - component: {fileID: 2763}
+  - component: {fileID: 2762}
+  - component: {fileID: 2758}
+  - component: {fileID: 1935}
   m_Layer: 0
   m_Name: Overcharge
   m_TagString: Untagged
@@ -306,30 +306,30 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4039392584572474
+--- !u!4 &1150
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1772060832756568}
+  m_GameObject: {fileID: 842}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.0538323, y: 5.38, z: -15.06497}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4993985143616608}
-  - {fileID: 4109045533817178}
+  - {fileID: 1423}
+  - {fileID: 1168}
   - {fileID: 8756013613900830600}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114257669005785006
+--- !u!114 &2511
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1772060832756568}
+  m_GameObject: {fileID: 842}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -36112512, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
@@ -352,13 +352,13 @@ MonoBehaviour:
   _entityBehaviourQueryOption: 0
   _entityPriorityCalculatorQueryOption: 0
   _entityReplicationFilterQueryOption: 0
---- !u!114 &5826601841721451242
+--- !u!114 &2763
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1772060832756568}
+  m_GameObject: {fileID: 842}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5adaf0d4d45f94ab452f6862eb6c21, type: 3}
@@ -370,7 +370,7 @@ MonoBehaviour:
   OnActivation:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 820922559247094484}
+      - m_Target: {fileID: 2744}
         m_MethodName: PlayActivationSound
         m_Mode: 1
         m_Arguments:
@@ -386,7 +386,7 @@ MonoBehaviour:
   OnDeactivation:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4945694417177616091}
+      - m_Target: {fileID: 2758}
         m_MethodName: StartCountdown
         m_Mode: 1
         m_Arguments:
@@ -399,13 +399,13 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &5701882039200974950
+--- !u!114 &2762
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1772060832756568}
+  m_GameObject: {fileID: 842}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: faf449d14c1b8214587b11af62a948e0, type: 3}
@@ -414,13 +414,13 @@ MonoBehaviour:
   OwnerKartRoot: {fileID: 0}
   Team: 0
   ID: 0
---- !u!114 &4945694417177616091
+--- !u!114 &2758
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1772060832756568}
+  m_GameObject: {fileID: 842}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 657a84eb20d8ea04d933d9470c5721e9, type: 3}
@@ -430,7 +430,7 @@ MonoBehaviour:
   OnDestroyed:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 820922559247094484}
+      - m_Target: {fileID: 2744}
         m_MethodName: PlayDeactivationSound
         m_Mode: 1
         m_Arguments:
@@ -443,13 +443,13 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!135 &7120059638053360894
+--- !u!135 &1935
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1772060832756568}
+  m_GameObject: {fileID: 842}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
@@ -461,7 +461,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 4039392584572474}
+    m_TransformParent: {fileID: 1150}
     m_Modifications:
     - target: {fileID: 3223384099707323684, guid: 987bc486e93e739459ea8bdc4468dc47,
         type: 3}

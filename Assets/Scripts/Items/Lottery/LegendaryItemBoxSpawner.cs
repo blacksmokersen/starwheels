@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Items.Lottery
 {
-    [CreateAssetMenu(menuName = "Item Settings/Legendary Upgrade")]
     public class LegendaryItemBoxSpawner : MonoBehaviour
     {
         [SerializeField] private LegendaryItemBoxesSpawnerSettings _settings;
@@ -22,7 +21,7 @@ namespace Items.Lottery
 
         private void UpgradeOneItemBox()
         {
-            Debug.Log("Upgrading one");
+            Debug.Log("Upgrading one item to legendary.");
             _itemBoxes[Random.Range(0, _itemBoxes.Length)].UpgradeToNext();
         }
 

@@ -29,7 +29,7 @@ namespace Multiplayer
         {
             RespawnRequest respawnRequestEvent = RespawnRequest.Create();
             respawnRequestEvent.Team = player.TeamColor;
-            respawnRequestEvent.ConnectionID = player.ConnectionID;
+            respawnRequestEvent.ConnectionID = SWMatchmaking.GetMyBoltId();
             respawnRequestEvent.Send();
         }
     }
