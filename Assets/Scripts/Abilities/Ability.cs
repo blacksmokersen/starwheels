@@ -40,14 +40,34 @@ namespace Abilities
 
         protected IEnumerator Cooldown()
         {
+
+            OnResetCoolDownAnimation(abilitySettings.CooldownDuration);
+            yield return new WaitForSeconds(0.1f);
+
+            /*
             CanUseAbility = false;
             yield return new WaitForSeconds(abilitySettings.CooldownDuration);
             CanUseAbility = true;
             OnAbilityReload.Invoke();
             ReloadEffects();
+            */
         }
 
-        protected void ReloadEffects()
+        public void OnResetCoolDownAnimation(float cooldownDuration)
+        {
+            CanUseAbility = false;
+            AbilityCooldownAnimationsEventsManager cooldownAnimationsEventsManager = FindObjectOfType<AbilityCooldownAnimationsEventsManager>();
+            cooldownAnimationsEventsManager.TriggerCooldownResetAnimation(cooldownDuration);
+        }
+        public void OnCooldownCompleteAnimation()
+        {
+            Debug.Log(CanUseAbility);
+            CanUseAbility = true;
+            Debug.Log(CanUseAbility);
+            OnAbilityReload.Invoke();
+        }
+
+            protected void ReloadEffects()
         {
             _particleSystem.Emit(abilitySettings.ReloadParticleNumber);
         }
