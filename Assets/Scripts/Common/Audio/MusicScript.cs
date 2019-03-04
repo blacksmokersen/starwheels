@@ -5,16 +5,12 @@ namespace Audio
 {
     public class MusicScript : MonoBehaviour
     {
-        [SerializeField] private Button muteButton;
-
         private static MusicScript instance = null;
 
         // CORE
 
         private void Awake()
         {
-          //  muteButton.onClick.AddListener(ToggleMute);
-
             if (instance == null)
             {
                 instance = this;

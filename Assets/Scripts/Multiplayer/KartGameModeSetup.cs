@@ -14,7 +14,7 @@ namespace GameModes
             if (entity.attachToken != null)
             {
                 var roomToken = (RoomProtocolToken)entity.attachToken;
-                Debug.Log("GameMode set : " + roomToken.Gamemode);
+                //Debug.Log("GameMode set : " + roomToken.Gamemode);
 
                 switch (roomToken.Gamemode)
                 {

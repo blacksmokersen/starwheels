@@ -21,7 +21,7 @@ namespace GameModes.Totem
             }
             else
             {
-                Debug.Log("TotemPossession component not found.");
+                Debug.LogWarning("TotemPossession component not found.");
             }
         }
 

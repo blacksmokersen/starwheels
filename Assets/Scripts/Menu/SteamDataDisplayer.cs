@@ -44,7 +44,6 @@ namespace Menu
         {
             int experience = 0;
             SteamUserStats.GetStat(Constants.SteamStats.Experience, out experience);
-            Debug.Log("Experience " + experience);
             _experience.text = "" + experience.ToString() + " xp";
         }
 
