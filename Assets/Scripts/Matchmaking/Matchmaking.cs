@@ -40,12 +40,7 @@ public static class SWMatchmaking
 
     public static int GetCurrentLobbyPlayerCount()
     {
-        int count = 0;
-        foreach (var connection in BoltNetwork.Connections)
-        {
-            count++;
-        }
-        return count;
+        return BoltNetwork.Clients.Count();
     }
 
     public static void JoinRandomLobby()

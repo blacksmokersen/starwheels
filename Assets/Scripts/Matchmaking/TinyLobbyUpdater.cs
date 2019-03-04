@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using Bolt;
 using TMPro;
+using System.Collections;
 
 namespace SW.Matchmaking
 {
@@ -24,7 +25,11 @@ namespace SW.Matchmaking
 
         public override void Connected(BoltConnection connection)
         {
-
+            if (connection.ConnectionId == SWMatchmaking.GetMyBoltId())
+            {
+                Debug.LogError("I Connected");
+                SetLookingForPlayers();
+            }
             Debug.Log("A player joined the lobby.");
             UpdateCurrentPlayerCount();
         }
@@ -51,6 +56,8 @@ namespace SW.Matchmaking
             _lookingForGameText.gameObject.SetActive(false);
             _currentPlayerCountText.gameObject.SetActive(true);
             _startGameButton.gameObject.SetActive(true);
+
+            StartCoroutine(UpdatePlayerCountRoutine());
         }
 
         public void LaunchGame()
@@ -72,6 +79,18 @@ namespace SW.Matchmaking
         }
 
         // PRIVATE
+
+        private IEnumerator UpdatePlayerCountRoutine()
+        {
+            Debug.Log("Starting routine");
+
+            while (_currentPlayerCountText.gameObject.activeInHierarchy)
+            {
+                Debug.Log("Updating player count");
+                UpdateCurrentPlayerCount();
+                yield return new WaitForSeconds(1f);
+            }
+        }
 
         private void UpdateCurrentPlayerCount()
         {
