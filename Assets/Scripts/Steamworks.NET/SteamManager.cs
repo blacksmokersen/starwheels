@@ -24,7 +24,10 @@ using Steamworks;
 public class SteamManager : MonoBehaviour
 {
     public bool SteamEnabled;
+
+    [Header("Events")]
     public UnityEvent OnSteamInitialized;
+    public UnityEvent OnAwakeDone;
 
 	private static SteamManager s_instance;
 	private static SteamManager Instance {
@@ -127,13 +130,15 @@ public class SteamManager : MonoBehaviour
 
             s_EverInitialized = true;
 
-            OnSteamInitialized.Invoke();
+            if(OnSteamInitialized != null) OnSteamInitialized.Invoke();
         }
         else
         {
             gameObject.SetActive(false);
         }
-	}
+
+        if (OnAwakeDone != null) OnAwakeDone.Invoke();
+    }
 
 	// This should only ever get called on first load and after an Assembly reload, You should never Disable the Steamworks Manager yourself.
 	private void OnEnable() {
