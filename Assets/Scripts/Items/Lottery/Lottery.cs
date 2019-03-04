@@ -50,6 +50,7 @@ namespace Items.Lottery
             _lotteryTimer = 0f;
             LotteryStarted = false;
             _shortenLottery = false;
+            StopAllCoroutines();
 
             OnLotteryStop.Invoke();
         }
