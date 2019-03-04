@@ -13,6 +13,7 @@ namespace Items
         [Header("Merge HUD")]
         [SerializeField] private GameObject _fullBoostImage;
         [SerializeField] private GameObject _lowBoostImage;
+        [SerializeField] private GameObject _shieldImage;
 
         [Header("Initializing State")]
         [SerializeField] private Image _initializingSprite;
@@ -48,9 +49,11 @@ namespace Items
             if (kartLottery)
             {
                 kartLottery.OnLotteryStart.AddListener(ShowInitializingState);
+                kartLottery.OnLotteryStart.AddListener(ShowBoostLogo);
                 kartLottery.OnLotteryUpdate.AddListener(UpdateLoadingGauge);
                 kartLottery.OnLotteryStop.AddListener(() => UpdateLoadingGauge(0f));
                 kartLottery.OnLotteryStop.AddListener(HideInitializingState);
+                kartLottery.OnLotteryStop.AddListener(HideBoostLogo);
             }
         }
 
@@ -95,14 +98,36 @@ namespace Items
             _loadingGauge.fillAmount = percentage;
         }
 
+        private void ShowBoostLogo()
+        {
+            _fullBoostImage.SetActive(true);
+        }
+
+        private void HideBoostLogo()
+        {
+            _fullBoostImage.SetActive(false);
+        }
+
         private void UpdateMergeLogo(int count)
         {
+            if (count <= 0)
+            {
+                _shieldImage.SetActive(false);
+            }
+            else
+            {
+                _shieldImage.SetActive(true);
+            }
+
+
+            /* OLD FEATURE
             if(count == 0)
             {
                 _fullBoostImage.SetActive(false);
                 _lowBoostImage.SetActive(false);
+                _shieldImage.SetActive(false);
             }
-            else if(count == _currentItem.Count)
+            else if(count > 0)
             {
                 _fullBoostImage.SetActive(true);
                 _lowBoostImage.SetActive(false);
@@ -112,6 +137,7 @@ namespace Items
                 _fullBoostImage.SetActive(false);
                 _lowBoostImage.SetActive(true);
             }
+            */
         }
     }
 }
