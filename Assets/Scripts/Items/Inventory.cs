@@ -105,7 +105,7 @@ namespace Items
             CurrentItemCount = count;
             OnItemCountChange.Invoke(CurrentItemCount);
 
-            if (CurrentItemCount == 0)
+            if (CurrentItemCount <= 0)
             {
                 SetItem(null, 0);
             }
