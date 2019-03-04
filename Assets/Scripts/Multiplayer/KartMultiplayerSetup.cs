@@ -33,16 +33,12 @@ namespace Network
             {
                 //state.Team = _playerSettings.TeamColor;
                 state.Nickname = _playerSettings.Nickname;
-                //state.OwnerID = _playerSettings.ConnectionID;
                 state.OwnerID = SWMatchmaking.GetMyBoltId();
 
                 PlayerReady playerReadyEvent = PlayerReady.Create();
                 playerReadyEvent.Team = state.Team;
                 playerReadyEvent.Send();
             }
-
-            var lobby = GameObject.Find("LobbyManager");
-            if(lobby) lobby.SetActive(false);
 
             GetComponentInChildren<Camera>().enabled = entity.isOwner;
         }
@@ -51,8 +47,11 @@ namespace Network
 
         private void ColorChanged()
         {
-            _playerSettings.TeamColor = state.Team;
-            Debug.Log("New team color : " + _playerSettings.TeamColor);
+            if (entity.isOwner)
+            {
+                _playerSettings.TeamColor = state.Team;
+                Debug.Log("New team color : " + _playerSettings.TeamColor);
+            }
 
             GetComponent<Player>().Team = state.Team.GetTeam();
             var panel = GetComponentInChildren<Common.HUD.NicknamePanel>();

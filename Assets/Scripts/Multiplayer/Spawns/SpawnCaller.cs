@@ -27,6 +27,8 @@ namespace Multiplayer
 
         private void SendRespawnRequestEvent(PlayerSettings player)
         {
+            Debug.LogFormat("SPAWNREQUEST : {0} | {1}", player.Nickname, player.TeamColor);
+
             RespawnRequest respawnRequestEvent = RespawnRequest.Create();
             respawnRequestEvent.Team = player.TeamColor;
             respawnRequestEvent.ConnectionID = SWMatchmaking.GetMyBoltId();
