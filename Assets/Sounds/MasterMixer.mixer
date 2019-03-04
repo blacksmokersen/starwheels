@@ -149,6 +149,7 @@ AudioMixerController:
     - eff07cff14e52df4e8ed9593ede0833f
     - 73053ced80c7c2945a9244b8afd60d79
     - b71be545eb391fa4289aa1c520b2a0b3
+    - 87194d01a2f83834badea9e41472b808
     name: Music
   m_CurrentViewIndex: 2
   m_TargetSnapshot: {fileID: 24500006}
@@ -1276,6 +1277,7 @@ AudioMixerGroupController:
   - {fileID: 243046669904644018}
   - {fileID: 243661777894863150}
   - {fileID: 243197141209918964}
+  - {fileID: 243892331772867076}
   m_Volume: d9f6fb057bd30db49b1fe14c1058d4ed
   m_Pitch: 61259ffa80d0f674bba0a34d32aa816d
   m_Effects:
@@ -1792,6 +1794,24 @@ AudioMixerGroupController:
   m_Effects:
   - {fileID: 244516450502592036}
   m_UserColorIndex: 4
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!243 &243892331772867076
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Oracle
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 87194d01a2f83834badea9e41472b808
+  m_Children: []
+  m_Volume: 7aca08860b37be944bd48f1bce65cc36
+  m_Pitch: ebbb8d580eea26d4ab93ccd78b71de24
+  m_Effects:
+  - {fileID: 244976903125282928}
+  m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
@@ -3149,6 +3169,20 @@ AudioMixerEffectController:
   m_EffectID: e0b30f79af1d85b42a11b04794e20a2c
   m_EffectName: Attenuation
   m_MixLevel: 64e1a1da336fdad4dab53c0306cac6f1
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &244976903125282928
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 6ad01f27bcdc63a41bfbe0f130c293a4
+  m_EffectName: Attenuation
+  m_MixLevel: 619a47fbce3cae94bb9f549a5aa5b3a4
   m_Parameters: []
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
