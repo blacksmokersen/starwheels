@@ -43,7 +43,7 @@ namespace GameModes.Totem
 
                 if (BoltNetwork.IsServer) // The server make the player throw the totem
                 {
-                    var kartThrowing = MyExtensions.KartExtensions.GetKartWithID(evnt.OwnerID);
+                    var kartThrowing = SWExtensions.KartExtensions.GetKartWithID(evnt.OwnerID);
                     if (kartThrowing)
                     {
                         Direction throwingDirection = evnt.ForwardDirection ? Direction.Forward : Direction.Backward;
@@ -106,7 +106,7 @@ namespace GameModes.Totem
 
         private void SetNewOwner(int newOwnerID)
         {
-            var kart = MyExtensions.KartExtensions.GetKartWithID(newOwnerID);
+            var kart = SWExtensions.KartExtensions.GetKartWithID(newOwnerID);
 
             if (kart)
             {

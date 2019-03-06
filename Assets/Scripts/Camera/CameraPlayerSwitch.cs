@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Cinemachine;
 using Multiplayer;
-using MyExtensions;
+using SWExtensions;
 
 namespace CameraUtils
 {

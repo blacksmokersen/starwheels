@@ -68,7 +68,7 @@ namespace Abilities
 
             if (_tpBack)
             {
-                MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useTpBackSound);
+                SWExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useTpBackSound);
                 Destroy(_tpBack.gameObject);
             }
         }
@@ -111,7 +111,7 @@ namespace Abilities
             var y = _tpBack.transform.position.y + 5f;
             _rb.transform.position = new Vector3(_tpBack.transform.position.x, y, _tpBack.transform.position.z);
             _rb.transform.rotation = GetKartRotation();
-            MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useTpBackSound);
+            SWExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useTpBackSound);
             Destroy(_tpBack.gameObject);
         }
     }

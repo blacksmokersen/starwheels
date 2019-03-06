@@ -50,7 +50,7 @@ namespace Items
 
         public void PlayExplosion()
         {
-            MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(ExplosionSource);
+            SWExtensions.AudioExtensions.PlayClipObjectAndDestroy(ExplosionSource);
         }
         #endregion
 
