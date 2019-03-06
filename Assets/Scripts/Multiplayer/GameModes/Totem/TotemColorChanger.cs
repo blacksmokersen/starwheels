@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Bolt;
+using System.Collections;
 
 namespace GameModes.Totem
 {
@@ -28,6 +29,7 @@ namespace GameModes.Totem
         public override void OnEvent(TotemWallHit evnt)
         {
             ChangeColor(evnt.Team);
+            StartCoroutine(SecurityRoutine());
         }
 
         public override void OnEvent(TotemPicked evnt)
@@ -47,11 +49,23 @@ namespace GameModes.Totem
         public void ResetToDefault()
         {
             ChangeColor(_defaultColor);
+            StopAllCoroutines();
         }
 
         public bool ColorIsDefault()
         {
             return CurrentColor == _defaultColor;
+        }
+
+        // PRIVATE
+
+        private IEnumerator SecurityRoutine()
+        {
+            yield return new WaitForSeconds(20f);
+            if (!ColorIsDefault())
+            {
+                ResetToDefault();
+            }
         }
     }
 }
