@@ -50,6 +50,7 @@ namespace CameraUtils
                     CameraReset();
                 }
 
+                ClampMaxAngle(Input.GetAxis(Constants.Input.TurnCamera));
 
                 if (Input.GetAxis(Constants.Input.UpAndDownCamera) >= 0.1f)
                 {
@@ -90,6 +91,13 @@ namespace CameraUtils
         }
 
         // PRIVATE
+
+
+        private void ClampMaxAngle(float xAxisValue)
+        {
+            _orbiter.m_XAxis.m_MinValue = -Mathf.Abs(xAxisValue) * 125;
+            _orbiter.m_XAxis.m_MaxValue = Mathf.Abs(xAxisValue) * 125;
+        }
 
         private void WhenToRecenterEnableCam(float value)
         {
