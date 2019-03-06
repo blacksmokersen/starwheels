@@ -84,7 +84,7 @@ namespace Items
                // itemState.Name = GetComponent<BoltEntity>().GetState<IItemState>().Name;
 
                 IonBeam.transform.position = new Vector3(_ionBeamCam.transform.position.x, IonBeam.transform.position.y, _ionBeamCam.transform.position.z);
-                MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(LaunchSource);
+                SWExtensions.AudioExtensions.PlayClipObjectAndDestroy(LaunchSource);
                 _ionBeamCam.Composer.enabled = true;
                 _ionBeamCam.IonBeamCameraBehaviour(false);
                 if (entity.isOwner)

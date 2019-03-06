@@ -59,12 +59,12 @@ namespace Items
 
         public void PlayPlayerHitSound()
         {
-            MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(PlayerHitSource);
+            SWExtensions.AudioExtensions.PlayClipObjectAndDestroy(PlayerHitSource);
         }
 
         public void PlayCollisionSound()
         {
-            MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(CollisionSource);
+            SWExtensions.AudioExtensions.PlayClipObjectAndDestroy(CollisionSource);
         }
         #endregion
 

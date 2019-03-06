@@ -36,7 +36,7 @@ namespace Items
 
         private void Setup()
         {
-            _ownerKart = MyExtensions.KartExtensions.GetKartWithID(state.OwnerID);
+            _ownerKart = SWExtensions.KartExtensions.GetKartWithID(state.OwnerID);
 
             if (_ownerKart)
             {

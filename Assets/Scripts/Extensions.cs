@@ -1,9 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Multiplayer;
 
-namespace MyExtensions
+namespace SWExtensions
 {
+    public static class SystemExtensions
+    {
+        public static Guid ToGuid(this int value)
+        {
+            byte[] bytes = new byte[16];
+            BitConverter.GetBytes(value).CopyTo(bytes, 0);
+            return new Guid(bytes);
+        }
+    }
+
     public class MathExtensions
     {
         public static float RemapValue(float actualMin, float actualMax, float targetMin, float targetMax, float val)

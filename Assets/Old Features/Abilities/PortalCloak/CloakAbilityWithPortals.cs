@@ -180,7 +180,7 @@ namespace Abilities
         private void SetCloack()
         {
             OnCloackSet.Invoke();
-            MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useCloakSound);
+            SWExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useCloakSound);
             KartMeshDisabler.DisableKartMeshes(true);
             CloakEffect.SetActive(true);
 
@@ -195,7 +195,7 @@ namespace Abilities
             OnCloackUnset.Invoke();
             CanDisableCloak = false;
             CloakEffect.SetActive(false);
-            MyExtensions.AudioExtensions.PlayClipObjectAndDestroy(_endCloakSound);
+            SWExtensions.AudioExtensions.PlayClipObjectAndDestroy(_endCloakSound);
             KartMeshDisabler.EnableKartMeshes(true);
 
             if (entity.isAttached && entity.isOwner)
