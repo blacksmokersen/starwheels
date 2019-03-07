@@ -31,7 +31,7 @@ namespace CameraUtils
 
         private void Start()
         {
-            _orbiter.m_XAxis.m_InputAxisName = _turnCamInputName;
+             _orbiter.m_XAxis.m_InputAxisName = _turnCamInputName;
         }
 
         private void Update()
@@ -73,16 +73,16 @@ namespace CameraUtils
 
         public void DisableTurnEffectInput()
         {
-            _orbiter.m_XAxis.m_InputAxisName = "";
-            _orbiter.m_XAxis.m_MinValue = 0;
-            _orbiter.m_XAxis.m_MaxValue = 0;
+            //  _orbiter.m_XAxis.m_InputAxisName = "";
+            //  _orbiter.m_XAxis.m_MinValue = 0;
+            //  _orbiter.m_XAxis.m_MaxValue = 0;
         }
 
         public void EnableTurnEffectInput()
         {
-            _orbiter.m_XAxis.m_InputAxisName = _turnCamInputName;
-            _orbiter.m_XAxis.m_MinValue = _controlAxisValueMin;
-            _orbiter.m_XAxis.m_MaxValue = _controlAxisValueMax;
+            //  _orbiter.m_XAxis.m_InputAxisName = _turnCamInputName;
+            //  _orbiter.m_XAxis.m_MinValue = _controlAxisValueMin;
+            //  _orbiter.m_XAxis.m_MaxValue = _controlAxisValueMax;
         }
 
         public void CenterCamera()
@@ -95,8 +95,100 @@ namespace CameraUtils
 
         private void ClampMaxAngle(float xAxisValue)
         {
+            // _orbiter.m_XAxis.m_InputAxisValue = 80;
+
+            /*
+            if (xAxisValue < 0)
+            {
+                --_orbiter.m_XAxis.Value;
+            }
+            else if (xAxisValue > 0f)
+            {
+                ++_orbiter.m_XAxis.Value;
+            }
+            */
+
+            if (Mathf.Abs(xAxisValue) <= 0.3f)
+            {
+                _orbiter.m_XAxis.m_MaxSpeed = 600;
+            }
+            else if (Mathf.Abs(xAxisValue) <= 0.8f)
+            {
+                _orbiter.m_XAxis.m_MaxSpeed = 300;
+            }
+            else if (Mathf.Abs(xAxisValue) <= 1f)
+            {
+                _orbiter.m_XAxis.m_MaxSpeed = 800;
+            }
+
+
+
+
+            if (Mathf.Abs(xAxisValue) <= 0.1f)
+            {
+                _orbiter.m_XAxis.m_MinValue = -5;
+                _orbiter.m_XAxis.m_MaxValue = 5;
+            }
+            else if (Mathf.Abs(xAxisValue) <= 0.1f)
+            {
+                _orbiter.m_XAxis.m_MinValue = -10;
+                _orbiter.m_XAxis.m_MaxValue = 10;
+            }
+            else if (Mathf.Abs(xAxisValue) <= 0.2f)
+            {
+                _orbiter.m_XAxis.m_MinValue = -20;
+                _orbiter.m_XAxis.m_MaxValue = 20;
+            }
+            else if (Mathf.Abs(xAxisValue) <= 0.3f)
+            {
+                _orbiter.m_XAxis.m_MinValue = -30;
+                _orbiter.m_XAxis.m_MaxValue = 30;
+            }
+            else if (Mathf.Abs(xAxisValue) <= 0.4f)
+            {
+                _orbiter.m_XAxis.m_MinValue = -40;
+                _orbiter.m_XAxis.m_MaxValue = 40;
+            }
+            else if (Mathf.Abs(xAxisValue) <= 0.5f)
+            {
+                _orbiter.m_XAxis.m_MinValue = -55;
+                _orbiter.m_XAxis.m_MaxValue = 55;
+            }
+            else if (Mathf.Abs(xAxisValue) <= 0.6f)
+            {
+                _orbiter.m_XAxis.m_MinValue = -75;
+                _orbiter.m_XAxis.m_MaxValue = 75;
+            }
+            else if (Mathf.Abs(xAxisValue) <= 0.7f)
+            {
+                _orbiter.m_XAxis.m_MinValue = -95;
+                _orbiter.m_XAxis.m_MaxValue = 95;
+            }
+            else if (Mathf.Abs(xAxisValue) <= 0.8f)
+            {
+                _orbiter.m_XAxis.m_MinValue = -105;
+                _orbiter.m_XAxis.m_MaxValue = 105;
+            }
+            else if (Mathf.Abs(xAxisValue) <= 0.9f)
+            {
+                _orbiter.m_XAxis.m_MinValue = -115;
+                _orbiter.m_XAxis.m_MaxValue = 115;
+            }
+            else if (Mathf.Abs(xAxisValue) <= 1f)
+            {
+                _orbiter.m_XAxis.m_MinValue = -125;
+                _orbiter.m_XAxis.m_MaxValue = 125;
+            }
+
+
+
+            /*
+            if (xAxisValue>=0.5f)
+            {
             _orbiter.m_XAxis.m_MinValue = -Mathf.Abs(xAxisValue) * 125;
             _orbiter.m_XAxis.m_MaxValue = Mathf.Abs(xAxisValue) * 125;
+            }
+            */
         }
 
         private void WhenToRecenterEnableCam(float value)
