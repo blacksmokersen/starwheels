@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace Multiplayer
 {
@@ -11,5 +12,10 @@ namespace Multiplayer
         public int ConnectionID;
         public int KartIndex;
         public int AbilityIndex;
+
+        [Header("Events")]
+        public UnityEvent OnTeamColorUpdated;
+        public UnityEvent OnNicknameUpdated;
+        public UnityEvent OnAbilityIndexUpdated;
     }
 }
