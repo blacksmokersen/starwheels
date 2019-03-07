@@ -17,6 +17,8 @@ namespace Abilities
         private void Awake()
         {
             _playerSettings = Resources.Load<PlayerSettings>(Constants.Resources.PlayerSettings);
+            _playerSettings.OnAbilityIndexUpdated.AddListener(UpdateAbility);
+
             _abilities = new GameObject[3] { _jumpingAbility, _tpBackAbility, _cloakAbility };
             SetAbility(_playerSettings.AbilityIndex);
         }
@@ -38,6 +40,12 @@ namespace Abilities
                     _abilities[i].SetActive(false);
                 }
             }
+        }
+
+        public void UpdateAbility()
+        {
+            SetAbility(_playerSettings.AbilityIndex);
+            Debug.Log("Updated ability.");
         }
 
         public Ability GetCurrentAbility()
