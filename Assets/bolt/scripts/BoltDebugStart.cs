@@ -10,6 +10,8 @@ public partial class BoltDebugStart : BoltInternal.GlobalEventListenerBase
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
+
+		Application.targetFrameRate = 60;
     }
 
     void Start()
@@ -55,11 +57,11 @@ end tell'";
         {
             BoltLog.Error("No map found to start from");
         }
+    }
 
-        if (!BoltNetwork.IsClient && !BoltNetwork.IsServer)
-        {
-            BoltLog.Error("failed to start debug mode");
-        }
+    public override void BoltStartFailed()
+    {
+        BoltLog.Error("Failed to start debug mode");
     }
 
     public override void BoltStartDone()
@@ -70,7 +72,7 @@ end tell'";
         }
         else
         {
-            BoltNetwork.Connect((ushort) BoltRuntimeSettings.instance.debugStartPort);
+            BoltNetwork.Connect((ushort)BoltRuntimeSettings.instance.debugStartPort);
         }
     }
 

@@ -71,7 +71,7 @@ public class InGameMenu : GlobalEventListener
         videoMenuButton.onClick.AddListener(OpenVideoPanel);
         hudMenuButton.onClick.AddListener(OpenHudPanel);
         keyBindingMenuButton.onClick.AddListener(OpenKeyBindPanel);
-        
+
 
         // Audio Settings
         muteVolumeSlider.onValueChanged.AddListener(MuteSound);
@@ -125,7 +125,9 @@ public class InGameMenu : GlobalEventListener
         if (BoltNetwork.IsServer)
             StartCoroutine(HostDisconectLastSecurity());
         else if (BoltNetwork.IsClient)
+        {
             BoltLauncher.Shutdown();
+        }
     }
 
     private void AllToMenu()
@@ -220,7 +222,7 @@ public class InGameMenu : GlobalEventListener
         {
             audioMixer.SetFloat("Master", -4);
         }
-        
+
     }
 
     //
