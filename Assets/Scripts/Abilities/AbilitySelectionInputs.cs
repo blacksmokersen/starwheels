@@ -27,7 +27,7 @@ namespace Abilities
         {
             if (Enabled)
             {
-                if (Input.GetKeyDown(KeyCode.A) || Input.GetButtonDown("joystick button 6"))
+                if (Input.GetKeyDown(KeyCode.A))// || Input.GetButtonDown("joystick button 6"))
                 {
                     _abilityPanel.ShowPanel();
                 }
