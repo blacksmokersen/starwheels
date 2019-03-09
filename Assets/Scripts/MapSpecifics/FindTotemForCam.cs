@@ -44,7 +44,7 @@ public class FindTotemForCam : MonoBehaviour
 
     IEnumerator FindTotemRoutine()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5);
 
         if (GameObject.FindWithTag("Totem").transform != null)
         {
