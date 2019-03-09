@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 8315555813827345476}
   - component: {fileID: 1141805902967868575}
   - component: {fileID: 2459586992032774457}
+  - component: {fileID: 2086771687602126373}
   m_Layer: 0
-  m_Name: Entry
+  m_Name: NextGameOptionEntry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,6 +97,31 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &2086771687602126373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842140188006241951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21b83de2470e97242857b9ddc9a9fe21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Settings: {fileID: 0}
+  ColorSettings: {fileID: 11400000, guid: 4975a6a1f5db7ff4c8441833c5600858, type: 2}
+  _choicesLayout: {fileID: 0}
+  _thisChoiceBackground: {fileID: 2459586992032774457}
+  _optionText: {fileID: 837941646344516682}
+  OnEntryTimeUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: FloatEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnOptionChosen:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &5728543746227057873
 GameObject:
   m_ObjectHideFlags: 0
