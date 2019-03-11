@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using SW.Matchmaking;
 using Bolt;
 
@@ -26,13 +27,20 @@ namespace Menu
             if (BoltNetwork.IsServer)
             {
                 SWMatchmaking.SetLobbyData(_lobbyData);
-                var token = FindObjectOfType<Multiplayer.SpawnAssigner>().RoomInfoToken;
-                if (token == null)
+
+                var token = new Photon.RoomProtocolToken()
                 {
-                    token = new Photon.RoomProtocolToken() { } ;
-                }
+                    Gamemode = _lobbyData.ChosenGamemode,
+                    PlayersCount = SWMatchmaking.GetCurrentLobbyPlayerCount()
+                };
                 BoltNetwork.LoadScene(_lobbyData.ChosenMapName, token);
             }
+        }
+
+        public void BackToMenu()
+        {
+            BoltLauncher.Shutdown();
+            SceneManager.LoadScene("Menu");
         }
 
         public void SetNextGamemode(string nextGamemode)
