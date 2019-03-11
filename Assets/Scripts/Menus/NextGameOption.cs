@@ -1,10 +1,18 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 namespace Menu
 {
+    [System.Serializable]
+    struct ChoiceMap
+    {
+        public string ChoiceName;
+        public HorizontalLayoutGroup ChoicePanel;
+    }
+
     public class NextGameOption : MonoBehaviour
     {
         [Header("Settings")]
@@ -12,7 +20,7 @@ namespace Menu
         [SerializeField] private NextGameOptionColors ColorSettings;
 
         [Header("UI Elements")]
-        [SerializeField] private HorizontalLayoutGroup _choicesLayout;
+        [SerializeField] private List<ChoiceMap> _choicesMap;
         [SerializeField] private Image _thisChoiceBackground;
         [SerializeField] private TextMeshProUGUI _optionText;
 
@@ -21,6 +29,7 @@ namespace Menu
         public FloatEvent OnEntryTimeUpdate;
         public StringEvent OnOptionChosen;
 
+        private HorizontalLayoutGroup _activePanel;
         private float timer = 0f;
         private Toggle[] _toggles;
 
@@ -43,36 +52,58 @@ namespace Menu
 
         public void SetActive()
         {
-            InitializeListeners();
+            if (_choicesMap.Count > 0)
+            {
+                _activePanel = _choicesMap[0].ChoicePanel;
+                InitializeListeners(_activePanel);
+            }
             _thisChoiceBackground.color = ColorSettings.HighlightedColor;
             StartCoroutine(UpdateTimeRoutine());
         }
 
-        public void SetChoice(string value)
+        public void SetActive(string previousChoice)
         {
-            Settings.Choice = value;
+            foreach (var choice in _choicesMap)
+            {
+                if (previousChoice == choice.ChoiceName)
+                {
+                    _activePanel = choice.ChoicePanel;
+                    InitializeListeners(_activePanel);
+                    break;
+                }
+            }
+            _thisChoiceBackground.color = ColorSettings.HighlightedColor;
+            StartCoroutine(UpdateTimeRoutine());
+        }
+
+        public void SetChoice(string choice)
+        {
+            Settings.Choice = choice;
+            SetChoiceText(choice);
             _thisChoiceBackground.color = ColorSettings.ChosenColor;
             OnOptionChosen.Invoke(Settings.Choice);
         }
 
+        public void SetChoiceText(string choice)
+        {
+            _optionText.text = Settings.OptionName + " : " + choice;
+        }
+
         // PRIVATE
 
-        private void InitializeListeners()
+        private void InitializeListeners(HorizontalLayoutGroup choicesLayout)
         {
-            if (_choicesLayout)
-            {
-                _choicesLayout.gameObject.SetActive(true);
-                _toggles = _choicesLayout.GetComponentsInChildren<Toggle>();
+            choicesLayout.gameObject.SetActive(true);
+            _toggles = choicesLayout.GetComponentsInChildren<Toggle>();
 
-                foreach (var toggle in _toggles)
+            foreach (var toggle in _toggles)
+            {
+                var choice = toggle.GetComponentInChildren<Label>().String.Value;
+                toggle.onValueChanged.AddListener((b) =>
                 {
-                    var choice = toggle.GetComponentInChildren<Label>().String.Value;
-                    toggle.onValueChanged.AddListener((b) =>
-                    {
-                        SetChoice(choice);
-                        HideChoices();
-                    });
-                }
+                    SetChoice(choice);
+                    HideChoices();
+                });
             }
         }
 
@@ -111,9 +142,9 @@ namespace Menu
 
         private void HideChoices()
         {
-            if (_choicesLayout)
+            if (_activePanel)
             {
-                _choicesLayout.gameObject.SetActive(false);
+                _activePanel.gameObject.SetActive(false);
             }
             StopAllCoroutines();
         }
