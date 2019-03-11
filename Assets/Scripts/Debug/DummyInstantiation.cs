@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Multiplayer;
 
-namespace KBA.Debug
+namespace SW.DebugUtils
 {
     public class DummyInstantiation : MonoBehaviour, IControllable
     {
