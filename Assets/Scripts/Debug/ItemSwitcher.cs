@@ -2,7 +2,7 @@
 using Items;
 using Bolt;
 
-namespace KBA.Debug
+namespace SW.DebugUtils
 {
     [RequireComponent(typeof(Inventory))]
     public class ItemSwitcher : EntityBehaviour, IControllable
