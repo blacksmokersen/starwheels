@@ -16,15 +16,20 @@ namespace CameraUtils
         private CinemachineOrbitalTransposer _orbiter;
         private CinemachineComposer _composer;
         private CinemachineVirtualCamera _cinemachine;
+        private CinemachineCollider _cinemachineCollider;
 
         private float _controlAxisValueMin;
         private float _controlAxisValueMax;
+        private bool _alreadyRecentered = false;
 
         private void Awake()
         {
             _cinemachine = GetComponentInParent<CinemachineVirtualCamera>();
             _orbiter = _cinemachine.GetCinemachineComponent<CinemachineOrbitalTransposer>();
             _composer = _cinemachine.GetCinemachineComponent<CinemachineComposer>();
+            _cinemachineCollider = GetComponent<CinemachineCollider>();
+
+
             _controlAxisValueMin = _orbiter.m_XAxis.m_MinValue;
             _controlAxisValueMax = _orbiter.m_XAxis.m_MaxValue;
         }
@@ -50,7 +55,7 @@ namespace CameraUtils
                     CameraReset();
                 }
 
-                ClampXMaxAngle(Input.GetAxis(Constants.Input.TurnCamera));
+                ClampXMaxAngle(Input.GetAxis(Constants.Input.TurnCamera), Input.GetAxis(Constants.Input.UpAndDownCamera));
 
                 CamYMovements(Input.GetAxis(Constants.Input.UpAndDownCamera));
                 //  WhenToRecenterEnableCam(Input.GetAxis(Constants.Input.TurnCamera));
@@ -59,16 +64,16 @@ namespace CameraUtils
 
         public void DisableTurnEffectInput()
         {
-              _orbiter.m_XAxis.m_InputAxisName = "";
-              _orbiter.m_XAxis.m_MinValue = 0;
-              _orbiter.m_XAxis.m_MaxValue = 0;
+            _orbiter.m_XAxis.m_InputAxisName = "";
+            _orbiter.m_XAxis.m_MinValue = 0;
+            _orbiter.m_XAxis.m_MaxValue = 0;
         }
 
         public void EnableTurnEffectInput()
         {
-              _orbiter.m_XAxis.m_InputAxisName = _turnCamInputName;
-              _orbiter.m_XAxis.m_MinValue = _controlAxisValueMin;
-              _orbiter.m_XAxis.m_MaxValue = _controlAxisValueMax;
+            _orbiter.m_XAxis.m_InputAxisName = _turnCamInputName;
+            _orbiter.m_XAxis.m_MinValue = _controlAxisValueMin;
+            _orbiter.m_XAxis.m_MaxValue = _controlAxisValueMax;
         }
 
         public void CenterCamera()
@@ -76,28 +81,50 @@ namespace CameraUtils
             _orbiter.m_XAxis.Value = 0;
         }
 
+        public void CenterOrbiter()
+        {
+            _cinemachineCollider.enabled = true;
+            _orbiter.m_FollowOffset.z = -6.35f;
+            _orbiter.m_FollowOffset.y = 2.2f;
+            _orbiter.m_FollowOffset.x = 0f;
+            _alreadyRecentered = true;
+        }
+
+
         // PRIVATE
 
 
 
         private void CamYMovements(float yAxisValue)
         {
-            _composer.m_TrackedObjectOffset.y = yAxisValue * 2;
 
+            if (yAxisValue > 0.1f)
+                _composer.m_TrackedObjectOffset.y = yAxisValue * 2;
+            else if (yAxisValue < 0.1f)
+                _composer.m_TrackedObjectOffset.y = yAxisValue * 4;
 
             if (yAxisValue >= 0.1f)
             {
+                _alreadyRecentered = false;
                 if (_orbiter.m_FollowOffset.z <= -5)
                     _orbiter.m_FollowOffset.z += 0.2f;
             }
             else if (yAxisValue <= -0.1f)
             {
-                if (_orbiter.m_FollowOffset.z >= -8)
-                    _orbiter.m_FollowOffset.z -= 0.2f;
+                _alreadyRecentered = false;
+                _cinemachineCollider.enabled = false;
+                if (_orbiter.m_FollowOffset.z <= -0.9f)
+                {
+                    _orbiter.m_FollowOffset.z += 0.4f;
+                    _orbiter.m_FollowOffset.y += 0.4f;
+                }
             }
             else
             {
-                _orbiter.m_FollowOffset.z = -6.35f;
+                if (!_alreadyRecentered)
+                {
+                    CenterOrbiter();
+                }
             }
 
 
@@ -135,8 +162,14 @@ namespace CameraUtils
             */
         }
 
-        private void ClampXMaxAngle(float xAxisValue)
+        private void ClampXMaxAngle(float xAxisValue, float yAxisValue)
         {
+            /*
+            if (xAxisValue <= 0.2f || yAxisValue <= 0.3f)
+            {
+                _orbiter.m_XAxis.Value = 0;
+            }
+            */
             _orbiter.m_XAxis.m_MinValue = -Mathf.Abs(xAxisValue) * 125;
             _orbiter.m_XAxis.m_MaxValue = Mathf.Abs(xAxisValue) * 125;
 
