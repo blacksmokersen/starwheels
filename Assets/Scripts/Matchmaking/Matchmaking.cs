@@ -24,6 +24,8 @@ public static class SWMatchmaking
     {
         if (BoltNetwork.IsRunning && BoltNetwork.IsServer)
         {
+            BoltNetwork.RegisterTokenClass<LobbyToken>();
+
             LobbyToken token = new LobbyToken().BuildData(lobbyData);
             BoltNetwork.SetServerInfo(lobbyData.ServerName, token);
             Debug.Log("Lobby data set.");
