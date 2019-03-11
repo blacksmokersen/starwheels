@@ -17,6 +17,7 @@ public class IonBeamCamera : GlobalEventListener
     [Space]
 
     [SerializeField] private float _speedCamMovements;
+    [SerializeField] private CameraTurnEffect _cameraTurnEffect;
     [SerializeField] private float _ionBeamCamZExpand;
     [SerializeField] private float _ionBeamCamYExpand;
     [SerializeField] CameraSettings _cameraSettings;
@@ -89,6 +90,7 @@ public class IonBeamCamera : GlobalEventListener
         Transposer.m_FollowOffset.x = 0;
         Transposer.m_FollowOffset.z = _cameraSettings.BaseCamPosition.z;
         Transposer.m_FollowOffset.y = _cameraSettings.BaseCamPosition.y;
+        _cameraTurnEffect.Enabled = true;
     }
 
     public bool IsCameraOnTop()
@@ -131,6 +133,11 @@ public class IonBeamCamera : GlobalEventListener
     IEnumerator CameraIonBeamExpand(float endValueZ, float endValueY, float expandDuration)
     {
         Collider.enabled = false;
+
+        _cameraTurnEffect.CenterCamera();
+        _cameraTurnEffect.CenterOrbiter();
+        _cameraTurnEffect.Enabled = false;
+
         float startDynamicCamValueZ = Transposer.m_FollowOffset.z;
         float startDynamicCamValueY = Transposer.m_FollowOffset.y;
 
@@ -168,12 +175,21 @@ public class IonBeamCamera : GlobalEventListener
             _currentTimer += Time.deltaTime;
             yield return null;
         }
+
+        Transposer.m_FollowOffset.y = returnValueY;
+
+        /*
         if (Transposer.m_FollowOffset.y > returnValueY)
         {
             // Security for lack of precision of Time.deltaTime
             _cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(returnValueZ, returnValueY, 0.5f));
         }
+        */
+
         Collider.enabled = true;
+        _cameraTurnEffect.Enabled = true;
+        _cameraTurnEffect.CenterCamera();
+        _cameraTurnEffect.CenterOrbiter();
         ChangeRenderOnTaGGameobjects(true);
     }
 }
