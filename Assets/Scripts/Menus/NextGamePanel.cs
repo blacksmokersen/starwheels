@@ -1,15 +1,20 @@
 ﻿using UnityEngine;
 using SW.Matchmaking;
+using Bolt;
 
 namespace Menu
 {
-    public class NextGamePanel : MonoBehaviour
+    public class NextGamePanel : GlobalEventListener
     {
         [Header("Lobby Info")]
         [SerializeField] private LobbyData _lobbyData;
 
-        private string _nextGamemode;
-        private string _nextMap;
+        // BOLT
+
+        public override void OnEvent(GameOver evnt)
+        {
+            gameObject.SetActive(true);
+        }
 
         // PUBLIC
 
@@ -18,23 +23,26 @@ namespace Menu
             if (BoltNetwork.IsServer)
             {
                 SWMatchmaking.SetLobbyData(_lobbyData);
-                BoltNetwork.LoadScene(_nextMap);
+                var token = FindObjectOfType<Multiplayer.SpawnAssigner>().RoomInfoToken;
+                if (token == null)
+                {
+                    token = new Photon.RoomProtocolToken() { } ;
+                }
+                BoltNetwork.LoadScene(_lobbyData.ChosenMapName, token);
             }
         }
 
-        // PRIVATE
-
-        private void SetNextGamemode(string nextGamemode)
+        public void SetNextGamemode(string nextGamemode)
         {
             _lobbyData.ChosenGamemode = nextGamemode;
         }
 
-        private void SetNextMap(string nextMap)
+        public void SetNextMap(string nextMap)
         {
             _lobbyData.ChosenMapName = nextMap;
         }
 
-        private void SetNextSkin(string nextSkin)
+        public void SetNextSkin(string nextSkin)
         {
 
         }
