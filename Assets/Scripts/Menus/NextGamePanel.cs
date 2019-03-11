@@ -13,6 +13,7 @@ namespace Menu
 
         public override void OnEvent(GameOver evnt)
         {
+            Debug.Log("Received event gameover");
             gameObject.SetActive(true);
         }
 

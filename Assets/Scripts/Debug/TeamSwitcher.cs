@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Bolt;
 
-namespace KBA.Debug
+namespace SW.DebugUtils
 {
     public class TeamSwitcher : EntityBehaviour<IKartState>, IControllable
     {
