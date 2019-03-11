@@ -8,7 +8,7 @@ namespace SW.DebugUtils
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Alpha0))
+            if (Input.GetKeyDown(KeyCode.Alpha0) && BoltNetwork.IsServer)
             {
                 _debugPanel.SetActive(!_debugPanel.activeInHierarchy);
             }
