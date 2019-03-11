@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Bolt;
 
 namespace Menu
 {
@@ -13,7 +14,7 @@ namespace Menu
         public HorizontalLayoutGroup ChoicePanel;
     }
 
-    public class NextGameOption : MonoBehaviour
+    public class NextGameOption : GlobalEventListener
     {
         [Header("Settings")]
         public NextGameOptionEntrySettings Settings;
@@ -40,11 +41,23 @@ namespace Menu
             _thisChoiceBackground.color = ColorSettings.NotChosenColor;
         }
 
-        private void OnEnable()
+        private new void OnEnable()
         {
+            base.OnEnable();
             if (Settings.IsFirstOptionInMenu)
             {
                 SetActive();
+            }
+        }
+
+        // BOLT
+
+        public override void OnEvent(NextGameOptionUpdate evnt)
+        {
+            if (BoltNetwork.IsClient && evnt.OptionName == Settings.OptionName)
+            {
+                SetChoice(evnt.NewChoice);
+                HideChoices();
             }
         }
 
@@ -61,7 +74,7 @@ namespace Menu
             StartCoroutine(UpdateTimeRoutine());
         }
 
-        public void SetActive(string previousChoice)
+        public void SetActiveDynamic(string previousChoice)
         {
             foreach (var choice in _choicesMap)
             {
@@ -81,6 +94,15 @@ namespace Menu
             Settings.Choice = choice;
             SetChoiceText(choice);
             _thisChoiceBackground.color = ColorSettings.ChosenColor;
+
+            if (BoltNetwork.IsServer)
+            {
+                NextGameOptionUpdate nextGameOptionUpdateEvent = NextGameOptionUpdate.Create();
+                nextGameOptionUpdateEvent.OptionName = Settings.OptionName;
+                nextGameOptionUpdateEvent.NewChoice = choice;
+                nextGameOptionUpdateEvent.Send();
+            }
+
             OnOptionChosen.Invoke(Settings.Choice);
         }
 
@@ -93,17 +115,20 @@ namespace Menu
 
         private void InitializeListeners(HorizontalLayoutGroup choicesLayout)
         {
-            choicesLayout.gameObject.SetActive(true);
-            _toggles = choicesLayout.GetComponentsInChildren<Toggle>();
-
-            foreach (var toggle in _toggles)
+            if (BoltNetwork.IsServer)
             {
-                var choice = toggle.GetComponentInChildren<Label>().String.Value;
-                toggle.onValueChanged.AddListener((b) =>
+                choicesLayout.gameObject.SetActive(true);
+                _toggles = choicesLayout.GetComponentsInChildren<Toggle>();
+
+                foreach (var toggle in _toggles)
                 {
-                    SetChoice(choice);
-                    HideChoices();
-                });
+                    var choice = toggle.GetComponentInChildren<Label>().String.Value;
+                    toggle.onValueChanged.AddListener((b) =>
+                    {
+                        SetChoice(choice);
+                        HideChoices();
+                    });
+                }
             }
         }
 
