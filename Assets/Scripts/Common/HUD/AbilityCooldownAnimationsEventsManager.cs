@@ -8,6 +8,8 @@ public class AbilityCooldownAnimationsEventsManager : MonoBehaviour, IObserver
 {
     private AbilitySetter _abilitySetter;
 
+    //PUBLIC
+
     public void Observe(GameObject kartRoot)
     {
         _abilitySetter = kartRoot.GetComponentInChildren<AbilitySetter>();
@@ -16,19 +18,16 @@ public class AbilityCooldownAnimationsEventsManager : MonoBehaviour, IObserver
     public void TriggerCooldownResetAnimation(float cooldownAnimationDuration)
     {
         GetComponent<Animator>().SetTrigger("StartCooldown");
-        StartCoroutine(TempCooldown());
-      //  GetComponent<Animator>().SetFloat("SpeedAnimMult", 1 - cooldownAnimationDuration/10);
+        GetComponent<Animator>().SetFloat("SpeedAnimMult", 1/cooldownAnimationDuration);
     }
 
-    private IEnumerator TempCooldown()
+    public void OnStartCooldownAnimation()
     {
-        yield return new WaitForSeconds(5);
-        _abilitySetter.GetCurrentAbility().OnCooldownCompleteAnimation();
+
     }
 
     public void OnCooldownCompleteAnimation()
     {
-        Debug.Log("TestReload");
         _abilitySetter.GetCurrentAbility().OnCooldownCompleteAnimation();
     }
 }

@@ -61,9 +61,7 @@ namespace Abilities
         }
         public void OnCooldownCompleteAnimation()
         {
-            Debug.Log(CanUseAbility);
             CanUseAbility = true;
-            Debug.Log(CanUseAbility);
             OnAbilityReload.Invoke();
         }
 
