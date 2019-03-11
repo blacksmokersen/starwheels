@@ -9,12 +9,14 @@ namespace Menu
         [Header("Lobby Info")]
         [SerializeField] private LobbyData _lobbyData;
 
+        [Header("UI Elements")]
+        [SerializeField] private GameObject _panel;
+
         // BOLT
 
         public override void OnEvent(GameOver evnt)
         {
-            Debug.Log("Received event gameover");
-            gameObject.SetActive(true);
+            _panel.SetActive(true);
         }
 
         // PUBLIC
