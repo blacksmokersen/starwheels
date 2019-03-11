@@ -22,6 +22,7 @@ namespace Menu
         public StringEvent OnOptionChosen;
 
         private float timer = 0f;
+        private Toggle[] _toggles;
 
         // CORE
 
@@ -44,6 +45,7 @@ namespace Menu
         {
             InitializeListeners();
             _thisChoiceBackground.color = ColorSettings.HighlightedColor;
+            StartCoroutine(UpdateTimeRoutine());
         }
 
         public void SetChoice(string value)
@@ -57,17 +59,32 @@ namespace Menu
 
         private void InitializeListeners()
         {
-            _choicesLayout.gameObject.SetActive(true);
-            var toggles = _choicesLayout.GetComponentsInChildren<Toggle>();
-
-            foreach (var toggle in toggles)
+            if (_choicesLayout)
             {
-                var choice = toggle.GetComponent<Label>().String.Value;
-                toggle.onValueChanged.AddListener((b) =>
+                _choicesLayout.gameObject.SetActive(true);
+                _toggles = _choicesLayout.GetComponentsInChildren<Toggle>();
+
+                foreach (var toggle in _toggles)
                 {
-                    SetChoice(choice);
-                    HideChoices();
-                });
+                    var choice = toggle.GetComponentInChildren<Label>().String.Value;
+                    toggle.onValueChanged.AddListener((b) =>
+                    {
+                        SetChoice(choice);
+                        HideChoices();
+                    });
+                }
+            }
+        }
+
+        private void SelectRandomChoice()
+        {
+            if (_toggles != null)
+            {
+                SetChoice(_toggles[Random.Range(0, _toggles.Length)].GetComponentInChildren<Label>().String.Value);
+            }
+            else
+            {
+                SetChoice("default");
             }
         }
 
@@ -87,12 +104,17 @@ namespace Menu
                 yield return new WaitForEndOfFrame();
             }
             OnEntryTimeUpdate.Invoke(1f);
+
+            SelectRandomChoice();
             HideChoices();
         }
 
         private void HideChoices()
         {
-            _choicesLayout.gameObject.SetActive(false);
+            if (_choicesLayout)
+            {
+                _choicesLayout.gameObject.SetActive(false);
+            }
             StopAllCoroutines();
         }
     }
