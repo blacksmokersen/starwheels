@@ -97,7 +97,10 @@ namespace Items
         private void UnsetTarget()
         {
             _currentTargetTransform = null;
-            _crossHair.SetActive(false);
+            if (_crossHair)
+            {
+                _crossHair.SetActive(false);
+            }
             _needsDisabling = false;
         }
 
@@ -125,7 +128,7 @@ namespace Items
             {
                 var otherPlayer = other.GetComponentInParent<Player>();
 
-                if (state.Team != otherPlayer.Team.GetColor())
+                if (entity.isAttached && state.Team != otherPlayer.Team.GetColor())
                 {
                     if (_currentTargetTransform == null)
                     {
