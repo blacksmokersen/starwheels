@@ -21,12 +21,28 @@ namespace GameModes.Totem
 
         public static Totem GetTotemComponent()
         {
-            return FindTotem().GetComponent<Totem>();
+            var totem = FindTotem();
+            if (totem)
+            {
+                return totem.GetComponent<Totem>();
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public static BoltEntity GetTotemEntity()
         {
-            return FindTotem().GetComponent<BoltEntity>();
+            var totem = FindTotem();
+            if (totem)
+            {
+                return totem.GetComponent<BoltEntity>();
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public static int GetTotemOwnerID()

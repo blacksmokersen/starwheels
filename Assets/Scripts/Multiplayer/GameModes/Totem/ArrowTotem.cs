@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Bolt;
 
 namespace GameModes.Totem
@@ -12,38 +10,42 @@ namespace GameModes.Totem
 
         private Transform _totemPosition;
 
-        void Start()
-        {
+        // CORE
 
+        private void Update()
+        {
+            if (entity.isOwner && entity.isAttached)
+            {
+                if (!_totemPosition)
+                {
+                    var totem = TotemHelpers.FindTotem();
+                    if (totem)
+                    {
+                        _totemPosition = totem.transform;
+                    }
+                }
+                else
+                {
+                    //Arrow stick to the ground
+                    this.transform.forward = new Vector3(-(_totemPosition.transform.position.x - this.transform.position.x), 0, -(_totemPosition.transform.position.z - this.transform.position.z));
+
+                    if (_totemPossession._isLocalOwner)
+                    {
+                        _arrowTotem.enabled = false;
+                    }
+                    else
+                    {
+                        _arrowTotem.enabled = true;
+                    }
+                }
+            }
         }
+
+        // BOLT
 
         public override void Attached()
         {
             gameObject.SetActive(entity.isOwner);
-        }
-
-        void Update()
-        {
-            if (!_totemPosition)
-            {
-                _totemPosition = TotemHelpers.GetTotemEntity().transform;
-            }
-            else
-            {
-                //this.transform.LookAt(2 * transform.position - _totemPosition.position);
-
-                //Arrow stick to the ground
-                this.transform.forward = new Vector3(-(_totemPosition.transform.position.x - this.transform.position.x), 0, -(_totemPosition.transform.position.z - this.transform.position.z));
-
-                if (_totemPossession._isLocalOwner)
-                {
-                    _arrowTotem.enabled = false;
-                }
-                else
-                {
-                    _arrowTotem.enabled = true;
-                }
-            }
         }
     }
 }

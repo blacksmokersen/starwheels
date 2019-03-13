@@ -38,7 +38,8 @@ namespace Items
         {
             if (other.CompareTag(Constants.Tag.KartHealthHitBox))
             {
-                if (other.GetComponentInParent<BoltEntity>().GetState<IKartState>().Team != state.Team)
+                var playerEntity = other.GetComponentInParent<BoltEntity>();
+                if (playerEntity.isAttached && entity.isAttached && playerEntity.GetState<IKartState>().Team != state.Team)
                 {
                     StartLerpingTowardTarget(other.gameObject);
                 }
