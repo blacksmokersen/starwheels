@@ -33,7 +33,8 @@ namespace GameModes.Totem
             {
                 var totemBehaviour = other.GetComponentInParent<Totem>();
                 var totemColor = other.GetComponentInParent<TotemColorChanger>();
-                if (totemBehaviour.CanBePickedUp && state.CanPickTotem && totemBehaviour.LocalOwnerID != state.OwnerID && (totemColor.CurrentColor == state.Team || totemColor.ColorIsDefault()))
+                if (entity.isAttached &&
+                    totemBehaviour.CanBePickedUp && state.CanPickTotem && totemBehaviour.LocalOwnerID != state.OwnerID && (totemColor.CurrentColor == state.Team || totemColor.ColorIsDefault()))
                 {
                     TotemPicked totemPickedEvent = TotemPicked.Create();
                     totemPickedEvent.KartEntity = entity;

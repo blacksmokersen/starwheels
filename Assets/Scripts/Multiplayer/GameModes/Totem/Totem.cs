@@ -23,6 +23,7 @@ namespace GameModes.Totem
 
         private Rigidbody _rb;
         private bool _isSlowingDown = false;
+        private Coroutine _slowdownCoroutine;
         private Transform _parent;
 
         // CORE
@@ -79,11 +80,14 @@ namespace GameModes.Totem
                 state.OwnerID = newOwnerID;
                 _isSlowingDown = false;
             }
+            if (_slowdownCoroutine != null)
+            {
+                StopCoroutine(_slowdownCoroutine);
+            }
 
             LocalOwnerID = newOwnerID;
             entity.TakeControl();
             _parent = parent;
-            FreezeTotem(true);
             StartCoroutine(AntiPickSpamRoutine());
 
             if (OnParentSet != null) OnParentSet.Invoke();
@@ -94,7 +98,7 @@ namespace GameModes.Totem
             if (entity.isOwner)
             {
                 state.OwnerID = -1;
-                StartCoroutine(SlowdownRoutine());
+                _slowdownCoroutine = StartCoroutine(SlowdownRoutine());
             }
             else
             {
@@ -104,7 +108,7 @@ namespace GameModes.Totem
             LocalOwnerID = -1;
             CanBePickedUp = true;
             _parent = null;
-            FreezeTotem(false);
+            _rb.velocity = Vector3.zero;
 
             if (OnParentUnset != null) OnParentUnset.Invoke();
         }
@@ -112,22 +116,6 @@ namespace GameModes.Totem
         public void StartAntiSpamCoroutine()
         {
             StartCoroutine(AntiPickSpamRoutine());
-        }
-
-        public void FreezeTotem(bool b)
-        {
-            var rb = GetComponent<Rigidbody>();
-            if (b)
-            {
-                rb.isKinematic = true;
-                //GetComponent<SphereCollider>().enabled = false; //USE LAYERS
-            }
-            else
-            {
-                rb.isKinematic = false;
-                rb.velocity = Vector3.zero;
-                _physicalCollider.enabled = true;
-            }
         }
 
         // PRIVATE
