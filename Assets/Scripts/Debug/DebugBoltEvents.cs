@@ -38,5 +38,12 @@ namespace SW.DebugUtils
             scoreIncreasedEvent.Score = int.Parse(_blueScoreInput.text);
             scoreIncreasedEvent.Send();
         }
+
+        public void TriggerPlayerHitEvent()
+        {
+            PlayerHit playerHitEvent = PlayerHit.Create();
+            playerHitEvent.VictimEntity = SWExtensions.KartExtensions.GetKartWithID(SWMatchmaking.GetMyBoltId()).GetComponent<BoltEntity>();
+            playerHitEvent.Send();
+        }
     }
 }
