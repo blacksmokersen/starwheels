@@ -33,6 +33,12 @@ namespace Items
 
         public void Observe(GameObject kartRoot)
         {
+            UpdateLoadingGauge(0);
+            UpdateMergeLogo(0);
+            HideInitializingState();
+            HideBoostLogo();
+
+
             var kartInventory = kartRoot.GetComponentInChildren<Inventory>();
             if (kartInventory)
             {
