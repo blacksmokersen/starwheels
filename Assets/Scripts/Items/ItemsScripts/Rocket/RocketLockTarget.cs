@@ -24,14 +24,13 @@ namespace Items
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == Constants.Tag.KartHealthHitBox && _activated && CurrentTarget == null)
+            if (CurrentTarget == null && other.gameObject.tag == Constants.Tag.KartHealthHitBox && _activated)
             {
                 var otherPlayer = other.GetComponentInParent<Player>();
 
                 if (entity.isAttached && state.Team != otherPlayer.Team.GetColor())
                 {
-                    CurrentTarget = other.gameObject;
-                    StartCoroutine(GetComponentInParent<RocketBehaviour>().StartQuickTurn());
+                    SetTarget(other.gameObject);
                 }
             }
         }
@@ -39,17 +38,13 @@ namespace Items
         private void OnTriggerStay(Collider other)
         {
 
-            if (other.gameObject.tag == Constants.Tag.KartHealthHitBox && _activated)
+            if (CurrentTarget == null && other.gameObject.tag == Constants.Tag.KartHealthHitBox && _activated)
             {
                 var otherPlayer = other.GetComponentInParent<Player>();
 
                 if (entity.isAttached && state.Team != otherPlayer.Team.GetColor())
                 {
-                    if (CurrentTarget == null) // || IsKartIsCloserThanActualTarget(other.gameObject))
-                    {
-                        CurrentTarget = other.gameObject;
-                        StartCoroutine(GetComponentInParent<RocketBehaviour>().StartQuickTurn());
-                    }
+                    SetTarget(other.gameObject);
                 }
             }
         }
@@ -74,6 +69,13 @@ namespace Items
 
 
         // PRIVATE
+
+        private void SetTarget(GameObject target)
+        {
+            CurrentTarget = target;
+            target.GetComponentInParent<Health.Health>().OnDeath.AddListener(() => { CurrentTarget = null; });
+            StartCoroutine(GetComponentInParent<RocketBehaviour>().StartQuickTurn());
+        }
 
         private bool IsKartIsCloserThanActualTarget(GameObject kart)
         {
