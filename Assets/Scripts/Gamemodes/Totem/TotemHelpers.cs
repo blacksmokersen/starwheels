@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GameModes.Totem
+namespace Gamemodes.Totem
 {
     public static class TotemHelpers
     {
@@ -19,12 +19,12 @@ namespace GameModes.Totem
             }
         }
 
-        public static Totem GetTotemComponent()
+        public static TotemOwnership GetTotemComponent()
         {
             var totem = FindTotem();
             if (totem)
             {
-                return totem.GetComponent<Totem>();
+                return totem.GetComponent<TotemOwnership>();
             }
             else
             {

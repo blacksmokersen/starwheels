@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Bolt;
 
-namespace GameModes.Totem
+namespace Gamemodes.Totem
 {
     public class KartEnergyDischarger : EntityBehaviour<IKartState>
     {

@@ -2,7 +2,7 @@
 using Bolt;
 using System.Collections;
 
-namespace GameModes.Totem
+namespace Gamemodes.Totem
 {
     public class TotemColorChanger : GlobalEventListener
     {

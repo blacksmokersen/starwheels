@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using Bolt;
 using Multiplayer.Teams;
 
-namespace GameModes
+namespace Gamemodes
 {
     public enum GameMode { None, ClassicBattle, BankRobbery, GoldenTotem }
 

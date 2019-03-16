@@ -537,7 +537,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3.75
+  m_Radius: 2.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2777
 MonoBehaviour:
@@ -760,6 +760,8 @@ GameObject:
   - component: {fileID: 2595}
   - component: {fileID: 2739}
   - component: {fileID: 2754}
+  - component: {fileID: 4157776295282965798}
+  - component: {fileID: 2756414525075855336}
   m_Layer: 15
   m_Name: Totem
   m_TagString: Totem
@@ -882,6 +884,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4157776295282965798}
+        m_MethodName: StopSlowdown
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnParentUnset:
@@ -920,10 +933,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4157776295282965798}
+        m_MethodName: StartSlowdown
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   _totemSettings: {fileID: 11400000, guid: 9f6ce33577d972c4f9494dd71799c0c4, type: 2}
-  _physicalCollider: {fileID: 1928}
 --- !u!114 &2571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1067,6 +1090,32 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: ColorEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   _totemAuraRenderer: {fileID: 23751202958215930}
+--- !u!114 &4157776295282965798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a29de48ea3919cd4b957acfa704ea3e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _totemSettings: {fileID: 11400000, guid: 9f6ce33577d972c4f9494dd71799c0c4, type: 2}
+--- !u!114 &2756414525075855336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49ec7f03e0d845d47b3c1399c550d860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _totemOwnership: {fileID: 2452}
 --- !u!114 &2759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1100,17 +1149,17 @@ PrefabInstance:
     - target: {fileID: 4624779067630979864, guid: 7a8aca3145e29c340ad148058ffc7ee0,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 2.8125
+      value: 2.1
       objectReference: {fileID: 0}
     - target: {fileID: 4624779067630979864, guid: 7a8aca3145e29c340ad148058ffc7ee0,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.8125
+      value: 2.1
       objectReference: {fileID: 0}
     - target: {fileID: 4624779067630979864, guid: 7a8aca3145e29c340ad148058ffc7ee0,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 2.8125
+      value: 2.1
       objectReference: {fileID: 0}
     - target: {fileID: 4641885120219959114, guid: 7a8aca3145e29c340ad148058ffc7ee0,
         type: 3}

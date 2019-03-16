@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GameModes.Totem
+namespace Gamemodes.Totem
 {
     [BoltGlobalBehaviour(BoltNetworkModes.Server, BoltScenes.CarapaceDebug, BoltScenes.StarwheelsFactory,BoltScenes.CarapaceSquare_V4)]
     public class TotemServer : GameModeBase

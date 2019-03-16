@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GameModes.Totem
+namespace Gamemodes.Totem
 {
     [DisallowMultipleComponent]
     public class TotemSlot : MonoBehaviour

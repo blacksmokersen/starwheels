@@ -2,7 +2,7 @@
 using Bolt;
 using Photon;
 
-namespace GameModes
+namespace Gamemodes
 {
     public class KartGameModeSetup : EntityBehaviour
     {
