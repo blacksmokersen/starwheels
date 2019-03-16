@@ -3,7 +3,7 @@ using Cinemachine;
 
 namespace CameraUtils
 {
-    public class CameraTurnEffect : MonoBehaviour, IControllable
+    public class CameraTurnEffect : CameraTarget, IControllable
     {
         [SerializeField] private bool _enabled = true;
         public bool Enabled
@@ -15,7 +15,6 @@ namespace CameraUtils
         private string _turnCamInputName = "RightJoystickHorizontal";
         private CinemachineOrbitalTransposer _orbiter;
         private CinemachineComposer _composer;
-        private CinemachineVirtualCamera _cinemachine;
         private CinemachineCollider _cinemachineCollider;
 
         private float _controlAxisValueMin;
@@ -24,9 +23,9 @@ namespace CameraUtils
 
         private void Awake()
         {
-            _cinemachine = GetComponentInParent<CinemachineVirtualCamera>();
-            _orbiter = _cinemachine.GetCinemachineComponent<CinemachineOrbitalTransposer>();
-            _composer = _cinemachine.GetCinemachineComponent<CinemachineComposer>();
+            Cinemachine = GetComponentInParent<CinemachineVirtualCamera>();
+            _orbiter = Cinemachine.GetCinemachineComponent<CinemachineOrbitalTransposer>();
+            _composer = Cinemachine.GetCinemachineComponent<CinemachineComposer>();
             _cinemachineCollider = GetComponent<CinemachineCollider>();
 
 

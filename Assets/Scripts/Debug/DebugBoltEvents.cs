@@ -23,6 +23,13 @@ namespace SW.DebugUtils
             gameReadyEvent.Send();
         }
 
+        public void LobbyCoutndownEvent()
+        {
+            LobbyCountdown countdownEvent = LobbyCountdown.Create();
+            countdownEvent.Time = 0;
+            countdownEvent.Send();
+        }
+
         public void TriggerRedScoreIncreaseEvent()
         {
             ScoreIncreased scoreIncreasedEvent = ScoreIncreased.Create();
