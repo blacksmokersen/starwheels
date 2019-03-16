@@ -10,6 +10,7 @@ namespace Gamemodes.Totem
     {
         [Header("Ownership")]
         public bool CanBePickedUp = true;
+        public int OldOwnerID = -1;
         public int LocalOwnerID = -1;
         public int ServerOwnerID { get { return state.OwnerID; } }
 
@@ -76,6 +77,7 @@ namespace Gamemodes.Totem
             {
                 entity.TakeControl();
             }
+            OldOwnerID = LocalOwnerID;
             LocalOwnerID = newOwnerID;
             StartCoroutine(AntiPickSpamRoutine());
             SetParentTransform(LocalOwnerID);
@@ -96,7 +98,7 @@ namespace Gamemodes.Totem
             {
                 entity.ReleaseControl();
             }
-
+            OldOwnerID = LocalOwnerID;
             LocalOwnerID = -1;
             CanBePickedUp = true;
             UnsetParentTransform();
