@@ -6,9 +6,10 @@ namespace Network
 {
     public class KartMultiplayerSetup : EntityBehaviour<IKartState>
     {
-        [Header("Kart Mesh")]
+        [Header("Temporal Anti-Aliasing")]
         [SerializeField] private Transform _kartMeshesRootTransform;
 
+        [Header("Settings")]
         [SerializeField] private PlayerSettings _playerSettings;
         [SerializeField] private float _delayBeforeDestroyKart;
 
