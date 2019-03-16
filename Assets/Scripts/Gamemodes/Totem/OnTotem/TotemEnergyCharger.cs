@@ -44,7 +44,6 @@ namespace Gamemodes
             if (OnFullyDischarged != null)
             {
                 OnFullyDischarged.Invoke();
-                Debug.Log("Fully Discharged");
             }
         }
 
@@ -56,7 +55,6 @@ namespace Gamemodes
             if (OnFullyCharged != null)
             {
                 OnFullyCharged.Invoke();
-                Debug.Log("Fully Charged");
             }
         }
 

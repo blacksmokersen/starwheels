@@ -13,6 +13,7 @@ namespace Gamemodes.Totem
         public UnityEvent OnTotemGet;
         public UnityEvent OnTotemLost;
 
+        private TotemOwnership _totemOwnership;
         private IKartState _kartState;
 
         // BOLT
@@ -32,6 +33,18 @@ namespace Gamemodes.Totem
         public override void OnEvent(TotemThrown evnt)
         {
             if (evnt.OwnerID == GetKartState().OwnerID)
+            {
+                OnTotemLost.Invoke();
+            }
+        }
+
+        public override void OnEvent(PlayerHit evnt)
+        {
+            if (!_totemOwnership)
+            {
+                _totemOwnership = TotemHelpers.GetTotemComponent();
+            }
+            if (_totemOwnership && evnt.VictimID == _totemOwnership.LocalOwnerID) // The totem owner has been hit
             {
                 OnTotemLost.Invoke();
             }
