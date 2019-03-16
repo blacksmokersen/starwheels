@@ -3,12 +3,12 @@ using Bolt;
 
 namespace Gamemodes.Totem
 {
-    public class ArrowTotem : EntityBehaviour
+    public class ArrowTotem : EntityBehaviour<IKartState>
     {
-        [SerializeField] private TotemPossession _totemPossession;
         [SerializeField] private Renderer _arrowTotem;
 
         private Transform _totemPosition;
+        private TotemOwnership _totemOwnership;
 
         // CORE
 
@@ -22,6 +22,7 @@ namespace Gamemodes.Totem
                     if (totem)
                     {
                         _totemPosition = totem.transform;
+                        _totemOwnership = totem.GetComponent<TotemOwnership>();
                     }
                 }
                 else
@@ -29,7 +30,7 @@ namespace Gamemodes.Totem
                     //Arrow stick to the ground
                     this.transform.forward = new Vector3(-(_totemPosition.transform.position.x - this.transform.position.x), 0, -(_totemPosition.transform.position.z - this.transform.position.z));
 
-                    if (_totemPossession.IsLocalOwner)
+                    if (_totemOwnership.IsLocalOwner(state.OwnerID))
                     {
                         _arrowTotem.enabled = false;
                     }

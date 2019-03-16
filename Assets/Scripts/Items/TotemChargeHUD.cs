@@ -13,15 +13,16 @@ namespace Gamemodes.Totem
 
         public void Observe(GameObject gameObject)
         {
-            var totemPossession = gameObject.GetComponentInChildren<TotemPossession>();
-            if (totemPossession)
+            var totemEvents = gameObject.GetComponentInChildren<OnKartTotemEventListener>();
+            if (totemEvents)
             {
-                totemPossession.OnTotemGet.AddListener(ShowDischargingHUD);
-                totemPossession.OnTotemLost.AddListener(ShowChargingHUD);
+                totemEvents.OnTotemGet.AddListener(ShowDischargingHUD);
+                totemEvents.OnTotemLost.AddListener(ShowChargingHUD);
             }
+
             else
             {
-                Debug.LogWarning("TotemPossession component not found.");
+                Debug.LogWarning("TotemEvents component not found.");
             }
         }
 

@@ -4,7 +4,7 @@ using ThrowingSystem;
 
 namespace Gamemodes.Totem
 {
-    public class TotemPicker : EntityBehaviour<IKartState> , IControllable
+    public class TotemThrower : EntityBehaviour<IKartState>, IControllable
     {
         [SerializeField] private bool _enabled = true;
         public bool Enabled
@@ -16,9 +16,7 @@ namespace Gamemodes.Totem
         [Header("Throwing System")]
         [SerializeField] private ThrowingDirection _throwingDirection;
 
-        [Header("Possession")]
-        [SerializeField] private TotemPossession _totemPossession;
-
+        private TotemOwnership _totemOwnership;
 
         // MONOBEHAVIOUR
 
@@ -27,24 +25,6 @@ namespace Gamemodes.Totem
             if (entity.isAttached && entity.isControllerOrOwner)
             {
                 MapInputs();
-            }
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (BoltNetwork.IsServer && other.CompareTag(Constants.Tag.TotemPickup)) // Server sees a player collide with totem trigger
-            {
-                var totemBehaviour = other.GetComponentInParent<TotemOwnership>();
-                var totemColor = other.GetComponentInParent<TotemColorChanger>();
-                if (entity.isAttached &&
-                    totemBehaviour.CanBePickedUp && state.CanPickTotem && totemBehaviour.LocalOwnerID != state.OwnerID && (totemColor.CurrentColor == state.Team || totemColor.ColorIsDefault()))
-                {
-                    Debug.Log("SEES COLLISION");
-                    TotemPicked totemPickedEvent = TotemPicked.Create();
-                    totemPickedEvent.KartEntity = entity;
-                    totemPickedEvent.NewOwnerID = state.OwnerID;
-                    totemPickedEvent.Send();
-                }
             }
         }
 
@@ -58,16 +38,23 @@ namespace Gamemodes.Totem
                     Input.GetButtonDown(Constants.Input.UseItemForward) ||
                     Input.GetButtonDown(Constants.Input.UseItemBackward))
                 {
-                    UseTotem();
+                    if (!_totemOwnership)
+                    {
+                        _totemOwnership = TotemHelpers.GetTotemComponent();
+                    }
+                    if (_totemOwnership)
+                    {
+                        ThrowTotem();
+                    }
                 }
             }
         }
 
         // PRIVATE
 
-        private void UseTotem()
+        private void ThrowTotem()
         {
-            if (_totemPossession.IsLocalOwner)
+            if (_totemOwnership.IsLocalOwner(state.OwnerID) && _totemOwnership.IsSynchronized())
             {
                 TotemThrown totemThrownEvent = TotemThrown.Create();
                 totemThrownEvent.KartEntity = entity;
