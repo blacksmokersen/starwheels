@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Bolt;
 
-namespace GameModes.Totem
+namespace Gamemodes.Totem
 {
     public class ArrowTotem : EntityBehaviour
     {
@@ -29,7 +29,7 @@ namespace GameModes.Totem
                     //Arrow stick to the ground
                     this.transform.forward = new Vector3(-(_totemPosition.transform.position.x - this.transform.position.x), 0, -(_totemPosition.transform.position.z - this.transform.position.z));
 
-                    if (_totemPossession._isLocalOwner)
+                    if (_totemPossession.IsLocalOwner)
                     {
                         _arrowTotem.enabled = false;
                     }

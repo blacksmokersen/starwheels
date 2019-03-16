@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace GameModes
+namespace Gamemodes
 {
     public class TotemEnergyCharger : MonoBehaviour
     {

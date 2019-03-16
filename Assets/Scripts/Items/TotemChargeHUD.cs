@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace GameModes.Totem
+namespace Gamemodes.Totem
 {
     public class TotemChargeHUD : MonoBehaviour, IObserver
     {

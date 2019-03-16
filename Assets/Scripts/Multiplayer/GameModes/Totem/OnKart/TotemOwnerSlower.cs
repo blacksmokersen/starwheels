@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Common.PhysicsUtils;
 
-namespace GameModes.Totem
+namespace Gamemodes.Totem
 {
     [DisallowMultipleComponent]
     public class TotemOwnerSlower : MonoBehaviour

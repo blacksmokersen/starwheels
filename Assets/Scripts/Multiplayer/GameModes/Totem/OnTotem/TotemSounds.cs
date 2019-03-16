@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GameModes
+namespace Gamemodes
 {
     public class TotemSounds : MonoBehaviour
     {

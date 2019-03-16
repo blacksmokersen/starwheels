@@ -4,7 +4,7 @@ using Bolt;
 using ThrowingSystem;
 using System.Collections;
 
-namespace GameModes.Totem
+namespace Gamemodes.Totem
 {
     [DisallowMultipleComponent]
     [RequireComponent(typeof(TotemPicker))]
@@ -17,10 +17,10 @@ namespace GameModes.Totem
         public UnityEvent OnTotemGet;
         public UnityEvent OnTotemLost;
 
-        public bool _isLocalOwner = false; // Local bool for possession (to compensate lag)
+        public bool IsLocalOwner = false; // Local bool for possession (to compensate lag)
 
         [Header("Totem References (Debug)")]
-        [SerializeField] private Totem _totemBehaviour;
+        [SerializeField] private TotemOwnership _totemBehaviour;
         [SerializeField] private GameObject _totemObjectRoot;
 
         private bool _referencesSet = false;
@@ -48,12 +48,14 @@ namespace GameModes.Totem
                     {
                         Direction throwingDirection = evnt.ForwardDirection ? Direction.Forward : Direction.Backward;
                         kartThrowing.GetComponentInChildren<ThrowableLauncher>().Throw(_totemObjectRoot.GetComponent<Throwable>(), throwingDirection);
+                        Debug.LogError("SERVER RECEIVED THROW");
                     }
                 }
 
-                if(_isLocalOwner) // I was the totem owner but threw it
+                if(IsLocalOwner) // I was the totem owner but threw it
                 {
-                    _isLocalOwner = false;
+                    Debug.LogError("I TRHEW TOTEM");
+                    IsLocalOwner = false;
                     OnTotemLost.Invoke();
                 }
             }
@@ -74,7 +76,7 @@ namespace GameModes.Totem
 
                     if (evnt.VictimEntity.isOwner) // If I was the totem owner
                     {
-                        _isLocalOwner = false;
+                        IsLocalOwner = false;
                         OnTotemLost.Invoke();
                     }
                 }
@@ -99,6 +101,7 @@ namespace GameModes.Totem
             {
                 if (!_totemBehaviour.IsSynchronized())
                 {
+                    Debug.LogError("SYNCHRONIZING TOTEM OWNER");
                     SetNewOwner(_totemBehaviour.ServerOwnerID);
                 }
             }
@@ -113,14 +116,16 @@ namespace GameModes.Totem
                 var kartTotemSlot = kart.GetComponentInChildren<TotemSlot>().transform;
                 _totemBehaviour.SetParent(kartTotemSlot, newOwnerID);
 
-                if (kart.GetComponent<BoltEntity>().isOwner && !_isLocalOwner) // If I am the new owner of the totem and ready to pick it up
+                if (kart.GetComponent<BoltEntity>().isOwner && !IsLocalOwner) // If I am the new owner of the totem and ready to pick it up
                 {
-                    _isLocalOwner = true;
+                    Debug.LogError("I AM NEW OWNER");
+                    IsLocalOwner = true;
                     OnTotemGet.Invoke();
                 }
-                else if (_isLocalOwner) // If I was the old owner of the totem
+                else if (IsLocalOwner) // If I was the old owner of the totem
                 {
-                    _isLocalOwner = false;
+                    Debug.LogError("I WAS OWNER");
+                    IsLocalOwner = false;
                     OnTotemLost.Invoke();
                 }
             }
@@ -138,7 +143,7 @@ namespace GameModes.Totem
             }
             else if(_totemObjectRoot && !_totemBehaviour)
             {
-                _totemBehaviour = _totemObjectRoot.GetComponent<Totem>();
+                _totemBehaviour = _totemObjectRoot.GetComponent<TotemOwnership>();
                 _referencesSet = true;
             }
         }

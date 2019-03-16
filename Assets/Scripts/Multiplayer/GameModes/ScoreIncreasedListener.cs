@@ -3,7 +3,7 @@ using Bolt;
 using Multiplayer.Teams;
 using TMPro;
 
-namespace GameModes
+namespace Gamemodes
 {
     public class ScoreIncreasedListener : GlobalEventListener
     {

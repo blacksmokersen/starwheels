@@ -2,7 +2,7 @@
 using Bolt;
 using ThrowingSystem;
 
-namespace GameModes.Totem
+namespace Gamemodes.Totem
 {
     public class TotemPicker : EntityBehaviour<IKartState> , IControllable
     {
@@ -15,6 +15,9 @@ namespace GameModes.Totem
 
         [Header("Throwing System")]
         [SerializeField] private ThrowingDirection _throwingDirection;
+
+        [Header("Possession")]
+        [SerializeField] private TotemPossession _totemPossession;
 
 
         // MONOBEHAVIOUR
@@ -31,11 +34,12 @@ namespace GameModes.Totem
         {
             if (BoltNetwork.IsServer && other.CompareTag(Constants.Tag.TotemPickup)) // Server sees a player collide with totem trigger
             {
-                var totemBehaviour = other.GetComponentInParent<Totem>();
+                var totemBehaviour = other.GetComponentInParent<TotemOwnership>();
                 var totemColor = other.GetComponentInParent<TotemColorChanger>();
                 if (entity.isAttached &&
                     totemBehaviour.CanBePickedUp && state.CanPickTotem && totemBehaviour.LocalOwnerID != state.OwnerID && (totemColor.CurrentColor == state.Team || totemColor.ColorIsDefault()))
                 {
+                    Debug.Log("SEES COLLISION");
                     TotemPicked totemPickedEvent = TotemPicked.Create();
                     totemPickedEvent.KartEntity = entity;
                     totemPickedEvent.NewOwnerID = state.OwnerID;
@@ -63,11 +67,14 @@ namespace GameModes.Totem
 
         private void UseTotem()
         {
-            TotemThrown totemThrownEvent = TotemThrown.Create();
-            totemThrownEvent.KartEntity = entity;
-            totemThrownEvent.OwnerID = state.OwnerID;
-            totemThrownEvent.ForwardDirection = _throwingDirection.LastDirectionUp != Direction.Backward ; // TO DO BETTER
-            totemThrownEvent.Send();
+            if (_totemPossession.IsLocalOwner)
+            {
+                TotemThrown totemThrownEvent = TotemThrown.Create();
+                totemThrownEvent.KartEntity = entity;
+                totemThrownEvent.OwnerID = state.OwnerID;
+                totemThrownEvent.ForwardDirection = _throwingDirection.LastDirectionUp != Direction.Backward; // TO DO BETTER
+                totemThrownEvent.Send();
+            }
         }
     }
 }

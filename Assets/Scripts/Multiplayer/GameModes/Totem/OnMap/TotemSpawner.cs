@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Bolt;
 
-namespace GameModes.Totem
+namespace Gamemodes.Totem
 {
     [DisallowMultipleComponent]
     public class TotemSpawner : GlobalEventListener
@@ -35,7 +35,7 @@ namespace GameModes.Totem
         public void RespawnTotem()
         {
             var totem = GameObject.FindGameObjectWithTag(Constants.Tag.Totem);
-            totem.GetComponent<Totem>().UnsetParent();
+            totem.GetComponent<TotemOwnership>().UnsetParent();
             totem.transform.position = transform.position;
 
             TotemThrown totemThrownEvent = TotemThrown.Create();
