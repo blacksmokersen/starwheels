@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GameModes.Totem
+namespace Gamemodes.Totem
 {
     [CreateAssetMenu(menuName = "Totem/Totem Settings")]
     public class TotemSettings : ScriptableObject

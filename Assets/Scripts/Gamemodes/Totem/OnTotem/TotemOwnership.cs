@@ -3,13 +3,14 @@ using UnityEngine;
 using UnityEngine.Events;
 using Bolt;
 
-namespace GameModes.Totem
+namespace Gamemodes.Totem
 {
     [DisallowMultipleComponent]
-    public class Totem : EntityBehaviour<IItemState>
+    public class TotemOwnership : EntityBehaviour<IItemState>
     {
         [Header("Ownership")]
         public bool CanBePickedUp = true;
+        public int OldOwnerID = -1;
         public int LocalOwnerID = -1;
         public int ServerOwnerID { get { return state.OwnerID; } }
 
@@ -19,26 +20,14 @@ namespace GameModes.Totem
 
         [Header("Settings")]
         [SerializeField] private TotemSettings _totemSettings;
-        [SerializeField] private Collider _physicalCollider;
 
-        private Rigidbody _rb;
-        private bool _isSlowingDown = false;
-        private Coroutine _slowdownCoroutine;
         private Transform _parent;
 
         // CORE
 
-        private void Awake()
+        private void Start()
         {
-            _rb = GetComponent<Rigidbody>();
-        }
-
-        private void FixedUpdate()
-        {
-            if (_parent == null)
-            {
-                Slowdown();
-            }
+            StartCoroutine(SynchronizationRoutine());
         }
 
         private void LateUpdate()
@@ -61,56 +50,63 @@ namespace GameModes.Totem
             }
         }
 
-        public override void Detached()
+        // PUBLIC
+
+        public bool IsLocalOwner(int id)
         {
-            Debug.Log("Totem detached from game.");
+            return LocalOwnerID == id;
         }
 
-        // PUBLIC
+        public bool IsServerOwner(int id)
+        {
+            return ServerOwnerID == id;
+        }
 
         public bool IsSynchronized()
         {
             return LocalOwnerID == ServerOwnerID;
         }
 
-        public void SetParent(Transform parent, int newOwnerID)
+        public void SetNewOwner(int newOwnerID)
         {
             if (entity.isOwner)
             {
                 state.OwnerID = newOwnerID;
-                _isSlowingDown = false;
             }
-            if (_slowdownCoroutine != null)
+            else
             {
-                StopCoroutine(_slowdownCoroutine);
+                entity.TakeControl();
             }
-
+            OldOwnerID = LocalOwnerID;
             LocalOwnerID = newOwnerID;
-            entity.TakeControl();
-            _parent = parent;
             StartCoroutine(AntiPickSpamRoutine());
+            SetParentTransform(LocalOwnerID);
 
-            if (OnParentSet != null) OnParentSet.Invoke();
+            if (OnParentSet != null)
+            {
+                OnParentSet.Invoke();
+            }
         }
 
-        public void UnsetParent()
+        public void UnsetOwner()
         {
             if (entity.isOwner)
             {
                 state.OwnerID = -1;
-                _slowdownCoroutine = StartCoroutine(SlowdownRoutine());
             }
             else
             {
                 entity.ReleaseControl();
             }
-
+            OldOwnerID = LocalOwnerID;
             LocalOwnerID = -1;
             CanBePickedUp = true;
-            _parent = null;
-            _rb.velocity = Vector3.zero;
+            UnsetParentTransform();
 
-            if (OnParentUnset != null) OnParentUnset.Invoke();
+            if (OnParentUnset != null)
+            {
+                OnParentUnset.Invoke();
+            }
         }
 
         public void StartAntiSpamCoroutine()
@@ -120,23 +116,40 @@ namespace GameModes.Totem
 
         // PRIVATE
 
-        private IEnumerator SlowdownRoutine()
+        private void SetParentTransform(int id)
         {
-            yield return new WaitForSeconds(_totemSettings.SecondsBeforeSlowdown);
-            _isSlowingDown = true;
+            var kart = SWExtensions.KartExtensions.GetKartWithID(id);
+
+            if (kart)
+            {
+                var kartTotemSlot = kart.GetComponentInChildren<TotemSlot>();
+                _parent = kartTotemSlot.transform;
+            }
+            else
+            {
+                _parent = null;
+            }
         }
 
-        private void Slowdown()
+        private void UnsetParentTransform()
         {
-            if (_isSlowingDown)
-            {
-                _rb.velocity *= _totemSettings.SlowdownFactor;
+            _parent = null;
+        }
 
-                if (_rb.velocity.magnitude < _totemSettings.StopMagnitudeThreshold)
-                {
-                    _isSlowingDown = false;
-                    _rb.velocity = Vector3.zero;
-                }
+        private IEnumerator SynchronizationRoutine()
+        {
+            while (Application.isPlaying)
+            {
+                yield return new WaitForSeconds(0.25f);
+                SynchronizeTotemOwner();
+            }
+        }
+
+        private void SynchronizeTotemOwner()
+        {
+            if (!IsSynchronized())
+            {
+                SetNewOwner(ServerOwnerID);
             }
         }
 
