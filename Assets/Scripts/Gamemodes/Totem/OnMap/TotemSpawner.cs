@@ -35,7 +35,8 @@ namespace Gamemodes.Totem
         public void RespawnTotem()
         {
             var totem = GameObject.FindGameObjectWithTag(Constants.Tag.Totem);
-            totem.GetComponent<TotemOwnership>().UnsetParent();
+            totem.GetComponent<TotemOwnership>().UnsetOwner();
+            totem.GetComponent<TotemPhysics>().SetVelocityToZero();
             totem.transform.position = transform.position;
 
             TotemThrown totemThrownEvent = TotemThrown.Create();

@@ -19,18 +19,14 @@ namespace Gamemodes.Totem
 
         [Header("Settings")]
         [SerializeField] private TotemSettings _totemSettings;
-        [SerializeField] private Collider _physicalCollider;
 
         private Transform _parent;
 
         // CORE
 
-        private void FixedUpdate()
+        private void Start()
         {
-            if (_parent == null)
-            {
-                //Slowdown();
-            }
+            StartCoroutine(SynchronizationRoutine());
         }
 
         private void LateUpdate()
@@ -53,46 +49,48 @@ namespace Gamemodes.Totem
             }
         }
 
-        public override void Detached()
+        // PUBLIC
+
+        public bool IsLocalOwner(int id)
         {
-            Debug.Log("Totem detached from game.");
+            return LocalOwnerID == id;
         }
 
-        // PUBLIC
+        public bool IsServerOwner(int id)
+        {
+            return ServerOwnerID == id;
+        }
 
         public bool IsSynchronized()
         {
             return LocalOwnerID == ServerOwnerID;
         }
 
-        public void SetParent(Transform parent, int newOwnerID)
+        public void SetNewOwner(int newOwnerID)
         {
             if (entity.isOwner)
             {
                 state.OwnerID = newOwnerID;
-                //_isSlowingDown = false;
             }
-            /*
-            if (_slowdownCoroutine != null)
+            else
             {
-                StopCoroutine(_slowdownCoroutine);
+                entity.TakeControl();
             }
-            */
-
             LocalOwnerID = newOwnerID;
-            entity.TakeControl();
-            _parent = parent;
             StartCoroutine(AntiPickSpamRoutine());
+            SetParentTransform(LocalOwnerID);
 
-            if (OnParentSet != null) OnParentSet.Invoke();
+            if (OnParentSet != null)
+            {
+                OnParentSet.Invoke();
+            }
         }
 
-        public void UnsetParent()
+        public void UnsetOwner()
         {
             if (entity.isOwner)
             {
                 state.OwnerID = -1;
-                //_slowdownCoroutine = StartCoroutine(SlowdownRoutine());
             }
             else
             {
@@ -101,10 +99,12 @@ namespace Gamemodes.Totem
 
             LocalOwnerID = -1;
             CanBePickedUp = true;
-            _parent = null;
-            //_rb.velocity = Vector3.zero;
+            UnsetParentTransform();
 
-            if (OnParentUnset != null) OnParentUnset.Invoke();
+            if (OnParentUnset != null)
+            {
+                OnParentUnset.Invoke();
+            }
         }
 
         public void StartAntiSpamCoroutine()
@@ -113,6 +113,43 @@ namespace Gamemodes.Totem
         }
 
         // PRIVATE
+
+        private void SetParentTransform(int id)
+        {
+            var kart = SWExtensions.KartExtensions.GetKartWithID(id);
+
+            if (kart)
+            {
+                var kartTotemSlot = kart.GetComponentInChildren<TotemSlot>();
+                _parent = kartTotemSlot.transform;
+            }
+            else
+            {
+                _parent = null;
+            }
+        }
+
+        private void UnsetParentTransform()
+        {
+            _parent = null;
+        }
+
+        private IEnumerator SynchronizationRoutine()
+        {
+            while (Application.isPlaying)
+            {
+                yield return new WaitForSeconds(0.25f);
+                SynchronizeTotemOwner();
+            }
+        }
+
+        private void SynchronizeTotemOwner()
+        {
+            if (!IsSynchronized())
+            {
+                SetNewOwner(ServerOwnerID);
+            }
+        }
 
         private IEnumerator AntiPickSpamRoutine()
         {

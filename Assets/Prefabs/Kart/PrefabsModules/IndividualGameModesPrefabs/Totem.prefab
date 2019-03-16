@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b83d2fc944bf1642bd402b0c233a826, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _totemPossession: {fileID: 6057394103160197951}
   _arrowTotem: {fileID: 0}
 --- !u!1 &3967814542417852389
 GameObject:
@@ -176,7 +175,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6164164434260075045}
   - component: {fileID: 6057460412007506585}
-  - component: {fileID: 6057394103160197951}
+  - component: {fileID: 3691808217266972910}
+  - component: {fileID: 8678616902033494979}
   - component: {fileID: 2717028874820973109}
   - component: {fileID: 6057409765090743145}
   - component: {fileID: 6687914346056628858}
@@ -217,10 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a493abe048d608d439358f85f9cf9283, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enabled: 1
-  _throwingDirection: {fileID: 0}
-  _totemPossession: {fileID: 6057394103160197951}
---- !u!114 &6057394103160197951
+--- !u!114 &3691808217266972910
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -229,15 +226,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 6161096272583477527}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2119b064304a76489aba2d05980b0c7, type: 3}
+  m_Script: {fileID: 11500000, guid: 98e7599cd77093e4490999923cc4e289, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _totemSettings: {fileID: 11400000, guid: 9f6ce33577d972c4f9494dd71799c0c4, type: 2}
+  _enabled: 1
+  _throwingDirection: {fileID: 0}
+--- !u!114 &8678616902033494979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6161096272583477527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ac0d74eaa169fc46a2754b2470e3d6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _kartEntity: {fileID: 0}
   OnTotemGet:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Disable
+      - m_Target: {fileID: 6057409765090743145}
+        m_MethodName: SlowOwner
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -247,8 +258,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 6057409765090743145}
-        m_MethodName: SlowOwner
+      - m_Target: {fileID: 2292216838672508570}
+        m_MethodName: FullyDischarge
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2717028874820973109}
+        m_MethodName: DisableAll
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -263,17 +285,6 @@ MonoBehaviour:
   OnTotemLost:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: EnableAfterXSeconds
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 3
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 6057409765090743145}
         m_MethodName: ResetOwnerSpeed
         m_Mode: 1
@@ -285,12 +296,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 6057409765090743145}
-        m_MethodName: FullyDischarge
-        m_Mode: 1
+      - m_Target: {fileID: 2292216838672508570}
+        m_MethodName: FullyDischargeForXSeconds
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 3
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2717028874820973109}
+        m_MethodName: EnableAllAfterXSeconds
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 3e284fa8f2cd6c748bd8be2c1dbf0c67,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: FloatVariable, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -298,9 +321,6 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  IsLocalOwner: 0
-  _totemBehaviour: {fileID: 0}
-  _totemObjectRoot: {fileID: 0}
 --- !u!114 &2717028874820973109
 MonoBehaviour:
   m_ObjectHideFlags: 0

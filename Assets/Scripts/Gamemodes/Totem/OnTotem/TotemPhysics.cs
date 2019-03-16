@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gamemodes.Totem
@@ -21,7 +20,7 @@ namespace Gamemodes.Totem
             _rb = GetComponent<Rigidbody>();
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (_isSlowingDown)
             {
@@ -60,15 +59,12 @@ namespace Gamemodes.Totem
 
         private void Slowdown()
         {
-            if (_isSlowingDown)
-            {
-                _rb.velocity *= _totemSettings.SlowdownFactor;
+            _rb.velocity *= _totemSettings.SlowdownFactor;
 
-                if (_rb.velocity.magnitude < _totemSettings.StopMagnitudeThreshold)
-                {
-                    _isSlowingDown = false;
-                    _rb.velocity = Vector3.zero;
-                }
+            if (_rb.velocity.magnitude < _totemSettings.StopMagnitudeThreshold)
+            {
+                _isSlowingDown = false;
+                _rb.velocity = Vector3.zero;
             }
         }
     }
