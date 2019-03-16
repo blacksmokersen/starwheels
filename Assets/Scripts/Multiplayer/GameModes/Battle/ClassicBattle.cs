@@ -2,7 +2,7 @@
 using Multiplayer;
 using Multiplayer.Teams;
 
-namespace GameModes
+namespace Gamemodes
 {
     [BoltGlobalBehaviour(BoltNetworkModes.Server, BoltScenes.Pillars, BoltScenes.BorealCave, BoltScenes.RubberDistrict)]
     public class ClassicBattle : GameModeBase

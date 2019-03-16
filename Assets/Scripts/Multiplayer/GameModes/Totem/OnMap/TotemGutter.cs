@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GameModes.Totem
+namespace Gamemodes.Totem
 {
     [DisallowMultipleComponent]
     public class TotemGutter : MonoBehaviour
@@ -19,7 +19,7 @@ namespace GameModes.Totem
                 }
                 else
                 {
-                    FindObjectOfType<Totem>().UnsetParent();
+                    FindObjectOfType<TotemOwnership>().UnsetParent();
                 }
             }
         }
