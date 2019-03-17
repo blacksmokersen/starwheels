@@ -128,6 +128,20 @@ namespace SWExtensions
         }
     }
 
+    public static class TMProExtensions
+    {
+        public static void ChangeTMProDropdownValue(this TMPro.TMP_Dropdown dropdown, string value)
+        {
+            for (var i = 0; i < dropdown.options.Count; i++)
+            {
+                if (dropdown.options[i].text == value)
+                {
+                    dropdown.value = i;
+                }
+            }
+        }
+    }
+
     public static class ComponentExtensions
     {
         public static T CopyComponent<T>(T original, GameObject destination) where T : Component

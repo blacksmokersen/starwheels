@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using Multiplayer.Teams;
 
 namespace Multiplayer
 {
@@ -7,7 +8,7 @@ namespace Multiplayer
     public class PlayerSettings : ScriptableObject
     {
         [Header("Player Information")]
-        public Color TeamColor;
+        public TeamColorSettings ColorSettings;
         public string Nickname;
         public int ConnectionID;
         public int KartIndex;

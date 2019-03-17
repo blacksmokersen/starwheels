@@ -33,6 +33,7 @@ namespace Network
 
             if (entity.isOwner)
             {
+                state.Team = _playerSettings.ColorSettings.BoltColor;
                 state.Nickname = _playerSettings.Nickname;
                 state.OwnerID = SWMatchmaking.GetMyBoltId();
 
@@ -50,7 +51,7 @@ namespace Network
         {
             if (entity.isOwner)
             {
-                _playerSettings.TeamColor = state.Team;
+                _playerSettings.ColorSettings.BoltColor = state.Team;
             }
 
             GetComponent<Player>().Team = state.Team.GetTeam();
