@@ -13,6 +13,7 @@ namespace Items
         [SerializeField] private GameObject ionBeamLaserPrefab;
 
         private GameObject _ionBeamOwner;
+        private GameObject _playerCamera;
         private IonBeamInputs _ionBeamInputs;
         private IonBeamCamera _ionBeamCam;
         private bool _isFiring = false;
@@ -27,7 +28,8 @@ namespace Items
 
         private void Awake()
         {
-            _ionBeamCam = GameObject.Find("PlayerCamera").GetComponent<IonBeamCamera>();
+            _ionBeamCam = GameObject.Find("IonBeamCamera").GetComponent<IonBeamCamera>();
+            _playerCamera = GameObject.Find("PlayerCamera");
             _ionBeamInputs = GetComponent<IonBeamInputs>();
         }
 
@@ -52,18 +54,20 @@ namespace Items
         public void EnableIonInputs()
         {
             _ionBeamCam.GetComponent<IonBeamCamera>().enabled = true;
-            _ionBeamCam.GetComponent<CameraTurnEffect>().DisableTurnEffectInput();
-            _ionBeamCam.GetComponent<CameraTurnEffect>().CenterCamera();
+            _ionBeamCam.GetComponent<Camera>().enabled = true;
+            _playerCamera.GetComponent<CameraTurnEffect>().DisableTurnEffectInput();
+            _playerCamera.GetComponent<CameraTurnEffect>().CenterCamera();
             StartCoroutine(DelayBeforeDisablePlayerInputs());
         }
 
         public void DisableIonBeam()
         {
             _ionBeamCam.GetComponent<IonBeamCamera>().enabled = false;
+            _ionBeamCam.GetComponent<Camera>().enabled = false;
             _ionBeamInputs.enabled = false;
             _ionBeamOwner.GetComponentInChildren<SteeringWheel>().CanSteer = true;
             _ionBeamOwner.GetComponentInChildren<EngineBehaviour>().enabled = true;
-            _ionBeamCam.GetComponent<CameraTurnEffect>().EnableTurnEffectInput();
+            _playerCamera.GetComponent<CameraTurnEffect>().EnableTurnEffectInput();
             BoltNetwork.Destroy(gameObject);
         }
 
@@ -111,10 +115,11 @@ namespace Items
         {
             yield return new WaitForSeconds(1);
             _ionBeamCam.GetComponent<IonBeamCamera>().enabled = false;
+            _ionBeamCam.GetComponent<Camera>().enabled = false;
             _ionBeamInputs.enabled = false;
             _ionBeamOwner.GetComponentInChildren<SteeringWheel>().CanSteer = true;
             _ionBeamOwner.GetComponentInChildren<EngineBehaviour>().enabled = true;
-            _ionBeamCam.GetComponent<CameraTurnEffect>().EnableTurnEffectInput();
+            _playerCamera.GetComponent<CameraTurnEffect>().EnableTurnEffectInput();
             BoltNetwork.Destroy(gameObject);
         }
     }

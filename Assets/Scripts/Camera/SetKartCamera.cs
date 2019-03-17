@@ -32,7 +32,7 @@ namespace CameraUtils
             Cinemachine.LookAt = kart.transform;
             kart.GetComponent<AudioListener>().enabled = true;
             _kartToFollow = kart;
-            SaveKart(kart);
+           // SaveKart(kart);
             CameraTargetKart = true;
         }
     }
