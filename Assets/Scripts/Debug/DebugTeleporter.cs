@@ -15,6 +15,7 @@ namespace SW.DebugUtils
         [Header("Teleport Settings")]
         [SerializeField] private GameObject _teleportTarget;
         [SerializeField] private Vector3 _teleportPosition;
+        [SerializeField] private bool _teleportOnKartSpawner = false;
 
         private void Update()
         {
@@ -30,7 +31,17 @@ namespace SW.DebugUtils
         {
             if (Enabled && Input.GetKeyDown(KeyCode.Alpha9))
             {
-                _teleportTarget.transform.position = _teleportPosition;
+                if (_teleportOnKartSpawner)
+                {
+                    var spawnPosition = FindObjectOfType<Multiplayer.SpawnCaller>().transform;
+                    _teleportTarget.transform.position = spawnPosition.position;
+                    _teleportTarget.transform.rotation = spawnPosition.rotation;
+                }
+                else
+                {
+                    _teleportTarget.transform.position = _teleportPosition;
+                }
+                _teleportTarget.GetComponent<Rigidbody>().velocity = Vector3.zero;
             }
         }
     }
