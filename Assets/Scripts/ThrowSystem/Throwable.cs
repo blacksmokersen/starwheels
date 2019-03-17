@@ -17,11 +17,14 @@ namespace ThrowingSystem
         public ThrowableType ThrowableType;
         public FloatVariable Speed;
 
+        [Header("Temporal Anti-Aliasing")]
+        [SerializeField] private Transform _throwableMeshesTransform;
+
         // BOLT
 
         public override void Attached()
         {
-            state.SetTransforms(state.Transform, transform);
+            state.SetTransforms(state.Transform, transform, _throwableMeshesTransform);
         }
     }
 }
