@@ -14,7 +14,9 @@ namespace Photon.Lobby
         {
             get { return state.Ready; }
         }
+
         [SerializeField] private PlayerSettings _playerSettings;
+        [SerializeField] private GameSettings _gameSettings;
 
         [Header("Lobby")]
         [SerializeField] private string _playerName = "";
@@ -31,6 +33,8 @@ namespace Photon.Lobby
         [SerializeField] private GameObject _localIcon;
         [SerializeField] private GameObject _remoteIcon;
 
+        private TeamColorSettings _currentColorSettings;
+
         // Colors
         private Color OddRowColor = new Color(250.0f / 255.0f, 250.0f / 255.0f, 250.0f / 255.0f, 1.0f);
         private Color EvenRowColor = new Color(180.0f / 255.0f, 180.0f / 255.0f, 180.0f / 255.0f, 1.0f);
@@ -44,10 +48,13 @@ namespace Photon.Lobby
         private void Awake()
         {
             _colorButton.GetComponent<Image>().color = TeamsColors.NoTeamColor;
+            _gameSettings = Resources.Load<GameSettings>("GameSettings");
+            _playerSettings = Resources.Load<PlayerSettings>(Constants.Resources.PlayerSettings);
         }
 
         // BOLT
 
+        #region Bolt
         public override void Attached()
         {
             state.AddCallback("Name", () =>
@@ -65,6 +72,16 @@ namespace Photon.Lobby
                 OnClientReady(state.Ready);
             });
 
+            state.AddCallback("Team", () =>
+            {
+                Debug.LogError("Team changning");
+                if (entity.isOwner && Connection)
+                {
+                    Debug.LogError("OnColorChanged Owner");
+                    //Connection.UserData = (Team)System.Enum.Parse(typeof(Team), state.Team);
+                }
+            });
+
             if (entity.isOwner)
             {
                 state.Color = _playerColor;
@@ -75,6 +92,8 @@ namespace Photon.Lobby
                     _playerSettings.ConnectionID = (int)Connection.ConnectionId;
                 }
             }
+
+            ChangeColorToFirst();
         }
 
         public override void ControlGained()
@@ -117,6 +136,7 @@ namespace Photon.Lobby
                 state.Ready = lobbyCommand.Input.Ready;
             }
         }
+        #endregion
 
         // PUBLIC
 
@@ -203,6 +223,12 @@ namespace Photon.Lobby
             OnClientReady(state.Ready);
         }
 
+        private void ChangeColorToFirst()
+        {
+            _currentColorSettings = _gameSettings.TeamsListSettings.GetFirst();
+            OnColorChanged(_currentColorSettings.MenuColor);
+        }
+
         private void ChangeReadyButtonColor(Color c)
         {
             ColorBlock b = _readyButton.colors;
@@ -215,25 +241,20 @@ namespace Photon.Lobby
 
         private void OnColorChanged(Color newColor)
         {
+            _currentColorSettings = _gameSettings.TeamsListSettings.GetNext(_currentColorSettings);
+            if (Connection)
+            {
+                Connection.UserData = _currentColorSettings.TeamEnum;
+            }
+
             _playerColor = newColor;
             _colorButton.GetComponent<Image>().color = newColor;
-
-            if (entity.isOwner && Connection)
-            {
-                Connection.UserData = newColor;
-            }
         }
 
         private void OnColorClicked()
         {
-            if (_playerColor == TeamsColors.BlueColor)
-                _playerColor = TeamsColors.RedColor;
-            else if (_playerColor == TeamsColors.RedColor)
-                _playerColor = TeamsColors.BlueColor;
-            else
-                _playerColor = TeamsColors.BlueColor;
-
-            _playerSettings.TeamColor = _playerColor;
+            _playerSettings.ColorSettings = _currentColorSettings;
+            _playerColor = _currentColorSettings.MenuColor;
         }
 
         private void OnReadyClicked()

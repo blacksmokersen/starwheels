@@ -21,6 +21,9 @@ namespace Gamemodes
                     case Constants.GameModes.Battle:
                         _battleSpecifics.SetActive(true);
                         break;
+                    case Constants.GameModes.FFA:
+                        _battleSpecifics.SetActive(true);
+                        break;
                     case Constants.GameModes.Totem:
                         _totemSpecifics.SetActive(true);
                         break;

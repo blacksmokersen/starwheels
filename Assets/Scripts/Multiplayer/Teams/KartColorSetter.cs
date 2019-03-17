@@ -1,48 +1,22 @@
 ﻿using UnityEngine;
+using Bolt;
 
 namespace Multiplayer.Teams
 {
-    public class KartColorSetter : MonoBehaviour
+    public class KartColorSetter : EntityBehaviour<IKartState>
     {
         [SerializeField] private Renderer targetKartRenderer;
 
-        private Material _redKartMaterial;
-        private Material _blueKartMaterial;
-        private Material _whiteKartMaterial;
+        private PlayerSettings _playerSettings;
 
         private void Awake()
         {
-            _redKartMaterial = Resources.Load<Material>(Constants.Materials.RedKart);
-            _blueKartMaterial = Resources.Load<Material>(Constants.Materials.BlueKart);
-            _whiteKartMaterial = Resources.Load<Material>(Constants.Materials.WhiteKart);
+            _playerSettings = Resources.Load<PlayerSettings>(Constants.Resources.PlayerSettings);
         }
 
-        // PUBLIC
-
-        public void SetKartColorUsingTeam(Team team)
+        public override void Attached()
         {
-            switch (team)
-            {
-                case Team.Blue:
-                    targetKartRenderer.material = _blueKartMaterial;
-                    break;
-                case Team.Red:
-                    targetKartRenderer.material = _redKartMaterial;
-                    break;
-                case Team.None:
-                    targetKartRenderer.material = _whiteKartMaterial;
-                    break;
-            }
-        }
-
-        public void SetKartColor(Color color)
-        {
-            if(color == TeamsColors.BlueColor)
-                targetKartRenderer.material = _blueKartMaterial;
-            else if (color == TeamsColors.RedColor)
-                targetKartRenderer.material = _redKartMaterial;
-            else
-                targetKartRenderer.material = _whiteKartMaterial;
+            targetKartRenderer.material.SetColor("_BaseColor", state.Team);
         }
     }
 }
