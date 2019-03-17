@@ -53,17 +53,14 @@ namespace Abilities
                 {
                     _playerSettings.AbilityIndex = abilityIndex;
                     _playerSettings.OnAbilityIndexUpdated.Invoke();
-                    Debug.Log("Ability isOn");
                 }
 
-                Debug.Log("Toggle Found");
                 toggle.onValueChanged.AddListener((b) => UpdateAbilityIndex(abilityIndex, b));
             }
         }
 
         private void UpdateAbilityIndex(int abilityIndex, bool toggleIsOn)
         {
-            Debug.Log("Updating ability : " + abilityIndex + " | " + toggleIsOn);
             if (toggleIsOn)
             {
                 _playerSettings.AbilityIndex = abilityIndex;

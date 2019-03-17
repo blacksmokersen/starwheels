@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using GameModes;
+using Gamemodes;
 
 namespace Audio
 {
