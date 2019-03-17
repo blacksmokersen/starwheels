@@ -25,7 +25,7 @@ namespace Controls
 
         private void Awake()
         {
-            _ionBeamCamera = GameObject.Find("PlayerCamera").GetComponent<IonBeamCamera>();
+            _ionBeamCamera = GameObject.Find("IonBeamCamera").GetComponent<IonBeamCamera>();
             _ionBeamBehaviour = GetComponent<IonBeamBehaviour>();
         }
 

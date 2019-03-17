@@ -23,7 +23,7 @@ namespace CameraUtils
         {
             Cinemachine = GetComponent<CinemachineVirtualCamera>();
         }
-
+        /*
         // BOLT
 
         public override void OnEvent(LobbyCountdown evnt)
@@ -66,5 +66,6 @@ namespace CameraUtils
             Cinemachine.LookAt = null;
             CameraTargetKart = false;
         }
+        */
     }
 }
