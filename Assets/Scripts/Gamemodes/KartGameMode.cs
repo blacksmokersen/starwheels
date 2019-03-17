@@ -3,7 +3,7 @@ using CameraUtils;
 using Multiplayer.Teams;
 using Bolt;
 
-namespace GameModes
+namespace Gamemodes
 {
     public class KartGameMode : GlobalEventListener
     {

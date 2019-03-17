@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Bolt;
 
-namespace GameModes.Totem
+namespace Gamemodes.Totem
 {
     public class TotemCollisionHandler : EntityBehaviour<ITotemWallState>
     {

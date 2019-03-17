@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace GameModes
+namespace Gamemodes
 {
     public class TotemEnergyCharger : MonoBehaviour
     {
@@ -44,7 +44,6 @@ namespace GameModes
             if (OnFullyDischarged != null)
             {
                 OnFullyDischarged.Invoke();
-                Debug.Log("Fully Discharged");
             }
         }
 
@@ -56,7 +55,6 @@ namespace GameModes
             if (OnFullyCharged != null)
             {
                 OnFullyCharged.Invoke();
-                Debug.Log("Fully Charged");
             }
         }
 
