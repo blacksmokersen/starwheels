@@ -46,7 +46,7 @@ namespace Items
 
         public override void SimulateController()
         {
-            transform.position = _ionBeamCam.Transposer.transform.position;
+            transform.position = _ionBeamCam.transform.position;
         }
 
         //PUBLIC
@@ -75,7 +75,7 @@ namespace Items
         {
             if (!_isFiring && entity.isOwner)
             {
-                Vector3 camPosition = _ionBeamCam.Transposer.transform.position;
+                Vector3 camPosition = _ionBeamCam.transform.position;
 
                 var IonBeam = BoltNetwork.Instantiate(ionBeamLaserPrefab, new Vector3(camPosition.x, 0, camPosition.z), Quaternion.identity);
                 var itemState = IonBeam.GetComponent<BoltEntity>().GetState<IItemState>();
@@ -89,7 +89,7 @@ namespace Items
 
                 IonBeam.transform.position = new Vector3(_ionBeamCam.transform.position.x, IonBeam.transform.position.y, _ionBeamCam.transform.position.z);
                 SWExtensions.AudioExtensions.PlayClipObjectAndDestroy(LaunchSource);
-                _ionBeamCam.Composer.enabled = true;
+              //  _ionBeamCam.Composer.enabled = true;
                 _ionBeamCam.IonBeamCameraBehaviour(false);
                 if (entity.isOwner)
                     StartCoroutine(DelayBeforeInputsChange());
