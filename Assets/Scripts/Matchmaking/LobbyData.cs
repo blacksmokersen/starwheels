@@ -19,10 +19,19 @@ namespace SW.Matchmaking
         public Dictionary<string, List<string>> MapPool;
         public string ChosenMapName;
 
+        [Header("Game Settings")]
+        public GameSettings GameSettings;
+
+        public void SetGamemode(string gamemode)
+        {
+            ChosenGamemode = gamemode;
+            GameSettings.SetGamemode(gamemode);
+            Debug.Log("Gamemode set : " + gamemode);
+        }
+
         public void SetRandomGamemode()
         {
-            ChosenGamemode = PickRandomGamemodeFromPool();
-            Debug.Log("Random gamemode set : " + ChosenGamemode);
+            SetGamemode(PickRandomGamemodeFromPool());
         }
 
         public void AddGamemode(string gamemode)
@@ -46,10 +55,16 @@ namespace SW.Matchmaking
             return GamemodePool[Random.Range(0, GamemodePool.Count)];
         }
 
+        public void SetMap(string mapName)
+        {
+            ChosenMapName = mapName;
+            GameSettings.MapName = mapName;
+            Debug.Log("Gamemode set : " + mapName);
+        }
+
         public void SetRandomMap()
         {
-            ChosenMapName = PickRandomMapNameFromPool(ChosenGamemode);
-            Debug.Log("Random gamemode set : " + ChosenMapName);
+            SetMap(PickRandomMapNameFromPool(ChosenGamemode));
         }
 
         public void AddMap(string gamemode, string map)

@@ -67,15 +67,7 @@ namespace Multiplayer
         {
             if (BoltNetwork.IsServer)
             {
-                Team playerTeam = Teams.TeamsColors.BlueColor.GetTeam();
-                if (connection.UserData != null)
-                {
-                    playerTeam = ((Color)connection.UserData).GetTeam();
-                }
-                else
-                {
-                    playerTeam = _teamAssigner.PickAvailableTeam();
-                }
+                Team playerTeam = _teamAssigner.PickAvailableTeam();
                 AssignSpawn((int)connection.ConnectionId, playerTeam);
                 _teamAssigner.AddPlayer(playerTeam, (int)connection.ConnectionId);
                 IncreaseSpawnCount();

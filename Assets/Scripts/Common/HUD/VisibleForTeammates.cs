@@ -27,16 +27,10 @@ namespace Common.HUD
 
         public override void Attached()
         {
-            var myTeam = _playerSettings.ColorSettings.TeamEnum;
-            var thisKartTeam = state.Team.GetTeam();
-
-            if (myTeam == thisKartTeam)
-            {
-                SetAlwaysVisble();
-            }
+            state.AddCallback("Team", TeamChanged);
         }
 
-        // PRIVATE
+        // PUBLIC
 
         public void SetAlwaysVisble()
         {
@@ -46,6 +40,18 @@ namespace Common.HUD
         public void ResetToDefault()
         {
             _targetRenderer.material = _defaultMaterial;
+        }
+
+        // PRIVATE
+
+        private void TeamChanged()
+        {
+            var myTeam = _playerSettings.ColorSettings.TeamEnum;
+            var thisKartTeam = state.Team.GetTeam();
+            if (myTeam == thisKartTeam)
+            {
+                SetAlwaysVisble();
+            }
         }
     }
 }
