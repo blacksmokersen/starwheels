@@ -14,7 +14,7 @@ namespace Gamemodes.Totem
 
         private void Update()
         {
-            if (entity.isOwner && entity.isAttached)
+            if (entity.isAttached && entity.isOwner)
             {
                 if (!_totemPosition)
                 {

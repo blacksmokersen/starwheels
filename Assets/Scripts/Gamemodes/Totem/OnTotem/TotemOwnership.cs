@@ -12,7 +12,20 @@ namespace Gamemodes.Totem
         public bool CanBePickedUp = true;
         public int OldOwnerID = -1;
         public int LocalOwnerID = -1;
-        public int ServerOwnerID { get { return state.OwnerID; } }
+        public int ServerOwnerID
+        {
+            get
+            {
+                if (entity.isAttached)
+                {
+                    return state.OwnerID;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+        }
 
         [Header("Unity Events")]
         public UnityEvent OnParentSet;

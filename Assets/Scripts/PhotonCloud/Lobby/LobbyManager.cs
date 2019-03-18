@@ -136,8 +136,8 @@ namespace Photon.Lobby
                 SetServerInfo("Host", "");
 
                 // Build Server Entity
-                BoltEntity entity = BoltNetwork.Instantiate(BoltPrefabs.PlayerInfo);
-                entity.TakeControl();
+                //BoltEntity entity = BoltNetwork.Instantiate(BoltPrefabs.PlayerInfo);
+                //entity.TakeControl();
 
             }
             else if (BoltNetwork.IsClient)

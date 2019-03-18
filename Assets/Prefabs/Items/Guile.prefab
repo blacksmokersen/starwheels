@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &684
+--- !u!1 &560
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,10 +8,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1169}
-  - component: {fileID: 1877}
-  - component: {fileID: 1852}
-  - component: {fileID: 1880}
+  - component: {fileID: 1150}
+  - component: {fileID: 1844}
+  - component: {fileID: 1830}
+  - component: {fileID: 1845}
   m_Layer: 9
   m_Name: AudioSources
   m_TagString: Untagged
@@ -19,27 +19,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1169
+--- !u!4 &1150
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 684}
+  m_GameObject: {fileID: 560}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1306}
+  m_Father: {fileID: 1183}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &1877
+--- !u!82 &1844
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 684}
+  m_GameObject: {fileID: 560}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 243207754799197206, guid: 1d4c80e3d0275764f9ad01100870ce32,
@@ -130,13 +130,13 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &1852
+--- !u!82 &1830
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 684}
+  m_GameObject: {fileID: 560}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 243780376996229168, guid: 1d4c80e3d0275764f9ad01100870ce32,
@@ -227,13 +227,13 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &1880
+--- !u!82 &1845
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 684}
+  m_GameObject: {fileID: 560}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 243194695159099864, guid: 1d4c80e3d0275764f9ad01100870ce32,
@@ -324,7 +324,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &851
+--- !u!1 &594
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -332,9 +332,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1405}
-  - component: {fileID: 1936}
-  - component: {fileID: 2610}
+  - component: {fileID: 1200}
+  - component: {fileID: 1911}
+  - component: {fileID: 2457}
   m_Layer: 9
   m_Name: CollisionTrigger
   m_TagString: CollisionHitBox
@@ -342,27 +342,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1405
+--- !u!4 &1200
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 851}
+  m_GameObject: {fileID: 594}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0.23}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children: []
-  m_Father: {fileID: 1306}
+  m_Father: {fileID: 1183}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
---- !u!136 &1936
+--- !u!136 &1911
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 851}
+  m_GameObject: {fileID: 594}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
@@ -370,13 +370,13 @@ CapsuleCollider:
   m_Height: 3.5
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: -0.15}
---- !u!114 &2610
+--- !u!114 &2457
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 851}
+  m_GameObject: {fileID: 594}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f31a1c46652e3164aaf4306dbb4cacc1, type: 3}
@@ -385,7 +385,7 @@ MonoBehaviour:
   OnCollision:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2717}
+      - m_Target: {fileID: 2483}
         m_MethodName: OnHit
         m_Mode: 1
         m_Arguments:
@@ -399,7 +399,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   ItemCollision: {fileID: 11400000, guid: 8927757f4fc5043439b644d0ab07e8b9, type: 2}
---- !u!1 &859
+--- !u!1 &595
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -407,14 +407,14 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1306}
-  - component: {fileID: 1832}
-  - component: {fileID: 2528}
-  - component: {fileID: 2717}
-  - component: {fileID: 2517}
-  - component: {fileID: 2532}
-  - component: {fileID: 2738}
-  - component: {fileID: 2768}
+  - component: {fileID: 1183}
+  - component: {fileID: 1810}
+  - component: {fileID: 2442}
+  - component: {fileID: 2483}
+  - component: {fileID: 2437}
+  - component: {fileID: 2443}
+  - component: {fileID: 2492}
+  - component: {fileID: 2503}
   m_Layer: 9
   m_Name: Guile
   m_TagString: Untagged
@@ -422,30 +422,30 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1306
+--- !u!4 &1183
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 859}
+  m_GameObject: {fileID: 595}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -6.37, y: 6.74, z: -1.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1405}
+  - {fileID: 1200}
   - {fileID: 4656130225786472}
-  - {fileID: 1169}
+  - {fileID: 1150}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &1832
+--- !u!54 &1810
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 859}
+  m_GameObject: {fileID: 595}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -455,13 +455,13 @@ Rigidbody:
   m_Interpolate: 2
   m_Constraints: 80
   m_CollisionDetection: 1
---- !u!114 &2528
+--- !u!114 &2442
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 859}
+  m_GameObject: {fileID: 595}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -36112512, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
@@ -484,13 +484,13 @@ MonoBehaviour:
   _entityBehaviourQueryOption: 0
   _entityPriorityCalculatorQueryOption: 0
   _entityReplicationFilterQueryOption: 0
---- !u!114 &2717
+--- !u!114 &2483
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 859}
+  m_GameObject: {fileID: 595}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d53f86f558a4e2249b867ed95fb63800, type: 3}
@@ -500,17 +500,17 @@ MonoBehaviour:
   _speed: {fileID: 11400000, guid: 3f3a63fb52946234faadcbfcf33b218c, type: 2}
   CollisionParticles: {fileID: 198265412429698386}
   ParticlesToEmitOnHit: 2000
-  LaunchSource: {fileID: 1877}
-  FlySource: {fileID: 1852}
-  PlayerHitSource: {fileID: 1880}
+  LaunchSource: {fileID: 1844}
+  FlySource: {fileID: 1830}
+  PlayerHitSource: {fileID: 1845}
   CollisionSource: {fileID: 0}
---- !u!114 &2517
+--- !u!114 &2437
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 859}
+  m_GameObject: {fileID: 595}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05da5082f6c1fb643801679d94caf256, type: 3}
@@ -519,13 +519,13 @@ MonoBehaviour:
   ThrowableType: 0
   Speed: {fileID: 11400000, guid: 3f3a63fb52946234faadcbfcf33b218c, type: 2}
   _throwableMeshesTransform: {fileID: 4656130225786472}
---- !u!114 &2532
+--- !u!114 &2443
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 859}
+  m_GameObject: {fileID: 595}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: faf449d14c1b8214587b11af62a948e0, type: 3}
@@ -534,26 +534,26 @@ MonoBehaviour:
   OwnerKartRoot: {fileID: 0}
   Team: 0
   ID: 0
---- !u!114 &2738
+--- !u!114 &2492
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 859}
+  m_GameObject: {fileID: 595}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4505bddf4d1f9943b667cd79e8149fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: 15c5b16e5cc8ef448a1d7e02c926fc17, type: 2}
---- !u!114 &2768
+--- !u!114 &2503
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 859}
+  m_GameObject: {fileID: 595}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0a0c5e199e6ca04abd3c27f976622ea, type: 3}
@@ -566,7 +566,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1306}
+    m_TransformParent: {fileID: 1183}
     m_Modifications:
     - target: {fileID: 8770769603116053770, guid: 69ac9b42bf7f6a548bb7e15e586d3c00,
         type: 3}
