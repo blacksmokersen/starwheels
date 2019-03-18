@@ -1080,7 +1080,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4999250074767062}
-  - {fileID: 8648899738692315054}
+  - {fileID: 1916382086258020572}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1225,6 +1225,78 @@ MonoBehaviour:
   m_LegacyHeightOffset: 3.4028235e+38
   m_LegacyHeadingBias: 3.4028235e+38
   m_HeadingIsSlave: 0
+--- !u!1 &3575111875458009741
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1916382086258020572}
+  - component: {fileID: 7908160347407979705}
+  - component: {fileID: 4912603634060544527}
+  m_Layer: 0
+  m_Name: IonBeamCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1916382086258020572
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3575111875458009741}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 132.99182, y: 116.34723, z: -23.63501}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 8648899738692315054}
+  m_Father: {fileID: 4409278275421684}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7908160347407979705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3575111875458009741}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd27ffb076282ea4596eb31f02315847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraTargetKart: 0
+  Cinemachine: {fileID: 0}
+  _speedCamMovements: 200
+  _playerCameraCinemachine: {fileID: 114246949737927122}
+  _ionBeamCamZExpand: 0
+  _ionBeamCamYExpand: 200
+  _cameraSettings: {fileID: 11400000, guid: ef13b57ca9ba4974abf886534b3fa9ea, type: 2}
+  _crosshairIonBeam: {fileID: 2800000, guid: 93f5d256aa561204eb5055ec10541980, type: 3}
+--- !u!95 &4912603634060544527
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3575111875458009741}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7ee0b225d6af3d54ba856a9d0b5b08ea, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8477427495887496982
 GameObject:
   m_ObjectHideFlags: 0
@@ -1235,12 +1307,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8648899738692315054}
   - component: {fileID: 3716731104162374267}
-  - component: {fileID: 4099494308143275569}
   - component: {fileID: 686088186541203304}
   - component: {fileID: 4352763465742135954}
-  - component: {fileID: 160138765}
   m_Layer: 0
-  m_Name: IonBeamCamera
+  m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1254,11 +1324,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8477427495887496982}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 0}
+  m_LocalPosition: {x: -132.99182, y: -116.24723, z: 23.63501}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4409278275421684}
-  m_RootOrder: 1
+  m_Father: {fileID: 1916382086258020572}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!20 &3716731104162374267
 Camera:
@@ -1302,26 +1372,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &4099494308143275569
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8477427495887496982}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd27ffb076282ea4596eb31f02315847, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CameraTargetKart: 0
-  Cinemachine: {fileID: 0}
-  _speedCamMovements: 200
-  _playerCameraCinemachine: {fileID: 114246949737927122}
-  _ionBeamCamZExpand: 0
-  _ionBeamCamYExpand: 200
-  _cameraSettings: {fileID: 11400000, guid: ef13b57ca9ba4974abf886534b3fa9ea, type: 2}
-  _crosshairIonBeam: {fileID: 2800000, guid: 93f5d256aa561204eb5055ec10541980, type: 3}
 --- !u!114 &686088186541203304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1450,22 +1500,3 @@ MonoBehaviour:
       enableFptlForForwardOpaque: 1
       enableBigTilePrepass: 1
       isFptlEnabled: 1
---- !u!95 &160138765
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8477427495887496982}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7ee0b225d6af3d54ba856a9d0b5b08ea, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
