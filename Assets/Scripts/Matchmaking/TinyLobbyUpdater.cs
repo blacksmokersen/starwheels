@@ -85,7 +85,6 @@ namespace SW.Matchmaking
 
             while (_currentPlayerCountText.gameObject.activeInHierarchy)
             {
-                Debug.Log("Updating player count");
                 UpdateCurrentPlayerCount();
                 yield return new WaitForSeconds(1f);
             }
