@@ -65,7 +65,7 @@ namespace CameraUtils
         {
             if (_ionBeamBehaviour && evnt.VictimEntity.isOwner)
             {
-                CameraReset();
+                ResetCamera();
                 _ionBeamBehaviour.DisableIonBeam();
             }
         }
@@ -79,14 +79,38 @@ namespace CameraUtils
 
         public void IonBeamCameraControls(float horizontal, float vertical)
         {
-          //  Transposer.m_FollowOffset.z += horizontal * _speedCamMovements * Time.deltaTime;
-          //  Transposer.m_FollowOffset.x += vertical * _speedCamMovements * Time.deltaTime;
-         //   ransform.position.z += horizontal * _speedCamMovements * Time.deltaTime;
-        //    Transposer.m_FollowOffset.x += vertical * _speedCamMovements * Time.deltaTime;
+            //  Transposer.m_FollowOffset.z += horizontal * _speedCamMovements * Time.deltaTime;
+            //  Transposer.m_FollowOffset.x += vertical * _speedCamMovements * Time.deltaTime;
+            //   ransform.position.z += horizontal * _speedCamMovements * Time.deltaTime;
+            //    Transposer.m_FollowOffset.x += vertical * _speedCamMovements * Time.deltaTime;
 
-            transform.position += new Vector3(vertical * _speedCamMovements * Time.deltaTime,
-                transform.position.y,
+            //  transform.forward += new Vector3(0,0,horizontal * _speedCamMovements * Time.deltaTime);
+            //transform.right += new Vector3(vertical * _speedCamMovements * Time.deltaTime, 0);
+
+          //  transform.forward += new Vector3(0,0,horizontal * _speedCamMovements * Time.deltaTime);
+
+
+          //  transform.right += new Vector3(vertical * _speedCamMovements * Time.deltaTime, 0);
+
+            transform.position += transform.forward * horizontal * _speedCamMovements * Time.deltaTime;
+            transform.position += transform.right * vertical * _speedCamMovements * Time.deltaTime;
+
+
+            /*
+            float test = 0;
+
+            test += horizontal * _speedCamMovements *Time.deltaTime;
+
+            transform.position = test;
+            */
+
+
+
+            /*
+            transform.forward += new Vector3(vertical * _speedCamMovements * Time.deltaTime,
+                0,
                 horizontal * _speedCamMovements * Time.deltaTime);
+                */
 
         }
 
@@ -140,8 +164,8 @@ namespace CameraUtils
 
         public void ResetCameraTransform()
         {
-           // transform.position = _playerCamera.transform.position;
-           transform.position = Vector3.zero;
+            transform.localPosition = _playerCamera.transform.position;
+            transform.localRotation = _playerCamera.transform.rotation;
         }
 
         //PRIVATE
