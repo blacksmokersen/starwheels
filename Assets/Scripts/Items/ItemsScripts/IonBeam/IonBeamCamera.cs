@@ -28,6 +28,7 @@ namespace CameraUtils
 
         private CinemachineVirtualCamera _cinemachine;
         private CinemachineOrbitalTransposer _orbiter;
+        private Animator _animator;
 
 
         private Coroutine _cameraIonBeamBehaviour;
@@ -46,6 +47,8 @@ namespace CameraUtils
             Transposer = _cinemachine.GetCinemachineComponent<CinemachineTransposer>();
             Composer = _cinemachine.GetCinemachineComponent<CinemachineComposer>();
             _orbiter = _cinemachine.GetCinemachineComponent<CinemachineOrbitalTransposer>();
+            _animator = GetComponent<Animator>();
+
             //  Collider = GetComponent<CinemachineCollider>();
         }
 
@@ -84,15 +87,21 @@ namespace CameraUtils
         {
             if (direction)
             {
+                StartExpandingCamera();
+                /*
                 if (_cameraIonBeamBehaviour != null)
                     StopCoroutine(_cameraIonBeamBehaviour);
                 _cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamExpand(_ionBeamCamZExpand, _ionBeamCamYExpand, 1f));
+                */
             }
             else
             {
+                ResetCamera();
+                /*
                 if (_cameraIonBeamBehaviour != null)
                     StopCoroutine(_cameraIonBeamBehaviour);
                 _cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(_cameraSettings.BaseCamPosition.z, _cameraSettings.BaseCamPosition.y, 0.5f));
+                */
             }
         }
 
@@ -114,7 +123,44 @@ namespace CameraUtils
             return _isCameraOnTop;
         }
 
+
+        public void CameraIsFullyExpanded()
+        {
+            Composer.enabled = false;
+            _showCrosshair = true;
+            _isCameraOnTop = true;
+        }
+
+
         //PRIVATE
+
+        private void StartExpandingCamera()
+        {
+            _playerCameraCinemachine.enabled = false;
+            _animator.SetTrigger("StartExpandCameraTrigger");
+            ChangeRenderOnTaGGameobjects(false);
+        }
+
+        private void ResetCamera()
+        {
+            Debug.Log("REsetCam");
+            _animator.SetTrigger("ResetCameraTrigger");
+            Composer.enabled = true;
+            _showCrosshair = false;
+            _isCameraOnTop = false;
+            ChangeRenderOnTaGGameobjects(true);
+            _playerCameraCinemachine.enabled = true;
+        }
+
+
+
+
+
+
+
+
+
+
 
         private void OnGUI()
         {
