@@ -10,8 +10,8 @@ namespace CameraUtils
 {
     public class IonBeamCamera : CameraTarget
     {
-        [HideInInspector] public CinemachineTransposer Transposer;
-        [HideInInspector] public CinemachineComposer Composer;
+      //  [HideInInspector] public CinemachineTransposer Transposer;
+      //  [HideInInspector] public CinemachineComposer Composer;
       //  [HideInInspector] public CinemachineCollider Collider;
 
         [Space]
@@ -26,8 +26,8 @@ namespace CameraUtils
         [SerializeField] CameraSettings _cameraSettings;
         [SerializeField] private Texture2D _crosshairIonBeam;
 
-        private CinemachineVirtualCamera _cinemachine;
-        private CinemachineOrbitalTransposer _orbiter;
+      //  private CinemachineVirtualCamera _cinemachine;
+      //  private CinemachineOrbitalTransposer _orbiter;
         private Animator _animator;
 
 
@@ -43,10 +43,10 @@ namespace CameraUtils
 
         private void Awake()
         {
-            _cinemachine = GetComponent<CinemachineVirtualCamera>();
-            Transposer = _cinemachine.GetCinemachineComponent<CinemachineTransposer>();
-            Composer = _cinemachine.GetCinemachineComponent<CinemachineComposer>();
-            _orbiter = _cinemachine.GetCinemachineComponent<CinemachineOrbitalTransposer>();
+          //  _cinemachine = GetComponent<CinemachineVirtualCamera>();
+         //   Transposer = _cinemachine.GetCinemachineComponent<CinemachineTransposer>();
+         //   Composer = _cinemachine.GetCinemachineComponent<CinemachineComposer>();
+         //   _orbiter = _cinemachine.GetCinemachineComponent<CinemachineOrbitalTransposer>();
             _animator = GetComponent<Animator>();
 
             //  Collider = GetComponent<CinemachineCollider>();
@@ -55,8 +55,8 @@ namespace CameraUtils
         private void Start()
         {
           //  _orbiter.m_XAxis.m_InputAxisName = _turnCamInputName;
-            _cinemachine.Follow = _playerCameraCinemachine.Follow;
-            _cinemachine.LookAt = _playerCameraCinemachine.LookAt;
+          //  _cinemachine.Follow = _playerCameraCinemachine.Follow;
+          //  _cinemachine.LookAt = _playerCameraCinemachine.LookAt;
         }
 
         //BOLT
@@ -79,8 +79,8 @@ namespace CameraUtils
 
         public void IonBeamCameraControls(float horizontal, float vertical)
         {
-            Transposer.m_FollowOffset.z += horizontal * _speedCamMovements * Time.deltaTime;
-            Transposer.m_FollowOffset.x += vertical * _speedCamMovements * Time.deltaTime;
+          //  Transposer.m_FollowOffset.z += horizontal * _speedCamMovements * Time.deltaTime;
+          //  Transposer.m_FollowOffset.x += vertical * _speedCamMovements * Time.deltaTime;
         }
 
         public void IonBeamCameraBehaviour(bool direction)
@@ -108,13 +108,13 @@ namespace CameraUtils
         public void CameraReset()
         {
             StopAllCoroutines();
-            Composer.enabled = true;
+          //  Composer.enabled = true;
             _showCrosshair = false;
             _isCameraOnTop = false;
-            Transposer.m_FollowOffset.x = 0;
-            Transposer.m_FollowOffset.z = _cameraSettings.BaseCamPosition.z;
-            Transposer.m_FollowOffset.y = _cameraSettings.BaseCamPosition.y;
-            _playerCameraCinemachine.enabled = true;
+          //  Transposer.m_FollowOffset.x = 0;
+          //  Transposer.m_FollowOffset.z = _cameraSettings.BaseCamPosition.z;
+          //  Transposer.m_FollowOffset.y = _cameraSettings.BaseCamPosition.y;
+          //  _playerCameraCinemachine.enabled = true;
           //  _cameraTurnEffect.Enabled = true;
         }
 
@@ -126,7 +126,7 @@ namespace CameraUtils
 
         public void CameraIsFullyExpanded()
         {
-            Composer.enabled = false;
+          //  Composer.enabled = false;
             _showCrosshair = true;
             _isCameraOnTop = true;
         }
@@ -136,7 +136,7 @@ namespace CameraUtils
 
         private void StartExpandingCamera()
         {
-            _playerCameraCinemachine.enabled = false;
+          //  _playerCameraCinemachine.enabled = false;
             _animator.SetTrigger("StartExpandCameraTrigger");
             ChangeRenderOnTaGGameobjects(false);
         }
@@ -145,11 +145,11 @@ namespace CameraUtils
         {
             Debug.Log("REsetCam");
             _animator.SetTrigger("ResetCameraTrigger");
-            Composer.enabled = true;
+          //  Composer.enabled = true;
             _showCrosshair = false;
             _isCameraOnTop = false;
             ChangeRenderOnTaGGameobjects(true);
-            _playerCameraCinemachine.enabled = true;
+          //  _playerCameraCinemachine.enabled = true;
         }
 
 
@@ -200,10 +200,10 @@ namespace CameraUtils
             // _cameraTurnEffect.CenterOrbiter();
             // _cameraTurnEffect.Enabled = false;
             _playerCameraCinemachine.enabled = false;
-            Composer.enabled = false;
+         //   Composer.enabled = false;
 
-            float startDynamicCamValueZ = Transposer.m_FollowOffset.z;
-            float startDynamicCamValueY = Transposer.m_FollowOffset.y;
+         //   float startDynamicCamValueZ = Transposer.m_FollowOffset.z;
+         //   float startDynamicCamValueY = Transposer.m_FollowOffset.y;
 
             var rotation = transform.rotation;
 
@@ -214,8 +214,8 @@ namespace CameraUtils
 
                 transform.rotation = new Quaternion(transform.rotation.w, Mathf.Lerp(transform.rotation.x, 90, _currentTimer / expandDuration), transform.rotation.y, transform.rotation.z);
 
-                Transposer.m_FollowOffset.z = Mathf.Lerp(startDynamicCamValueZ, endValueZ, _currentTimer / expandDuration);
-                Transposer.m_FollowOffset.y = Mathf.Lerp(startDynamicCamValueY, endValueY, _currentTimer / expandDuration);
+             //   Transposer.m_FollowOffset.z = Mathf.Lerp(startDynamicCamValueZ, endValueZ, _currentTimer / expandDuration);
+             //   Transposer.m_FollowOffset.y = Mathf.Lerp(startDynamicCamValueY, endValueY, _currentTimer / expandDuration);
                 _currentTimer += Time.deltaTime;
                 yield return null;
             }
@@ -230,22 +230,22 @@ namespace CameraUtils
         {
             _showCrosshair = false;
             _isCameraOnTop = false;
-            float startDynamicCamValueX = Transposer.m_FollowOffset.x;
-            float startDynamicCamValueZ = Transposer.m_FollowOffset.z;
-            float startDynamicCamValueY = Transposer.m_FollowOffset.y;
+       //     float startDynamicCamValueX = Transposer.m_FollowOffset.x;
+       //     float startDynamicCamValueZ = Transposer.m_FollowOffset.z;
+       //     float startDynamicCamValueY = Transposer.m_FollowOffset.y;
 
             _currentTimer = 0f;
 
             while (_currentTimer < resetDuration)
             {
-                Transposer.m_FollowOffset.x = Mathf.Lerp(startDynamicCamValueX, 0, _currentTimer / resetDuration);
-                Transposer.m_FollowOffset.z = Mathf.Lerp(startDynamicCamValueZ, returnValueZ, _currentTimer / resetDuration);
-                Transposer.m_FollowOffset.y = Mathf.Lerp(startDynamicCamValueY, returnValueY, _currentTimer / resetDuration);
+         //       Transposer.m_FollowOffset.x = Mathf.Lerp(startDynamicCamValueX, 0, _currentTimer / resetDuration);
+         //       Transposer.m_FollowOffset.z = Mathf.Lerp(startDynamicCamValueZ, returnValueZ, _currentTimer / resetDuration);
+         //       Transposer.m_FollowOffset.y = Mathf.Lerp(startDynamicCamValueY, returnValueY, _currentTimer / resetDuration);
                 _currentTimer += Time.deltaTime;
                 yield return null;
             }
 
-            Transposer.m_FollowOffset.y = returnValueY;
+         //   Transposer.m_FollowOffset.y = returnValueY;
 
             _playerCameraCinemachine.enabled = true;
 
