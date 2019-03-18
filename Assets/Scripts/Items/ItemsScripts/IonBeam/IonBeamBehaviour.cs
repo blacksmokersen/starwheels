@@ -54,7 +54,8 @@ namespace Items
         public void EnableIonInputs()
         {
             _ionBeamCam.GetComponent<IonBeamCamera>().enabled = true;
-            _ionBeamCam.GetComponent<Camera>().enabled = true;
+            _ionBeamCam.ResetCameraTransform();
+            _ionBeamCam.GetComponentInChildren<Camera>().enabled = true;
             _playerCamera.GetComponent<CameraTurnEffect>().DisableTurnEffectInput();
             _playerCamera.GetComponent<CameraTurnEffect>().CenterCamera();
             StartCoroutine(DelayBeforeDisablePlayerInputs());
@@ -63,7 +64,7 @@ namespace Items
         public void DisableIonBeam()
         {
             _ionBeamCam.GetComponent<IonBeamCamera>().enabled = false;
-            _ionBeamCam.GetComponent<Camera>().enabled = false;
+            _ionBeamCam.GetComponentInChildren<Camera>().enabled = false;
             _ionBeamInputs.enabled = false;
             _ionBeamOwner.GetComponentInChildren<SteeringWheel>().CanSteer = true;
             _ionBeamOwner.GetComponentInChildren<EngineBehaviour>().enabled = true;
@@ -76,6 +77,8 @@ namespace Items
             if (!_isFiring && entity.isOwner)
             {
                 Vector3 camPosition = _ionBeamCam.transform.position;
+                _ionBeamCam.GetComponent<IonBeamCamera>().enabled = false;
+                _ionBeamCam.GetComponentInChildren<Camera>().enabled = false;
 
                 var IonBeam = BoltNetwork.Instantiate(ionBeamLaserPrefab, new Vector3(camPosition.x, 0, camPosition.z), Quaternion.identity);
                 var itemState = IonBeam.GetComponent<BoltEntity>().GetState<IItemState>();
@@ -114,8 +117,8 @@ namespace Items
         IEnumerator DelayBeforeInputsChange()
         {
             yield return new WaitForSeconds(1);
-            _ionBeamCam.GetComponent<IonBeamCamera>().enabled = false;
-            _ionBeamCam.GetComponent<Camera>().enabled = false;
+         //   _ionBeamCam.GetComponent<IonBeamCamera>().enabled = false;
+         //   _ionBeamCam.GetComponentInChildren<Camera>().enabled = false;
             _ionBeamInputs.enabled = false;
             _ionBeamOwner.GetComponentInChildren<SteeringWheel>().CanSteer = true;
             _ionBeamOwner.GetComponentInChildren<EngineBehaviour>().enabled = true;

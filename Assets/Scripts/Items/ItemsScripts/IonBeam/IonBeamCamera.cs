@@ -19,7 +19,7 @@ namespace CameraUtils
         [Space]
 
         [SerializeField] private float _speedCamMovements;
-        [SerializeField] private CinemachineVirtualCamera _playerCameraCinemachine;
+        [SerializeField] private GameObject _playerCamera;
       //  [SerializeField] private CameraTurnEffect _cameraTurnEffect;
         [SerializeField] private float _ionBeamCamZExpand;
         [SerializeField] private float _ionBeamCamYExpand;
@@ -81,6 +81,13 @@ namespace CameraUtils
         {
           //  Transposer.m_FollowOffset.z += horizontal * _speedCamMovements * Time.deltaTime;
           //  Transposer.m_FollowOffset.x += vertical * _speedCamMovements * Time.deltaTime;
+         //   ransform.position.z += horizontal * _speedCamMovements * Time.deltaTime;
+        //    Transposer.m_FollowOffset.x += vertical * _speedCamMovements * Time.deltaTime;
+
+            transform.position += new Vector3(vertical * _speedCamMovements * Time.deltaTime,
+                transform.position.y,
+                horizontal * _speedCamMovements * Time.deltaTime);
+
         }
 
         public void IonBeamCameraBehaviour(bool direction)
@@ -131,12 +138,17 @@ namespace CameraUtils
             _isCameraOnTop = true;
         }
 
+        public void ResetCameraTransform()
+        {
+           // transform.position = _playerCamera.transform.position;
+           transform.position = Vector3.zero;
+        }
 
         //PRIVATE
 
         private void StartExpandingCamera()
         {
-          //  _playerCameraCinemachine.enabled = false;
+            //  _playerCameraCinemachine.enabled = false;
             _animator.SetTrigger("StartExpandCameraTrigger");
             ChangeRenderOnTaGGameobjects(false);
         }
@@ -199,7 +211,7 @@ namespace CameraUtils
             // _cameraTurnEffect.CenterCamera();
             // _cameraTurnEffect.CenterOrbiter();
             // _cameraTurnEffect.Enabled = false;
-            _playerCameraCinemachine.enabled = false;
+           // _playerCameraCinemachine.enabled = false;
          //   Composer.enabled = false;
 
          //   float startDynamicCamValueZ = Transposer.m_FollowOffset.z;
@@ -247,7 +259,7 @@ namespace CameraUtils
 
          //   Transposer.m_FollowOffset.y = returnValueY;
 
-            _playerCameraCinemachine.enabled = true;
+          //  _playerCameraCinemachine.enabled = true;
 
             /*
             if (Transposer.m_FollowOffset.y > returnValueY)
