@@ -28,5 +28,17 @@ namespace Multiplayer.Teams
             }
             return null;
         }
+
+        public TeamColorSettings FindSettingsWithTeamEnum(Team team)
+        {
+            foreach (var teamColorSettings in TeamsList)
+            {
+                if (teamColorSettings.TeamEnum == team)
+                {
+                    return teamColorSettings;
+                }
+            }
+            return null;
+        }
     }
 }

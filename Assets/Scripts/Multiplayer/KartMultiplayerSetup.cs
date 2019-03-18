@@ -26,16 +26,14 @@ namespace Network
         public override void Attached()
         {
             state.SetTransforms(state.Transform, transform, _kartMeshesRootTransform);
-
             state.SetAnimator(GetComponentInChildren<Animator>());
+
             state.AddCallback("Team", ColorChanged);
             state.AddCallback("Nickname", NameChanged);
 
             if (entity.isOwner)
             {
-                state.Team = _playerSettings.ColorSettings.BoltColor;
                 state.Nickname = _playerSettings.Nickname;
-                state.OwnerID = SWMatchmaking.GetMyBoltId();
 
                 PlayerReady playerReadyEvent = PlayerReady.Create();
                 playerReadyEvent.Team = state.Team;
@@ -51,7 +49,7 @@ namespace Network
         {
             if (entity.isOwner)
             {
-                _playerSettings.ColorSettings.BoltColor = state.Team;
+                //_playerSettings.ColorSettings.BoltColor = state.Team;
             }
 
             GetComponent<Player>().Team = state.Team.GetTeam();

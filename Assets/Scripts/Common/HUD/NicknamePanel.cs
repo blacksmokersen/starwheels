@@ -21,8 +21,8 @@ namespace Common.HUD
 
         public override void Attached()
         {
-            SetName(state.Nickname);
-            SetFrameRendererColor(state.Team);
+            state.AddCallback("Nickname", NicknameChanged);
+            state.AddCallback("Team", TeamChanged);
         }
 
         public override void ControlGained()
@@ -60,6 +60,18 @@ namespace Common.HUD
         public void HidePanel()
         {
             gameObject.SetActive(false);
+        }
+
+        // PRIVATE
+
+        private void NicknameChanged()
+        {
+            SetName(state.Nickname);
+        }
+
+        private void TeamChanged()
+        {
+            SetFrameRendererColor(state.Team);
         }
     }
 }
