@@ -2,7 +2,6 @@
 using UnityEngine;
 using Bolt;
 using Multiplayer;
-using Multiplayer.Teams;
 
 namespace Totem
 {
@@ -11,22 +10,24 @@ namespace Totem
         [Header("Kart to teleport")]
         [SerializeField] private BoltEntity _kartRoot;
 
-        private List<GameObject> _blueSpawns;
-        private List<GameObject> _redSpawns;
+        private List<TeamSpawn> _spawns;
         private PlayerSettings _playerSettings;
+
+        // CORE
 
         private void Awake()
         {
-            _blueSpawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.BlueSpawn));
-            _redSpawns = new List<GameObject>(GameObject.FindGameObjectsWithTag(Constants.Tag.RedSpawn));
+            _spawns = new List<TeamSpawn>(FindObjectsOfType<TeamSpawn>());
 
             _playerSettings = Resources.Load<PlayerSettings>(Constants.Resources.PlayerSettings);
         }
 
+        // BOLT
+
         public override void OnEvent(TotemWallHit evnt)
         {
-            var scorerColor = evnt.Team.GetTeam().OppositeTeam().GetColor();
-            if (_kartRoot.isOwner && scorerColor == _playerSettings.TeamColor)
+            var scorerTeam = evnt.Team.ToTeam().OppositeTeam();
+            if (_kartRoot.isOwner && scorerTeam == _playerSettings.ColorSettings.TeamEnum)
             {
                 TeleportOnSpawn();
             }
@@ -36,24 +37,23 @@ namespace Totem
 
         private void TeleportOnSpawn()
         {
-            if (_playerSettings.TeamColor == TeamsColors.BlueColor)
-            {
-                var teleportTarget = _blueSpawns[Random.Range(0, _blueSpawns.Count - 1)];
-                _kartRoot.transform.position = teleportTarget.transform.position;
-                _kartRoot.transform.rotation = teleportTarget.transform.rotation;
-            }
-            else if (_playerSettings.TeamColor == TeamsColors.RedColor)
-            {
-                var teleportTarget = _redSpawns[Random.Range(0, _redSpawns.Count - 1)];
-                _kartRoot.transform.position = teleportTarget.transform.position;
-                _kartRoot.transform.rotation = teleportTarget.transform.rotation;
-            }
-            else
-            {
-                Debug.LogError("Can't teleport because the team is unknown.");
-            }
-
+            var teleportTarget = GetRandomSpawnForTeam(_playerSettings.ColorSettings.TeamEnum);
+            _kartRoot.transform.position = teleportTarget.transform.position;
+            _kartRoot.transform.rotation = teleportTarget.transform.rotation;
             _kartRoot.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        }
+
+        private GameObject GetRandomSpawnForTeam(Team team)
+        {
+            var validSpawns = new List<TeamSpawn>();
+            foreach (var spawn in _spawns)
+            {
+                if (spawn.Team == team)
+                {
+                    validSpawns.Add(spawn);
+                }
+            }
+            return validSpawns[Random.Range(0, validSpawns.Count)].gameObject;
         }
     }
 }

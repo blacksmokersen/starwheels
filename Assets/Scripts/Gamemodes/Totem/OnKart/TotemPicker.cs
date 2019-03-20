@@ -29,7 +29,7 @@ namespace Gamemodes.Totem
                     state.CanPickTotem && // Kart is charged
                     !(state.OwnerID == totemOwnership.OldOwnerID && SecondsSinceLastPick < 1f) && // It's not the same kart that threw it
                     totemOwnership.LocalOwnerID != state.OwnerID && // It's not the current owner of the totem
-                    (totemColor.CurrentColor == state.Team || totemColor.ColorIsDefault())) // The kart has the same color as totem or totem color is default
+                    (totemColor.CurrentTeam == state.Team.ToTeam() || totemColor.IsDefault())) // The kart has the same color as totem or totem color is default
                 {
                     SendTotemPickedEvent(totemOwnership.ServerOwnerID);
                 }

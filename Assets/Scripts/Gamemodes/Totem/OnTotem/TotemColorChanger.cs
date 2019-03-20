@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using Bolt;
 using System.Collections;
+using Multiplayer.Teams;
 
 namespace Gamemodes.Totem
 {
     public class TotemColorChanger : GlobalEventListener
     {
-        [Header("Colors")]
-        public Color CurrentColor;
+        [Header("Possession")]
+        public Team CurrentTeam;
 
         [Header("Events")]
         public ColorEvent OnColorChange;
@@ -15,20 +16,24 @@ namespace Gamemodes.Totem
         [SerializeField] private Renderer _totemAuraRenderer;
 
         private Color _defaultColor;
+        private TeamsListSettings _teamsList;
 
         // CORE
 
         private void Awake()
         {
+            _teamsList = Resources.Load<GameSettings>(Constants.Resources.GameSettings).TeamsListSettings;
+
             _defaultColor = _totemAuraRenderer.material.color;
-            CurrentColor = _defaultColor;
+            CurrentTeam = Team.None;
         }
 
         // BOLT
 
         public override void OnEvent(TotemWallHit evnt)
         {
-            ChangeColor(evnt.Team);
+            CurrentTeam = evnt.Team.ToTeam();
+            ChangeColor(_teamsList.GetSettings(evnt.Team.ToTeam()).ItemsColor);
             StartCoroutine(SecurityRoutine());
         }
 
@@ -42,19 +47,23 @@ namespace Gamemodes.Totem
         public void ChangeColor(Color c)
         {
             _totemAuraRenderer.material.color = c;
-            CurrentColor = c;
-            OnColorChange.Invoke(CurrentColor);
+
+            if (OnColorChange != null)
+            {
+                OnColorChange.Invoke(c);
+            }
         }
 
         public void ResetToDefault()
         {
+            CurrentTeam = Team.None;
             ChangeColor(_defaultColor);
             StopAllCoroutines();
         }
 
-        public bool ColorIsDefault()
+        public bool IsDefault()
         {
-            return CurrentColor == _defaultColor;
+            return CurrentTeam == Team.None;
         }
 
         // PRIVATE
@@ -62,7 +71,7 @@ namespace Gamemodes.Totem
         private IEnumerator SecurityRoutine()
         {
             yield return new WaitForSeconds(20f);
-            if (!ColorIsDefault())
+            if (!IsDefault())
             {
                 ResetToDefault();
             }

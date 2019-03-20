@@ -1,9 +1,5 @@
-﻿#if UNITY_EDITOR
-using UnityEditor;
-#endif
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
-using Multiplayer.Teams;
 using Bolt;
 
 namespace Common.HUD
@@ -14,7 +10,14 @@ namespace Common.HUD
         [SerializeField] private TextMeshPro nameText;
         [SerializeField] private SpriteRenderer frameRenderer;
 
+        private GameSettings _gameSettings;
+
         // CORE
+
+        private void Awake()
+        {
+            _gameSettings = Resources.Load<GameSettings>(Constants.Resources.GameSettings);
+        }
 
         private void Update()
         {
@@ -25,8 +28,8 @@ namespace Common.HUD
 
         public override void Attached()
         {
-            SetName(state.Nickname);
-            SetFrameRendererColor(state.Team);
+            state.AddCallback("Nickname", NicknameChanged);
+            state.AddCallback("Team", TeamChanged);
         }
 
         public override void ControlGained()
@@ -53,7 +56,8 @@ namespace Common.HUD
 
         public void SetFrameRendererTeam(Team team)
         {
-            SetFrameRendererColor(team.GetColor());
+            var color = _gameSettings.TeamsListSettings.GetSettings(team).NameplateColor;
+            SetFrameRendererColor(color);
         }
 
         public void ShowPanel()
@@ -65,28 +69,17 @@ namespace Common.HUD
         {
             gameObject.SetActive(false);
         }
-    }
 
-    #if UNITY_EDITOR
-    /*
-    [CustomEditor(typeof(NicknamePanel))]
-    public class NicknamePanelEditor : Editor
-    {
-        Color frameColor;
-        public override void OnInspectorGUI()
+        // PRIVATE
+
+        private void NicknameChanged()
         {
-            DrawDefaultInspector();
+            SetName(state.Nickname);
+        }
 
-            NicknamePanel nicknamePanel = (NicknamePanel)target;
-            if (GUILayout.Button("Show Panel"))
-                nicknamePanel.ShowPanel();
-            if (GUILayout.Button("Hide Panel"))
-                nicknamePanel.HidePanel();
-
-            frameColor = EditorGUILayout.ColorField("Change color", frameColor);
-            nicknamePanel.SetFrameRendererColor(frameColor);
+        private void TeamChanged()
+        {
+            SetFrameRendererTeam(state.Team.ToTeam());
         }
     }
-    */
-    #endif
 }

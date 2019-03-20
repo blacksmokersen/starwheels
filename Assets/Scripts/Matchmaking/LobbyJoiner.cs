@@ -76,6 +76,8 @@ namespace SW.Matchmaking
                 if (_lobbyData.GamemodePool.Contains(lobbyToken.GameMode))
                 {
                     SWMatchmaking.JoinLobby(lobby.Key);
+                    _lobbyData.SetGamemode(lobbyToken.GameMode);
+                    _lobbyData.SetMap(lobbyToken.MapName);
                 }
             }
         }

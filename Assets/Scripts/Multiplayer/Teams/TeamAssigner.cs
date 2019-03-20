@@ -1,40 +1,39 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Multiplayer.Teams
 {
     public class TeamAssigner : MonoBehaviour
     {
+        private GameSettings _gameSettings;
         private Dictionary<Team, List<int>> _teamsPlayers = new Dictionary<Team, List<int>>();
 
         // AWAKE
 
         private void Awake()
         {
-            _teamsPlayers.Add(Team.Blue, new List<int>());
-            _teamsPlayers.Add(Team.Red, new List<int>());
+            _gameSettings = Resources.Load<GameSettings>(Constants.Resources.GameSettings);
+            RegisterAvailableTeams();
         }
 
         // PUBLIC
 
         public Team PickAvailableTeam()
         {
-            var bluePlayersCount = _teamsPlayers[Team.Blue].Count;
-            var redPlayersCount = _teamsPlayers[Team.Red].Count;
+            int leastPlayerCount = int.MaxValue;
+            Team availableTeam = Team.Blue;
 
-            if (bluePlayersCount > redPlayersCount)
+            foreach (var pair in _teamsPlayers)
             {
-                return Team.Red;
+                if (pair.Value.Count < leastPlayerCount)
+                {
+                    leastPlayerCount = pair.Value.Count;
+                    availableTeam = pair.Key;
+                }
             }
-            else if (bluePlayersCount < redPlayersCount)
-            {
-                return Team.Blue;
-            }
-            else
-            {
-                return Team.Blue;
-            }
+
+            Debug.Log("Selected team : " + availableTeam);
+            return availableTeam;
         }
 
         public void AddPlayer(Team team, int playerID)
@@ -46,6 +45,14 @@ namespace Multiplayer.Teams
         }
 
         // PRIVATE
+
+        private void RegisterAvailableTeams()
+        {
+            foreach (var team in _gameSettings.TeamsListSettings.TeamsList)
+            {
+                _teamsPlayers.Add(team.TeamEnum, new List<int>());
+            }
+        }
 
         private bool PlayerAlreadyInATeam(int playerID)
         {

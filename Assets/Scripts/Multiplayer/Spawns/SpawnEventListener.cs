@@ -7,7 +7,8 @@ namespace Multiplayer
 {
     public class SpawnEventListener : GlobalEventListener
     {
-        [SerializeField] private PlayerSettings _playerSettings;
+        private PlayerSettings _playerSettings;
+        private GameSettings _gameSettings;
 
         [Tooltip("GameModes are : 'Totem' and 'Battle'")]
         [SerializeField] private string _gameMode;
@@ -16,6 +17,9 @@ namespace Multiplayer
 
         private void Awake()
         {
+            _playerSettings = Resources.Load<PlayerSettings>(Constants.Resources.PlayerSettings);
+            _gameSettings = Resources.Load<GameSettings>(Constants.Resources.GameSettings);
+
             if (!BoltNetwork.IsConnected) // Used for In-Editor tests
             {
                 BoltLauncher.StartServer();
@@ -39,8 +43,7 @@ namespace Multiplayer
         {
             if(evnt.ConnectionID == SWMatchmaking.GetMyBoltId())
             {
-                Team teamEnum = (Team) System.Enum.Parse(typeof(Team), evnt.TeamEnum);
-                InstantiateKart(evnt.SpawnPosition, evnt.SpawnRotation, teamEnum, (RoomProtocolToken)evnt.RoomToken);
+                InstantiateKart(evnt.SpawnPosition, evnt.SpawnRotation, evnt.TeamEnum.ToTeam(), (RoomProtocolToken)evnt.RoomToken);
             }
         }
 
@@ -60,9 +63,12 @@ namespace Multiplayer
                 myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart);
             }
 
+            _playerSettings.ColorSettings = _gameSettings.TeamsListSettings.GetSettings(team);
+
             myKart.transform.position = spawnPosition;
             myKart.transform.rotation = spawnRotation;
-            myKart.GetComponent<BoltEntity>().GetState<IKartState>().Team = team.GetColor();
+            Debug.Log("Team bolt changed : " + _playerSettings.ColorSettings.BoltColor);
+            myKart.GetComponent<BoltEntity>().GetState<IKartState>().Team = _playerSettings.ColorSettings.TeamEnum.ToString();
             myKart.GetComponent<BoltEntity>().GetState<IKartState>().OwnerID = SWMatchmaking.GetMyBoltId();
         }
     }

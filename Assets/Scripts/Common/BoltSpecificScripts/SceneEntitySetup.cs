@@ -1,4 +1,5 @@
-﻿using Bolt;
+﻿using UnityEngine;
+using Bolt;
 
 namespace Multiplayer
 {
@@ -18,17 +19,18 @@ namespace Multiplayer
 
         // PRIVATE
 
+        private new void OnEnable()
+        {
+            SetupEntity();
+        }
+
         private void SetupEntity()
         {
-            if (BoltNetwork.IsServer)
+            var entity = GetComponent<BoltEntity>();
+            if (BoltNetwork.IsServer && !entity.isAttached)
             {
-                var entity = GetComponent<BoltEntity>();
                 BoltNetwork.Attach(entity.gameObject);
                 entity.TakeControl();
-            }
-            else
-            {
-                gameObject.SetActive(false);
             }
         }
     }

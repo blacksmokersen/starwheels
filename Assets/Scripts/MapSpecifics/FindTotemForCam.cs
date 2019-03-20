@@ -11,7 +11,7 @@ public class FindTotemForCam : MonoBehaviour
     private CinemachineTransposer _transposer;
     private CinemachineComposer _composer;
 
-    private GameObject _totem;
+    private BoltEntity _totem;
 
     private bool _totemFound = false;
 
@@ -32,8 +32,10 @@ public class FindTotemForCam : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_totemFound)
+        if (_totemFound && _totem.isAttached)
+        {
             FollowTotemCamEffects();
+        }
     }
 
     private void FollowTotemCamEffects()
@@ -48,7 +50,7 @@ public class FindTotemForCam : MonoBehaviour
 
         if (GameObject.FindWithTag("Totem").transform != null)
         {
-            _totem = GameObject.FindWithTag("Totem");
+            _totem = GameObject.FindWithTag("Totem").GetComponent<BoltEntity>();
             _cinemachine.Follow = _totem.transform;
             _cinemachine.LookAt = _totem.transform;
             _totemFound = true;

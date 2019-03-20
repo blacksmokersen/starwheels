@@ -18,10 +18,13 @@ namespace Gamemodes
 
                 switch (roomToken.Gamemode)
                 {
-                    case Constants.GameModes.Battle:
+                    case Constants.Gamemodes.Battle:
                         _battleSpecifics.SetActive(true);
                         break;
-                    case Constants.GameModes.Totem:
+                    case Constants.Gamemodes.FFA:
+                        _battleSpecifics.SetActive(true);
+                        break;
+                    case Constants.Gamemodes.Totem:
                         _totemSpecifics.SetActive(true);
                         break;
                     default:

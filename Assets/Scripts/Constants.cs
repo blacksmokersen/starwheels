@@ -62,6 +62,7 @@
     {
         public const string EndGameMenu = "Menu/EndGameMenu";
         public const string PlayerSettings = "PlayerSettings";
+        public const string GameSettings = "GameSettings";
         public const string ItemListData = "Data/ItemList";
     }
 
@@ -80,12 +81,11 @@
     }
 
     // GameModes
-    public class GameModes
+    public class Gamemodes
     {
         public const string Battle = "Battle";
         public const string Totem = "Totem";
-        public const string RespawnModeOn = "RespawnMode";
-        public const string RespawnModeOff = "NoRespawnMode";
+        public const string FFA = "FFA";
     }
 
     // Mixer

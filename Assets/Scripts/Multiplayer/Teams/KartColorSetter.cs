@@ -1,48 +1,35 @@
 ﻿using UnityEngine;
+using Bolt;
 
 namespace Multiplayer.Teams
 {
-    public class KartColorSetter : MonoBehaviour
+    public class KartColorSetter : EntityBehaviour<IKartState>
     {
         [SerializeField] private Renderer targetKartRenderer;
 
-        private Material _redKartMaterial;
-        private Material _blueKartMaterial;
-        private Material _whiteKartMaterial;
+        private TeamsListSettings _teamsSettings;
+
+        // CORE
 
         private void Awake()
         {
-            _redKartMaterial = Resources.Load<Material>(Constants.Materials.RedKart);
-            _blueKartMaterial = Resources.Load<Material>(Constants.Materials.BlueKart);
-            _whiteKartMaterial = Resources.Load<Material>(Constants.Materials.WhiteKart);
+            _teamsSettings = Resources.Load<GameSettings>(Constants.Resources.GameSettings).TeamsListSettings;
         }
 
-        // PUBLIC
+        // BOLT
 
-        public void SetKartColorUsingTeam(Team team)
+        public override void Attached()
         {
-            switch (team)
-            {
-                case Team.Blue:
-                    targetKartRenderer.material = _blueKartMaterial;
-                    break;
-                case Team.Red:
-                    targetKartRenderer.material = _redKartMaterial;
-                    break;
-                case Team.None:
-                    targetKartRenderer.material = _whiteKartMaterial;
-                    break;
-            }
+            state.AddCallback("Team", TeamChanged);
         }
 
-        public void SetKartColor(Color color)
+        // PRIVATE
+
+        private void TeamChanged()
         {
-            if(color == TeamsColors.BlueColor)
-                targetKartRenderer.material = _blueKartMaterial;
-            else if (color == TeamsColors.RedColor)
-                targetKartRenderer.material = _redKartMaterial;
-            else
-                targetKartRenderer.material = _whiteKartMaterial;
+            Debug.Log("Team changed : " + state.Team);
+            var newColor = _teamsSettings.GetSettings(state.Team.ToTeam()).KartColor;
+            targetKartRenderer.material.SetColor("_BaseColor", newColor);
         }
     }
 }

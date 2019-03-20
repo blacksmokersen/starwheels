@@ -32,7 +32,7 @@ namespace Health
             if (entity.attachToken != null)
             {
                 var roomToken = (RoomProtocolToken)entity.attachToken;
-                CanLoseHealth = roomToken.Gamemode == Constants.GameModes.Battle;
+                CanLoseHealth = (roomToken.Gamemode == Constants.Gamemodes.Battle || roomToken.Gamemode == Constants.Gamemodes.FFA) ;
             }
             else
             {

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using Bolt;
-using Multiplayer.Teams;
 using TMPro;
 
 namespace Gamemodes
@@ -14,9 +13,7 @@ namespace Gamemodes
 
         public override void OnEvent(ScoreIncreased evnt)
         {
-            var team = evnt.Team.GetTeam();
-
-            switch (team)
+            switch (evnt.Team.ToTeam())
             {
                 case Team.Blue:
                     _blueScoreText.text = "" + evnt.Score;
@@ -25,7 +22,7 @@ namespace Gamemodes
                     _redScoreText.text = "" + evnt.Score;
                     break;
                 default:
-                    Debug.LogError("Unknown team.");
+                    Debug.LogWarning("Unknown team.");
                     break;
             }
         }

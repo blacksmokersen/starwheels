@@ -93,6 +93,8 @@ namespace Photon.Lobby
             _abilityDropdown.onValueChanged.AddListener(delegate { _playerSettings.AbilityIndex = _abilityDropdown.value; });
 
             SetServerInfo("Offline", "None");
+
+            DontDestroyOnLoad(gameObject);
         }
 
         private void FixedUpdate()
@@ -230,7 +232,7 @@ namespace Photon.Lobby
                 lobbyPlayer.Connection = connection;
                 lobbyPlayer.SetPlayerID((int)connection.ConnectionId);
 
-                connection.UserData = lobbyPlayer;
+                //connection.UserData = lobbyPlayer;
                 connection.SetStreamBandwidth(1024 * 1024);
 
                 entity.AssignControl(connection);
@@ -257,7 +259,7 @@ namespace Photon.Lobby
 
         public void ChangeTo(RectTransform newPanel)
         {
-            if (_currentPanel != null)
+            if (_currentPanel != null && _currentPanel.GetComponent<BoltEntity>() == null)
             {
                 _currentPanel.gameObject.SetActive(false);
             }
