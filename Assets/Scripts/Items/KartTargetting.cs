@@ -115,7 +115,7 @@ namespace Items
             {
                 var otherPlayer = other.GetComponentInParent<Player>();
 
-                if (state.Team != otherPlayer.Team.GetColor())
+                if (state.Team.ToTeam() != otherPlayer.Team)
                 {
                     SwitchTarget(other.transform);
                 }
@@ -128,7 +128,7 @@ namespace Items
             {
                 var otherPlayer = other.GetComponentInParent<Player>();
 
-                if (entity.isAttached && state.Team != otherPlayer.Team.GetColor())
+                if (entity.isAttached && state.Team.ToTeam() != otherPlayer.Team)
                 {
                     if (_currentTargetTransform == null)
                     {

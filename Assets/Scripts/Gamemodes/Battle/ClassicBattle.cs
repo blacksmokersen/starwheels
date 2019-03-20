@@ -31,15 +31,13 @@ namespace Gamemodes
 
         public override void OnEvent(PlayerHit evnt)
         {
-            var team = evnt.KillerTeamColor.GetTeam();
-            IncreaseScore(team);
+            IncreaseScore(evnt.KillerTeam.ToTeam());
             CheckScore();
         }
 
         public override void OnEvent(PlayerReady evnt)
         {
-            var team = evnt.Team.GetTeam();
-            PlayerJoined(team);
+            PlayerJoined(evnt.Team.ToTeam());
         }
 
         // PUBLIC

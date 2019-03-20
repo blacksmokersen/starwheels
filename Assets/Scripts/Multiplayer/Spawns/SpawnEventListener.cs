@@ -43,8 +43,7 @@ namespace Multiplayer
         {
             if(evnt.ConnectionID == SWMatchmaking.GetMyBoltId())
             {
-                Team teamEnum = (Team) System.Enum.Parse(typeof(Team), evnt.TeamEnum);
-                InstantiateKart(evnt.SpawnPosition, evnt.SpawnRotation, teamEnum, (RoomProtocolToken)evnt.RoomToken);
+                InstantiateKart(evnt.SpawnPosition, evnt.SpawnRotation, evnt.TeamEnum.ToTeam(), (RoomProtocolToken)evnt.RoomToken);
             }
         }
 
@@ -64,12 +63,12 @@ namespace Multiplayer
                 myKart = BoltNetwork.Instantiate(BoltPrefabs.Kart);
             }
 
-            _playerSettings.ColorSettings = _gameSettings.TeamsListSettings.FindSettingsWithTeamEnum(team);
+            _playerSettings.ColorSettings = _gameSettings.TeamsListSettings.GetSettings(team);
 
             myKart.transform.position = spawnPosition;
             myKart.transform.rotation = spawnRotation;
             Debug.Log("Team bolt changed : " + _playerSettings.ColorSettings.BoltColor);
-            myKart.GetComponent<BoltEntity>().GetState<IKartState>().Team = _playerSettings.ColorSettings.BoltColor;
+            myKart.GetComponent<BoltEntity>().GetState<IKartState>().Team = _playerSettings.ColorSettings.TeamEnum.ToString();
             myKart.GetComponent<BoltEntity>().GetState<IKartState>().OwnerID = SWMatchmaking.GetMyBoltId();
         }
     }

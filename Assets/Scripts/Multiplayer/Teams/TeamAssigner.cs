@@ -32,6 +32,7 @@ namespace Multiplayer.Teams
                 }
             }
 
+            Debug.Log("Selected team : " + availableTeam);
             return availableTeam;
         }
 

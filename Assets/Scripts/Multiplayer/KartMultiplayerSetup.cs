@@ -47,24 +47,12 @@ namespace Network
 
         private void ColorChanged()
         {
-            if (entity.isOwner)
-            {
-                //_playerSettings.ColorSettings.BoltColor = state.Team;
-            }
-
-            GetComponent<Player>().Team = state.Team.GetTeam();
-            var panel = GetComponentInChildren<Common.HUD.NicknamePanel>();
-            if (panel)
-            {
-                panel.SetFrameRendererColor(state.Team);
-            }
+            GetComponent<Player>().Team = state.Team.ToTeam();
         }
 
         private void NameChanged()
         {
             GetComponent<Player>().Nickname = state.Nickname;
-            var panel = GetComponentInChildren<Common.HUD.NicknamePanel>();
-            if(panel) panel.SetName(state.Nickname);
         }
     }
 }

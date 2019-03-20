@@ -10,7 +10,14 @@ namespace Common.HUD
         [SerializeField] private TextMeshPro nameText;
         [SerializeField] private SpriteRenderer frameRenderer;
 
+        private GameSettings _gameSettings;
+
         // CORE
+
+        private void Awake()
+        {
+            _gameSettings = Resources.Load<GameSettings>(Constants.Resources.GameSettings);
+        }
 
         private void Update()
         {
@@ -49,7 +56,8 @@ namespace Common.HUD
 
         public void SetFrameRendererTeam(Team team)
         {
-            SetFrameRendererColor(team.GetColor());
+            var color = _gameSettings.TeamsListSettings.GetSettings(team).NameplateColor;
+            SetFrameRendererColor(color);
         }
 
         public void ShowPanel()
@@ -71,7 +79,7 @@ namespace Common.HUD
 
         private void TeamChanged()
         {
-            SetFrameRendererColor(state.Team);
+            SetFrameRendererTeam(state.Team.ToTeam());
         }
     }
 }

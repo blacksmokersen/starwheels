@@ -47,8 +47,7 @@ namespace Common.HUD
         private void TeamChanged()
         {
             var myTeam = _playerSettings.ColorSettings.TeamEnum;
-            var thisKartTeam = state.Team.GetTeam();
-            if (myTeam == thisKartTeam)
+            if (myTeam == state.Team.ToTeam())
             {
                 SetAlwaysVisble();
             }

@@ -29,7 +29,7 @@ namespace Multiplayer.Teams
             return null;
         }
 
-        public TeamColorSettings FindSettingsWithTeamEnum(Team team)
+        public TeamColorSettings GetSettings(Team team)
         {
             foreach (var teamColorSettings in TeamsList)
             {

@@ -24,12 +24,10 @@ namespace Gamemodes
 
         public override void OnEvent(GameOver evnt)
         {
-            var winningTeam = evnt.WinningTeam.GetTeam();
-
             _endGameMenu.SetActive(true);
-            _endGameMenu.GetComponent<Menu.GameOverMenu>().SetWinnerTeam(winningTeam);
+            _endGameMenu.GetComponent<Menu.GameOverMenu>().SetWinnerTeam(evnt.WinningTeam.ToTeam());
 
-            OnGameEnd.Invoke(winningTeam);
+            OnGameEnd.Invoke(evnt.WinningTeam.ToTeam());
         }
 
         // PRIVATE
