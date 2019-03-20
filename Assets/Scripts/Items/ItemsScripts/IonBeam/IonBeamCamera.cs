@@ -6,190 +6,115 @@ using Bolt;
 using CameraUtils;
 using Items;
 
-public class IonBeamCamera : GlobalEventListener
+namespace CameraUtils
 {
-    [HideInInspector] public CinemachineTransposer Transposer;
-    [HideInInspector] public CinemachineComposer Composer;
-    [HideInInspector] public CinemachineCollider Collider;
-
-    [Space]
-    [Header("This Component Should Stay Inactive")]
-    [Space]
-
-    [SerializeField] private float _speedCamMovements;
-    [SerializeField] private CameraTurnEffect _cameraTurnEffect;
-    [SerializeField] private float _ionBeamCamZExpand;
-    [SerializeField] private float _ionBeamCamYExpand;
-    [SerializeField] CameraSettings _cameraSettings;
-    [SerializeField] private Texture2D _crosshairIonBeam;
-
-    private CinemachineVirtualCamera _cinemachine;
-    private Coroutine _cameraIonBeamBehaviour;
-
-    private float _currentTimer;
-    private bool _showCrosshair;
-    private bool _isCameraOnTop = false;
-    private IonBeamBehaviour _ionBeamBehaviour;
-
-    //CORE
-
-    private void Awake()
+    public class IonBeamCamera : CameraTarget
     {
-        _cinemachine = GetComponent<CinemachineVirtualCamera>();
-        Transposer = _cinemachine.GetCinemachineComponent<CinemachineTransposer>();
-        Composer = _cinemachine.GetCinemachineComponent<CinemachineComposer>();
-        Collider = GetComponent<CinemachineCollider>();
-    }
+        [Space]
+        [Header("This Component Should Stay Inactive")]
+        [Space]
 
-    //BOLT
+        [SerializeField] private float _speedCamMovements;
+        [SerializeField] private GameObject _playerCamera;
+        [SerializeField] CameraSettings _cameraSettings;
+        [SerializeField] private Texture2D _crosshairIonBeam;
 
-    public override void OnEvent(PlayerHit evnt)
-    {
-        if (_ionBeamBehaviour && evnt.VictimEntity.isOwner)
+        private Animator _animator;
+        private bool _showCrosshair;
+        private bool _isCameraOnTop = false;
+        private IonBeamBehaviour _ionBeamBehaviour;
+
+        //CORE
+
+        private void Awake()
         {
-            CameraReset();
-            _ionBeamBehaviour.DisableIonBeam();
-        }
-    }
-
-    //PUBLIC
-
-    public void GetIonBeamBehaviour(IonBeamBehaviour ionBeamBehaviour)
-    {
-        _ionBeamBehaviour = ionBeamBehaviour;
-    }
-
-    public void IonBeamCameraControls(float horizontal, float vertical)
-    {
-        Transposer.m_FollowOffset.z += horizontal * _speedCamMovements * Time.deltaTime;
-        Transposer.m_FollowOffset.x += vertical * _speedCamMovements * Time.deltaTime;
-    }
-
-    public void IonBeamCameraBehaviour(bool direction)
-    {
-        if (direction)
-        {
-            if (_cameraIonBeamBehaviour != null)
-                StopCoroutine(_cameraIonBeamBehaviour);
-            _cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamExpand(_ionBeamCamZExpand, _ionBeamCamYExpand, 1f));
-        }
-        else
-        {
-            if (_cameraIonBeamBehaviour != null)
-                StopCoroutine(_cameraIonBeamBehaviour);
-            _cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(_cameraSettings.BaseCamPosition.z, _cameraSettings.BaseCamPosition.y, 0.5f));
-        }
-    }
-
-    public void CameraReset()
-    {
-        StopAllCoroutines();
-        Composer.enabled = true;
-        _showCrosshair = false;
-        _isCameraOnTop = false;
-        Transposer.m_FollowOffset.x = 0;
-        Transposer.m_FollowOffset.z = _cameraSettings.BaseCamPosition.z;
-        Transposer.m_FollowOffset.y = _cameraSettings.BaseCamPosition.y;
-        _cameraTurnEffect.Enabled = true;
-    }
-
-    public bool IsCameraOnTop()
-    {
-        return _isCameraOnTop;
-    }
-
-    //PRIVATE
-
-    private void OnGUI()
-    {
-        if (_showCrosshair)
-        {
-            float xMin = (Screen.width / 2) - (_crosshairIonBeam.width / 2);
-            float yMin = (Screen.height / 2) - (_crosshairIonBeam.height / 2);
-            GUI.DrawTexture(new Rect(xMin, yMin, _crosshairIonBeam.width, _crosshairIonBeam.height), _crosshairIonBeam);
-        }
-    }
-
-    private void ChangeRenderOnTaGGameobjects(bool state)
-    {
-        GameObject[] TaggedGameobjectsToIgnore;
-        TaggedGameobjectsToIgnore = GameObject.FindGameObjectsWithTag(Constants.Tag.IonBeamCamIgnore);
-
-        foreach(GameObject GoToIgnore in TaggedGameobjectsToIgnore)
-        {
-            GoToIgnore.GetComponent<Renderer>().enabled = state;
+            _animator = GetComponent<Animator>();
         }
 
+        //BOLT
 
-
-
-        /*
-        if (GameObject.FindGameObjectWithTag("IonBeamCamIgnore") != null)
-            GameObject.FindGameObjectWithTag("IonBeamCamIgnore").GetComponent<Renderer>().enabled = state;
-            */
-
-    }
-
-    IEnumerator CameraIonBeamExpand(float endValueZ, float endValueY, float expandDuration)
-    {
-        Collider.enabled = false;
-
-        _cameraTurnEffect.CenterCamera();
-        _cameraTurnEffect.CenterOrbiter();
-        _cameraTurnEffect.Enabled = false;
-
-        float startDynamicCamValueZ = Transposer.m_FollowOffset.z;
-        float startDynamicCamValueY = Transposer.m_FollowOffset.y;
-
-        _currentTimer = 0f;
-        while (_currentTimer < expandDuration)
+        public override void OnEvent(PlayerHit evnt)
         {
-            Transposer.m_FollowOffset.z = Mathf.Lerp(startDynamicCamValueZ, endValueZ, _currentTimer / expandDuration);
-            Transposer.m_FollowOffset.y = Mathf.Lerp(startDynamicCamValueY, endValueY, _currentTimer / expandDuration);
-            _currentTimer += Time.deltaTime;
-            yield return null;
-        }
-        // transform.rotation = new Quaternion(Mathf.Lerp(transform.rotation.x, 90, _currentTimer / boostDuration), 0, 0, 0);
-        transform.eulerAngles = new Vector3(90, transform.eulerAngles.y, transform.eulerAngles.z);
-        ChangeRenderOnTaGGameobjects(false);
-        Composer.enabled = false;
-        _showCrosshair = true;
-        _isCameraOnTop = true;
-    }
-
-    IEnumerator CameraIonBeamReset(float returnValueZ, float returnValueY, float resetDuration)
-    {
-        _showCrosshair = false;
-        _isCameraOnTop = false;
-        float startDynamicCamValueX = Transposer.m_FollowOffset.x;
-        float startDynamicCamValueZ = Transposer.m_FollowOffset.z;
-        float startDynamicCamValueY = Transposer.m_FollowOffset.y;
-
-        _currentTimer = 0f;
-
-        while (_currentTimer < resetDuration)
-        {
-            Transposer.m_FollowOffset.x = Mathf.Lerp(startDynamicCamValueX, 0, _currentTimer / resetDuration);
-            Transposer.m_FollowOffset.z = Mathf.Lerp(startDynamicCamValueZ, returnValueZ, _currentTimer / resetDuration);
-            Transposer.m_FollowOffset.y = Mathf.Lerp(startDynamicCamValueY, returnValueY, _currentTimer / resetDuration);
-            _currentTimer += Time.deltaTime;
-            yield return null;
+            if (_ionBeamBehaviour && evnt.VictimEntity.isOwner)
+            {
+                ResetCamera();
+                _ionBeamBehaviour.DisableIonBeam();
+            }
         }
 
-        Transposer.m_FollowOffset.y = returnValueY;
+        //PUBLIC
 
-        /*
-        if (Transposer.m_FollowOffset.y > returnValueY)
+        public void GetIonBeamBehaviour(IonBeamBehaviour ionBeamBehaviour)
         {
-            // Security for lack of precision of Time.deltaTime
-            _cameraIonBeamBehaviour = StartCoroutine(CameraIonBeamReset(returnValueZ, returnValueY, 0.5f));
+            _ionBeamBehaviour = ionBeamBehaviour;
         }
-        */
 
-        Collider.enabled = true;
-        _cameraTurnEffect.Enabled = true;
-        _cameraTurnEffect.CenterCamera();
-        _cameraTurnEffect.CenterOrbiter();
-        ChangeRenderOnTaGGameobjects(true);
+        public void IonBeamCameraControls(float horizontal, float vertical)
+        {
+            transform.position += transform.forward * horizontal * _speedCamMovements * Time.deltaTime;
+            transform.position += transform.right * vertical * _speedCamMovements * Time.deltaTime;
+        }
+
+        public void IonBeamCameraBehaviour(bool direction)
+        {
+            if (direction)
+                StartExpandingCamera();
+            else
+                ResetCamera();
+        }
+
+        public bool IsCameraOnTop()
+        {
+            return _isCameraOnTop;
+        }
+
+        public void CameraIsFullyExpanded()
+        {
+            _showCrosshair = true;
+            _isCameraOnTop = true;
+        }
+
+        public void ResetCameraTransform()
+        {
+            transform.localPosition = _playerCamera.transform.position;
+            transform.localRotation = _playerCamera.transform.rotation;
+        }
+
+        //PRIVATE
+
+        private void StartExpandingCamera()
+        {
+            _animator.SetTrigger("StartExpandCameraTrigger");
+            ChangeRenderOnTaGGameobjects(false);
+        }
+
+        private void ResetCamera()
+        {
+            _animator.SetTrigger("ResetCameraTrigger");
+            _showCrosshair = false;
+            _isCameraOnTop = false;
+            ChangeRenderOnTaGGameobjects(true);
+        }
+
+        private void OnGUI()
+        {
+            if (_showCrosshair)
+            {
+                float xMin = (Screen.width / 2) - (_crosshairIonBeam.width / 2);
+                float yMin = (Screen.height / 2) - (_crosshairIonBeam.height / 2);
+                GUI.DrawTexture(new Rect(xMin, yMin, _crosshairIonBeam.width, _crosshairIonBeam.height), _crosshairIonBeam);
+            }
+        }
+
+        private void ChangeRenderOnTaGGameobjects(bool state)
+        {
+            GameObject[] TaggedGameobjectsToIgnore;
+            TaggedGameobjectsToIgnore = GameObject.FindGameObjectsWithTag(Constants.Tag.IonBeamCamIgnore);
+
+            foreach (GameObject GoToIgnore in TaggedGameobjectsToIgnore)
+            {
+                GoToIgnore.GetComponent<Renderer>().enabled = state;
+            }
+        }
     }
 }

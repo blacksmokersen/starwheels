@@ -11,7 +11,7 @@ namespace Multiplayer
     public class SpawnAssigner : GlobalEventListener
     {
         [Header("Settings")]
-        [SerializeField] private FloatVariable _countdownSeconds;
+        [SerializeField] private CountdownSettings _countdownSettings;
         [SerializeField] private GameSettings _gameSettings;
 
         public RoomProtocolToken RoomInfoToken;
@@ -200,25 +200,28 @@ namespace Multiplayer
 
         private IEnumerator CountdownCoroutine()
         {
-            float remainingTime = _countdownSeconds.Value;
+            float remainingTime = _countdownSettings.Timer;
             int floorTime = Mathf.FloorToInt(remainingTime);
 
             LobbyCountdown countdownEvent;
 
-            while (remainingTime > 0)
+            if (_countdownSettings.Countdown)
             {
-                remainingTime -= Time.deltaTime;
-                int newFloorTime = Mathf.FloorToInt(remainingTime);
-
-                if (newFloorTime != floorTime)
+                while (remainingTime > 0)
                 {
-                    floorTime = newFloorTime;
+                    remainingTime -= Time.deltaTime;
+                    int newFloorTime = Mathf.FloorToInt(remainingTime);
 
-                    countdownEvent = LobbyCountdown.Create(GlobalTargets.Everyone);
-                    countdownEvent.Time = floorTime;
-                    countdownEvent.Send();
+                    if (newFloorTime != floorTime)
+                    {
+                        floorTime = newFloorTime;
+
+                        countdownEvent = LobbyCountdown.Create(GlobalTargets.Everyone);
+                        countdownEvent.Time = floorTime;
+                        countdownEvent.Send();
+                    }
+                    yield return null;
                 }
-                yield return null;
             }
 
             countdownEvent = LobbyCountdown.Create(GlobalTargets.Everyone);

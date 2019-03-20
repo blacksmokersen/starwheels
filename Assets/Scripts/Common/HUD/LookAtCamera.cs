@@ -6,7 +6,8 @@ namespace Common.HUD
     {
         private void Update()
         {
-            transform.LookAt(Camera.main.transform);
+            if (Camera.main != null)
+                transform.LookAt(Camera.main.transform);
         }
     }
 }
