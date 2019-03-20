@@ -3,16 +3,15 @@ using Cinemachine;
 
 namespace CameraUtils
 {
-    public class SetKartCamera : MonoBehaviour, IObserver
+    public class SetKartCamera : CameraTarget, IObserver
     {
         private GameObject _kartToFollow;
-        private CinemachineVirtualCamera _cinemachine;
 
         // CORE
 
         private void Awake()
         {
-            _cinemachine = GetComponent<CinemachineVirtualCamera>();
+            Cinemachine = GetComponent<CinemachineVirtualCamera>();
             if (_kartToFollow) SetKart(_kartToFollow);
         }
 
@@ -29,10 +28,12 @@ namespace CameraUtils
             {
                 _kartToFollow.GetComponent<AudioListener>().enabled = false;
             }
-            _cinemachine.Follow = kart.transform;
-            _cinemachine.LookAt = kart.transform;
+            Cinemachine.Follow = kart.transform;
+            Cinemachine.LookAt = kart.transform;
             kart.GetComponent<AudioListener>().enabled = true;
             _kartToFollow = kart;
+           // SaveKart(kart);
+            CameraTargetKart = true;
         }
     }
 }
