@@ -7,13 +7,13 @@ namespace Multiplayer.Teams
     {
         [SerializeField] private Renderer targetKartRenderer;
 
-        private PlayerSettings _playerSettings;
+        private TeamsListSettings _teamsSettings;
 
         // CORE
 
         private void Awake()
         {
-            _playerSettings = Resources.Load<PlayerSettings>(Constants.Resources.PlayerSettings);
+            _teamsSettings = Resources.Load<GameSettings>(Constants.Resources.GameSettings).TeamsListSettings;
         }
 
         // BOLT
@@ -28,7 +28,8 @@ namespace Multiplayer.Teams
         private void TeamChanged()
         {
             Debug.Log("Team changed : " + state.Team);
-            targetKartRenderer.material.SetColor("_BaseColor", state.Team);
+            var newColor = _teamsSettings.GetSettings(state.Team.ToTeam()).KartColor;
+            targetKartRenderer.material.SetColor("_BaseColor", newColor);
         }
     }
 }

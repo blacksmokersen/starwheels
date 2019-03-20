@@ -13,9 +13,7 @@ namespace Gamemodes
 
         public override void OnEvent(ScoreIncreased evnt)
         {
-            var team = evnt.Team.GetTeam();
-
-            switch (team)
+            switch (evnt.Team.ToTeam())
             {
                 case Team.Blue:
                     _blueScoreText.text = "" + evnt.Score;

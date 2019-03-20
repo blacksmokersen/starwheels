@@ -14,11 +14,13 @@ namespace Common.HUD
 
         private ItemListData _itemListData;
         private PlayerSettings _playerSettings;
+        private GameSettings _gameSettings;
 
         private void Awake()
         {
             _itemListData = Resources.Load<ItemListData>(Constants.Resources.ItemListData);
             _playerSettings = Resources.Load<PlayerSettings>(Constants.Resources.PlayerSettings);
+            _gameSettings = Resources.Load<GameSettings>(Constants.Resources.GameSettings);
         }
 
         // BOLT
@@ -34,9 +36,11 @@ namespace Common.HUD
         {
             var entry = Instantiate(_entryPrefab, transform, false).GetComponent<KillFeedEntry>();
 
-            entry.SetKillerNameAndColor(evnt.KillerName, evnt.KillerTeamColor, evnt.KillerName == _playerSettings.Nickname);
+            var killerColor = _gameSettings.TeamsListSettings.GetSettings(evnt.KillerTeam.ToTeam()).KillFeedEntryColor;
+            entry.SetKillerNameAndColor(evnt.KillerName, killerColor, evnt.KillerName == _playerSettings.Nickname);
             entry.SetItemIcon(_itemListData.GetItemIconUsingName(evnt.Item));
-            entry.SetVictimNameAndColor(evnt.VictimName, evnt.VictimTeamColor, evnt.VictimName == _playerSettings.Nickname);
+            var victimrColor = _gameSettings.TeamsListSettings.GetSettings(evnt.VictimTeam.ToTeam()).KillFeedEntryColor;
+            entry.SetVictimNameAndColor(evnt.VictimName, victimrColor, evnt.VictimName == _playerSettings.Nickname);
             entry.transform.localPosition = Vector3.zero;
 
             LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());

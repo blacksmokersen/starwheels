@@ -81,13 +81,11 @@
     }
 
     // GameModes
-    public class GameModes
+    public class Gamemodes
     {
         public const string Battle = "Battle";
         public const string Totem = "Totem";
         public const string FFA = "FFA";
-        public const string RespawnModeOn = "RespawnMode";
-        public const string RespawnModeOff = "NoRespawnMode";
     }
 
     // Mixer

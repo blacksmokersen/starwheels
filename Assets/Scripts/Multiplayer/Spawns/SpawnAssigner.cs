@@ -12,7 +12,7 @@ namespace Multiplayer
     {
         [Header("Settings")]
         [SerializeField] private FloatVariable _countdownSeconds;
-        [SerializeField] private PlayerSettings _serverPlayerSettings;
+        [SerializeField] private GameSettings _gameSettings;
 
         public RoomProtocolToken RoomInfoToken;
 
@@ -78,8 +78,7 @@ namespace Multiplayer
         {
             if (BoltNetwork.IsServer)
             {
-                var team = (Team) System.Enum.Parse(typeof(Team),evnt.Team);
-                AssignSpawn(evnt.ConnectionID, team, true);
+                AssignSpawn(evnt.ConnectionID, evnt.Team.ToTeam(), true);
             }
         }
 
@@ -111,6 +110,7 @@ namespace Multiplayer
         {
             var spawns = FindObjectsOfType<TeamSpawn>();
             _initialSpawns = new List<TeamSpawn>(spawns);
+            Debug.Log("Ini : " + _initialSpawns.Count);
             _respawns = new List<TeamSpawn>(spawns);
         }
 
@@ -140,12 +140,26 @@ namespace Multiplayer
 
         private GameObject GetInitialSpawnPosition(Team team)
         {
-            return GetRandomSpawnFromList(team, _initialSpawns);
+            if (_gameSettings.Gamemode == Constants.Gamemodes.FFA)
+            {
+                return GetRandomSpawnFromList(Team.Any, _initialSpawns);
+            }
+            else
+            {
+                return GetRandomSpawnFromList(team, _initialSpawns);
+            }
         }
 
         private GameObject GetRespawnPosition(Team team)
         {
-            return GetRandomSpawnFromList(team, _respawns);
+            if (_gameSettings.Gamemode == Constants.Gamemodes.FFA)
+            {
+                return GetRandomSpawnFromList(Team.Any, _respawns);
+            }
+            else
+            {
+                return GetRandomSpawnFromList(team, _respawns);
+            }
         }
 
         private GameObject GetRandomSpawnFromList(Team team, List<TeamSpawn> spawnList)

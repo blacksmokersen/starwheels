@@ -36,7 +36,7 @@ namespace SW.DebugUtils
         {
             if (entity.isAttached && entity.isOwner)
             {
-                state.Team = state.Team.GetNextTeamColor();
+                //state.Team = state.Team.GetNextTeamColor();
             }
         }
     }
