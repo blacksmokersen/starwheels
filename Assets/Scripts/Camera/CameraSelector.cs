@@ -7,26 +7,37 @@ namespace CameraUtils
 {
     public class CameraSelector : GlobalEventListener
     {
-        public GameObject ActualCamera;
-
         [SerializeField] private Camera _kartCamera;
         [SerializeField] private Camera _mapCamera;
-
         [SerializeField] private CountdownSettings _countdownSettings;
 
         //CORE
 
         private void Start()
         {
-            if (!_countdownSettings.Countdown)
-                ShowPlayerCamera();
-            if (_mapCamera == null)
+            if (BoltNetwork.IsConnected)
             {
-                Debug.LogWarning("There is no MapCamera selected in the CameraSelector");
-                _kartCamera.enabled = true;
+                if (!_countdownSettings.Countdown)
+                    ShowPlayerCamera();
+                if (_mapCamera == null)
+                {
+                    Debug.LogWarning("There is no MapCamera selected in the CameraSelector");
+                    _kartCamera.enabled = true;
+                }
+                else
+                {
+                    _mapCamera.enabled = true;
+                    _kartCamera.enabled = false;
+                }
+                if (_kartCamera == null)
+                    Debug.LogError("There is no PlayerCamera selected in the CameraSelector");
             }
-            if (_kartCamera == null)
-                Debug.LogError("There is no PlayerCamera selected in the CameraSelector");
+            else
+            {
+                _kartCamera.enabled = true;
+                if(_mapCamera != null)
+                    _mapCamera.enabled = false;
+            }
         }
 
         //BOLT
@@ -53,7 +64,6 @@ namespace CameraUtils
             _kartCamera.enabled = false;
         }
 
-
         //DEBUG
 
         private void Update()
@@ -70,10 +80,5 @@ namespace CameraUtils
                 _kartCamera.enabled = false;
             }
         }
-
-
-
-
-
     }
 }
