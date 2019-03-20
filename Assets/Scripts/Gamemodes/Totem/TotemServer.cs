@@ -10,8 +10,7 @@ namespace Gamemodes.Totem
         public override void OnEvent(TotemWallHit evnt)
         {
             Debug.Log("TotemWallHit event received.");
-            var team = evnt.Team.GetTeam().OppositeTeam();
-            IncreaseScore(team);
+            IncreaseScore(evnt.Team.ToTeam().OppositeTeam());
         }
     }
 }

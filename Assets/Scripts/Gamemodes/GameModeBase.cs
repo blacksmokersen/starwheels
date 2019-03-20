@@ -52,7 +52,7 @@ namespace Gamemodes
         protected void EndGame()
         {
             GameOver goEvent = GameOver.Create();
-            goEvent.WinningTeam = WinnerTeam.GetColor();
+            goEvent.WinningTeam = WinnerTeam.ToString();
             goEvent.Send();
 
             var playerInputsList = FindObjectsOfType<MonoBehaviour>().OfType<IControllable>();
@@ -76,7 +76,7 @@ namespace Gamemodes
         protected void IncreaseScore(Team team)
         {
             ScoreIncreased scoreIncreased = ScoreIncreased.Create();
-            scoreIncreased.Team = team.GetColor();
+            scoreIncreased.Team = team.ToString();
             switch (team)
             {
                 case Team.Blue:
@@ -88,7 +88,7 @@ namespace Gamemodes
                     scoreIncreased.Score = _redScore;
                     break;
                 default:
-                    Debug.LogError("Unknown team.");
+                    Debug.LogWarning("Unknown team.");
                     break;
             }
             scoreIncreased.Send();

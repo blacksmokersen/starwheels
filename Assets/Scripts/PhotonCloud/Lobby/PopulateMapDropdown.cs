@@ -9,7 +9,7 @@ namespace Photon.Lobby
         [SerializeField] private MapListData _mapListData;
         [SerializeField] private TMP_Dropdown _mapDropdown;
 
-        private void Start()
+        private void Awake()
         {
             var options = new List<string>();
 

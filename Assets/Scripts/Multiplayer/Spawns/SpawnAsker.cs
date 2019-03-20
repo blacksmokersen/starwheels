@@ -21,7 +21,7 @@ namespace Multiplayer
             if (entity.attachToken != null)
             {
                 var roomToken = (RoomProtocolToken)entity.attachToken;
-                Enabled = roomToken.Gamemode == Constants.GameModes.Battle;
+                Enabled = (roomToken.Gamemode == Constants.Gamemodes.Battle || roomToken.Gamemode == Constants.Gamemodes.FFA);
             }
             else
             {

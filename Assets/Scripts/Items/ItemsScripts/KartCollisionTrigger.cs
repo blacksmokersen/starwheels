@@ -10,8 +10,6 @@ namespace Items
         [Header("Invincibility Condition")]
         [SerializeField] private Health.Health _health;
 
-       // private bool _ionBeamMultiHitProtection = false;
-
         private void OnTriggerEnter(Collider other)
         {
             if (BoltNetwork.IsServer && entity.isAttached)
@@ -27,18 +25,6 @@ namespace Items
 
                         if (itemEntity.isAttached && itemEntity.TryFindState<IItemState>(out itemState)) // It is a concrete item & it is attached
                         {
-                            /*
-                            if (other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName == ItemCollisionName.IonBeamLaser)
-                            {
-                                //   if (!_ionBeamMultiHitProtection)
-                                //   {
-                                    Debug.LogWarning("HitIonBeam");
-                                    SendPlayerHitEvent(itemState);
-                                    //   _ionBeamMultiHitProtection = true;
-                                //   }
-                            }
-                            */
-
                             if (itemState.OwnerID == state.OwnerID)
                             {
                                 if (itemCollisionTrigger.ItemCollision.ItemName == ItemCollisionName.Disk)
@@ -60,7 +46,6 @@ namespace Items
                                     SendPlayerHitEvent(itemState);
                                 }
                                 DestroyColliderObject(other);
-                                //   _ionBeamMultiHitProtection = true;
                             }
                         }
                     }
@@ -84,12 +69,12 @@ namespace Items
         {
             PlayerHit playerHitEvent = PlayerHit.Create();
             playerHitEvent.KillerName = itemState.OwnerNickname;
-            playerHitEvent.KillerTeamColor = itemState.Team;
+            playerHitEvent.KillerTeam = itemState.Team;
             playerHitEvent.Item = itemState.Name;
             playerHitEvent.VictimEntity = entity;
             playerHitEvent.VictimID = state.OwnerID;
             playerHitEvent.VictimName = state.Nickname;
-            playerHitEvent.VictimTeamColor = state.Team;
+            playerHitEvent.VictimTeam = state.Team;
             playerHitEvent.Send();
         }
     }

@@ -28,7 +28,7 @@ namespace Items
             {
                 var otherPlayer = other.GetComponentInParent<Player>();
 
-                if (entity.isAttached && state.Team != otherPlayer.Team.GetColor())
+                if (entity.isAttached && state.Team.ToTeam() != otherPlayer.Team)
                 {
                     SetTarget(other.gameObject);
                 }
@@ -42,7 +42,7 @@ namespace Items
             {
                 var otherPlayer = other.GetComponentInParent<Player>();
 
-                if (entity.isAttached && state.Team != otherPlayer.Team.GetColor())
+                if (entity.isAttached && state.Team.ToTeam() != otherPlayer.Team)
                 {
                     SetTarget(other.gameObject);
                 }
