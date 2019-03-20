@@ -37,7 +37,7 @@ namespace Gamemodes
 
         public override void OnEvent(PlayerReady evnt)
         {
-            PlayerJoined(evnt.Team.ToTeam());
+            //PlayerJoined(evnt.Team.ToTeam());
         }
 
         // PUBLIC
