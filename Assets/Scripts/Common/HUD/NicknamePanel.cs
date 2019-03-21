@@ -10,6 +10,7 @@ namespace Common.HUD
         [SerializeField] private TextMeshPro nameText;
         [SerializeField] private SpriteRenderer frameRenderer;
 
+        private GameObject _camera;
         private GameSettings _gameSettings;
 
         // CORE
@@ -19,9 +20,14 @@ namespace Common.HUD
             _gameSettings = Resources.Load<GameSettings>(Constants.Resources.GameSettings);
         }
 
+        private void Start()
+        {
+            _camera = GameObject.Find("PlayerCamera");
+        }
+
         private void Update()
         {
-            transform.LookAt(Camera.main.transform);
+            transform.LookAt(_camera.transform);
         }
 
         // BOLT
