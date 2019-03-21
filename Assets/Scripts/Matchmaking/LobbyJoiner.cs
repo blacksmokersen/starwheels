@@ -36,7 +36,6 @@ namespace SW.Matchmaking
             {
                 OnConnectedAsClient.Invoke();
                 Debug.Log("Bolt now running as client.");
-                Debug.Log("Sessions found : " + BoltNetwork.SessionList.Count);
             }
 
             StartCoroutine(LobbyCountDebug());
@@ -73,6 +72,7 @@ namespace SW.Matchmaking
             foreach (var lobby in lobbyList)
             {
                 var lobbyToken = SWMatchmaking.GetLobbyToken(lobby.Key);
+                Debug.Log("Found lobby for : " + lobbyToken.GameMode);
                 if (_lobbyData.GamemodePool.Contains(lobbyToken.GameMode))
                 {
                     SWMatchmaking.JoinLobby(lobby.Key);

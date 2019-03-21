@@ -59,7 +59,7 @@ namespace SW.Matchmaking
         {
             ChosenMapName = mapName;
             GameSettings.MapName = mapName;
-            Debug.Log("Gamemode set : " + mapName);
+            Debug.Log("Map set : " + mapName);
         }
 
         public void SetRandomMap()

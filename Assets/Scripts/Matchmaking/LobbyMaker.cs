@@ -52,10 +52,10 @@ namespace SW.Matchmaking
 
         private void VerifyLobbyDataSanity()
         {
-            Assert.IsNotNull(_lobbyData.ServerName);
-            Assert.IsNotNull(_lobbyData.ChosenMapName);
-            Assert.IsNotNull(_lobbyData.ChosenGamemode);
-            Assert.AreNotEqual(_lobbyData.MaxPlayers, 0);
+            Assert.IsNotNull(_lobbyData.ServerName, "Server cannont be null.");
+            Assert.IsNotNull(_lobbyData.ChosenMapName, "MapName cannot be null.");
+            Assert.IsNotNull(_lobbyData.ChosenGamemode, "Gamemode cannot be null.");
+            Assert.AreNotEqual(_lobbyData.MaxPlayers, 0, "MaxPlayers cannot be equal to 0.");
         }
     }
 }
