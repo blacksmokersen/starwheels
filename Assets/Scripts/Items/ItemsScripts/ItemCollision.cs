@@ -10,7 +10,7 @@ namespace Items
         Guile,
         IonBeamLaser,
         Totem,
-        Kart
+        ItemDestroyer
     }
 
     [CreateAssetMenu(menuName ="Item/ItemCollision")]
@@ -28,7 +28,7 @@ namespace Items
         public bool Guile;
         public bool IonBeamLaser;
         public bool Totem;
-        public bool Kart;
+        public bool ItemDestroyer;
 
         public bool ShouldBeDestroyed(ItemCollision itemCollision)
         {
@@ -56,7 +56,7 @@ namespace Items
             {
                 return true;
             }
-            else if (itemCollision.ItemName == ItemCollisionName.Kart && Kart)
+            else if (itemCollision.ItemName == ItemCollisionName.ItemDestroyer && ItemDestroyer)
             {
                 return true;
             }
