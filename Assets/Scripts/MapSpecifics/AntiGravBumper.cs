@@ -13,9 +13,9 @@ namespace MapsSpecifics
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(Constants.Tag.Kart))
+            if (other.CompareTag(Constants.Tag.KartCollider))
             {
-                other.GetComponent<Rigidbody>().AddForce(_impulseForce.Value * Vector3.up, ForceMode.Impulse);
+                other.GetComponentInParent<Rigidbody>().AddForce(_impulseForce.Value * Vector3.up, ForceMode.Impulse);
 
                 if (OnBumped != null)
                 {
