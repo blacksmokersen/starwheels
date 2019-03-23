@@ -91,11 +91,8 @@ namespace Items
                 itemState.OwnerNickname = OwnerNickname;
                 itemState.Name = ItemName;
 
-               // itemState.Name = GetComponent<BoltEntity>().GetState<IItemState>().Name;
-
                 IonBeam.transform.position = new Vector3(_ionBeamCam.transform.position.x, IonBeam.transform.position.y, _ionBeamCam.transform.position.z);
                 SWExtensions.AudioExtensions.PlayClipObjectAndDestroy(LaunchSource);
-              //  _ionBeamCam.Composer.enabled = true;
                 _ionBeamCam.IonBeamCameraBehaviour(false);
                 if (entity.isOwner)
                     StartCoroutine(DelayBeforeInputsChange());
@@ -112,8 +109,6 @@ namespace Items
             itemState.OwnerID = state.OwnerID;
             itemState.OwnerNickname = OwnerNickname;
             itemState.Name = ItemName;
-
-            // itemState.Name = GetComponent<BoltEntity>().GetState<IItemState>().Name;
 
             IonBeam.transform.position = position;
             SWExtensions.AudioExtensions.PlayClipObjectAndDestroy(LaunchSource);
