@@ -18,9 +18,6 @@ namespace Items
         private IonBeamCamera _ionBeamCam;
         private bool _isFiring = false;
 
-        [Header("Sounds")]
-        public AudioSource LaunchSource;
-
         [HideInInspector] public bool IsFiringBackward = false;
         public string OwnerNickname;
         public string ItemName;
@@ -37,14 +34,17 @@ namespace Items
         public void Start()
         {
             _ionBeamOwner = GetComponent<Ownership>().OwnerKartRoot;
-            if (entity.isOwner && !IsFiringBackward)
+            if (entity.isOwner)
             {
-                _ionBeamCam.GetIonBeamBehaviour(this);
-                _ionBeamCam.IonBeamCameraBehaviour(true);
-                EnableIonInputs();
+                if (IsFiringBackward)
+                    LaunchImmediateIonBeamBackwards(_ionBeamOwner.transform.position);
+                else
+                {
+                    _ionBeamCam.GetIonBeamBehaviour(this);
+                    _ionBeamCam.IonBeamCameraBehaviour(true);
+                    EnableIonInputs();
+                }
             }
-            else
-                LaunchImmediateIonBeamBackwards(_ionBeamOwner.transform.position);
         }
 
         public override void SimulateController()
@@ -92,7 +92,6 @@ namespace Items
                 itemState.Name = ItemName;
 
                 IonBeam.transform.position = new Vector3(_ionBeamCam.transform.position.x, IonBeam.transform.position.y, _ionBeamCam.transform.position.z);
-                SWExtensions.AudioExtensions.PlayClipObjectAndDestroy(LaunchSource);
                 _ionBeamCam.IonBeamCameraBehaviour(false);
                 if (entity.isOwner)
                     StartCoroutine(DelayBeforeInputsChange());
@@ -111,7 +110,6 @@ namespace Items
             itemState.Name = ItemName;
 
             IonBeam.transform.position = position;
-            SWExtensions.AudioExtensions.PlayClipObjectAndDestroy(LaunchSource);
         }
 
         //PRIVATE
