@@ -140,9 +140,11 @@ namespace Items
                 itemState.OwnerNickname = state.Nickname;
                 itemState.Name = CurrentItem.Name;
 
-                if(instantiatedItem.GetComponent<IonBeamBehaviour>() != null)
+                if (instantiatedItem.GetComponent<IonBeamBehaviour>() != null)
                 {
                     var ionBeanBehaviour = instantiatedItem.GetComponent<IonBeamBehaviour>();
+                    if (_throwingDirection.LastDirectionUp == Direction.Backward)
+                        ionBeanBehaviour.IsFiringBackward = true;
                     ionBeanBehaviour.OwnerNickname = state.Nickname;
                     ionBeanBehaviour.ItemName = CurrentItem.Name;
                 }
