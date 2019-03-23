@@ -76,8 +76,11 @@ namespace CameraUtils
 
         public void ResetCameraTransform()
         {
-            transform.localPosition = _playerCamera.transform.position;
-            transform.localRotation = _playerCamera.transform.rotation;
+            transform.position = _playerCamera.transform.position;
+            transform.rotation = new Quaternion(0,
+                _playerCamera.transform.rotation.y,
+                _playerCamera.transform.rotation.z,
+                _playerCamera.transform.rotation.w);
         }
 
         //PRIVATE
