@@ -695,6 +695,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1192}
     m_Modifications:
+    - target: {fileID: 1686259265322816863, guid: ea5d94e313ff1d74baa52652e41faac4,
+        type: 3}
+      propertyPath: m_Name
+      value: Drift
+      objectReference: {fileID: 0}
     - target: {fileID: 1687302081213842515, guid: ea5d94e313ff1d74baa52652e41faac4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -752,32 +757,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
         type: 3}
-      propertyPath: OnDriftStart.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
-        type: 3}
-      propertyPath: OnDriftRight.m_PersistentCalls.m_Calls.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
-        type: 3}
-      propertyPath: OnDriftLeft.m_PersistentCalls.m_Calls.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
-        type: 3}
-      propertyPath: OnDriftStart.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 114744034100631520}
-    - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
-        type: 3}
       propertyPath: OnDriftEnd.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 114744034100631520}
     - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
         type: 3}
       propertyPath: OnDriftReset.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 114744034100631520}
+    - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
+        type: 3}
+      propertyPath: OnDriftLeft.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 114744034100631520}
+    - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
+        type: 3}
+      propertyPath: OnDriftRight.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 114744034100631520}
     - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
@@ -795,87 +790,6 @@ PrefabInstance:
       propertyPath: _groundCondition
       value: 
       objectReference: {fileID: 2434}
-    - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
-        type: 3}
-      propertyPath: OnDriftRight.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
-        type: 3}
-      propertyPath: OnDriftRight.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
-        type: 3}
-      propertyPath: OnDriftLeft.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
-        type: 3}
-      propertyPath: OnDriftLeft.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
-        type: 3}
-      propertyPath: OnDriftLeft.m_PersistentCalls.m_Calls.Array.data[2].m_Target
-      value: 
-      objectReference: {fileID: 114744034100631520}
-    - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
-        type: 3}
-      propertyPath: OnDriftLeft.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: SetTrailsActive
-      objectReference: {fileID: 0}
-    - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
-        type: 3}
-      propertyPath: OnDriftLeft.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
-        type: 3}
-      propertyPath: OnDriftLeft.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
-        type: 3}
-      propertyPath: OnDriftRight.m_PersistentCalls.m_Calls.Array.data[2].m_Target
-      value: 
-      objectReference: {fileID: 114744034100631520}
-    - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
-        type: 3}
-      propertyPath: OnDriftRight.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: SetTrailsActive
-      objectReference: {fileID: 0}
-    - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
-        type: 3}
-      propertyPath: OnDriftRight.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
-        type: 3}
-      propertyPath: OnDriftRight.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
-        type: 3}
-      propertyPath: OnDriftBoostStart.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: CustomBoostFromBoostSettings
-      objectReference: {fileID: 0}
-    - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
-        type: 3}
-      propertyPath: OnDriftBoostStart.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
-        type: 3}
-      propertyPath: OnDriftBoostStart.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: Common.PhysicsUtils.BoostSettings, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
-        type: 3}
-      propertyPath: OnDriftBoostStart.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
-      value: 
-      objectReference: {fileID: 11400000, guid: f3cca9e52c61cea49bbd249aaa45431b,
-        type: 2}
     - target: {fileID: 1653731357617801883, guid: ea5d94e313ff1d74baa52652e41faac4,
         type: 3}
       propertyPath: _animator
@@ -2416,12 +2330,12 @@ PrefabInstance:
     - target: {fileID: 4331826489526702994, guid: 473d896dbdefa5a4d9adf8ea87479244,
         type: 3}
       propertyPath: m_havePropertiesChanged
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4331826489526702994, guid: 473d896dbdefa5a4d9adf8ea87479244,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 473d896dbdefa5a4d9adf8ea87479244, type: 3}

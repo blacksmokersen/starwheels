@@ -60,6 +60,11 @@ namespace Drift
             _rigidBody = GetComponentInParent<Rigidbody>();
         }
 
+        private void Start()
+        {
+            ResetDrift();
+        }
+
         private void Update()
         {
             if (entity.isControllerOrOwner)
