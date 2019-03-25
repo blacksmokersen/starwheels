@@ -38,13 +38,11 @@ namespace CameraUtils
             if (Enabled && Input.GetButtonDown(Constants.Input.BackCamera))
             {
                 BackCameraSwitch(true);
-                //  kartEvents.OnBackCameraStart(true);
             }
 
             if (Input.GetButtonUp(Constants.Input.BackCamera))
             {
                 BackCameraSwitch(false);
-                // kartEvents.OnBackCameraEnd(false);
             }
         }
 
