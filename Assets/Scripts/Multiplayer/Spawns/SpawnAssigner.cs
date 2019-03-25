@@ -4,6 +4,7 @@ using Bolt;
 using Photon;
 using System.Collections;
 using Multiplayer.Teams;
+using SW.Matchmaking;
 
 namespace Multiplayer
 {
@@ -12,7 +13,7 @@ namespace Multiplayer
     {
         [Header("Settings")]
         [SerializeField] private CountdownSettings _countdownSettings;
-        [SerializeField] private GameSettings _gameSettings;
+        [SerializeField] private LobbyData _lobbySettings;
 
         public RoomProtocolToken RoomInfoToken;
 
@@ -110,7 +111,6 @@ namespace Multiplayer
         {
             var spawns = FindObjectsOfType<TeamSpawn>();
             _initialSpawns = new List<TeamSpawn>(spawns);
-            Debug.Log("Ini : " + _initialSpawns.Count);
             _respawns = new List<TeamSpawn>(spawns);
         }
 
@@ -140,7 +140,7 @@ namespace Multiplayer
 
         private GameObject GetInitialSpawnPosition(Team team)
         {
-            if (_gameSettings.Gamemode == Constants.Gamemodes.FFA)
+            if (_lobbySettings.ChosenGamemode == Constants.Gamemodes.FFA)
             {
                 return GetRandomSpawnFromList(Team.Any, _initialSpawns);
             }
@@ -152,7 +152,7 @@ namespace Multiplayer
 
         private GameObject GetRespawnPosition(Team team)
         {
-            if (_gameSettings.Gamemode == Constants.Gamemodes.FFA)
+            if (_lobbySettings.ChosenGamemode == Constants.Gamemodes.FFA)
             {
                 return GetRandomSpawnFromList(Team.Any, _respawns);
             }
