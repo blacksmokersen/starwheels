@@ -32,6 +32,7 @@ namespace SW.Matchmaking
             if (BoltNetwork.IsServer)
             {
                 Debug.Log("Bolt now running as server.");
+                _lobbyData.SetRandomName();
                 _lobbyData.SetRandomGamemode();
                 _lobbyData.SetRandomMap();
                 SWMatchmaking.SetLobbyData(_lobbyData);
