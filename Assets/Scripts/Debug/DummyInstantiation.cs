@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using Multiplayer;
+using Bolt;
 
 namespace SW.DebugUtils
 {
-    public class DummyInstantiation : MonoBehaviour, IControllable
+    public class DummyInstantiation : EntityBehaviour<IKartState>, IControllable
     {
         [SerializeField] private bool _enabled = true;
         public bool Enabled
@@ -13,8 +14,7 @@ namespace SW.DebugUtils
         }
 
         [Header("Karts")]
-        [SerializeField] private GameObject blueKart;
-        [SerializeField] private GameObject redKart;
+        [SerializeField] private BoltEntity _dummy;
 
         // CORE
 
@@ -31,21 +31,20 @@ namespace SW.DebugUtils
             {
                 if (Input.GetKeyDown(KeyCode.Alpha3))
                 {
-                    Instantiate(blueKart);
-                }
-                if (Input.GetKeyDown(KeyCode.Alpha4))
-                {
-                    Instantiate(redKart);
+                    InstantiateKart(_dummy);
                 }
             }
         }
 
         // PRIVATE
 
-        private void InstantiateKart(GameObject kart)
+        private void InstantiateKart(BoltEntity kart)
         {
-            var spawnPosition = transform.position;
-            BoltNetwork.Instantiate(kart, spawnPosition, Quaternion.identity);
+            var dummy = BoltNetwork.Instantiate(kart, transform.position, transform.rotation);
+            dummy.GetState<IKartState>().Team = Team.Red.ToString();
+            dummy.GetState<IKartState>().Nickname = "Dummy";
+            dummy.GetState<IKartState>().OwnerID = -2;
+            dummy.ReleaseControl();
         }
     }
 }

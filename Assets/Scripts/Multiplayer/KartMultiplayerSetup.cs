@@ -40,7 +40,11 @@ namespace Network
                 playerReadyEvent.Send();
             }
 
-            GetComponentInChildren<Camera>().enabled = entity.isOwner;
+            var backCam = GetComponentInChildren<Camera>();
+            if (backCam != null)
+            {
+                backCam.enabled = entity.isOwner;
+            }
         }
 
         // PRIVATE

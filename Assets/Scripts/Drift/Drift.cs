@@ -67,7 +67,7 @@ namespace Drift
 
         private void Update()
         {
-            if (entity.isControllerOrOwner)
+            if (entity.isAttached && entity.isControllerOrOwner)
             {
                 SetTurnState(Input.GetAxis(Constants.Input.TurnAxis));
 
