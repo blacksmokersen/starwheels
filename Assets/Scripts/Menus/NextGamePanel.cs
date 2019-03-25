@@ -45,12 +45,12 @@ namespace Menu
 
         public void SetNextGamemode(string nextGamemode)
         {
-            _lobbyData.ChosenGamemode = nextGamemode;
+            _lobbyData.SetGamemode(nextGamemode);
         }
 
         public void SetNextMap(string nextMap)
         {
-            _lobbyData.ChosenMapName = nextMap;
+            _lobbyData.SetMap(nextMap);
         }
 
         public void SetNextSkin(string nextSkin)
