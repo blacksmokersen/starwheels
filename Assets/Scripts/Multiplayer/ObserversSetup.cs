@@ -4,19 +4,21 @@ using Bolt;
 
 public class ObserversSetup : EntityBehaviour
 {
+    public bool IsEnabled = true;
+
     [SerializeField] private GameObject _objectToObserve;
 
     public override void Attached()
     {
-        if (entity.isAttached && entity.isOwner)
+        if (entity.isAttached && entity.isOwner && IsEnabled)
         {
             SetObservers();
         }
     }
 
-    // PRIVATE
+    // PUBLIC
 
-    private void SetObservers()
+    public void SetObservers()
     {
         foreach (var observer in FindObjectsOfType<MonoBehaviour>().OfType<IObserver>())
         {

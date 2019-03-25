@@ -87,7 +87,7 @@ namespace Health
 
         private void CheckIfIsDead()
         {
-            if (state.Health <= 0 && !IsDead)
+            if (entity.isAttached && state.Health <= 0 && !IsDead)
             {
                 IsDead = true;
                 OnDeath.Invoke();
@@ -96,7 +96,10 @@ namespace Health
 
         private void UpdateCurrentHealth()
         {
-            CurrentHealth = state.Health;
+            if (entity.isAttached)
+            {
+                CurrentHealth = state.Health;
+            }
         }
 
         private IEnumerator InvicibilityTime(float x)
