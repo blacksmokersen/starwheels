@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Multiplayer;
 using Bolt;
+using Common;
 
 namespace SW.DebugUtils
 {
@@ -14,13 +15,25 @@ namespace SW.DebugUtils
         }
 
         [Header("Karts")]
-        [SerializeField] private BoltEntity _dummy;
+        [SerializeField] private BoltEntity _dummyPrefab;
+
+        private PlayerSettings _playerSettings;
+        private BoltEntity _lastInstantiatedDummy;
+        private bool _hasControlOfDummy = false;
 
         // CORE
 
+        private void Awake()
+        {
+            _playerSettings = Resources.Load<PlayerSettings>(Constants.Resources.PlayerSettings);
+        }
+
         private void Update()
         {
-            MapInputs();
+            if (entity.isAttached && entity.isOwner)
+            {
+                MapInputs();
+            }
         }
 
         // PUBLIC
@@ -31,7 +44,11 @@ namespace SW.DebugUtils
             {
                 if (Input.GetKeyDown(KeyCode.Alpha3))
                 {
-                    InstantiateKart(_dummy);
+                    InstantiateKart(_dummyPrefab);
+                }
+                if (Input.GetKeyDown(KeyCode.Alpha4))
+                {
+                    SwitchControlOfLastDummy();
                 }
             }
         }
@@ -40,11 +57,50 @@ namespace SW.DebugUtils
 
         private void InstantiateKart(BoltEntity kart)
         {
-            var dummy = BoltNetwork.Instantiate(kart, transform.position, transform.rotation);
-            dummy.GetState<IKartState>().Team = Team.Red.ToString();
-            dummy.GetState<IKartState>().Nickname = "Dummy";
-            dummy.GetState<IKartState>().OwnerID = -2;
-            dummy.ReleaseControl();
+            var spawnPosition = transform.position + (5 * transform.forward);
+            _lastInstantiatedDummy = BoltNetwork.Instantiate(kart, spawnPosition, transform.rotation);
+            _lastInstantiatedDummy.GetState<IKartState>().Team = _playerSettings.ColorSettings.TeamEnum.OppositeTeam().ToString();
+            _lastInstantiatedDummy.GetState<IKartState>().Nickname = "Dummy";
+            _lastInstantiatedDummy.GetState<IKartState>().OwnerID = -2;
+            ReleaseControlOfDummy();
+        }
+
+        private void SwitchControlOfLastDummy()
+        {
+            if (_hasControlOfDummy)
+            {
+                ReleaseControlOfDummy();
+            }
+            else
+            {
+                TakeControlOfDummy();
+            }
+        }
+
+        private void TakeControlOfDummy()
+        {
+            entity.ReleaseControl();
+            GetComponentInParent<ControllableDisabler>().DisableAllInChildren();
+            Enabled = true;
+            _lastInstantiatedDummy.TakeControl();
+            _lastInstantiatedDummy.GetComponent<ObserversSetup>().SetObservers();
+            _lastInstantiatedDummy.GetComponent<ControllableDisabler>().EnableAllInChildren();
+
+            _hasControlOfDummy = true;
+        }
+
+        private void ReleaseControlOfDummy()
+        {
+            entity.TakeControl();
+            entity.GetComponentInParent<ControllableDisabler>().EnableAllInChildren();
+            GetComponentInParent<ObserversSetup>().SetObservers();
+            if (_lastInstantiatedDummy)
+            {
+                _lastInstantiatedDummy.GetComponent<ControllableDisabler>().DisableAllInChildren();
+                _lastInstantiatedDummy.ReleaseControl();
+            }
+
+            _hasControlOfDummy = false;
         }
     }
 }
