@@ -13,9 +13,12 @@ namespace Gamemodes.Totem
         public IntEvent OnLifeLost;
         public TeamEvent OnWallDestroyed;
 
-        public override void ControlGained()
+        public override void Attached()
         {
-            if (entity.isControllerOrOwner) state.Lives = RemainingLives;
+            if (entity.isOwner)
+            {
+                state.Lives = RemainingLives;
+            }
         }
 
         // MONOBEHAVIOUR
@@ -32,7 +35,10 @@ namespace Gamemodes.Totem
 
         private void LoseLife()
         {
-            if (OnLifeLost != null) OnLifeLost.Invoke(state.Lives); // Local event
+            if (OnLifeLost != null)
+            {
+                OnLifeLost.Invoke(state.Lives); // Local event
+            }
 
             if (entity.isAttached && entity.isControllerOrOwner)
             {
@@ -50,7 +56,10 @@ namespace Gamemodes.Totem
                     gameOverEvent.WinningTeam = OwnerTeam.ToString();
                     gameOverEvent.Send();
 
-                    if (OnWallDestroyed != null) OnWallDestroyed.Invoke(OwnerTeam);
+                    if (OnWallDestroyed != null)
+                    {
+                        OnWallDestroyed.Invoke(OwnerTeam);
+                    }
 
                     BoltNetwork.Destroy(gameObject);
                 }
