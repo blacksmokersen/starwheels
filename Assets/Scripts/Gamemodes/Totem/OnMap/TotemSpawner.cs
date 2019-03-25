@@ -37,6 +37,7 @@ namespace Gamemodes.Totem
             var totem = GameObject.FindGameObjectWithTag(Constants.Tag.Totem);
             totem.GetComponent<TotemOwnership>().UnsetOwner();
             totem.GetComponent<TotemPhysics>().SetVelocityToZero();
+            totem.GetComponent<TotemPhysics>().EnableCollider(true);
             totem.transform.position = transform.position;
 
             TotemThrown totemThrownEvent = TotemThrown.Create();

@@ -9,6 +9,9 @@ namespace Gamemodes.Totem
         [Header("Settings")]
         [SerializeField] private TotemSettings _totemSettings;
 
+        [Header("Physics Elements")]
+        [SerializeField] private Collider _collider;
+
         private Rigidbody _rb;
         private bool _isSlowingDown = false;
         private Coroutine _slowdownCoroutine;
@@ -33,6 +36,11 @@ namespace Gamemodes.Totem
         public void SetVelocityToZero()
         {
             _rb.velocity = Vector3.zero;
+        }
+
+        public void EnableCollider(bool b)
+        {
+            _collider.enabled = b;
         }
 
         public void StartSlowdown()
