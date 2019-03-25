@@ -896,6 +896,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2739}
+        m_MethodName: EnableCollider
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnParentUnset:
@@ -944,6 +955,17 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2739}
+        m_MethodName: EnableCollider
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
@@ -1105,6 +1127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _totemSettings: {fileID: 11400000, guid: 9f6ce33577d972c4f9494dd71799c0c4, type: 2}
+  _collider: {fileID: 1902}
 --- !u!114 &2733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1144,11 +1167,6 @@ PrefabInstance:
       value: Graphics
       objectReference: {fileID: 0}
     - target: {fileID: 4513351017885806344, guid: 7a8aca3145e29c340ad148058ffc7ee0,
-        type: 3}
-      propertyPath: m_Layer
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 4627486346820087484, guid: 7a8aca3145e29c340ad148058ffc7ee0,
         type: 3}
       propertyPath: m_Layer
       value: 15
@@ -1237,6 +1255,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4627486346820087484, guid: 7a8aca3145e29c340ad148058ffc7ee0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4628473504680265566, guid: 7a8aca3145e29c340ad148058ffc7ee0,
         type: 3}
