@@ -95,5 +95,10 @@ namespace SW.Matchmaking
                 return null;
             }
         }
+
+        public void SetRandomName()
+        {
+            ServerName = "#"+Random.Range(float.MinValue, float.MaxValue);
+        }
     }
 }
