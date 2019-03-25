@@ -71,6 +71,10 @@ namespace Items
                     {
                         UseItem();
                     }
+                    else if (_secondsBeforeMerging.Value == 0)
+                    {
+                        UseItem();
+                    }
                     _timer = 0f;
                 }
             }

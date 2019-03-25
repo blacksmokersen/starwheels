@@ -47,7 +47,7 @@ namespace Items.Merge
         {
             if (Enabled)
             {
-                if (Input.GetButton(Constants.Input.UseItem) || Input.GetButton(Constants.Input.UseItemBackward) || Input.GetButton(Constants.Input.UseItemForward))
+                if (Input.GetButton(Constants.Input.MergeItem))
                 {
                     _timer += Time.deltaTime;
 
@@ -58,7 +58,7 @@ namespace Items.Merge
                         _canMerge = false;
                     }
                 }
-                if (Input.GetButtonUp(Constants.Input.UseItem) || Input.GetButtonUp(Constants.Input.UseItemBackward) || Input.GetButtonUp(Constants.Input.UseItemForward))
+                if (Input.GetButtonUp(Constants.Input.MergeItem))
                 {
                     _timer = 0f;
                     _canMerge = true;

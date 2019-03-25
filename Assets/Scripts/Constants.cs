@@ -42,6 +42,7 @@
         public const string UseItem = "Item";
         public const string UseItemForward = "ItemForward";
         public const string UseItemBackward = "ItemBackward";
+        public const string MergeItem = "MergeItem";
         public const string UseAbility = "Ability";
         public const string BackCamera = "ClickLeftJoystick";
         public const string TurnCamera = "RightJoystickHorizontal";
