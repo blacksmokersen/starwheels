@@ -12,7 +12,7 @@ namespace Multiplayer
             SetupEntity();
         }
 
-        public override void SceneLoadLocalDone(string map)
+        public override void SceneLoadLocalDone(string map, IProtocolToken token)
         {
             SetupEntity();
         }
@@ -31,6 +31,7 @@ namespace Multiplayer
             {
                 BoltNetwork.Attach(entity.gameObject);
                 entity.TakeControl();
+                Debug.Log("Setup scene entity : " + entity.name);
             }
         }
     }
