@@ -9,6 +9,7 @@ namespace CameraUtils
     {
         [SerializeField] private Camera _kartCamera;
         [SerializeField] private Camera _mapCamera;
+        [SerializeField] private Camera _freeCamera;
         [SerializeField] private CountdownSettings _countdownSettings;
 
         //CORE
@@ -28,6 +29,13 @@ namespace CameraUtils
                 {
                     _mapCamera.enabled = true;
                     _kartCamera.enabled = false;
+                    if (_freeCamera != null)
+                    {
+                        _freeCamera.enabled = false;
+                        _freeCamera.GetComponent<FreeCamera>().Enabled = false;
+                    }
+                    else
+                        Debug.LogWarning("There is no FreeCamera selected in the CameraSelector");
                 }
                 if (_kartCamera == null)
                     Debug.LogError("There is no PlayerCamera selected in the CameraSelector");
@@ -35,8 +43,15 @@ namespace CameraUtils
             else
             {
                 _kartCamera.enabled = true;
-                if(_mapCamera != null)
+                if (_mapCamera != null)
+                {
                     _mapCamera.enabled = false;
+                    if (_freeCamera != null)
+                    {
+                        _freeCamera.enabled = false;
+                        _freeCamera.GetComponent<FreeCamera>().Enabled = false;
+                    }
+                }
             }
         }
 
@@ -55,29 +70,46 @@ namespace CameraUtils
         private void ShowPlayerCamera()
         {
             _mapCamera.enabled = false;
+            _freeCamera.enabled = false;
             _kartCamera.enabled = true;
+            _freeCamera.GetComponent<FreeCamera>().Enabled = false;
+            _freeCamera.GetComponent<FreeCamera>().EnableKartControls();
         }
 
         private void ShowMapCamera()
         {
             _mapCamera.enabled = true;
             _kartCamera.enabled = false;
+            _freeCamera.enabled = false;
+            _freeCamera.GetComponent<FreeCamera>().Enabled = false;
+            _freeCamera.GetComponent<FreeCamera>().DisableKartControls();
+        }
+
+        private void ShowFreeCamera()
+        {
+            _mapCamera.enabled = false;
+            _kartCamera.enabled = false;
+            _freeCamera.enabled = true;
+            _freeCamera.GetComponent<FreeCamera>().Enabled = true;
+            _freeCamera.GetComponent<FreeCamera>().DisableKartControls();
         }
 
         //DEBUG
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.P))
+            if (Input.GetKeyDown(KeyCode.Keypad7))
             {
-                _mapCamera.enabled = false;
-                _kartCamera.enabled = true;
+                ShowPlayerCamera();
             }
 
-            if (Input.GetKeyDown(KeyCode.M))
+            if (Input.GetKeyDown(KeyCode.Keypad8))
             {
-                _mapCamera.enabled = true;
-                _kartCamera.enabled = false;
+                ShowMapCamera();
+            }
+            if (Input.GetKeyDown(KeyCode.Keypad9))
+            {
+                ShowFreeCamera();
             }
         }
     }
