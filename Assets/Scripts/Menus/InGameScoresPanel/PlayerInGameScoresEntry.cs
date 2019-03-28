@@ -5,7 +5,7 @@ using TMPro;
 namespace Menu.InGameScores
 {
     [DisallowMultipleComponent]
-    public class PlayerInGameScoresEntry : MonoBehaviour
+    public class InGameScoresEntry : MonoBehaviour
     {
         [Header("UI Elements")]
         [SerializeField] private TextMeshProUGUI _killCount;

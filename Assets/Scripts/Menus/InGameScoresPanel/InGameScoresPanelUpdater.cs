@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Bolt;
 
@@ -8,44 +7,43 @@ namespace Menu.InGameScores
     [DisallowMultipleComponent]
     public class InGameScoresPanelUpdater : GlobalEventListener
     {
-        public Dictionary<int, InGameScoresEntry> PlayerScoreEntries;
+        public Dictionary<int, PlayerInGameScoresEntry> PlayerScoreEntries;
 
-        // BOLT SPECIFIC EVENTS
+        [Header("Entry Data")]
+        [SerializeField] private PlayerInGameScoresEntry _prefab;
 
-        public override void Connected(BoltConnection connection)
-        {
-
-        }
+        // BOLT
 
         public override void Disconnected(BoltConnection connection)
         {
-
+            DestroyEntryForPlayer((int)connection.ConnectionId);
         }
 
-        // GAMEPLAY EVENTS
+        // PUBLIC
 
-        public override void OnEvent(GameReady evnt)
+        public void CreateEntryForPlayer(int id)
         {
-
+            var entry = Instantiate(_prefab);
+            PlayerScoreEntries.Add(id, entry);
         }
 
-        public override void OnEvent(PlayerHit evnt)
-        {
-
-        }
-
-        public override void OnEvent(GameOver evnt)
-        {
-
-        }
-
-        // PRIVATE
-
-        private void UpdatePlayerScore(int id, int score)
+        public void DestroyEntryForPlayer(int id)
         {
             if (PlayerScoreEntries.ContainsKey(id))
             {
-                PlayerScoreEntries[id].UpdateScore(score);
+                Destroy(PlayerScoreEntries[id]);
+            }
+            else
+            {
+                Debug.LogError("Entry couldn't be destroyed since ID was not found.");
+            }
+        }
+
+        public void UpdatePlayerKillCount(int id, int killCount)
+        {
+            if (PlayerScoreEntries.ContainsKey(id))
+            {
+                PlayerScoreEntries[id].UpdateKillCount(killCount);
             }
             else
             {
@@ -53,7 +51,19 @@ namespace Menu.InGameScores
             }
         }
 
-        private void UpdatePlayerAbility(int id, int abilityIndex)
+        public void UpdatePlayerDeathCount(int id, int deathCount)
+        {
+            if (PlayerScoreEntries.ContainsKey(id))
+            {
+                PlayerScoreEntries[id].UpdateKillCount(deathCount);
+            }
+            else
+            {
+                Debug.LogError("Provided ID could be found in the players scores entries.");
+            }
+        }
+
+        public void UpdatePlayerAbility(int id, int abilityIndex)
         {
             if (PlayerScoreEntries.ContainsKey(id))
             {
