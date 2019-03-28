@@ -14,4 +14,10 @@ public class StringEvent : UnityEvent<string> { }
 public class BoolEvent : UnityEvent<bool> { }
 
 [System.Serializable]
+public class DoubleIntEvent : UnityEvent<int, int> { }
+
+[System.Serializable]
+public class IntFloatEvent : UnityEvent<int> { }
+
+[System.Serializable]
 public class ColorEvent : UnityEvent<Color> { }
