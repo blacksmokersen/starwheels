@@ -68,6 +68,7 @@ namespace Items
         private void SendPlayerHitEvent(IItemState itemState)
         {
             PlayerHit playerHitEvent = PlayerHit.Create();
+            playerHitEvent.KillerID = itemState.OwnerID;
             playerHitEvent.KillerName = itemState.OwnerNickname;
             playerHitEvent.KillerTeam = itemState.Team;
             playerHitEvent.Item = itemState.Name;
