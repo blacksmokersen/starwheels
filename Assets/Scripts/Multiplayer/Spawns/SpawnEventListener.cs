@@ -39,6 +39,14 @@ namespace Multiplayer
             InstantiateKart(transform.position, transform.rotation, Team.Blue, _roomProtocolToken); // Scene specific position
         }
 
+        public override void BoltShutdownBegin(AddCallback registerDoneCallback)
+        {
+            PlayerQuit playerQuitEvent = PlayerQuit.Create();
+            playerQuitEvent.PlayerID = SWMatchmaking.GetMyBoltId();
+            playerQuitEvent.Send();
+            Debug.Log("Sent PlayerQuit event.");
+        }
+
         public override void OnEvent(PlayerSpawn evnt)
         {
             if(evnt.ConnectionID == SWMatchmaking.GetMyBoltId())
