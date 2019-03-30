@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Bolt;
@@ -7,27 +8,28 @@ using Multiplayer.Teams;
 
 namespace Gamemodes
 {
-    public enum GameMode { None, ClassicBattle, BankRobbery, GoldenTotem }
+    public enum GameMode { None, Battle, BankRobbery, Totem, FFA }
 
     [BoltGlobalBehaviour(BoltNetworkModes.Server)]
     public abstract class GameModeBase : GlobalEventListener
     {
-        public static GameMode CurrentGameMode;
-
-        [Header("Game Mode")]
+        [Header("Gamemode")]
         public Team WinnerTeam = Team.None;
-        public bool GameStarted = false;
-        public bool IsOver = false;
 
         [Header("Events")]
         public UnityEvent OnGameReset;
         public TeamEvent OnGameEnd;
         public UnityEvent OnGameStart;
 
-        protected int _redScore = 0;
-        protected int _blueScore = 0;
+        protected Dictionary<Team, int> scores;
+        protected GameSettings gameSettings;
 
-        [SerializeField] private float countdownSeconds = 3f;
+        // CORE
+
+        private void Awake()
+        {
+            gameSettings = Resources.Load<GameSettings>(Constants.Resources.GameSettings);
+        }
 
         // BOLT
 
@@ -41,66 +43,66 @@ namespace Gamemodes
             ResetGame();
         }
 
+        public override void Connected(BoltConnection connection)
+        {
+            // Add player to score
+        }
+
+        public override void Disconnected(BoltConnection connection)
+        {
+            // Remove player from score
+        }
+
         // PROTECTED
 
         protected virtual void InitializeGame()
         {
-            // To Implement in concrete Game Modes
             OnGameStart.Invoke();
         }
 
-        protected void EndGame()
+        protected void SendWinningTeamEvent(Team team)
         {
             GameOver goEvent = GameOver.Create();
-            goEvent.WinningTeam = WinnerTeam.ToString();
+            goEvent.WinningTeam = team.ToString();
             goEvent.Send();
-
-            var playerInputsList = FindObjectsOfType<MonoBehaviour>().OfType<IControllable>();
-
-            foreach (MonoBehaviour playerInputs in playerInputsList)
-            {
-                playerInputs.enabled = false;
-            }
         }
 
         protected void ResetGame()
         {
             WinnerTeam = Team.None;
-            GameStarted = false;
-            IsOver = false;
-            _redScore = 0;
-            _blueScore = 0;
+            ResetScores();
             OnGameReset.Invoke();
         }
 
-        protected void IncreaseScore(Team team)
+        protected void IncreaseScore(Team team, int pointsToAdd)
+        {
+            scores[team] += pointsToAdd;
+        }
+
+        protected void SendScoreIncreasedEvent(Team team)
         {
             ScoreIncreased scoreIncreased = ScoreIncreased.Create();
             scoreIncreased.Team = team.ToString();
-            switch (team)
-            {
-                case Team.Blue:
-                    _blueScore++;
-                    scoreIncreased.Score = _blueScore;
-                    break;
-                case Team.Red:
-                    _redScore++;
-                    scoreIncreased.Score = _redScore;
-                    break;
-                default:
-                    Debug.LogWarning("Unknown team.");
-                    break;
-            }
+            scoreIncreased.Score = scores[team];
             scoreIncreased.Send();
         }
 
         // PRIVATE
 
-        private IEnumerator StartCountdown()
+        private void InitializeScores()
         {
-            yield return new WaitForSeconds(countdownSeconds);
-            InitializeGame();
-            GameStarted = true;
+            foreach (var entry in gameSettings.TeamsListSettings.TeamsList)
+            {
+                scores.Add(entry.TeamEnum, 0);
+            }
+        }
+
+        private void ResetScores()
+        {
+            foreach (var entry in scores)
+            {
+                scores[entry.Key] = 0;
+            }
         }
     }
 }

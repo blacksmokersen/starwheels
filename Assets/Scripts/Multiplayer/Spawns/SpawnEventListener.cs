@@ -39,6 +39,14 @@ namespace Multiplayer
             InstantiateKart(transform.position, transform.rotation, Team.Blue, _roomProtocolToken); // Scene specific position
         }
 
+        public override void BoltShutdownBegin(AddCallback registerDoneCallback)
+        {
+            PlayerQuit playerQuitEvent = PlayerQuit.Create();
+            playerQuitEvent.PlayerID = SWMatchmaking.GetMyBoltId();
+            playerQuitEvent.Send();
+            Debug.Log("Sent PlayerQuit event.");
+        }
+
         public override void OnEvent(PlayerSpawn evnt)
         {
             if(evnt.ConnectionID == SWMatchmaking.GetMyBoltId())
@@ -67,9 +75,14 @@ namespace Multiplayer
 
             myKart.transform.position = spawnPosition;
             myKart.transform.rotation = spawnRotation;
-            Debug.Log("Team bolt changed : " + _playerSettings.ColorSettings.BoltColor);
-            myKart.GetComponent<BoltEntity>().GetState<IKartState>().Team = _playerSettings.ColorSettings.TeamEnum.ToString();
+            myKart.GetComponent<BoltEntity>().GetState<IKartState>().Team = team.ToString(); // _playerSettings.ColorSettings.TeamEnum.ToString();
             myKart.GetComponent<BoltEntity>().GetState<IKartState>().OwnerID = SWMatchmaking.GetMyBoltId();
+
+            PlayerReady playerReadyEvent = PlayerReady.Create();
+            playerReadyEvent.Nickname = _playerSettings.Nickname;
+            playerReadyEvent.PlayerID = SWMatchmaking.GetMyBoltId();
+            playerReadyEvent.Team = team.ToString();
+            playerReadyEvent.Send();
         }
     }
 }

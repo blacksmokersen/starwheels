@@ -12,8 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e599e323e220ee479ab29978995aff8, type: 3}
   m_Name: PlayerSettings
   m_EditorClassIdentifier: 
-  TeamColor: {r: 0.2, g: 0.5, b: 1, a: 0.8}
-  Nickname: test
+  ColorSettings: {fileID: 11400000, guid: ee0bb88e01756be4480a41b3c62862ba, type: 2}
+  Nickname: sha
   ConnectionID: 0
   KartIndex: 0
   AbilityIndex: 0
+  OnTeamColorUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnNicknameUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnAbilityIndexUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
