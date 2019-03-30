@@ -28,9 +28,9 @@ namespace Menu.InGameScores
             }
         }
 
-        public override void Disconnected(BoltConnection connection)
+        public override void OnEvent(PlayerQuit evnt)
         {
-            DestroyEntryForPlayer((int)connection.ConnectionId);
+            DestroyEntryForPlayer(evnt.PlayerID);
         }
 
         // PUBLIC
@@ -61,8 +61,15 @@ namespace Menu.InGameScores
         {
             if (PlayerScoreEntries.ContainsKey(id))
             {
-                Destroy(PlayerScoreEntries[id].gameObject);
-                // check if last player of team
+                var parent = PlayerScoreEntries[id].GetComponentInParent<TeamInGameScoresEntry>();
+                if (ParentHasOnlyOneChild(parent))
+                {
+                    Destroy(parent.gameObject);
+                }
+                else
+                {
+                    Destroy(PlayerScoreEntries[id].gameObject);
+                }
             }
             else
             {
@@ -106,6 +113,13 @@ namespace Menu.InGameScores
             {
                 Debug.LogError("Provided ID could be found in the players scores entries.");
             }
+        }
+
+        // PRIVATE
+
+        private bool ParentHasOnlyOneChild(TeamInGameScoresEntry teamEntry)
+        {
+            return teamEntry.GetComponentsInChildren<PlayerInGameScoresEntry>().Length <= 1;
         }
     }
 }
