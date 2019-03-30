@@ -7,18 +7,18 @@ namespace Menu.InGameScores
     public class PlayerStats
     {
         // BATTLE
-        public int KillCount;
-        public int DeathCount;
+        public int KillCount = 0;
+        public int DeathCount = 0;
 
         // TOTEM
-        public int IndividualGoals;
-        public int Passes;
-        public int Saves;
+        public int IndividualGoals = 0;
+        public int Passes = 0;
+        public int Saves = 0;
     }
 
     public class PlayersStats : GlobalEventListener
     {
-        public Dictionary<int, PlayerStats> AllPlayersStats;
+        public Dictionary<int, PlayerStats> AllPlayersStats = new Dictionary<int, PlayerStats>();
 
         [Header("Events")]
         public DoubleIntEvent OnPlayerKillCountUpdated;
@@ -26,21 +26,38 @@ namespace Menu.InGameScores
 
         // BOLT SPECIFIC EVENTS
 
-        public override void Connected(BoltConnection connection)
+        public override void OnEvent(PlayerReady evnt)
         {
-            CreateEntryForPlayerID((int)connection.ConnectionId);
+            if (!AllPlayersStats.ContainsKey(evnt.PlayerID))
+            {
+                CreateEntryForPlayerID(evnt.PlayerID);
+            }
+            else
+            {
+                Debug.Log("Could not add the player stats entry since it already exists.");
+            }
         }
 
         public override void Disconnected(BoltConnection connection)
         {
-            RemoveEntryForPlayerID((int)connection.ConnectionId);
+            if (AllPlayersStats.ContainsKey((int)connection.ConnectionId))
+            {
+                RemoveEntryForPlayerID((int)connection.ConnectionId);
+            }
+            else
+            {
+                Debug.Log("Could not remove the player stats entry since his ID was not found.");
+            }
         }
 
         // GAMEPLAY EVENTS
 
         public override void OnEvent(PlayerHit evnt)
         {
-            UpdatePlayerKillCount(evnt.KillerID); // change to killer
+            if (evnt.KillerID != evnt.VictimID) // This is not a self kill
+            {
+                UpdatePlayerKillCount(evnt.KillerID);
+            }
             UpdatePlayerDeathCount(evnt.VictimID);
         }
 
@@ -58,13 +75,13 @@ namespace Menu.InGameScores
 
         public void UpdatePlayerKillCount(int id)
         {
-            AllPlayersStats[id].KillCount++;
+            AllPlayersStats[id].KillCount += 1;
             OnPlayerKillCountUpdated.Invoke(id, AllPlayersStats[id].KillCount);
         }
 
         public void UpdatePlayerDeathCount(int id)
         {
-            AllPlayersStats[id].DeathCount++;
+            AllPlayersStats[id].DeathCount += 1;
             OnPlayerDeathCountUpdated.Invoke(id, AllPlayersStats[id].DeathCount);
         }
     }

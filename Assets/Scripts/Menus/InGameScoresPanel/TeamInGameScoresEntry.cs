@@ -1,18 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
+using Multiplayer.Teams;
 
-public class TeamInGameScoresEntry : MonoBehaviour
+namespace Menu.InGameScores
 {
-    // Start is called before the first frame update
-    void Start()
+    [DisallowMultipleComponent]
+    public class TeamInGameScoresEntry : MonoBehaviour
     {
-        
-    }
+        public Team Team;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        [Header("UI Elements")]
+        [SerializeField] private Image _backgroundImage;
+
+        private GameSettings _gameSettings;
+
+        // CORE
+
+        private void Awake()
+        {
+            _gameSettings = Resources.Load<GameSettings>(Constants.Resources.GameSettings);
+        }
+
+        // PUBLIC
+
+        public void SetTeam(Team team)
+        {
+            Team = team;
+        }
+
+        public void SetColorAccordingToTeam()
+        {
+            _backgroundImage.color = _gameSettings.TeamsListSettings.GetSettings(Team).KillFeedEntryColor;
+        }
     }
 }
