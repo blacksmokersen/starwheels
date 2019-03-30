@@ -5,14 +5,20 @@ using TMPro;
 namespace Menu.InGameScores
 {
     [DisallowMultipleComponent]
-    public class InGameScoresEntry : MonoBehaviour
+    public class PlayerInGameScoresEntry : MonoBehaviour
     {
         [Header("UI Elements")]
+        [SerializeField] private TextMeshProUGUI _nickname;
         [SerializeField] private TextMeshProUGUI _killCount;
         [SerializeField] private TextMeshProUGUI _deathCount;
         [SerializeField] private Image _abilityLogo;
 
         // PUBLIC
+
+        public void UpdateNickname(string nickname)
+        {
+            _nickname.text = nickname;
+        }
 
         public void UpdateKillCount(int killCount)
         {
@@ -21,7 +27,7 @@ namespace Menu.InGameScores
 
         public void UpdateDeathCount(int deathCount)
         {
-            _killCount.text = "" + deathCount;
+            _deathCount.text = "" + deathCount;
         }
 
         public void UpdateAbilityLogo(int index)

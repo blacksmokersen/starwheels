@@ -34,10 +34,6 @@ namespace Network
             if (entity.isOwner)
             {
                 state.Nickname = _playerSettings.Nickname;
-
-                PlayerReady playerReadyEvent = PlayerReady.Create();
-                playerReadyEvent.Team = state.Team;
-                playerReadyEvent.Send();
             }
 
             var backCam = GetComponentInChildren<Camera>();
