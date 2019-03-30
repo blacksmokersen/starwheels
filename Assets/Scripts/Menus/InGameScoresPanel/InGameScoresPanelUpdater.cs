@@ -61,8 +61,9 @@ namespace Menu.InGameScores
         {
             if (PlayerScoreEntries.ContainsKey(id))
             {
-                var parent = PlayerScoreEntries[id].GetComponentInParent<TeamInGameScoresEntry>();
-                if (ParentHasOnlyOneChild(parent))
+                var parent = PlayerScoreEntries[id].transform.parent;
+
+                if (parent && ParentHasOnlyOneChild(parent))
                 {
                     Destroy(parent.gameObject);
                 }
@@ -117,9 +118,10 @@ namespace Menu.InGameScores
 
         // PRIVATE
 
-        private bool ParentHasOnlyOneChild(TeamInGameScoresEntry teamEntry)
+        private bool ParentHasOnlyOneChild(Transform parent)
         {
-            return teamEntry.GetComponentsInChildren<PlayerInGameScoresEntry>().Length <= 1;
+            var childCount = parent.childCount;
+            return childCount <= 2;
         }
     }
 }
