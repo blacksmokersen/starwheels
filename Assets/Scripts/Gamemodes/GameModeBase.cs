@@ -10,7 +10,7 @@ namespace Gamemodes
 {
     public enum GameMode { None, Battle, BankRobbery, Totem, FFA }
 
-    public abstract class GameModeBase : GlobalEventListener
+    public abstract class GamemodeBase : GlobalEventListener
     {
         [Header("Gamemode")]
         public Team WinnerTeam = Team.None;
