@@ -38,7 +38,7 @@ namespace Multiplayer
 
         public override void OnEvent(LobbyCountdown evnt)
         {
-            Debug.Log("Starts in " + evnt.Time);
+            //Debug.Log("Starts in " + evnt.Time);
         }
     }
 }

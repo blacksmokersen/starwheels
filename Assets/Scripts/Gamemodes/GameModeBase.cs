@@ -10,8 +10,7 @@ namespace Gamemodes
 {
     public enum GameMode { None, Battle, BankRobbery, Totem, FFA }
 
-    [BoltGlobalBehaviour(BoltNetworkModes.Server)]
-    public abstract class GameModeBase : GlobalEventListener
+    public abstract class GamemodeBase : GlobalEventListener
     {
         [Header("Gamemode")]
         public Team WinnerTeam = Team.None;
@@ -21,7 +20,7 @@ namespace Gamemodes
         public TeamEvent OnGameEnd;
         public UnityEvent OnGameStart;
 
-        protected Dictionary<Team, int> scores;
+        protected Dictionary<Team, int> scores = new Dictionary<Team, int>();
         protected GameSettings gameSettings;
 
         // CORE
@@ -29,19 +28,10 @@ namespace Gamemodes
         private void Awake()
         {
             gameSettings = Resources.Load<GameSettings>(Constants.Resources.GameSettings);
+            InitializeScores();
         }
 
         // BOLT
-
-        public override void SceneLoadLocalDone(string scene)
-        {
-            ResetGame();
-        }
-
-        public override void SceneLoadLocalDone(string scene, IProtocolToken token)
-        {
-            ResetGame();
-        }
 
         public override void Connected(BoltConnection connection)
         {

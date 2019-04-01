@@ -40,7 +40,7 @@ namespace Gamemodes.Totem
                 OnLifeLost.Invoke(state.Lives); // Local event
             }
 
-            if (entity.isAttached && entity.isControllerOrOwner)
+            if (entity.isAttached && entity.isOwner)
             {
                 state.Lives--;
 
@@ -49,6 +49,7 @@ namespace Gamemodes.Totem
                 TotemWallHit totemWallHitEvent = TotemWallHit.Create();
                 totemWallHitEvent.Team = OwnerTeam.ToString();
                 totemWallHitEvent.Send();
+                Debug.Log("Totem wall has been hit !");
 
                 if (state.Lives <= 0)
                 {
