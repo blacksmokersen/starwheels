@@ -1,6 +1,6 @@
 ﻿namespace Gamemodes
 {
-    public class BattleServerRules : GameModeBase
+    public class BattleServerRules : GamemodeBase
     {
         public IntVariable MaxScore;
 
