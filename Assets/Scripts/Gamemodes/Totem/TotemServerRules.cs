@@ -8,9 +8,12 @@ namespace Gamemodes.Totem
 
         public override void OnEvent(TotemWallHit evnt)
         {
-            Debug.Log("TotemWallHit event received.");
-            IncreaseScore(evnt.Team.ToTeam().OppositeTeam(), 1);
-            SendScoreIncreasedEvent(evnt.Team.ToTeam().OppositeTeam());
+            if (BoltNetwork.IsServer)
+            {
+                Debug.Log("TotemWallHit event received.");
+                IncreaseScore(evnt.Team.ToTeam().OppositeTeam(), 1);
+                SendScoreIncreasedEvent(evnt.Team.ToTeam().OppositeTeam());
+            }
         }
     }
 }
