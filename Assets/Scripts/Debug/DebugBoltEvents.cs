@@ -52,5 +52,12 @@ namespace SW.DebugUtils
             playerHitEvent.VictimEntity = SWExtensions.KartExtensions.GetKartWithID(SWMatchmaking.GetMyBoltId()).GetComponent<BoltEntity>();
             playerHitEvent.Send();
         }
+
+        public void TriggerPlayerQuitEvent()
+        {
+            PlayerQuit playerQuitEvent = PlayerQuit.Create();
+            playerQuitEvent.PlayerID = SWMatchmaking.GetMyBoltId();
+            playerQuitEvent.Send();
+        }
     }
 }
