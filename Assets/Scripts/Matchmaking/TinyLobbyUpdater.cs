@@ -2,7 +2,6 @@
 using UnityEngine.UI;
 using Bolt;
 using TMPro;
-using System.Collections;
 
 namespace SW.Matchmaking
 {
@@ -29,14 +28,49 @@ namespace SW.Matchmaking
             {
                 SetLookingForPlayers();
             }
-            Debug.Log("A player joined the lobby.");
-            UpdateCurrentPlayerCount();
+
+            if (BoltNetwork.IsServer)
+            {
+                var playerCount = 1 + SWMatchmaking.GetCurrentLobbyPlayerCount();
+                LobbyPlayerJoined lobbyPlayerJoinedEvent = LobbyPlayerJoined.Create();
+                lobbyPlayerJoinedEvent.LobbyPlayerCount = playerCount;
+                lobbyPlayerJoinedEvent.PlayerID = (int)connection.ConnectionId;
+                lobbyPlayerJoinedEvent.Send();
+
+                UpdateCurrentPlayerCount(playerCount);
+            }
         }
 
         public override void Disconnected(BoltConnection connection)
         {
+            if (BoltNetwork.IsServer)
+            {
+                var playerCount = SWMatchmaking.GetCurrentLobbyPlayerCount();
+                LobbyPlayerLeft lobbyPlayerLeftEvent = LobbyPlayerLeft.Create();
+                lobbyPlayerLeftEvent.LobbyPlayerCount = playerCount;
+                lobbyPlayerLeftEvent.PlayerID = (int)connection.ConnectionId;
+                lobbyPlayerLeftEvent.Send();
+
+                UpdateCurrentPlayerCount(playerCount);
+            }
+        }
+
+        public override void OnEvent(LobbyPlayerJoined evnt)
+        {
+            if (BoltNetwork.IsClient)
+            {
+                UpdateCurrentPlayerCount(evnt.LobbyPlayerCount);
+            }
+            Debug.Log("A player joined the lobby.");
+        }
+
+        public override void OnEvent(LobbyPlayerLeft evnt)
+        {
+            if (BoltNetwork.IsClient)
+            {
+                UpdateCurrentPlayerCount(evnt.LobbyPlayerCount);
+            }
             Debug.Log("A player disconnected from the lobby.");
-            UpdateCurrentPlayerCount();
         }
 
         // PUBLIC
@@ -55,8 +89,6 @@ namespace SW.Matchmaking
             _lookingForGameText.gameObject.SetActive(false);
             _currentPlayerCountText.gameObject.SetActive(true);
             _startGameButton.gameObject.SetActive(true);
-
-            StartCoroutine(UpdatePlayerCountRoutine());
         }
 
         public void LaunchGame()
@@ -79,20 +111,8 @@ namespace SW.Matchmaking
 
         // PRIVATE
 
-        private IEnumerator UpdatePlayerCountRoutine()
+        private void UpdateCurrentPlayerCount(int playerCount)
         {
-            Debug.Log("Starting routine.");
-
-            while (_currentPlayerCountText.gameObject.activeInHierarchy)
-            {
-                UpdateCurrentPlayerCount();
-                yield return new WaitForSeconds(1f);
-            }
-        }
-
-        private void UpdateCurrentPlayerCount()
-        {
-            var playerCount = 1 + SWMatchmaking.GetCurrentLobbyPlayerCount();
             _currentPlayerCountText.text = playerCount + " players";
         }
 
