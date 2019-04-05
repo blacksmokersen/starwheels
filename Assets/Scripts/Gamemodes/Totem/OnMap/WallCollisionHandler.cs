@@ -3,14 +3,14 @@ using Bolt;
 
 namespace Gamemodes.Totem
 {
-    public class TotemCollisionHandler : EntityBehaviour<ITotemWallState>
+    public class WallCollisionHandler : EntityBehaviour<ITotemWallState>
     {
         [Header("Data")]
         public int RemainingLives;
         public Team OwnerTeam;
 
         [Header("Events")]
-        public IntEvent OnLifeLost;
+        public IntEvent OnWallHit;
         public TeamEvent OnWallDestroyed;
 
         public override void Attached()
@@ -35,9 +35,9 @@ namespace Gamemodes.Totem
 
         private void LoseLife()
         {
-            if (OnLifeLost != null)
+            if (OnWallHit != null)
             {
-                OnLifeLost.Invoke(state.Lives); // Local event
+                OnWallHit.Invoke(state.Lives); // Local event
             }
 
             if (entity.isAttached && entity.isOwner)
@@ -53,10 +53,6 @@ namespace Gamemodes.Totem
 
                 if (state.Lives <= 0)
                 {
-                    GameOver gameOverEvent = GameOver.Create();
-                    gameOverEvent.WinningTeam = OwnerTeam.ToString();
-                    gameOverEvent.Send();
-
                     if (OnWallDestroyed != null)
                     {
                         OnWallDestroyed.Invoke(OwnerTeam);
