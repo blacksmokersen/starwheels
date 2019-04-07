@@ -9,14 +9,14 @@ namespace MapsSpecifics
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(Constants.Tag.KartHealthHitBox))
+            if (other.CompareTag(Constants.Tag.KartHealthHitBox) || other.CompareTag(Constants.Tag.ItemCollisionHitBox))
             {
-                var kartRoot = other.GetComponentInParent<BoltEntity>().gameObject;
-                kartRoot.transform.position = _out.transform.position;
-                kartRoot.transform.rotation = _out.transform.rotation;
-                var kartRb = kartRoot.GetComponent<Rigidbody>();
-                var newVelocity = kartRb.velocity.magnitude * _out.transform.forward.normalized;
-                kartRb.velocity = newVelocity;
+                var objectRoot = other.GetComponentInParent<BoltEntity>().gameObject;
+                objectRoot.transform.position = _out.transform.position;
+                objectRoot.transform.rotation = _out.transform.rotation;
+                var rb = objectRoot.GetComponent<Rigidbody>();
+                var newVelocity = rb.velocity.magnitude * _out.transform.forward.normalized;
+                rb.velocity = newVelocity;
             }
         }
     }
