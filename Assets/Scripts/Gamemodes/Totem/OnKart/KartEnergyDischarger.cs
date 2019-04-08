@@ -47,14 +47,12 @@ namespace Gamemodes.Totem
             {
                 state.CanPickTotem = false;
             }
-
-            _chargingRoutine = StartCoroutine(RechargeEnergy());
             if(OnFullyDischarged != null) OnFullyDischarged.Invoke();
         }
 
-        public void FullyDischargeForXSeconds(float seconds)
+        public void FullyDischargeForXSeconds(FloatVariable seconds)
         {
-            StartCoroutine(FullyDischargeForXSecondsRoutine(seconds));
+            StartCoroutine(FullyDischargeForXSecondsRoutine(seconds.Value));
         }
 
         public void FullyCharge()
@@ -66,11 +64,16 @@ namespace Gamemodes.Totem
             if (OnFullyCharged != null) OnFullyCharged.Invoke();
         }
 
+        public void FullyChargeAfterXSeconds(FloatVariable seconds)
+        {
+            StartCoroutine(RechargeEnergyAfterXSeconds(seconds.Value));
+        }
+
         // PRIVATE
 
-        private IEnumerator RechargeEnergy()
+        private IEnumerator RechargeEnergyAfterXSeconds(float seconds)
         {
-            yield return new WaitForSeconds(_secondsDischarged.Value);
+            yield return new WaitForSeconds(seconds);
             FullyCharge();
         }
 
