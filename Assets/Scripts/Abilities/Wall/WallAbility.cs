@@ -30,6 +30,8 @@ namespace Abilities
         [SerializeField] private GameObject _wallAbilityPrefab;
         [SerializeField] private GameObject _wallPreviewRaycastOrigin;
         [SerializeField] private GameObject _wallPreview;
+        [SerializeField] private GameObject _wallPreviewPerpendiculary;
+        [SerializeField] private GameObject _wallPreviewInLine;
 
         private bool _enableWallPreview = false;
         private bool _previewIsEnable = false;
@@ -40,6 +42,7 @@ namespace Abilities
         private void Awake()
         {
             _rb = GetComponentInParent<Rigidbody>();
+            _wallPreview = _wallPreviewPerpendiculary;
         }
 
         private void Update()
@@ -60,6 +63,7 @@ namespace Abilities
 
         public void MapInputs()
         {
+            DebugSwitchLinePreview();
             if (CanUseAbility)
             {
                 if (Enabled && Input.GetButtonDown(Constants.Input.UseAbility))
@@ -79,6 +83,20 @@ namespace Abilities
         public new void Reload()
         {
             CanUseAbility = true;
+        }
+
+        //DEBUG
+
+        private void DebugSwitchLinePreview()
+        {
+            if (Input.GetKeyDown(KeyCode.KeypadPlus))
+            {
+                _wallPreview = _wallPreviewPerpendiculary;
+            }
+            if (Input.GetKeyDown(KeyCode.KeypadMinus))
+            {
+                _wallPreview = _wallPreviewInLine;
+            }
         }
 
         //PRIVATE
