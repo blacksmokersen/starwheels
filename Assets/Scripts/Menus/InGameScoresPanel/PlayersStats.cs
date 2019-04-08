@@ -75,8 +75,15 @@ namespace Menu.InGameScores
 
         public void UpdatePlayerKillCount(int id)
         {
-            AllPlayersStats[id].KillCount += 1;
-            OnPlayerKillCountUpdated.Invoke(id, AllPlayersStats[id].KillCount);
+            if (AllPlayersStats.ContainsKey(id))
+            {
+                AllPlayersStats[id].KillCount += 1;
+                OnPlayerKillCountUpdated.Invoke(id, AllPlayersStats[id].KillCount);
+            }
+            else
+            {
+                Debug.LogError("Could not find the appopriate ID in the stats.");
+            }
         }
 
         public void UpdatePlayerDeathCount(int id)
