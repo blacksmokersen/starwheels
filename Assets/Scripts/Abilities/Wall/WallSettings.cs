@@ -10,5 +10,7 @@ namespace Abilities
          [Header("Wall Range")]
         public float WallMinRange;
         public float WallMaxRange;
+        [Header("Wall Jump Value")]
+        public float WallJumpValue;
     }
 }

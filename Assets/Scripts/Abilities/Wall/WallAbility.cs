@@ -33,8 +33,14 @@ namespace Abilities
 
         private bool _enableWallPreview = false;
         private bool _previewIsEnable = false;
+        private Rigidbody _rb;
 
         //CORE
+
+        private void Awake()
+        {
+            _rb = GetComponentInParent<Rigidbody>();
+        }
 
         private void Update()
         {
@@ -79,7 +85,7 @@ namespace Abilities
 
         private void JumpToTopOfThePrefab()
         {
-
+            _rb.AddRelativeForce(Vector3.up * _wallSettings.WallJumpValue, ForceMode.Impulse);
         }
 
         private void MovePreviewRaycast()
@@ -107,6 +113,11 @@ namespace Abilities
         {
             if (entity.isOwner)
             {
+                if (Mathf.Abs(Input.GetAxis(Constants.Input.UpAndDownAxis)) < 0.1f)
+                {
+                    JumpToTopOfThePrefab();
+                }
+
                 var wallPrefab = BoltNetwork.Instantiate(_wallAbilityPrefab, _wallPreview.transform.position, _wallPreview.transform.rotation);
 
                 _enableWallPreview = false;
