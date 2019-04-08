@@ -49,7 +49,15 @@ namespace Common.PhysicsUtils
         {
             if (CurrentClampSpeed > 0)
             {
-                _rigidbody.velocity = Vector3.ClampMagnitude(_rigidbody.velocity, CurrentClampSpeed);
+                if (_clampSpeedSettings.ClampYAxis)
+                {
+                    _rigidbody.velocity = Vector3.ClampMagnitude(_rigidbody.velocity, CurrentClampSpeed);
+                }
+                else
+                {
+                    var horizontalVelocity = Vector3.ClampMagnitude(new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z), CurrentClampSpeed);
+                    _rigidbody.velocity.Set(horizontalVelocity.x, _rigidbody.velocity.y, horizontalVelocity.z);
+                }
             }
         }
 

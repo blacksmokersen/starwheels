@@ -7,5 +7,8 @@ namespace Common.PhysicsUtils
     {
         [Header("ClampSpeed")]
         public float BaseClampSpeed;
+
+        [Header("Extra Settings")]
+        public bool ClampYAxis;
     }
 }
