@@ -7,7 +7,7 @@ namespace Abilities
     {
         [SerializeField] private GameObject _jumpingAbility;
         [SerializeField] private GameObject _tpBackAbility;
-        [SerializeField] private GameObject _cloakAbility;
+        [SerializeField] private GameObject _wallAbility;
 
         private GameObject[] _abilities;
         private PlayerSettings _playerSettings;
@@ -19,7 +19,7 @@ namespace Abilities
             _playerSettings = Resources.Load<PlayerSettings>(Constants.Resources.PlayerSettings);
             _playerSettings.OnAbilityIndexUpdated.AddListener(UpdateAbility);
 
-            _abilities = new GameObject[3] { _jumpingAbility, _tpBackAbility, _cloakAbility };
+            _abilities = new GameObject[3] { _jumpingAbility, _tpBackAbility, _wallAbility };
             SetAbility(_playerSettings.AbilityIndex);
         }
 
