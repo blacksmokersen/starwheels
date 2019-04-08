@@ -23,12 +23,16 @@ namespace Abilities
         [Header("Conditions")]
         [SerializeField] private GroundCondition _groundCondition;
 
+        [Header("WallSettings")]
+        [SerializeField] private WallSettings _wallSettings;
+
         [Header("WallPrefab")]
         [SerializeField] private GameObject _wallAbilityPrefab;
         [SerializeField] private GameObject _wallPreviewRaycastOrigin;
         [SerializeField] private GameObject _wallPreview;
 
         private bool _enableWallPreview = false;
+        private bool _previewIsEnable = false;
 
         //CORE
 
@@ -50,14 +54,19 @@ namespace Abilities
 
         public void MapInputs()
         {
-            if (Enabled && Input.GetButtonDown(Constants.Input.UseAbility))
+            if (CanUseAbility)
             {
-                _wallPreview.SetActive(true);
-                _enableWallPreview = true;
-            }
-            if (Enabled && Input.GetButtonUp(Constants.Input.UseAbility))
-            {
-                InstantiateWall();
+                if (Enabled && Input.GetButtonDown(Constants.Input.UseAbility))
+                {
+                    _wallPreview.SetActive(true);
+                    _enableWallPreview = true;
+                    _previewIsEnable = true;
+                }
+                if (Enabled && Input.GetButtonUp(Constants.Input.UseAbility) && _previewIsEnable)
+                {
+                    InstantiateWall();
+                    _previewIsEnable = false;
+                }
             }
         }
 
@@ -76,7 +85,8 @@ namespace Abilities
         private void MovePreviewRaycast()
         {
             var leftJoytstickInput = Input.GetAxis(Constants.Input.UpAndDownAxis);
-            _wallPreviewRaycastOrigin.transform.localPosition = Vector3.forward * (leftJoytstickInput * 10);
+            _wallPreviewRaycastOrigin.transform.localPosition = Vector3.forward *
+                (int)Mathf.Clamp((leftJoytstickInput * _wallSettings.WallMaxRange), _wallSettings.WallMinRange, _wallSettings.WallMaxRange);
         }
 
         private void PreviewWall()
@@ -87,15 +97,9 @@ namespace Abilities
                 if (Physics.Raycast(_wallPreviewRaycastOrigin.transform.position, Vector3.down, out hit, 100, 1 << LayerMask.NameToLayer(Constants.Layer.Ground)))
                 {
                     Quaternion instantiateRotation = _wallPreview.transform.rotation;
-                    _wallPreview.transform.position = new Vector3 (hit.point.x, hit.point.y, _wallPreviewRaycastOrigin.transform.position.z);
+                    _wallPreview.transform.position = new Vector3(hit.point.x, hit.point.y, _wallPreviewRaycastOrigin.transform.position.z);
                     _wallPreview.transform.rotation = new Quaternion(Quaternion.identity.x, instantiateRotation.y, Quaternion.identity.z, instantiateRotation.w);
                 }
-
-                if(Mathf.Abs(Input.GetAxis(Constants.Input.UpAndDownAxis)) < 0.3f)
-                {
-                  //   _wallPreview.GetComponent<MeshRenderer>().materials.
-                }
-
             }
         }
 
@@ -108,6 +112,7 @@ namespace Abilities
                 _enableWallPreview = false;
                 _wallPreviewRaycastOrigin.transform.localPosition = Vector3.zero;
                 _wallPreview.SetActive(false);
+                StartCoroutine(Cooldown());
             }
         }
     }

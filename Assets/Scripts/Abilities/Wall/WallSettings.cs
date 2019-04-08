@@ -7,6 +7,8 @@ namespace Abilities
     {
         [Header("Wall Duration")]
         public float WallDuration;
-
+         [Header("Wall Range")]
+        public float WallMinRange;
+        public float WallMaxRange;
     }
 }
