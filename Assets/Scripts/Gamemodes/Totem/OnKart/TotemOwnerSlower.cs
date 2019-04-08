@@ -25,6 +25,7 @@ namespace Gamemodes.Totem
 
                 _ownerClampSpeed.SetClampMagnitude(targetMagnitude);
                 _ownerIsSlowed = true;
+                Debug.Log("Slowing owner");
             }
         }
 
