@@ -88,8 +88,15 @@ namespace Menu.InGameScores
 
         public void UpdatePlayerDeathCount(int id)
         {
-            AllPlayersStats[id].DeathCount += 1;
-            OnPlayerDeathCountUpdated.Invoke(id, AllPlayersStats[id].DeathCount);
+            if (AllPlayersStats.ContainsKey(id))
+            {
+                AllPlayersStats[id].DeathCount += 1;
+                OnPlayerDeathCountUpdated.Invoke(id, AllPlayersStats[id].DeathCount);
+            }
+            else
+            {
+                Debug.LogError("Could not find the appopriate ID in the stats.");
+            }
         }
     }
 }

@@ -162,7 +162,7 @@ namespace Gamemodes.Totem
         {
             if (!IsSynchronized())
             {
-                SetNewOwner(ServerOwnerID);
+                SetNewOwner(ServerOwnerID); // TODO : Send info to previous owner
             }
         }
 

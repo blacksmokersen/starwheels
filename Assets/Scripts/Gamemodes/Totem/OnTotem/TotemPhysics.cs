@@ -41,6 +41,7 @@ namespace Gamemodes.Totem
         public void EnableCollider(bool b)
         {
             _collider.enabled = b;
+            _rb.isKinematic = b;
         }
 
         public void StartSlowdown()
