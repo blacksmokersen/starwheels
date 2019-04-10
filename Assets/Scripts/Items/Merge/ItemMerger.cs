@@ -4,6 +4,7 @@ using Bolt;
 
 namespace Items.Merge
 {
+    [DisallowMultipleComponent]
     public class ItemMerger : EntityBehaviour<IKartState>, IControllable
     {
         [SerializeField] private bool _enabled = true;
@@ -24,12 +25,11 @@ namespace Items.Merge
         [Header("Bonuses References")]
         [SerializeField] private Boost _boost;
         [SerializeField] private BoostSettings _boostSettings;
-        [SerializeField] private Health.Health _health;
 
         private float _timer = 0f;
         private bool _canMerge = true;
 
-        private enum MergeMode { Full, Small };
+        private enum MergeMode { Shield, SpeedBoost };
 
         // CORE
 
@@ -72,15 +72,14 @@ namespace Items.Merge
         {
             if (_inventory.CurrentItem != null)
             {
-                //var mergeMode = _inventory.CurrentItemCount == _inventory.CurrentItem.Count ? MergeMode.Full : MergeMode.Small;
                 _inventory.SetCount(_inventory.CurrentItemCount - 1);
-                GrantBoosts(MergeMode.Full);
+                GrantBoosts(MergeMode.Shield);
             }
             else if (_lottery.LotteryStarted)
             {
                 _lottery.StopAllCoroutines();
                 _lottery.ResetLottery();
-                GrantBoosts(MergeMode.Small);
+                GrantBoosts(MergeMode.SpeedBoost);
             }
         }
 
@@ -90,11 +89,11 @@ namespace Items.Merge
             itemMergingEvent.Entity = entity;
             switch (mode)
             {
-                case MergeMode.Full:
-                    itemMergingEvent.Full = true;
+                case MergeMode.Shield:
+                    itemMergingEvent.Shield = true;
                     break;
-                case MergeMode.Small:
-                    itemMergingEvent.Full = false;
+                case MergeMode.SpeedBoost:
+                    itemMergingEvent.Shield = false;
                     _boost.CustomBoostFromBoostSettings(_boostSettings);
                     break;
             }

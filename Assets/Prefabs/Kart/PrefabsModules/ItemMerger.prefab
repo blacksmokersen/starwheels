@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6339944139262997674}
   - component: {fileID: 7235131153636044470}
   - component: {fileID: 6725285090973575078}
+  - component: {fileID: 7542136217614537780}
   m_Layer: 0
   m_Name: ItemMerger
   m_TagString: Untagged
@@ -51,7 +52,6 @@ MonoBehaviour:
   _lottery: {fileID: 0}
   _boost: {fileID: 0}
   _boostSettings: {fileID: 11400000, guid: 81046543c55d7984ebc2ee1cb815245c, type: 2}
-  _health: {fileID: 0}
 --- !u!114 &6725285090973575078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,24 +64,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b42f4201499e27c4ba9f14ff7a07fcd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnFullItemMerging:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: ActivateForXSeconds
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 1.75
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnSmallItemMerging:
+  OnItemMergingShield:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  OnItemMergingSpeedBoost:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &7542136217614537780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3868421639382682024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cc19b364f2d009489f7a98539f700b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentsToDisable: []
+  _componentsNotToDisable: []
