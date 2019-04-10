@@ -46,11 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6356b1c94b55cea48834debaa3a833f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSphere: {fileID: 1150503316115428}
+  itemSphere: {fileID: 5648252258929799736}
   cooldown: 2
-  _sphere: {fileID: 198005028829093252}
-  _sphereCenter: {fileID: 198665417248572734}
-  _sphereSurroundings: {fileID: 198145745828408278}
+  _sphere: {fileID: 552342888387643428}
+  _sphereCenter: {fileID: 552342888387643428}
+  _sphereSurroundings: {fileID: 552342888387643428}
   _centerLight: {fileID: 2282325539305014265}
   CurrentSettings: {fileID: 0}
   _firstSettings: {fileID: 11400000, guid: a01296815be22f24f81c9b9722bd5e45, type: 2}
@@ -90,6 +90,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4994627475318056}
     m_Modifications:
+    - target: {fileID: 955848629984715700, guid: eb4daf9a40eb1cc4393709f10463b675,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 955848629984715700, guid: eb4daf9a40eb1cc4393709f10463b675,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 955848629984715700, guid: eb4daf9a40eb1cc4393709f10463b675,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7948882209822693952, guid: eb4daf9a40eb1cc4393709f10463b675,
         type: 3}
       propertyPath: m_Name
@@ -155,21 +170,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 955848629984715700, guid: eb4daf9a40eb1cc4393709f10463b675,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 955848629984715700, guid: eb4daf9a40eb1cc4393709f10463b675,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 955848629984715700, guid: eb4daf9a40eb1cc4393709f10463b675,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.b
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7588676120320713993, guid: eb4daf9a40eb1cc4393709f10463b675,
         type: 3}
       propertyPath: m_Intensity
@@ -180,6 +180,11 @@ PrefabInstance:
       propertyPath: m_LightShadowCasterMode
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2676206231896559962, guid: eb4daf9a40eb1cc4393709f10463b675,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.771
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb4daf9a40eb1cc4393709f10463b675, type: 3}
 --- !u!4 &6835844027886744457 stripped
@@ -188,33 +193,21 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1151988867731111472}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1150503316115428 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1150873826925048276, guid: eb4daf9a40eb1cc4393709f10463b675,
-    type: 3}
-  m_PrefabInstance: {fileID: 1151988867731111472}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &198005028829093252 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 955848629984715700, guid: eb4daf9a40eb1cc4393709f10463b675,
-    type: 3}
-  m_PrefabInstance: {fileID: 1151988867731111472}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &198665417248572734 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 954027416560384782, guid: eb4daf9a40eb1cc4393709f10463b675,
-    type: 3}
-  m_PrefabInstance: {fileID: 1151988867731111472}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &198145745828408278 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 955707893675087334, guid: eb4daf9a40eb1cc4393709f10463b675,
-    type: 3}
-  m_PrefabInstance: {fileID: 1151988867731111472}
-  m_PrefabAsset: {fileID: 0}
 --- !u!108 &2282325539305014265 stripped
 Light:
   m_CorrespondingSourceObject: {fileID: 1175682743221288393, guid: eb4daf9a40eb1cc4393709f10463b675,
+    type: 3}
+  m_PrefabInstance: {fileID: 1151988867731111472}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5648252258929799736 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4728269733728603144, guid: eb4daf9a40eb1cc4393709f10463b675,
+    type: 3}
+  m_PrefabInstance: {fileID: 1151988867731111472}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &552342888387643428 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 600948163517232660, guid: eb4daf9a40eb1cc4393709f10463b675,
     type: 3}
   m_PrefabInstance: {fileID: 1151988867731111472}
   m_PrefabAsset: {fileID: 0}
