@@ -4,29 +4,24 @@ using Bolt;
 
 namespace Items.Merge
 {
+    [DisallowMultipleComponent]
     public class ItemMergingEventListener : GlobalEventListener
     {
         [Header("Unity Events")]
-        public UnityEvent OnFullItemMerging;
-        public UnityEvent OnSmallItemMerging;
+        public UnityEvent OnItemMergingShield;
+        public UnityEvent OnItemMergingSpeedBoost;
 
         public override void OnEvent(ItemMerging evnt)
         {
             if (evnt.Entity == GetComponentInParent<BoltEntity>()) // This is the kart that launched the event
             {
-                if (evnt.Full)
+                if (evnt.Shield && OnItemMergingShield != null)
                 {
-                    if (OnFullItemMerging != null)
-                    {
-                        OnFullItemMerging.Invoke();
-                    }
+                    OnItemMergingShield.Invoke();
                 }
-                else
+                else if (!evnt.Shield && OnItemMergingSpeedBoost != null)
                 {
-                    if (OnSmallItemMerging != null)
-                    {
-                        OnSmallItemMerging.Invoke();
-                    }
+                    OnItemMergingSpeedBoost.Invoke();
                 }
             }
         }
