@@ -39,14 +39,9 @@ namespace Abilities
         private CloakSettings _cloakSettings;
         private Coroutine _cloakRoutine;
 
-        private CloakPortalCameraBehaviour _portalCamera;
-
         private void Awake()
         {
             _cloakSettings = (CloakSettings)abilitySettings;
-
-            if(GameObject.Find("PlayerCamera").GetComponent<CloakPortalCameraBehaviour>() != null)
-            _portalCamera = GameObject.Find("PlayerCamera").GetComponent<CloakPortalCameraBehaviour>();
         }
 
         // BOLT

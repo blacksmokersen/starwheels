@@ -48,7 +48,6 @@ namespace Engine
         private float _startDecCurveTimer;
         private float _curveAccVelocityValue;
         private float _curveDecVelocityValue;
-        private float _inertiaStart = 20;
 
         // CORE
 
