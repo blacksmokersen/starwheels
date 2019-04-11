@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Items;
 
 namespace Abilities
 {
@@ -15,6 +16,26 @@ namespace Abilities
         }
 
         //PRIVATE
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (BoltNetwork.IsServer)
+            {
+                if (other.gameObject.CompareTag(Constants.Tag.ItemCollisionHitBox)) // It is an item collision
+                {
+                    if (other.GetComponentInParent<NetworkDestroyable>())
+                    {
+                        var itemNetworkDestroyable = other.GetComponentInParent<NetworkDestroyable>();
+                        itemNetworkDestroyable.DestroyObject();
+                    }
+
+                    StopAllCoroutines();
+                    DestroyEntity destroyEntityEvent = DestroyEntity.Create();
+                    destroyEntityEvent.Entity = GetComponent<BoltEntity>();
+                    destroyEntityEvent.Send();
+                }
+            }
+        }
 
         IEnumerator SelfDestruct(float wallDuration)
         {
