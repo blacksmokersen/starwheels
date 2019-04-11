@@ -60,8 +60,8 @@ namespace Items.Lottery
         private IEnumerator GetLotteryItem(ItemBoxSettings settings)
         {
             if (LotteryStarted || !_inventory.IsEmpty()) yield break;
-            OnLotteryStart.Invoke();
             LotteryStarted = true;
+            OnLotteryStart.Invoke();
 
             while (_lotteryTimer < ItemsLottery.LotteryDuration && _shortenLottery == false)
             {
@@ -81,7 +81,7 @@ namespace Items.Lottery
         {
             if (other.CompareTag(Constants.Tag.ItemBox) && _inventory.Enabled && _inventory.CurrentItem == null)
             {
-                if (entity.isControllerOrOwner)
+                if (entity.isAttached && entity.isControllerOrOwner)
                 {
                     var itemsChancesSettings = other.GetComponent<ItemBox>().CurrentSettings;
                     this.StartCoroutine(GetLotteryItem(itemsChancesSettings));

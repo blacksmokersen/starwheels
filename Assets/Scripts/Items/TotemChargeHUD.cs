@@ -13,30 +13,38 @@ namespace Gamemodes.Totem
 
         public void Observe(GameObject gameObject)
         {
-            var totemEvents = gameObject.GetComponentInChildren<OnKartTotemEventListener>();
-            if (totemEvents)
+            var totemCharger = gameObject.GetComponentInChildren<KartEnergyDischarger>();
+            if (totemCharger)
             {
-                totemEvents.OnTotemGet.AddListener(ShowDischargingHUD);
-                totemEvents.OnTotemLost.AddListener(ShowChargingHUD);
+                totemCharger.OnFullyDischarged.AddListener(() => { HideChargingHUD(); ShowDischargingHUD(); });
+                totemCharger.OnStartedCharging.AddListener(() => { ShowChargingHUD(); HideDischargingHUD(); });
+                totemCharger.OnFullyCharged.AddListener(() => { HideChargingHUD(); HideDischargingHUD(); });
             }
-
             else
             {
                 Debug.LogWarning("TotemEvents component not found.");
             }
         }
 
-        public void ShowChargingHUD()
+        public void ShowChargingHUDForXSeconds(float x)
         {
             StopAllCoroutines();
-            StartCoroutine(ShowChargingRoutine());
+            StartCoroutine(ShowChargingHUDForXSecondsRoutine(x));
+        }
+
+        public void ShowDischargingHUDForXSeconds(float x)
+        {
+            StopAllCoroutines();
+            StartCoroutine(ShowDischargingHUDForXSecondsRoutine(x));
+        }
+
+        public void ShowChargingHUD()
+        {
+            _charging.SetActive(true);
         }
 
         public void ShowDischargingHUD()
         {
-            StopAllCoroutines();
-            //StartCoroutine(ShowDischargingRoutine());
-            HideChargingHUD();
             _dicharging.SetActive(true);
         }
 
@@ -52,20 +60,20 @@ namespace Gamemodes.Totem
 
         // PRIVATE
 
-        private IEnumerator ShowChargingRoutine()
+        private IEnumerator ShowChargingHUDForXSecondsRoutine(float x)
         {
             HideDischargingHUD();
-            _charging.SetActive(true);
-            yield return new WaitForSeconds(3f);
-            _charging.SetActive(false);
+            ShowChargingHUD();
+            yield return new WaitForSeconds(x);
+            HideChargingHUD();
         }
 
-        private IEnumerator ShowDischargingRoutine()
+        private IEnumerator ShowDischargingHUDForXSecondsRoutine(float x)
         {
             HideChargingHUD();
-            _dicharging.SetActive(true);
-            yield return new WaitForSeconds(3f);
-            _dicharging.SetActive(false);
+            ShowDischargingHUD();
+            yield return new WaitForSeconds(x);
+            HideDischargingHUD();
         }
     }
 }
