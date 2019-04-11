@@ -7,6 +7,9 @@ namespace Menu.InGameScores
     [DisallowMultipleComponent]
     public class PlayerInGameScoresEntry : MonoBehaviour
     {
+        [Header("Settings")]
+        [SerializeField] private int _maxNameLength;
+
         [Header("UI Elements")]
         [SerializeField] private TextMeshProUGUI _nickname;
         [SerializeField] private TextMeshProUGUI _killCount;
@@ -17,6 +20,10 @@ namespace Menu.InGameScores
 
         public void UpdateNickname(string nickname)
         {
+            if (nickname.Length > _maxNameLength)
+            {
+                nickname = nickname.Substring(0, _maxNameLength);
+            }
             _nickname.text = nickname;
         }
 
