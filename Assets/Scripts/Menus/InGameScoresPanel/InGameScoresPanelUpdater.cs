@@ -12,6 +12,7 @@ namespace Menu.InGameScores
         public Dictionary<int, PlayerInGameScoresEntry> PlayerScoreEntries = new Dictionary<int, PlayerInGameScoresEntry>();
 
         [Header("UI Elements")]
+        [SerializeField] private RectTransform _rootPanel;
         [SerializeField] private Transform _teamEntriesParent;
 
         [Header("Prefabs")]
@@ -43,18 +44,14 @@ namespace Menu.InGameScores
             if (!TeamScoreEntries.ContainsKey(team))
             {
                 var teamEntry = Instantiate(_teamPrefab);
-                teamEntry.transform.SetParent(_teamEntriesParent);
-                teamEntry.transform.localScale = Vector3.one;
+                teamEntry.transform.SetParent(_teamEntriesParent, false);
                 teamEntry.SetTeam(team);
                 teamEntry.SetColorAccordingToTeam();
                 TeamScoreEntries.Add(team, teamEntry);
             }
+            entry.transform.SetParent(TeamScoreEntries[team].transform, false);
 
-            entry.transform.SetParent(TeamScoreEntries[team].transform);
-            entry.transform.localScale = Vector3.one;
             PlayerScoreEntries.Add(id, entry);
-
-            LayoutRebuilder.ForceRebuildLayoutImmediate(_teamEntriesParent.GetComponent<RectTransform>());
         }
 
         public void DestroyEntryForPlayer(int id)

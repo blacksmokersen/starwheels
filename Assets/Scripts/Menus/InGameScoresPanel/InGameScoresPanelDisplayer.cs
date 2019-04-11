@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Menu.InGameScores
 {
@@ -43,6 +44,10 @@ namespace Menu.InGameScores
         private void ShowPanel()
         {
             _panel.SetActive(true);
+            foreach (var rect in GetComponentsInChildren<RectTransform>())
+            {
+                LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
+            }
         }
 
         private void HidePanel()
