@@ -12,9 +12,8 @@ namespace Gamemodes.Totem
 
         [Header("Events")]
         public UnityEvent OnFullyCharged;
+        public UnityEvent OnStartedCharging;
         public UnityEvent OnFullyDischarged;
-
-        private Coroutine _chargingRoutine;
 
         // BOLT
 
@@ -47,7 +46,10 @@ namespace Gamemodes.Totem
             {
                 state.CanPickTotem = false;
             }
-            if(OnFullyDischarged != null) OnFullyDischarged.Invoke();
+            if (OnFullyDischarged != null)
+            {
+                OnFullyDischarged.Invoke();
+            }
         }
 
         public void FullyDischargeForXSeconds(FloatVariable seconds)
@@ -61,7 +63,11 @@ namespace Gamemodes.Totem
             {
                 state.CanPickTotem = true;
             }
-            if (OnFullyCharged != null) OnFullyCharged.Invoke();
+            if (OnFullyCharged != null)
+            {
+                OnFullyCharged.Invoke();
+            }
+            StopAllCoroutines();
         }
 
         public void FullyChargeAfterXSeconds(FloatVariable seconds)
@@ -73,6 +79,10 @@ namespace Gamemodes.Totem
 
         private IEnumerator RechargeEnergyAfterXSeconds(float seconds)
         {
+            if (OnStartedCharging != null)
+            {
+                OnStartedCharging.Invoke();
+            }
             yield return new WaitForSeconds(seconds);
             FullyCharge();
         }
@@ -80,6 +90,10 @@ namespace Gamemodes.Totem
         private IEnumerator FullyDischargeForXSecondsRoutine(float seconds)
         {
             FullyDischarge();
+            if (OnStartedCharging != null)
+            {
+                OnStartedCharging.Invoke();
+            }
             yield return new WaitForSeconds(seconds);
             FullyCharge();
         }
