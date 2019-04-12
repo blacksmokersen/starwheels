@@ -10,6 +10,10 @@ namespace Abilities
         public float SecondJumpUpForce;
         public float SecondJumpLateralForces;
 
+        [Header("Cancel Velocity")]
+        public float TimeBeforeCancelVelocity;
+        public float CancelSmootherDuration;
+
         [Header("Jump Cooldown")]
         public float MaxTimeBetweenFirstAndSecondJump;
     }
