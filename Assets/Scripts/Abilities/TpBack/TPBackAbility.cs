@@ -38,7 +38,7 @@ namespace Abilities
 
         private void Awake()
         {
-            _tPBackSettings = (TPBackSettings) abilitySettings;
+            _tPBackSettings = (TPBackSettings)abilitySettings;
             _rb = GetComponentInParent<Rigidbody>();
         }
 
@@ -88,6 +88,7 @@ namespace Abilities
 
                     var throwable = instantiatedItem.GetComponent<Throwable>();
                     _tpBack = instantiatedItem.GetComponent<TPBackBehaviour>();
+                    _tpBack.Kart = transform.root;
                     _throwableLauncher.Throw(throwable, _throwingDirection.CurrentDirection);
                 }
                 else // if (_tpBack.IsEnabled())
@@ -105,14 +106,17 @@ namespace Abilities
             OnBlinkActivated.Invoke();
             _kartMeshes.SetActive(false);
             _health.SetInvincibility();
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.1f);
             _kartMeshes.SetActive(true);
             _health.UnsetInvincibility();
-            var y = _tpBack.transform.position.y + 5f;
-            _rb.transform.position = new Vector3(_tpBack.transform.position.x, y, _tpBack.transform.position.z);
-            _rb.transform.rotation = GetKartRotation();
             SWExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useTpBackSound);
-            Destroy(_tpBack.gameObject);
+            if (_tpBack != null)
+            {
+                var y = _tpBack.transform.position.y + 5f;
+                _rb.transform.position = new Vector3(_tpBack.transform.position.x, y, _tpBack.transform.position.z);
+                _rb.transform.rotation = GetKartRotation();
+                Destroy(_tpBack.gameObject);
+            }
         }
     }
 }
