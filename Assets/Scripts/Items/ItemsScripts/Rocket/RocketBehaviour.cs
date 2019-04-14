@@ -13,6 +13,8 @@ namespace Items
         public float AntiShakingThreshold;
         public float SecondsBeforeIgnoringTarget;
 
+        public Transform CurrentTarget;
+
         private float _actualTurnSpeed;
         private bool _ignoreTarget = false;
         private RocketLockTarget _rocketLock;
@@ -23,6 +25,8 @@ namespace Items
         {
             base.Awake();
             _rocketLock = GetComponentInChildren<RocketLockTarget>();
+
+
         }
 
         private void Start()
@@ -49,6 +53,23 @@ namespace Items
             }
         }
 
+        // BOLT
+
+        public override void Attached()
+        {
+            if (entity.isOwner)
+            {
+                var ownerID = entity.GetState<IItemState>().OwnerID;
+                var kartOwner = SWExtensions.KartExtensions.GetKartWithID(ownerID);
+                var kartTarget = kartOwner.GetComponentInChildren<KartTargetting>().CurrentTargetTransform;
+
+                if (kartTarget != null)
+                {
+                    SetTarget(kartTarget);
+                }
+            }
+        }
+
         // PUBLIC
 
         public IEnumerator StartQuickTurn()
@@ -57,6 +78,14 @@ namespace Items
             yield return new WaitForSeconds(QuickTurnDuration);
             _actualTurnSpeed = NormalTurnSpeed;
         }
+
+        public void SetTarget(Transform target)
+        {
+            CurrentTarget = target;
+            target.GetComponentInParent<Health.Health>().OnDeath.AddListener(() => { CurrentTarget = null; });
+            StartCoroutine(StartQuickTurn());
+        }
+
         // PRIVATE
 
         private void SetVelocityForward()
@@ -68,13 +97,13 @@ namespace Items
 
         private void TurnTowardTarget()
         {
-            if (_rocketLock.CurrentTarget != null && _ignoreTarget == false)
+            if (CurrentTarget != null && _ignoreTarget == false)
             {
-                if (transform.InverseTransformPoint(_rocketLock.CurrentTarget.transform.position).x < -AntiShakingThreshold) // If the target is on the left we turn to the left
+                if (transform.InverseTransformPoint(CurrentTarget.transform.position).x < -AntiShakingThreshold) // If the target is on the left we turn to the left
                 {
                     transform.Rotate(Vector3.down * _actualTurnSpeed * Time.deltaTime);
                 }
-                else if (transform.InverseTransformPoint(_rocketLock.CurrentTarget.transform.position).x > AntiShakingThreshold)  // If the target is on the right we turn to the right
+                else if (transform.InverseTransformPoint(CurrentTarget.transform.position).x > AntiShakingThreshold)  // If the target is on the right we turn to the right
                 {
                     transform.Rotate(Vector3.up * _actualTurnSpeed * Time.deltaTime);
                 }

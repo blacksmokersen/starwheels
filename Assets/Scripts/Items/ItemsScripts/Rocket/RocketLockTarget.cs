@@ -13,9 +13,12 @@ namespace Items
         public GameObject CurrentTarget = null;
         [SerializeField] private Transform _origin;
 
+        [Header("Dependencies")]
+        [SerializeField] private RocketBehaviour _rocketBehaviour;
+
         private bool _activated = false;
 
-        // MONO
+        // CORE
 
         private void Start()
         {
@@ -24,58 +27,31 @@ namespace Items
 
         private void OnTriggerEnter(Collider other)
         {
-            if (CurrentTarget == null && other.gameObject.tag == Constants.Tag.KartHealthHitBox && _activated)
+            if (_rocketBehaviour.CurrentTarget == null && other.gameObject.tag == Constants.Tag.KartHealthHitBox && _activated)
             {
                 var otherPlayer = other.GetComponentInParent<Player>();
 
                 if (entity.isAttached && state.Team.ToTeam() != otherPlayer.Team)
                 {
-                    SetTarget(other.gameObject);
+                    _rocketBehaviour.SetTarget(other.transform);
                 }
             }
         }
 
         private void OnTriggerStay(Collider other)
         {
-
-            if (CurrentTarget == null && other.gameObject.tag == Constants.Tag.KartHealthHitBox && _activated)
+            if (_rocketBehaviour.CurrentTarget == null && other.gameObject.tag == Constants.Tag.KartHealthHitBox && _activated)
             {
                 var otherPlayer = other.GetComponentInParent<Player>();
 
                 if (entity.isAttached && state.Team.ToTeam() != otherPlayer.Team)
                 {
-                    SetTarget(other.gameObject);
+                    _rocketBehaviour.SetTarget(other.transform);
                 }
             }
         }
-
-        // BOLT
-
-        public override void SimulateOwner()
-        {
-            try
-            {
-                if (CurrentTarget == null || !CurrentTarget.activeInHierarchy)
-                {
-                    CurrentTarget = null;
-                }
-            }
-            catch (MissingReferenceException)
-            {
-                CurrentTarget = null;
-                Debug.Log("Resetting rocket target.");
-            }
-        }
-
 
         // PRIVATE
-
-        private void SetTarget(GameObject target)
-        {
-            CurrentTarget = target;
-            target.GetComponentInParent<Health.Health>().OnDeath.AddListener(() => { CurrentTarget = null; });
-            StartCoroutine(GetComponentInParent<RocketBehaviour>().StartQuickTurn());
-        }
 
         private bool IsKartIsCloserThanActualTarget(GameObject kart)
         {

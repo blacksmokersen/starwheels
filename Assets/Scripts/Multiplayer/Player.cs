@@ -8,7 +8,6 @@ namespace Multiplayer
 {
     public class Player : EntityBehaviour
     {
-        #region Variables
         public static Player Me;
 
         private string _nickName;
@@ -24,7 +23,6 @@ namespace Multiplayer
             get { return _team; }
             set { _team = value; OnTeamChanged.Invoke(_team); }
         }
-        #endregion
 
         [Header("Events")]
         public StringEvent OnNicknameChanged;
@@ -43,23 +41,6 @@ namespace Multiplayer
             }
         }
     }
-
-    #region Editor
-#if UNITY_EDITOR
-    [CustomEditor(typeof(Player))]
-    public class PlayerSettingsEditor : Editor
-    {
-        public override void OnInspectorGUI()
-        {
-            DrawDefaultInspector();
-
-            Player playerSettings = (Player)target;
-            playerSettings.Nickname = EditorGUILayout.TextField("Enter nickname", playerSettings.Nickname);
-            playerSettings.Team = (Team)EditorGUILayout.EnumPopup("Choose a team", playerSettings.Team);
-        }
-    }
-#endif
-    #endregion
 }
 
 
