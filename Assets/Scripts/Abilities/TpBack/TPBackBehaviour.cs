@@ -8,8 +8,8 @@ namespace Items
     public class TPBackBehaviour : MonoBehaviour
     {
         [Header("Owner")]
-        public Transform _kart;
-        public Quaternion _kartRotation;
+        [HideInInspector]public Transform Kart;
+        public Quaternion KartRotation;
 
         [Header("TPBack parameters")]
         public float ActivationTime;
@@ -38,7 +38,7 @@ namespace Items
 
         private void Update()
         {
-            if (_kart != null)
+            if (Kart != null)
             {
                 CheckForMaxDistance();
             }
@@ -55,7 +55,7 @@ namespace Items
 
         private void CheckForMaxDistance()
         {
-            if (Vector3.Distance(_kart.position, transform.position) > MaxDistance)
+            if (Vector3.Distance(Kart.position, transform.position) > MaxDistance)
             {
                 StopCoroutine(AliveDuration());
                 Destroy(gameObject);
@@ -95,6 +95,10 @@ namespace Items
                 else
                     _canBeEnabled = true;
             }
+        }
+        private void OnTriggerExit(Collider other)
+        {
+
         }
     }
 }

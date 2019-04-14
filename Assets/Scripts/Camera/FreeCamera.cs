@@ -23,15 +23,9 @@ namespace CameraUtils
         [SerializeField] private float _forwardSpeed;
         [SerializeField] private float _backwardSpeed;
 
-        private Camera _camera;
         private GameObject _kart;
 
         //CORE
-
-        private void Awake()
-        {
-            _camera = GetComponent<Camera>();
-        }
 
         private void Update()
         {

@@ -11,8 +11,6 @@ namespace Items
         [SerializeField] private Collider _ionBeamCollider;
         [SerializeField] private Transform raycastTransformOrigin;
 
-        private bool _damagePlayer = false;
-
         //CORE
 
         private void Start()
@@ -37,7 +35,6 @@ namespace Items
             if (Physics.Raycast(raycastTransformOrigin.position, Vector3.down, out hit, 500, 1 << LayerMask.NameToLayer(Constants.Layer.Ground)))
             {
                 _ionBeamCollider.enabled = true;
-                _damagePlayer = true;
             }
             else
             {
@@ -48,7 +45,6 @@ namespace Items
         public void AtEndDamageAnimation()
         {
             _ionBeamCollider.enabled = false;
-            _damagePlayer = false;
         }
 
         public void AtEndAnimation()

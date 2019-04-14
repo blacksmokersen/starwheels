@@ -98,7 +98,10 @@ namespace Abilities.Jump
             if (_straightUpSecondJump)
                 _rb.AddRelativeForce(forceUp, ForceMode.Impulse);
             else
-                _rb.AddRelativeForce(forceUp + forceDirectional, ForceMode.Impulse);
+            {
+                _rb.AddRelativeForce(forceUp + forceDirectional, ForceMode.Force);
+                StartCoroutine(CancelJumpVelocity(forceDirectional));
+            }
             OnSecondJump.Invoke(direction);
         }
 
@@ -143,6 +146,23 @@ namespace Abilities.Jump
         {
             yield return new WaitForSeconds(_jumpSettings.MaxTimeBetweenFirstAndSecondJump);
             StartCoroutine(Cooldown());
+        }
+
+        private IEnumerator CancelJumpVelocity(Vector3 velocityToCancel)
+        {
+            yield return new WaitForSeconds(_jumpSettings.TimeBeforeCancelVelocity);
+            var locVel = transform.InverseTransformDirection(_rb.velocity);
+            var _currentTimer = 0f;
+            while (_currentTimer < _jumpSettings.CancelSmootherDuration)
+            {
+                locVel = transform.InverseTransformDirection(_rb.velocity);
+                _rb.velocity -= transform.TransformDirection(new Vector3(locVel.x/10,0,0));
+                _currentTimer += Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+            }
+            locVel.x = 0;
+            _rb.velocity = transform.TransformDirection(locVel);
+
         }
     }
 }
