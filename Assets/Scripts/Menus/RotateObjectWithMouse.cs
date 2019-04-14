@@ -39,7 +39,7 @@ namespace Menu
             {
                 if (_canRotateObject)
                 {
-                    _targetObject.transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X"), 0) * Time.deltaTime * _manualSpeed);
+                    _targetObject.transform.Rotate(new Vector3(0, -Input.GetAxis("Mouse X"), 0) * Time.deltaTime * _manualSpeed);
                 }
             }
 
@@ -51,7 +51,7 @@ namespace Menu
 
         private void CheckJoystickInputs()
         {
-            _targetObject.transform.Rotate(new Vector3(0, Input.GetAxis(Constants.Input.TurnCamera), 0) * Time.deltaTime * _manualSpeed);
+            _targetObject.transform.Rotate(new Vector3(0, -Input.GetAxis(Constants.Input.TurnCamera), 0) * Time.deltaTime * _manualSpeed);
         }
 
         private void SlowlyRotateObject()
