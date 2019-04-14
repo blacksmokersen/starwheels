@@ -9,14 +9,16 @@ namespace Items
     {
         public string ItemName;
 
+        public Transform CurrentTargetTransform;
         public bool Targetting;
         [SerializeField] private Inventory _inventory;
         [SerializeField] private GameObject _crossHairReference;
         [SerializeField] private Transform _origin;
 
         private GameObject _crossHair;
-        private Transform _currentTargetTransform;
         private bool _needsDisabling = false;
+
+        // CORE
 
         private void Update()
         {
@@ -24,11 +26,11 @@ namespace Items
             {
                 if (entity.isAttached && entity.isOwner)
                 {
-                    if (_currentTargetTransform != null)
+                    if (CurrentTargetTransform != null)
                     {
-                        _crossHair.transform.position = _currentTargetTransform.position + new Vector3(0f, 0.5f, 0f);
+                        _crossHair.transform.position = CurrentTargetTransform.position + new Vector3(0f, 0.5f, 0f);
                     }
-                    else if (_currentTargetTransform == null && _needsDisabling)
+                    else if (CurrentTargetTransform == null && _needsDisabling)
                     {
                         UnsetTarget();
                     }
@@ -89,14 +91,14 @@ namespace Items
 
         private void SwitchTarget(Transform newTargetTransform)
         {
-            _currentTargetTransform = newTargetTransform;
+            CurrentTargetTransform = newTargetTransform;
             _crossHair.SetActive(true);
             _needsDisabling = true;
         }
 
         private void UnsetTarget()
         {
-            _currentTargetTransform = null;
+            CurrentTargetTransform = null;
             if (_crossHair)
             {
                 _crossHair.SetActive(false);
@@ -106,12 +108,12 @@ namespace Items
 
         private bool IsCloserThanCurrentTarget(Transform target)
         {
-            return Vector3.Distance(_origin.position, target.position) < Vector3.Distance(_origin.position, _currentTargetTransform.position);
+            return Vector3.Distance(_origin.position, target.position) < Vector3.Distance(_origin.position, CurrentTargetTransform.position);
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (Targetting && other.CompareTag(Constants.Tag.KartHealthHitBox) && _currentTargetTransform == null)
+            if (Targetting && other.CompareTag(Constants.Tag.KartHealthHitBox) && CurrentTargetTransform == null)
             {
                 var otherPlayer = other.GetComponentInParent<Player>();
 
@@ -130,11 +132,11 @@ namespace Items
 
                 if (entity.isAttached && state.Team.ToTeam() != otherPlayer.Team)
                 {
-                    if (_currentTargetTransform == null)
+                    if (CurrentTargetTransform == null)
                     {
                         SwitchTarget(other.transform);
                     }
-                    else if (other.transform != _currentTargetTransform && IsCloserThanCurrentTarget(other.transform))
+                    else if (other.transform != CurrentTargetTransform && IsCloserThanCurrentTarget(other.transform))
                     {
                         SwitchTarget(other.transform);
                     }
@@ -144,7 +146,7 @@ namespace Items
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag(Constants.Tag.KartHealthHitBox) && other.transform == _currentTargetTransform)
+            if (other.CompareTag(Constants.Tag.KartHealthHitBox) && other.transform == CurrentTargetTransform)
             {
                 SwitchTarget(null);
                 _crossHair.SetActive(false);
