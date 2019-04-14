@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Common.PhysicsUtils;
 
 namespace Items
 {
     public class MineBehaviour : NetworkDestroyable
     {
-        [Header("Mine parameters")]
+        [Header("Settings")]
         public float ActivationTime;
         public float ForwardThrowingForce;
         public float TimesLongerThanHighThrow;
@@ -17,6 +18,9 @@ namespace Items
         public AudioSource IdleSource;
         public AudioSource ExplosionSource;
 
+        [Header("Animation")]
+        [SerializeField] private Animator _animator;
+
         [Header("Triggers To Activate")]
         [SerializeField] private List<Collider> _triggers;
 
@@ -25,6 +29,16 @@ namespace Items
         private void Start()
         {
             StartCoroutine(MineActivationDelay());
+            StartCoroutine(MineStopRoutine());
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.Layer.Ground))
+            {
+                GetComponent<Hovering>().Disable();
+                StopMine();
+            }
         }
 
         // BOLT
@@ -66,14 +80,20 @@ namespace Items
             }
         }
 
-        private void OnCollisionEnter(Collision collision)
+        private void StopMine()
         {
-            if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.Layer.Ground))
-            {
-                GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-                GetComponent<Rigidbody>().freezeRotation = true;
-                PlayIdleSound();
-            }
+            var rb = GetComponent<Rigidbody>();
+            rb.velocity = Vector3.zero;
+            rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+            rb.freezeRotation = true;
+            _animator.SetTrigger("Stop");
+            PlayIdleSound();
+        }
+
+        private IEnumerator MineStopRoutine()
+        {
+            yield return new WaitForSeconds(1f);
+            GetComponent<Hovering>().Disable();
         }
     }
 }

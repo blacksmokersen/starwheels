@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Bolt;
+using Multiplayer;
 
 namespace SW.DebugUtils
 {
@@ -12,7 +13,16 @@ namespace SW.DebugUtils
             set { _enabled = value; }
         }
 
+        private PlayerSettings _playerSettings;
+        private GameSettings _gameSettings;
+
         // CORE
+
+        private void Awake()
+        {
+            _playerSettings = Resources.Load<PlayerSettings>(Constants.Resources.PlayerSettings);
+            _gameSettings = Resources.Load<GameSettings>(Constants.Resources.GameSettings);
+        }
 
         private void Update()
         {
@@ -36,7 +46,9 @@ namespace SW.DebugUtils
         {
             if (entity.isAttached && entity.isOwner)
             {
-                //state.Team = state.Team.GetNextTeamColor();
+                var nextColorSettings = _gameSettings.TeamsListSettings.GetNext(_playerSettings.ColorSettings);
+                state.Team = nextColorSettings.TeamEnum.ToString();
+                _playerSettings.ColorSettings = nextColorSettings;
             }
         }
     }
