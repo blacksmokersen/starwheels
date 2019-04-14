@@ -25,8 +25,6 @@ namespace Items
         {
             base.Awake();
             _rocketLock = GetComponentInChildren<RocketLockTarget>();
-
-
         }
 
         private void Start()

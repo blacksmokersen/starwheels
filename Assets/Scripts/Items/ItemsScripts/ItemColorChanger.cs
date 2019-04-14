@@ -12,6 +12,8 @@ namespace Items
     {
         [Header("Materials and Mesh renderers")]
         [SerializeField] private List<MeshRenderer> _meshRenderers;
+        [SerializeField] private List<Light> _lights;
+        [SerializeField] private List<TrailRenderer> _trails;
         [SerializeField] private List<DecalProjectorComponent> _decals;
 
         private TeamColorSettings _colorSettings;
@@ -37,6 +39,17 @@ namespace Items
             foreach (var meshRenderer in _meshRenderers)
             {
                 meshRenderer.material.SetColor("_BaseColor", _colorSettings.ItemsColor);
+                meshRenderer.material.SetColor("_Color", _colorSettings.ItemsColor);
+            }
+
+            foreach (var light in _lights)
+            {
+                light.color = _colorSettings.ItemsColor;
+            }
+
+            foreach (var trail in _trails)
+            {
+                trail.startColor = _colorSettings.ItemsColor;
             }
 
             foreach (var decal in _decals)

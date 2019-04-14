@@ -71,6 +71,9 @@ namespace Items
                 case "Totem(Clone)":
                     _shockwavePrefab = shockwaveYellow;
                     break;
+                case "GoldDisk(Clone)":
+                    _shockwavePrefab = shockwaveYellow;
+                    break;
             }
         }
 

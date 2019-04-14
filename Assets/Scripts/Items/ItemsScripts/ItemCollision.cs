@@ -9,6 +9,7 @@ namespace Items
         Mine,
         Guile,
         IonBeamLaser,
+        GoldDisk,
         Totem,
         ItemDestroyer
     }
@@ -27,6 +28,7 @@ namespace Items
         public bool Mine;
         public bool Guile;
         public bool IonBeamLaser;
+        public bool GoldDisk;
         public bool Totem;
         public bool ItemDestroyer;
 
@@ -49,6 +51,10 @@ namespace Items
                 return true;
             }
             else if (itemCollision.ItemName == ItemCollisionName.IonBeamLaser && IonBeamLaser)
+            {
+                return true;
+            }
+            else if (itemCollision.ItemName == ItemCollisionName.GoldDisk && GoldDisk)
             {
                 return true;
             }
