@@ -1,63 +1,71 @@
 ﻿using UnityEngine;
 
-/*
- * May have to synchronize the size with a throwable state
- *
- */
-public class ScaleModifier : MonoBehaviour
+namespace Common
 {
-    [Header("Settings")]
-    [SerializeField] private ScaleModifierSettings settings;
-
-    private float _timer = 0f;
-    private bool _modifyingScale = false;
-    private Vector3 _increaseRatio;
-    private Vector3 _startSize;
-
-    // CORE
-
-    private void Awake()
+    /*
+     * May have to synchronize the size with a throwable state
+     *
+     */
+    public class ScaleModifier : MonoBehaviour
     {
-        _increaseRatio = settings.TargetSize - settings.StartSize;
-    }
+        [Header("Settings")]
+        [SerializeField] private ScaleModifierSettings settings;
 
-    private void OnEnable()
-    {
-        _timer = 0f;
-    }
+        private float _timer = 0f;
+        private bool _modifyingScale = false;
+        private Vector3 _increaseRatio;
+        private Vector3 _startSize;
 
-    private void Update()
-    {
-        if (_timer < settings.SecondsBeforeFullSize && _modifyingScale)
+        // CORE
+
+        private void Awake()
         {
-            _timer += Time.deltaTime;
-            IncreaseSize();
+            _increaseRatio = settings.TargetSize - settings.StartSize;
+
+            if (settings.StartIncreaseOnAwake)
+            {
+                StartIncreasing();
+            }
         }
-    }
 
-    // PUBLIC
+        private void OnEnable()
+        {
+            _timer = 0f;
+        }
 
-    public void ResetScale()
-    {
-        _modifyingScale = false;
-        _timer = 0f;
-        transform.localScale = settings.StartSize;
-    }
+        private void Update()
+        {
+            if (_timer < settings.SecondsBeforeFullSize && _modifyingScale)
+            {
+                _timer += Time.deltaTime;
+                IncreaseSize();
+            }
+        }
 
-    public void StartIncreasing()
-    {
-        _timer = 0f;
-        _modifyingScale = true;
-    }
+        // PUBLIC
 
-    // PRIVATE
+        public void ResetScale()
+        {
+            _modifyingScale = false;
+            _timer = 0f;
+            transform.localScale = settings.StartSize;
+        }
 
-    private void IncreaseSize()
-    {
-        var currentScale = transform.localScale;
-        currentScale.x = settings.StartSize.x + _timer / settings.SecondsBeforeFullSize * _increaseRatio.x;
-        currentScale.y = settings.StartSize.y + _timer / settings.SecondsBeforeFullSize * _increaseRatio.y;
-        currentScale.z = settings.StartSize.z + _timer / settings.SecondsBeforeFullSize * _increaseRatio.z;
-        transform.localScale = currentScale;
+        public void StartIncreasing()
+        {
+            _timer = 0f;
+            _modifyingScale = true;
+        }
+
+        // PRIVATE
+
+        private void IncreaseSize()
+        {
+            var currentScale = transform.localScale;
+            currentScale.x = settings.StartSize.x + _timer / settings.SecondsBeforeFullSize * _increaseRatio.x;
+            currentScale.y = settings.StartSize.y + _timer / settings.SecondsBeforeFullSize * _increaseRatio.y;
+            currentScale.z = settings.StartSize.z + _timer / settings.SecondsBeforeFullSize * _increaseRatio.z;
+            transform.localScale = currentScale;
+        }
     }
 }
