@@ -44,12 +44,21 @@ namespace Gamemodes.Totem
             {
                 state.Lives--;
 
-                FindObjectOfType<TotemSpawner>().RespawnTotem();
+                foreach (var totemSpawn in FindObjectsOfType<TotemSpawner>())
+                {
+                    if (OwnerTeam == Team.Red && totemSpawn.RespawnSide == TotemSpawner.Side.Red)
+                    {
+                        totemSpawn.RespawnTotem();
+                    }
+                    else if (OwnerTeam == Team.Blue && totemSpawn.RespawnSide == TotemSpawner.Side.Blue)
+                    {
+                        totemSpawn.RespawnTotem();
+                    }
+                }
 
                 TotemWallHit totemWallHitEvent = TotemWallHit.Create();
                 totemWallHitEvent.Team = OwnerTeam.ToString();
                 totemWallHitEvent.Send();
-                Debug.Log("Totem wall has been hit !");
 
                 if (state.Lives <= 0)
                 {
