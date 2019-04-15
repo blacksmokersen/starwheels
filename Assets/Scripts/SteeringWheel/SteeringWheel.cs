@@ -9,7 +9,7 @@ namespace Steering
     {
         [SerializeField] private bool _enabled = true;
 
-        [SerializeField] private Animator _animatorChar;
+      //  [SerializeField] private Animator _animatorChar;
 
         public bool Enabled
         {
@@ -152,23 +152,23 @@ namespace Steering
             if (turnValue > 0)
             {
                 TurningState = TurnState.Right;
-                _animatorChar.SetBool("CharNotTurning", false);
-                _animatorChar.SetBool("CharTurnLeft", false);
-                _animatorChar.SetBool("CharTurnRight", true);
+             //   _animatorChar.SetBool("CharNotTurning", false);
+             //   _animatorChar.SetBool("CharTurnLeft", false);
+             //   _animatorChar.SetBool("CharTurnRight", true);
             }
             else if (turnValue < 0)
             {
                 TurningState = TurnState.Left;
-                _animatorChar.SetBool("CharNotTurning", false);
-                _animatorChar.SetBool("CharTurnRight", false);
-                _animatorChar.SetBool("CharTurnLeft", true);
+             //   _animatorChar.SetBool("CharNotTurning", false);
+             //   _animatorChar.SetBool("CharTurnRight", false);
+             //   _animatorChar.SetBool("CharTurnLeft", true);
             }
             else
             {
                 TurningState = TurnState.NotTurning;
-                _animatorChar.SetBool("CharNotTurning", true);
-                _animatorChar.SetBool("CharTurnRight", false);
-                _animatorChar.SetBool("CharTurnLeft", false);
+             //   _animatorChar.SetBool("CharNotTurning", true);
+             //   _animatorChar.SetBool("CharTurnRight", false);
+             //   _animatorChar.SetBool("CharTurnLeft", false);
             }
         }
 

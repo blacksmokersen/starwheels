@@ -99,6 +99,6 @@
     // Animations
     public class Animations
     {
-        public const string Knockout = "HitHighSpeed";
+        public const string Knockout = "Hit";
     }
 }
