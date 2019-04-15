@@ -26,11 +26,14 @@ namespace Totem
 
         public override void OnEvent(TotemWallHit evnt)
         {
+            /*
             var scorerTeam = evnt.Team.ToTeam().OppositeTeam();
             if (_kartRoot.isOwner && scorerTeam == _playerSettings.ColorSettings.TeamEnum)
             {
                 TeleportOnSpawn();
             }
+            */
+            TeleportOnSpawn();
         }
 
         // PRIVATE

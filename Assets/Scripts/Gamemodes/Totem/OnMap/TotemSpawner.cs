@@ -3,16 +3,26 @@ using Bolt;
 
 namespace Gamemodes.Totem
 {
+
+
     [DisallowMultipleComponent]
     public class TotemSpawner : GlobalEventListener
     {
+        public enum Side
+        {
+            Red,
+            Blue,
+            Center
+        };
+        public Side RespawnSide;
+
         private bool _totemInstantiated = false;
 
         // DEBUG
 
         private void Update()
         {
-            if(BoltNetwork.IsServer && Input.GetKeyDown(KeyCode.Alpha5))
+            if(BoltNetwork.IsServer && Input.GetKeyDown(KeyCode.Alpha5) && RespawnSide == Side.Center)
             {
                 RespawnTotem();
             }
@@ -22,12 +32,18 @@ namespace Gamemodes.Totem
 
         public override void BoltStartDone()
         {
-            InstantiateTotem();
+            if (RespawnSide == Side.Center)
+            {
+                InstantiateTotem();
+            }
         }
 
         public override void SceneLoadLocalDone(string map)
         {
-            InstantiateTotem();
+            if (RespawnSide == Side.Center)
+            {
+                InstantiateTotem();
+            }
         }
 
         // PUBLIC

@@ -15,7 +15,13 @@ namespace Gamemodes.Totem
             {
                 if (BoltNetwork.IsServer)
                 {
-                    FindObjectOfType<TotemSpawner>().RespawnTotem();
+                    foreach (var totemSpawn in FindObjectsOfType<TotemSpawner>())
+                    {
+                        if (totemSpawn.RespawnSide == TotemSpawner.Side.Center)
+                        {
+                            totemSpawn.RespawnTotem();
+                        }
+                    }
                 }
                 else
                 {
