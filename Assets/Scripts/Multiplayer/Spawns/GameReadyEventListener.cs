@@ -16,8 +16,7 @@ namespace Multiplayer
 
         private void Start()
         {
-            var token = (Photon.RoomProtocolToken) GetComponentInParent<BoltEntity>().attachToken;
-            if (token.GameStarted && OnGameReady != null)
+            if (OnGameReady != null)
             {
                 OnGameReady.Invoke();
             }
