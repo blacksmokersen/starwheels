@@ -96,7 +96,7 @@ namespace Abilities.Jump
             var forceUp = Vector3.up * _jumpSettings.SecondJumpUpForce;
             var forceDirectional = forceDirection * _jumpSettings.SecondJumpLateralForces;
             if (_straightUpSecondJump)
-                _rb.AddRelativeForce(forceUp, ForceMode.Impulse);
+                _rb.AddRelativeForce(forceUp, ForceMode.Force);
             else
             {
                 _rb.AddRelativeForce(forceUp + forceDirectional, ForceMode.Force);
