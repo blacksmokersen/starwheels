@@ -9,6 +9,7 @@ namespace Photon
         public String Gamemode;
         public String RespawnMode;
         public int PlayersCount;
+        public bool GameStarted = false;
 
         public void Read(UdpPacket packet)
         {

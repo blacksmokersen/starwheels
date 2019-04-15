@@ -230,6 +230,8 @@ namespace Multiplayer
 
             GameReady gameReadyEvent = GameReady.Create(GlobalTargets.Everyone);
             gameReadyEvent.Send();
+
+            RoomInfoToken.GameStarted = true;
         }
     }
 }

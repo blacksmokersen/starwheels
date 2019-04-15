@@ -88,6 +88,7 @@ namespace Common
 
         public void EnableAllInChildren()
         {
+            Debug.Log("Enabled all in children");
             foreach (var controllable in GetComponentsInChildren<IControllable>())
             {
                 controllable.Enabled = true;
