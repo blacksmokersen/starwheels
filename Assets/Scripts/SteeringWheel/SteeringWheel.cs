@@ -9,7 +9,8 @@ namespace Steering
     {
         [SerializeField] private bool _enabled = true;
 
-      //  [SerializeField] private Animator _animatorChar;
+        [SerializeField] private Animator _kartGraphicsAnimator;
+        //  [SerializeField] private Animator _animatorChar;
 
         public bool Enabled
         {
@@ -86,7 +87,7 @@ namespace Steering
             else
             {
                 var rb = _rb;
-                rb = TurnUsingTorque(cmd.Input.Turn,rb);
+                rb = TurnUsingTorque(cmd.Input.Turn, rb);
                 cmd.Result.Velocity = rb.velocity;
             }
         }
@@ -101,9 +102,9 @@ namespace Steering
                 var ActualTurnTorque = Settings.TurnTorque;
 
                 if (Mathf.Abs(turnValue) <= 0.3f)
-                    ActualTurnTorque = Settings.TurnTorque/4;
+                    ActualTurnTorque = Settings.TurnTorque / 4;
                 else if (Mathf.Abs(turnValue) >= 0.3f && Mathf.Abs(turnValue) <= 0.6f)
-                    ActualTurnTorque = Settings.TurnTorque/2;
+                    ActualTurnTorque = Settings.TurnTorque / 2;
                 else if (Mathf.Abs(turnValue) >= 0.6f && Mathf.Abs(turnValue) <= 0.8f)
                     ActualTurnTorque = Settings.TurnTorque / 1.5f;
                 else
@@ -152,23 +153,23 @@ namespace Steering
             if (turnValue > 0)
             {
                 TurningState = TurnState.Right;
-             //   _animatorChar.SetBool("CharNotTurning", false);
-             //   _animatorChar.SetBool("CharTurnLeft", false);
-             //   _animatorChar.SetBool("CharTurnRight", true);
+                _kartGraphicsAnimator.SetBool("NotTurning", false);
+                _kartGraphicsAnimator.SetBool("TurnLeft", false);
+                _kartGraphicsAnimator.SetBool("TurnRight", true);
             }
             else if (turnValue < 0)
             {
                 TurningState = TurnState.Left;
-             //   _animatorChar.SetBool("CharNotTurning", false);
-             //   _animatorChar.SetBool("CharTurnRight", false);
-             //   _animatorChar.SetBool("CharTurnLeft", true);
+                _kartGraphicsAnimator.SetBool("NotTurning", false);
+                _kartGraphicsAnimator.SetBool("TurnRight", false);
+                _kartGraphicsAnimator.SetBool("TurnLeft", true);
             }
             else
             {
                 TurningState = TurnState.NotTurning;
-             //   _animatorChar.SetBool("CharNotTurning", true);
-             //   _animatorChar.SetBool("CharTurnRight", false);
-             //   _animatorChar.SetBool("CharTurnLeft", false);
+                _kartGraphicsAnimator.SetBool("NotTurning", true);
+                _kartGraphicsAnimator.SetBool("TurnRight", false);
+                _kartGraphicsAnimator.SetBool("TurnLeft", false);
             }
         }
 
