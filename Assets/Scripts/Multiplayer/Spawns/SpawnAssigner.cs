@@ -135,7 +135,10 @@ namespace Multiplayer
             playerSpawn.TeamEnum = team.ToString();
             playerSpawn.Send();
 
-            IncreaseSpawnCount();
+            if (!respawn)
+            {
+                IncreaseSpawnCount();
+            }
         }
 
         private GameObject GetInitialSpawnPosition(Team team)
@@ -228,6 +231,7 @@ namespace Multiplayer
             countdownEvent.Time = 0;
             countdownEvent.Send();
 
+            Debug.Log("Sending GAME STARTED EVENT");
             GameReady gameReadyEvent = GameReady.Create(GlobalTargets.Everyone);
             gameReadyEvent.Send();
 
