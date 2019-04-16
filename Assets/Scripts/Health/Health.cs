@@ -27,19 +27,6 @@ namespace Health
 
         // BOLT
 
-        public override void Attached()
-        {
-            if (entity.attachToken != null)
-            {
-                var roomToken = (RoomProtocolToken)entity.attachToken;
-                CanLoseHealth = false; // (roomToken.Gamemode == Constants.Gamemodes.Battle || roomToken.Gamemode == Constants.Gamemodes.FFA) ;
-            }
-            else
-            {
-                Debug.LogError("Couldn't find the attached token to set the knockout mode.");
-            }
-        }
-
         public override void ControlGained()
         {
             state.SetDynamic("Health", CurrentHealth);
@@ -48,6 +35,11 @@ namespace Health
         }
 
         // PUBLIC
+
+        public void SetCanLoseHealth(bool b)
+        {
+            CanLoseHealth = b;
+        }
 
         public void LoseHealth()
         {
@@ -59,7 +51,6 @@ namespace Health
                 }
 
                 OnHealthLoss.Invoke(state.Health);
-                //SetInvincibilityForXSeconds(3f);
             }
         }
 

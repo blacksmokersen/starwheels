@@ -11,22 +11,21 @@ namespace Multiplayer
      */
     public class SpawnAsker : EntityBehaviour
     {
-        [Header("Is Active")]
+        [Header("Is Active (Debug)")]
         [SerializeField] private bool Enabled = false;
 
         [SerializeField] private PlayerSettings _playerSettings;
 
-        public override void Attached()
+        // PUBLIC
+
+        public void Enable()
         {
-            if (entity.attachToken != null)
-            {
-                var roomToken = (RoomProtocolToken)entity.attachToken;
-                Enabled = false;// (roomToken.Gamemode == Constants.Gamemodes.Battle || roomToken.Gamemode == Constants.Gamemodes.FFA);
-            }
-            else
-            {
-                Debug.LogError("Couldn't find the attached token to set the knockout mode.");
-            }
+            Enabled = true;
+        }
+
+        public void Disable()
+        {
+            Enabled = false;
         }
 
         public void AskForSpawn()

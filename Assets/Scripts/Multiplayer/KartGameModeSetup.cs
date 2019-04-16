@@ -1,40 +1,55 @@
 ﻿using UnityEngine;
-using Bolt;
-using Photon;
+using UnityEngine.Events;
 
 namespace Gamemodes
 {
-    public class KartGameModeSetup : EntityBehaviour
+    public class KartGameModeSetup : MonoBehaviour
     {
+        [Header("Events")]
+        public UnityEvent OnTotemModeSet;
+        public UnityEvent OnFFAModeSet;
+        public UnityEvent OnBattleModeSet;
+
         [SerializeField] private GameObject _totemSpecifics;
         [SerializeField] private GameObject _battleSpecifics;
 
-        public override void Attached()
-        {
-            if (entity.attachToken != null)
-            {
-                var roomToken = (RoomProtocolToken)entity.attachToken;
-                //Debug.Log("GameMode set : " + roomToken.Gamemode);
+        private GameSettings _gameSettings;
 
-                switch (roomToken.Gamemode)
-                {
-                    case Constants.Gamemodes.Battle:
-                        _battleSpecifics.SetActive(true);
-                        break;
-                    case Constants.Gamemodes.FFA:
-                        _battleSpecifics.SetActive(true);
-                        break;
-                    case Constants.Gamemodes.Totem:
-                        _totemSpecifics.SetActive(true);
-                        break;
-                    default:
-                        Debug.LogError("GameMode unknown !");
-                        break;
-                }
-            }
-            else
+        // CORE
+
+        private void Awake()
+        {
+            _gameSettings = Resources.Load<GameSettings>(Constants.Resources.GameSettings);
+        }
+
+        private void Start()
+        {
+            switch (_gameSettings.Gamemode)
             {
-                Debug.LogError("Couldn't find the attached token to set the gamemode.");
+                case Constants.Gamemodes.Battle:
+                    _battleSpecifics.SetActive(true);
+                    if (OnBattleModeSet != null)
+                    {
+                        OnBattleModeSet.Invoke();
+                    }
+                    break;
+                case Constants.Gamemodes.FFA:
+                    _battleSpecifics.SetActive(true);
+                    if (OnFFAModeSet != null)
+                    {
+                        OnFFAModeSet.Invoke();
+                    }
+                    break;
+                case Constants.Gamemodes.Totem:
+                    _totemSpecifics.SetActive(true);
+                    if (OnTotemModeSet != null)
+                    {
+                        OnTotemModeSet.Invoke();
+                    }
+                    break;
+                default:
+                    Debug.LogError("Gamemode unknown !");
+                    break;
             }
         }
     }
