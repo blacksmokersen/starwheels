@@ -18,7 +18,7 @@ namespace Knockout
             if (entity.attachToken != null)
             {
                 var roomToken = (RoomProtocolToken)entity.attachToken;
-                Enabled = roomToken.Gamemode == Constants.Gamemodes.Totem;
+                Enabled = true;// roomToken.Gamemode == Constants.Gamemodes.Totem;
             }
             else
             {
