@@ -5,7 +5,7 @@ using Photon;
 
 namespace Knockout
 {
-    public class Knockout : EntityBehaviour
+    public class Knockout : MonoBehaviour
     {
         [Header("Is Active")]
         [SerializeField] private bool Enabled = false;
@@ -13,17 +13,16 @@ namespace Knockout
         [Header("Events")]
         public UnityEvent OnKnockout;
 
-        public override void Attached()
+        // PUBLIC
+
+        public void Enable()
         {
-            if (entity.attachToken != null)
-            {
-                var roomToken = (RoomProtocolToken)entity.attachToken;
-                Enabled = true;// roomToken.Gamemode == Constants.Gamemodes.Totem;
-            }
-            else
-            {
-                Debug.LogError("Couldn't find the attached token to set the knockout mode.");
-            }
+            Enabled = true;
+        }
+
+        public void Disable()
+        {
+            Enabled = false;
         }
 
         public void ApplyKnockoutState()

@@ -54,7 +54,10 @@ namespace Gamemodes.Totem
 
         public void FullyDischargeForXSeconds(FloatVariable seconds)
         {
-            StartCoroutine(FullyDischargeForXSecondsRoutine(seconds.Value));
+            if (gameObject.activeInHierarchy)
+            {
+                StartCoroutine(FullyDischargeForXSecondsRoutine(seconds.Value));
+            }
         }
 
         public void FullyCharge()
@@ -72,7 +75,10 @@ namespace Gamemodes.Totem
 
         public void FullyChargeAfterXSeconds(FloatVariable seconds)
         {
-            StartCoroutine(RechargeEnergyAfterXSeconds(seconds.Value));
+            if (gameObject.activeInHierarchy)
+            {
+                StartCoroutine(RechargeEnergyAfterXSeconds(seconds.Value));
+            }
         }
 
         // PRIVATE
