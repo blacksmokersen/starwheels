@@ -1,42 +1,47 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Bolt;
+using ThrowingSystem;
 
 namespace Items
 {
     public class ShockwaveEffectBehaviour : EntityEventListener
     {
-        private ItemListData _itemList;
-
-        // CORE
-
-        private void Awake()
-        {
-            _itemList = Resources.Load<ItemListData>(Constants.Resources.ItemListData);
-        }
+        [Header("Prefabs")]
+        [SerializeField] private GameObject _smallEffectPrefab;
+        [SerializeField] private GameObject _mediumEffectPrefab;
+        [SerializeField] private GameObject _bigEffectPrefab;
 
         //BOLT
 
-        public override void OnEvent(PlayerLaunchItem playerLaunchItem)
+        public override void OnEvent(ObjectThrow evnt)
         {
-            if (entity == playerLaunchItem.Entity)
+            if (entity == evnt.Entity)
             {
-                Debug.Log("This entity : " + playerLaunchItem.ItemName);
-                InstantiateShockwave(playerLaunchItem.Position, playerLaunchItem.Rotation, playerLaunchItem.ItemName);
+                var size = (Size)Enum.Parse(typeof(Size), evnt.Size);
+                InstantiateShockwave(evnt.Position, evnt.Rotation, size);
             }
         }
 
         //PUBLIC
 
-        public void InstantiateShockwave(Vector3 position, Quaternion rotation, string itemName)
+        public void InstantiateShockwave(Vector3 position, Quaternion rotation, Size size)
         {
-            var item = _itemList.GetItemUsingName(itemName);
-            if (item)
+            GameObject prefab = _smallEffectPrefab;
+            switch (size)
             {
-                var shockwave = Instantiate(item.ShockwavePrefab);
-                shockwave.transform.position = position;
-                shockwave.transform.rotation = rotation;
-                Destroy(shockwave, .3f);
+                case Size.Small:
+                    prefab = _smallEffectPrefab;
+                    break;
+                case Size.Medium:
+                    prefab = _mediumEffectPrefab;
+                    break;
+                case Size.Big:
+                    prefab = _bigEffectPrefab;
+                    break;
             }
+            var shockwave = Instantiate(prefab, position, rotation, transform);
+            Destroy(shockwave, .3f);
         }
     }
 }
