@@ -61,7 +61,7 @@ namespace ThrowingSystem
                 Drop(throwable, throwingDirection);
             }
             throwable.transform.rotation = Quaternion.Euler(rot);
-            StartLaunchItemEvent(throwable.transform.position, throwable.transform.rotation, throwable.name);
+            SendObjectThrowEvent(throwable.transform.position, throwable.transform.rotation, throwable.ThrowableSize);
         }
 
         private void StraightThrow(Throwable throwable, Direction throwingDirection)
@@ -82,7 +82,7 @@ namespace ThrowingSystem
                 rb.velocity = -transform.forward.normalized * throwable.Speed.Value;
             }
             throwable.transform.rotation = Quaternion.Euler(rot);
-            StartLaunchItemEvent(throwable.transform.position, throwable.transform.rotation, throwable.name);
+            SendObjectThrowEvent(throwable.transform.position, throwable.transform.rotation, throwable.ThrowableSize);
         }
 
         private void Drop(Throwable throwable, Direction throwingDirection)
@@ -97,17 +97,17 @@ namespace ThrowingSystem
                 throwable.transform.position = _itemPositions.BackPosition.position;
             }
             throwable.transform.rotation = Quaternion.Euler(rot);
-            StartLaunchItemEvent(throwable.transform.position,throwable.transform.rotation,throwable.name);
+            SendObjectThrowEvent(throwable.transform.position, throwable.transform.rotation, throwable.ThrowableSize);
         }
 
-        private void StartLaunchItemEvent(Vector3 position,Quaternion rotation, string itemName)
+        private void SendObjectThrowEvent(Vector3 position,Quaternion rotation, Size objectSize)
         {
-            var launchEvent = PlayerLaunchItem.Create(entity);
-            launchEvent.Position = position;
-            launchEvent.Rotation = rotation;
-            launchEvent.ItemName = itemName;
-            launchEvent.Entity = GetComponentInParent<BoltEntity>();
-            launchEvent.Send();
+            var objectThrowEvent = ObjectThrow.Create(entity);
+            objectThrowEvent.Position = position;
+            objectThrowEvent.Rotation = rotation;
+            objectThrowEvent.Size = objectSize.ToString();
+            objectThrowEvent.Entity = GetComponentInParent<BoltEntity>();
+            objectThrowEvent.Send();
         }
     }
 }

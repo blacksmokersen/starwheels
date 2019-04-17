@@ -1,87 +1,47 @@
-﻿using System.Collections;
+﻿using System;
 using UnityEngine;
+using Bolt;
+using ThrowingSystem;
 
 namespace Items
 {
-    public class ShockwaveEffectBehaviour : Bolt.EntityEventListener
+    public class ShockwaveEffectBehaviour : EntityEventListener
     {
-        [SerializeField] private GameObject shockwaveGreen;
-        [SerializeField] private GameObject shockwaveBlue;
-        [SerializeField] private GameObject shockwaveYellow;
-        [SerializeField] private Inventory playerInventory;
-
-        private GameObject _shockwavePrefab;
-        private string _itemNameToDisplay;
+        [Header("Prefabs")]
+        [SerializeField] private GameObject _smallEffectPrefab;
+        [SerializeField] private GameObject _mediumEffectPrefab;
+        [SerializeField] private GameObject _bigEffectPrefab;
 
         //BOLT
 
-        public override void OnEvent(PlayerLaunchItem playerLaunchItem)
+        public override void OnEvent(ObjectThrow evnt)
         {
-            if (entity == playerLaunchItem.Entity)
-                InstantiateShockwave(playerLaunchItem.Position, playerLaunchItem.Rotation, playerLaunchItem.ItemName);
+            if (entity == evnt.Entity)
+            {
+                var size = (Size)Enum.Parse(typeof(Size), evnt.Size);
+                InstantiateShockwave(evnt.Position, evnt.Rotation, size);
+            }
         }
 
         //PUBLIC
 
-        public void InstantiateShockwave(Vector3 position, Quaternion rotation, string itemName)
+        public void InstantiateShockwave(Vector3 position, Quaternion rotation, Size size)
         {
-            ShockwavePrefab(itemName);
-            _shockwavePrefab.transform.position = position;
-            _shockwavePrefab.transform.rotation = rotation;
-            StartCoroutine(DisableDelay(_shockwavePrefab));
-        }
-
-        public void InstantShockwaveGODisabler() //used for TpBack
-        {
-            if (_shockwavePrefab != null)
-                _shockwavePrefab.SetActive(false);
-        }
-
-        //PRIVATE
-
-        private void ShockwavePrefab(string itemName)
-        {
-            _itemNameToDisplay = itemName;
-
-            switch (_itemNameToDisplay)
+            GameObject prefab = _smallEffectPrefab;
+            switch (size)
             {
-                case "Disk(Clone)":
-                    _shockwavePrefab = shockwaveGreen;
+                case Size.Small:
+                    prefab = _smallEffectPrefab;
                     break;
-
-                case "Mine(Clone)":
-                    _shockwavePrefab = shockwaveGreen;
+                case Size.Medium:
+                    prefab = _mediumEffectPrefab;
                     break;
-
-                case "Guile(Clone)":
-                    _shockwavePrefab = shockwaveYellow;
-                    break;
-
-                case "Rocket(Clone)":
-                    _shockwavePrefab = shockwaveBlue;
-                    break;
-
-                case "IonBeam(Clone)":
-                    _shockwavePrefab = shockwaveYellow;
-                    break;
-
-                case "TPBack(Clone)":
-                    _shockwavePrefab = shockwaveYellow;
-                    break;
-                case "Totem(Clone)":
-                    _shockwavePrefab = shockwaveYellow;
-                    break;
-                case "GoldDisk(Clone)":
-                    _shockwavePrefab = shockwaveYellow;
+                case Size.Big:
+                    prefab = _bigEffectPrefab;
                     break;
             }
-        }
-
-        private IEnumerator DisableDelay(GameObject shockwaveGO)
-        {
-            shockwaveGO.SetActive(true);
-            yield return new WaitForSeconds(0.3f);
-            shockwaveGO.SetActive(false);
+            var shockwave = Instantiate(prefab, position, rotation, transform);
+            Destroy(shockwave, .3f);
         }
     }
 }
