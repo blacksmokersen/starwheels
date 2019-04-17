@@ -11,10 +11,18 @@ namespace ThrowingSystem
         None
     }
 
+    public enum Size
+    {
+        Small,
+        Medium,
+        Big
+    }
+
     [RequireComponent(typeof(Rigidbody))]
     public class Throwable : EntityBehaviour<IThrowableState>
     {
         public ThrowableType ThrowableType;
+        public Size ThrowableSize;
         public FloatVariable Speed;
 
         [Header("Temporal Anti-Aliasing")]

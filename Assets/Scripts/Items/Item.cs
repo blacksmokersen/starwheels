@@ -1,17 +1,25 @@
 ﻿using UnityEngine;
 
+public enum ItemRarity { Green, Purple, Gold }
+
 namespace Items
 {
     [CreateAssetMenu]
     public class Item : ScriptableObject
     {
         public string Name;
+        public ItemRarity Rarity;
+
+        [Header("Inventory Settings")]
         public int Count;
-        public Texture2D Icon;
         public ItemType ItemType;
         public GameObject ItemPrefab;
         public Sprite InventoryTexture;
-        public float Chances;
-        public Color ItemColor;
+
+        [Header("Preview")]
+        public GameObject ShockwavePrefab;
+        public GameObject ShieldPrefab;
+        public GameObject PreviewPrefab;
+        public Material EmissiveMaterial;
     }
 }
