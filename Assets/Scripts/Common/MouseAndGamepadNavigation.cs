@@ -62,15 +62,9 @@ namespace Common
         {
             if (!_gamepadHasFocus && (Mathf.Abs(Input.GetAxis(Constants.Input.TurnAxis)) > 0 || Mathf.Abs(Input.GetAxis(Constants.Input.UpAndDownAxis)) > 0))
             {
-                //_lastSelected.Select();
                 _eventSystem.SetSelectedGameObject(_lastSelected.gameObject);
-                _gamepadHasFocus = true;
                 Cursor.visible = false;
-
-                if (_eventSystem.IsPointerOverGameObject())
-                {
-                    //GameObjectUnderPointer().GetComponent<Selectable>().
-                }
+                _gamepadHasFocus = true;
             }
         }
 
