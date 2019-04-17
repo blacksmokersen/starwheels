@@ -10,6 +10,9 @@ namespace Multiplayer
         private PlayerSettings _playerSettings;
         private GameSettings _gameSettings;
 
+        [Header("Game State")]
+        [SerializeField] private BoolVariable _gameStarted;
+
         [Tooltip("GameModes are : 'Totem' and 'Battle'")]
         [SerializeField] private string _gameMode;
 
@@ -17,6 +20,7 @@ namespace Multiplayer
 
         private void Awake()
         {
+            _gameStarted.Value = false;
             _playerSettings = Resources.Load<PlayerSettings>(Constants.Resources.PlayerSettings);
             _gameSettings = Resources.Load<GameSettings>(Constants.Resources.GameSettings);
 
@@ -43,6 +47,10 @@ namespace Multiplayer
         {
             if(evnt.ConnectionID == SWMatchmaking.GetMyBoltId())
             {
+                if (_gameStarted.Value == false && evnt.GameStarted == true)
+                {
+                    _gameStarted.Value = true;
+                }
                 InstantiateKart(evnt.SpawnPosition, evnt.SpawnRotation, evnt.TeamEnum.ToTeam(), (RoomProtocolToken)evnt.RoomToken);
             }
         }
