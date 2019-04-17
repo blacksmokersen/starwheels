@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 namespace Items
 {
@@ -18,6 +17,18 @@ namespace Items
                 }
             }
             return -1;
+        }
+
+        public Item GetItemUsingName(string name)
+        {
+            foreach (var item in Items)
+            {
+                if (item.Name == name)
+                {
+                    return item;
+                }
+            }
+            return null;
         }
 
         public Sprite GetItemIconUsingName(string name)

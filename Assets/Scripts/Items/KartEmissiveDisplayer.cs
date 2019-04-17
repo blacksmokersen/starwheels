@@ -7,19 +7,21 @@ namespace Items
     public class KartEmissiveDisplayer : GlobalEventListener
     {
         [Header("Materials Emissives")]
-        public Material GreenMaterial;
-        public Material PurpleMaterial;
-        public Material GoldMaterial;
         public Material DefaultMaterial;
 
+        [Space(10)]
         public GameObject Emissive;
 
-        private string _emissiveToDisplay;
+        private ItemListData _itemList;
 
-        public void Awake()
+        // CORE
+
+        private void Awake()
         {
-            Emissive.GetComponent<MeshRenderer>();
+            _itemList = Resources.Load<ItemListData>(Constants.Resources.ItemListData);
         }
+
+        // BOLT
 
         public override void OnEvent(ShowKartDisplayItem evnt)
         {
@@ -27,11 +29,9 @@ namespace Items
 
             if (entity == evnt.Entity)
             {
-                _emissiveToDisplay = evnt.ItemName;
-
                 if (evnt.ItemCount > 0)
                 {
-                    DisplayEmissive();
+                    DisplayEmissive(evnt.ItemName);
                 }
                 else
                 {
@@ -40,26 +40,14 @@ namespace Items
             }
         }
 
-        public void DisplayEmissive()
-        {
-            switch (_emissiveToDisplay)
-            {
+        // PUBLIC
 
-                case "Disk":
-                    Emissive.GetComponent<MeshRenderer>().material = GreenMaterial;
-                    break;
-                case "Mine":
-                    Emissive.GetComponent<MeshRenderer>().material = GreenMaterial;
-                    break;
-                case "Guile":
-                    Emissive.GetComponent<MeshRenderer>().material = GreenMaterial;
-                    break;
-                case "Rocket":
-                    Emissive.GetComponent<MeshRenderer>().material = PurpleMaterial;
-                    break;
-                case "IonBeam":
-                    Emissive.GetComponent<MeshRenderer>().material = GoldMaterial;
-                    break;
+        public void DisplayEmissive(string itemName)
+        {
+            var item = _itemList.GetItemUsingName(itemName);
+            if (item)
+            {
+                Emissive.GetComponent<MeshRenderer>().material = item.EmissiveMaterial;
             }
         }
 

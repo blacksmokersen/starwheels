@@ -97,7 +97,7 @@ namespace ThrowingSystem
                 throwable.transform.position = _itemPositions.BackPosition.position;
             }
             throwable.transform.rotation = Quaternion.Euler(rot);
-            StartLaunchItemEvent(throwable.transform.position,throwable.transform.rotation,throwable.name);
+            StartLaunchItemEvent(throwable.transform.position, throwable.transform.rotation, throwable.name);
         }
 
         private void StartLaunchItemEvent(Vector3 position,Quaternion rotation, string itemName)

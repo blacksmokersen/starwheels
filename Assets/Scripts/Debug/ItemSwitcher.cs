@@ -22,7 +22,7 @@ namespace SW.DebugUtils
 
         private void Awake()
         {
-            _itemsList = Resources.Load<ItemListData>("Data/ItemList").Items;
+            _itemsList = Resources.Load<ItemListData>(Constants.Resources.ItemListData).Items;
             _inventory = GetComponent<Inventory>();
         }
 
