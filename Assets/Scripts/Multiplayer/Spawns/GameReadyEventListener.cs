@@ -16,7 +16,7 @@ namespace Multiplayer
 
         private void Start()
         {
-            if (OnGameReady != null)
+            if (_gameStartedVariable.Value == true && OnGameReady != null)
             {
                 OnGameReady.Invoke();
             }

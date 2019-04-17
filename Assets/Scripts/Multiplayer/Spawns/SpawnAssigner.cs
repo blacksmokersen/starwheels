@@ -25,6 +25,7 @@ namespace Multiplayer
         private int _spawnsAssigned = 0;
         private int _playersCount = -1;
         private bool _gameIsReady = false;
+        private bool _gameIsStarted = false;
 
         // CORE
 
@@ -133,6 +134,7 @@ namespace Multiplayer
             playerSpawn.SpawnRotation = spawn.transform.rotation;
             playerSpawn.RoomToken = RoomInfoToken;
             playerSpawn.TeamEnum = team.ToString();
+            playerSpawn.GameStarted = _gameIsStarted;
             playerSpawn.Send();
 
             if (!respawn)
@@ -231,11 +233,10 @@ namespace Multiplayer
             countdownEvent.Time = 0;
             countdownEvent.Send();
 
-            Debug.Log("Sending GAME STARTED EVENT");
             GameReady gameReadyEvent = GameReady.Create(GlobalTargets.Everyone);
             gameReadyEvent.Send();
 
-            RoomInfoToken.GameStarted = true;
+            _gameIsStarted = true;
         }
     }
 }
