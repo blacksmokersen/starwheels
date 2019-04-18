@@ -10,6 +10,7 @@ namespace Items
         Guile,
         IonBeamLaser,
         GoldDisk,
+        Laser,
         Totem,
         ItemDestroyer
     }
@@ -29,6 +30,7 @@ namespace Items
         public bool Guile;
         public bool IonBeamLaser;
         public bool GoldDisk;
+        public bool Laser;
         public bool Totem;
         public bool ItemDestroyer;
 
@@ -55,6 +57,10 @@ namespace Items
                 return true;
             }
             else if (itemCollision.ItemName == ItemCollisionName.GoldDisk && GoldDisk)
+            {
+                return true;
+            }
+            else if (itemCollision.ItemName == ItemCollisionName.Laser && Laser)
             {
                 return true;
             }
