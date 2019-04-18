@@ -152,6 +152,13 @@ namespace Items
                     ionBeanBehaviour.OwnerNickname = state.Nickname;
                     ionBeanBehaviour.ItemName = CurrentItem.Name;
                 }
+
+                if (instantiatedItem.GetComponent<LaserBehaviour>() != null)
+                {
+                    var laserBehaviour = instantiatedItem.GetComponent<LaserBehaviour>();
+                    var kartRigibody = GetComponentInParent<Rigidbody>();
+                    laserBehaviour.LaunchLaser(transform.root, kartRigibody);
+                }
             }
         }
 

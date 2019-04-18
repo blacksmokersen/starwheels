@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Items Settings/IonBeamLaser")]
 public class IonBeamLaserSettings : ScriptableObject
 {
     public float Speed;
