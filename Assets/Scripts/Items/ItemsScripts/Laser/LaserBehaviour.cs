@@ -8,11 +8,20 @@ namespace Items
     public class LaserBehaviour : NetworkDestroyable
     {
         [SerializeField] private LaserSettings _laserSettings;
+
+        private MeshRenderer _laserRenderer;
+        private CapsuleCollider _laserCollider;
         //CORE
+
+        private void Awake()
+        {
+            _laserRenderer = GetComponentInChildren<MeshRenderer>();
+            _laserCollider = GetComponentInChildren<CapsuleCollider>();
+        }
 
         private void Start()
         {
-            StartCoroutine(LaserDuration(_laserSettings.LaserDuration));
+            StartCoroutine(LaserDuration(_laserSettings.TimeBeforeDestroyLaser));
         }
 
         //PUBLIC
@@ -34,6 +43,9 @@ namespace Items
 
         private IEnumerator LaserDuration(float duration)
         {
+            yield return new WaitForSeconds(_laserSettings.FlashDuration);
+            _laserRenderer.enabled = false;
+            _laserCollider.enabled = false;
             yield return new WaitForSeconds(duration);
             DestroyEntity destroyEntityEvent = DestroyEntity.Create();
             destroyEntityEvent.Entity = entity;
