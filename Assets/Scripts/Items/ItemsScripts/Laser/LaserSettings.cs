@@ -5,8 +5,9 @@ namespace Items
     [CreateAssetMenu(menuName = "Items Settings/Laser")]
     public class LaserSettings : ScriptableObject
     {
-        [Header("Wall Duration")]
-        public float LaserDuration;
+        [Header("Laser Duration")]
+        public float FlashDuration;
+        public float TimeBeforeDestroyLaser;
         [Header("KartRecoil")]
         public float KartRecoilPower;
     }
