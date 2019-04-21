@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Common;
 using Multiplayer;
 using Bolt;
 using ThrowingSystem;
@@ -121,43 +122,34 @@ namespace Items
         {
             var instantiatedItem = BoltNetwork.Instantiate(CurrentItem.ItemPrefab);
 
+            var itemState = instantiatedItem.GetComponent<BoltEntity>().GetState<IItemState>();
+            itemState.Team = state.Team;
+            itemState.OwnerID = state.OwnerID;
+            itemState.OwnerNickname = state.Nickname;
+            itemState.Name = CurrentItem.Name;
+
             var itemOwnership = instantiatedItem.GetComponent<Ownership>();
-            var playerSettings = GetComponentInParent<Player>();
-            itemOwnership.Set(playerSettings);
-
-            if (CurrentItem.ItemType == ItemType.Throwable)
+            if (itemOwnership)
             {
-                var itemState = instantiatedItem.GetComponent<BoltEntity>().GetState<IItemState>();
-                itemState.Team = state.Team;
-                itemState.OwnerID = state.OwnerID;
-                itemState.OwnerNickname = state.Nickname;
-                itemState.Name = CurrentItem.Name;
+                itemOwnership.Set(GetComponentInParent<Player>());
+            }
 
-                var throwable = instantiatedItem.GetComponent<Throwable>();
+            var throwable = instantiatedItem.GetComponent<Throwable>();
+            if (throwable)
+            {
                 _projectileLauncher.Throw(throwable, _throwingDirection.LastDirectionUp);
             }
-            else if (CurrentItem.ItemType == ItemType.Self)
+
+            var usable = instantiatedItem.GetComponent<MultiModeUsable>();
+            if (usable)
             {
-                var itemState = instantiatedItem.GetComponent<BoltEntity>().GetState<IItemState>();
-                itemState.Team = state.Team;
-                itemState.OwnerID = state.OwnerID;
-                itemState.OwnerNickname = state.Nickname;
-                itemState.Name = CurrentItem.Name;
-
-                if (instantiatedItem.GetComponent<IonBeamBehaviour>() != null)
+                if (_throwingDirection.LastDirectionUp == Direction.Forward)
                 {
-                    var ionBeanBehaviour = instantiatedItem.GetComponent<IonBeamBehaviour>();
-                    if (_throwingDirection.LastDirectionUp == Direction.Backward)
-                        ionBeanBehaviour.IsFiringBackward = true;
-                    ionBeanBehaviour.OwnerNickname = state.Nickname;
-                    ionBeanBehaviour.ItemName = CurrentItem.Name;
+                    usable.SetMode(1);
                 }
-
-                if (instantiatedItem.GetComponent<LaserBehaviour>() != null)
+                else if (_throwingDirection.LastDirectionUp == Direction.Backward)
                 {
-                    var laserBehaviour = instantiatedItem.GetComponent<LaserBehaviour>();
-                    var kartRigibody = GetComponentInParent<Rigidbody>();
-                    laserBehaviour.LaunchLaser(transform.root, kartRigibody);
+                    usable.SetMode(2);
                 }
             }
         }

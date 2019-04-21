@@ -11,12 +11,14 @@ namespace Items
         public float QuickTurnSpeed;
         public float QuickTurnDuration;
         public float AntiShakingThreshold;
+        public float SecondsBeforeLookingForTarget;
         public float SecondsBeforeIgnoringTarget;
 
         public Transform CurrentTarget;
 
         private float _actualTurnSpeed;
         private bool _ignoreTarget = false;
+        private bool _lookForTarget = false;
         private RocketLockTarget _rocketLock;
 
         // MONO
@@ -29,6 +31,7 @@ namespace Items
 
         private void Start()
         {
+            StartCoroutine(LookForTargetAfterXSeconds(SecondsBeforeLookingForTarget));
             StartCoroutine(IgnoreTargetAfterXSeconds(SecondsBeforeIgnoringTarget));
         }
 
@@ -95,7 +98,7 @@ namespace Items
 
         private void TurnTowardTarget()
         {
-            if (CurrentTarget != null && _ignoreTarget == false)
+            if (CurrentTarget != null && _ignoreTarget == false && _lookForTarget)
             {
                 if (transform.InverseTransformPoint(CurrentTarget.transform.position).x < -AntiShakingThreshold) // If the target is on the left we turn to the left
                 {
@@ -106,6 +109,13 @@ namespace Items
                     transform.Rotate(Vector3.up * _actualTurnSpeed * Time.deltaTime);
                 }
             }
+        }
+
+        private IEnumerator LookForTargetAfterXSeconds(float x)
+        {
+            _lookForTarget = false;
+            yield return new WaitForSeconds(x); // For X seconds the rocket goes straight forward
+            _lookForTarget = true;
         }
 
         private IEnumerator IgnoreTargetAfterXSeconds(float x)

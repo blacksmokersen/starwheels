@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Engine;
 
 namespace Items
 {
@@ -17,12 +15,15 @@ namespace Items
 
         //PUBLIC
 
-         public void LaunchLaser(Transform kartPos, Rigidbody kartRigidbody)
+         public void LaunchLaser(GameObject kartRoot)
         {
-            Transform LaserPosition = kartPos;
-            transform.position = kartPos.position;
-            transform.rotation = new Quaternion(Quaternion.identity.x, kartPos.rotation.y, Quaternion.identity.z, kartPos.rotation.w);
-            RecoilImpulseToKart(kartRigidbody);
+            var kartTransform = kartRoot.transform;
+            Transform LaserPosition = kartTransform;
+            transform.position = kartTransform.position;
+            transform.rotation = new Quaternion(Quaternion.identity.x, kartTransform.rotation.y, Quaternion.identity.z, kartTransform.rotation.w);
+
+            var kartRb = kartRoot.GetComponentInChildren<Rigidbody>();
+            RecoilImpulseToKart(kartRb);
         }
 
         //PRIVATE

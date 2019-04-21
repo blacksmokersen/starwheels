@@ -12,6 +12,8 @@ namespace Items
         public float ForwardThrowingForce;
         public float TimesLongerThanHighThrow;
         public float LivingTime;
+        public float SecondBeforeStoppingForward;
+        public float SecondBeforeStoppingBackward;
 
         [Header("Sounds")]
         public AudioSource LaunchSource;
@@ -29,7 +31,6 @@ namespace Items
         private void Start()
         {
             StartCoroutine(MineActivationDelay());
-            StartCoroutine(MineStopRoutine());
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -49,6 +50,19 @@ namespace Items
         }
 
         // PUBLIC
+
+        public void LaunchMode(int mode)
+        {
+            switch (mode)
+            {
+                case 1:
+                    StartCoroutine(MineStopRoutine(SecondBeforeStoppingForward));
+                    break;
+                case 2:
+                    StartCoroutine(MineStopRoutine(SecondBeforeStoppingBackward));
+                    break;
+            }
+        }
 
         #region Audio
         public void PlayLaunchSound()
@@ -90,9 +104,9 @@ namespace Items
             PlayIdleSound();
         }
 
-        private IEnumerator MineStopRoutine()
+        private IEnumerator MineStopRoutine(float seconds)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(seconds);
             GetComponent<Hovering>().Disable();
         }
     }

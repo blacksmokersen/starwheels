@@ -77,7 +77,7 @@ namespace SWExtensions
             return null;
         }
 
-        public static GameObject GetKartRoot(Component component)
+        public static GameObject GetKartRoot(this Component component)
         {
             GameObject result = component.GetComponentInParent<Player>().gameObject;
             if(result == null)
