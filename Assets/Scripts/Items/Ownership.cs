@@ -7,42 +7,15 @@ namespace Items
     {
         public GameObject OwnerKartRoot;
         public Team Team;
-        public float ID;
 
-        private void Awake()
-        {
-            ID = Random.Range(0, 1000);
-        }
+        [Header("Events")]
+        public GameObjectEvent OnOwnershipSet;
 
         public void Set(Player player)
         {
-            OwnerKartRoot = player.gameObject;
             Team = player.Team;
-        }
-
-        public bool IsMe(GameObject kartRoot)
-        {
-            return OwnerKartRoot == kartRoot;
-        }
-
-        public bool IsMe(Player otherPlayer)
-        {
-            return otherPlayer.gameObject == OwnerKartRoot;
-        }
-
-        public bool IsSameTeam(GameObject kartRoot)
-        {
-            return kartRoot.GetComponent<Player>().Team == Team;
-        }
-
-        public bool IsSameTeam(Player otherPlayer)
-        {
-            return otherPlayer.Team == Team;
-        }
-
-        public bool IsNotSameTeam(Player otherPlayer)
-        {
-            return otherPlayer.Team != Team;
+            OwnerKartRoot = player.gameObject;
+            OnOwnershipSet.Invoke(OwnerKartRoot);
         }
     }
 }

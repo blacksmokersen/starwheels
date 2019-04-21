@@ -21,3 +21,6 @@ public class IntFloatEvent : UnityEvent<int> { }
 
 [System.Serializable]
 public class ColorEvent : UnityEvent<Color> { }
+
+[System.Serializable]
+public class GameObjectEvent : UnityEvent<GameObject> { }

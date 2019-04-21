@@ -4,6 +4,7 @@
     {
         Throwable,
         Self,
+        Custom,
         None
     }
 }

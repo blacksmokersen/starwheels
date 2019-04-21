@@ -12,15 +12,11 @@ namespace Items
     {
         [SerializeField] private GameObject ionBeamLaserPrefab;
 
-        private GameObject _ionBeamOwner;
+        private Ownership _ionBeamOwnership;
         private GameObject _playerCamera;
         private IonBeamInputs _ionBeamInputs;
         private IonBeamCamera _ionBeamCam;
         private bool _isFiring = false;
-
-        [HideInInspector] public bool IsFiringBackward = false;
-        public string OwnerNickname;
-        public string ItemName;
 
         //CORE
 
@@ -29,30 +25,33 @@ namespace Items
             _ionBeamCam = GameObject.Find("IonBeamCamera").GetComponent<IonBeamCamera>();
             _playerCamera = GameObject.Find("PlayerCamera");
             _ionBeamInputs = GetComponent<IonBeamInputs>();
+            _ionBeamOwnership = GetComponent<Ownership>();
         }
 
-        public void Start()
+        private void Update()
         {
-            _ionBeamOwner = GetComponent<Ownership>().OwnerKartRoot;
-            if (entity.isOwner)
+            if (entity.isControllerOrOwner)
             {
-                if (IsFiringBackward)
-                    LaunchImmediateIonBeamBackwards(_ionBeamOwner.transform.position);
-                else
-                {
-                    _ionBeamCam.GetIonBeamBehaviour(this);
-                    _ionBeamCam.IonBeamCameraBehaviour(true);
-                    EnableIonInputs();
-                }
+                transform.position = _ionBeamCam.transform.position;
             }
         }
 
-        public override void SimulateController()
-        {
-            transform.position = _ionBeamCam.transform.position;
-        }
-
         //PUBLIC
+
+        public void LaunchMode(int mode)
+        {
+            switch (mode)
+            {
+                case 1:
+                    _ionBeamCam.GetIonBeamBehaviour(this);
+                    _ionBeamCam.IonBeamCameraBehaviour(true);
+                    EnableIonInputs();
+                    break;
+                case 2:
+                    LaunchImmediateIonBeamBackwards(_ionBeamOwnership.transform.position);
+                    break;
+            }
+        }
 
         public void EnableIonInputs()
         {
@@ -69,8 +68,8 @@ namespace Items
             _ionBeamCam.GetComponent<IonBeamCamera>().enabled = false;
             _ionBeamCam.GetComponentInChildren<Camera>().enabled = false;
             _ionBeamInputs.enabled = false;
-            _ionBeamOwner.GetComponentInChildren<SteeringWheel>().CanSteer = true;
-            _ionBeamOwner.GetComponentInChildren<EngineBehaviour>().enabled = true;
+            _ionBeamOwnership.OwnerKartRoot.GetComponentInChildren<SteeringWheel>().CanSteer = true;
+            _ionBeamOwnership.OwnerKartRoot.GetComponentInChildren<EngineBehaviour>().enabled = true;
             _playerCamera.GetComponent<CameraTurnEffect>().EnableTurnEffectInput();
             BoltNetwork.Destroy(gameObject);
         }
@@ -88,13 +87,15 @@ namespace Items
 
                 itemState.Team = state.Team;
                 itemState.OwnerID = state.OwnerID;
-                itemState.OwnerNickname = OwnerNickname;
-                itemState.Name = ItemName;
+                itemState.OwnerNickname = state.OwnerNickname;
+                itemState.Name = state.Name;
 
                 IonBeam.transform.position = new Vector3(_ionBeamCam.transform.position.x, IonBeam.transform.position.y, _ionBeamCam.transform.position.z);
                 _ionBeamCam.IonBeamCameraBehaviour(false);
                 if (entity.isOwner)
+                {
                     StartCoroutine(DelayBeforeInputsChange());
+                }
                 _isFiring = true;
             }
         }
@@ -106,8 +107,8 @@ namespace Items
 
             itemState.Team = state.Team;
             itemState.OwnerID = state.OwnerID;
-            itemState.OwnerNickname = OwnerNickname;
-            itemState.Name = ItemName;
+            itemState.OwnerNickname = state.OwnerNickname;
+            itemState.Name = state.Name;
 
             IonBeam.transform.position = position;
         }
@@ -116,9 +117,9 @@ namespace Items
 
         IEnumerator DelayBeforeDisablePlayerInputs()
         {
-            _ionBeamOwner.GetComponentInChildren<SteeringWheel>().CanSteer = false;
-            _ionBeamOwner.GetComponentInChildren<SteeringWheel>().ResetAxisValue();
-            _ionBeamOwner.GetComponentInChildren<EngineBehaviour>().enabled = false;
+            _ionBeamOwnership.OwnerKartRoot.GetComponentInChildren<SteeringWheel>().CanSteer = false;
+            _ionBeamOwnership.OwnerKartRoot.GetComponentInChildren<SteeringWheel>().ResetAxisValue();
+            _ionBeamOwnership.OwnerKartRoot.GetComponentInChildren<EngineBehaviour>().enabled = false;
             while (!_ionBeamCam.IsCameraOnTop())
             {
                 yield return new WaitForSeconds(0.1f);
@@ -129,11 +130,9 @@ namespace Items
         IEnumerator DelayBeforeInputsChange()
         {
             yield return new WaitForSeconds(1);
-         //   _ionBeamCam.GetComponent<IonBeamCamera>().enabled = false;
-         //   _ionBeamCam.GetComponentInChildren<Camera>().enabled = false;
             _ionBeamInputs.enabled = false;
-            _ionBeamOwner.GetComponentInChildren<SteeringWheel>().CanSteer = true;
-            _ionBeamOwner.GetComponentInChildren<EngineBehaviour>().enabled = true;
+            _ionBeamOwnership.OwnerKartRoot.GetComponentInChildren<SteeringWheel>().CanSteer = true;
+            _ionBeamOwnership.OwnerKartRoot.GetComponentInChildren<EngineBehaviour>().enabled = true;
             _playerCamera.GetComponent<CameraTurnEffect>().EnableTurnEffectInput();
             BoltNetwork.Destroy(gameObject);
         }

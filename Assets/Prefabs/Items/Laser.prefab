@@ -199,7 +199,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OwnerKartRoot: {fileID: 0}
   Team: 0
-  ID: 0
+  OnOwnershipSet:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2099652158}
+        m_MethodName: LaunchLaser
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: GameObjectEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!1 &6870383912212936897
 GameObject:
   m_ObjectHideFlags: 0

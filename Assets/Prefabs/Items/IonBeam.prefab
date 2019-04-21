@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2421}
   - component: {fileID: 2425}
   - component: {fileID: 2461}
+  - component: {fileID: 6033037054389898683}
   m_Layer: 0
   m_Name: IonBeam
   m_TagString: Untagged
@@ -77,8 +78,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ionBeamLaserPrefab: {fileID: 538, guid: efed87d509833704fb8c72e81802eb9d, type: 3}
   IsFiringBackward: 0
-  OwnerNickname: 
-  ItemName: 
 --- !u!114 &2425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,7 +92,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OwnerKartRoot: {fileID: 0}
   Team: 0
-  ID: 0
+  OnOwnershipSet:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: GameObjectEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &2461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,3 +110,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enabled: 1
+--- !u!114 &6033037054389898683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea6f275016dd6744998dad04c961db11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Mode: 0
+  OnModeUpdated:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2421}
+        m_MethodName: LaunchMode
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: IntEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null

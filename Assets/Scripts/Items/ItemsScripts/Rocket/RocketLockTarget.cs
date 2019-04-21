@@ -20,11 +20,6 @@ namespace Items
 
         // CORE
 
-        private void Start()
-        {
-            StartCoroutine(LookForTarget());
-        }
-
         private void OnTriggerEnter(Collider other)
         {
             if (_rocketBehaviour.CurrentTarget == null && other.gameObject.tag == Constants.Tag.KartHealthHitBox && _activated)
@@ -34,6 +29,7 @@ namespace Items
                 if (entity.isAttached && state.Team.ToTeam() != otherPlayer.Team)
                 {
                     _rocketBehaviour.SetTarget(other.transform);
+                    Debug.Log("A");
                 }
             }
         }
@@ -47,6 +43,7 @@ namespace Items
                 if (entity.isAttached && state.Team.ToTeam() != otherPlayer.Team)
                 {
                     _rocketBehaviour.SetTarget(other.transform);
+                    Debug.Log("B");
                 }
             }
         }
@@ -56,13 +53,6 @@ namespace Items
         private bool IsKartIsCloserThanActualTarget(GameObject kart)
         {
             return Vector3.Distance(_origin.position, kart.transform.position) < Vector3.Distance(_origin.position, CurrentTarget.transform.position);
-        }
-
-        private IEnumerator LookForTarget()
-        {
-            _activated = false;
-            yield return new WaitForSeconds(SecondsBeforeSearchingTarget); // For X seconds the rocket goes straight forward
-            _activated = true;
         }
     }
 }
