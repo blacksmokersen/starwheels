@@ -112,7 +112,7 @@ namespace Abilities
             SWExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useTpBackSound);
             if (_tpBack != null)
             {
-                var y = _tpBack.transform.position.y + 5f;
+                var y = _tpBack.transform.position.y + _tPBackSettings.IncreasedYPositionOnTP;
                 _rb.transform.position = new Vector3(_tpBack.transform.position.x, y, _tpBack.transform.position.z);
                 _rb.transform.rotation = GetKartRotation();
                 Destroy(_tpBack.gameObject);

@@ -89,8 +89,11 @@ namespace Abilities.Jump
             }
             else
             {
-                forceDirection = Vector3.up;
-                _straightUpSecondJump = true;
+                forceDirection = Vector3.forward;
+                direction = Direction.Forward;
+
+                //  forceDirection = Vector3.up;
+                //  _straightUpSecondJump = true;
             }
 
             var forceUp = Vector3.up * _jumpSettings.SecondJumpUpForce;
