@@ -9972,7 +9972,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OwnerKartRoot: {fileID: 0}
   Team: 0
-  ID: 0
+  OnOwnershipSet:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: GameObjectEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &2484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19562,6 +19566,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1175}
     m_Modifications:
+    - target: {fileID: 1716910847999694925, guid: f237cc1468d5bef4e8ac72c82c1b1e8a,
+        type: 3}
+      propertyPath: m_Name
+      value: Graphics
+      objectReference: {fileID: 0}
     - target: {fileID: 1713618749637320599, guid: f237cc1468d5bef4e8ac72c82c1b1e8a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -19631,11 +19640,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1716910847999694925, guid: f237cc1468d5bef4e8ac72c82c1b1e8a,
-        type: 3}
-      propertyPath: m_Name
-      value: Graphics
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f237cc1468d5bef4e8ac72c82c1b1e8a, type: 3}
