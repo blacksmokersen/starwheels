@@ -10,7 +10,7 @@ namespace Steering
         [SerializeField] private bool _enabled = true;
 
         [SerializeField] private Animator _kartGraphicsAnimator;
-        //  [SerializeField] private Animator _animatorChar;
+        [SerializeField] private Animator _animatorChar;
 
         public bool Enabled
         {
@@ -156,6 +156,9 @@ namespace Steering
                 _kartGraphicsAnimator.SetBool("NotTurning", false);
                 _kartGraphicsAnimator.SetBool("TurnLeft", false);
                 _kartGraphicsAnimator.SetBool("TurnRight", true);
+                _animatorChar.SetBool("NotTurning", false);
+                _animatorChar.SetBool("TurnLeft", false);
+                _animatorChar.SetBool("TurnRight", true);
             }
             else if (turnValue < 0)
             {
@@ -163,6 +166,9 @@ namespace Steering
                 _kartGraphicsAnimator.SetBool("NotTurning", false);
                 _kartGraphicsAnimator.SetBool("TurnRight", false);
                 _kartGraphicsAnimator.SetBool("TurnLeft", true);
+                _animatorChar.SetBool("NotTurning", false);
+                _animatorChar.SetBool("TurnRight", false);
+                _animatorChar.SetBool("TurnLeft", true);
             }
             else
             {
@@ -170,6 +176,9 @@ namespace Steering
                 _kartGraphicsAnimator.SetBool("NotTurning", true);
                 _kartGraphicsAnimator.SetBool("TurnRight", false);
                 _kartGraphicsAnimator.SetBool("TurnLeft", false);
+                _animatorChar.SetBool("NotTurning", true);
+                _animatorChar.SetBool("TurnRight", false);
+                _animatorChar.SetBool("TurnLeft", false);
             }
         }
 

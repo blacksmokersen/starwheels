@@ -44,25 +44,25 @@ namespace Abilities.Jump
         private void LeftJumpAnimation()
         {
             _animator.SetTrigger("LeftJump");
-            _charAnimator.SetTrigger("LeftJump");
+          //  _charAnimator.SetTrigger("LeftJump");
         }
 
         private void RightJumpAnimation()
         {
             _animator.SetTrigger("RightJump");
-            _charAnimator.SetTrigger("RightJump");
+           // _charAnimator.SetTrigger("RightJump");
         }
 
         private void FrontJumpAnimation()
         {
             _animator.SetTrigger("FrontJump");
-            _charAnimator.SetTrigger("FrontJump");
+          //  _charAnimator.SetTrigger("FrontJump");
         }
 
         private void BackJumpAnimation()
         {
             _animator.SetTrigger("BackJump");
-            _charAnimator.SetTrigger("BackJump");
+           // _charAnimator.SetTrigger("BackJump");
         }
     }
 }
