@@ -7,6 +7,7 @@ namespace Controls
     {
         [Header("Settings")]
         [SerializeField] private bool _disableKartOnEnabled;
+        [SerializeField] private BoolVariable _gameStarted;
 
         private ControllableDisabler _disabler;
 
@@ -36,7 +37,7 @@ namespace Controls
             {
                 FindDisabler();
             }
-            if (_disabler)
+            if (_disabler && _gameStarted.Value)
             {
                 _disabler.EnableAllInChildren();
             }
@@ -48,7 +49,7 @@ namespace Controls
             {
                 FindDisabler();
             }
-            if (_disabler)
+            if (_disabler && _gameStarted.Value)
             {
                 _disabler.DisableAllInChildren();
             }

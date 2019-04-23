@@ -7,5 +7,7 @@ namespace Abilities
     {
         [Header("TPBack")]
         public GameObject Prefab;
+        [Header("Settings")]
+        public float IncreasedYPositionOnTP;
     }
 }

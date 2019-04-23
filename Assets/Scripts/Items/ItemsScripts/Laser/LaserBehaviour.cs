@@ -7,15 +7,22 @@ namespace Items
     {
         [SerializeField] private LaserSettings _laserSettings;
 
+        [SerializeField] private GameObject _laserFront;
+        [SerializeField] private GameObject _laserBack;
+
         private MeshRenderer _laserRenderer;
-        private CapsuleCollider _laserCollider;
+        private Collider _laserCollider;
+        private MeshCollider _laserColliderBack;
+
         //CORE
 
+            /*
         private void Awake()
         {
             _laserRenderer = GetComponentInChildren<MeshRenderer>();
             _laserCollider = GetComponentInChildren<CapsuleCollider>();
         }
+        */
 
         private void Start()
         {
@@ -24,7 +31,27 @@ namespace Items
 
         //PUBLIC
 
-         public void LaunchLaser(GameObject kartRoot)
+        public void LaunchMode(int mode)
+        {
+            switch (mode)
+            {
+                case 1:
+                    _laserFront.SetActive(true);
+                    _laserRenderer = _laserFront.GetComponentInChildren<MeshRenderer>();
+                    _laserCollider = _laserFront.GetComponentInChildren<CapsuleCollider>();
+                    _laserBack.SetActive(false);
+                    break;
+                case 2:
+                    _laserBack.SetActive(true);
+                    _laserRenderer = _laserBack.GetComponentInChildren<MeshRenderer>();
+                    //_laserColliderBack = _laserBack.GetComponentInChildren<MeshCollider>();
+                    _laserCollider = _laserBack.GetComponentInChildren<SphereCollider>();
+                    _laserFront.SetActive(false);
+                    break;
+            }
+        }
+
+        public void LaunchLaser(GameObject kartRoot)
         {
             var kartTransform = kartRoot.transform;
             Transform LaserPosition = kartTransform;
@@ -45,8 +72,12 @@ namespace Items
         private IEnumerator LaserDuration(float duration)
         {
             yield return new WaitForSeconds(_laserSettings.FlashDuration);
-            _laserRenderer.enabled = false;
-            _laserCollider.enabled = false;
+            if (_laserRenderer)
+                _laserRenderer.enabled = false;
+            if (_laserCollider)
+                _laserCollider.enabled = false;
+            if (_laserColliderBack)
+                _laserColliderBack.enabled = false;
             yield return new WaitForSeconds(duration);
             DestroyEntity destroyEntityEvent = DestroyEntity.Create();
             destroyEntityEvent.Entity = entity;

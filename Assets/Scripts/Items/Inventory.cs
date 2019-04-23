@@ -143,13 +143,13 @@ namespace Items
             var usable = instantiatedItem.GetComponent<MultiModeUsable>();
             if (usable)
             {
-                if (_throwingDirection.LastDirectionUp == Direction.Forward)
-                {
-                    usable.SetMode(1);
-                }
-                else if (_throwingDirection.LastDirectionUp == Direction.Backward)
+                if (_throwingDirection.LastDirectionUp == Direction.Backward)
                 {
                     usable.SetMode(2);
+                }
+                else
+                {
+                    usable.SetMode(1);
                 }
             }
         }
