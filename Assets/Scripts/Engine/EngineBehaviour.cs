@@ -158,7 +158,7 @@ namespace Engine
 
 
 
-            if (Input.GetAxis(Constants.Input.Accelerate) <= 0.1f)
+            if (Input.GetAxis(Constants.Input.Accelerate) <= 0.1f && CurrentSpeed < 20)
             {
                 if (CurrentSpeed > 3)
                 {
