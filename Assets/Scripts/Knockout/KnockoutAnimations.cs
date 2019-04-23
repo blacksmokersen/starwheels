@@ -11,6 +11,7 @@ namespace Knockout
         {
             Debug.Log("Playing anim");
             _animator.SetTrigger(Constants.Animations.Knockout);
+            _animator.SetTrigger(("HitBack"));
         }
     }
 }
