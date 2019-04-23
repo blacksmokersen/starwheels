@@ -13,7 +13,7 @@ namespace Drift
             {
                 state.DriftLeft = true;
                 _animator.SetBool("DriftLeft", true);
-               // _animatorChar.SetBool("CharDriftLeft", true);
+                _animatorChar.SetBool("DriftLeft", true);
             }
         }
 
@@ -23,7 +23,7 @@ namespace Drift
             {
                 state.DriftRight = true;
                 _animator.SetBool("DriftRight", true);
-              //  _animatorChar.SetBool("CharDriftRight", true);
+                _animatorChar.SetBool("DriftRight", true);
             }
         }
 
@@ -33,10 +33,10 @@ namespace Drift
             {
                 state.DriftLeft = false;
                 _animator.SetBool("DriftLeft", false);
-              //  _animatorChar.SetBool("CharDriftRight", false);
+                _animatorChar.SetBool("DriftLeft", false);
                 state.DriftRight = false;
                 _animator.SetBool("DriftRight", false);
-               // _animatorChar.SetBool("CharDriftLeft", false);
+                _animatorChar.SetBool("DriftRight", false);
             }
         }
     }
