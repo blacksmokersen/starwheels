@@ -8,6 +8,16 @@ namespace Abilities.Jump
 
         // PUBLIC
 
+        public void FirstJumpAnimation()
+        {
+            _animator.SetTrigger("FirstJump");
+        }
+
+        public void OnHitGroundAnimation()
+        {
+            _animator.SetTrigger("HitGround");
+        }
+
         public void DoubleJumpAnimation(Direction direction)
         {
             switch (direction)

@@ -19,6 +19,7 @@ namespace Abilities.Jump
         public UnityEvent OnFirstJump;
         public DirectionEvent OnSecondJump;
         public UnityEvent OnJumpReload;
+        public UnityEvent OnHitGround;
 
         [Header("Conditions")]
         [SerializeField] private GroundCondition _groundCondition;
@@ -35,7 +36,7 @@ namespace Abilities.Jump
         {
             _rb = GetComponentInParent<Rigidbody>();
             _jumpSettings = (JumpSettings) abilitySettings;
-            _groundCondition.OnHitGround.AddListener(() => { _hasDoneFirstJump = false; });
+            _groundCondition.OnHitGround.AddListener(() => { _hasDoneFirstJump = false; OnHitGround.Invoke(); });
         }
 
         private void Update()
