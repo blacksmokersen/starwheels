@@ -13,6 +13,9 @@ namespace Network
         [SerializeField] private PlayerSettings _playerSettings;
         [SerializeField] private float _delayBeforeDestroyKart;
 
+        [SerializeField] private Animator _kartAnimator;
+        [SerializeField] private Animator _CharacterAnimator;
+
         private void Awake()
         {
             if (!BoltNetwork.IsConnected)
@@ -26,7 +29,8 @@ namespace Network
         public override void Attached()
         {
             state.SetTransforms(state.Transform, transform, _kartMeshesRootTransform);
-            state.SetAnimator(GetComponentInChildren<Animator>());
+            state.SetAnimator(_kartAnimator);
+            state.AddAnimator(_CharacterAnimator);
 
             state.AddCallback("Team", ColorChanged);
             state.AddCallback("Nickname", NameChanged);
