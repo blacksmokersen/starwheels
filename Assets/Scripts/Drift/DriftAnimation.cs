@@ -11,7 +11,7 @@ namespace Drift
         {
             if (entity.isAttached)
             {
-                state.DriftLeft = true;
+              //  state.DriftLeft = true;
                 _animator.SetBool("DriftLeft", true);
                 _animatorChar.SetBool("DriftLeft", true);
             }
@@ -21,7 +21,7 @@ namespace Drift
         {
             if (entity.isAttached)
             {
-                state.DriftRight = true;
+              //  state.DriftRight = true;
                 _animator.SetBool("DriftRight", true);
                 _animatorChar.SetBool("DriftRight", true);
             }
@@ -31,10 +31,10 @@ namespace Drift
         {
             if (entity.isAttached)
             {
-                state.DriftLeft = false;
+                //state.DriftLeft = false;
                 _animator.SetBool("DriftLeft", false);
                 _animatorChar.SetBool("DriftLeft", false);
-                state.DriftRight = false;
+              //  state.DriftRight = false;
                 _animator.SetBool("DriftRight", false);
                 _animatorChar.SetBool("DriftRight", false);
             }
