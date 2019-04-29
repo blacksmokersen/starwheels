@@ -11,7 +11,11 @@ namespace Items.Merge
         public bool Enabled
         {
             get { return _enabled; }
-            set { _enabled = value; }
+            set
+            {
+                _canMerge = value;
+                _enabled = value;
+            }
         }
 
         [Header("Settings")]
@@ -53,6 +57,7 @@ namespace Items.Merge
 
                     if (_timer > _secondsBeforeMerging.Value && _canMerge)
                     {
+                        Debug.Log("Hello");
                         ConsumeItem();
                         _timer = 0f;
                         _canMerge = false;
