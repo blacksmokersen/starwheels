@@ -7,6 +7,13 @@
         public const string Money = "money";
     }
 
+    // Player Stats
+    public class PlayerStats
+    {
+        public const string DeathCountName = "DeathCount";
+        public const string KillCountName = "KillCount";
+    }
+
     // Layers
     public class Layer
     {

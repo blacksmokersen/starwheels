@@ -9828,12 +9828,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1348}
   - component: {fileID: 2497}
-  - component: {fileID: 3217}
-  - component: {fileID: 3213}
-  - component: {fileID: 3215}
-  - component: {fileID: 3238}
-  - component: {fileID: 3222}
-  - component: {fileID: 3254}
+  - component: {fileID: 3218}
+  - component: {fileID: 3214}
+  - component: {fileID: 3216}
+  - component: {fileID: 3239}
+  - component: {fileID: 3223}
+  - component: {fileID: 3255}
   m_Layer: 13
   m_Name: GoldDisk
   m_TagString: Untagged
@@ -9876,7 +9876,7 @@ Rigidbody:
   m_Interpolate: 2
   m_Constraints: 80
   m_CollisionDetection: 1
---- !u!114 &3217
+--- !u!114 &3218
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9905,7 +9905,7 @@ MonoBehaviour:
   _entityBehaviourQueryOption: 0
   _entityPriorityCalculatorQueryOption: 0
   _entityReplicationFilterQueryOption: 0
---- !u!114 &3213
+--- !u!114 &3214
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9919,7 +9919,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _groundLayerName: Ground
   _hoveringHeight: {fileID: 11400000, guid: 527fcf28e6b2c47439cd8f6caf1f5afe, type: 2}
---- !u!114 &3215
+--- !u!114 &3216
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9935,7 +9935,7 @@ MonoBehaviour:
   ThrowableSize: 2
   Speed: {fileID: 11400000, guid: cfa7befe49ff6a34d93630fb5875b187, type: 2}
   _throwableMeshesTransform: {fileID: 4599122279134174}
---- !u!114 &3238
+--- !u!114 &3239
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9958,7 +9958,7 @@ MonoBehaviour:
   ReboundsBeforeEnd: 50
   ParticlesToEmit: 300
   CanHitOwner: 0
---- !u!114 &3222
+--- !u!114 &3223
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9977,7 +9977,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: GameObjectEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
---- !u!114 &3254
+--- !u!114 &3255
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10000,8 +10000,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1379}
-  - component: {fileID: 3246}
-  - component: {fileID: 2522}
+  - component: {fileID: 3247}
+  - component: {fileID: 2512}
   m_Layer: 13
   m_Name: CollisionTrigger
   m_TagString: CollisionHitBox
@@ -10023,7 +10023,7 @@ Transform:
   m_Father: {fileID: 1348}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3246
+--- !u!114 &3247
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10038,7 +10038,7 @@ MonoBehaviour:
   OnCollision:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3238}
+      - m_Target: {fileID: 3239}
         m_MethodName: OnHit
         m_Mode: 1
         m_Arguments:
@@ -10052,7 +10052,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   ItemCollision: {fileID: 11400000, guid: 567614b8d4a7bdd4190c32ad71ffc1db, type: 2}
---- !u!65 &2522
+--- !u!65 &2512
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -19540,7 +19540,7 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &3508
+--- !u!114 &3283
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -6,6 +6,10 @@ namespace Menu.InGameScores
 {
     public class PlayerStats
     {
+        // GENERICS
+        public string Name;
+        public Team Team;
+
         // BATTLE
         public int KillCount = 0;
         public int DeathCount = 0;
@@ -21,6 +25,7 @@ namespace Menu.InGameScores
         public Dictionary<int, PlayerStats> AllPlayersStats = new Dictionary<int, PlayerStats>();
 
         [Header("Events")]
+        public IntEvent OnPlayerStatCreated;
         public DoubleIntEvent OnPlayerKillCountUpdated;
         public DoubleIntEvent OnPlayerDeathCountUpdated;
 
@@ -30,11 +35,19 @@ namespace Menu.InGameScores
         {
             if (!AllPlayersStats.ContainsKey(evnt.PlayerID))
             {
-                CreateEntryForPlayerID(evnt.PlayerID);
+                CreateEntryForPlayerID(evnt.PlayerID, evnt.Nickname, evnt.Team.ToTeam());
             }
             else
             {
                 Debug.Log("Could not add the player stats entry since it already exists.");
+            }
+        }
+
+        public override void Connected(BoltConnection connection)
+        {
+            if (BoltNetwork.IsServer)
+            {
+                SendStatsToPlayer((int)connection.ConnectionId);
             }
         }
 
@@ -54,18 +67,49 @@ namespace Menu.InGameScores
 
         public override void OnEvent(PlayerHit evnt)
         {
-            if (evnt.KillerID != evnt.VictimID) // This is not a self kill
+            if (BoltNetwork.IsServer)
             {
-                UpdatePlayerKillCount(evnt.KillerID);
+                if (evnt.VictimID != evnt.KillerID)
+                {
+                    AllPlayersStats[evnt.KillerID].KillCount += 1;
+                    PlayerStatUpdate playerKillCountUpdate = PlayerStatUpdate.Create();
+                    playerKillCountUpdate.StatName = Constants.PlayerStats.KillCountName;
+                    playerKillCountUpdate.PlayerID = evnt.KillerID;
+                    playerKillCountUpdate.StatValue = AllPlayersStats[evnt.KillerID].KillCount;
+                    playerKillCountUpdate.Send();
+                }
+
+                AllPlayersStats[evnt.VictimID].DeathCount += 1;
+                PlayerStatUpdate playerDeathCountUpdate = PlayerStatUpdate.Create();
+                playerDeathCountUpdate.StatName = Constants.PlayerStats.DeathCountName;
+                playerDeathCountUpdate.PlayerID = evnt.VictimID;
+                playerDeathCountUpdate.StatValue = 1;
+                playerDeathCountUpdate.Send();
             }
-            UpdatePlayerDeathCount(evnt.VictimID);
+        }
+
+        public override void OnEvent(PlayerStatUpdate evnt)
+        {
+            if (evnt.StatName == Constants.PlayerStats.DeathCountName)
+            {
+                UpdatePlayerDeathCount(evnt.PlayerID, evnt.StatValue);
+            }
+            if (evnt.StatName == Constants.PlayerStats.KillCountName)
+            {
+                UpdatePlayerKillCount(evnt.PlayerID, evnt.StatValue);
+            }
         }
 
         // PUBLIC
 
-        public void CreateEntryForPlayerID(int id)
+        public void CreateEntryForPlayerID(int id, string nickname, Team team)
         {
-            AllPlayersStats.Add(id, new PlayerStats());
+            var newStats = new PlayerStats()
+            {
+                Name = nickname,
+                Team = team
+            };
+            AllPlayersStats.Add(id, newStats);
         }
 
         public void RemoveEntryForPlayerID(int id)
@@ -73,29 +117,30 @@ namespace Menu.InGameScores
             AllPlayersStats.Remove(id);
         }
 
-        public void UpdatePlayerKillCount(int id)
+        public void UpdatePlayerKillCount(int id, int count)
         {
-            if (AllPlayersStats.ContainsKey(id))
-            {
-                AllPlayersStats[id].KillCount += 1;
-                OnPlayerKillCountUpdated.Invoke(id, AllPlayersStats[id].KillCount);
-            }
-            else
-            {
-                Debug.LogError("Could not find the appopriate ID in the stats.");
-            }
+            OnPlayerKillCountUpdated.Invoke(id, count);
         }
 
-        public void UpdatePlayerDeathCount(int id)
+        public void UpdatePlayerDeathCount(int id, int count)
         {
-            if (AllPlayersStats.ContainsKey(id))
+            OnPlayerDeathCountUpdated.Invoke(id, count);
+        }
+
+        // PRIVATE
+
+        private void SendStatsToPlayer(int playerID)
+        {
+            foreach (var playerStat in AllPlayersStats)
             {
-                AllPlayersStats[id].DeathCount += 1;
-                OnPlayerDeathCountUpdated.Invoke(id, AllPlayersStats[id].DeathCount);
-            }
-            else
-            {
-                Debug.LogError("Could not find the appopriate ID in the stats.");
+                PlayerAllStats playerAllStats = PlayerAllStats.Create();
+                playerAllStats.Name = playerStat.Value.Name;
+                playerAllStats.Team = playerStat.Value.Team.ToString();
+                playerAllStats.TargetPlayerID = playerID;
+                playerAllStats.PlayerID = playerStat.Key;
+                playerAllStats.KillCount = playerStat.Value.KillCount;
+                playerAllStats.DeathCount = playerStat.Value.DeathCount;
+                playerAllStats.Send();
             }
         }
     }
