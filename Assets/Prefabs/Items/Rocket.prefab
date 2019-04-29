@@ -55,7 +55,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1321}
   - component: {fileID: 2502}
-  - component: {fileID: 3237}
+  - component: {fileID: 3238}
   m_Layer: 13
   m_Name: Lock
   m_TagString: Untagged
@@ -91,7 +91,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: 819dbd3d5c11e594cbcc2b3613ccfdc8, type: 3}
---- !u!114 &3237
+--- !u!114 &3238
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,7 +106,7 @@ MonoBehaviour:
   SecondsBeforeSearchingTarget: 2
   CurrentTarget: {fileID: 0}
   _origin: {fileID: 4971250644370338}
-  _rocketBehaviour: {fileID: 3220}
+  _rocketBehaviour: {fileID: 3221}
 --- !u!1 &440
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,12 +117,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1350}
   - component: {fileID: 2499}
+  - component: {fileID: 3200}
+  - component: {fileID: 3188}
+  - component: {fileID: 3221}
+  - component: {fileID: 3246}
+  - component: {fileID: 3227}
   - component: {fileID: 3199}
-  - component: {fileID: 3187}
-  - component: {fileID: 3220}
-  - component: {fileID: 3245}
-  - component: {fileID: 3226}
-  - component: {fileID: 3198}
   m_Layer: 13
   m_Name: Rocket
   m_TagString: Untagged
@@ -165,7 +165,7 @@ Rigidbody:
   m_Interpolate: 2
   m_Constraints: 80
   m_CollisionDetection: 1
---- !u!114 &3199
+--- !u!114 &3200
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -194,7 +194,7 @@ MonoBehaviour:
   _entityBehaviourQueryOption: 0
   _entityPriorityCalculatorQueryOption: 0
   _entityReplicationFilterQueryOption: 0
---- !u!114 &3187
+--- !u!114 &3188
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -208,7 +208,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _groundLayerName: Ground
   _hoveringHeight: {fileID: 11400000, guid: 66c692deda668b7458122d1c73f66374, type: 2}
---- !u!114 &3220
+--- !u!114 &3221
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 907d8704dddde5d468de47d654a43fac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ownership: {fileID: 3226}
+  Ownership: {fileID: 3227}
   _speed: {fileID: 11400000, guid: afd4ef2a2ccf0084d900d51e0f5c6d37, type: 2}
   CollisionParticles: {fileID: 7572607177322754382}
   ParticlesToEmitOnHit: 2000
@@ -236,7 +236,7 @@ MonoBehaviour:
   SecondsBeforeLookingForTarget: 0.3
   SecondsBeforeIgnoringTarget: 4.5
   CurrentTarget: {fileID: 0}
---- !u!114 &3245
+--- !u!114 &3246
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -252,7 +252,7 @@ MonoBehaviour:
   ThrowableSize: 1
   Speed: {fileID: 11400000, guid: afd4ef2a2ccf0084d900d51e0f5c6d37, type: 2}
   _throwableMeshesTransform: {fileID: 4971250644370338}
---- !u!114 &3226
+--- !u!114 &3227
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -271,7 +271,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: GameObjectEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
---- !u!114 &3198
+--- !u!114 &3199
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -295,7 +295,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1341}
   - component: {fileID: 2651}
-  - component: {fileID: 3244}
+  - component: {fileID: 3245}
   m_Layer: 13
   m_Name: CollisionTrigger
   m_TagString: CollisionHitBox
@@ -331,7 +331,7 @@ CapsuleCollider:
   m_Height: 2.64
   m_Direction: 1
   m_Center: {x: 0, y: -1.53, z: -0.04}
---- !u!114 &3244
+--- !u!114 &3245
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -346,7 +346,7 @@ MonoBehaviour:
   OnCollision:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3220}
+      - m_Target: {fileID: 3221}
         m_MethodName: OnHit
         m_Mode: 1
         m_Arguments:

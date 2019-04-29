@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1370}
-  - component: {fileID: 3252}
+  - component: {fileID: 3253}
   - component: {fileID: 2550}
   - component: {fileID: 2527}
   - component: {fileID: 2546}
@@ -35,7 +35,7 @@ Transform:
   m_Father: {fileID: 1324}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3252
+--- !u!114 &3253
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -450,9 +450,9 @@ GameObject:
   - component: {fileID: 1324}
   - component: {fileID: 2495}
   - component: {fileID: 2509}
-  - component: {fileID: 3207}
-  - component: {fileID: 3258}
-  - component: {fileID: 3197}
+  - component: {fileID: 3208}
+  - component: {fileID: 3259}
+  - component: {fileID: 3198}
   m_Layer: 10
   m_Name: TPBack
   m_TagString: Untagged
@@ -505,7 +505,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 0.25, z: 0.8}
   m_Center: {x: 0, y: 0.125, z: 0}
---- !u!114 &3207
+--- !u!114 &3208
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -527,7 +527,7 @@ MonoBehaviour:
   OnTpBackLaunch:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3252}
+      - m_Target: {fileID: 3253}
         m_MethodName: PlayLaunchSound
         m_Mode: 1
         m_Arguments:
@@ -543,7 +543,7 @@ MonoBehaviour:
   OnTpBackFlight:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3252}
+      - m_Target: {fileID: 3253}
         m_MethodName: PlayFlightSound
         m_Mode: 1
         m_Arguments:
@@ -559,7 +559,7 @@ MonoBehaviour:
   OnTpBackActivated:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3252}
+      - m_Target: {fileID: 3253}
         m_MethodName: StopFlightSound
         m_Mode: 1
         m_Arguments:
@@ -575,7 +575,7 @@ MonoBehaviour:
   OnTpBackIdle:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3252}
+      - m_Target: {fileID: 3253}
         m_MethodName: PlayIdleSound
         m_Mode: 1
         m_Arguments:
@@ -588,7 +588,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &3258
+--- !u!114 &3259
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -604,7 +604,7 @@ MonoBehaviour:
   ThrowableSize: 0
   Speed: {fileID: 11400000, guid: ea5f3d3e55cc13e4b8b1bee7d623a79b, type: 2}
   _throwableMeshesTransform: {fileID: 7744824914811047479}
---- !u!114 &3197
+--- !u!114 &3198
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

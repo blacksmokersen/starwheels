@@ -29,6 +29,11 @@ namespace Menu.InGameScores
             }
         }
 
+        public override void OnEvent(PlayerAllStats evnt)
+        {
+            CreateEntryForPlayer(evnt.PlayerID, evnt.Name, evnt.Team.ToTeam());
+        }
+
         public override void OnEvent(PlayerQuit evnt)
         {
             DestroyEntryForPlayer(evnt.PlayerID);
@@ -85,7 +90,7 @@ namespace Menu.InGameScores
             }
             else
             {
-                Debug.LogError("Provided ID could be found in the players scores entries.");
+                Debug.LogError("Provided ID could not be found in the players scores entries.");
             }
         }
 
@@ -97,7 +102,7 @@ namespace Menu.InGameScores
             }
             else
             {
-                Debug.LogError("Provided ID could be found in the players scores entries.");
+                Debug.LogError("Provided ID could not be found in the players scores entries.");
             }
         }
 
@@ -109,7 +114,7 @@ namespace Menu.InGameScores
             }
             else
             {
-                Debug.LogError("Provided ID could be found in the players scores entries.");
+                Debug.LogError("Provided ID could not be found in the players scores entries.");
             }
         }
 
