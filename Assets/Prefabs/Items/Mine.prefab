@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1339}
   - component: {fileID: 2638}
-  - component: {fileID: 3188}
+  - component: {fileID: 3189}
   m_Layer: 13
   m_Name: ItemCollisionTrigger
   m_TagString: CollisionHitBox
@@ -45,7 +45,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3188
+--- !u!114 &3189
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -60,7 +60,7 @@ MonoBehaviour:
   OnCollision:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3206}
+      - m_Target: {fileID: 3207}
         m_MethodName: PlayExplosion
         m_Mode: 1
         m_Arguments:
@@ -408,7 +408,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1315}
   - component: {fileID: 2637}
-  - component: {fileID: 3243}
+  - component: {fileID: 3244}
   m_Layer: 13
   m_Name: PlayerCollisionTrigger
   m_TagString: CollisionHitBox
@@ -443,7 +443,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.75
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3243
+--- !u!114 &3244
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -458,7 +458,7 @@ MonoBehaviour:
   OnCollision:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3206}
+      - m_Target: {fileID: 3207}
         m_MethodName: PlayExplosion
         m_Mode: 1
         m_Arguments:
@@ -482,12 +482,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1352}
   - component: {fileID: 2496}
-  - component: {fileID: 3233}
-  - component: {fileID: 3567}
-  - component: {fileID: 3206}
-  - component: {fileID: 3231}
-  - component: {fileID: 3573}
-  - component: {fileID: 3605}
+  - component: {fileID: 3234}
+  - component: {fileID: 3285}
+  - component: {fileID: 3207}
+  - component: {fileID: 3232}
+  - component: {fileID: 3287}
+  - component: {fileID: 3291}
   m_Layer: 13
   m_Name: Mine
   m_TagString: GroundItem
@@ -531,7 +531,7 @@ Rigidbody:
   m_Interpolate: 2
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!114 &3233
+--- !u!114 &3234
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -560,7 +560,7 @@ MonoBehaviour:
   _entityBehaviourQueryOption: 0
   _entityPriorityCalculatorQueryOption: 0
   _entityReplicationFilterQueryOption: 0
---- !u!114 &3567
+--- !u!114 &3285
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -598,7 +598,7 @@ MonoBehaviour:
   _animator: {fileID: 4756154663287276972}
   _triggers:
   - {fileID: 2637}
---- !u!114 &3231
+--- !u!114 &3232
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -614,7 +614,7 @@ MonoBehaviour:
   ThrowableSize: 0
   Speed: {fileID: 11400000, guid: 71c9a00b58dcb4f49ac1b37617317871, type: 2}
   _throwableMeshesTransform: {fileID: 4244714120504598}
---- !u!114 &3573
+--- !u!114 &3287
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -633,7 +633,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: GameObjectEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
---- !u!114 &3605
+--- !u!114 &3291
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -649,7 +649,7 @@ MonoBehaviour:
   OnModeUpdated:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3206}
+      - m_Target: {fileID: 3207}
         m_MethodName: LaunchMode
         m_Mode: 0
         m_Arguments:
@@ -715,7 +715,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1385}
   - component: {fileID: 2643}
-  - component: {fileID: 3275}
+  - component: {fileID: 3276}
   m_Layer: 13
   m_Name: LockCollisionTrigger
   m_TagString: Untagged
@@ -750,7 +750,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3275
+--- !u!114 &3276
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -767,7 +767,7 @@ MonoBehaviour:
   _speedMultiplicator: {fileID: 11400000, guid: 76b367b5e9a154d4c86629a86c3be1e5,
     type: 2}
   _shieldMesh: {fileID: 6453265497522978163}
---- !u!114 &3607
+--- !u!114 &3292
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

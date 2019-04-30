@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2101}
   - component: {fileID: 2303}
   - component: {fileID: 2905}
-  - component: {fileID: 3234}
+  - component: {fileID: 3235}
   m_Layer: 15
   m_Name: Pseudo
   m_TagString: Untagged
@@ -92,7 +92,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 399}
   m_CullTransparentMesh: 0
---- !u!114 &3234
+--- !u!114 &3235
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -217,7 +217,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1318}
-  - component: {fileID: 3230}
+  - component: {fileID: 3231}
   - component: {fileID: 2540}
   - component: {fileID: 2537}
   m_Layer: 15
@@ -241,7 +241,7 @@ Transform:
   m_Father: {fileID: 1313}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3230
+--- !u!114 &3231
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -458,7 +458,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1310}
-  - component: {fileID: 3229}
+  - component: {fileID: 3230}
   m_Layer: 15
   m_Name: TotemPanel
   m_TagString: Untagged
@@ -482,7 +482,7 @@ Transform:
   m_Father: {fileID: 1313}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3229
+--- !u!114 &3230
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -504,7 +504,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1383}
   - component: {fileID: 2640}
-  - component: {fileID: 3272}
+  - component: {fileID: 3273}
   m_Layer: 15
   m_Name: PickupTrigger
   m_TagString: TotemPickup
@@ -539,7 +539,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 2.8
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3272
+--- !u!114 &3273
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -690,7 +690,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1362}
   - component: {fileID: 2633}
-  - component: {fileID: 3209}
+  - component: {fileID: 3210}
   m_Layer: 15
   m_Name: ItemCollisionTrigger
   m_TagString: CollisionHitBox
@@ -725,7 +725,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.7
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3209
+--- !u!114 &3210
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -752,17 +752,17 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1313}
-  - component: {fileID: 3203}
+  - component: {fileID: 3204}
   - component: {fileID: 2500}
-  - component: {fileID: 3190}
-  - component: {fileID: 3221}
-  - component: {fileID: 3236}
-  - component: {fileID: 3225}
-  - component: {fileID: 3263}
-  - component: {fileID: 3265}
+  - component: {fileID: 3191}
+  - component: {fileID: 3222}
+  - component: {fileID: 3237}
+  - component: {fileID: 3226}
+  - component: {fileID: 3264}
+  - component: {fileID: 3266}
+  - component: {fileID: 3275}
   - component: {fileID: 3274}
-  - component: {fileID: 3273}
-  - component: {fileID: 3572}
+  - component: {fileID: 3286}
   m_Layer: 15
   m_Name: Totem
   m_TagString: Totem
@@ -790,7 +790,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3203
+--- !u!114 &3204
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -835,7 +835,7 @@ Rigidbody:
   m_Interpolate: 2
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!114 &3190
+--- !u!114 &3191
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -853,7 +853,7 @@ MonoBehaviour:
   OnParentSet:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3230}
+      - m_Target: {fileID: 3231}
         m_MethodName: PlayTotemPickedUpSound
         m_Mode: 1
         m_Arguments:
@@ -864,7 +864,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3263}
+      - m_Target: {fileID: 3264}
         m_MethodName: FullyDischargeTotem
         m_Mode: 1
         m_Arguments:
@@ -875,7 +875,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3263}
+      - m_Target: {fileID: 3264}
         m_MethodName: StartCharging
         m_Mode: 1
         m_Arguments:
@@ -886,7 +886,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3274}
+      - m_Target: {fileID: 3275}
         m_MethodName: StopSlowdown
         m_Mode: 1
         m_Arguments:
@@ -897,7 +897,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3274}
+      - m_Target: {fileID: 3275}
         m_MethodName: EnableCollider
         m_Mode: 6
         m_Arguments:
@@ -913,7 +913,7 @@ MonoBehaviour:
   OnParentUnset:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3230}
+      - m_Target: {fileID: 3231}
         m_MethodName: PlayTotemLostSound
         m_Mode: 1
         m_Arguments:
@@ -924,7 +924,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3263}
+      - m_Target: {fileID: 3264}
         m_MethodName: FullyDischargeTotem
         m_Mode: 1
         m_Arguments:
@@ -935,7 +935,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3263}
+      - m_Target: {fileID: 3264}
         m_MethodName: StartCharging
         m_Mode: 1
         m_Arguments:
@@ -946,7 +946,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3274}
+      - m_Target: {fileID: 3275}
         m_MethodName: StartSlowdown
         m_Mode: 1
         m_Arguments:
@@ -957,7 +957,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3274}
+      - m_Target: {fileID: 3275}
         m_MethodName: EnableCollider
         m_Mode: 6
         m_Arguments:
@@ -971,7 +971,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   _totemSettings: {fileID: 11400000, guid: 9f6ce33577d972c4f9494dd71799c0c4, type: 2}
---- !u!114 &3221
+--- !u!114 &3222
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -987,7 +987,7 @@ MonoBehaviour:
   ThrowableSize: 2
   Speed: {fileID: 11400000, guid: 906cd35c7d41a144b9fab1e4aaf720fb, type: 2}
   _throwableMeshesTransform: {fileID: 0}
---- !u!114 &3236
+--- !u!114 &3237
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1001,7 +1001,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _groundLayerName: Ground
   _hoveringHeight: {fileID: 11400000, guid: 563758ae1139c4e4c887a4ac12436820, type: 2}
---- !u!114 &3225
+--- !u!114 &3226
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1016,7 +1016,7 @@ MonoBehaviour:
   _totemSettings: {fileID: 11400000, guid: 9f6ce33577d972c4f9494dd71799c0c4, type: 2}
   _sphereCollider: {fileID: 2640}
   _meshTransform: {fileID: 4974691026423464}
---- !u!114 &3263
+--- !u!114 &3264
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1032,7 +1032,7 @@ MonoBehaviour:
   OnFullyDischarged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3267}
+      - m_Target: {fileID: 3268}
         m_MethodName: ResetScale
         m_Mode: 1
         m_Arguments:
@@ -1043,7 +1043,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3272}
+      - m_Target: {fileID: 3273}
         m_MethodName: ResetScale
         m_Mode: 1
         m_Arguments:
@@ -1059,7 +1059,7 @@ MonoBehaviour:
   OnStartChargingEnergy:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3272}
+      - m_Target: {fileID: 3273}
         m_MethodName: StartIncreasing
         m_Mode: 1
         m_Arguments:
@@ -1070,7 +1070,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3267}
+      - m_Target: {fileID: 3268}
         m_MethodName: StartIncreasing
         m_Mode: 1
         m_Arguments:
@@ -1098,7 +1098,7 @@ MonoBehaviour:
   _chargingDuration: 2
   _chargingStep: 0.1
   _totemMaterial: {fileID: 0}
---- !u!114 &3265
+--- !u!114 &3266
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1116,7 +1116,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: ColorEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   _totemAuraRenderer: {fileID: 23751202958215930}
---- !u!114 &3274
+--- !u!114 &3275
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1130,7 +1130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _totemSettings: {fileID: 11400000, guid: 9f6ce33577d972c4f9494dd71799c0c4, type: 2}
   _collider: {fileID: 2636}
---- !u!114 &3273
+--- !u!114 &3274
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1142,8 +1142,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49ec7f03e0d845d47b3c1399c550d860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _totemOwnership: {fileID: 3190}
---- !u!114 &3572
+  _totemOwnership: {fileID: 3191}
+--- !u!114 &3286
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1157,7 +1157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GravityForce: {fileID: 11400000, guid: 0d2a1fd13ab8bcc4392ae5ec7000067c, type: 2}
   UseWorldCoordinates: 1
---- !u!114 &3267
+--- !u!114 &3268
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
