@@ -25,7 +25,6 @@ namespace Menu.InGameScores
         public Dictionary<int, PlayerStats> AllPlayersStats = new Dictionary<int, PlayerStats>();
 
         [Header("Events")]
-        public IntEvent OnPlayerStatCreated;
         public DoubleIntEvent OnPlayerKillCountUpdated;
         public DoubleIntEvent OnPlayerDeathCountUpdated;
 
@@ -43,7 +42,7 @@ namespace Menu.InGameScores
             }
         }
 
-        public override void Connected(BoltConnection connection)
+        public override void SceneLoadRemoteDone(BoltConnection connection)
         {
             if (BoltNetwork.IsServer)
             {
@@ -83,7 +82,7 @@ namespace Menu.InGameScores
                 PlayerStatUpdate playerDeathCountUpdate = PlayerStatUpdate.Create();
                 playerDeathCountUpdate.StatName = Constants.PlayerStats.DeathCountName;
                 playerDeathCountUpdate.PlayerID = evnt.VictimID;
-                playerDeathCountUpdate.StatValue = 1;
+                playerDeathCountUpdate.StatValue = AllPlayersStats[evnt.VictimID].DeathCount;
                 playerDeathCountUpdate.Send();
             }
         }

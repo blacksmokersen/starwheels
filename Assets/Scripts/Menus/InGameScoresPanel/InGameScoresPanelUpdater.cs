@@ -31,7 +31,15 @@ namespace Menu.InGameScores
 
         public override void OnEvent(PlayerAllStats evnt)
         {
-            CreateEntryForPlayer(evnt.PlayerID, evnt.Name, evnt.Team.ToTeam());
+            if (evnt.TargetPlayerID == SWMatchmaking.GetMyBoltId())
+            {
+                var entry = CreateEntryForPlayer(evnt.PlayerID, evnt.Name, evnt.Team.ToTeam());
+                if (entry)
+                {
+                    entry.UpdateKillCount(evnt.KillCount);
+                    entry.UpdateDeathCount(evnt.DeathCount);
+                }
+            }
         }
 
         public override void OnEvent(PlayerQuit evnt)
@@ -41,22 +49,31 @@ namespace Menu.InGameScores
 
         // PUBLIC
 
-        public void CreateEntryForPlayer(int id, string nickname, Team team)
+        public PlayerInGameScoresEntry CreateEntryForPlayer(int id, string nickname, Team team)
         {
-            var entry = Instantiate(_playerPrefab);
-            entry.UpdateNickname(nickname);
-
-            if (!TeamScoreEntries.ContainsKey(team))
+            if (!PlayerScoreEntries.ContainsKey(id))
             {
-                var teamEntry = Instantiate(_teamPrefab);
-                teamEntry.transform.SetParent(_teamEntriesParent, false);
-                teamEntry.SetTeam(team);
-                teamEntry.SetColorAccordingToTeam();
-                TeamScoreEntries.Add(team, teamEntry);
-            }
-            entry.transform.SetParent(TeamScoreEntries[team].transform, false);
+                var entry = Instantiate(_playerPrefab);
+                entry.UpdateNickname(nickname);
 
-            PlayerScoreEntries.Add(id, entry);
+                if (!TeamScoreEntries.ContainsKey(team))
+                {
+                    var teamEntry = Instantiate(_teamPrefab);
+                    teamEntry.transform.SetParent(_teamEntriesParent, false);
+                    teamEntry.SetTeam(team);
+                    teamEntry.SetColorAccordingToTeam();
+                    TeamScoreEntries.Add(team, teamEntry);
+                }
+                entry.transform.SetParent(TeamScoreEntries[team].transform, false);
+
+                PlayerScoreEntries.Add(id, entry);
+                return entry;
+            }
+            else
+            {
+                Debug.LogError("An entry for this player already exists.");
+                return null;
+            }
         }
 
         public void DestroyEntryForPlayer(int id)
