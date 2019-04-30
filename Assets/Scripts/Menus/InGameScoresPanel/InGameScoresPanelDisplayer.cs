@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
+using Bolt;
 
 namespace Menu.InGameScores
 {
-    public class InGameScoresPanelDisplayer : MonoBehaviour, IControllable
+    public class InGameScoresPanelDisplayer : GlobalEventListener, IControllable
     {
         [SerializeField] private bool _enabled = true;
         public bool Enabled
@@ -20,6 +22,13 @@ namespace Menu.InGameScores
         private void Update()
         {
             MapInputs();
+        }
+
+        // BOLT
+
+        public override void OnEvent(GameOver evnt)
+        {
+            StartCoroutine(ActivateAfterXSecondsRoutine(5f));
         }
 
         // PUBLIC
@@ -53,6 +62,13 @@ namespace Menu.InGameScores
         private void HidePanel()
         {
             _panel.SetActive(false);
+        }
+
+        private IEnumerator ActivateAfterXSecondsRoutine(float x)
+        {
+            yield return new WaitForSeconds(x);
+            ShowPanel();
+            Enabled = false;
         }
     }
 }

@@ -334,7 +334,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1378}
   - component: {fileID: 2647}
-  - component: {fileID: 3228}
+  - component: {fileID: 3229}
   m_Layer: 9
   m_Name: CollisionTrigger
   m_TagString: CollisionHitBox
@@ -370,7 +370,7 @@ CapsuleCollider:
   m_Height: 3.5
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: -0.15}
---- !u!114 &3228
+--- !u!114 &3229
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -385,7 +385,7 @@ MonoBehaviour:
   OnCollision:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3253}
+      - m_Target: {fileID: 3254}
         m_MethodName: OnHit
         m_Mode: 1
         m_Arguments:
@@ -409,12 +409,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1357}
   - component: {fileID: 2493}
-  - component: {fileID: 3210}
-  - component: {fileID: 3253}
-  - component: {fileID: 3205}
   - component: {fileID: 3211}
-  - component: {fileID: 3262}
-  - component: {fileID: 3270}
+  - component: {fileID: 3254}
+  - component: {fileID: 3206}
+  - component: {fileID: 3212}
+  - component: {fileID: 3263}
+  - component: {fileID: 3271}
   m_Layer: 9
   m_Name: Guile
   m_TagString: Untagged
@@ -455,7 +455,7 @@ Rigidbody:
   m_Interpolate: 2
   m_Constraints: 80
   m_CollisionDetection: 1
---- !u!114 &3210
+--- !u!114 &3211
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -484,7 +484,7 @@ MonoBehaviour:
   _entityBehaviourQueryOption: 0
   _entityPriorityCalculatorQueryOption: 0
   _entityReplicationFilterQueryOption: 0
---- !u!114 &3253
+--- !u!114 &3254
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -504,7 +504,7 @@ MonoBehaviour:
   FlySource: {fileID: 2526}
   PlayerHitSource: {fileID: 2544}
   CollisionSource: {fileID: 0}
---- !u!114 &3205
+--- !u!114 &3206
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -520,7 +520,7 @@ MonoBehaviour:
   ThrowableSize: 0
   Speed: {fileID: 11400000, guid: 3f3a63fb52946234faadcbfcf33b218c, type: 2}
   _throwableMeshesTransform: {fileID: 4656130225786472}
---- !u!114 &3211
+--- !u!114 &3212
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -539,7 +539,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: GameObjectEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
---- !u!114 &3262
+--- !u!114 &3263
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -552,7 +552,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: 15c5b16e5cc8ef448a1d7e02c926fc17, type: 2}
---- !u!114 &3270
+--- !u!114 &3271
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

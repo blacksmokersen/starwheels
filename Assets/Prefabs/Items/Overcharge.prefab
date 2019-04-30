@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1319}
-  - component: {fileID: 3264}
+  - component: {fileID: 3265}
   - component: {fileID: 2538}
   - component: {fileID: 2551}
   m_Layer: 0
@@ -33,7 +33,7 @@ Transform:
   m_Father: {fileID: 1314}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3264
+--- !u!114 &3265
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -294,10 +294,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1314}
-  - component: {fileID: 3204}
+  - component: {fileID: 3205}
+  - component: {fileID: 3270}
   - component: {fileID: 3269}
-  - component: {fileID: 3268}
-  - component: {fileID: 3266}
+  - component: {fileID: 3267}
   - component: {fileID: 2642}
   m_Layer: 0
   m_Name: Overcharge
@@ -323,7 +323,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3204
+--- !u!114 &3205
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -352,7 +352,7 @@ MonoBehaviour:
   _entityBehaviourQueryOption: 0
   _entityPriorityCalculatorQueryOption: 0
   _entityReplicationFilterQueryOption: 0
---- !u!114 &3269
+--- !u!114 &3270
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -370,7 +370,7 @@ MonoBehaviour:
   OnActivation:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3264}
+      - m_Target: {fileID: 3265}
         m_MethodName: PlayActivationSound
         m_Mode: 1
         m_Arguments:
@@ -386,7 +386,7 @@ MonoBehaviour:
   OnDeactivation:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3266}
+      - m_Target: {fileID: 3267}
         m_MethodName: StartCountdown
         m_Mode: 1
         m_Arguments:
@@ -399,7 +399,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &3268
+--- !u!114 &3269
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -418,7 +418,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: GameObjectEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
---- !u!114 &3266
+--- !u!114 &3267
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -434,7 +434,7 @@ MonoBehaviour:
   OnDestroyed:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3264}
+      - m_Target: {fileID: 3265}
         m_MethodName: PlayDeactivationSound
         m_Mode: 1
         m_Arguments:
