@@ -16,6 +16,11 @@ namespace SW.Matchmaking
         [Header("Events")]
         public UnityEvent OnConnectedAsClient;
 
+        [Header("DebugMode")]
+        [SerializeField] private ServerDebugMode _serverDebugMode;
+
+        [HideInInspector] public bool DebugModEnabled = false;
+
         // BOLT
 
         public override void BoltStartBegin()
@@ -69,15 +74,33 @@ namespace SW.Matchmaking
         {
             var lobbyList = BoltNetwork.SessionList;
 
-            foreach (var lobby in lobbyList)
+            if (DebugModEnabled)
             {
-                var lobbyToken = SWMatchmaking.GetLobbyToken(lobby.Key);
-                Debug.Log("Found lobby for : " + lobbyToken.GameMode);
-                if (_lobbyData.GamemodePool.Contains(lobbyToken.GameMode))
+                foreach (var lobby in lobbyList)
                 {
-                    SWMatchmaking.JoinLobby(lobby.Key);
-                    _lobbyData.SetGamemode(lobbyToken.GameMode);
-                    _lobbyData.SetMap(lobbyToken.MapName);
+                    var lobbyToken = SWMatchmaking.GetLobbyToken(lobby.Key);
+                    Debug.Log("Found lobby for ServerName : " + _serverDebugMode.GetClientServerName());
+                    if (lobbyToken.ServerName == _serverDebugMode.GetClientServerName())
+                    {
+                        Debug.Log("Found ServerName : " + lobbyToken.ServerName);
+                        SWMatchmaking.JoinLobby(lobby.Key);
+                        _lobbyData.SetGamemode(lobbyToken.GameMode);
+                        _lobbyData.SetMap(lobbyToken.MapName);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var lobby in lobbyList)
+                {
+                    var lobbyToken = SWMatchmaking.GetLobbyToken(lobby.Key);
+                    Debug.Log("Found lobby for : " + lobbyToken.GameMode);
+                    if (_lobbyData.GamemodePool.Contains(lobbyToken.GameMode))
+                    {
+                        SWMatchmaking.JoinLobby(lobby.Key);
+                        _lobbyData.SetGamemode(lobbyToken.GameMode);
+                        _lobbyData.SetMap(lobbyToken.MapName);
+                    }
                 }
             }
         }

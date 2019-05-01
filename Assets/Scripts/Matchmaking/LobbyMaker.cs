@@ -13,6 +13,11 @@ namespace SW.Matchmaking
         [Header("Events")]
         public UnityEvent OnConnectedAsServer;
 
+        [Header("DebugMode")]
+        [SerializeField] private ServerDebugMode _serverDebugMode;
+
+        [HideInInspector] public bool DebugModEnabled = false;
+
         // BOLT
 
         public override void BoltStartBegin()
@@ -31,13 +36,26 @@ namespace SW.Matchmaking
         {
             if (BoltNetwork.IsServer)
             {
-                Debug.Log("Bolt now running as server.");
-                _lobbyData.SetRandomName();
-                _lobbyData.SetRandomGamemode();
-                _lobbyData.SetRandomMap();
-                SWMatchmaking.SetLobbyData(_lobbyData);
+                if (DebugModEnabled)
+                {
+                    Debug.Log("Bolt now running as server.");
+                    _lobbyData.ServerName = _serverDebugMode.GetHostServerName();
+                    _lobbyData.SetRandomGamemode();
+                    _lobbyData.SetRandomMap();
+                    SWMatchmaking.SetLobbyData(_lobbyData);
 
-                OnConnectedAsServer.Invoke();
+                    OnConnectedAsServer.Invoke();
+                }
+                else
+                {
+                    Debug.Log("Bolt now running as server.");
+                    _lobbyData.SetRandomName();
+                    _lobbyData.SetRandomGamemode();
+                    _lobbyData.SetRandomMap();
+                    SWMatchmaking.SetLobbyData(_lobbyData);
+
+                    OnConnectedAsServer.Invoke();
+                }
             }
         }
 
