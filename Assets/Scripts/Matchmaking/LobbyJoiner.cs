@@ -83,9 +83,9 @@ namespace SW.Matchmaking
                     if (lobbyToken.ServerName == _serverDebugMode.GetClientServerName())
                     {
                         Debug.Log("Found ServerName : " + lobbyToken.ServerName);
-                        SWMatchmaking.JoinLobby(lobby.Key);
                         _lobbyData.SetGamemode(lobbyToken.GameMode);
                         _lobbyData.SetMap(lobbyToken.MapName);
+                        SWMatchmaking.JoinLobby(lobby.Key);
                     }
                 }
             }
@@ -97,9 +97,9 @@ namespace SW.Matchmaking
                     Debug.Log("Found lobby for : " + lobbyToken.GameMode);
                     if (_lobbyData.GamemodePool.Contains(lobbyToken.GameMode))
                     {
-                        SWMatchmaking.JoinLobby(lobby.Key);
                         _lobbyData.SetGamemode(lobbyToken.GameMode);
                         _lobbyData.SetMap(lobbyToken.MapName);
+                        SWMatchmaking.JoinLobby(lobby.Key);
                     }
                 }
             }

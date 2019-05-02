@@ -64,7 +64,7 @@ namespace Menu.InGameScores
                     teamEntry.SetColorAccordingToTeam();
                     TeamScoreEntries.Add(team, teamEntry);
                 }
-                entry.transform.SetParent(TeamScoreEntries[team].transform, false);
+                entry.transform.SetParent(TeamScoreEntries[team].gameObject.transform, false);
 
                 PlayerScoreEntries.Add(id, entry);
                 return entry;
