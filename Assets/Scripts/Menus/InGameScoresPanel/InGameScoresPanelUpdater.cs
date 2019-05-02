@@ -47,6 +47,11 @@ namespace Menu.InGameScores
             DestroyEntryForPlayer(evnt.PlayerID);
         }
 
+        public override void Disconnected(BoltConnection connection)
+        {
+            DestroyEntryForPlayer((int)connection.ConnectionId);
+        }
+
         // PUBLIC
 
         public PlayerInGameScoresEntry CreateEntryForPlayer(int id, string nickname, Team team)
