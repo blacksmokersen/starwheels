@@ -33,7 +33,7 @@ namespace SW.Matchmaking
             var gamemodesToggles = GetComponentsInChildren<Toggle>();
             foreach (var toggle in gamemodesToggles)
             {
-                var gameModeName = toggle.GetComponentInChildren<TextMeshProUGUI>().text;
+                var gameModeName = toggle.GetComponent<GamemodeGroupLabel>().Label.Value;
 
                 if (toggle.isOn)
                 {
