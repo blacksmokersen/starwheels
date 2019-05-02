@@ -25,18 +25,24 @@ namespace Menu
 
         public void SetUnselectedImage()
         {
-            _unselectedImage.gameObject.SetActive(true);
-            _onHoverImage.gameObject.SetActive(false);
-            _onHoverValidationInputImage.gameObject.SetActive(false);
-            _selectedImage.gameObject.SetActive(false);
+            if (!_targetToggle.isOn)
+            {
+                _unselectedImage.gameObject.SetActive(true);
+                _onHoverImage.gameObject.SetActive(false);
+                _onHoverValidationInputImage.gameObject.SetActive(false);
+                _selectedImage.gameObject.SetActive(false);
+            }
         }
 
         public void SetHoverImage()
         {
-            _unselectedImage.gameObject.SetActive(false);
-            _onHoverImage.gameObject.SetActive(true);
-            _onHoverValidationInputImage.gameObject.SetActive(true);
-            _selectedImage.gameObject.SetActive(false);
+            if (!_targetToggle.isOn)
+            {
+                _unselectedImage.gameObject.SetActive(false);
+                _onHoverImage.gameObject.SetActive(true);
+                _onHoverValidationInputImage.gameObject.SetActive(true);
+                _selectedImage.gameObject.SetActive(false);
+            }
         }
 
         public void SetSelectedImage()

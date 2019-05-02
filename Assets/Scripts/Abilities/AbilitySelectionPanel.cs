@@ -74,7 +74,7 @@ namespace Abilities
         {
             if (secondsRemaining > 0)
             {
-                _secondsLeftText.text = secondsRemaining + "s remaining";
+                _secondsLeftText.text = secondsRemaining + "S REMAINING";
             }
             else
             {
