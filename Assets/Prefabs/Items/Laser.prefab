@@ -1946,9 +1946,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1489}
-  - component: {fileID: 3296}
-  - component: {fileID: 3278}
-  - component: {fileID: 3279}
   m_Layer: 0
   m_Name: LaserBack
   m_TagString: Untagged
@@ -1974,80 +1971,6 @@ Transform:
   m_Father: {fileID: 1488}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -36112512, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sceneGuid: 781fdd3a-8457-4053-a3ad-bad299a3be2c
-  _serializerGuid: ffe9e53f-72a5-4574-af39-0fa608838337
-  _prefabId: 14
-  _updateRate: 1
-  _autoFreezeProxyFrames: 0
-  _clientPredicted: 1
-  _allowInstantiateOnClient: 1
-  _persistThroughSceneLoads: 0
-  _sceneObjectDestroyOnDetach: 1
-  _sceneObjectAutoAttach: 1
-  _alwaysProxy: 0
-  _detachOnDisable: 1
-  _allowFirstReplicationWhenFrozen: 0
-  _autoRemoveChildEntities: 0
-  _entityBehaviourQueryOption: 0
-  _entityPriorityCalculatorQueryOption: 0
-  _entityReplicationFilterQueryOption: 0
---- !u!114 &3278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbc4fafcb6f83074c82ab5de36b4208c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _laserSettings: {fileID: 11400000, guid: 49f7a38911b71a94aba15b1656625771, type: 2}
-  _laserFront: {fileID: 0}
-  _laserBack: {fileID: 0}
---- !u!114 &3279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: faf449d14c1b8214587b11af62a948e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OwnerKartRoot: {fileID: 0}
-  Team: 0
-  OnOwnershipSet:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3278}
-        m_MethodName: LaunchLaser
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: GameObjectEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
 --- !u!1 &584
 GameObject:
   m_ObjectHideFlags: 0
