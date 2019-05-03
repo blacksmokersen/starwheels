@@ -89,6 +89,9 @@ namespace Abilities
                     var throwable = instantiatedItem.GetComponent<Throwable>();
                     _tpBack = instantiatedItem.GetComponent<TPBackBehaviour>();
                     _tpBack.Kart = transform.root;
+                    if (_throwingDirection.CurrentDirection == Direction.Default)
+                        _throwableLauncher.Throw(throwable, Direction.Backward);
+                    else
                     _throwableLauncher.Throw(throwable, _throwingDirection.CurrentDirection);
                 }
                 else // if (_tpBack.IsEnabled())
