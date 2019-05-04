@@ -54,24 +54,17 @@ namespace Items
             }
         }
 
-        // BOLT
+        // PUBLIC
 
-        public override void Attached()
+        public void FindTarget()
         {
-            if (entity.isOwner)
-            {
-                var ownerID = entity.GetState<IItemState>().OwnerID;
-                var kartOwner = SWExtensions.KartExtensions.GetKartWithID(ownerID);
-                var kartTarget = kartOwner.GetComponentInChildren<KartTargetting>().CurrentTargetTransform;
+            var kartTarget = GetComponent<Ownership>().OwnerKartRoot.GetComponentInChildren<KartTargetting>().CurrentTargetTransform;
 
-                if (kartTarget != null)
-                {
-                    SetTarget(kartTarget);
-                }
+            if (kartTarget != null)
+            {
+                SetTarget(kartTarget);
             }
         }
-
-        // PUBLIC
 
         public IEnumerator StartQuickTurn()
         {
