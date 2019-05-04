@@ -25,6 +25,7 @@ namespace Items
 
                         if (itemEntity.isAttached && itemEntity.TryFindState<IItemState>(out itemState)) // It is a concrete item & it is attached
                         {
+                            /* Hit Ourself
                             if (itemState.OwnerID == state.OwnerID)
                             {
                                 if (itemCollisionTrigger.ItemCollision.ItemName == ItemCollisionName.Disk)
@@ -39,7 +40,8 @@ namespace Items
                                     }
                                 }
                             }
-                            else if (itemState.Team != state.Team)
+                            */
+                            if (itemState.Team != state.Team)
                             {
                                 if (!_health.IsInvincible) // The server checks that this kart is not invincible
                                 {

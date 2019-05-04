@@ -36,7 +36,6 @@ Transform:
   m_Children:
   - {fileID: 5800946888050289292}
   - {fileID: 1049514376717575640}
-  - {fileID: 1178890215665229289}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -261,10 +260,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6b9d50cb291b3c4487c7fbde3b1b837, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GreenItem: {fileID: 0}
-  PurpleItem: {fileID: 0}
-  GoldItem: {fileID: 0}
+  _enabled: 1
   _throwingDirection: {fileID: 0}
+  _shieldsRoot: {fileID: 0}
 --- !u!114 &5838420469217815682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,9 +275,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b97896df1e15fc409c6ebb22e54c2ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GreenMaterial: {fileID: 2100000, guid: 92cb28f4b83b2244fa5f0a5b5b211f18, type: 2}
-  PurpleMaterial: {fileID: 2100000, guid: abb2ed595ccd59b48958fc039740d371, type: 2}
-  GoldMaterial: {fileID: 2100000, guid: 8756763030079654b9fa2bccabf7d66f, type: 2}
   DefaultMaterial: {fileID: 2100000, guid: 6a3364080fb751e4eaff05a403900b60, type: 2}
   Emissive: {fileID: 0}
 --- !u!114 &5838430279523773668
@@ -548,69 +543,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &5887989045935945396
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1178890215665229289}
-  - component: {fileID: 8735118381005263544}
-  - component: {fileID: 7795210736343728250}
-  m_Layer: 0
-  m_Name: MineKartTargetting
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1178890215665229289
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5887989045935945396}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 500, y: 500.00037, z: 500.00037}
-  m_Children: []
-  m_Father: {fileID: 5809317536033656704}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &8735118381005263544
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5887989045935945396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e32599b586e4904eab69cd990f8bd70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ItemName: Mine
-  Targetting: 0
-  _inventory: {fileID: 5838649154409820254}
-  _crossHairReference: {fileID: 4128178144660241995, guid: c42a1fc3059223c48ad0d086b9ef2309,
-    type: 3}
-  _origin: {fileID: 0}
---- !u!65 &7795210736343728250
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5887989045935945396}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 5, y: 14, z: 3}
-  m_Center: {x: 0, y: 0, z: -1.3}
 --- !u!1 &9103752362549441695
 GameObject:
   m_ObjectHideFlags: 0
@@ -670,6 +602,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemName: Rocket
+  CurrentTargetTransform: {fileID: 0}
   Targetting: 0
   _inventory: {fileID: 5838649154409820254}
   _crossHairReference: {fileID: 4128178144660241995, guid: c42a1fc3059223c48ad0d086b9ef2309,
