@@ -27,7 +27,7 @@ namespace Multiplayer
             else
             {
                 Debug.LogWarning("Can't set nickname if Steam is not initialized");
-                _settings.Nickname = "Default";
+                _settings.Nickname = "John Doe #" + (int)Random.Range(1,1000);
             }
         }
     }
