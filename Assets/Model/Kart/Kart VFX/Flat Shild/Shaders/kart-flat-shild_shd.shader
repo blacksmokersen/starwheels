@@ -1,96 +1,908 @@
-// Shader created with Shader Forge v1.38 
-// Shader Forge (c) Neat Corporation / Joachim Holmer - http://www.acegikmo.com/shaderforge/
-// Note: Manually altering this data may prevent you from opening it in Shader Forge
-/*SF_DATA;ver:1.38;sub:START;pass:START;ps:flbk:,iptp:0,cusa:False,bamd:0,cgin:,lico:1,lgpr:1,limd:0,spmd:1,trmd:0,grmd:0,uamb:True,mssp:True,bkdf:False,hqlp:False,rprd:False,enco:False,rmgx:True,imps:True,rpth:0,vtps:0,hqsc:True,nrmq:1,nrsp:0,vomd:0,spxs:False,tesm:0,olmd:1,culm:2,bsrc:3,bdst:7,dpts:2,wrdp:False,dith:0,atcv:False,rfrpo:True,rfrpn:Refraction,coma:15,ufog:True,aust:True,igpj:True,qofs:0,qpre:3,rntp:2,fgom:False,fgoc:True,fgod:False,fgor:False,fgmd:0,fgcr:0,fgcg:0,fgcb:0,fgca:1,fgde:0.01,fgrn:0,fgrf:300,stcl:False,atwp:False,stva:128,stmr:255,stmw:255,stcp:6,stps:0,stfa:0,stfz:0,ofsf:0,ofsu:0,f2p0:False,fnsp:True,fnfb:True,fsmp:False;n:type:ShaderForge.SFN_Final,id:4795,x:33673,y:32638,varname:node_4795,prsc:2|emission-2393-OUT,alpha-7937-OUT;n:type:ShaderForge.SFN_Tex2d,id:6074,x:31603,y:32490,varname:_MainTex,prsc:2,ntxv:0,isnm:False|UVIN-3925-UVOUT,TEX-4542-TEX;n:type:ShaderForge.SFN_Multiply,id:2393,x:33296,y:32741,varname:node_2393,prsc:2|A-3412-OUT,B-2053-RGB,C-797-RGB,D-9248-OUT;n:type:ShaderForge.SFN_VertexColor,id:2053,x:32859,y:32820,varname:node_2053,prsc:2;n:type:ShaderForge.SFN_Color,id:797,x:32859,y:32985,ptovrint:True,ptlb:Color,ptin:_TintColor,varname:_TintColor,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,c1:0.5,c2:0.5,c3:0.5,c4:1;n:type:ShaderForge.SFN_Vector1,id:9248,x:32848,y:33157,varname:node_9248,prsc:2,v1:2;n:type:ShaderForge.SFN_Tex2dAsset,id:4542,x:31243,y:32775,ptovrint:False,ptlb:Texture,ptin:_Texture,varname:node_4542,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Panner,id:3925,x:31062,y:32508,varname:node_3925,prsc:2,spu:1.3,spv:1|UVIN-9513-OUT,DIST-8758-OUT;n:type:ShaderForge.SFN_Panner,id:1983,x:31048,y:32672,varname:node_1983,prsc:2,spu:-0.9,spv:-3.2|UVIN-4950-UVOUT,DIST-8758-OUT;n:type:ShaderForge.SFN_TexCoord,id:4950,x:30475,y:32405,varname:node_4950,prsc:2,uv:0,uaff:False;n:type:ShaderForge.SFN_Time,id:1889,x:30620,y:32710,varname:node_1889,prsc:2;n:type:ShaderForge.SFN_Multiply,id:8758,x:30795,y:32697,varname:node_8758,prsc:2|A-1889-T,B-3239-OUT,C-2074-OUT;n:type:ShaderForge.SFN_ValueProperty,id:3239,x:30660,y:32925,ptovrint:False,ptlb:Speed,ptin:_Speed,varname:node_3239,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,v1:1;n:type:ShaderForge.SFN_Multiply,id:9173,x:31884,y:32562,varname:node_9173,prsc:2|A-6074-G,B-3817-G,C-2179-OUT;n:type:ShaderForge.SFN_Tex2d,id:3817,x:31507,y:32671,varname:node_3817,prsc:2,ntxv:0,isnm:False|UVIN-1983-UVOUT,TEX-4542-TEX;n:type:ShaderForge.SFN_Vector1,id:2074,x:30884,y:32944,varname:node_2074,prsc:2,v1:0.1;n:type:ShaderForge.SFN_Vector1,id:2179,x:31684,y:32741,varname:node_2179,prsc:2,v1:2;n:type:ShaderForge.SFN_Add,id:1490,x:32397,y:32572,varname:node_1490,prsc:2|A-6921-R,B-6721-OUT;n:type:ShaderForge.SFN_Tex2d,id:6921,x:31620,y:32306,varname:node_6921,prsc:2,ntxv:0,isnm:False|TEX-4542-TEX;n:type:ShaderForge.SFN_Tex2d,id:9175,x:31654,y:32885,varname:node_9175,prsc:2,ntxv:0,isnm:False|UVIN-9106-UVOUT,TEX-4542-TEX;n:type:ShaderForge.SFN_Clamp01,id:6721,x:32284,y:32876,varname:node_6721,prsc:2|IN-9285-OUT;n:type:ShaderForge.SFN_Clamp01,id:7842,x:32165,y:32701,varname:node_7842,prsc:2|IN-9173-OUT;n:type:ShaderForge.SFN_Multiply,id:7937,x:33333,y:32958,varname:node_7937,prsc:2|A-3412-OUT,B-2053-A,C-797-A;n:type:ShaderForge.SFN_Clamp01,id:3412,x:33073,y:32569,varname:node_3412,prsc:2|IN-8897-OUT;n:type:ShaderForge.SFN_TexCoord,id:5880,x:30909,y:33035,varname:node_5880,prsc:2,uv:0,uaff:False;n:type:ShaderForge.SFN_ValueProperty,id:7932,x:30894,y:33284,ptovrint:False,ptlb:speed,ptin:_speed,varname:node_7932,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,v1:0.5;n:type:ShaderForge.SFN_Multiply,id:9513,x:30828,y:32321,varname:node_9513,prsc:2|A-5049-OUT,B-4950-UVOUT;n:type:ShaderForge.SFN_Vector2,id:5049,x:30539,y:32264,varname:node_5049,prsc:2,v1:1.1,v2:1.1;n:type:ShaderForge.SFN_Panner,id:9106,x:31419,y:33026,varname:node_9106,prsc:2,spu:1,spv:0|UVIN-5640-OUT,DIST-4744-OUT;n:type:ShaderForge.SFN_Multiply,id:4744,x:31066,y:33217,varname:node_4744,prsc:2|A-7932-OUT,B-7736-T;n:type:ShaderForge.SFN_Time,id:7736,x:30922,y:33386,varname:node_7736,prsc:2;n:type:ShaderForge.SFN_Tex2d,id:2737,x:31610,y:33184,varname:node_2737,prsc:2,ntxv:0,isnm:False|UVIN-2714-UVOUT,TEX-4542-TEX;n:type:ShaderForge.SFN_Panner,id:2714,x:31388,y:33249,varname:node_2714,prsc:2,spu:-0.9,spv:0|UVIN-5880-UVOUT,DIST-4744-OUT;n:type:ShaderForge.SFN_Multiply,id:5640,x:31222,y:33026,varname:node_5640,prsc:2|A-225-OUT,B-5880-UVOUT;n:type:ShaderForge.SFN_Multiply,id:6931,x:31956,y:32989,varname:node_6931,prsc:2|A-9175-B,B-2737-B,C-9091-OUT;n:type:ShaderForge.SFN_Vector1,id:9091,x:31830,y:33246,varname:node_9091,prsc:2,v1:4;n:type:ShaderForge.SFN_Vector2,id:225,x:31044,y:32967,varname:node_225,prsc:2,v1:1.1,v2:1;n:type:ShaderForge.SFN_Power,id:9285,x:32146,y:32955,varname:node_9285,prsc:2|VAL-6931-OUT,EXP-6204-OUT;n:type:ShaderForge.SFN_Vector1,id:6204,x:32028,y:33157,varname:node_6204,prsc:2,v1:2;n:type:ShaderForge.SFN_Tex2d,id:4735,x:31921,y:33420,varname:node_4735,prsc:2,ntxv:0,isnm:False|UVIN-29-OUT,TEX-4542-TEX;n:type:ShaderForge.SFN_TexCoord,id:5562,x:31433,y:33459,varname:node_5562,prsc:2,uv:0,uaff:False;n:type:ShaderForge.SFN_Add,id:5507,x:32665,y:32639,varname:node_5507,prsc:2|A-1490-OUT,B-2575-OUT;n:type:ShaderForge.SFN_Multiply,id:2929,x:32570,y:33382,varname:node_2929,prsc:2|A-4735-A,B-7420-OUT,C-4490-OUT;n:type:ShaderForge.SFN_Vector1,id:7420,x:31921,y:33594,varname:node_7420,prsc:2,v1:1.5;n:type:ShaderForge.SFN_Multiply,id:29,x:31654,y:33455,varname:node_29,prsc:2|A-5562-UVOUT,B-1713-OUT;n:type:ShaderForge.SFN_Tex2d,id:8569,x:31864,y:33701,varname:node_8569,prsc:2,ntxv:0,isnm:False|TEX-4542-TEX;n:type:ShaderForge.SFN_OneMinus,id:4490,x:32392,y:33626,varname:node_4490,prsc:2|IN-3374-OUT;n:type:ShaderForge.SFN_Multiply,id:3374,x:32165,y:33671,varname:node_3374,prsc:2|A-8569-R,B-6493-OUT;n:type:ShaderForge.SFN_Vector1,id:6493,x:32018,y:33916,varname:node_6493,prsc:2,v1:3;n:type:ShaderForge.SFN_Clamp01,id:2575,x:32794,y:33335,varname:node_2575,prsc:2|IN-2929-OUT;n:type:ShaderForge.SFN_Vector2,id:3436,x:31464,y:33652,varname:node_3436,prsc:2,v1:3,v2:1;n:type:ShaderForge.SFN_Append,id:1713,x:31509,y:33754,varname:node_1713,prsc:2|A-7263-OUT,B-955-OUT;n:type:ShaderForge.SFN_Vector1,id:955,x:31280,y:33821,varname:node_955,prsc:2,v1:1;n:type:ShaderForge.SFN_ValueProperty,id:8957,x:31054,y:33674,ptovrint:False,ptlb:Item numbre,ptin:_Itemnumbre,varname:node_8957,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,v1:1;n:type:ShaderForge.SFN_Multiply,id:5876,x:32665,y:32833,varname:node_5876,prsc:2|A-5507-OUT,B-7842-OUT;n:type:ShaderForge.SFN_Add,id:8897,x:32897,y:32652,varname:node_8897,prsc:2|A-5507-OUT,B-5876-OUT;n:type:ShaderForge.SFN_Floor,id:7263,x:31265,y:33639,varname:node_7263,prsc:2|IN-8957-OUT;proporder:797-4542-3239-7932-8957;pass:END;sub:END;*/
+// Made with Amplify Shader Editor
+// Available at the Unity Asset Store - http://u3d.as/y3X 
+Shader "NewShader/Flat Shield"
+{
+    Properties
+    {
+		[HDR]_Color("Color", Color) = (0,0,0,0)
+		_Texture("Texture", 2D) = "white" {}
+		_Speed("Speed", Float) = 0.5
+		_ItemNumbre("Item Numbre", Float) = 1
+		[HideInInspector] _texcoord( "", 2D ) = "white" {}
+    }
 
-Shader "TIAB/Flat Shild" {
-    Properties {
-        _TintColor ("Color", Color) = (0.5,0.5,0.5,1)
-        _Texture ("Texture", 2D) = "white" {}
-        _Speed ("Speed", Float ) = 1
-        _speed ("speed", Float ) = 0.5
-        _Itemnumbre ("Item numbre", Float ) = 1
-        [HideInInspector]_Cutoff ("Alpha cutoff", Range(0,1)) = 0.5
-    }
-    SubShader {
-        Tags {
-            "IgnoreProjector"="True"
-            "Queue"="Transparent"
-            "RenderType"="Transparent"
+    SubShader
+    {
+        Tags { "RenderPipeline"="HDRenderPipeline" "RenderType"="Transparent" "Queue"="Transparent" }
+
+		Blend One One , SrcAlpha OneMinusSrcAlpha
+		Cull Off
+		ZTest LEqual
+		ZWrite On
+		Offset 0 , 0
+
+		HLSLINCLUDE
+		#pragma target 5.0
+		#pragma only_renderers d3d11 ps4 xboxone vulkan metal switch
+		#pragma multi_compile_instancing
+		ENDHLSL
+
+		
+        Pass
+        {
+			
+            Name "Depth prepass"
+            Tags { "LightMode"="DepthForwardOnly" }
+            ColorMask 0
+			
+        
+            HLSLPROGRAM
+        
+				#pragma vertex Vert
+				#pragma fragment Frag
+        
+				#define _SURFACE_TYPE_TRANSPARENT 1
+				#define _BLENDMODE_ADD 1
+
+        
+				#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+				#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Wind.hlsl"
+        
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/FragInputs.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPass.cs.hlsl"
+        
+                #define SHADERPASS SHADERPASS_DEPTH_ONLY
+        
+        
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderVariables.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Unlit/Unlit.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/BuiltinUtilities.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/MaterialUtilities.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl"
+        
+				struct AttributesMesh 
+				{
+					float3 positionOS : POSITION;
+					float4 normalOS : NORMAL;
+					float4 ase_texcoord : TEXCOORD0;
+					float4 ase_color : COLOR;
+					#if UNITY_ANY_INSTANCING_ENABLED
+					uint instanceID : INSTANCEID_SEMANTIC;
+					#endif 
+				};
+        
+				struct PackedVaryingsMeshToPS 
+				{
+					float4 positionCS : SV_Position;
+					float4 ase_texcoord : TEXCOORD0;
+					float4 ase_color : COLOR;
+					#if UNITY_ANY_INSTANCING_ENABLED
+					uint instanceID : INSTANCEID_SEMANTIC; 
+					#endif
+				};
+
+				CBUFFER_START(UnityPerMaterial)
+				uniform sampler2D _Texture;
+				uniform float4 _Texture_ST;
+				uniform float _Speed;
+				uniform float _ItemNumbre;
+				uniform float4 _Color;
+				CBUFFER_END
+				                
+                struct SurfaceDescription
+                {
+                    float Alpha;
+                    float AlphaClipThreshold;
+                };
+
+				void BuildSurfaceData(FragInputs fragInputs, SurfaceDescription surfaceDescription, float3 V, out SurfaceData surfaceData)
+				{
+					ZERO_INITIALIZE(SurfaceData, surfaceData);
+				}
+        
+				void GetSurfaceAndBuiltinData(SurfaceDescription surfaceDescription, FragInputs fragInputs, float3 V, inout PositionInputs posInput, out SurfaceData surfaceData, out BuiltinData builtinData)
+				{ 
+				#if _ALPHATEST_ON
+					DoAlphaTest ( surfaceDescription.Alpha, surfaceDescription.AlphaClipThreshold );
+				#endif
+
+					BuildSurfaceData(fragInputs, surfaceDescription, V, surfaceData);
+					ZERO_INITIALIZE(BuiltinData, builtinData);
+					builtinData.opacity =  surfaceDescription.Alpha;
+					builtinData.distortion = float2(0.0, 0.0);
+					builtinData.distortionBlur =0.0;
+				}
+
+				PackedVaryingsMeshToPS Vert(AttributesMesh inputMesh   )
+				{
+					PackedVaryingsMeshToPS outputPackedVaryingsMeshToPS;
+
+					UNITY_SETUP_INSTANCE_ID(inputMesh);
+					UNITY_TRANSFER_INSTANCE_ID(inputMesh, outputPackedVaryingsMeshToPS);
+
+					outputPackedVaryingsMeshToPS.ase_texcoord.xy = inputMesh.ase_texcoord.xy;
+					outputPackedVaryingsMeshToPS.ase_color = inputMesh.ase_color;
+					
+					//setting value to unused interpolator channels and avoid initialization warnings
+					outputPackedVaryingsMeshToPS.ase_texcoord.zw = 0;
+					inputMesh.positionOS.xyz +=  float3( 0, 0, 0 ) ;
+					inputMesh.normalOS =  inputMesh.normalOS ;
+
+					float3 positionRWS = TransformObjectToWorld(inputMesh.positionOS);
+					outputPackedVaryingsMeshToPS.positionCS = TransformWorldToHClip(positionRWS);  
+					return outputPackedVaryingsMeshToPS;
+				}
+
+				void Frag(  PackedVaryingsMeshToPS packedInput
+							#ifdef WRITE_NORMAL_BUFFER
+							, out float4 outNormalBuffer : SV_Target0
+								#ifdef WRITE_MSAA_DEPTH
+							, out float1 depthColor : SV_Target1
+								#endif
+							#else
+							, out float4 outColor : SV_Target0
+							#endif
+
+							#ifdef _DEPTHOFFSET_ON
+							, out float outputDepth : SV_Depth
+							#endif
+							
+						)
+				{
+					FragInputs input;
+					ZERO_INITIALIZE(FragInputs, input);
+					input.worldToTangent = k_identity3x3;
+					input.positionSS = packedInput.positionCS;
+
+					PositionInputs posInput = GetPositionInput(input.positionSS.xy, _ScreenSize.zw, input.positionSS.z, input.positionSS.w, input.positionRWS);
+
+					float3 V = float3(1.0, 1.0, 1.0); // Avoid the division by 0
+
+					SurfaceData surfaceData;
+					BuiltinData builtinData;
+					SurfaceDescription surfaceDescription = (SurfaceDescription)0;
+					float2 uv_Texture = packedInput.ase_texcoord.xy * _Texture_ST.xy + _Texture_ST.zw;
+					float temp_output_45_0 = ( _Speed * _Time.y );
+					float temp_output_55_0 = ( temp_output_45_0 * 0.5 );
+					float2 uv50 = packedInput.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
+					float2 panner53 = ( temp_output_55_0 * float2( 0,0 ) + ( uv50 * float2( 1.1,1 ) ));
+					float2 panner54 = ( temp_output_55_0 * float2( 0,0 ) + uv50);
+					float clampResult17 = clamp( pow( ( tex2D( _Texture, panner53 ).b * tex2D( _Texture, panner54 ).b * 4.0 ) , 2.0 ) , 0.0 , 1.0 );
+					float2 uv39 = packedInput.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
+					float4 appendResult40 = (float4(floor( _ItemNumbre ) , 1.0 , 0.0 , 0.0));
+					float clampResult34 = clamp( ( tex2D( _Texture, ( float4( uv39, 0.0 , 0.0 ) * appendResult40 ).xy ).a * 1.5 * ( 1.0 - ( tex2D( _Texture, uv_Texture ).r * 3.0 ) ) ) , 0.0 , 1.0 );
+					float temp_output_11_0 = ( ( tex2D( _Texture, uv_Texture ).r + clampResult17 ) + clampResult34 );
+					float2 panner47 = ( temp_output_45_0 * float2( 1.3,1 ) + ( 1.1 * uv50 ));
+					float2 panner49 = ( temp_output_45_0 * float2( -0.9,-3.2 ) + uv50);
+					float clampResult16 = clamp( ( tex2D( _Texture, panner47 ).g * tex2D( _Texture, panner49 ).g * 2.0 ) , 0.0 , 1.0 );
+					float clampResult9 = clamp( ( temp_output_11_0 + ( temp_output_11_0 * clampResult16 ) ) , 0.0 , 1.0 );
+					
+					surfaceDescription.Alpha = ( clampResult9 * packedInput.ase_color.a * _Color.a );
+					surfaceDescription.AlphaClipThreshold =  0;
+
+					GetSurfaceAndBuiltinData(surfaceDescription, input, V, posInput, surfaceData, builtinData);
+
+				#ifdef _DEPTHOFFSET_ON
+					outputDepth = posInput.deviceDepth;
+				#endif
+
+				#ifdef WRITE_NORMAL_BUFFER
+					EncodeIntoNormalBuffer(ConvertSurfaceDataToNormalData(surfaceData), posInput.positionSS, outNormalBuffer);
+					#ifdef WRITE_MSAA_DEPTH
+					// In case we are rendering in MSAA, reading the an MSAA depth buffer is way too expensive. To avoid that, we export the depth to a color buffer
+					depthColor = packedInput.positionCS.z;
+					#endif
+				#elif defined(SCENESELECTIONPASS)
+					// We use depth prepass for scene selection in the editor, this code allow to output the outline correctly
+					outColor = float4(_ObjectId, _PassValue, 1.0, 1.0);
+				#else
+					outColor = float4(0.0, 0.0, 0.0, 0.0);
+				#endif
+				}
+        
+            ENDHLSL
         }
-        Pass {
-            Name "FORWARD"
-            Tags {
-                "LightMode"="ForwardBase"
-            }
-            Blend SrcAlpha OneMinusSrcAlpha
-            Cull Off
-            ZWrite Off
+		
+        Pass
+        {
+			
+            Name "Forward Unlit"
+            Tags { "LightMode"="ForwardOnly" }
+        
+            ColorMask RGBA
+			
+            HLSLPROGRAM
+        
+				#pragma vertex Vert
+				#pragma fragment Frag
+
+				#define _SURFACE_TYPE_TRANSPARENT 1
+				#define _BLENDMODE_ADD 1
+
+        
+				#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+				#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Wind.hlsl"
+        
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/FragInputs.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPass.cs.hlsl"
+
+                #define SHADERPASS SHADERPASS_FORWARD_UNLIT
+                #pragma multi_compile _ LIGHTMAP_ON
+                #pragma multi_compile _ DIRLIGHTMAP_COMBINED
+                #pragma multi_compile _ DYNAMICLIGHTMAP_ON
+        
+        
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderVariables.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Unlit/Unlit.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/BuiltinUtilities.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/MaterialUtilities.hlsl"
+		        #include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl"
+	        
+				struct AttributesMesh 
+				{
+					float3 positionOS : POSITION;
+					float4 normalOS : NORMAL;
+					float4 ase_texcoord : TEXCOORD0;
+					float4 ase_color : COLOR;
+					#if UNITY_ANY_INSTANCING_ENABLED
+					uint instanceID : INSTANCEID_SEMANTIC;
+					#endif
+				};
+
+				struct PackedVaryingsMeshToPS 
+				{
+					float4 positionCS : SV_Position;
+					float4 ase_texcoord : TEXCOORD0;
+					float4 ase_color : COLOR;
+					#if UNITY_ANY_INSTANCING_ENABLED
+					uint instanceID : INSTANCEID_SEMANTIC; 
+					#endif 
+				};
+
+				CBUFFER_START(UnityPerMaterial)
+				uniform sampler2D _Texture;
+				uniform float4 _Texture_ST;
+				uniform float _Speed;
+				uniform float _ItemNumbre;
+				uniform float4 _Color;
+				CBUFFER_END
+				                
+		            
+				struct SurfaceDescription
+				{
+					float3 Color;
+					float Alpha;
+					float AlphaClipThreshold;
+				};
+        
+		
+				void BuildSurfaceData(FragInputs fragInputs, SurfaceDescription surfaceDescription, float3 V, out SurfaceData surfaceData)
+				{
+					ZERO_INITIALIZE(SurfaceData, surfaceData);
+					surfaceData.color = surfaceDescription.Color;
+				}
+        
+				void GetSurfaceAndBuiltinData(SurfaceDescription surfaceDescription , FragInputs fragInputs, float3 V, inout PositionInputs posInput, out SurfaceData surfaceData, out BuiltinData builtinData)
+				{
+				#if _ALPHATEST_ON
+					DoAlphaTest ( surfaceDescription.Alpha, surfaceDescription.AlphaClipThreshold );
+				#endif
+					BuildSurfaceData(fragInputs, surfaceDescription, V, surfaceData);
+					ZERO_INITIALIZE(BuiltinData, builtinData); 
+					builtinData.opacity = surfaceDescription.Alpha;
+					builtinData.distortion = float2(0.0, 0.0); 
+					builtinData.distortionBlur = 0.0;
+				}
+        
+         
+				PackedVaryingsMeshToPS Vert(AttributesMesh inputMesh )
+				{
+					PackedVaryingsMeshToPS outputPackedVaryingsMeshToPS;
+					UNITY_SETUP_INSTANCE_ID(inputMesh);
+					UNITY_TRANSFER_INSTANCE_ID(inputMesh, outputPackedVaryingsMeshToPS);
+
+					outputPackedVaryingsMeshToPS.ase_texcoord.xy = inputMesh.ase_texcoord.xy;
+					outputPackedVaryingsMeshToPS.ase_color = inputMesh.ase_color;
+					
+					//setting value to unused interpolator channels and avoid initialization warnings
+					outputPackedVaryingsMeshToPS.ase_texcoord.zw = 0;
+					inputMesh.positionOS.xyz +=  float3( 0, 0, 0 ) ;
+					inputMesh.normalOS =  inputMesh.normalOS ;
+
+					float3 positionRWS = TransformObjectToWorld(inputMesh.positionOS);
+					outputPackedVaryingsMeshToPS.positionCS = TransformWorldToHClip(positionRWS);
+					return outputPackedVaryingsMeshToPS;
+				}
+
+				float4 Frag(PackedVaryingsMeshToPS packedInput) : SV_Target
+				{
+					
+					FragInputs input;
+					ZERO_INITIALIZE(FragInputs, input);
+					input.worldToTangent = k_identity3x3;
+					input.positionSS = packedInput.positionCS;
+				
+					PositionInputs posInput = GetPositionInput(input.positionSS.xy, _ScreenSize.zw, input.positionSS.z, input.positionSS.w, input.positionRWS);
+
+					float3 V = float3(1.0, 1.0, 1.0);
+
+					SurfaceData surfaceData;
+					BuiltinData builtinData;
+					SurfaceDescription surfaceDescription = (SurfaceDescription)0;
+					float2 uv_Texture = packedInput.ase_texcoord.xy * _Texture_ST.xy + _Texture_ST.zw;
+					float temp_output_45_0 = ( _Speed * _Time.y );
+					float temp_output_55_0 = ( temp_output_45_0 * 0.5 );
+					float2 uv50 = packedInput.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
+					float2 panner53 = ( temp_output_55_0 * float2( 0,0 ) + ( uv50 * float2( 1.1,1 ) ));
+					float2 panner54 = ( temp_output_55_0 * float2( 0,0 ) + uv50);
+					float clampResult17 = clamp( pow( ( tex2D( _Texture, panner53 ).b * tex2D( _Texture, panner54 ).b * 4.0 ) , 2.0 ) , 0.0 , 1.0 );
+					float2 uv39 = packedInput.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
+					float4 appendResult40 = (float4(floor( _ItemNumbre ) , 1.0 , 0.0 , 0.0));
+					float clampResult34 = clamp( ( tex2D( _Texture, ( float4( uv39, 0.0 , 0.0 ) * appendResult40 ).xy ).a * 1.5 * ( 1.0 - ( tex2D( _Texture, uv_Texture ).r * 3.0 ) ) ) , 0.0 , 1.0 );
+					float temp_output_11_0 = ( ( tex2D( _Texture, uv_Texture ).r + clampResult17 ) + clampResult34 );
+					float2 panner47 = ( temp_output_45_0 * float2( 1.3,1 ) + ( 1.1 * uv50 ));
+					float2 panner49 = ( temp_output_45_0 * float2( -0.9,-3.2 ) + uv50);
+					float clampResult16 = clamp( ( tex2D( _Texture, panner47 ).g * tex2D( _Texture, panner49 ).g * 2.0 ) , 0.0 , 1.0 );
+					float clampResult9 = clamp( ( temp_output_11_0 + ( temp_output_11_0 * clampResult16 ) ) , 0.0 , 1.0 );
+					
+					surfaceDescription.Color =  ( clampResult9 * packedInput.ase_color * _Color ).rgb;
+					surfaceDescription.Alpha = ( clampResult9 * packedInput.ase_color.a * _Color.a );
+					surfaceDescription.AlphaClipThreshold =  0;
+
+					GetSurfaceAndBuiltinData(surfaceDescription, input, V, posInput, surfaceData, builtinData);
+
+					BSDFData bsdfData = ConvertSurfaceDataToBSDFData(input.positionSS.xy, surfaceData);
+
+					float4 outColor = ApplyBlendMode(bsdfData.color + builtinData.emissiveColor, builtinData.opacity);
+					outColor = EvaluateAtmosphericScattering(posInput, V, outColor);
+
+					return outColor;
+				}
+
+            ENDHLSL
+        }
+
+		
+        Pass
+        {
+			
+            Name "ShadowCaster"
+            Tags { "LightMode"="ShadowCaster" }
             
-            CGPROGRAM
-            #pragma vertex vert
-            #pragma fragment frag
-            #define UNITY_PASS_FORWARDBASE
-            #include "UnityCG.cginc"
-            #pragma multi_compile_fwdbase
-            #pragma multi_compile_fog
-            #pragma only_renderers d3d9 d3d11 glcore gles 
-            #pragma target 3.0
-            uniform float4 _TintColor;
-            uniform sampler2D _Texture; uniform float4 _Texture_ST;
-            uniform float _Speed;
-            uniform float _speed;
-            uniform float _Itemnumbre;
-            struct VertexInput {
-                float4 vertex : POSITION;
-                float2 texcoord0 : TEXCOORD0;
-                float4 vertexColor : COLOR;
-            };
-            struct VertexOutput {
-                float4 pos : SV_POSITION;
-                float2 uv0 : TEXCOORD0;
-                float4 vertexColor : COLOR;
-                UNITY_FOG_COORDS(1)
-            };
-            VertexOutput vert (VertexInput v) {
-                VertexOutput o = (VertexOutput)0;
-                o.uv0 = v.texcoord0;
-                o.vertexColor = v.vertexColor;
-                o.pos = UnityObjectToClipPos( v.vertex );
-                UNITY_TRANSFER_FOG(o,o.pos);
-                return o;
-            }
-            float4 frag(VertexOutput i, float facing : VFACE) : COLOR {
-                float isFrontFace = ( facing >= 0 ? 1 : 0 );
-                float faceSign = ( facing >= 0 ? 1 : -1 );
-////// Lighting:
-////// Emissive:
-                float4 node_6921 = tex2D(_Texture,TRANSFORM_TEX(i.uv0, _Texture));
-                float4 node_7736 = _Time;
-                float node_4744 = (_speed*node_7736.g);
-                float2 node_9106 = ((float2(1.1,1)*i.uv0)+node_4744*float2(1,0));
-                float4 node_9175 = tex2D(_Texture,TRANSFORM_TEX(node_9106, _Texture));
-                float2 node_2714 = (i.uv0+node_4744*float2(-0.9,0));
-                float4 node_2737 = tex2D(_Texture,TRANSFORM_TEX(node_2714, _Texture));
-                float2 node_29 = (i.uv0*float2(floor(_Itemnumbre),1.0));
-                float4 node_4735 = tex2D(_Texture,TRANSFORM_TEX(node_29, _Texture));
-                float4 node_8569 = tex2D(_Texture,TRANSFORM_TEX(i.uv0, _Texture));
-                float node_5507 = ((node_6921.r+saturate(pow((node_9175.b*node_2737.b*4.0),2.0)))+saturate((node_4735.a*1.5*(1.0 - (node_8569.r*3.0)))));
-                float4 node_1889 = _Time;
-                float node_8758 = (node_1889.g*_Speed*0.1);
-                float2 node_3925 = ((float2(1.1,1.1)*i.uv0)+node_8758*float2(1.3,1));
-                float4 _MainTex = tex2D(_Texture,TRANSFORM_TEX(node_3925, _Texture));
-                float2 node_1983 = (i.uv0+node_8758*float2(-0.9,-3.2));
-                float4 node_3817 = tex2D(_Texture,TRANSFORM_TEX(node_1983, _Texture));
-                float node_3412 = saturate((node_5507+(node_5507*saturate((_MainTex.g*node_3817.g*2.0)))));
-                float3 emissive = (node_3412*i.vertexColor.rgb*_TintColor.rgb*2.0);
-                float3 finalColor = emissive;
-                fixed4 finalRGBA = fixed4(finalColor,(node_3412*i.vertexColor.a*_TintColor.a));
-                UNITY_APPLY_FOG_COLOR(i.fogCoord, finalRGBA, fixed4(0,0,0,1));
-                return finalRGBA;
-            }
-            ENDCG
+            ZClip [_ZClip]
+            ColorMask 0
+        
+            HLSLPROGRAM
+        
+				#pragma instancing_options renderinglayer
+                #pragma multi_compile _ LOD_FADE_CROSSFADE
+
+				#pragma vertex Vert
+				#pragma fragment Frag
+        
+				#define _SURFACE_TYPE_TRANSPARENT 1
+				#define _BLENDMODE_ADD 1
+
+
+				#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+				#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Wind.hlsl"
+        
+				#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/NormalSurfaceGradient.hlsl"
+        
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/FragInputs.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPass.cs.hlsl"
+        
+				#define SHADERPASS SHADERPASS_SHADOWS
+				#define USE_LEGACY_UNITY_MATRIX_VARIABLES
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderVariables.hlsl"    
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Lit/Lit.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/BuiltinUtilities.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/MaterialUtilities.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl"
+        
+       
+			   struct AttributesMesh 
+			   {
+					float3 positionOS : POSITION;
+					float3 normalOS : NORMAL;
+					float4 ase_texcoord : TEXCOORD0;
+					float4 ase_color : COLOR;
+					#if UNITY_ANY_INSTANCING_ENABLED
+					uint instanceID : INSTANCEID_SEMANTIC;
+					#endif
+				};
+        
+				struct PackedVaryingsMeshToPS
+				{
+					float4 positionCS : SV_Position;
+					float4 ase_texcoord : TEXCOORD0;
+					float4 ase_color : COLOR;
+					#if UNITY_ANY_INSTANCING_ENABLED
+					uint instanceID : INSTANCEID_SEMANTIC;
+					#endif
+				};
+
+				CBUFFER_START(UnityPerMaterial)
+				uniform sampler2D _Texture;
+				uniform float4 _Texture_ST;
+				uniform float _Speed;
+				uniform float _ItemNumbre;
+				uniform float4 _Color;
+				CBUFFER_END
+				                
+			    
+				struct SurfaceDescription
+                {
+                    float Alpha;
+                    float AlphaClipThreshold;
+                };
+                    
+            
+				void BuildSurfaceData(FragInputs fragInputs, SurfaceDescription surfaceDescription, float3 V, out SurfaceData surfaceData)
+				{
+					ZERO_INITIALIZE(SurfaceData, surfaceData);
+					surfaceData.ambientOcclusion =      1.0f;
+					surfaceData.subsurfaceMask =        1.0f;
+					surfaceData.materialFeatures = MATERIALFEATUREFLAGS_LIT_STANDARD;
+			#ifdef _MATERIAL_FEATURE_SPECULAR_COLOR
+					surfaceData.materialFeatures |= MATERIALFEATUREFLAGS_LIT_SPECULAR_COLOR;
+			#endif
+					float3 normalTS =                   float3(0.0f, 0.0f, 1.0f);
+					GetNormalWS(fragInputs, normalTS, surfaceData.normalWS);
+					surfaceData.tangentWS = normalize(fragInputs.worldToTangent[0].xyz);    // The tangent is not normalize in worldToTangent for mikkt. TODO: Check if it expected that we normalize with Morten. Tag: SURFACE_GRADIENT
+					surfaceData.tangentWS = Orthonormalize(surfaceData.tangentWS, surfaceData.normalWS);
+					surfaceData.anisotropy = 0;
+					surfaceData.coatMask = 0.0f;
+					surfaceData.iridescenceThickness = 0.0;
+					surfaceData.iridescenceMask = 1.0;
+					surfaceData.ior = 1.0;
+					surfaceData.transmittanceColor = float3(1.0, 1.0, 1.0);
+					surfaceData.atDistance = 1000000.0;
+					surfaceData.transmittanceMask = 0.0;
+					surfaceData.specularOcclusion = 1.0;
+			#if defined(_BENTNORMALMAP) && defined(_ENABLESPECULAROCCLUSION)
+					// If we have bent normal and ambient occlusion, process a specular occlusion
+					surfaceData.specularOcclusion = GetSpecularOcclusionFromBentAO(V, bentNormalWS, surfaceData);
+			#elif defined(_MASKMAP)
+					surfaceData.specularOcclusion = GetSpecularOcclusionFromAmbientOcclusion(NdotV, surfaceData.ambientOcclusion, PerceptualSmoothnessToRoughness(surfaceData.perceptualSmoothness));
+			#endif
+				}
+        
+				void GetSurfaceAndBuiltinData(SurfaceDescription surfaceDescription, FragInputs fragInputs, float3 V, inout PositionInputs posInput, out SurfaceData surfaceData, out BuiltinData builtinData)
+				{
+					#if _ALPHATEST_ON
+						DoAlphaTest(surfaceDescription.Alpha, surfaceDescription.AlphaClipThreshold);
+					#endif
+					DoAlphaTest(surfaceDescription.Alpha, surfaceDescription.AlphaClipThreshold);
+        
+					BuildSurfaceData(fragInputs, surfaceDescription, V, surfaceData);
+        
+					InitBuiltinData(surfaceDescription.Alpha, surfaceData.normalWS, -fragInputs.worldToTangent[2], fragInputs.positionRWS, fragInputs.texCoord1, fragInputs.texCoord2, builtinData);
+					builtinData.distortion =                float2(0.0, 0.0);
+					builtinData.distortionBlur =            0.0;
+					builtinData.depthOffset =               0.0;
+        
+					PostInitBuiltinData(V, posInput, surfaceData, builtinData);
+				}
+        
+				PackedVaryingsMeshToPS Vert(AttributesMesh inputMesh )
+				{
+					PackedVaryingsMeshToPS outputPackedVaryingsMeshToPS;
+				
+					UNITY_SETUP_INSTANCE_ID(inputMesh);
+					UNITY_TRANSFER_INSTANCE_ID(inputMesh, outputPackedVaryingsMeshToPS);
+
+					outputPackedVaryingsMeshToPS.ase_texcoord.xy = inputMesh.ase_texcoord.xy;
+					outputPackedVaryingsMeshToPS.ase_color = inputMesh.ase_color;
+					
+					//setting value to unused interpolator channels and avoid initialization warnings
+					outputPackedVaryingsMeshToPS.ase_texcoord.zw = 0;
+					inputMesh.positionOS.xyz +=  float3( 0, 0, 0 ) ;
+					inputMesh.normalOS =  inputMesh.normalOS ;
+
+					float3 positionRWS = TransformObjectToWorld(inputMesh.positionOS);
+					outputPackedVaryingsMeshToPS.positionCS = TransformWorldToHClip(positionRWS);
+				
+					return outputPackedVaryingsMeshToPS;
+				}
+
+				void Frag(  PackedVaryingsMeshToPS packedInput
+							#ifdef WRITE_NORMAL_BUFFER
+							, out float4 outNormalBuffer : SV_Target0
+								#ifdef WRITE_MSAA_DEPTH
+							, out float1 depthColor : SV_Target1
+								#endif
+							#else
+							, out float4 outColor : SV_Target0
+							#endif
+
+							#ifdef _DEPTHOFFSET_ON
+							, out float outputDepth : SV_Depth
+							#endif
+							 
+						)
+				{
+						FragInputs input;
+						ZERO_INITIALIZE(FragInputs, input);
+						input.worldToTangent = k_identity3x3;
+						input.positionSS = packedInput.positionCS;       // input.positionCS is SV_Position
+
+						// input.positionSS is SV_Position
+						PositionInputs posInput = GetPositionInput(input.positionSS.xy, _ScreenSize.zw, input.positionSS.z, input.positionSS.w, input.positionRWS);
+
+						float3 V = float3(1.0, 1.0, 1.0); // Avoid the division by 0
+
+						SurfaceData surfaceData;
+						BuiltinData builtinData;
+						SurfaceDescription surfaceDescription = (SurfaceDescription)0;
+						float2 uv_Texture = packedInput.ase_texcoord.xy * _Texture_ST.xy + _Texture_ST.zw;
+						float temp_output_45_0 = ( _Speed * _Time.y );
+						float temp_output_55_0 = ( temp_output_45_0 * 0.5 );
+						float2 uv50 = packedInput.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
+						float2 panner53 = ( temp_output_55_0 * float2( 0,0 ) + ( uv50 * float2( 1.1,1 ) ));
+						float2 panner54 = ( temp_output_55_0 * float2( 0,0 ) + uv50);
+						float clampResult17 = clamp( pow( ( tex2D( _Texture, panner53 ).b * tex2D( _Texture, panner54 ).b * 4.0 ) , 2.0 ) , 0.0 , 1.0 );
+						float2 uv39 = packedInput.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
+						float4 appendResult40 = (float4(floor( _ItemNumbre ) , 1.0 , 0.0 , 0.0));
+						float clampResult34 = clamp( ( tex2D( _Texture, ( float4( uv39, 0.0 , 0.0 ) * appendResult40 ).xy ).a * 1.5 * ( 1.0 - ( tex2D( _Texture, uv_Texture ).r * 3.0 ) ) ) , 0.0 , 1.0 );
+						float temp_output_11_0 = ( ( tex2D( _Texture, uv_Texture ).r + clampResult17 ) + clampResult34 );
+						float2 panner47 = ( temp_output_45_0 * float2( 1.3,1 ) + ( 1.1 * uv50 ));
+						float2 panner49 = ( temp_output_45_0 * float2( -0.9,-3.2 ) + uv50);
+						float clampResult16 = clamp( ( tex2D( _Texture, panner47 ).g * tex2D( _Texture, panner49 ).g * 2.0 ) , 0.0 , 1.0 );
+						float clampResult9 = clamp( ( temp_output_11_0 + ( temp_output_11_0 * clampResult16 ) ) , 0.0 , 1.0 );
+						
+						surfaceDescription.Alpha = ( clampResult9 * packedInput.ase_color.a * _Color.a );
+						surfaceDescription.AlphaClipThreshold = 0;
+
+						GetSurfaceAndBuiltinData(surfaceDescription,input, V, posInput, surfaceData, builtinData);
+
+					#ifdef _DEPTHOFFSET_ON
+						outputDepth = posInput.deviceDepth;
+					#endif
+
+					#ifdef WRITE_NORMAL_BUFFER
+						EncodeIntoNormalBuffer(ConvertSurfaceDataToNormalData(surfaceData), posInput.positionSS, outNormalBuffer);
+						#ifdef WRITE_MSAA_DEPTH
+						// In case we are rendering in MSAA, reading the an MSAA depth buffer is way too expensive. To avoid that, we export the depth to a color buffer
+						depthColor = packedInput.positionCS.z;
+						#endif
+					#elif defined(SCENESELECTIONPASS)
+						// We use depth prepass for scene selection in the editor, this code allow to output the outline correctly
+						outColor = float4(_ObjectId, _PassValue, 1.0, 1.0);
+					#else
+						outColor = float4(0.0, 0.0, 0.0, 0.0);
+					#endif
+				}
+
+            ENDHLSL
         }
+
+		
+		Pass
+		{
+			
+            Name "META"
+            Tags { "LightMode"="Meta" }
+        
+            Cull Off
+        
+            HLSLPROGRAM
+        
+				#pragma vertex Vert
+				#pragma fragment Frag
+        
+				#define _SURFACE_TYPE_TRANSPARENT 1
+				#define _BLENDMODE_ADD 1
+
+				
+				#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+				#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Wind.hlsl"
+        
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/FragInputs.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPass.cs.hlsl"
+        
+                #define SHADERPASS SHADERPASS_LIGHT_TRANSPORT
+        
+                #define ATTRIBUTES_NEED_NORMAL
+                #define ATTRIBUTES_NEED_TANGENT
+                #define ATTRIBUTES_NEED_TEXCOORD0
+                #define ATTRIBUTES_NEED_TEXCOORD1
+                #define ATTRIBUTES_NEED_TEXCOORD2
+                #define ATTRIBUTES_NEED_COLOR
+        
+        
+			    #include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderVariables.hlsl"
+                #include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Unlit/Unlit.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/BuiltinUtilities.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/MaterialUtilities.hlsl"
+				#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl"
+
+				struct AttributesMesh
+				{
+					float3 positionOS : POSITION;
+					float3 normalOS : NORMAL;
+					float4 tangentOS : TANGENT;
+					float4 uv0 : TEXCOORD0;
+					float4 uv1 : TEXCOORD1;
+					float4 uv2 : TEXCOORD2;
+					float4 color : COLOR;
+					
+					#if UNITY_ANY_INSTANCING_ENABLED
+					uint instanceID : INSTANCEID_SEMANTIC;
+					#endif
+				};
+        
+				struct PackedVaryingsMeshToPS
+				{
+					float4 positionCS : SV_Position;
+					float4 ase_texcoord : TEXCOORD0;
+					float4 ase_color : COLOR;
+					#if UNITY_ANY_INSTANCING_ENABLED
+					uint instanceID : INSTANCEID_SEMANTIC;
+					#endif
+				};
+
+                CBUFFER_START(UnityPerMaterial)
+				uniform sampler2D _Texture;
+				uniform float4 _Texture_ST;
+				uniform float _Speed;
+				uniform float _ItemNumbre;
+				uniform float4 _Color;
+				CBUFFER_END
+				                
+                struct SurfaceDescription
+                {
+                    float3 Color;
+                    float Alpha;
+                    float AlphaClipThreshold;
+                };
+                    
+				void BuildSurfaceData(FragInputs fragInputs, SurfaceDescription surfaceDescription, float3 V, out SurfaceData surfaceData)
+				{
+					ZERO_INITIALIZE(SurfaceData, surfaceData);
+					surfaceData.color = surfaceDescription.Color;
+				}
+        
+				void GetSurfaceAndBuiltinData(SurfaceDescription surfaceDescription, FragInputs fragInputs, float3 V, inout PositionInputs posInput, out SurfaceData surfaceData, out BuiltinData builtinData)
+				{
+       
+				#if _ALPHATEST_ON
+					DoAlphaTest(surfaceDescription.Alpha, surfaceDescription.AlphaClipThreshold);
+				#endif
+
+					BuildSurfaceData(fragInputs, surfaceDescription, V, surfaceData);
+					ZERO_INITIALIZE(BuiltinData, builtinData);
+					builtinData.opacity = surfaceDescription.Alpha;
+					builtinData.distortion = float2(0.0, 0.0);
+					builtinData.distortionBlur = 0.0;
+				}
+       
+				CBUFFER_START(UnityMetaPass)
+				bool4 unity_MetaVertexControl;
+				bool4 unity_MetaFragmentControl;
+				CBUFFER_END
+
+				float unity_OneOverOutputBoost;
+				float unity_MaxOutputValue;
+
+				PackedVaryingsMeshToPS Vert(AttributesMesh inputMesh   )
+				{
+					PackedVaryingsMeshToPS outputPackedVaryingsMeshToPS;
+
+					UNITY_SETUP_INSTANCE_ID(inputMesh);
+					UNITY_TRANSFER_INSTANCE_ID(inputMesh, outputPackedVaryingsMeshToPS);
+
+					outputPackedVaryingsMeshToPS.ase_texcoord.xy = inputMesh.uv0.xy;
+					outputPackedVaryingsMeshToPS.ase_color = inputMesh.color;
+					
+					//setting value to unused interpolator channels and avoid initialization warnings
+					outputPackedVaryingsMeshToPS.ase_texcoord.zw = 0;
+					inputMesh.positionOS.xyz +=  float3( 0, 0, 0 ) ;
+					inputMesh.normalOS =  inputMesh.normalOS ;
+
+					float2 uv;
+
+					if (unity_MetaVertexControl.x)
+					{
+						uv = inputMesh.uv1.xy * unity_LightmapST.xy + unity_LightmapST.zw;
+					}
+					else if (unity_MetaVertexControl.y)
+					{
+						uv = inputMesh.uv2.xy * unity_DynamicLightmapST.xy + unity_DynamicLightmapST.zw;
+					}
+
+					outputPackedVaryingsMeshToPS.positionCS = float4(uv * 2.0 - 1.0, inputMesh.positionOS.z > 0 ? 1.0e-4 : 0.0, 1.0);
+					return outputPackedVaryingsMeshToPS;
+				}
+
+				float4 Frag(PackedVaryingsMeshToPS packedInput) : SV_Target
+				{			
+					FragInputs input;
+					ZERO_INITIALIZE(FragInputs, input);
+					input.worldToTangent = k_identity3x3;
+					input.positionSS = packedInput.positionCS;
+                
+				
+					PositionInputs posInput = GetPositionInput(input.positionSS.xy, _ScreenSize.zw, input.positionSS.z, input.positionSS.w, input.positionRWS);
+
+					float3 V = float3(1.0, 1.0, 1.0); // Avoid the division by 0
+		
+					SurfaceData surfaceData;
+					BuiltinData builtinData;
+					SurfaceDescription surfaceDescription = (SurfaceDescription)0;
+					float2 uv_Texture = packedInput.ase_texcoord.xy * _Texture_ST.xy + _Texture_ST.zw;
+					float temp_output_45_0 = ( _Speed * _Time.y );
+					float temp_output_55_0 = ( temp_output_45_0 * 0.5 );
+					float2 uv50 = packedInput.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
+					float2 panner53 = ( temp_output_55_0 * float2( 0,0 ) + ( uv50 * float2( 1.1,1 ) ));
+					float2 panner54 = ( temp_output_55_0 * float2( 0,0 ) + uv50);
+					float clampResult17 = clamp( pow( ( tex2D( _Texture, panner53 ).b * tex2D( _Texture, panner54 ).b * 4.0 ) , 2.0 ) , 0.0 , 1.0 );
+					float2 uv39 = packedInput.ase_texcoord.xy * float2( 1,1 ) + float2( 0,0 );
+					float4 appendResult40 = (float4(floor( _ItemNumbre ) , 1.0 , 0.0 , 0.0));
+					float clampResult34 = clamp( ( tex2D( _Texture, ( float4( uv39, 0.0 , 0.0 ) * appendResult40 ).xy ).a * 1.5 * ( 1.0 - ( tex2D( _Texture, uv_Texture ).r * 3.0 ) ) ) , 0.0 , 1.0 );
+					float temp_output_11_0 = ( ( tex2D( _Texture, uv_Texture ).r + clampResult17 ) + clampResult34 );
+					float2 panner47 = ( temp_output_45_0 * float2( 1.3,1 ) + ( 1.1 * uv50 ));
+					float2 panner49 = ( temp_output_45_0 * float2( -0.9,-3.2 ) + uv50);
+					float clampResult16 = clamp( ( tex2D( _Texture, panner47 ).g * tex2D( _Texture, panner49 ).g * 2.0 ) , 0.0 , 1.0 );
+					float clampResult9 = clamp( ( temp_output_11_0 + ( temp_output_11_0 * clampResult16 ) ) , 0.0 , 1.0 );
+					
+					surfaceDescription.Color =  float3( 1, 1, 1 );
+					surfaceDescription.Alpha = ( clampResult9 * packedInput.ase_color.a * _Color.a );
+					surfaceDescription.AlphaClipThreshold =  0;
+
+					GetSurfaceAndBuiltinData(surfaceDescription,input, V, posInput, surfaceData, builtinData);
+					BSDFData bsdfData = ConvertSurfaceDataToBSDFData(input.positionSS.xy, surfaceData);
+					LightTransportData lightTransportData = GetLightTransportData(surfaceData, builtinData, bsdfData);
+					float4 res = float4(0.0, 0.0, 0.0, 1.0);
+					if (unity_MetaFragmentControl.x)
+					{
+						res.rgb = clamp(pow(abs(lightTransportData.diffuseColor), saturate(unity_OneOverOutputBoost)), 0, unity_MaxOutputValue);
+					}
+
+					if (unity_MetaFragmentControl.y)
+					{
+						res.rgb = lightTransportData.emissiveColor;
+					}
+
+					return res;
+				}
+
+            ENDHLSL
+		}
     }
-    CustomEditor "ShaderForgeMaterialInspector"
+    FallBack "Hidden/InternalErrorShader"
+	CustomEditor "ASEMaterialInspector"
+	
+	
 }
+/*ASEBEGIN
+Version=16103
+1995;67;1641;974;4191.059;264.9856;1;True;True
+Node;AmplifyShaderEditor.RangedFloatNode;44;-3842.165,-39.54528;Float;False;Property;_Speed;Speed;2;0;Create;True;0;0;False;0;0.5;0.5;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.TimeNode;46;-3887.666,131.6301;Float;False;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;45;-3578.216,-41.68765;Float;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;56;-3350.621,151.0384;Float;False;Constant;_Float7;Float 7;3;0;Create;True;0;0;False;0;0.5;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.TextureCoordinatesNode;50;-3703.165,-396.53;Float;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.Vector2Node;59;-3311.351,-106.841;Float;False;Constant;_Vector0;Vector 0;4;0;Create;True;0;0;False;0;1.1,1;0,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
+Node;AmplifyShaderEditor.RangedFloatNode;41;-3695.491,619.5164;Float;False;Property;_ItemNumbre;Item Numbre;3;0;Create;True;0;0;False;0;1;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;55;-3117.613,30.60736;Float;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;58;-2953.985,-98.98692;Float;False;2;2;0;FLOAT2;0,0;False;1;FLOAT2;0,0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.PannerNode;54;-2775.955,59.40573;Float;False;3;0;FLOAT2;0,0;False;2;FLOAT2;0,0;False;1;FLOAT;1;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.FloorOpNode;42;-3445.491,610.5164;Float;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;43;-3438.491,710.5164;Float;False;Constant;_Float5;Float 5;3;0;Create;True;0;0;False;0;1;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.PannerNode;53;-2773.336,-72.8065;Float;False;3;0;FLOAT2;0,0;False;2;FLOAT2;0,0;False;1;FLOAT;1;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.TexturePropertyNode;25;-3275.194,-985.2847;Float;True;Property;_Texture;Texture;1;0;Create;True;0;0;False;0;None;None;False;white;Auto;Texture2D;0;1;SAMPLER2D;0
+Node;AmplifyShaderEditor.RangedFloatNode;29;-2111.306,226.0123;Float;False;Constant;_Float1;Float 1;2;0;Create;True;0;0;False;0;4;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.DynamicAppendNode;40;-3236.491,593.5164;Float;False;FLOAT4;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.SamplerNode;21;-2801.093,478.2394;Float;True;Property;_TextureSample3;Texture Sample 3;4;0;Create;True;0;0;False;0;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RangedFloatNode;36;-2377.662,701.7283;Float;False;Constant;_Float4;Float 4;2;0;Create;True;0;0;False;0;3;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.TextureCoordinatesNode;39;-3396.491,447.5164;Float;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;23;-2406.479,97.90491;Float;True;Property;_TextureSample5;Texture Sample 5;2;0;Create;True;0;0;False;0;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;20;-2411.484,-92.33725;Float;True;Property;_TextureSample2;Texture Sample 2;3;0;Create;True;0;0;False;0;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RangedFloatNode;52;-3393.743,-510.6327;Float;False;Constant;_Float6;Float 6;3;0;Create;True;0;0;False;0;1.1;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;51;-3118.277,-437.9823;Float;False;2;2;0;FLOAT;0;False;1;FLOAT2;0,0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;28;-1951.829,2.227308;Float;False;3;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;38;-3021.491,448.5164;Float;False;2;2;0;FLOAT2;0,0;False;1;FLOAT4;0,0,0,0;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.RangedFloatNode;27;-1839.807,107.7573;Float;False;Constant;_Float0;Float 0;2;0;Create;True;0;0;False;0;2;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;35;-2167.062,634.515;Float;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.PannerNode;47;-2820.672,-394.6331;Float;False;3;0;FLOAT2;0,0;False;2;FLOAT2;1.3,1;False;1;FLOAT;1;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.PowerNode;26;-1630.746,52.49648;Float;False;2;0;FLOAT;0;False;1;FLOAT;1;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SamplerNode;22;-2806.819,277.7805;Float;True;Property;_TextureSample4;Texture Sample 4;1;0;Create;True;0;0;False;0;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RangedFloatNode;33;-2219.106,475.7942;Float;False;Constant;_Float3;Float 3;2;0;Create;True;0;0;False;0;1.5;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.PannerNode;49;-2820.072,-271.6255;Float;False;3;0;FLOAT2;0,0;False;2;FLOAT2;-0.9,-3.2;False;1;FLOAT;1;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.OneMinusNode;37;-1964.301,655.7992;Float;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;32;-1941.452,385.9497;Float;False;3;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SamplerNode;19;-2404.037,-329.0397;Float;True;Property;_TextureSample1;Texture Sample 1;1;0;Create;True;0;0;False;0;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.ClampOpNode;17;-1499.712,-64.40414;Float;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;1;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SamplerNode;18;-2815.627,-728.2734;Float;True;Property;_TextureSample0;Texture Sample 0;1;0;Create;True;0;0;False;0;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;24;-2405.707,-532.6321;Float;True;Property;_TextureSample6;Texture Sample 6;1;0;Create;True;0;0;False;0;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RangedFloatNode;31;-2040.764,-139.6601;Float;False;Constant;_Float2;Float 2;2;0;Create;True;0;0;False;0;2;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;30;-1892.686,-310.9657;Float;False;3;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.ClampOpNode;34;-1744.79,403.0789;Float;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;1;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;15;-1347.5,-365.5;Float;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;11;-1136.5,-373.5;Float;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.ClampOpNode;16;-1276.37,-216.9764;Float;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;1;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;13;-975.5,-245.5;Float;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;10;-830.5,-338.5;Float;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.ClampOpNode;9;-654.5,-358.5;Float;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;1;False;1;FLOAT;0
+Node;AmplifyShaderEditor.VertexColorNode;7;-695.5,-174.5;Float;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.ColorNode;6;-712.5,2.5;Float;False;Property;_Color;Color;0;1;[HDR];Create;True;0;0;False;0;0,0,0,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;5;-281.5,136.5;Float;False;3;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;4;-310.5,-29;Float;False;3;3;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;0;0,0;Float;False;False;2;Float;ASEMaterialInspector;0;1;Hidden/Templates/HDSRPUnlit;dfe2f27ac20b08c469b2f95c236be0c3;0;0;Depth prepass;0;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;True;0;False;-1;False;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=HDRenderPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;0;False;False;False;False;True;False;False;False;False;0;False;-1;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;True;1;LightMode=DepthForwardOnly;False;0;;0;0;Standard;0;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;3;0,0;Float;False;False;2;Float;ASEMaterialInspector;0;1;Hidden/Templates/HDSRPUnlit;dfe2f27ac20b08c469b2f95c236be0c3;0;3;META;1;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;True;0;False;-1;False;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=HDRenderPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;0;False;False;False;True;2;False;-1;False;False;False;False;False;True;1;LightMode=Meta;False;0;;0;0;Standard;0;5;0;FLOAT3;0,0,0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT3;0,0,0;False;4;FLOAT3;0,0,0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;2;0,0;Float;False;False;2;Float;ASEMaterialInspector;0;1;Hidden/Templates/HDSRPUnlit;dfe2f27ac20b08c469b2f95c236be0c3;0;2;ShadowCaster;1;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;True;0;False;-1;False;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=HDRenderPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;0;False;False;False;False;True;False;False;False;False;0;False;-1;False;False;False;False;True;1;LightMode=ShadowCaster;False;0;;0;0;Standard;0;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;0,0;Float;False;True;2;Float;ASEMaterialInspector;0;3;NewShader/Flat Shield;dfe2f27ac20b08c469b2f95c236be0c3;0;1;Forward Unlit;5;True;4;1;False;-1;1;False;-1;2;5;False;-1;10;False;-1;False;False;True;2;False;-1;False;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=HDRenderPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;7;0;False;False;False;False;True;True;True;True;True;0;False;-1;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;True;1;LightMode=ForwardOnly;False;0;;0;0;Standard;0;5;0;FLOAT3;0,0,0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT3;0,0,0;False;4;FLOAT3;0,0,0;False;0
+WireConnection;45;0;44;0
+WireConnection;45;1;46;2
+WireConnection;55;0;45;0
+WireConnection;55;1;56;0
+WireConnection;58;0;50;0
+WireConnection;58;1;59;0
+WireConnection;54;0;50;0
+WireConnection;54;1;55;0
+WireConnection;42;0;41;0
+WireConnection;53;0;58;0
+WireConnection;53;1;55;0
+WireConnection;40;0;42;0
+WireConnection;40;1;43;0
+WireConnection;21;0;25;0
+WireConnection;23;0;25;0
+WireConnection;23;1;54;0
+WireConnection;20;0;25;0
+WireConnection;20;1;53;0
+WireConnection;51;0;52;0
+WireConnection;51;1;50;0
+WireConnection;28;0;20;3
+WireConnection;28;1;23;3
+WireConnection;28;2;29;0
+WireConnection;38;0;39;0
+WireConnection;38;1;40;0
+WireConnection;35;0;21;1
+WireConnection;35;1;36;0
+WireConnection;47;0;51;0
+WireConnection;47;1;45;0
+WireConnection;26;0;28;0
+WireConnection;26;1;27;0
+WireConnection;22;0;25;0
+WireConnection;22;1;38;0
+WireConnection;49;0;50;0
+WireConnection;49;1;45;0
+WireConnection;37;0;35;0
+WireConnection;32;0;22;4
+WireConnection;32;1;33;0
+WireConnection;32;2;37;0
+WireConnection;19;0;25;0
+WireConnection;19;1;49;0
+WireConnection;17;0;26;0
+WireConnection;18;0;25;0
+WireConnection;24;0;25;0
+WireConnection;24;1;47;0
+WireConnection;30;0;24;2
+WireConnection;30;1;19;2
+WireConnection;30;2;31;0
+WireConnection;34;0;32;0
+WireConnection;15;0;18;1
+WireConnection;15;1;17;0
+WireConnection;11;0;15;0
+WireConnection;11;1;34;0
+WireConnection;16;0;30;0
+WireConnection;13;0;11;0
+WireConnection;13;1;16;0
+WireConnection;10;0;11;0
+WireConnection;10;1;13;0
+WireConnection;9;0;10;0
+WireConnection;5;0;9;0
+WireConnection;5;1;7;4
+WireConnection;5;2;6;4
+WireConnection;4;0;9;0
+WireConnection;4;1;7;0
+WireConnection;4;2;6;0
+WireConnection;1;0;4;0
+WireConnection;1;1;5;0
+ASEEND*/
+//CHKSM=54C97440CE72300D2D46C3E5AE196239130ABF7D
