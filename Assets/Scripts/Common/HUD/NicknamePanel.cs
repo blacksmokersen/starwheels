@@ -28,16 +28,12 @@ namespace Common.HUD
         private void Update()
         {
             if (_camera != null)
+            {
                 transform.LookAt(_camera.transform);
+            }
         }
 
         // BOLT
-
-        public override void Attached()
-        {
-            state.AddCallback("Nickname", NicknameChanged);
-            state.AddCallback("Team", TeamChanged);
-        }
 
         public override void ControlGained()
         {
@@ -75,18 +71,6 @@ namespace Common.HUD
         public void HidePanel()
         {
             gameObject.SetActive(false);
-        }
-
-        // PRIVATE
-
-        private void NicknameChanged()
-        {
-            SetName(state.Nickname);
-        }
-
-        private void TeamChanged()
-        {
-            SetFrameRendererTeam(state.Team.ToTeam());
         }
     }
 }

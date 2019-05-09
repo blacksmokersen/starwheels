@@ -82,6 +82,7 @@ namespace Multiplayer
             playerReadyEvent.Nickname = _playerSettings.Nickname;
             playerReadyEvent.PlayerID = SWMatchmaking.GetMyBoltId();
             playerReadyEvent.Team = (int) team;
+            playerReadyEvent.Entity = myKart.GetComponent<BoltEntity>();
             playerReadyEvent.Send();
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Multiplayer;
 using Bolt;
 using Common.PhysicsUtils;
 
@@ -172,7 +173,7 @@ namespace Items
                 playerHitEvent.Item = state.Name;
                 playerHitEvent.VictimEntity = victimEntity;
                 playerHitEvent.VictimID = victimKartState.OwnerID;
-                playerHitEvent.VictimName = victimKartState.Nickname;
+                playerHitEvent.VictimName = victimEntity.GetComponent<PlayerInfo>().Nickname;
                 playerHitEvent.VictimTeam = (int) victimKartState.Team;
                 playerHitEvent.Send();
             }

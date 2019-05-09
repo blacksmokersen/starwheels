@@ -11,7 +11,7 @@ namespace Items
         [Header("Events")]
         public GameObjectEvent OnOwnershipSet;
 
-        public void Set(Player player)
+        public void Set(PlayerInfo player)
         {
             Team = player.Team;
             OwnerKartRoot = player.gameObject;

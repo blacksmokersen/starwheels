@@ -22,7 +22,7 @@ namespace Audio
 
         public void GameEndSound(Team winningTeam)
         {
-            var myTeam = Multiplayer.Player.Me.Team;
+            var myTeam = Multiplayer.PlayerInfo.Me.Team;
             if (myTeam == winningTeam)
             {
                 PlayVictorySound();

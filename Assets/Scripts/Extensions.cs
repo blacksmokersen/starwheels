@@ -25,12 +25,12 @@ namespace SWExtensions
 
     public static class TeamExtensions
     {
-        public static List<Player> GetTeammates(this Player playerSettings)
+        public static List<PlayerInfo> GetTeammates(this PlayerInfo playerSettings)
         {
-            var teammates = new List<Player>();
-            var allPlayers = MonoBehaviour.FindObjectsOfType<Player>();
+            var teammates = new List<PlayerInfo>();
+            var allPlayers = MonoBehaviour.FindObjectsOfType<PlayerInfo>();
 
-            foreach (Player player in allPlayers)
+            foreach (PlayerInfo player in allPlayers)
             {
                 if (player.Team == playerSettings.Team)
                 {
@@ -40,7 +40,7 @@ namespace SWExtensions
             return teammates;
         }
 
-        public static Player GetNextTeammate(this Player playerSettings, Player currentTeammate)
+        public static PlayerInfo GetNextTeammate(this PlayerInfo playerSettings, PlayerInfo currentTeammate)
         {
             var teammates = playerSettings.GetTeammates();
             for (int i = 0; i < teammates.Count; i++)
@@ -53,7 +53,7 @@ namespace SWExtensions
             return null;
         }
 
-        public static Player PickRandomTeammate(this Player playerSettings)
+        public static PlayerInfo PickRandomTeammate(this PlayerInfo playerSettings)
         {
             var teammates = playerSettings.GetTeammates();
             var rand = UnityEngine.Random.Range(0, teammates.Count);
@@ -79,7 +79,7 @@ namespace SWExtensions
 
         public static GameObject GetKartRoot(this Component component)
         {
-            GameObject result = component.GetComponentInParent<Player>().gameObject;
+            GameObject result = component.GetComponentInParent<PlayerInfo>().gameObject;
             if(result == null)
             {
                 Debug.LogError("Could not find the kart root. The component may not be from the kart prefab.");
@@ -87,13 +87,13 @@ namespace SWExtensions
             return result;
         }
 
-        public static List<GameObject> GetTeamKarts(this Player playerSettings)
+        public static List<GameObject> GetTeamKarts(this PlayerInfo playerSettings)
         {
             var teamKarts = new List<GameObject>();
             var allKarts = GameObject.FindGameObjectsWithTag(Constants.Tag.Kart);
             foreach (GameObject kart in allKarts)
             {
-                var kartPlayer = kart.GetComponent<Player>();
+                var kartPlayer = kart.GetComponent<PlayerInfo>();
                 if (kartPlayer.Team == playerSettings.Team && kartPlayer != playerSettings)
                 {
                     teamKarts.Add(kart);
@@ -102,7 +102,7 @@ namespace SWExtensions
             return teamKarts;
         }
 
-        public static GameObject GetNextTeamKart(this Player playerSettings, GameObject currentTeamKart)
+        public static GameObject GetNextTeamKart(this PlayerInfo playerSettings, GameObject currentTeamKart)
         {
             var teamKarts = playerSettings.GetTeamKarts();
             for (int i = 0; i < teamKarts.Count; i++)
@@ -115,7 +115,7 @@ namespace SWExtensions
             return null;
         }
 
-        public static GameObject PickRandomTeamKart(this Player playerSettings)
+        public static GameObject PickRandomTeamKart(this PlayerInfo playerSettings)
         {
             var teamKart = playerSettings.GetTeamKarts();
 
