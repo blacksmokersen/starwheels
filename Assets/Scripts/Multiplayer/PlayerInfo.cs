@@ -24,6 +24,8 @@ namespace Multiplayer
             set { _team = value; OnTeamChanged.Invoke(_team); }
         }
 
+        public int OwnerID;
+
         [Header("Events")]
         public StringEvent OnNicknameChanged;
         public TeamEvent OnTeamChanged;
