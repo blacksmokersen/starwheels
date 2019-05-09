@@ -59,7 +59,7 @@ namespace SW.DebugUtils
         {
             var spawnPosition = transform.position + (5 * transform.forward);
             _lastInstantiatedDummy = BoltNetwork.Instantiate(kart, spawnPosition, transform.rotation);
-            _lastInstantiatedDummy.GetState<IKartState>().Team = _playerSettings.ColorSettings.TeamEnum.OppositeTeam().ToString();
+            _lastInstantiatedDummy.GetState<IKartState>().Team = (int)_playerSettings.ColorSettings.TeamEnum.OppositeTeam();
             _lastInstantiatedDummy.GetState<IKartState>().Nickname = "Dummy";
             _lastInstantiatedDummy.GetState<IKartState>().OwnerID = -2;
             ReleaseControlOfDummy();

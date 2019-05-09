@@ -13,8 +13,8 @@
         }
     }
 
-    public static Team ToTeam(this string s)
+    public static Team ToTeam(this int i)
     {
-        return (Team)System.Enum.Parse(typeof(Team), s);
+        return (Team)i;
     }
 }

@@ -31,7 +31,7 @@ namespace Gamemodes.Totem
         private void SendGameOverEvent()
         {
             GameOver gameOverEvent = GameOver.Create();
-            gameOverEvent.WinningTeam = OwnerTeam.OppositeTeam().ToString();
+            gameOverEvent.WinningTeam = (int) OwnerTeam.OppositeTeam();
             gameOverEvent.Send();
         }
     }

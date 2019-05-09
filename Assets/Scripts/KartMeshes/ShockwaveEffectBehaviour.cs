@@ -18,7 +18,7 @@ namespace Items
         {
             if (entity == evnt.Entity)
             {
-                var size = (Size)Enum.Parse(typeof(Size), evnt.Size);
+                var size = (Size) evnt.Size;
                 InstantiateShockwave(evnt.Position, evnt.Rotation, size);
             }
         }

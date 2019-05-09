@@ -168,12 +168,12 @@ namespace Items
             {
                 PlayerHit playerHitEvent = PlayerHit.Create();
                 playerHitEvent.KillerName = state.OwnerNickname;
-                playerHitEvent.KillerTeam = state.Team.ToString();
+                playerHitEvent.KillerTeam = (int) state.Team;
                 playerHitEvent.Item = state.Name;
                 playerHitEvent.VictimEntity = victimEntity;
                 playerHitEvent.VictimID = victimKartState.OwnerID;
                 playerHitEvent.VictimName = victimKartState.Nickname;
-                playerHitEvent.VictimTeam = victimKartState.Team.ToString();
+                playerHitEvent.VictimTeam = (int) victimKartState.Team;
                 playerHitEvent.Send();
             }
             else
