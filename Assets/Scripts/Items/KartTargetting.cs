@@ -115,7 +115,7 @@ namespace Items
         {
             if (Targetting && other.CompareTag(Constants.Tag.KartHealthHitBox) && CurrentTargetTransform == null)
             {
-                var otherPlayer = other.GetComponentInParent<Player>();
+                var otherPlayer = other.GetComponentInParent<PlayerInfo>();
 
                 if (state.Team.ToTeam() != otherPlayer.Team)
                 {
@@ -128,7 +128,7 @@ namespace Items
         {
             if (Targetting && other.CompareTag(Constants.Tag.KartHealthHitBox))
             {
-                var otherPlayer = other.GetComponentInParent<Player>();
+                var otherPlayer = other.GetComponentInParent<PlayerInfo>();
 
                 if (entity.isAttached && state.Team.ToTeam() != otherPlayer.Team)
                 {

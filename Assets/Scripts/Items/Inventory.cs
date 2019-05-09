@@ -125,13 +125,13 @@ namespace Items
             var itemState = instantiatedItem.GetComponent<BoltEntity>().GetState<IItemState>();
             itemState.Team = state.Team;
             itemState.OwnerID = state.OwnerID;
-            itemState.OwnerNickname = state.Nickname;
+            itemState.OwnerNickname = GetComponentInParent<PlayerInfo>().Nickname;
             itemState.Name = CurrentItem.Name;
 
             var itemOwnership = instantiatedItem.GetComponent<Ownership>();
             if (itemOwnership)
             {
-                itemOwnership.Set(GetComponentInParent<Player>());
+                itemOwnership.Set(GetComponentInParent<PlayerInfo>());
             }
 
             var throwable = instantiatedItem.GetComponent<Throwable>();

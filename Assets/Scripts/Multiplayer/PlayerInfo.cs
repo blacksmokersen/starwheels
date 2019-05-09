@@ -6,9 +6,9 @@ using UnityEditor;
 
 namespace Multiplayer
 {
-    public class Player : EntityBehaviour
+    public class PlayerInfo : EntityBehaviour
     {
-        public static Player Me;
+        public static PlayerInfo Me;
 
         private string _nickName;
         public string Nickname
@@ -27,9 +27,6 @@ namespace Multiplayer
         [Header("Events")]
         public StringEvent OnNicknameChanged;
         public TeamEvent OnTeamChanged;
-        public IntEvent OnScoreChanged;
-
-        // CORE
 
         // BOLT
 

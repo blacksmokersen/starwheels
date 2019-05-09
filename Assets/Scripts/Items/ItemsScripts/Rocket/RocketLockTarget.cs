@@ -24,7 +24,7 @@ namespace Items
         {
             if (_rocketBehaviour.CurrentTarget == null && other.gameObject.tag == Constants.Tag.KartHealthHitBox && _activated)
             {
-                var otherPlayer = other.GetComponentInParent<Player>();
+                var otherPlayer = other.GetComponentInParent<PlayerInfo>();
 
                 if (entity.isAttached && state.Team.ToTeam() != otherPlayer.Team)
                 {
@@ -38,7 +38,7 @@ namespace Items
         {
             if (_rocketBehaviour.CurrentTarget == null && other.gameObject.tag == Constants.Tag.KartHealthHitBox && _activated)
             {
-                var otherPlayer = other.GetComponentInParent<Player>();
+                var otherPlayer = other.GetComponentInParent<PlayerInfo>();
 
                 if (entity.isAttached && state.Team.ToTeam() != otherPlayer.Team)
                 {
