@@ -53,7 +53,7 @@ namespace Gamemodes
         protected void SendWinningTeamEvent(Team team)
         {
             GameOver goEvent = GameOver.Create();
-            goEvent.WinningTeam = team.ToString();
+            goEvent.WinningTeam = (int) team;
             goEvent.Send();
         }
 
@@ -72,7 +72,7 @@ namespace Gamemodes
         protected void SendScoreIncreasedEvent(Team team)
         {
             ScoreIncreased scoreIncreased = ScoreIncreased.Create();
-            scoreIncreased.Team = team.ToString();
+            scoreIncreased.Team = (int) team;
             scoreIncreased.Score = scores[team];
             scoreIncreased.Send();
         }

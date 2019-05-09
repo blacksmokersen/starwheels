@@ -75,13 +75,13 @@ namespace Multiplayer
 
             myKart.transform.position = spawnPosition;
             myKart.transform.rotation = spawnRotation;
-            myKart.GetComponent<BoltEntity>().GetState<IKartState>().Team = team.ToString(); // _playerSettings.ColorSettings.TeamEnum.ToString();
+            myKart.GetComponent<BoltEntity>().GetState<IKartState>().Team = (int) team; // _playerSettings.ColorSettings.TeamEnum.ToString();
             myKart.GetComponent<BoltEntity>().GetState<IKartState>().OwnerID = SWMatchmaking.GetMyBoltId();
 
             PlayerReady playerReadyEvent = PlayerReady.Create();
             playerReadyEvent.Nickname = _playerSettings.Nickname;
             playerReadyEvent.PlayerID = SWMatchmaking.GetMyBoltId();
-            playerReadyEvent.Team = team.ToString();
+            playerReadyEvent.Team = (int) team;
             playerReadyEvent.Send();
         }
     }

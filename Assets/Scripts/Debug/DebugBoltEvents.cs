@@ -13,7 +13,7 @@ namespace SW.DebugUtils
         public void TriggerGameOverEvent()
         {
             GameOver gameOverEvent = GameOver.Create();
-            gameOverEvent.WinningTeam = Team.Blue.ToString();
+            gameOverEvent.WinningTeam = (int)Team.Blue;
             gameOverEvent.Send();
         }
 
@@ -33,7 +33,7 @@ namespace SW.DebugUtils
         public void TriggerRedScoreIncreaseEvent()
         {
             ScoreIncreased scoreIncreasedEvent = ScoreIncreased.Create();
-            scoreIncreasedEvent.Team = Team.Red.ToString();
+            scoreIncreasedEvent.Team = (int)Team.Red;
             scoreIncreasedEvent.Score = int.Parse(_redScoreInput.text);
             scoreIncreasedEvent.Send();
         }
@@ -41,7 +41,7 @@ namespace SW.DebugUtils
         public void TriggerBlueScoreIncreaseEvent()
         {
             ScoreIncreased scoreIncreasedEvent = ScoreIncreased.Create();
-            scoreIncreasedEvent.Team = Team.Blue.ToString();
+            scoreIncreasedEvent.Team = (int)Team.Blue;
             scoreIncreasedEvent.Score = int.Parse(_blueScoreInput.text);
             scoreIncreasedEvent.Send();
         }

@@ -57,7 +57,7 @@ namespace Gamemodes.Totem
                 }
 
                 TotemWallHit totemWallHitEvent = TotemWallHit.Create();
-                totemWallHitEvent.Team = OwnerTeam.ToString();
+                totemWallHitEvent.Team = (int) OwnerTeam;
                 totemWallHitEvent.Send();
 
                 if (state.Lives <= 0)

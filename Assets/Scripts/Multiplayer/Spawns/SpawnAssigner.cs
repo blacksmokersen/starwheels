@@ -133,7 +133,7 @@ namespace Multiplayer
             playerSpawn.SpawnPosition = spawn.transform.position;
             playerSpawn.SpawnRotation = spawn.transform.rotation;
             playerSpawn.RoomToken = RoomInfoToken;
-            playerSpawn.TeamEnum = team.ToString();
+            playerSpawn.TeamEnum = (int) team;
             playerSpawn.GameStarted = _gameIsStarted;
             playerSpawn.Send();
 
