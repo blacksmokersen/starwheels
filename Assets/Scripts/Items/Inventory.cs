@@ -122,11 +122,12 @@ namespace Items
         {
             var instantiatedItem = BoltNetwork.Instantiate(CurrentItem.ItemPrefab);
 
-            var itemState = instantiatedItem.GetComponent<BoltEntity>().GetState<IItemState>();
-            itemState.Team = state.Team;
-            itemState.OwnerID = state.OwnerID;
-            itemState.OwnerNickname = GetComponentInParent<PlayerInfo>().Nickname;
-            itemState.Name = CurrentItem.Name;
+            ItemThrown itemThrownEvent = ItemThrown.Create();
+            itemThrownEvent.OwnerNickname = GetComponentInParent<PlayerInfo>().Nickname;
+            itemThrownEvent.OwnerID = state.OwnerID;
+            itemThrownEvent.Team = state.Team;
+            itemThrownEvent.Entity = instantiatedItem;
+            itemThrownEvent.Send();
 
             var itemOwnership = instantiatedItem.GetComponent<Ownership>();
             if (itemOwnership)

@@ -85,10 +85,10 @@ namespace Items
                 var IonBeam = BoltNetwork.Instantiate(ionBeamLaserPrefab, new Vector3(camPosition.x, 0, camPosition.z), Quaternion.identity);
                 var itemState = IonBeam.GetComponent<BoltEntity>().GetState<IItemState>();
 
-                itemState.Team = state.Team;
+                //itemState.Team = state.Team;
                 itemState.OwnerID = state.OwnerID;
-                itemState.OwnerNickname = state.OwnerNickname;
-                itemState.Name = state.Name;
+                //itemState.OwnerNickname = state.OwnerNickname;
+                //itemState.Name = state.Name;
 
                 IonBeam.transform.position = new Vector3(_ionBeamCam.transform.position.x, IonBeam.transform.position.y, _ionBeamCam.transform.position.z);
                 _ionBeamCam.IonBeamCameraBehaviour(false);
@@ -105,10 +105,10 @@ namespace Items
             var IonBeam = BoltNetwork.Instantiate(ionBeamLaserPrefab, position, Quaternion.identity);
             var itemState = IonBeam.GetComponent<BoltEntity>().GetState<IItemState>();
 
-            itemState.Team = state.Team;
+            //itemState.Team = state.Team;
             itemState.OwnerID = state.OwnerID;
-            itemState.OwnerNickname = state.OwnerNickname;
-            itemState.Name = state.Name;
+            //itemState.OwnerNickname = state.OwnerNickname;
+            //itemState.Name = state.Name;
 
             IonBeam.transform.position = position;
         }

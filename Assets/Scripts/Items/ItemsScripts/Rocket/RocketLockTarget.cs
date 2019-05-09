@@ -20,6 +20,8 @@ namespace Items
 
         // CORE
 
+        /*
+
         private void OnTriggerEnter(Collider other)
         {
             if (_rocketBehaviour.CurrentTarget == null && other.gameObject.tag == Constants.Tag.KartHealthHitBox && _activated)
@@ -54,5 +56,7 @@ namespace Items
         {
             return Vector3.Distance(_origin.position, kart.transform.position) < Vector3.Distance(_origin.position, CurrentTarget.transform.position);
         }
+
+        */
     }
 }

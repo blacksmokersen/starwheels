@@ -19,11 +19,17 @@ namespace Items
         [Header("Mesh to Hide")]
         [SerializeField] private MeshRenderer _shieldMesh;
 
+        private Ownership _ownership;
         private float _speed = 0.05f;
         private bool _lerping = false;
         private GameObject _target;
 
         // CORE
+
+        private void Awake()
+        {
+            _ownership = GetComponentInParent<Ownership>();
+        }
 
         private void Update()
         {
@@ -39,7 +45,7 @@ namespace Items
             if (other.CompareTag(Constants.Tag.KartHealthHitBox))
             {
                 var playerEntity = other.GetComponentInParent<BoltEntity>();
-                if (playerEntity.isAttached && entity.isAttached && playerEntity.GetState<IKartState>().Team != state.Team)
+                if (playerEntity.isAttached && entity.isAttached && playerEntity.GetState<IKartState>().Team != (int)_ownership.Team)
                 {
                     StartLerpingTowardTarget(other.gameObject);
                 }
