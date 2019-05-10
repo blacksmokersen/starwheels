@@ -73,6 +73,7 @@ namespace Items
             playerHitEvent.KillerID = itemOwnership.OwnerID;
             playerHitEvent.KillerName = itemOwnership.OwnerNickname;
             playerHitEvent.KillerTeam = (int) itemOwnership.Team;
+            playerHitEvent.Item = itemOwnership.Label;
             playerHitEvent.VictimEntity = entity;
             playerHitEvent.VictimID = state.OwnerID;
             playerHitEvent.VictimName = GetComponentInParent<Multiplayer.PlayerInfo>().Nickname;
