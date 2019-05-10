@@ -104,15 +104,17 @@ namespace Items
 
         public void LaunchImmediateIonBeamBackwards(Vector3 position)
         {
-            var IonBeam = BoltNetwork.Instantiate(ionBeamLaserPrefab, position, Quaternion.identity);
-            var itemState = IonBeam.GetComponent<BoltEntity>().GetState<IItemState>();
-
-            //itemState.Team = state.Team;
+            var ionBeamLaser = BoltNetwork.Instantiate(ionBeamLaserPrefab, position, Quaternion.identity);
+            var itemState = ionBeamLaser.GetComponent<BoltEntity>().GetState<IItemState>();
             itemState.OwnerID = state.OwnerID;
-            //itemState.OwnerNickname = state.OwnerNickname;
-            //itemState.Name = state.Name;
 
-            IonBeam.transform.position = position;
+            var laserOwnership = ionBeamLaser.GetComponent<Ownership>();
+            laserOwnership.Label = _ionBeamOwnership.Label;
+            laserOwnership.OwnerID = _ionBeamOwnership.OwnerID;
+            laserOwnership.OwnerNickname = _ionBeamOwnership.OwnerNickname;
+            laserOwnership.Team = _ionBeamOwnership.Team;
+
+            ionBeamLaser.transform.position = position;
         }
 
         //PRIVATE
