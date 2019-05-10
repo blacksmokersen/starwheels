@@ -6,6 +6,9 @@ namespace Items
 {
     public class Ownership : GlobalEventListener
     {
+        public string Label;
+
+        [Header("Owner Information")]
         public int OwnerID;
         public string OwnerNickname;
         public GameObject OwnerKartRoot;
@@ -30,6 +33,7 @@ namespace Items
         {
             if (evnt.Entity = GetComponent<BoltEntity>())
             {
+                Label = evnt.ItemName;
                 OwnerID = evnt.OwnerID;
                 OwnerNickname = evnt.OwnerNickname;
                 Team = evnt.Team.ToTeam();
