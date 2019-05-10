@@ -39,23 +39,31 @@ namespace Items
             state.AddCallback("OwnerID", Setup);
         }
 
-        //PRIVATE
+        // PUBLIC
 
-        private void Setup()
+        public void Setup()
         {
-            _ownerKart = _ownership.OwnerKartRoot;
+            _ownerKart = SWExtensions.KartExtensions.GetKartWithID(state.OwnerID);
 
-            SetParent();
-            if (entity.isOwner)
+            if (_ownerKart)
             {
-                SetOwnerNewSpeed();
-                StartCoroutine(SelfDeactivationCoroutine());
+                SetParent();
+                if (entity.isOwner)
+                {
+                    SetOwnerNewSpeed();
+                    StartCoroutine(SelfDeactivationCoroutine());
+                }
+                SetOwnerInvincibility();
+                DisableOwnerInventory();
             }
-            SetOwnerInvincibility();
-            DisableOwnerInventory();
-
+            else
+            {
+                Debug.LogError("Could not find the player who launched the overcharge.");
+            }
             OnActivation.Invoke();
         }
+
+        //PRIVATE
 
         private void SetParent()
         {
@@ -169,7 +177,7 @@ namespace Items
                 PlayerHit playerHitEvent = PlayerHit.Create();
                 playerHitEvent.KillerName = _ownership.OwnerNickname;
                 playerHitEvent.KillerTeam = (int) _ownership.Team;
-                //playerHitEvent.Item = state.Name;
+                playerHitEvent.Item = _ownership.Label;
                 playerHitEvent.VictimEntity = victimEntity;
                 playerHitEvent.VictimID = victimKartState.OwnerID;
                 playerHitEvent.VictimName = victimEntity.GetComponent<PlayerInfo>().Nickname;
