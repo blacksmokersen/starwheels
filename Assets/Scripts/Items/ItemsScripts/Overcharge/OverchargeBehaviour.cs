@@ -43,7 +43,7 @@ namespace Items
 
         public void Setup()
         {
-            _ownerKart = SWExtensions.KartExtensions.GetKartWithID(state.OwnerID);
+            _ownerKart = SWExtensions.KartExtensions.GetKartWithID(_ownership.OwnerID);
 
             if (_ownerKart)
             {
@@ -175,6 +175,7 @@ namespace Items
             if(victimEntity.TryFindState<IKartState>(out victimKartState))
             {
                 PlayerHit playerHitEvent = PlayerHit.Create();
+                playerHitEvent.KillerID = _ownership.OwnerID;
                 playerHitEvent.KillerName = _ownership.OwnerNickname;
                 playerHitEvent.KillerTeam = (int) _ownership.Team;
                 playerHitEvent.Item = _ownership.Label;
