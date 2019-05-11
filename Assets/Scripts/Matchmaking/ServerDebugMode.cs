@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace SW.Matchmaking
 {
@@ -51,13 +52,13 @@ namespace SW.Matchmaking
 
         public string GetHostServerName()
         {
-            ServerNameHost = _serverNameMatchmakingPanel.GetComponentInChildren<InputField>().text;
+            ServerNameHost = _serverNameMatchmakingPanel.GetComponentInChildren<TMP_InputField>().text;
             return ServerNameHost;
         }
 
         public string GetClientServerName()
         {
-            ServerNameClient = _serverNameQuickMatchPanel.GetComponentInChildren<InputField>().text;
+            ServerNameClient = _serverNameQuickMatchPanel.GetComponentInChildren<TMP_InputField>().text;
             return ServerNameClient;
         }
     }

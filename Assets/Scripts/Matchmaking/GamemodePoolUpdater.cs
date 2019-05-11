@@ -23,6 +23,13 @@ namespace SW.Matchmaking
             InitializeGamemodePoolAndListeners();
         }
 
+        // PUBLIC
+
+        public void ResetPool()
+        {
+            _lobbyData.GamemodePool.Clear();
+        }
+
         // PRIVATE
 
         private void InitializeGamemodePoolAndListeners()
@@ -31,6 +38,7 @@ namespace SW.Matchmaking
             _lobbyData.MapPool = new Dictionary<string, List<string>>();
 
             var gamemodesToggles = GetComponentsInChildren<Toggle>();
+
             foreach (var toggle in gamemodesToggles)
             {
                 var gameModeName = toggle.GetComponent<GamemodeGroupLabel>().Label.Value;
