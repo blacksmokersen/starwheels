@@ -47,7 +47,7 @@ namespace SW.DebugUtils
             if (entity.isAttached && entity.isOwner)
             {
                 var nextColorSettings = _gameSettings.TeamsListSettings.GetNext(_playerSettings.ColorSettings);
-                state.Team = nextColorSettings.TeamEnum.ToString();
+                state.Team = (int) nextColorSettings.TeamEnum;
                 _playerSettings.ColorSettings = nextColorSettings;
             }
         }

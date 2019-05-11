@@ -120,18 +120,20 @@ namespace Items
 
         private void InstantiateItem()
         {
-            var instantiatedItem = BoltNetwork.Instantiate(CurrentItem.ItemPrefab);
+            var instantiatedItem = BoltNetwork.Instantiate(CurrentItem.ItemPrefab, transform.position + transform.forward, transform.rotation);
 
-            var itemState = instantiatedItem.GetComponent<BoltEntity>().GetState<IItemState>();
-            itemState.Team = state.Team;
-            itemState.OwnerID = state.OwnerID;
-            itemState.OwnerNickname = state.Nickname;
-            itemState.Name = CurrentItem.Name;
+            ItemThrown itemThrownEvent = ItemThrown.Create();
+            itemThrownEvent.OwnerNickname = GetComponentInParent<PlayerInfo>().Nickname;
+            itemThrownEvent.OwnerID = state.OwnerID;
+            itemThrownEvent.Team = state.Team;
+            itemThrownEvent.Entity = instantiatedItem;
 
             var itemOwnership = instantiatedItem.GetComponent<Ownership>();
             if (itemOwnership)
             {
-                itemOwnership.Set(GetComponentInParent<Player>());
+                itemOwnership.Label = CurrentItem.Name;
+                itemOwnership.Set(GetComponentInParent<PlayerInfo>());
+                itemThrownEvent.ItemName = itemOwnership.Label;
             }
 
             var throwable = instantiatedItem.GetComponent<Throwable>();
@@ -152,6 +154,8 @@ namespace Items
                     usable.SetMode(1);
                 }
             }
+
+            itemThrownEvent.Send();
         }
 
         private IEnumerator AntiSpamRoutine()

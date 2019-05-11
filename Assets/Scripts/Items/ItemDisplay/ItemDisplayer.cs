@@ -58,7 +58,7 @@ namespace Items
             showDisplayEvent.Entity = GetComponentInParent<BoltEntity>();
             showDisplayEvent.ItemName = _inventory.CurrentItem != null ? _inventory.CurrentItem.Name : "";
             showDisplayEvent.ItemCount = _inventory.CurrentItemCount;
-            showDisplayEvent.Direction = _throwingDirection.LastDirectionUp.ToString();
+            showDisplayEvent.Direction = (int) _throwingDirection.LastDirectionUp;
             showDisplayEvent.Send();
         }
 

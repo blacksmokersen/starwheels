@@ -19,7 +19,7 @@ namespace CameraUtils
 
         public void SetCameraToNextPlayer()
         {
-            var newTargetKart = Player.Me.GetNextTeamKart(_currentTarget);
+            var newTargetKart = PlayerInfo.Me.GetNextTeamKart(_currentTarget);
             if (newTargetKart != null)
             {
                 SetCameraToPlayer(newTargetKart);
@@ -28,7 +28,7 @@ namespace CameraUtils
 
         public void SetCameraToRandomPlayer()
         {
-            var randomKart = Player.Me.PickRandomTeamKart();
+            var randomKart = PlayerInfo.Me.PickRandomTeamKart();
 
             if (randomKart != null)
             {

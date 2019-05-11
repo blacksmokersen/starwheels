@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Multiplayer;
 using Bolt;
 using Common.PhysicsUtils;
 
@@ -19,6 +20,7 @@ namespace Items
         public UnityEvent OnActivation;
         public UnityEvent OnDeactivation;
 
+        private Ownership _ownership;
         private GameObject _ownerKart;
         private GameObject _ownerKartHitBox;
         private List<GameObject> _kartsInRange = new List<GameObject>();
@@ -26,15 +28,20 @@ namespace Items
 
         // CORE
 
+        private void Awake()
+        {
+            _ownership = GetComponent<Ownership>();
+        }
+
         private void Start()
         {
             Setup();
             state.AddCallback("OwnerID", Setup);
         }
 
-        //PRIVATE
+        // PUBLIC
 
-        private void Setup()
+        public void Setup()
         {
             _ownerKart = SWExtensions.KartExtensions.GetKartWithID(state.OwnerID);
 
@@ -51,11 +58,12 @@ namespace Items
             }
             else
             {
-                Debug.LogError("The Overcharge owner was not found !");
+                Debug.LogError("Could not find the player who launched the overcharge.");
             }
-
             OnActivation.Invoke();
         }
+
+        //PRIVATE
 
         private void SetParent()
         {
@@ -142,7 +150,7 @@ namespace Items
                 BoltEntity victimEntity = other.GetComponentInParent<BoltEntity>();
                 if(victimEntity.TryFindState<IKartState>(out victimKartState))
                 {
-                    if(victimKartState.Team != state.Team)
+                    if(victimKartState.Team != (int)_ownership.Team)
                     {
                         _kartsInRange.Add(other.gameObject);
                         _kartsInRangeTimer.Add(other.gameObject, 0f);
@@ -167,13 +175,13 @@ namespace Items
             if(victimEntity.TryFindState<IKartState>(out victimKartState))
             {
                 PlayerHit playerHitEvent = PlayerHit.Create();
-                playerHitEvent.KillerName = state.OwnerNickname;
-                playerHitEvent.KillerTeam = state.Team.ToString();
-                playerHitEvent.Item = state.Name;
+                playerHitEvent.KillerName = _ownership.OwnerNickname;
+                playerHitEvent.KillerTeam = (int) _ownership.Team;
+                playerHitEvent.Item = _ownership.Label;
                 playerHitEvent.VictimEntity = victimEntity;
                 playerHitEvent.VictimID = victimKartState.OwnerID;
-                playerHitEvent.VictimName = victimKartState.Nickname;
-                playerHitEvent.VictimTeam = victimKartState.Team.ToString();
+                playerHitEvent.VictimName = victimEntity.GetComponent<PlayerInfo>().Nickname;
+                playerHitEvent.VictimTeam = (int) victimKartState.Team;
                 playerHitEvent.Send();
             }
             else

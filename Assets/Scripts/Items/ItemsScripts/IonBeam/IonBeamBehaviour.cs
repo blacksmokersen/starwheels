@@ -82,15 +82,17 @@ namespace Items
                 _ionBeamCam.GetComponent<IonBeamCamera>().enabled = false;
                 _ionBeamCam.GetComponentInChildren<Camera>().enabled = false;
 
-                var IonBeam = BoltNetwork.Instantiate(ionBeamLaserPrefab, new Vector3(camPosition.x, 0, camPosition.z), Quaternion.identity);
-                var itemState = IonBeam.GetComponent<BoltEntity>().GetState<IItemState>();
+                var ionBeamLaser = BoltNetwork.Instantiate(ionBeamLaserPrefab, new Vector3(camPosition.x, 0, camPosition.z), Quaternion.identity);
+                var itemState = ionBeamLaser.GetComponent<BoltEntity>().GetState<IItemState>();
+                itemState.OwnerID = _ionBeamOwnership.OwnerID;
 
-                itemState.Team = state.Team;
-                itemState.OwnerID = state.OwnerID;
-                itemState.OwnerNickname = state.OwnerNickname;
-                itemState.Name = state.Name;
+                var laserOwnership = ionBeamLaser.GetComponent<Ownership>();
+                laserOwnership.Label = _ionBeamOwnership.Label;
+                laserOwnership.OwnerID = _ionBeamOwnership.OwnerID;
+                laserOwnership.OwnerNickname = _ionBeamOwnership.OwnerNickname;
+                laserOwnership.Team = _ionBeamOwnership.Team;
 
-                IonBeam.transform.position = new Vector3(_ionBeamCam.transform.position.x, IonBeam.transform.position.y, _ionBeamCam.transform.position.z);
+                ionBeamLaser.transform.position = new Vector3(_ionBeamCam.transform.position.x, ionBeamLaser.transform.position.y, _ionBeamCam.transform.position.z);
                 _ionBeamCam.IonBeamCameraBehaviour(false);
                 if (entity.isOwner)
                 {
@@ -102,15 +104,17 @@ namespace Items
 
         public void LaunchImmediateIonBeamBackwards(Vector3 position)
         {
-            var IonBeam = BoltNetwork.Instantiate(ionBeamLaserPrefab, position, Quaternion.identity);
-            var itemState = IonBeam.GetComponent<BoltEntity>().GetState<IItemState>();
-
-            itemState.Team = state.Team;
+            var ionBeamLaser = BoltNetwork.Instantiate(ionBeamLaserPrefab, position, Quaternion.identity);
+            var itemState = ionBeamLaser.GetComponent<BoltEntity>().GetState<IItemState>();
             itemState.OwnerID = state.OwnerID;
-            itemState.OwnerNickname = state.OwnerNickname;
-            itemState.Name = state.Name;
 
-            IonBeam.transform.position = position;
+            var laserOwnership = ionBeamLaser.GetComponent<Ownership>();
+            laserOwnership.Label = _ionBeamOwnership.Label;
+            laserOwnership.OwnerID = _ionBeamOwnership.OwnerID;
+            laserOwnership.OwnerNickname = _ionBeamOwnership.OwnerNickname;
+            laserOwnership.Team = _ionBeamOwnership.Team;
+
+            ionBeamLaser.transform.position = position;
         }
 
         //PRIVATE

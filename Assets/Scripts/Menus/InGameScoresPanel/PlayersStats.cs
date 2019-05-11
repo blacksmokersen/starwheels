@@ -134,7 +134,7 @@ namespace Menu.InGameScores
             {
                 PlayerAllStats playerAllStats = PlayerAllStats.Create();
                 playerAllStats.Name = playerStat.Value.Name;
-                playerAllStats.Team = playerStat.Value.Team.ToString();
+                playerAllStats.Team = (int) playerStat.Value.Team;
                 playerAllStats.TargetPlayerID = playerID;
                 playerAllStats.PlayerID = playerStat.Key;
                 playerAllStats.KillCount = playerStat.Value.KillCount;
