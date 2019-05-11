@@ -23,7 +23,7 @@ namespace Items
 
             if (entity == evnt.Entity)
             {
-                Direction direction = (Direction) System.Enum.Parse(typeof(Direction), evnt.Direction);
+                Direction direction = (Direction) evnt.Direction;
                 _itemDisplayer.DisplayItem(evnt.ItemName, evnt.ItemCount, direction);
             }
         }

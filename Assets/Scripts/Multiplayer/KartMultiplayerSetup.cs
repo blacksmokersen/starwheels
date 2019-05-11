@@ -33,12 +33,6 @@ namespace Network
             state.AddAnimator(_CharacterAnimator);
 
             state.AddCallback("Team", ColorChanged);
-            state.AddCallback("Nickname", NameChanged);
-
-            if (entity.isOwner)
-            {
-                state.Nickname = _playerSettings.Nickname;
-            }
 
             var backCam = GetComponentInChildren<Camera>();
             if (backCam != null)
@@ -51,12 +45,7 @@ namespace Network
 
         private void ColorChanged()
         {
-            GetComponent<Player>().Team = state.Team.ToTeam();
-        }
-
-        private void NameChanged()
-        {
-            GetComponent<Player>().Nickname = state.Nickname;
+            GetComponent<PlayerInfo>().Team = state.Team.ToTeam();
         }
     }
 }

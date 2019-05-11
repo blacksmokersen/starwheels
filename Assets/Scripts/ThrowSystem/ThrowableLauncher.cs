@@ -105,7 +105,7 @@ namespace ThrowingSystem
             var objectThrowEvent = ObjectThrow.Create(entity);
             objectThrowEvent.Position = position;
             objectThrowEvent.Rotation = rotation;
-            objectThrowEvent.Size = objectSize.ToString();
+            objectThrowEvent.Size = (int) objectSize;
             objectThrowEvent.Entity = GetComponentInParent<BoltEntity>();
             objectThrowEvent.Send();
         }

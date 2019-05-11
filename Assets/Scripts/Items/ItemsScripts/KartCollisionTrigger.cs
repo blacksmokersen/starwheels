@@ -21,9 +21,9 @@ namespace Items
                     if (itemCollisionTrigger.ItemCollision.HitsPlayer) // It is an item that damages the player
                     {
                         BoltEntity itemEntity = other.GetComponentInParent<BoltEntity>();
-                        IItemState itemState;
+                        Ownership itemOwnership = itemEntity.GetComponent<Ownership>();
 
-                        if (itemEntity.isAttached && itemEntity.TryFindState<IItemState>(out itemState)) // It is a concrete item & it is attached
+                        if (itemEntity.isAttached) // It is a concrete item & it is attached
                         {
                             /* Hit Ourself
                             if (itemState.OwnerID == state.OwnerID)
@@ -41,11 +41,11 @@ namespace Items
                                 }
                             }
                             */
-                            if (itemState.Team != state.Team)
+                            if ((int)itemOwnership.Team != state.Team)
                             {
                                 if (!_health.IsInvincible) // The server checks that this kart is not invincible
                                 {
-                                    SendPlayerHitEvent(itemState);
+                                    SendPlayerHitEvent(itemOwnership);
                                 }
                                 DestroyColliderObject(other);
                             }
@@ -67,16 +67,16 @@ namespace Items
             }
         }
 
-        private void SendPlayerHitEvent(IItemState itemState)
+        private void SendPlayerHitEvent(Ownership itemOwnership)
         {
             PlayerHit playerHitEvent = PlayerHit.Create();
-            playerHitEvent.KillerID = itemState.OwnerID;
-            playerHitEvent.KillerName = itemState.OwnerNickname;
-            playerHitEvent.KillerTeam = itemState.Team;
-            playerHitEvent.Item = itemState.Name;
+            playerHitEvent.KillerID = itemOwnership.OwnerID;
+            playerHitEvent.KillerName = itemOwnership.OwnerNickname;
+            playerHitEvent.KillerTeam = (int) itemOwnership.Team;
+            playerHitEvent.Item = itemOwnership.Label;
             playerHitEvent.VictimEntity = entity;
             playerHitEvent.VictimID = state.OwnerID;
-            playerHitEvent.VictimName = state.Nickname;
+            playerHitEvent.VictimName = GetComponentInParent<Multiplayer.PlayerInfo>().Nickname;
             playerHitEvent.VictimTeam = state.Team;
             playerHitEvent.Send();
         }
