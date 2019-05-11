@@ -10,6 +10,10 @@ namespace SW.Matchmaking
         [Header("Lobby Info")]
         [SerializeField] private LobbyData _lobbyData;
 
+        [Header("UI Elements")]
+        [SerializeField] private GameObject _battleMapsPool;
+        [SerializeField] private GameObject _orbMapsPool;
+
         // CORE
 
         private void Start()
@@ -19,7 +23,27 @@ namespace SW.Matchmaking
 
         private void OnEnable()
         {
+            Debug.Log("Enabled");
             InitializeMapPoolAndListener();
+        }
+
+        // PUBLIC
+
+        public void InitializeBattleMapPool()
+        {
+            _battleMapsPool.SetActive(true);
+            InitializeMapPoolAndListener();
+        }
+
+        public void InitializeOrbMapPool()
+        {
+            _orbMapsPool.SetActive(true);
+            InitializeMapPoolAndListener();
+        }
+
+        public void ResetMapPool()
+        {
+            _lobbyData.MapPool.Clear();
         }
 
         // PRIVATE
@@ -27,6 +51,7 @@ namespace SW.Matchmaking
         private void InitializeMapPoolAndListener()
         {
             var toggles = GetComponentsInChildren<Toggle>();
+            Debug.Log("Nb of toggles : " + toggles.Length);
 
             foreach (var toggle in toggles)
             {
@@ -36,9 +61,8 @@ namespace SW.Matchmaking
                 {
                     toggle.onValueChanged.AddListener((b) =>
                     {
-
+                        Debug.Log("Value changed : " + b);
                         UpdateMapPool(mapName, gamemodeName.Label.Value, toggle.isOn);
-
                     });
 
                     if (toggle.isOn)
@@ -54,10 +78,12 @@ namespace SW.Matchmaking
             if (toggleIsOn)
             {
                 _lobbyData.AddMap(gameModeName, mapName);
+                Debug.Log("Added map " + mapName + " for " + gameModeName);
             }
             else
             {
                 _lobbyData.RemoveMap(gameModeName, mapName);
+                Debug.Log("Not on");
             }
         }
     }
