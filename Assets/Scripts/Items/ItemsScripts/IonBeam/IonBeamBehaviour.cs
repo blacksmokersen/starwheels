@@ -92,6 +92,13 @@ namespace Items
                 laserOwnership.OwnerNickname = _ionBeamOwnership.OwnerNickname;
                 laserOwnership.Team = _ionBeamOwnership.Team;
 
+                ItemThrown itemThrownEvent = ItemThrown.Create();
+                itemThrownEvent.OwnerNickname = _ionBeamOwnership.OwnerNickname;
+                itemThrownEvent.OwnerID = _ionBeamOwnership.OwnerID;
+                itemThrownEvent.Team = (int)_ionBeamOwnership.Team;
+                itemThrownEvent.Entity = ionBeamLaser;
+                itemThrownEvent.Send();
+
                 ionBeamLaser.transform.position = new Vector3(_ionBeamCam.transform.position.x, ionBeamLaser.transform.position.y, _ionBeamCam.transform.position.z);
                 _ionBeamCam.IonBeamCameraBehaviour(false);
                 if (entity.isOwner)
@@ -113,6 +120,13 @@ namespace Items
             laserOwnership.OwnerID = _ionBeamOwnership.OwnerID;
             laserOwnership.OwnerNickname = _ionBeamOwnership.OwnerNickname;
             laserOwnership.Team = _ionBeamOwnership.Team;
+
+            ItemThrown itemThrownEvent = ItemThrown.Create();
+            itemThrownEvent.OwnerNickname = _ionBeamOwnership.OwnerNickname;
+            itemThrownEvent.OwnerID = _ionBeamOwnership.OwnerID;
+            itemThrownEvent.Team = (int)_ionBeamOwnership.Team;
+            itemThrownEvent.Entity = ionBeamLaser;
+            itemThrownEvent.Send();
 
             ionBeamLaser.transform.position = position;
         }

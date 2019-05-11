@@ -58,11 +58,14 @@ namespace Items
 
         public void FindTarget()
         {
-            var kartTarget = GetComponent<Ownership>().OwnerKartRoot.GetComponentInChildren<KartTargetting>().CurrentTargetTransform;
-
-            if (kartTarget != null)
+            if (entity.isOwner)
             {
-                SetTarget(kartTarget);
+                var kartTarget = GetComponent<Ownership>().OwnerKartRoot.GetComponentInChildren<KartTargetting>().CurrentTargetTransform;
+
+                if (kartTarget != null)
+                {
+                    SetTarget(kartTarget);
+                }
             }
         }
 
