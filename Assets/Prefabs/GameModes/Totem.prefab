@@ -521,7 +521,7 @@ Transform:
   m_GameObject: {fileID: 486}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.6, y: 1.6, z: 1.6}
   m_Children: []
   m_Father: {fileID: 1392}
   m_RootOrder: 0
@@ -1014,6 +1014,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _totemSettings: {fileID: 11400000, guid: 9f6ce33577d972c4f9494dd71799c0c4, type: 2}
+  _timesMeshBiggerThanCollider: 3
   _sphereCollider: {fileID: 2728}
   _meshTransform: {fileID: 4974691026423464}
 --- !u!114 &3383
@@ -1032,7 +1033,7 @@ MonoBehaviour:
   OnFullyDischarged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3086786940871420378}
         m_MethodName: ResetScale
         m_Mode: 1
         m_Arguments:
@@ -1070,7 +1071,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3086786940871420378}
         m_MethodName: StartIncreasing
         m_Mode: 1
         m_Arguments:
@@ -1157,6 +1158,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GravityForce: {fileID: 11400000, guid: 0d2a1fd13ab8bcc4392ae5ec7000067c, type: 2}
   UseWorldCoordinates: 1
+--- !u!114 &3086786940871420378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981505452616460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4505bddf4d1f9943b667cd79e8149fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: 389a1228b6672614aaba01076a89b6e8, type: 2}
 --- !u!1001 &4629463453150594480
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1168,6 +1182,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Graphics
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624779067630979864, guid: 7a8aca3145e29c340ad148058ffc7ee0,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 8.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624779067630979864, guid: 7a8aca3145e29c340ad148058ffc7ee0,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 8.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624779067630979864, guid: 7a8aca3145e29c340ad148058ffc7ee0,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 8.4
       objectReference: {fileID: 0}
     - target: {fileID: 4160397543902728760, guid: 7a8aca3145e29c340ad148058ffc7ee0,
         type: 3}
@@ -1226,9 +1255,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a8aca3145e29c340ad148058ffc7ee0, type: 3}
---- !u!4 &8756013613900830600 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4160397543902728760, guid: 7a8aca3145e29c340ad148058ffc7ee0,
+--- !u!1 &1981505452616460 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4627486346820087484, guid: 7a8aca3145e29c340ad148058ffc7ee0,
     type: 3}
   m_PrefabInstance: {fileID: 4629463453150594480}
   m_PrefabAsset: {fileID: 0}
@@ -1247,6 +1276,12 @@ MeshRenderer:
 --- !u!23 &8019413632187793713 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 3419787162240631937, guid: 7a8aca3145e29c340ad148058ffc7ee0,
+    type: 3}
+  m_PrefabInstance: {fileID: 4629463453150594480}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8756013613900830600 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4160397543902728760, guid: 7a8aca3145e29c340ad148058ffc7ee0,
     type: 3}
   m_PrefabInstance: {fileID: 4629463453150594480}
   m_PrefabAsset: {fileID: 0}
