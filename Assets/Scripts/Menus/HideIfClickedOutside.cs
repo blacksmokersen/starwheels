@@ -14,9 +14,9 @@ namespace Menu
                 && gameObject.activeSelf
                 && !RectTransformUtility.RectangleContainsScreenPoint(gameObject.GetComponent<RectTransform>(), Input.mousePosition, null))
             {
-                gameObject.SetActive(false);
-
                 OnClickedOutside.Invoke();
+
+                gameObject.SetActive(false);
             }
         }
     }

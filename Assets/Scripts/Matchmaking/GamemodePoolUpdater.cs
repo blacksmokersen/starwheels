@@ -28,6 +28,7 @@ namespace SW.Matchmaking
         public void ResetPool()
         {
             _lobbyData.GamemodePool.Clear();
+            Debug.Log("Blob2");
         }
 
         // PRIVATE
