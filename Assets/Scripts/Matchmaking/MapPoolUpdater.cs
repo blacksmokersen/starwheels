@@ -23,7 +23,6 @@ namespace SW.Matchmaking
 
         private void OnEnable()
         {
-            Debug.Log("Enabled");
             InitializeMapPoolAndListener();
         }
 
@@ -51,7 +50,6 @@ namespace SW.Matchmaking
         private void InitializeMapPoolAndListener()
         {
             var toggles = GetComponentsInChildren<Toggle>();
-            Debug.Log("Nb of toggles : " + toggles.Length);
 
             foreach (var toggle in toggles)
             {
@@ -61,7 +59,6 @@ namespace SW.Matchmaking
                 {
                     toggle.onValueChanged.AddListener((b) =>
                     {
-                        Debug.Log("Value changed : " + b);
                         UpdateMapPool(mapName, gamemodeName.Label.Value, toggle.isOn);
                     });
 
@@ -77,13 +74,13 @@ namespace SW.Matchmaking
         {
             if (toggleIsOn)
             {
+                Debug.Log("adding : " + mapName);
                 _lobbyData.AddMap(gameModeName, mapName);
-                Debug.Log("Added map " + mapName + " for " + gameModeName);
             }
             else
             {
+                Debug.Log("rm : " + mapName);
                 _lobbyData.RemoveMap(gameModeName, mapName);
-                Debug.Log("Not on");
             }
         }
     }

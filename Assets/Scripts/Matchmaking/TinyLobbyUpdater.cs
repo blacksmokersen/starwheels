@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using Bolt;
 using TMPro;
 
@@ -13,7 +12,7 @@ namespace SW.Matchmaking
         [Header("UI Elements")]
         [SerializeField] private TextMeshProUGUI _lookingForGameText;
         [SerializeField] private TextMeshProUGUI _currentPlayerCountText;
-        [SerializeField] private Button _startGameButton;
+        [SerializeField] private GameObject _startGameButton;
 
         // BOLT
 
@@ -80,7 +79,7 @@ namespace SW.Matchmaking
             gameObject.SetActive(true);
             _lookingForGameText.gameObject.SetActive(true);
             _currentPlayerCountText.gameObject.SetActive(false);
-            _startGameButton.gameObject.SetActive(false);
+            _startGameButton.SetActive(false);
         }
 
         public void SetLookingForPlayers()
@@ -88,7 +87,7 @@ namespace SW.Matchmaking
             gameObject.SetActive(true);
             _lookingForGameText.gameObject.SetActive(false);
             _currentPlayerCountText.gameObject.SetActive(true);
-            _startGameButton.gameObject.SetActive(true);
+            _startGameButton.SetActive(BoltNetwork.IsServer);
         }
 
         public void LaunchGame()
