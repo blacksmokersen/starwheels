@@ -8,6 +8,7 @@ namespace Gamemodes.Totem
     {
         [Header("Settings")]
         [SerializeField] private TotemSettings _totemSettings;
+        [SerializeField] private float _timesMeshBiggerThanCollider;
 
         [Header("Totem Pickup Zone")]
         [SerializeField] private SphereCollider _sphereCollider;
@@ -16,7 +17,7 @@ namespace Gamemodes.Totem
         private void Start()
         {
             _sphereCollider.radius = _totemSettings.Radius;
-            _meshTransform.localScale = Vector3.one * 0.75f * _totemSettings.Radius;
+            _meshTransform.localScale = Vector3.one * _timesMeshBiggerThanCollider * _totemSettings.Radius;
         }
     }
 }
