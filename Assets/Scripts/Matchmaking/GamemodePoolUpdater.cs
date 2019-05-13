@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 namespace SW.Matchmaking
 {
@@ -11,16 +10,21 @@ namespace SW.Matchmaking
         [Header("Lobby Info")]
         [SerializeField] private LobbyData _lobbyData;
 
-        // CORE
+        [Header("Settings")]
+        [SerializeField] private bool _resetTogglesOnInitializing;
 
-        private void Awake()
-        {
-            InitializeGamemodePoolAndListeners();
-        }
+        // CORE
 
         private void OnEnable()
         {
             InitializeGamemodePoolAndListeners();
+        }
+
+        // PUBLIC
+
+        public void ResetPool()
+        {
+            _lobbyData.GamemodePool.Clear();
         }
 
         // PRIVATE
@@ -31,11 +35,18 @@ namespace SW.Matchmaking
             _lobbyData.MapPool = new Dictionary<string, List<string>>();
 
             var gamemodesToggles = GetComponentsInChildren<Toggle>();
+
             foreach (var toggle in gamemodesToggles)
             {
+                toggle.onValueChanged.RemoveAllListeners();
+
                 var gameModeName = toggle.GetComponent<GamemodeGroupLabel>().Label.Value;
 
-                if (toggle.isOn)
+                if (_resetTogglesOnInitializing)
+                {
+                    toggle.isOn = false;
+                }
+                else if (toggle.isOn)
                 {
                     _lobbyData.GamemodePool.Add(gameModeName);
                 }

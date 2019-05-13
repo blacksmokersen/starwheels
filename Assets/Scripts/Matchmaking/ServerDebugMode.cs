@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace SW.Matchmaking
 {
@@ -13,7 +14,6 @@ namespace SW.Matchmaking
         [SerializeField] private GameObject _text;
         [SerializeField] private GameObject _serverNameMatchmakingPanel;
         [SerializeField] private GameObject _serverNameQuickMatchPanel;
-        [SerializeField] private GameObject[] _TogglesQuickMatch;
         [SerializeField] private LobbyMaker _lobyMaker;
         [SerializeField] private LobbyJoiner _lobyJoiner;
 
@@ -42,22 +42,19 @@ namespace SW.Matchmaking
             _lobyJoiner.DebugModEnabled = !_lobyJoiner.DebugModEnabled;
             _text.SetActive(_lobyMaker.DebugModEnabled);
             _serverNameMatchmakingPanel.SetActive(_lobyMaker.DebugModEnabled);
-            foreach (GameObject gameObject in _TogglesQuickMatch)
-            {
-                gameObject.SetActive(!_lobyMaker.DebugModEnabled);
-            }
+
             _serverNameQuickMatchPanel.SetActive(_lobyMaker.DebugModEnabled);
         }
 
         public string GetHostServerName()
         {
-            ServerNameHost = _serverNameMatchmakingPanel.GetComponentInChildren<InputField>().text;
+            ServerNameHost = _serverNameMatchmakingPanel.GetComponentInChildren<TMP_InputField>().text;
             return ServerNameHost;
         }
 
         public string GetClientServerName()
         {
-            ServerNameClient = _serverNameQuickMatchPanel.GetComponentInChildren<InputField>().text;
+            ServerNameClient = _serverNameQuickMatchPanel.GetComponentInChildren<TMP_InputField>().text;
             return ServerNameClient;
         }
     }

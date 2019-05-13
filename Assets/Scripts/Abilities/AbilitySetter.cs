@@ -45,7 +45,6 @@ namespace Abilities
         public void UpdateAbility()
         {
             SetAbility(_playerSettings.AbilityIndex);
-            Debug.Log("Updated ability.");
         }
 
         public Ability GetCurrentAbility()

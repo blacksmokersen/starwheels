@@ -10,16 +10,33 @@ namespace SW.Matchmaking
         [Header("Lobby Info")]
         [SerializeField] private LobbyData _lobbyData;
 
-        // CORE
+        [Header("UI Elements")]
+        [SerializeField] private GameObject _battleMapsPool;
+        [SerializeField] private GameObject _orbMapsPool;
 
-        private void Start()
+        // PUBLIC
+
+        public void InitializeBattleMapPool(bool b)
         {
-            InitializeMapPoolAndListener();
+            if (b)
+            {
+                _battleMapsPool.SetActive(true);
+                InitializeMapPoolAndListener();
+            }
         }
 
-        private void OnEnable()
+        public void InitializeOrbMapPool(bool b)
         {
-            InitializeMapPoolAndListener();
+            if (b)
+            {
+                _orbMapsPool.SetActive(true);
+                InitializeMapPoolAndListener();
+            }
+        }
+
+        public void ResetMapPool()
+        {
+            _lobbyData.MapPool.Clear();
         }
 
         // PRIVATE
@@ -30,21 +47,19 @@ namespace SW.Matchmaking
 
             foreach (var toggle in toggles)
             {
+                toggle.onValueChanged.RemoveAllListeners();
+
                 var mapName = toggle.GetComponent<MapLabel>().MapData.MapName;
                 var gameModeNames = toggle.GetComponentsInParent<GamemodeGroupLabel>();
+
                 foreach (var gamemodeName in gameModeNames)
                 {
+                    toggle.isOn = false;
+
                     toggle.onValueChanged.AddListener((b) =>
                     {
-
                         UpdateMapPool(mapName, gamemodeName.Label.Value, toggle.isOn);
-
                     });
-
-                    if (toggle.isOn)
-                    {
-                        _lobbyData.MapPool[gamemodeName.Label.Value].Add(mapName);
-                    }
                 }
             }
         }
@@ -57,6 +72,7 @@ namespace SW.Matchmaking
             }
             else
             {
+                Debug.Log("rm : " + mapName);
                 _lobbyData.RemoveMap(gameModeName, mapName);
             }
         }

@@ -21,6 +21,11 @@ namespace Menu
             SetUnselectedImage();
         }
 
+        private void OnEnable()
+        {
+            SetUnselectedImage();
+        }
+
         // PUBLIC
 
         public void SetUnselectedImage()

@@ -26,7 +26,6 @@ namespace SW.Matchmaking
         {
             ChosenGamemode = gamemode;
             GameSettings.SetGamemode(gamemode);
-            Debug.Log("Gamemode set : " + gamemode);
         }
 
         public void SetRandomGamemode()
@@ -59,7 +58,6 @@ namespace SW.Matchmaking
         {
             ChosenMapName = mapName;
             GameSettings.MapName = mapName;
-            Debug.Log("Map set : " + mapName);
         }
 
         public void SetRandomMap()
