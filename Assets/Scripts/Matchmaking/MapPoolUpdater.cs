@@ -14,30 +14,24 @@ namespace SW.Matchmaking
         [SerializeField] private GameObject _battleMapsPool;
         [SerializeField] private GameObject _orbMapsPool;
 
-        // CORE
-
-        private void Start()
-        {
-            InitializeMapPoolAndListener();
-        }
-
-        private void OnEnable()
-        {
-            InitializeMapPoolAndListener();
-        }
-
         // PUBLIC
 
-        public void InitializeBattleMapPool()
+        public void InitializeBattleMapPool(bool b)
         {
-            _battleMapsPool.SetActive(true);
-            InitializeMapPoolAndListener();
+            if (b)
+            {
+                _battleMapsPool.SetActive(true);
+                InitializeMapPoolAndListener();
+            }
         }
 
-        public void InitializeOrbMapPool()
+        public void InitializeOrbMapPool(bool b)
         {
-            _orbMapsPool.SetActive(true);
-            InitializeMapPoolAndListener();
+            if (b)
+            {
+                _orbMapsPool.SetActive(true);
+                InitializeMapPoolAndListener();
+            }
         }
 
         public void ResetMapPool()
@@ -53,19 +47,19 @@ namespace SW.Matchmaking
 
             foreach (var toggle in toggles)
             {
+                toggle.onValueChanged.RemoveAllListeners();
+
                 var mapName = toggle.GetComponent<MapLabel>().MapData.MapName;
                 var gameModeNames = toggle.GetComponentsInParent<GamemodeGroupLabel>();
+
                 foreach (var gamemodeName in gameModeNames)
                 {
+                    toggle.isOn = false;
+
                     toggle.onValueChanged.AddListener((b) =>
                     {
                         UpdateMapPool(mapName, gamemodeName.Label.Value, toggle.isOn);
                     });
-
-                    if (toggle.isOn)
-                    {
-                        _lobbyData.MapPool[gamemodeName.Label.Value].Add(mapName);
-                    }
                 }
             }
         }
@@ -74,7 +68,6 @@ namespace SW.Matchmaking
         {
             if (toggleIsOn)
             {
-                Debug.Log("adding : " + mapName);
                 _lobbyData.AddMap(gameModeName, mapName);
             }
             else

@@ -43,7 +43,6 @@ namespace Menu
         {
             if (!_targetToggle.isOn)
             {
-                Debug.Log("Hover");
                 _unselectedImage.gameObject.SetActive(false);
                 _onHoverImage.gameObject.SetActive(true);
                 _onHoverValidationInputImage.gameObject.SetActive(true);
@@ -53,7 +52,6 @@ namespace Menu
 
         public void SetSelectedImage()
         {
-            Debug.Log("Selected");
             _unselectedImage.gameObject.SetActive(false);
             _onHoverImage.gameObject.SetActive(false);
             _onHoverValidationInputImage.gameObject.SetActive(false);
