@@ -31,8 +31,6 @@ namespace Multiplayer.Teams
                     availableTeam = pair.Key;
                 }
             }
-
-            Debug.Log("Selected team : " + availableTeam);
             return availableTeam;
         }
 

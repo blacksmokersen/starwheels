@@ -57,7 +57,6 @@ namespace Items.Merge
 
                     if (_timer > _secondsBeforeMerging.Value && _canMerge)
                     {
-                        Debug.Log("Hello");
                         ConsumeItem();
                         _timer = 0f;
                         _canMerge = false;
