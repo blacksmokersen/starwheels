@@ -26,12 +26,12 @@ namespace Menu
 
         public void ResetPanel(bool letSelfActive)
         {
-            gameObject.SetActive(letSelfActive);
-
             _battleMapsPanel.SetActive(false);
             _orbMapsPanel.SetActive(false);
             _mapsPanel.SetActive(true);
             _gamemodePanel.SetActive(true);
+
+            gameObject.SetActive(letSelfActive);
         }
     }
 }

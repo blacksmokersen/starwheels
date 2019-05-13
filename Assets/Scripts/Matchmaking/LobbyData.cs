@@ -12,11 +12,11 @@ namespace SW.Matchmaking
         public int MaxPlayers;
 
         [Header("Gamemode Info")]
-        public List<string> GamemodePool = new List<string>();
+        public List<string> GamemodePool;
         public string ChosenGamemode;
 
         [Header("Map Info")]
-        public Dictionary<string, List<string>> MapPool = new Dictionary<string, List<string>>();
+        public Dictionary<string, List<string>> MapPool;
         public string ChosenMapName;
 
         [Header("Game Settings")]
@@ -37,7 +37,6 @@ namespace SW.Matchmaking
         {
             if (!GamemodePool.Contains(gamemode))
             {
-                Debug.Log("Adding GM : " + gamemode);
                 GamemodePool.Add(gamemode);
             }
         }
@@ -46,14 +45,12 @@ namespace SW.Matchmaking
         {
             if (GamemodePool.Contains(gamemode))
             {
-                Debug.Log("Removed GM : " + gamemode);
                 GamemodePool.Remove(gamemode);
             }
         }
 
         public string PickRandomGamemodeFromPool()
         {
-
             return GamemodePool[Random.Range(0, GamemodePool.Count)];
         }
 
