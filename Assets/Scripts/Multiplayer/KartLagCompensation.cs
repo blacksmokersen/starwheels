@@ -10,6 +10,9 @@ namespace Items
         public int CollisionDistance;
         public int NumberOfFramesToRewind;
 
+        public Collider KartCollider;
+        public KartCollisionTrigger KartcollisionTrigger;
+
         public override void OnEvent(ItemsLagCheckEvent evnt)
         {
             if (BoltNetwork.IsServer && evnt.BoltEntity == GetComponentInParent<BoltEntity>())
@@ -25,6 +28,14 @@ namespace Items
             {
                 Debug.LogError("HIT WITH LAG COMPENSATION -- FrameToRewind : " + NumberOfFramesToRewind +
                     " -- DISTANCE : " + ServerRewindDistCheck(localCollisionPosition, Target, NumberOfFramesToRewind));
+
+                Debug.Log(Target.gameObject.GetComponentInChildren<KartLagCompensation>().KartCollider);
+
+
+                Target.gameObject.GetComponentInChildren<KartCollisionTrigger>().CheckTargetInformationsBeforeSendingHitEvent(Target.gameObject.GetComponentInChildren<KartLagCompensation>().KartCollider);
+
+
+              //  KartcollisionTrigger.CheckTargetInformationsBeforeSendingHitEvent(Target.gameObject.GetComponentInChildren<KartLagCompensation>().KartCollider);
             }
         }
 
