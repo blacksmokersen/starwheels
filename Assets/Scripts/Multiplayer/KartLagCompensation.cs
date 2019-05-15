@@ -15,27 +15,26 @@ namespace Items
 
         public override void OnEvent(ItemsLagCheckEvent evnt)
         {
-            if (BoltNetwork.IsServer && evnt.BoltEntity == GetComponentInParent<BoltEntity>())
+            if (BoltNetwork.IsServer && evnt.TargetBoltEntity == GetComponentInParent<BoltEntity>())
             {
-                ServerCollisionCheck(evnt.ItemCollisionPosition, evnt.BoltEntity, evnt.FrameToRewindTo);
+                ServerCollisionCheck(evnt.ItemCollisionPosition,evnt.ItemBoltEntity, evnt.TargetBoltEntity, evnt.FrameToRewindTo);
             }
         }
 
-        public void ServerCollisionCheck(Vector3 localCollisionPosition, BoltEntity Target, int targetedFrame)
+        public void ServerCollisionCheck(Vector3 localCollisionPosition,BoltEntity item, BoltEntity target, int targetedFrame)
         {
             //  int FramesToRewind = BoltNetwork.Frame - targetedFrame;
-            if (ServerRewindDistCheck(localCollisionPosition, Target, NumberOfFramesToRewind) <= CollisionDistance)
+            if (ServerRewindDistCheck(localCollisionPosition, target, NumberOfFramesToRewind) <= CollisionDistance)
             {
                 Debug.LogError("HIT WITH LAG COMPENSATION -- FrameToRewind : " + NumberOfFramesToRewind +
-                    " -- DISTANCE : " + ServerRewindDistCheck(localCollisionPosition, Target, NumberOfFramesToRewind));
-
-                Debug.Log(Target.gameObject.GetComponentInChildren<KartLagCompensation>().KartCollider);
+                    " -- DISTANCE : " + ServerRewindDistCheck(localCollisionPosition, target, NumberOfFramesToRewind));
 
 
-                Target.gameObject.GetComponentInChildren<KartCollisionTrigger>().CheckTargetInformationsBeforeSendingHitEvent(Target.gameObject.GetComponentInChildren<KartLagCompensation>().KartCollider);
+                var itemCollider = item.gameObject.GetComponentInChildren<ItemCollisionTrigger>().gameObject.GetComponent<SphereCollider>();
+
+                target.gameObject.GetComponentInChildren<KartCollisionTrigger>().CheckTargetInformationsBeforeSendingHitEvent(itemCollider);
 
 
-              //  KartcollisionTrigger.CheckTargetInformationsBeforeSendingHitEvent(Target.gameObject.GetComponentInChildren<KartLagCompensation>().KartCollider);
             }
         }
 

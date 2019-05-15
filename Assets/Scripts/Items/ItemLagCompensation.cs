@@ -16,7 +16,8 @@ namespace Items
                     Debug.LogError("LOCAL HIT : SENT TO SERVER TO CHECK");
 
                     ItemsLagCheckEvent itemsLagCheckEvent = ItemsLagCheckEvent.Create();
-                    itemsLagCheckEvent.BoltEntity = other.GetComponentInParent<BoltEntity>();
+                    itemsLagCheckEvent.ItemBoltEntity = GetComponentInParent<BoltEntity>();
+                    itemsLagCheckEvent.TargetBoltEntity = other.GetComponentInParent<BoltEntity>();
                     itemsLagCheckEvent.FrameToRewindTo = BoltNetwork.Frame;
                     itemsLagCheckEvent.ItemCollisionPosition = transform.position;
                     itemsLagCheckEvent.Send();
