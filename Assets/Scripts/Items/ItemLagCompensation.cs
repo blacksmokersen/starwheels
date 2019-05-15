@@ -18,11 +18,30 @@ namespace Items
                     ItemsLagCheckEvent itemsLagCheckEvent = ItemsLagCheckEvent.Create();
                     itemsLagCheckEvent.ItemBoltEntity = GetComponentInParent<BoltEntity>();
                     itemsLagCheckEvent.TargetBoltEntity = other.GetComponentInParent<BoltEntity>();
-                    itemsLagCheckEvent.FrameToRewindTo = BoltNetwork.Frame;
+                    itemsLagCheckEvent.FrameToRewindTo = 15;
                     itemsLagCheckEvent.ItemCollisionPosition = transform.position;
                     itemsLagCheckEvent.Send();
                 }
             }
+            else if (BoltNetwork.IsServer)
+            {
+                if (other.gameObject.CompareTag(Constants.Tag.KartTrigger) && !other.GetComponentInParent<BoltEntity>().isOwner)
+                {
+                    Debug.LogError("LOCAL HIT BY SERVER");
+
+                    ItemsLagCheckEvent itemsLagCheckEvent = ItemsLagCheckEvent.Create();
+                    itemsLagCheckEvent.ItemBoltEntity = GetComponentInParent<BoltEntity>();
+                    itemsLagCheckEvent.TargetBoltEntity = other.GetComponentInParent<BoltEntity>();
+                    itemsLagCheckEvent.FrameToRewindTo = 0;
+                    itemsLagCheckEvent.ItemCollisionPosition = transform.position;
+                    itemsLagCheckEvent.Send();
+                }
+            }
+
+
+
+
+
         }
     }
 }

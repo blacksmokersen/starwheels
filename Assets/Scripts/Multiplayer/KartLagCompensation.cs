@@ -23,10 +23,10 @@ namespace Items
 
         public void ServerCollisionCheck(Vector3 localCollisionPosition,BoltEntity item, BoltEntity target, int targetedFrame)
         {
-            if (ServerRewindDistCheck(localCollisionPosition, target, NumberOfFramesToRewind) <= CollisionDistance)
+            if (ServerRewindDistCheck(localCollisionPosition, target, targetedFrame) <= CollisionDistance)
             {
-                Debug.LogError("HIT WITH LAG COMPENSATION -- FrameToRewind : " + NumberOfFramesToRewind +
-                    " -- DISTANCE : " + ServerRewindDistCheck(localCollisionPosition, target, NumberOfFramesToRewind));
+                Debug.LogError("HIT WITH LAG COMPENSATION -- FrameToRewind : " + targetedFrame +
+                    " -- DISTANCE : " + ServerRewindDistCheck(localCollisionPosition, target, targetedFrame));
 
                 foreach (Transform child in item.transform)
                 {
