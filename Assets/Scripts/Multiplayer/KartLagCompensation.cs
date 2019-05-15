@@ -23,18 +23,19 @@ namespace Items
 
         public void ServerCollisionCheck(Vector3 localCollisionPosition,BoltEntity item, BoltEntity target, int targetedFrame)
         {
-            //  int FramesToRewind = BoltNetwork.Frame - targetedFrame;
             if (ServerRewindDistCheck(localCollisionPosition, target, NumberOfFramesToRewind) <= CollisionDistance)
             {
                 Debug.LogError("HIT WITH LAG COMPENSATION -- FrameToRewind : " + NumberOfFramesToRewind +
                     " -- DISTANCE : " + ServerRewindDistCheck(localCollisionPosition, target, NumberOfFramesToRewind));
 
-
-                var itemCollider = item.gameObject.GetComponentInChildren<ItemCollisionTrigger>().gameObject.GetComponent<SphereCollider>();
-
-                target.gameObject.GetComponentInChildren<KartCollisionTrigger>().CheckTargetInformationsBeforeSendingHitEvent(itemCollider);
-
-
+                foreach (Transform child in item.transform)
+                {
+                    if (child.CompareTag(Constants.Tag.ItemCollisionHitBox))
+                    {
+                        var itemCollider = child.GetComponent<Collider>();
+                        target.GetComponentInChildren<KartCollisionTrigger>().CheckTargetInformationsBeforeSendingHitEvent(itemCollider);
+                    }
+                }
             }
         }
 
