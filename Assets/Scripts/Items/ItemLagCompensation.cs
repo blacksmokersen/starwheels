@@ -7,6 +7,8 @@ namespace Items
 {
     public class ItemLagCompensation : EntityBehaviour
     {
+        [SerializeField] private float _collisionDistanceCheck;
+
         protected void OnTriggerEnter(Collider other)
         {
             if (BoltNetwork.IsClient && entity.isAttached && entity.isOwner)
@@ -18,7 +20,8 @@ namespace Items
                     ItemsLagCheckEvent itemsLagCheckEvent = ItemsLagCheckEvent.Create();
                     itemsLagCheckEvent.ItemBoltEntity = GetComponentInParent<BoltEntity>();
                     itemsLagCheckEvent.TargetBoltEntity = other.GetComponentInParent<BoltEntity>();
-                    itemsLagCheckEvent.FrameToRewindTo = 15;
+                    itemsLagCheckEvent.FramesToRewind = 15;
+                    itemsLagCheckEvent.CollsionDistanceCheck = _collisionDistanceCheck;
                     itemsLagCheckEvent.ItemCollisionPosition = transform.position;
                     itemsLagCheckEvent.Send();
                 }
@@ -32,16 +35,12 @@ namespace Items
                     ItemsLagCheckEvent itemsLagCheckEvent = ItemsLagCheckEvent.Create();
                     itemsLagCheckEvent.ItemBoltEntity = GetComponentInParent<BoltEntity>();
                     itemsLagCheckEvent.TargetBoltEntity = other.GetComponentInParent<BoltEntity>();
-                    itemsLagCheckEvent.FrameToRewindTo = 0;
+                    itemsLagCheckEvent.FramesToRewind = 0;
+                    itemsLagCheckEvent.CollsionDistanceCheck = _collisionDistanceCheck;
                     itemsLagCheckEvent.ItemCollisionPosition = transform.position;
                     itemsLagCheckEvent.Send();
                 }
             }
-
-
-
-
-
         }
     }
 }

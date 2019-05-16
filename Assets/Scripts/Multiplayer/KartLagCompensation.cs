@@ -7,26 +7,27 @@ namespace Items
 {
     public class KartLagCompensation : GlobalEventListener
     {
-        public int CollisionDistance;
-        public int NumberOfFramesToRewind;
-
         public Collider KartCollider;
         public KartCollisionTrigger KartcollisionTrigger;
+
+        //BOLT
 
         public override void OnEvent(ItemsLagCheckEvent evnt)
         {
             if (BoltNetwork.IsServer && evnt.TargetBoltEntity == GetComponentInParent<BoltEntity>())
             {
-                ServerCollisionCheck(evnt.ItemCollisionPosition,evnt.ItemBoltEntity, evnt.TargetBoltEntity, evnt.FrameToRewindTo);
+                ServerCollisionCheck(evnt.ItemCollisionPosition,evnt.ItemBoltEntity, evnt.TargetBoltEntity, evnt.FramesToRewind, evnt.CollsionDistanceCheck);
             }
         }
 
-        public void ServerCollisionCheck(Vector3 localCollisionPosition,BoltEntity item, BoltEntity target, int targetedFrame)
+        //PUBLIC
+
+        public void ServerCollisionCheck(Vector3 localCollisionPosition,BoltEntity item, BoltEntity target, int framestoRewind, float collisionDistance)
         {
-            if (ServerRewindDistCheck(localCollisionPosition, target, targetedFrame) <= CollisionDistance)
+            if (ServerRewindDistCheck(localCollisionPosition, target, framestoRewind) <= collisionDistance)
             {
-                Debug.LogError("HIT WITH LAG COMPENSATION -- FrameToRewind : " + targetedFrame +
-                    " -- DISTANCE : " + ServerRewindDistCheck(localCollisionPosition, target, targetedFrame));
+                Debug.LogError("HIT WITH LAG COMPENSATION -- FrameToRewind : " + framestoRewind +
+                    " -- DISTANCE : " + ServerRewindDistCheck(localCollisionPosition, target, framestoRewind));
 
                 foreach (Transform child in item.transform)
                 {
@@ -39,9 +40,10 @@ namespace Items
             }
         }
 
-        float ServerRewindDistCheck(Vector3 localCollisionPosition, BoltEntity target, int framesToRewind)
-        {
+        //PRIVATE
 
+        private float ServerRewindDistCheck(Vector3 localCollisionPosition, BoltEntity target, int framesToRewind)
+        {
             var targetHitbox = target.GetComponent<BoltHitboxBody>();
             Vector3 targetRewindPos = BoltNetwork.PositionAtFrame(targetHitbox, BoltNetwork.Frame - framesToRewind);
             return Vector3.Distance(localCollisionPosition, targetRewindPos);

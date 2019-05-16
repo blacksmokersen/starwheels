@@ -34,37 +34,6 @@ namespace Items
             }
         }
 
-        /*
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (BoltNetwork.IsServer && entity.isAttached && entity.isOwner)
-            {
-                if (other.gameObject.CompareTag(Constants.Tag.ItemCollisionHitBox)) // It is an item collision
-                {
-                    var itemCollisionTrigger = other.GetComponent<ItemCollisionTrigger>();
-
-                    if (itemCollisionTrigger.ItemCollision.HitsPlayer) // It is an item that damages the player
-                    {
-                        BoltEntity itemEntity = other.GetComponentInParent<BoltEntity>();
-                        Ownership itemOwnership = itemEntity.GetComponent<Ownership>();
-
-                        if ((int)itemOwnership.Team != state.Team)
-                        {
-                            if (!_health.IsInvincible) // The server checks that this kart is not invincible
-                            {
-                                SendPlayerHitEvent(itemOwnership);
-                            }
-                            DestroyColliderObject(other);
-                        }
-                    }
-                }
-            }
-        }
-
-            */
-
-
     /*
     private void OnTriggerEnter(Collider other)
     {
