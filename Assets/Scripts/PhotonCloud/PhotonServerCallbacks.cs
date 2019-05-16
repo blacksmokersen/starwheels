@@ -1,0 +1,89 @@
+﻿using Bolt;
+using UdpKit;
+
+namespace Photon
+{
+    [BoltGlobalBehaviour(BoltNetworkModes.Server)]
+    public class PhotonServerCallbacks : GlobalEventListener
+    {
+        public override void Connected(BoltConnection connection)
+        {
+            BoltLog.Warn("Connected");
+
+            ServerAcceptToken acceptToken = connection.AcceptToken as ServerAcceptToken;
+
+            if (acceptToken != null)
+            {
+                BoltLog.Info("AcceptToken: " + acceptToken.GetType());
+                BoltLog.Info("AcceptToken: " + acceptToken.Data);
+            }
+            else
+            {
+                BoltLog.Warn("AcceptToken is NULL");
+            }
+
+            ServerConnectToken connectToken = connection.ConnectToken as ServerConnectToken;
+
+            if (connectToken != null)
+            {
+                BoltLog.Info("ConnectToken: " + connectToken.GetType());
+                BoltLog.Info("ConnectToken: " + connectToken.Data);
+            }
+            else
+            {
+                BoltLog.Warn("ConnectToken is NULL");
+            }
+        }
+
+        public override void ConnectAttempt(UdpEndPoint endpoint, IProtocolToken token)
+        {
+            BoltLog.Warn("Connect Attempt");
+            base.ConnectAttempt(endpoint, token);
+        }
+
+        public override void ConnectFailed(UdpEndPoint endpoint, IProtocolToken token)
+        {
+            BoltLog.Warn("Connect Failed");
+            base.ConnectFailed(endpoint, token);
+        }
+
+        public override void ConnectRefused(UdpEndPoint endpoint, IProtocolToken token)
+        {
+            BoltLog.Warn("Connect Refused");
+            base.ConnectRefused(endpoint, token);
+        }
+
+        public override void ConnectRequest(UdpEndPoint endpoint, IProtocolToken token)
+        {
+            BoltLog.Warn("Connect Request");
+
+            //token should be ServerConnectToken
+            if (token != null)
+            {
+                BoltLog.Warn(token.GetType().ToString());
+
+                ServerConnectToken t = token as ServerConnectToken;
+                BoltLog.Warn("Server Token: null? " + (t == null));
+                BoltLog.Warn("Data: " + t.Data);
+
+            }
+            else
+            {
+                BoltLog.Warn("Received token is null");
+            }
+
+            ServerAcceptToken acceptToken = new ServerAcceptToken
+            {
+                Data = "Accepted"
+            };
+
+            BoltNetwork.Accept(endpoint, acceptToken);
+        }
+
+        public override void Disconnected(BoltConnection connection)
+        {
+            BoltLog.Warn("Disconnected");
+            base.Disconnected(connection);
+        }
+    }
+}
