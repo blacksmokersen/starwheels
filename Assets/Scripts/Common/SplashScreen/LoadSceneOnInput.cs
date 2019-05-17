@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 
@@ -14,6 +15,10 @@ namespace Common.SplashScreen
 
         private long _playerCurrentFrame;
         private long _playerFrameCount;
+
+        [Header("Epilepsie")]
+        [SerializeField] private GameObject _epilepsiePanel;
+        [SerializeField] private Animator _epilepsieAnimator;
 
         // CORE
 
@@ -32,21 +37,16 @@ namespace Common.SplashScreen
                 if (Input.anyKeyDown)
                 {
                     Debug.Log(_playerCurrentFrame);
-                    LoadScene();
+                    ShowEpilepsiePanel();
                 }
                 else if (VideoIsOver())
                 {
-                    LoadScene();
+                    ShowEpilepsiePanel();
                 }
             }
         }
 
         // PRIVATE
-
-        private void LoadScene()
-        {
-            SceneManager.LoadScene(_nextSceneName);
-        }
 
         private bool CanSkipVideo()
         {
@@ -56,6 +56,59 @@ namespace Common.SplashScreen
         private bool VideoIsOver()
         {
             return _playerCurrentFrame >= _playerFrameCount;
+        }
+
+        private void ShowEpilepsiePanel()
+        {
+            StartCoroutine(ShowEpilepsiePanelForXSeconds());
+        }
+
+        private IEnumerator ShowEpilepsiePanelForXSeconds()
+        {
+            _epilepsiePanel.SetActive(true);
+
+            TriggerEpilepsiePanelFadeIn();
+            yield return new WaitForSeconds(1f);
+
+            var epilepsiePanelShowing = true;
+            var canSkipEpilepsiePanel = false;
+            var timer = 0f;
+            while (epilepsiePanelShowing)
+            {
+                yield return new WaitForEndOfFrame();
+                timer += Time.deltaTime;
+                if (timer >= 1f)
+                {
+                    canSkipEpilepsiePanel = true;
+                }
+                if (timer >= 3f)
+                {
+                    epilepsiePanelShowing = false;
+                }
+                if (canSkipEpilepsiePanel && Input.anyKeyDown)
+                {
+                    epilepsiePanelShowing = false;
+                }
+            }
+            TriggerEpilepsiePanelFadeOut();
+            yield return new WaitForSeconds(1f);
+
+            LoadMenuScene();
+        }
+
+        private void TriggerEpilepsiePanelFadeIn()
+        {
+            _epilepsieAnimator.SetTrigger("TriggerFadeIn");
+        }
+
+        private void TriggerEpilepsiePanelFadeOut()
+        {
+            _epilepsieAnimator.SetTrigger("TriggerFadeOut");
+        }
+
+        private void LoadMenuScene()
+        {
+            SceneManager.LoadScene(_nextSceneName);
         }
     }
 }
