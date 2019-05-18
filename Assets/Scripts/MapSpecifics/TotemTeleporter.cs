@@ -17,7 +17,10 @@ namespace MapsSpecifics
         {
             if (Enabled && other.CompareTag(Constants.Tag.TotemRespawn))
             {
-                _otherTeleporter.DisableForXSeconds(1f);
+                if (_otherTeleporter.Enabled)
+                {
+                    _otherTeleporter.DisableForXSeconds(1f);
+                }
 
                 var totemRoot = other.GetComponentInParent<BoltEntity>().gameObject;
                 totemRoot.transform.position = _otherTeleporter.transform.position;
