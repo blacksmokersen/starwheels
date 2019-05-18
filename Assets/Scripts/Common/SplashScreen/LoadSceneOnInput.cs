@@ -11,14 +11,19 @@ namespace Common.SplashScreen
 
         [Header("Video")]
         [SerializeField] private VideoPlayer _videoPlayer;
+        [SerializeField] private GameObject _videoTextureObject;
         [SerializeField] private long _minimumFrameBeforeSkipping;
 
         private long _playerCurrentFrame;
         private long _playerFrameCount;
+        private bool _videoFinished = false;
 
         [Header("Epilepsie")]
         [SerializeField] private GameObject _epilepsiePanel;
         [SerializeField] private Animator _epilepsieAnimator;
+
+        private bool _epilepsiePanelShowing = true;
+        private bool _canSkipEpilepsiePanel = false;
 
         // CORE
 
@@ -32,17 +37,21 @@ namespace Common.SplashScreen
         {
             _playerCurrentFrame = _videoPlayer.frame;
 
-            if (CanSkipVideo())
+            if (CanSkipVideo() && !_videoFinished)
             {
                 if (Input.anyKeyDown)
                 {
-                    Debug.Log(_playerCurrentFrame);
                     ShowEpilepsiePanel();
                 }
                 else if (VideoIsOver())
                 {
                     ShowEpilepsiePanel();
                 }
+            }
+
+            if (_canSkipEpilepsiePanel && Input.anyKeyDown)
+            {
+                _epilepsiePanelShowing = false;
             }
         }
 
@@ -58,40 +67,46 @@ namespace Common.SplashScreen
             return _playerCurrentFrame >= _playerFrameCount;
         }
 
-        private void ShowEpilepsiePanel()
+        private void DisableVideo()
         {
-            StartCoroutine(ShowEpilepsiePanelForXSeconds());
+            _videoPlayer.Pause();
+            _videoTextureObject.SetActive(false);
+            _videoFinished = true;
         }
 
-        private IEnumerator ShowEpilepsiePanelForXSeconds()
+        private void ShowEpilepsiePanel()
+        {
+            DisableVideo();
+            StartCoroutine(ShowEpilepsiePanelRoutine());
+        }
+
+        private IEnumerator ShowEpilepsiePanelRoutine()
         {
             _epilepsiePanel.SetActive(true);
 
             TriggerEpilepsiePanelFadeIn();
             yield return new WaitForSeconds(1f);
 
-            var epilepsiePanelShowing = true;
-            var canSkipEpilepsiePanel = false;
+
             var timer = 0f;
-            while (epilepsiePanelShowing)
+            while (_epilepsiePanelShowing)
             {
                 yield return new WaitForEndOfFrame();
                 timer += Time.deltaTime;
                 if (timer >= 1f)
                 {
-                    canSkipEpilepsiePanel = true;
+                    _canSkipEpilepsiePanel = true;
                 }
                 if (timer >= 3f)
                 {
-                    epilepsiePanelShowing = false;
-                }
-                if (canSkipEpilepsiePanel && Input.anyKeyDown)
-                {
-                    epilepsiePanelShowing = false;
+                    _epilepsiePanelShowing = false;
+                    break;
                 }
             }
+            Debug.Log("Finished showing epilepsie panel.");
+
             TriggerEpilepsiePanelFadeOut();
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1.2f);
 
             LoadMenuScene();
         }
@@ -108,7 +123,8 @@ namespace Common.SplashScreen
 
         private void LoadMenuScene()
         {
-            SceneManager.LoadScene(_nextSceneName);
+            Debug.Log("Loading MainMenu.");
+            SceneManager.LoadScene(_nextSceneName, LoadSceneMode.Single);
         }
     }
 }
