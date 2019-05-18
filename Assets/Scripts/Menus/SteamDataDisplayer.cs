@@ -24,7 +24,7 @@ namespace Menu
                 InitializeProfilePicture();
                 InitializeName();
                 InitializeExperience();
-                InitializeMoney();
+                //InitializeMoney();
             }
         }
 
