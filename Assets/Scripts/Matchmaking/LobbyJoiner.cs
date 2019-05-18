@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using Bolt;
 using System;
 using UdpKit;
+using UnityEngine.UI;
 
 namespace SW.Matchmaking
 {
@@ -12,6 +13,7 @@ namespace SW.Matchmaking
     {
         [Header("Lobby Info")]
         [SerializeField] private LobbyData _lobbyData;
+        [SerializeField] private GameObject _lobbyPanel;
 
         [Header("Events")]
         public UnityEvent OnConnectedAsClient;
@@ -57,6 +59,29 @@ namespace SW.Matchmaking
         }
 
         // PUBLIC
+
+        public void TryJoiningLobby()
+        {
+            bool canJoinLobby = false;
+            foreach (var toggle in _lobbyPanel.GetComponentsInChildren<Toggle>())
+            {
+                if (toggle.isOn)
+                {
+                    canJoinLobby = true;
+                    break;
+                }
+            }
+
+            if (canJoinLobby)
+            {
+                _lobbyPanel.SetActive(false);
+                ConnectAsClient();
+            }
+            else
+            {
+                Debug.LogError("Cannot join lobby if no Gamemode is selected.");
+            }
+        }
 
         public void ConnectAsClient()
         {
