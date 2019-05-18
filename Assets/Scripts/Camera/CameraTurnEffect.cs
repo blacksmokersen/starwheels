@@ -5,6 +5,9 @@ namespace CameraUtils
 {
     public class CameraTurnEffect : CameraTarget, IControllable
     {
+        [Header("Camera Settings")]
+        [SerializeField] CameraSettings _cameraSettings;
+
         [SerializeField] private bool _enabled = true;
         public bool Enabled
         {
@@ -83,9 +86,7 @@ namespace CameraUtils
         public void CenterOrbiter()
         {
             _cinemachineCollider.enabled = true;
-            _orbiter.m_FollowOffset.z = -6.35f;
-            _orbiter.m_FollowOffset.y = 2.2f;
-            _orbiter.m_FollowOffset.x = 0f;
+            _orbiter.m_FollowOffset = _cameraSettings.BaseCamPosition;
             _alreadyRecentered = true;
         }
 

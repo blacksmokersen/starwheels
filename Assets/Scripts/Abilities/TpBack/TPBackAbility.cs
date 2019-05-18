@@ -109,7 +109,7 @@ namespace Abilities
             OnBlinkActivated.Invoke();
             _kartMeshes.SetActive(false);
             _health.SetInvincibility();
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.25f);
             _kartMeshes.SetActive(true);
             _health.UnsetInvincibility();
             SWExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useTpBackSound);

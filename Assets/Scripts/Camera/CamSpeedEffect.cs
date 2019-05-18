@@ -36,8 +36,9 @@ namespace CameraUtils
         {
             if (_rigidbody)
             {
-                float clampCam = Mathf.Clamp(_rigidbody.velocity.magnitude / 5, 0, 20);
+                float clampCam = Mathf.Clamp(_rigidbody.velocity.magnitude / 2, 0, 20);
                 _cinemachine.m_Lens.FieldOfView = _fov + clampCam;
+
             }
         }
     }

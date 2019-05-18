@@ -12,6 +12,7 @@ namespace CameraUtils
             set { _enabled = value; }
         }
 
+        [Header("Camera Settings")]
         [SerializeField] CameraSettings _cameraSettings;
         [SerializeField] float _backCamZPosition;
 
