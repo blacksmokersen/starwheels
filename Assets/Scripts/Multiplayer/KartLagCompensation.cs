@@ -26,8 +26,10 @@ namespace Items
         {
             if (ServerRewindDistCheck(localCollisionPosition, target, framestoRewind) <= collisionDistance)
             {
+                /*
                 Debug.LogError("HIT WITH LAG COMPENSATION -- FrameToRewind : " + framestoRewind +
                     " -- DISTANCE : " + ServerRewindDistCheck(localCollisionPosition, target, framestoRewind));
+                */
 
                 foreach (Transform child in item.transform)
                 {
