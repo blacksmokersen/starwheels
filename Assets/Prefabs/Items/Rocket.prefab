@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 3365}
   - component: {fileID: 3346}
   - component: {fileID: 3318}
+  - component: {fileID: 5192779125884743991}
   m_Layer: 13
   m_Name: Rocket
   m_TagString: Untagged
@@ -299,6 +300,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GravityForce: {fileID: 11400000, guid: 33a79f3253499c84a82a1c9232840ed6, type: 2}
   UseWorldCoordinates: 1
+--- !u!114 &5192779125884743991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1510134700, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _proximity: {fileID: 4694053580225560721}
+  _hitboxes:
+  - {fileID: 4694053580225560721}
 --- !u!1 &522
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,6 +326,8 @@ GameObject:
   - component: {fileID: 1420}
   - component: {fileID: 2739}
   - component: {fileID: 3364}
+  - component: {fileID: 4694053580225560721}
+  - component: {fileID: 7216478907529172452}
   m_Layer: 13
   m_Name: CollisionTrigger
   m_TagString: CollisionHitBox
@@ -374,6 +392,36 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   ItemCollision: {fileID: 11400000, guid: 6ec46eb105be16648b3c4442c986e7bd, type: 2}
+--- !u!114 &4694053580225560721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301758009, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shape: 1
+  _type: 0
+  _center: {x: 0, y: -1.5, z: 0}
+  _boxSize: {x: 0.25, y: 0.25, z: 0.25}
+  _sphereRadius: 0.25
+--- !u!114 &7216478907529172452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b7e3309ccb4e4b46991d49e989bbc53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collisionDistanceCheck: 4
 --- !u!1 &539
 GameObject:
   m_ObjectHideFlags: 0

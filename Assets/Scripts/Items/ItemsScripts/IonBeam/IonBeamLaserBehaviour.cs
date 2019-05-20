@@ -9,6 +9,7 @@ namespace Items
 
         [SerializeField] private GameObject _ionBeamCore;
         [SerializeField] private Collider _ionBeamCollider;
+        [SerializeField] private GameObject _ionbeamLagCompensation;
         [SerializeField] private Transform raycastTransformOrigin;
 
         //CORE
@@ -34,7 +35,8 @@ namespace Items
             RaycastHit hit;
             if (Physics.Raycast(raycastTransformOrigin.position, Vector3.down, out hit, 500, 1 << LayerMask.NameToLayer(Constants.Layer.Ground)))
             {
-                _ionBeamCollider.enabled = true;
+               // _ionBeamCollider.enabled = true;
+                _ionbeamLagCompensation.SetActive(true);
             }
             else
             {
@@ -44,7 +46,8 @@ namespace Items
 
         public void AtEndDamageAnimation()
         {
-            _ionBeamCollider.enabled = false;
+           // _ionBeamCollider.enabled = false;
+            _ionbeamLagCompensation.SetActive(false);
         }
 
         public void AtEndAnimation()

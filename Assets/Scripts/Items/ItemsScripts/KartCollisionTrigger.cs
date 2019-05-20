@@ -10,6 +10,30 @@ namespace Items
         [Header("Invincibility Condition")]
         [SerializeField] private Health.Health _health;
 
+        public void CheckTargetInformationsBeforeSendingHitEvent(Collider target)
+        {
+            var itemCollisionTrigger = target.GetComponent<ItemCollisionTrigger>();
+
+            if (itemCollisionTrigger.ItemCollision.HitsPlayer) // It is an item that damages the player
+            {
+                BoltEntity itemEntity = target.GetComponentInParent<BoltEntity>();
+                Ownership itemOwnership = itemEntity.GetComponent<Ownership>();
+
+                if (itemEntity.isAttached) // It is a concrete item & it is attached
+                {
+                    if ((int)itemOwnership.Team != state.Team)
+                    {
+                        if (!_health.IsInvincible) // The server checks that this kart is not invincible
+                        {
+                            SendPlayerHitEvent(itemOwnership);
+                        }
+                        DestroyColliderObject(target);
+                    }
+                }
+            }
+        }
+
+        /*
         private void OnTriggerEnter(Collider other)
         {
             if (BoltNetwork.IsServer && entity.isAttached)
@@ -25,22 +49,22 @@ namespace Items
 
                         if (itemEntity.isAttached) // It is a concrete item & it is attached
                         {
-                            /* Hit Ourself
-                            if (itemState.OwnerID == state.OwnerID)
-                            {
-                                if (itemCollisionTrigger.ItemCollision.ItemName == ItemCollisionName.Disk)
-                                {
-                                    if (other.GetComponentInParent<DiskBehaviour>().CanHitOwner)
-                                    {
-                                        if (!_health.IsInvincible) // The server checks that this kart is not invincible
-                                        {
-                                            SendPlayerHitEvent(itemState);
-                                        }
-                                        DestroyColliderObject(other);
-                                    }
-                                }
-                            }
-                            */
+                          //   Hit Ourself
+                          //  if (itemState.OwnerID == state.OwnerID)
+                          //  {
+                          //      if (itemCollisionTrigger.ItemCollision.ItemName == ItemCollisionName.Disk)
+                          //      {
+                          //          if (other.GetComponentInParent<DiskBehaviour>().CanHitOwner)
+                          //          {
+                          //              if (!_health.IsInvincible) // The server checks that this kart is not invincible
+                          //              {
+                          //                  SendPlayerHitEvent(itemState);
+                          //              }
+                          //              DestroyColliderObject(other);
+                          //          }
+                          //      }
+                          //  }
+
                             if ((int)itemOwnership.Team != state.Team)
                             {
                                 if (!_health.IsInvincible) // The server checks that this kart is not invincible
@@ -53,7 +77,7 @@ namespace Items
                     }
                 }
             }
-        }
+        } */
 
         private void DestroyColliderObject(Collider other)
         {
