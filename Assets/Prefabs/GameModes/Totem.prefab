@@ -239,7 +239,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1392}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3350
 MonoBehaviour:
@@ -680,69 +680,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &513
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1441}
-  - component: {fileID: 2721}
-  - component: {fileID: 3329}
-  m_Layer: 15
-  m_Name: ItemCollisionTrigger
-  m_TagString: CollisionHitBox
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1441
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 513}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1392}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &2721
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 513}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.7
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3329
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f31a1c46652e3164aaf4306dbb4cacc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnCollision:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  ItemCollision: {fileID: 11400000, guid: 2018e41075a59ba4c9e3252e0e0f4b5e, type: 2}
 --- !u!1 &526
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,7 +721,6 @@ Transform:
   - {fileID: 1462}
   - {fileID: 1424}
   - {fileID: 1389}
-  - {fileID: 1441}
   - {fileID: 1397}
   - {fileID: 8756013613900830600}
   m_Father: {fileID: 0}
@@ -1236,7 +1172,7 @@ PrefabInstance:
     - target: {fileID: 4160397543902728760, guid: 7a8aca3145e29c340ad148058ffc7ee0,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4160397543902728760, guid: 7a8aca3145e29c340ad148058ffc7ee0,
         type: 3}
@@ -1255,9 +1191,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a8aca3145e29c340ad148058ffc7ee0, type: 3}
---- !u!1 &1981505452616460 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4627486346820087484, guid: 7a8aca3145e29c340ad148058ffc7ee0,
+--- !u!4 &8756013613900830600 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4160397543902728760, guid: 7a8aca3145e29c340ad148058ffc7ee0,
     type: 3}
   m_PrefabInstance: {fileID: 4629463453150594480}
   m_PrefabAsset: {fileID: 0}
@@ -1279,9 +1215,9 @@ MeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 4629463453150594480}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &8756013613900830600 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4160397543902728760, guid: 7a8aca3145e29c340ad148058ffc7ee0,
+--- !u!1 &1981505452616460 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4627486346820087484, guid: 7a8aca3145e29c340ad148058ffc7ee0,
     type: 3}
   m_PrefabInstance: {fileID: 4629463453150594480}
   m_PrefabAsset: {fileID: 0}

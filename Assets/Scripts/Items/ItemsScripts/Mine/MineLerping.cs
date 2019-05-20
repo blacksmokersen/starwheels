@@ -15,6 +15,7 @@ namespace Items
 
         [Header("Settings")]
         [SerializeField] private FloatVariable _speedMultiplicator;
+        [SerializeField] private float _speedCap;
 
         [Header("Mesh to Hide")]
         [SerializeField] private MeshRenderer _shieldMesh;
@@ -35,6 +36,7 @@ namespace Items
         {
             if (_lerping && _target)
             {
+                Debug.Log("Lerping");
                 _mineRoot.transform.position = Vector3.Lerp(transform.position, _target.transform.position, _speed);
                 SpeedIncrease();
             }
@@ -65,7 +67,7 @@ namespace Items
 
         private void SpeedIncrease()
         {
-            _speed *= _speedMultiplicator.Value;
+            _speed = Mathf.Clamp((_speed * _speedMultiplicator.Value),0 , _speedCap);
         }
 
         private IEnumerator WaitBeforeLerping()

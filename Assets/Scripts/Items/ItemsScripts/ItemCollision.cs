@@ -11,7 +11,7 @@ namespace Items
         IonBeamLaser,
         GoldDisk,
         Laser,
-        Totem,
+        Kart,
         ItemDestroyer
     }
 
@@ -31,7 +31,7 @@ namespace Items
         public bool IonBeamLaser;
         public bool GoldDisk;
         public bool Laser;
-        public bool Totem;
+        public bool Kart;
         public bool ItemDestroyer;
 
         public bool ShouldBeDestroyed(ItemCollision itemCollision)
@@ -64,7 +64,7 @@ namespace Items
             {
                 return true;
             }
-            else if (itemCollision.ItemName == ItemCollisionName.Totem && Totem)
+            else if (itemCollision.ItemName == ItemCollisionName.Kart && Kart)
             {
                 return true;
             }

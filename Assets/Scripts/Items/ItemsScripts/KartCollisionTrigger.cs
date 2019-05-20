@@ -59,7 +59,7 @@ namespace Items
         {
             var otherItemCollision = other.GetComponent<ItemCollisionTrigger>().ItemCollision;
             if (otherItemCollision.ShouldBeDestroyed(_itemCollision)
-                && other.GetComponent<ItemCollisionTrigger>().ItemCollision.ItemName != ItemCollisionName.IonBeamLaser) // The item should be destroyed
+                && otherItemCollision.ItemName != ItemCollisionName.IonBeamLaser) // The item should be destroyed
             {
                 DestroyEntity destroyEntityEvent = DestroyEntity.Create();
                 destroyEntityEvent.Entity = other.GetComponentInParent<BoltEntity>();

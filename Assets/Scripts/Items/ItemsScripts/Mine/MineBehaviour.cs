@@ -26,6 +26,8 @@ namespace Items
         [Header("Triggers To Activate")]
         [SerializeField] private List<Collider> _triggers;
 
+        private bool _minePositionFixed = false;
+
         // CORE
 
         private void Start()
@@ -37,7 +39,6 @@ namespace Items
         {
             if (collision.gameObject.layer == LayerMask.NameToLayer(Constants.Layer.Ground))
             {
-                GetComponent<Hovering>().Disable();
                 StopMine();
             }
         }
@@ -96,18 +97,27 @@ namespace Items
 
         private void StopMine()
         {
-            var rb = GetComponent<Rigidbody>();
-            rb.velocity = Vector3.zero;
-            rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-            rb.freezeRotation = true;
-            _animator.SetTrigger("Stop");
-            PlayIdleSound();
+            if (!_minePositionFixed)
+            {
+                Debug.Log("Stopping mine");
+                GetComponent<Hovering>().Disable();
+
+                var rb = GetComponent<Rigidbody>();
+                rb.velocity = Vector3.zero;
+                rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                rb.freezeRotation = true;
+
+                _animator.SetTrigger("Stop");
+                PlayIdleSound();
+
+                _minePositionFixed = true;
+            }
         }
 
         private IEnumerator MineStopRoutine(float seconds)
         {
             yield return new WaitForSeconds(seconds);
-            GetComponent<Hovering>().Disable();
+            StopMine();
         }
     }
 }

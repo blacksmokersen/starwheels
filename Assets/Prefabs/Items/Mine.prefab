@@ -441,7 +441,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
-  m_Radius: 0.75
+  m_Radius: 1.4
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3363
 MonoBehaviour:
@@ -628,7 +628,7 @@ MonoBehaviour:
   OnModeUpdated:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3325}
         m_MethodName: LaunchMode
         m_Mode: 0
         m_Arguments:
@@ -657,7 +657,7 @@ MonoBehaviour:
   TimesLongerThanHighThrow: 5
   LivingTime: 80
   SecondBeforeStoppingForward: 0.5
-  SecondBeforeStoppingBackward: 0.05
+  SecondBeforeStoppingBackward: 0
   LaunchSource: {fileID: 2637}
   IdleSource: {fileID: 2627}
   ExplosionSource: {fileID: 2616}
@@ -769,6 +769,7 @@ MonoBehaviour:
   _animator: {fileID: 4756154663287276972}
   _speedMultiplicator: {fileID: 11400000, guid: 76b367b5e9a154d4c86629a86c3be1e5,
     type: 2}
+  _speedCap: 50
   _shieldMesh: {fileID: 6453265497522978163}
 --- !u!114 &3409
 MonoBehaviour:
