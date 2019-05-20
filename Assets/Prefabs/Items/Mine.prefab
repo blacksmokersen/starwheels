@@ -409,6 +409,8 @@ GameObject:
   - component: {fileID: 1394}
   - component: {fileID: 2725}
   - component: {fileID: 3363}
+  - component: {fileID: 3686233981837035506}
+  - component: {fileID: 6835815276188235968}
   m_Layer: 13
   m_Name: PlayerCollisionTrigger
   m_TagString: CollisionHitBox
@@ -472,6 +474,36 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   ItemCollision: {fileID: 11400000, guid: 8c95664035986254a9f7200ba402fa64, type: 2}
+--- !u!114 &3686233981837035506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301758009, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shape: 1
+  _type: 0
+  _center: {x: 0, y: 0, z: 0}
+  _boxSize: {x: 0.25, y: 0.25, z: 0.25}
+  _sphereRadius: 0.25
+--- !u!114 &6835815276188235968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b7e3309ccb4e4b46991d49e989bbc53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collisionDistanceCheck: 3
 --- !u!1 &534
 GameObject:
   m_ObjectHideFlags: 0
@@ -488,6 +520,7 @@ GameObject:
   - component: {fileID: 3404}
   - component: {fileID: 3408}
   - component: {fileID: 3325}
+  - component: {fileID: 3912320042188675137}
   m_Layer: 13
   m_Name: Mine
   m_TagString: GroundItem
@@ -664,6 +697,21 @@ MonoBehaviour:
   _animator: {fileID: 4756154663287276972}
   _triggers:
   - {fileID: 2725}
+--- !u!114 &3912320042188675137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1510134700, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _proximity: {fileID: 3686233981837035506}
+  _hitboxes:
+  - {fileID: 3686233981837035506}
 --- !u!1 &544
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,16 +844,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1431}
     m_Modifications:
-    - target: {fileID: 1756649608373416066, guid: 301de4b98ce4bee4f97f3dd3d895cc3b,
-        type: 3}
-      propertyPath: m_Name
-      value: Graphics
-      objectReference: {fileID: 0}
-    - target: {fileID: 1756649608373416066, guid: 301de4b98ce4bee4f97f3dd3d895cc3b,
-        type: 3}
-      propertyPath: m_Layer
-      value: 13
-      objectReference: {fileID: 0}
     - target: {fileID: 1759438603978507514, guid: 301de4b98ce4bee4f97f3dd3d895cc3b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -860,6 +898,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1756649608373416066, guid: 301de4b98ce4bee4f97f3dd3d895cc3b,
+        type: 3}
+      propertyPath: m_Name
+      value: Graphics
+      objectReference: {fileID: 0}
+    - target: {fileID: 1756649608373416066, guid: 301de4b98ce4bee4f97f3dd3d895cc3b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 6513504592475628608, guid: 301de4b98ce4bee4f97f3dd3d895cc3b,
         type: 3}

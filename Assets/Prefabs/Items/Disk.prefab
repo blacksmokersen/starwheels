@@ -9834,6 +9834,7 @@ GameObject:
   - component: {fileID: 3359}
   - component: {fileID: 3343}
   - component: {fileID: 3375}
+  - component: {fileID: 5940796700896016785}
   m_Layer: 13
   m_Name: Disk
   m_TagString: Untagged
@@ -9994,6 +9995,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GravityForce: {fileID: 11400000, guid: 13b8856652c8fae45beac2252abb7531, type: 2}
   UseWorldCoordinates: 1
+--- !u!114 &5940796700896016785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1510134700, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _proximity: {fileID: 2270557838750059659}
+  _hitboxes:
+  - {fileID: 2270557838750059659}
 --- !u!1 &511
 GameObject:
   m_ObjectHideFlags: 0
@@ -10005,6 +10021,8 @@ GameObject:
   - component: {fileID: 1459}
   - component: {fileID: 2727}
   - component: {fileID: 3367}
+  - component: {fileID: 2270557838750059659}
+  - component: {fileID: 8308785365084264972}
   m_Layer: 13
   m_Name: CollisionTrigger
   m_TagString: CollisionHitBox
@@ -10068,6 +10086,36 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   ItemCollision: {fileID: 11400000, guid: 03cd553d80e02c44192a6068454a4702, type: 2}
+--- !u!114 &2270557838750059659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301758009, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shape: 1
+  _type: 0
+  _center: {x: 0, y: 0, z: 0}
+  _boxSize: {x: 0.25, y: 0.25, z: 0.25}
+  _sphereRadius: 0.25
+--- !u!114 &8308785365084264972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b7e3309ccb4e4b46991d49e989bbc53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collisionDistanceCheck: 3
 --- !u!1 &517
 GameObject:
   m_ObjectHideFlags: 0
@@ -19550,16 +19598,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1428}
     m_Modifications:
-    - target: {fileID: 6721548461296041892, guid: 5780a9715ec669a4aa00ce03243f8440,
-        type: 3}
-      propertyPath: m_Name
-      value: Graphics
-      objectReference: {fileID: 0}
-    - target: {fileID: 6721548461296041892, guid: 5780a9715ec669a4aa00ce03243f8440,
-        type: 3}
-      propertyPath: m_Layer
-      value: 13
-      objectReference: {fileID: 0}
     - target: {fileID: 6724985623268178046, guid: 5780a9715ec669a4aa00ce03243f8440,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -19614,6 +19652,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6721548461296041892, guid: 5780a9715ec669a4aa00ce03243f8440,
+        type: 3}
+      propertyPath: m_Name
+      value: Graphics
+      objectReference: {fileID: 0}
+    - target: {fileID: 6721548461296041892, guid: 5780a9715ec669a4aa00ce03243f8440,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 6720971835577200370, guid: 5780a9715ec669a4aa00ce03243f8440,
         type: 3}
