@@ -25,12 +25,19 @@ namespace Common.SplashScreen
         private bool _epilepsiePanelShowing = true;
         private bool _canSkipEpilepsiePanel = false;
 
+        private bool _loadMainMenu = false;
+
         // CORE
 
         private void Awake()
         {
             _playerCurrentFrame = _videoPlayer.frame;
             _playerFrameCount = System.Convert.ToInt64(_videoPlayer.frameCount);
+        }
+
+        private void Start()
+        {
+            StartCoroutine(LoadMenuScene());
         }
 
         private void Update()
@@ -106,9 +113,8 @@ namespace Common.SplashScreen
             Debug.Log("Finished showing epilepsie panel.");
 
             TriggerEpilepsiePanelFadeOut();
-            yield return new WaitForSeconds(1.2f);
-
-            LoadMenuScene();
+            yield return new WaitForSeconds(1.5f);
+            _loadMainMenu = true;
         }
 
         private void TriggerEpilepsiePanelFadeIn()
@@ -121,10 +127,21 @@ namespace Common.SplashScreen
             _epilepsieAnimator.SetTrigger("TriggerFadeOut");
         }
 
-        private void LoadMenuScene()
+        private IEnumerator LoadMenuScene()
         {
-            Debug.Log("Loading MainMenu.");
-            SceneManager.LoadScene(_nextSceneName, LoadSceneMode.Single);
+            Debug.Log("Starting MainMenu load.");
+
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(_nextSceneName, LoadSceneMode.Single);
+            asyncLoad.allowSceneActivation = false;
+
+            while (!asyncLoad.isDone)
+            {
+                if (_loadMainMenu)
+                {
+                    asyncLoad.allowSceneActivation = true;
+                }
+                yield return null;
+            }
         }
     }
 }
