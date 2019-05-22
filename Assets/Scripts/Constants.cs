@@ -52,6 +52,7 @@
         public const string UseItemBackward = "ItemBackward";
         public const string MergeItem = "MergeItem";
         public const string UseAbility = "Ability";
+        public const string EnableKeyboardTurnCamera = "EnableKeyboardTurnCamera";
         public const string BackCamera = "ClickLeftJoystick";
         public const string TurnCamera = "RightJoystickHorizontal";
         public const string UpAndDownCamera = "RightJoystickVertical";
