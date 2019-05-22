@@ -99,33 +99,17 @@ namespace SW.Matchmaking
         {
             var lobbyList = BoltNetwork.SessionList;
 
-            if (DebugModEnabled)
+            foreach (var lobby in lobbyList)
             {
-                foreach (var lobby in lobbyList)
+                var lobbyToken = SWMatchmaking.GetLobbyToken(lobby.Key);
+                var lobbyMatchesSelectedServerName = DebugModEnabled && lobbyToken.ServerName == _serverDebugMode.GetClientServerName();
+                var lobbyMatchesSelectedGamemodes = _lobbyData.GamemodePool.Contains(lobbyToken.GameMode);
+
+                if ( lobbyMatchesSelectedServerName || lobbyMatchesSelectedGamemodes )
                 {
-                    var lobbyToken = SWMatchmaking.GetLobbyToken(lobby.Key);
-                    Debug.Log("Found lobby for ServerName : " + _serverDebugMode.GetClientServerName());
-                    if (lobbyToken.ServerName == _serverDebugMode.GetClientServerName())
-                    {
-                        Debug.Log("Found ServerName : " + lobbyToken.ServerName);
-                        _lobbyData.SetGamemode(lobbyToken.GameMode);
-                        _lobbyData.SetMap(lobbyToken.MapName);
-                        SWMatchmaking.JoinLobby(lobby.Key);
-                    }
-                }
-            }
-            else
-            {
-                foreach (var lobby in lobbyList)
-                {
-                    var lobbyToken = SWMatchmaking.GetLobbyToken(lobby.Key);
-                    Debug.Log("Found lobby for : " + lobbyToken.GameMode);
-                    if (_lobbyData.GamemodePool.Contains(lobbyToken.GameMode))
-                    {
-                        _lobbyData.SetGamemode(lobbyToken.GameMode);
-                        _lobbyData.SetMap(lobbyToken.MapName);
-                        SWMatchmaking.JoinLobby(lobby.Key);
-                    }
+                    _lobbyData.SetGamemode(lobbyToken.GameMode);
+                    _lobbyData.SetMap(lobbyToken.MapName);
+                    SWMatchmaking.JoinLobby(lobby.Key);
                 }
             }
         }

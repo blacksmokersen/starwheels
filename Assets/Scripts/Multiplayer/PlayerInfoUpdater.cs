@@ -23,6 +23,7 @@ namespace Multiplayer
             {
                 _playerInfo.Nickname = evnt.Nickname;
                 _playerInfo.Team = evnt.Team.ToTeam();
+                _playerInfo.OwnerID = evnt.PlayerID;
             }
         }
     }

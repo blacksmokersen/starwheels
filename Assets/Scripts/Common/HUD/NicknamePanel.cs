@@ -59,8 +59,15 @@ namespace Common.HUD
 
         public void SetFrameRendererTeam(Team team)
         {
-            var color = _gameSettings.TeamsListSettings.GetSettings(team).NameplateColor;
-            SetFrameRendererColor(color);
+            if (team != Team.None)
+            {
+                var color = _gameSettings.TeamsListSettings.GetSettings(team).NameplateColor;
+                SetFrameRendererColor(color);
+            }
+            else
+            {
+                Debug.LogWarning("No team was found.");
+            }
         }
 
         public void ShowPanel()

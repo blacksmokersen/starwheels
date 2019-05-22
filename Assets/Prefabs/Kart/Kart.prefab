@@ -276,6 +276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OwnerID: 0
+  KartEntity: {fileID: 3339}
   OnNicknameChanged:
     m_PersistentCalls:
       m_Calls:
@@ -306,6 +307,10 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: TeamEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnOwnerIDChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: IntEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &3413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2021,12 +2026,12 @@ PrefabInstance:
     - target: {fileID: 4331826489526702994, guid: 473d896dbdefa5a4d9adf8ea87479244,
         type: 3}
       propertyPath: m_havePropertiesChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4331826489526702994, guid: 473d896dbdefa5a4d9adf8ea87479244,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4466932735679710612, guid: 473d896dbdefa5a4d9adf8ea87479244,
         type: 3}

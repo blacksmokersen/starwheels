@@ -28,7 +28,7 @@ namespace SW.Matchmaking
                 BoltNetwork.RegisterTokenClass<Photon.RoomProtocolToken>();
                 BoltNetwork.RegisterTokenClass<Photon.ServerAcceptToken>();
                 BoltNetwork.RegisterTokenClass<Photon.ServerConnectToken>();
-                BoltNetwork.RegisterTokenClass<SW.Matchmaking.LobbyToken>();
+                BoltNetwork.RegisterTokenClass<LobbyToken>();
             }
         }
 
@@ -38,24 +38,18 @@ namespace SW.Matchmaking
             {
                 if (DebugModEnabled)
                 {
-                    Debug.Log("Bolt now running as server.");
                     _lobbyData.ServerName = _serverDebugMode.GetHostServerName();
-                    _lobbyData.SetRandomGamemode();
-                    _lobbyData.SetRandomMap();
-                    SWMatchmaking.SetLobbyData(_lobbyData);
-
-                    OnConnectedAsServer.Invoke();
                 }
                 else
                 {
-                    Debug.Log("Bolt now running as server.");
                     _lobbyData.SetRandomName();
-                    _lobbyData.SetRandomGamemode();
-                    _lobbyData.SetRandomMap();
-                    SWMatchmaking.SetLobbyData(_lobbyData);
-
-                    OnConnectedAsServer.Invoke();
                 }
+                _lobbyData.SetRandomGamemode();
+                _lobbyData.SetRandomMap();
+                SWMatchmaking.SetLobbyData(_lobbyData);
+
+                OnConnectedAsServer.Invoke();
+                Debug.Log("Bolt now running as server.");
             }
         }
 

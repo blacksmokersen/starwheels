@@ -75,7 +75,7 @@ namespace Multiplayer
 
             myKart.transform.position = spawnPosition;
             myKart.transform.rotation = spawnRotation;
-            myKart.GetComponent<BoltEntity>().GetState<IKartState>().Team = (int) team; // _playerSettings.ColorSettings.TeamEnum.ToString();
+            myKart.GetComponent<BoltEntity>().GetState<IKartState>().Team = (int) team;
             myKart.GetComponent<BoltEntity>().GetState<IKartState>().OwnerID = SWMatchmaking.GetMyBoltId();
 
             PlayerReady playerReadyEvent = PlayerReady.Create();

@@ -1,12 +1,9 @@
 ﻿using UnityEngine;
 using Bolt;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 namespace Multiplayer
 {
-    public class PlayerInfo : EntityBehaviour
+    public class PlayerInfo : GlobalEventListener
     {
         public static PlayerInfo Me;
 
@@ -25,18 +22,44 @@ namespace Multiplayer
         }
 
         public int OwnerID;
+        public BoltEntity KartEntity;
 
         [Header("Events")]
         public StringEvent OnNicknameChanged;
         public TeamEvent OnTeamChanged;
+        public IntEvent OnOwnerIDChanged;
+
+        public void Start()
+        {
+            if (KartEntity.isOwner)
+            {
+                Me = this;
+            }
+        }
 
         // BOLT
 
-        public override void Attached()
+        public override void OnEvent(PlayerReady evnt)
         {
-            if (entity.isOwner)
+            if (evnt.PlayerID != SWMatchmaking.GetMyBoltId()) // I should no receive my own event
             {
-                Me = this;
+                PlayerInfoEvent playerInfoEvent = PlayerInfoEvent.Create(GlobalTargets.Others);
+                playerInfoEvent.TargetPlayerID = evnt.PlayerID;
+                playerInfoEvent.Nickname = Nickname;
+                playerInfoEvent.Team = (int)Team;
+                playerInfoEvent.PlayerID = OwnerID;
+                playerInfoEvent.KartEntity = KartEntity;
+                playerInfoEvent.Send();
+            }
+        }
+
+        public override void OnEvent(PlayerInfoEvent evnt)
+        {
+            if (evnt.TargetPlayerID == SWMatchmaking.GetMyBoltId() && evnt.KartEntity == KartEntity)
+            {
+                Nickname = evnt.Nickname;
+                Team = evnt.Team.ToTeam();
+                OwnerID = evnt.PlayerID;
             }
         }
     }
