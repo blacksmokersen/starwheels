@@ -36,9 +36,10 @@ namespace Items
                 Label = evnt.ItemName;
                 OwnerID = evnt.OwnerID;
                 OwnerNickname = evnt.OwnerNickname;
+                OwnerKartRoot = SWExtensions.KartExtensions.GetKartWithID(OwnerID);
                 Team = evnt.Team.ToTeam();
 
-                OnOwnershipSet.Invoke(SWExtensions.KartExtensions.GetKartWithID(OwnerID));
+                OnOwnershipSet.Invoke(OwnerKartRoot);
             }
         }
     }

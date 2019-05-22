@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using Bolt;
 
 namespace Multiplayer
@@ -41,8 +42,17 @@ namespace Multiplayer
 
         public override void OnEvent(PlayerReady evnt)
         {
+            if (evnt.Entity == GetComponent<BoltEntity>())
+            {
+                Debug.LogError("Hello ... : " + SWMatchmaking.GetMyBoltId());
+                Nickname = evnt.Nickname;
+                Team = evnt.Team.ToTeam();
+                OwnerID = evnt.PlayerID;
+            }
+
             if (evnt.PlayerID != SWMatchmaking.GetMyBoltId()) // I should no receive my own event
             {
+                Debug.LogError("... world !: " + SWMatchmaking.GetMyBoltId());
                 PlayerInfoEvent playerInfoEvent = PlayerInfoEvent.Create(GlobalTargets.Others);
                 playerInfoEvent.TargetPlayerID = evnt.PlayerID;
                 playerInfoEvent.Nickname = Nickname;
@@ -57,6 +67,7 @@ namespace Multiplayer
         {
             if (evnt.TargetPlayerID == SWMatchmaking.GetMyBoltId() && evnt.KartEntity == KartEntity)
             {
+                Debug.LogError("Received: " + SWMatchmaking.GetMyBoltId());
                 Nickname = evnt.Nickname;
                 Team = evnt.Team.ToTeam();
                 OwnerID = evnt.PlayerID;

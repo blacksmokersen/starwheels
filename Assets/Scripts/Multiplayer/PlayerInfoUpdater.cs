@@ -19,12 +19,7 @@ namespace Multiplayer
 
         public override void OnEvent(PlayerReady evnt)
         {
-            if (evnt.Entity == GetComponent<BoltEntity>())
-            {
-                _playerInfo.Nickname = evnt.Nickname;
-                _playerInfo.Team = evnt.Team.ToTeam();
-                _playerInfo.OwnerID = evnt.PlayerID;
-            }
+
         }
     }
 }

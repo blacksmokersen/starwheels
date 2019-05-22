@@ -26,7 +26,7 @@ namespace Items
         private List<GameObject> _kartsInRange = new List<GameObject>();
         private Dictionary<GameObject, float> _kartsInRangeTimer = new Dictionary<GameObject, float>();
 
-        // CORE
+        // MONO
 
         private void Awake()
         {
@@ -37,67 +37,6 @@ namespace Items
         {
             Setup();
             state.AddCallback("OwnerID", Setup);
-        }
-
-        // PUBLIC
-
-        public void Setup()
-        {
-            _ownerKart = SWExtensions.KartExtensions.GetKartWithID(_ownership.OwnerID);
-
-            if (_ownerKart)
-            {
-                SetParent();
-                if (entity.isOwner)
-                {
-                    SetOwnerNewSpeed();
-                    StartCoroutine(SelfDeactivationCoroutine());
-                }
-                SetOwnerInvincibility();
-                DisableOwnerInventory();
-            }
-            else
-            {
-                Debug.LogError("Could not find the player who launched the overcharge.");
-            }
-            OnActivation.Invoke();
-        }
-
-        //PRIVATE
-
-        private void SetParent()
-        {
-            transform.SetParent(_ownerKart.transform);
-            transform.localPosition = Vector3.zero;
-        }
-
-        private void SetOwnerNewSpeed()
-        {
-            var kartBoost = _ownerKart.GetComponentInChildren<Boost>();
-            kartBoost.CustomBoostFromBoostSettings(_overchargeBoostSettings);
-        }
-
-        private void SetOwnerInvincibility()
-        {
-            var health = _ownerKart.GetComponentInChildren<Health.Health>();
-            health.SetInvincibilityForXSeconds(_settings.OverchargeDuration);
-            _ownerKartHitBox = health.GetComponentInChildren<KartCollisionTrigger>().gameObject;
-        }
-
-        private void DisableOwnerInventory()
-        {
-            _ownerKart.GetComponentInChildren<Inventory>().Enabled = false;
-        }
-
-        private void EnableOwnerInventory()
-        {
-            _ownerKart.GetComponentInChildren<Inventory>().Enabled = true;
-        }
-
-        private IEnumerator SelfDeactivationCoroutine()
-        {
-            yield return new WaitForSeconds(_settings.OverchargeDuration);
-            OnDeactivation.Invoke();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -123,6 +62,61 @@ namespace Items
             {
                 TryRemoveFromLists(other);
             }
+        }
+
+        // PUBLIC
+
+        public void Setup()
+        {
+            _ownerKart = _ownership.OwnerKartRoot;
+
+            SetParent();
+            if (entity.isOwner)
+            {
+                SetOwnerNewSpeed();
+                StartCoroutine(SelfDeactivationCoroutine());
+            }
+            SetOwnerInvincibility();
+            DisableOwnerInventory();
+
+            OnActivation.Invoke();
+        }
+
+        public void DisableOwnerInventory()
+        {
+            _ownerKart.GetComponentInChildren<Inventory>().Enabled = false;
+        }
+
+        public void EnableOwnerInventory()
+        {
+            _ownerKart.GetComponentInChildren<Inventory>().Enabled = true;
+        }
+
+        //PRIVATE
+
+        private void SetParent()
+        {
+            transform.SetParent(_ownerKart.transform);
+            transform.localPosition = Vector3.zero;
+        }
+
+        private void SetOwnerNewSpeed()
+        {
+            var kartBoost = _ownerKart.GetComponentInChildren<Boost>();
+            kartBoost.CustomBoostFromBoostSettings(_overchargeBoostSettings);
+        }
+
+        private void SetOwnerInvincibility()
+        {
+            var health = _ownerKart.GetComponentInChildren<Health.Health>();
+            health.SetInvincibilityForXSeconds(_settings.OverchargeDuration);
+            _ownerKartHitBox = health.GetComponentInChildren<KartCollisionTrigger>().gameObject;
+        }
+
+        private IEnumerator SelfDeactivationCoroutine()
+        {
+            yield return new WaitForSeconds(_settings.OverchargeDuration);
+            OnDeactivation.Invoke();
         }
 
         private void IncreaseStayTimer(Collider other)
