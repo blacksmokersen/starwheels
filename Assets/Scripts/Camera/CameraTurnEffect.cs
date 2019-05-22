@@ -15,7 +15,7 @@ namespace CameraUtils
             set { _enabled = value; }
         }
 
-        private string _turnCamInputName = "RightJoystickHorizontal";
+        private string _turnCamInputName = "Mouse X";
         private CinemachineOrbitalTransposer _orbiter;
         private CinemachineComposer _composer;
         private CinemachineCollider _cinemachineCollider;
@@ -52,14 +52,22 @@ namespace CameraUtils
         {
             if (Enabled)
             {
+                if (Input.GetAxis(Constants.Input.TurnCamera) != 0)
+                    _orbiter.m_XAxis.m_InputAxisName = "RightJoystickHorizontal";
+                else
+                    _orbiter.m_XAxis.m_InputAxisName = "Mouse X";
+
                 if (Input.GetButtonDown(Constants.Input.ResetCamera))
-                {
                     CameraReset();
+
+                if (Input.GetButton(Constants.Input.EnableKeyboardTurnCamera))
+                    ClampXMaxAngle(1, 1);
+                else
+                {
+                    ClampXMaxAngle(Input.GetAxis(Constants.Input.TurnCamera), Input.GetAxis(Constants.Input.UpAndDownCamera));
+                 //   CamYMovements(Input.GetAxis(Constants.Input.UpAndDownCamera));
                 }
 
-                ClampXMaxAngle(Input.GetAxis(Constants.Input.TurnCamera), Input.GetAxis(Constants.Input.UpAndDownCamera));
-
-                CamYMovements(Input.GetAxis(Constants.Input.UpAndDownCamera));
                 //  WhenToRecenterEnableCam(Input.GetAxis(Constants.Input.TurnCamera));
             }
         }
