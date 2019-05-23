@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Bolt;
@@ -30,10 +29,8 @@ namespace SW.Matchmaking
             if (BoltNetwork.IsClient)
             {
                 Debug.Log("Registering tokens...");
-                BoltNetwork.RegisterTokenClass<Photon.RoomProtocolToken>();
-                BoltNetwork.RegisterTokenClass<Photon.ServerAcceptToken>();
-                BoltNetwork.RegisterTokenClass<Photon.ServerConnectToken>();
-                BoltNetwork.RegisterTokenClass<SW.Matchmaking.LobbyToken>();
+                BoltNetwork.RegisterTokenClass<Multiplayer.RoomProtocolToken>();
+                BoltNetwork.RegisterTokenClass<LobbyToken>();
             }
         }
 

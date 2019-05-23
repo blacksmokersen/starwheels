@@ -28,7 +28,7 @@ namespace Menu
             {
                 SWMatchmaking.SetLobbyData(_lobbyData);
 
-                var token = new Photon.RoomProtocolToken()
+                var token = new Multiplayer.RoomProtocolToken()
                 {
                     Gamemode = _lobbyData.ChosenGamemode,
                     PlayersCount = SWMatchmaking.GetCurrentLobbyPlayerCount()

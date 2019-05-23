@@ -25,9 +25,7 @@ namespace SW.Matchmaking
             if (BoltNetwork.IsServer)
             {
                 Debug.Log("Registering tokens...");
-                BoltNetwork.RegisterTokenClass<Photon.RoomProtocolToken>();
-                BoltNetwork.RegisterTokenClass<Photon.ServerAcceptToken>();
-                BoltNetwork.RegisterTokenClass<Photon.ServerConnectToken>();
+                BoltNetwork.RegisterTokenClass<Multiplayer.RoomProtocolToken>();
                 BoltNetwork.RegisterTokenClass<LobbyToken>();
             }
         }

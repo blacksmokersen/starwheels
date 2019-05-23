@@ -94,7 +94,7 @@ namespace SW.Matchmaking
         {
             if (BoltNetwork.IsServer)
             {
-                var roomToken = new Photon.RoomProtocolToken() { Gamemode = _lobbyData.ChosenGamemode };
+                var roomToken = new Multiplayer.RoomProtocolToken() { Gamemode = _lobbyData.ChosenGamemode };
                 BoltNetwork.LoadScene(_lobbyData.ChosenMapName, roomToken);
             }
             else
