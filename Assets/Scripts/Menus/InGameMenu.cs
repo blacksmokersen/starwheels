@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -66,6 +65,7 @@ public class InGameMenu : GlobalEventListener
         allToMenu.onClick.AddListener(AllToMenu);
         optionsButton.onClick.AddListener(OpenOptionsMenu);
 
+
         backMenuButton.onClick.AddListener(CloseOptionsMenu);
         audioMenuButton.onClick.AddListener(OpenAudioPanel);
         videoMenuButton.onClick.AddListener(OpenVideoPanel);
@@ -95,7 +95,7 @@ public class InGameMenu : GlobalEventListener
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetButtonDown(Constants.Input.EscapeMenu))
         {
 
             if(_currentMenu == MenuState.NONE )
@@ -305,26 +305,4 @@ public class InGameMenu : GlobalEventListener
         yield return new WaitForSeconds(1.5f);
         BoltLauncher.Shutdown();
     }
-
-    /*
-    public override void BoltShutdownBegin(AddCallback registerDoneCallback)
-    {
-
-        if (BoltNetwork.IsServer)
-        {
-            Debug.Log("1");
-            SceneManager.LoadScene("Menu");
-        }
-        else if (BoltNetwork.IsClient)
-        {
-            Debug.Log("2");
-            SceneManager.LoadScene("Menu");
-        }
-
-        registerDoneCallback(() =>
-        {
-           Debug.Log("Shutdown Done");
-        });
-    }
-    */
 }

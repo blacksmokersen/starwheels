@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 namespace Common
 {
     [DisallowMultipleComponent]
-    public class MouseAndGamepadNavigation : StandaloneInputModule
+    public class MouseAndGamepadNavigation : MonoBehaviour
     {
         [SerializeField] private EventSystem _eventSystem;
 
@@ -14,9 +14,8 @@ namespace Common
 
         // CORE
 
-        private new void Awake()
+        private void Awake()
         {
-            base.Awake();
             _lastSelected = _eventSystem.firstSelectedGameObject.GetComponent<Selectable>();
         }
 
@@ -31,11 +30,13 @@ namespace Common
 
         public GameObject GameObjectUnderPointer(int pointerId)
         {
-            var lastPointer = GetLastPointerEventData(pointerId);
+            /*
+            var lastPointer = _eventSystem.GetLastPointerEventData(pointerId);
             if (lastPointer != null)
             {
                 return lastPointer.pointerCurrentRaycast.gameObject;
             }
+            */
             return null;
         }
 
