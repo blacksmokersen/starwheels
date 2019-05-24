@@ -63,6 +63,20 @@ namespace SWExtensions
 
     public static class KartExtensions
     {
+        public static GameObject GetMyKart()
+        {
+            var allKarts = GameObject.FindGameObjectsWithTag(Constants.Tag.Kart);
+            foreach (GameObject kart in allKarts)
+            {
+                var entity = kart.GetComponent<BoltEntity>();
+                if (entity.isOwner)
+                {
+                    return kart;
+                }
+            }
+            return null;
+        }
+
         public static GameObject GetKartWithID(int id)
         {
             var allKarts = GameObject.FindGameObjectsWithTag(Constants.Tag.Kart);

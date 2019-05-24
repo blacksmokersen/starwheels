@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Common;
+using SWExtensions;
 
 namespace Controls
 {
@@ -7,6 +8,7 @@ namespace Controls
     {
         [Header("Settings")]
         [SerializeField] private bool _disableKartOnEnabled;
+        [SerializeField] private bool _enableKartOnDisabled;
         [SerializeField] private BoolVariable _gameStarted;
 
         private ControllableDisabler _disabler;
@@ -23,7 +25,7 @@ namespace Controls
 
         private void OnDisable()
         {
-            if (_disableKartOnEnabled)
+            if (_enableKartOnDisabled)
             {
                 Enable();
             }
@@ -59,12 +61,10 @@ namespace Controls
 
         private void FindDisabler()
         {
-            foreach (var disabler in FindObjectsOfType<ControllableDisabler>())
+            var myKart = KartExtensions.GetMyKart();
+            if (myKart)
             {
-                if (disabler.CompareTag(Constants.Tag.Kart))
-                {
-                    _disabler = disabler;
-                }
+                _disabler = myKart.GetComponent<ControllableDisabler>();
             }
         }
     }

@@ -11,7 +11,6 @@ namespace Menu
         [SerializeField] private GameObject _mapsPanel;
         [SerializeField] private GameObject _battleMapsPanel;
         [SerializeField] private GameObject _orbMapsPanel;
-        [SerializeField] private GameObject _createLobbyButton;
 
         // CORE
 
@@ -27,7 +26,6 @@ namespace Menu
 
         public void ResetPanel(bool letSelfActive)
         {
-            _createLobbyButton.SetActive(false);
             _battleMapsPanel.SetActive(false);
             _orbMapsPanel.SetActive(false);
             _mapsPanel.SetActive(true);
