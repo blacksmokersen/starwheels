@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using UdpKit;
+using System;
+using UnityEngine;
 using Bolt;
 using TMPro;
 
@@ -10,9 +12,36 @@ namespace SW.Matchmaking
         [SerializeField] private LobbyData _lobbyData;
 
         [Header("UI Elements")]
+        [SerializeField] private GameObject _createGamePanel;
         [SerializeField] private TextMeshProUGUI _lookingForGameText;
+        [SerializeField] private TextMeshProUGUI _currentGamemodeLobbiesText;
+        [SerializeField] private TextMeshProUGUI _timerText;
         [SerializeField] private TextMeshProUGUI _currentPlayerCountText;
         [SerializeField] private GameObject _startGameButton;
+
+        [Header("Settings")]
+        [SerializeField] private float _secondsBeforeCreatingGame;
+
+        private bool _timerStarted = false;
+        private float _timer = 0.0f;
+
+        // MONO
+
+        private void Update()
+        {
+            if (_timerStarted)
+            {
+                _timer += Time.deltaTime;
+                UpdateTimer(_timer);
+                CheckTimer();
+            }
+        }
+
+        private new void OnEnable()
+        {
+            base.OnEnable();
+            ResetTimer();
+        }
 
         // BOLT
 
@@ -21,11 +50,27 @@ namespace SW.Matchmaking
             gameObject.SetActive(false);
         }
 
+        public override void SessionListUpdated(Map<Guid, UdpSession> sessionList)
+        {
+            LobbyToken lobbyToken;
+            int matchedLobbyCount = 0;
+            foreach (var lobby in sessionList)
+            {
+                lobbyToken = SWMatchmaking.GetLobbyToken(lobby.Key);
+
+                if (_lobbyData.GamemodePool.Contains(lobbyToken.GameMode))
+                {
+                    matchedLobbyCount++;
+                }
+            }
+        }
+
         public override void Connected(BoltConnection connection)
         {
             if (connection.ConnectionId == SWMatchmaking.GetMyBoltId())
             {
                 SetLookingForPlayers();
+                ResetTimer();
             }
 
             if (BoltNetwork.IsServer)
@@ -80,6 +125,8 @@ namespace SW.Matchmaking
             _lookingForGameText.gameObject.SetActive(true);
             _currentPlayerCountText.gameObject.SetActive(false);
             _startGameButton.SetActive(false);
+
+            _timerStarted = true;
         }
 
         public void SetLookingForPlayers()
@@ -88,6 +135,8 @@ namespace SW.Matchmaking
             _lookingForGameText.gameObject.SetActive(false);
             _currentPlayerCountText.gameObject.SetActive(true);
             _startGameButton.SetActive(BoltNetwork.IsServer);
+
+            _timerStarted = true;
         }
 
         public void LaunchGame()
@@ -105,6 +154,7 @@ namespace SW.Matchmaking
 
         public void QuitLobby()
         {
+            ResetTimer();
             BoltLauncher.Shutdown();
         }
 
@@ -113,6 +163,34 @@ namespace SW.Matchmaking
         private void UpdateCurrentPlayerCount(int playerCount)
         {
             _currentPlayerCountText.text = playerCount + " players";
+        }
+
+        private void UpdateTimer(float seconds)
+        {
+            TimeSpan time = TimeSpan.FromSeconds(seconds);
+            DateTime dateTime = DateTime.Today.Add(time);
+            _timerText.text = dateTime.ToString("mm:ss");
+        }
+
+        private void ResetTimer()
+        {
+            _timerStarted = false;
+            _timer = 0f;
+            UpdateTimer(_timer);
+        }
+
+        private void CheckTimer()
+        {
+            if (BoltNetwork.IsClient && _timer > _secondsBeforeCreatingGame)
+            {
+                _createGamePanel.SetActive(true);
+            }
+        }
+
+        private void UpdateCurrentMatchedLobbies(int lobbyCount)
+        {
+            var gamemodes = String.Join("/", _lobbyData.GamemodePool.ToArray());
+            _currentGamemodeLobbiesText.text = lobbyCount + " lobbies found for " + gamemodes;
         }
 
         private void OnApplicationQuit()
