@@ -31,7 +31,7 @@ namespace Items
 
         public override void OnEvent(ItemThrown evnt)
         {
-            if (evnt.Entity = GetComponent<BoltEntity>())
+            if (evnt.Entity == GetComponent<BoltEntity>())
             {
                 Label = evnt.ItemName;
                 OwnerID = evnt.OwnerID;

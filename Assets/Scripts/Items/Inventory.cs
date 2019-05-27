@@ -121,12 +121,18 @@ namespace Items
         private void InstantiateItem()
         {
             var instantiatedItem = BoltNetwork.Instantiate(CurrentItem.ItemPrefab, transform.position + transform.forward, transform.rotation);
+            int usableMode;
+            if (_throwingDirection.LastDirectionUp == Direction.Backward)
+                usableMode = 2;
+            else
+                usableMode = 1;
 
             ItemThrown itemThrownEvent = ItemThrown.Create();
             itemThrownEvent.OwnerNickname = GetComponentInParent<PlayerInfo>().Nickname;
             itemThrownEvent.OwnerID = state.OwnerID;
             itemThrownEvent.Team = state.Team;
             itemThrownEvent.Entity = instantiatedItem;
+            itemThrownEvent.UsageMode = usableMode;
 
             var itemOwnership = instantiatedItem.GetComponent<Ownership>();
             if (itemOwnership)
@@ -142,6 +148,7 @@ namespace Items
                 _projectileLauncher.Throw(throwable, _throwingDirection.LastDirectionUp);
             }
 
+            /*
             var usable = instantiatedItem.GetComponent<MultiModeUsable>();
             if (usable)
             {
@@ -154,6 +161,7 @@ namespace Items
                     usable.SetMode(1);
                 }
             }
+            */
 
             itemThrownEvent.Send();
         }

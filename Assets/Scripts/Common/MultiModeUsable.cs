@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using Bolt;
 
 namespace Common
 {
     [DisallowMultipleComponent]
-    public class MultiModeUsable : MonoBehaviour
+    public class MultiModeUsable : GlobalEventListener
     {
         public int Mode;
 
@@ -14,6 +15,14 @@ namespace Common
         {
             Mode = mode;
             OnModeUpdated.Invoke(Mode);
+        }
+
+        public override void OnEvent(ItemThrown evnt)
+        {
+            if (evnt.Entity == GetComponent<BoltEntity>())
+            {
+                SetMode(evnt.UsageMode);
+            }
         }
     }
 }

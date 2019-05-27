@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 1469}
   - component: {fileID: 2732}
   - component: {fileID: 3406}
+  - component: {fileID: 1867821469038321676}
+  - component: {fileID: 644034322262343047}
   m_Layer: 0
   m_Name: CollisionTrigger
   m_TagString: CollisionHitBox
@@ -63,6 +65,36 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   ItemCollision: {fileID: 11400000, guid: 69dfa03513c0f8b4395b496b0f802723, type: 2}
+--- !u!114 &1867821469038321676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301758009, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shape: 1
+  _type: 0
+  _center: {x: 0, y: 0, z: 0}
+  _boxSize: {x: 0.25, y: 0.25, z: 0.25}
+  _sphereRadius: 0.25
+--- !u!114 &644034322262343047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b7e3309ccb4e4b46991d49e989bbc53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collisionDistanceCheck: 15
 --- !u!1 &547
 GameObject:
   m_ObjectHideFlags: 0
@@ -1811,6 +1843,7 @@ GameObject:
   - component: {fileID: 3397}
   - component: {fileID: 3398}
   - component: {fileID: 3410}
+  - component: {fileID: 8643284889593884230}
   m_Layer: 0
   m_Name: Laser
   m_TagString: Untagged
@@ -1940,6 +1973,21 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: IntEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!114 &8643284889593884230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1510134700, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _proximity: {fileID: 0}
+  _hitboxes:
+  - {fileID: 0}
 --- !u!1 &651
 GameObject:
   m_ObjectHideFlags: 0
@@ -1985,6 +2033,8 @@ GameObject:
   - component: {fileID: 1569}
   - component: {fileID: 2740}
   - component: {fileID: 3396}
+  - component: {fileID: 7380945291828774165}
+  - component: {fileID: 8532318915323001185}
   m_Layer: 0
   m_Name: CollisionTrigger
   m_TagString: CollisionHitBox
@@ -2038,3 +2088,33 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   ItemCollision: {fileID: 11400000, guid: 69dfa03513c0f8b4395b496b0f802723, type: 2}
+--- !u!114 &7380945291828774165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301758009, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shape: 1
+  _type: 0
+  _center: {x: 0, y: 0, z: 0}
+  _boxSize: {x: 0.25, y: 0.25, z: 0.25}
+  _sphereRadius: 0.25
+--- !u!114 &8532318915323001185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b7e3309ccb4e4b46991d49e989bbc53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collisionDistanceCheck: 10

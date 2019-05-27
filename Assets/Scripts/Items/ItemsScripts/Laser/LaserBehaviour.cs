@@ -16,14 +16,6 @@ namespace Items
 
         //CORE
 
-            /*
-        private void Awake()
-        {
-            _laserRenderer = GetComponentInChildren<MeshRenderer>();
-            _laserCollider = GetComponentInChildren<CapsuleCollider>();
-        }
-        */
-
         private void Start()
         {
             StartCoroutine(LaserDuration(_laserSettings.TimeBeforeDestroyLaser));
@@ -37,14 +29,17 @@ namespace Items
             {
                 case 1:
                     _laserFront.SetActive(true);
+                    GetComponent<BoltHitboxBody>().proximity = _laserFront.GetComponentInChildren<BoltHitbox>();
+                    GetComponent<BoltHitboxBody>().hitboxes[0] = _laserFront.GetComponentInChildren<BoltHitbox>();
                     _laserRenderer = _laserFront.GetComponentInChildren<MeshRenderer>();
                     _laserCollider = _laserFront.GetComponentInChildren<CapsuleCollider>();
                     _laserBack.SetActive(false);
                     break;
                 case 2:
                     _laserBack.SetActive(true);
+                    GetComponent<BoltHitboxBody>().proximity = _laserBack.GetComponentInChildren<BoltHitbox>();
+                    GetComponent<BoltHitboxBody>().hitboxes[0] = _laserBack.GetComponentInChildren<BoltHitbox>();
                     _laserRenderer = _laserBack.GetComponentInChildren<MeshRenderer>();
-                    //_laserColliderBack = _laserBack.GetComponentInChildren<MeshCollider>();
                     _laserCollider = _laserBack.GetComponentInChildren<SphereCollider>();
                     _laserFront.SetActive(false);
                     break;
