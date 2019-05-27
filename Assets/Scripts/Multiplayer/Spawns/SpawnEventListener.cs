@@ -75,6 +75,10 @@ namespace Multiplayer
 
             myKart.transform.position = spawnPosition;
             myKart.transform.rotation = spawnRotation;
+            PlayerInfo.Me = myKart.GetComponent<PlayerInfo>();
+            myKart.GetComponent<PlayerInfo>().Nickname = _playerSettings.Nickname;
+            myKart.GetComponent<PlayerInfo>().OwnerID = SWMatchmaking.GetMyBoltId();
+            myKart.GetComponent<PlayerInfo>().Team = team;
             myKart.GetComponent<BoltEntity>().GetState<IKartState>().Team = (int) team;
             myKart.GetComponent<BoltEntity>().GetState<IKartState>().OwnerID = SWMatchmaking.GetMyBoltId();
 
