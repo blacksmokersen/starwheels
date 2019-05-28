@@ -20,9 +20,12 @@ namespace SW.Matchmaking
         [SerializeField] private GameObject _startGameButton;
 
         [Header("Settings")]
+        [SerializeField] private int _minimumPlayersToAutomaticLaunch;
+        [SerializeField] private float _secondsBeforeLaunchingGame;
         [SerializeField] private float _secondsBeforeCreatingGame;
 
         [Header("Events")]
+        public UnityEvent OnAutomaticLaunch;
         public UnityEvent OnNoLobbyFound;
 
         private bool _timerStarted = false;
@@ -196,11 +199,19 @@ namespace SW.Matchmaking
 
         private void CheckTimer()
         {
-            if (BoltNetwork.IsClient && _timer > _secondsBeforeCreatingGame)
+            if (BoltNetwork.IsServer && _timer > _secondsBeforeLaunchingGame && (1+SWMatchmaking.GetCurrentLobbyPlayerCount()) >= _minimumPlayersToAutomaticLaunch)
             {
+                ResetTimer();
+                if (OnAutomaticLaunch != null)
+                {
+                    OnAutomaticLaunch.Invoke();
+                }
+            }
+            else if (BoltNetwork.IsClient && _timer > _secondsBeforeCreatingGame)
+            {
+                ResetTimer();
                 if (OnNoLobbyFound != null)
                 {
-                    ResetTimer();
                     OnNoLobbyFound.Invoke();
                 }
             }
