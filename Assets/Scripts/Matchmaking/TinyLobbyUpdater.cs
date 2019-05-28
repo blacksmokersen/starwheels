@@ -82,7 +82,6 @@ namespace SW.Matchmaking
 
         public override void Connected(BoltConnection connection)
         {
-            Debug.Log("Hello");
             if (connection.ConnectionId == SWMatchmaking.GetMyBoltId())
             {
                 SetLookingForPlayers();
@@ -153,6 +152,7 @@ namespace SW.Matchmaking
             _lookingForGameText.text = "Looking for players";
             _currentPlayerCountText.gameObject.SetActive(true);
             _startGameButton.SetActive(BoltNetwork.IsServer);
+            _timerText.gameObject.SetActive(BoltNetwork.IsServer);
 
             _timerStarted = true;
         }

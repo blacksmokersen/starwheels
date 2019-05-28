@@ -92,7 +92,7 @@ namespace SW.Matchmaking
             }
         }
 
-        public void FindLobby()
+        public void FindPublicLobby()
         {
             var lobbyList = BoltNetwork.SessionList;
 
@@ -102,7 +102,7 @@ namespace SW.Matchmaking
                 var lobbyMatchesSelectedServerName = DebugModEnabled && lobbyToken.ServerName == _serverDebugMode.GetClientServerName();
                 var lobbyMatchesSelectedGamemodes = _lobbyData.GamemodePool.Contains(lobbyToken.GameMode);
 
-                if ( lobbyMatchesSelectedServerName || lobbyMatchesSelectedGamemodes )
+                if ( (lobbyMatchesSelectedServerName || lobbyMatchesSelectedGamemodes) && lobbyToken.Public )
                 {
                     _lobbyData.SetGamemode(lobbyToken.GameMode);
                     _lobbyData.SetMap(lobbyToken.MapName);
@@ -118,7 +118,7 @@ namespace SW.Matchmaking
             while (Application.isPlaying)
             {
                 yield return new WaitForSeconds(0.5f);
-                FindLobby();
+                FindPublicLobby();
             }
         }
     }

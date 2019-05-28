@@ -38,24 +38,27 @@ namespace SW.Matchmaking
 
             foreach (var toggle in gamemodesToggles)
             {
-                toggle.onValueChanged.RemoveAllListeners();
-
-                var gameModeName = toggle.GetComponent<GamemodeGroupLabel>().Label.Value;
-
-                if (_resetTogglesOnInitializing)
+                if (toggle.GetComponent<GamemodeGroupLabel>())
                 {
-                    toggle.isOn = false;
+                    toggle.onValueChanged.RemoveAllListeners();
+
+                    var gameModeName = toggle.GetComponent<GamemodeGroupLabel>().Label.Value;
+
+                    if (_resetTogglesOnInitializing)
+                    {
+                        toggle.isOn = false;
+                    }
+                    else if (toggle.isOn)
+                    {
+                        _lobbyData.GamemodePool.Add(gameModeName);
+                    }
+                    _lobbyData.MapPool.Add(gameModeName, new List<string>());
+
+                    toggle.onValueChanged.AddListener((b) =>
+                    {
+                        UpdateGamemodePool(gameModeName, toggle.isOn);
+                    });
                 }
-                else if (toggle.isOn)
-                {
-                    _lobbyData.GamemodePool.Add(gameModeName);
-                }
-                _lobbyData.MapPool.Add(gameModeName, new List<string>());
-
-                toggle.onValueChanged.AddListener((b) =>
-                {
-                    UpdateGamemodePool(gameModeName, toggle.isOn);
-                });
             }
         }
 
