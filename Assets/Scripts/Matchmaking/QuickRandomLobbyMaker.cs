@@ -66,7 +66,7 @@ namespace SW.Matchmaking
 
         public void CreateRandomGame()
         {
-            Debug.Log("Creating random game");
+            Debug.Log("Creating random game for " + _lobbyData.ChosenGamemode);
             PopulateMapList();
             _lobbyData.SetRandomMap();
             SWMatchmaking.SetLobbyData(_lobbyData);

@@ -1,6 +1,7 @@
 ﻿using UdpKit;
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using Bolt;
 using TMPro;
 
@@ -12,7 +13,6 @@ namespace SW.Matchmaking
         [SerializeField] private LobbyData _lobbyData;
 
         [Header("UI Elements")]
-        [SerializeField] private GameObject _createGamePanel;
         [SerializeField] private TextMeshProUGUI _lookingForGameText;
         [SerializeField] private TextMeshProUGUI _currentGamemodeLobbiesText;
         [SerializeField] private TextMeshProUGUI _timerText;
@@ -21,6 +21,9 @@ namespace SW.Matchmaking
 
         [Header("Settings")]
         [SerializeField] private float _secondsBeforeCreatingGame;
+
+        [Header("Events")]
+        public UnityEvent OnNoLobbyFound;
 
         private bool _timerStarted = false;
         private float _timer = 0.0f;
@@ -41,6 +44,15 @@ namespace SW.Matchmaking
         {
             base.OnEnable();
             ResetTimer();
+
+            if (BoltNetwork.IsServer)
+            {
+                SetLookingForPlayers();
+            }
+            else
+            {
+                SetLookingForGame();
+            }
         }
 
         // BOLT
@@ -67,6 +79,7 @@ namespace SW.Matchmaking
 
         public override void Connected(BoltConnection connection)
         {
+            Debug.Log("Hello");
             if (connection.ConnectionId == SWMatchmaking.GetMyBoltId())
             {
                 SetLookingForPlayers();
@@ -123,6 +136,7 @@ namespace SW.Matchmaking
         {
             gameObject.SetActive(true);
             _lookingForGameText.gameObject.SetActive(true);
+            _lookingForGameText.text = "Looking for a game";
             _currentPlayerCountText.gameObject.SetActive(false);
             _startGameButton.SetActive(false);
 
@@ -132,7 +146,8 @@ namespace SW.Matchmaking
         public void SetLookingForPlayers()
         {
             gameObject.SetActive(true);
-            _lookingForGameText.gameObject.SetActive(false);
+            _lookingForGameText.gameObject.SetActive(true);
+            _lookingForGameText.text = "Looking for players";
             _currentPlayerCountText.gameObject.SetActive(true);
             _startGameButton.SetActive(BoltNetwork.IsServer);
 
@@ -183,7 +198,11 @@ namespace SW.Matchmaking
         {
             if (BoltNetwork.IsClient && _timer > _secondsBeforeCreatingGame)
             {
-                _createGamePanel.SetActive(true);
+                if (OnNoLobbyFound != null)
+                {
+                    ResetTimer();
+                    OnNoLobbyFound.Invoke();
+                }
             }
         }
 
