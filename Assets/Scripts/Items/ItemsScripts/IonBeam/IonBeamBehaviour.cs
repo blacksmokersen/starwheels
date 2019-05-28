@@ -40,16 +40,19 @@ namespace Items
 
         public void LaunchMode(int mode)
         {
-            switch (mode)
+            if (entity.isOwner)
             {
-                case 1:
-                    _ionBeamCam.GetIonBeamBehaviour(this);
-                    _ionBeamCam.IonBeamCameraBehaviour(true);
-                    EnableIonInputs();
-                    break;
-                case 2:
-                    LaunchImmediateIonBeamBackwards(_ionBeamOwnership.transform.position);
-                    break;
+                switch (mode)
+                {
+                    case 1:
+                        _ionBeamCam.GetIonBeamBehaviour(this);
+                        _ionBeamCam.IonBeamCameraBehaviour(true);
+                        EnableIonInputs();
+                        break;
+                    case 2:
+                        LaunchImmediateIonBeamBackwards(_ionBeamOwnership.transform.position);
+                        break;
+                }
             }
         }
 
