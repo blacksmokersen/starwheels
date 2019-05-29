@@ -32,7 +32,9 @@ namespace SW.Matchmaking.Friends
         {
             if (SteamManager.Initialized)
             {
+                Debug.Log("[LOBBY CREATION] starting ... ");
                 SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, _maxFriends);
+                Debug.Log("[LOBBY CREATION] Sent event ! ");
             }
         }
 
@@ -49,7 +51,9 @@ namespace SW.Matchmaking.Friends
 
         public void SendBoltLobbyInfoToFriends() // Send the server Bolt ID to the friends lobby, so that they can join
         {
+            Debug.Log("[LOBBY DATA] sending ...");
             SteamMatchmaking.SetLobbyData(_lobbyID, "boltLobbyId", 101.ToString());
+            Debug.Log("[LOBBY DATA] SENT !");
         }
 
         // PROTECTED
@@ -69,7 +73,7 @@ namespace SW.Matchmaking.Friends
                 _lobbyID = (CSteamID)result.m_ulSteamIDLobby;
                 _lobbyCreated = true;
                 OpenInvitationPopup();
-                Debug.Log("Friends lobby created !");
+                Debug.Log("[LOBBY CREATION] DONE ! ");
             }
             else
             {
@@ -88,7 +92,9 @@ namespace SW.Matchmaking.Friends
         {
             bool isReady = SteamMatchmaking.GetLobbyData(_lobbyID, "ready") == "yes";
             int boltID;
+            Debug.Log("[LOBBY DATA] Updated ...");
             int.TryParse(SteamMatchmaking.GetLobbyData(_lobbyID, "boltLobbyId"), out boltID);
+            Debug.Log("[LOBBY DATA] ... value received : " + boltID);
 
             if (isReady && boltID != -1)
             {
