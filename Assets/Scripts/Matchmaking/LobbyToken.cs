@@ -9,6 +9,7 @@ namespace SW.Matchmaking
         public string GameMode;
         public string MapName;
         public bool Public;
+        public bool CanBeJoined;
         public int MaxPlayers;
 
         public void Read(UdpPacket packet)
@@ -17,6 +18,7 @@ namespace SW.Matchmaking
             GameMode = packet.ReadString();
             MapName = packet.ReadString();
             Public = packet.ReadBool();
+            CanBeJoined = packet.ReadBool();
             MaxPlayers = packet.ReadInt();
         }
 
@@ -26,6 +28,7 @@ namespace SW.Matchmaking
             packet.WriteString(GameMode);
             packet.WriteString(MapName);
             packet.WriteBool(Public);
+            packet.WriteBool(CanBeJoined);
             packet.WriteInt(MaxPlayers);
         }
 
@@ -35,6 +38,7 @@ namespace SW.Matchmaking
             GameMode = data.ChosenGamemode;
             MapName = data.ChosenMapName;
             Public = data.Public;
+            CanBeJoined = data.CanBeJoined;
             MaxPlayers = data.MaxPlayers;
             return this;
         }
