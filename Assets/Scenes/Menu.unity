@@ -1442,22 +1442,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lobbyData: {fileID: 11400000, guid: 930191bbcbab87e4f98912baee12eddc, type: 2}
   _mapListData: {fileID: 11400000, guid: b043d4fc247c9ca4e9d820a19ec214ae, type: 2}
-  OnBoltStartDone:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 195904373}
-        m_MethodName: CreateRandomGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   OnBoltShutdown:
     m_PersistentCalls:
       m_Calls:
@@ -1476,7 +1460,18 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   OnSwitchedToServer:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 195904373}
+        m_MethodName: CreateRandomGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnSwitchedToClient:
@@ -5854,7 +5849,7 @@ MonoBehaviour:
   _startGameButton: {fileID: 1759963740}
   _minimumPlayersToAutomaticLaunch: 4
   _secondsBeforeLaunchingGame: 90
-  _secondsBeforeCreatingGame: 45
+  _secondsBeforeCreatingGame: 10
   OnAutomaticLaunch:
     m_PersistentCalls:
       m_Calls:

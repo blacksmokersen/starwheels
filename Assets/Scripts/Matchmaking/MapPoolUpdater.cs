@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 namespace SW.Matchmaking
 {
@@ -75,7 +74,6 @@ namespace SW.Matchmaking
             }
             else
             {
-                Debug.Log("rm : " + mapName);
                 _lobbyData.RemoveMap(gameModeName, mapName);
             }
         }

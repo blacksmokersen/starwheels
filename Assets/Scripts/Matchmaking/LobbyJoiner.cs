@@ -101,7 +101,6 @@ namespace SW.Matchmaking
                 var lobbyToken = SWMatchmaking.GetLobbyToken(lobby.Key);
                 var lobbyMatchesSelectedServerName = DebugModEnabled && lobbyToken.ServerName == _serverDebugMode.GetClientServerName();
                 var lobbyMatchesSelectedGamemodes = _lobbyData.GamemodePool.Contains(lobbyToken.GameMode);
-                Debug.LogError("Found lobby : " + lobbyToken.Public.ToString() + " / " + lobbyToken.CanBeJoined.ToString());
 
                 if ((lobbyMatchesSelectedServerName || lobbyMatchesSelectedGamemodes) && lobbyToken.Public && lobbyToken.CanBeJoined )
                 {
