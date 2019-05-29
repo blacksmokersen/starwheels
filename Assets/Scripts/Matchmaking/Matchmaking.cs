@@ -69,11 +69,6 @@ public static class SWMatchmaking
         BoltNetwork.Connect(BoltNetwork.SessionList[id], connectToken);
     }
 
-    public static void JoinRandomGame()
-    {
-
-    }
-
     public static int GetMyBoltId() // En faire une extension de boltnetwork
     {
         if (BoltNetwork.IsConnected)
