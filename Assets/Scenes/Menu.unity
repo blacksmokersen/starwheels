@@ -1442,22 +1442,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lobbyData: {fileID: 11400000, guid: 930191bbcbab87e4f98912baee12eddc, type: 2}
   _mapListData: {fileID: 11400000, guid: b043d4fc247c9ca4e9d820a19ec214ae, type: 2}
-  OnBoltStartDone:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 195904373}
-        m_MethodName: CreateRandomGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   OnBoltShutdown:
     m_PersistentCalls:
       m_Calls:
@@ -1476,7 +1460,18 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   OnSwitchedToServer:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 195904373}
+        m_MethodName: CreateRandomGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnSwitchedToClient:
@@ -5854,7 +5849,7 @@ MonoBehaviour:
   _startGameButton: {fileID: 1759963740}
   _minimumPlayersToAutomaticLaunch: 4
   _secondsBeforeLaunchingGame: 90
-  _secondsBeforeCreatingGame: 45
+  _secondsBeforeCreatingGame: 10
   OnAutomaticLaunch:
     m_PersistentCalls:
       m_Calls:
@@ -8473,7 +8468,7 @@ MonoBehaviour:
   _firstItemSelected: {fileID: 268140398}
   _setFocusOnStart: 0
   _setFocusOnEnabled: 1
-  _resetOnEnabled: 0
+  _resetOnEnabled: 1
   _elementsToReset:
   - {fileID: 2232543419655075118}
   - {fileID: 70216427324426428}
@@ -17770,7 +17765,7 @@ MonoBehaviour:
   _firstItemSelected: {fileID: 2851544314449957878}
   _setFocusOnStart: 0
   _setFocusOnEnabled: 1
-  _resetOnEnabled: 0
+  _resetOnEnabled: 1
   _elementsToReset: []
   _elementsToResetStatuses: 
 --- !u!1001 &2047015315
@@ -21949,7 +21944,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41df106e03f2ec243a864e86540f82f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isDebugModeActivated: 1
+  _isDebugModeActivated: 0
   _text: {fileID: 6647586860663309616}
   _serverNameMatchmakingPanel: {fileID: 70216427324426428}
   _serverNameQuickMatchPanel: {fileID: 2138798283}

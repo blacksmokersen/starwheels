@@ -15,6 +15,7 @@ namespace SW.Matchmaking
         private void Awake()
         {
             _toggle.onValueChanged.AddListener(SetPrivateLobby);
+            _lobbyData.Public = !_toggle.isOn;
         }
 
         private void SetPrivateLobby(bool value)

@@ -102,7 +102,7 @@ namespace SW.Matchmaking
                 var lobbyMatchesSelectedServerName = DebugModEnabled && lobbyToken.ServerName == _serverDebugMode.GetClientServerName();
                 var lobbyMatchesSelectedGamemodes = _lobbyData.GamemodePool.Contains(lobbyToken.GameMode);
 
-                if ( (lobbyMatchesSelectedServerName || lobbyMatchesSelectedGamemodes) && lobbyToken.Public )
+                if ((lobbyMatchesSelectedServerName || lobbyMatchesSelectedGamemodes) && lobbyToken.Public && lobbyToken.CanBeJoined )
                 {
                     _lobbyData.SetGamemode(lobbyToken.GameMode);
                     _lobbyData.SetMap(lobbyToken.MapName);

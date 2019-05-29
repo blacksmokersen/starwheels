@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.Events;
 using Bolt;
 
@@ -11,7 +12,6 @@ namespace SW.Matchmaking
         [SerializeField] private MapListData _mapListData;
 
         [Header("Bolt Events")]
-        public UnityEvent OnBoltStartDone;
         public UnityEvent OnBoltShutdown;
 
         [Header("Other Events")]
@@ -19,57 +19,33 @@ namespace SW.Matchmaking
         public UnityEvent OnSwitchedToClient;
         public UnityEvent OnGameCreated;
 
-        // BOLT
-
-        public override void BoltStartDone()
-        {
-            if (OnBoltStartDone != null)
-            {
-                OnBoltStartDone.Invoke();
-            }
-        }
-
-        public override void BoltShutdownBegin(AddCallback registerDoneCallback)
-        {
-            if (OnBoltShutdown != null)
-            {
-                OnBoltShutdown.Invoke();
-            }
-        }
-
         // PUBLIC
 
         public void ShutdownBolt()
         {
             BoltLauncher.Shutdown();
+            StartCoroutine(WaitForBoltShutdown());
         }
 
         public void SwitchToServer()
         {
             BoltLauncher.StartServer();
-
-            if (OnSwitchedToServer != null)
-            {
-                OnSwitchedToServer.Invoke();
-            }
+            StartCoroutine(WaitForConnectedAsServer());
         }
 
         public void SwitchToClient()
         {
             BoltLauncher.StartClient();
-
-            if (OnSwitchedToClient != null)
-            {
-                OnSwitchedToClient.Invoke();
-            }
+            StartCoroutine(WaitForConnectedAsClient());
         }
 
         public void CreateRandomGame()
         {
-            Debug.Log("Creating random game for " + _lobbyData.ChosenGamemode);
+            _lobbyData.SetRandomGamemode();
             PopulateMapList();
             _lobbyData.SetRandomMap();
             SWMatchmaking.SetLobbyData(_lobbyData);
+            Debug.Log("Creating random game for " + _lobbyData.ChosenGamemode);
             SWMatchmaking.CreateLobby();
 
             if (OnGameCreated != null)
@@ -84,10 +60,53 @@ namespace SW.Matchmaking
         {
             foreach (var map in _mapListData.MapList)
             {
-                if (map.ExclusiveGameMode.Value == _lobbyData.ChosenGamemode)
+                foreach (var supportedGamemode in map.SupportedGamemodes)
                 {
-                    _lobbyData.AddMap(_lobbyData.ChosenGamemode, map.MapName);
+                    if (supportedGamemode.Value == _lobbyData.ChosenGamemode)
+                    {
+                        _lobbyData.AddMap(_lobbyData.ChosenGamemode, map.MapName);
+                        break;
+                    }
                 }
+            }
+        }
+
+        private IEnumerator WaitForBoltShutdown()
+        {
+            while (BoltNetwork.IsConnected)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+
+            if (OnBoltShutdown != null)
+            {
+                OnBoltShutdown.Invoke();
+            }
+        }
+
+        private IEnumerator WaitForConnectedAsServer()
+        {
+            while(!(BoltNetwork.IsConnected && BoltNetwork.IsServer))
+            {
+                yield return new WaitForEndOfFrame();
+            }
+
+            if (OnSwitchedToServer != null)
+            {
+                OnSwitchedToServer.Invoke();
+            }
+        }
+
+        private IEnumerator WaitForConnectedAsClient()
+        {
+            while (!(BoltNetwork.IsConnected && BoltNetwork.IsClient))
+            {
+                yield return new WaitForEndOfFrame();
+            }
+
+            if (OnSwitchedToClient != null)
+            {
+                OnSwitchedToClient.Invoke();
             }
         }
     }

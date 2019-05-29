@@ -9,6 +9,7 @@ namespace SW.Matchmaking
         [Header("General Info")]
         public string ServerName;
         public bool Public;
+        public bool CanBeJoined = true;
         public int MaxPlayers;
 
         [Header("Gamemode Info")]
