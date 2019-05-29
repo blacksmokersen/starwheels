@@ -91,20 +91,20 @@ namespace Abilities.Jump
             }
             else
             {
-                forceDirection = Vector3.forward;
-                direction = Direction.Forward;
+               // forceDirection = Vector3.forward;
+               // direction = Direction.Forward;
 
-                //  forceDirection = Vector3.up;
-                //  _straightUpSecondJump = true;
+                  forceDirection = Vector3.up;
+                  _straightUpSecondJump = true;
             }
 
             var forceUp = Vector3.up * _jumpSettings.SecondJumpUpForce;
             var forceDirectional = forceDirection * _jumpSettings.SecondJumpLateralForces;
             if (_straightUpSecondJump)
-                _rb.AddRelativeForce(forceUp, ForceMode.Force);
+                _rb.AddRelativeForce(forceUp, ForceMode.Impulse);
             else
             {
-                _rb.AddRelativeForce(forceUp + forceDirectional, ForceMode.Force);
+                _rb.AddRelativeForce(forceUp + forceDirectional, ForceMode.Impulse);
                 StartCoroutine(CancelJumpVelocity(forceDirectional));
             }
             OnSecondJump.Invoke(direction);
