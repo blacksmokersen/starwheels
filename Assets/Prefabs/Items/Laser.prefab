@@ -1352,6 +1352,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1564}
+  - component: {fileID: 8184837775075786875}
   m_Layer: 0
   m_Name: LaserFront
   m_TagString: Untagged
@@ -1376,6 +1377,24 @@ Transform:
   m_Father: {fileID: 1567}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8184837775075786875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1510134700, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _proximity: {fileID: 7380945291828774165}
+  _hitboxes:
+  - {fileID: 7380945291828774165}
+  - {fileID: 8985616752021817555}
+  - {fileID: 8541589500646504022}
+  - {fileID: 8122636683371655598}
 --- !u!1 &550
 GameObject:
   m_ObjectHideFlags: 0
@@ -1843,7 +1862,6 @@ GameObject:
   - component: {fileID: 3397}
   - component: {fileID: 3398}
   - component: {fileID: 3410}
-  - component: {fileID: 8643284889593884230}
   m_Layer: 0
   m_Name: Laser
   m_TagString: Untagged
@@ -1973,21 +1991,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: IntEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &8643284889593884230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1510134700, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _proximity: {fileID: 0}
-  _hitboxes:
-  - {fileID: 0}
 --- !u!1 &651
 GameObject:
   m_ObjectHideFlags: 0
@@ -1997,6 +2000,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1568}
+  - component: {fileID: 7672482330560906073}
   m_Layer: 0
   m_Name: LaserBack
   m_TagString: Untagged
@@ -2022,6 +2026,21 @@ Transform:
   m_Father: {fileID: 1567}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7672482330560906073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1510134700, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _proximity: {fileID: 1867821469038321676}
+  _hitboxes:
+  - {fileID: 1867821469038321676}
 --- !u!1 &652
 GameObject:
   m_ObjectHideFlags: 0
@@ -2034,6 +2053,9 @@ GameObject:
   - component: {fileID: 2740}
   - component: {fileID: 3396}
   - component: {fileID: 7380945291828774165}
+  - component: {fileID: 8985616752021817555}
+  - component: {fileID: 8541589500646504022}
+  - component: {fileID: 8122636683371655598}
   - component: {fileID: 8532318915323001185}
   m_Layer: 0
   m_Name: CollisionTrigger
@@ -2102,7 +2124,58 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shape: 1
   _type: 0
-  _center: {x: 0, y: 0, z: 0}
+  _center: {x: 0, y: 0.8, z: 0}
+  _boxSize: {x: 0.25, y: 0.25, z: 0.25}
+  _sphereRadius: 0.25
+--- !u!114 &8985616752021817555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301758009, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shape: 1
+  _type: 0
+  _center: {x: 0, y: 0.26, z: 0}
+  _boxSize: {x: 0.25, y: 0.25, z: 0.25}
+  _sphereRadius: 0.25
+--- !u!114 &8541589500646504022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301758009, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shape: 1
+  _type: 0
+  _center: {x: 0, y: -0.26, z: 0}
+  _boxSize: {x: 0.25, y: 0.25, z: 0.25}
+  _sphereRadius: 0.25
+--- !u!114 &8122636683371655598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301758009, guid: 5b00bf8b25851d440940a40ec23344f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shape: 1
+  _type: 0
+  _center: {x: 0, y: -0.8, z: 0}
   _boxSize: {x: 0.25, y: 0.25, z: 0.25}
   _sphereRadius: 0.25
 --- !u!114 &8532318915323001185

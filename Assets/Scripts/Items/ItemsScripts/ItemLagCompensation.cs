@@ -30,7 +30,7 @@ namespace Items
             {
                 if (other.gameObject.CompareTag(Constants.Tag.KartTrigger) && !other.GetComponentInParent<BoltEntity>().isOwner)
                 {
-               //     Debug.LogError("LOCAL HIT BY SERVER");
+                 //   Debug.LogError("LOCAL HIT BY SERVER");
 
                     ItemCollsionLagCompensationEvent itemsLagCheckEvent = ItemCollsionLagCompensationEvent.Create();
                     itemsLagCheckEvent.ItemBoltEntity = GetComponentInParent<BoltEntity>();
