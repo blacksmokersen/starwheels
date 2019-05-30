@@ -58,7 +58,7 @@ namespace Items
             showDisplayEvent.Entity = GetComponentInParent<BoltEntity>();
             showDisplayEvent.ItemName = _inventory.CurrentItem != null ? _inventory.CurrentItem.Name : "";
             showDisplayEvent.ItemCount = _inventory.CurrentItemCount;
-            showDisplayEvent.Direction = (int) _throwingDirection.LastDirectionUp;
+            showDisplayEvent.Direction = (int)_throwingDirection.LastDirectionUp;
             showDisplayEvent.Send();
         }
 
@@ -77,6 +77,13 @@ namespace Items
                     {
                         node.Hide();
                     }
+                }
+            }
+            else
+            {
+                foreach (var node in _shieldsRoot.GetComponentsInChildren<ItemDisplayerShieldNode>())
+                {
+                    node.Hide();
                 }
             }
         }
@@ -98,7 +105,7 @@ namespace Items
                 _itemIsForward = false;
                 SendShowDisplayEvent();
             }
-            else if(Math.Abs(Input.GetAxis(Constants.Input.UpAndDownAxis)) < 0.3f && (_itemIsBackward || _itemIsForward))
+            else if (Math.Abs(Input.GetAxis(Constants.Input.UpAndDownAxis)) < 0.3f && (_itemIsBackward || _itemIsForward))
             {
                 _itemIsForward = false;
                 _itemIsBackward = false;
