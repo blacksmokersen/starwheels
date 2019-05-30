@@ -141,8 +141,8 @@ public class InGameMenu : GlobalEventListener
     {
         Debug.Log("Options Menu");
         _optionsVisible = !_optionsVisible;
-        optionsPanel.SetActive(_optionsVisible);
         inGameMenuPanel.SetActive(false);
+        optionsPanel.SetActive(_optionsVisible);
         _currentMenu = MenuState.OPTIONS;
 
         //par défaut on affiche l'audio panel dans les options
