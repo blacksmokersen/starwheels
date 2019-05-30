@@ -65,7 +65,7 @@ namespace SW.Matchmaking.Friends
                 Debug.LogError("[LOBBY DATA] sending ...");
                 if (_sessionData.MySession != null)
                 {
-                    SteamMatchmaking.SetLobbyData(_lobbyID, "ready", "yes");
+                    //SteamMatchmaking.SetLobbyData(_lobbyID, "ready", "yes");
                     SteamMatchmaking.SetLobbyData(_lobbyID, "boltLobbyId", _sessionData.MySession.Id.ToString());
                     Debug.LogError("[LOBBY DATA] BoltID  ... " + _sessionData.MySession.Id.ToString());
                 }
@@ -117,17 +117,24 @@ namespace SW.Matchmaking.Friends
         {
             Debug.LogError("[LOBBY DATA] Updated ...");
 
-            bool isReady = SteamMatchmaking.GetLobbyData(_lobbyID, "ready") == "yes";
-            Debug.LogError("[LOBBY DATA] ... Ready value received : " + isReady.ToString());
+            //bool isReady = SteamMatchmaking.GetLobbyData(_lobbyID, "ready") == "yes";
+            //Debug.LogError("[LOBBY DATA] ... Ready value received : " + isReady.ToString());
 
-            Guid boltServerID = new Guid(SteamMatchmaking.GetLobbyData(_lobbyID, "boltLobbyId"));
-            Debug.LogError("[LOBBY DATA] ... ID value received : " + boltServerID.ToString());
-
-            if (!BoltNetwork.IsServer && isReady && boltServerID != null)
+            try
             {
-                Debug.LogError("[BOLT] Starting client ...");
-                BoltLauncher.StartClient();
-                StartCoroutine(JoinBoltLobby(boltServerID));
+                Guid boltServerID = new Guid(SteamMatchmaking.GetLobbyData(_lobbyID, "boltLobbyId"));
+                Debug.LogError("[LOBBY DATA] ... ID value received : " + boltServerID.ToString());
+
+                if (!BoltNetwork.IsServer && boltServerID != null)
+                {
+                    Debug.LogError("[BOLT] Starting client ...");
+                    BoltLauncher.StartClient();
+                    StartCoroutine(JoinBoltLobby(boltServerID));
+                }
+            }
+            catch (FormatException e)
+            {
+                Debug.LogError("Yo l'erreur");
             }
         }
 
