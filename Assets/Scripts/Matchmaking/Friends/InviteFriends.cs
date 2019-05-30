@@ -60,17 +60,15 @@ namespace SW.Matchmaking.Friends
 
         public void SendBoltLobbyInfoToFriends() // Send the server Bolt ID to the friends lobby, so that they can join
         {
-            if (BoltNetwork.IsServer)
+            Debug.LogError("[LOBBY DATA] sending ...");
+            if (_sessionData.MySession != null)
             {
-                Debug.LogError("[LOBBY DATA] sending ...");
-                if (_sessionData.MySession != null)
-                {
-                    //SteamMatchmaking.SetLobbyData(_lobbyID, "ready", "yes");
-                    SteamMatchmaking.SetLobbyData(_lobbyID, "boltLobbyId", _sessionData.MySession.Id.ToString());
-                    Debug.LogError("[LOBBY DATA] BoltID  ... " + _sessionData.MySession.Id.ToString());
-                }
-                Debug.LogError("[LOBBY DATA] SENT !");
+                //SteamMatchmaking.SetLobbyData(_lobbyID, "ready", "yes");
+                Debug.LogError("[LOBBY DATA] sending to ... " + _lobbyID.ToString());
+                SteamMatchmaking.SetLobbyData(_lobbyID, "boltLobbyId", _sessionData.MySession.Id.ToString());
+                Debug.LogError("[LOBBY DATA] BoltID  ... " + _sessionData.MySession.Id.ToString());
             }
+            Debug.LogError("[LOBBY DATA] SENT !");
         }
 
         // PROTECTED
@@ -110,7 +108,7 @@ namespace SW.Matchmaking.Friends
         {
             _lobbyID = (CSteamID)result.m_ulSteamIDLobby;
 
-            Debug.LogErrorFormat("[LOBBY ENTERED] Entered with ID {0}", result.m_ulSteamIDLobby);
+            Debug.LogErrorFormat("[LOBBY ENTERED] Entered with ID {0}", _lobbyID.ToString());
         }
 
         private void OnLobbyDataUpdated(LobbyDataUpdate_t result)
