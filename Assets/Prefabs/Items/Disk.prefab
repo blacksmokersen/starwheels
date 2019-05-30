@@ -9835,6 +9835,7 @@ GameObject:
   - component: {fileID: 3343}
   - component: {fileID: 3375}
   - component: {fileID: 5940796700896016785}
+  - component: {fileID: 1490224207655541035}
   m_Layer: 13
   m_Name: Disk
   m_TagString: Untagged
@@ -10010,6 +10011,34 @@ MonoBehaviour:
   _proximity: {fileID: 2270557838750059659}
   _hitboxes:
   - {fileID: 2270557838750059659}
+--- !u!114 &1490224207655541035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea6f275016dd6744998dad04c961db11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Mode: 1
+  OnModeUpdated:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3359}
+        m_MethodName: LaunchMode
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: IntEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &511
 GameObject:
   m_ObjectHideFlags: 0

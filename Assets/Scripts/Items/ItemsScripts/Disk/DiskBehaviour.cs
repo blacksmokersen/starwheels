@@ -18,6 +18,16 @@ namespace Items
             DestroyObject(30f);
         }
 
+        //PUBLIC
+
+        public void LaunchMode(int mode)
+        {
+            if (mode == 10)
+                DestroyObject(0.1f);
+        }
+
+        //PRIVATE
+
         private void OnCollisionEnter(Collision collision)
         {
             if (BoltNetwork.IsServer)

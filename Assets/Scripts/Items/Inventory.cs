@@ -38,6 +38,7 @@ namespace Items
         public ItemEvent OnItemUse;
         public IntEvent OnItemCountChange;
 
+        [HideInInspector] public bool IsWallDetected;
         private float _timer = 0f;
 
         // CORE
@@ -126,6 +127,8 @@ namespace Items
                 usableMode = 2;
             else
                 usableMode = 1;
+            if (IsWallDetected)
+                usableMode = 10;
 
             ItemThrown itemThrownEvent = ItemThrown.Create();
             itemThrownEvent.OwnerNickname = GetComponentInParent<PlayerInfo>().Nickname;
