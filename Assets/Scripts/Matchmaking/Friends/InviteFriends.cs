@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using Steamworks;
-using SWExtensions;
 using System.Collections;
 
 namespace SW.Matchmaking.Friends
@@ -18,6 +17,16 @@ namespace SW.Matchmaking.Friends
 
         private CSteamID _lobbyID;
         private bool _lobbyCreated = false;
+
+        // CALLBACKS
+
+        protected Callback<GameLobbyJoinRequested_t> GameLobbyJoinRequestedCallback;
+
+        protected Callback<LobbyCreated_t> LobbyCreatedCallback;
+
+        protected Callback<LobbyEnter_t> LobbyEnteredCallback;
+
+        protected Callback<LobbyDataUpdate_t> LobbyDataUpdatedCallback;
 
         // PUBLIC
 
@@ -41,7 +50,7 @@ namespace SW.Matchmaking.Friends
         {
             if (SteamManager.Initialized)
             {
-                Debug.LogError("[LOBBY CREATION] starting ... ");
+                Debug.LogError("[LOBBY CREATION] Starting ... ");
                 SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, _maxFriends);
                 Debug.LogError("[LOBBY CREATION] Sent event ! ");
             }
@@ -63,23 +72,13 @@ namespace SW.Matchmaking.Friends
             Debug.LogError("[LOBBY DATA] sending ...");
             if (_sessionData.MySession != null)
             {
-                //SteamMatchmaking.SetLobbyData(_lobbyID, "ready", "yes");
+                var randomServerID = UnityEngine.Random.Range(0, 255).ToString();
+                SteamMatchmaking.SetLobbyData(_lobbyID, "boltLobbyId", randomServerID);
                 Debug.LogError("[LOBBY DATA] sending to ... " + _lobbyID.ToString());
-                SteamMatchmaking.SetLobbyData(_lobbyID, "boltLobbyId", _sessionData.MySession.Id.ToString());
-                Debug.LogError("[LOBBY DATA] BoltID  ... " + _sessionData.MySession.Id.ToString());
+                Debug.LogError("[LOBBY DATA] Random Server ID : " + randomServerID);
+                Debug.LogError("[LOBBY DATA] SENT !");
             }
-            Debug.LogError("[LOBBY DATA] SENT !");
         }
-
-        // PROTECTED
-
-        protected Callback<GameLobbyJoinRequested_t> GameLobbyJoinRequestedCallback;
-
-        protected Callback<LobbyCreated_t> LobbyCreatedCallback;
-
-        protected Callback<LobbyEnter_t> LobbyEnteredCallback;
-
-        protected Callback<LobbyDataUpdate_t> LobbyDataUpdatedCallback;
 
         // PRIVATE
 
@@ -108,31 +107,29 @@ namespace SW.Matchmaking.Friends
         {
             _lobbyID = (CSteamID)result.m_ulSteamIDLobby;
 
-            Debug.LogErrorFormat("[LOBBY ENTERED] Entered with ID {0}", _lobbyID.ToString());
+            Debug.LogErrorFormat("[LOBBY ENTERED] Entered with SteamID {0}", _lobbyID.ToString());
+            Debug.LogErrorFormat("[LOBBY ENTERED] Current bolt lobby ID value : {0} ", SteamMatchmaking.GetLobbyData(_lobbyID, "boltLobbyId"));
         }
 
         private void OnLobbyDataUpdated(LobbyDataUpdate_t result)
         {
             Debug.LogError("[LOBBY DATA] Updated ...");
 
-            //bool isReady = SteamMatchmaking.GetLobbyData(_lobbyID, "ready") == "yes";
-            //Debug.LogError("[LOBBY DATA] ... Ready value received : " + isReady.ToString());
-
             try
             {
-                Guid boltServerID = new Guid(SteamMatchmaking.GetLobbyData(_lobbyID, "boltLobbyId"));
-                Debug.LogError("[LOBBY DATA] ... ID value received : " + boltServerID.ToString());
+                string boltServerID = SteamMatchmaking.GetLobbyData(_lobbyID, "boltLobbyId");
+                Debug.LogError("[LOBBY DATA] ... ID value received : " + boltServerID);
 
-                if (!BoltNetwork.IsServer && boltServerID != null)
+                if (!BoltNetwork.IsServer && boltServerID != "")
                 {
                     Debug.LogError("[BOLT] Starting client ...");
                     BoltLauncher.StartClient();
-                    StartCoroutine(JoinBoltLobby(boltServerID));
+                    StartCoroutine(JoinBoltLobby(new Guid(boltServerID)));
                 }
             }
             catch (FormatException e)
             {
-                Debug.LogError("Yo l'erreur");
+                Debug.LogError("[ERROR] Error creating Guid for server");
             }
         }
 
