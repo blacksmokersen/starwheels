@@ -2,6 +2,7 @@
 using UnityEngine.Events;
 using UnityEngine.Assertions;
 using Bolt;
+using UdpKit;
 
 namespace SW.Matchmaking
 {
@@ -9,6 +10,7 @@ namespace SW.Matchmaking
     {
         [Header("Lobby Info")]
         [SerializeField] private LobbyData _lobbyData;
+        [SerializeField] private SessionData _sessionData;
 
         [Header("Events")]
         public UnityEvent OnConnectedAsServer;
@@ -50,6 +52,16 @@ namespace SW.Matchmaking
                 OnConnectedAsServer.Invoke();
                 Debug.Log("Bolt now running as server.");
             }
+        }
+
+        public override void SessionCreated(UdpSession session)
+        {
+            _sessionData.MySession = session;
+        }
+
+        public override void BoltShutdownBegin(AddCallback registerDoneCallback)
+        {
+            _sessionData.MySession = null;
         }
 
         // PUBLIC
