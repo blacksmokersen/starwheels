@@ -7,16 +7,15 @@ namespace SW.Matchmaking.Friends
 {
     public class InviteFriends : MonoBehaviour
     {
-        public int CurrentFriendCount = 0;
-
         [Header("Session")]
         [SerializeField] private SessionData _sessionData;
 
         [Header("Group Settings")]
         [SerializeField] private int _maxFriends;
 
-        private CSteamID _lobbyID;
-        private bool _lobbyCreated = false;
+        private const string _lobbyIDParameterName = "BoltLobbyID";
+        private CSteamID _steamLobbyID;
+        private CSteamID _mySteamID;
 
         // CALLBACKS
 
@@ -38,11 +37,13 @@ namespace SW.Matchmaking.Friends
                 LobbyCreatedCallback = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
                 LobbyEnteredCallback = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
                 LobbyDataUpdatedCallback = Callback<LobbyDataUpdate_t>.Create(OnLobbyDataUpdated);
-                Debug.LogError("[INITIALIZATION] Done !");
+                Debug.Log("[LOBBY] Callbacks initialization done.");
+
+                _mySteamID = SteamUser.GetSteamID();
             }
             else
             {
-                Debug.LogWarning("Could not initialize callbacks since Steam is not initialized.");
+                Debug.LogWarning("[LOBBY] Could not initialize callbacks since Steam is not initialized.");
             }
         }
 
@@ -50,33 +51,29 @@ namespace SW.Matchmaking.Friends
         {
             if (SteamManager.Initialized)
             {
-                Debug.LogError("[LOBBY CREATION] Starting ... ");
+                Debug.LogError("[LOBBY] Initializing lobby creation ... ");
                 SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, _maxFriends);
-                Debug.LogError("[LOBBY CREATION] Sent event ! ");
             }
         }
 
         public void OpenInvitationPopup()
         {
-            if (SteamManager.Initialized && _lobbyCreated)
+            if (SteamManager.Initialized)
             {
-                Debug.LogError("Opening invitation popup ...");
-                SteamFriends.ActivateGameOverlayInviteDialog(_lobbyID);
-
-                Debug.LogError("Friends online : " + SteamFriends.GetFriendCount(EFriendFlags.k_EFriendFlagImmediate));
+                Debug.LogError("[LOBBY] Opening invitation popup.");
+                SteamFriends.ActivateGameOverlayInviteDialog(_steamLobbyID);
             }
         }
 
-        public void SendBoltLobbyInfoToFriends() // Send the server Bolt ID to the friends lobby, so that they can join
+        public void SetBoltLobbyID() // Send the server Bolt ID to the friends lobby, so that they can join
         {
-            Debug.LogError("[LOBBY DATA] sending ...");
-            if (_sessionData.MySession != null)
+            if (BoltNetwork.IsServer)
             {
-                var randomServerID = UnityEngine.Random.Range(0, 255).ToString();
-                SteamMatchmaking.SetLobbyData(_lobbyID, "boltLobbyId", randomServerID);
-                Debug.LogError("[LOBBY DATA] sending to ... " + _lobbyID.ToString());
-                Debug.LogError("[LOBBY DATA] Random Server ID : " + randomServerID);
-                Debug.LogError("[LOBBY DATA] SENT !");
+                if (_sessionData.MySession != null)
+                {
+                    SteamMatchmaking.SetLobbyData(_steamLobbyID, _lobbyIDParameterName, _sessionData.MySession.Id.ToString());
+                    Debug.LogErrorFormat("[LOBBY] Sending Bolt server ID ({0}) to ({1}).", _sessionData.MySession.Id.ToString(), _steamLobbyID.ToString());
+                }
             }
         }
 
@@ -84,7 +81,7 @@ namespace SW.Matchmaking.Friends
 
         private void OnGameLobbyJoinRequested(GameLobbyJoinRequested_t result)
         {
-            Debug.LogErrorFormat("[JOINING LOBBY] Attempt with id {0}", result.m_steamIDLobby.ToString());
+            Debug.LogErrorFormat("[LOBBY] Join request from ({0}).", result.m_steamIDLobby.ToString());
             SteamMatchmaking.JoinLobby(result.m_steamIDLobby);
         }
 
@@ -92,44 +89,43 @@ namespace SW.Matchmaking.Friends
         {
             if (result.m_eResult == EResult.k_EResultOK)
             {
-                _lobbyID = (CSteamID)result.m_ulSteamIDLobby;
-                _lobbyCreated = true;
+                _steamLobbyID = (CSteamID)result.m_ulSteamIDLobby;
+                SetBoltLobbyID();
                 OpenInvitationPopup();
-                Debug.LogError("[LOBBY CREATION] DONE ! ");
+                Debug.LogError("[LOBBY] Lobby created.");
             }
             else
             {
-                Debug.LogWarning("Couldn't create lobby.");
+                Debug.LogWarning("[LOBBY] Couldn't create lobby.");
             }
         }
 
         private void OnLobbyEntered(LobbyEnter_t result)
         {
-            _lobbyID = (CSteamID)result.m_ulSteamIDLobby;
-
-            Debug.LogErrorFormat("[LOBBY ENTERED] Entered with SteamID {0}", _lobbyID.ToString());
-            Debug.LogErrorFormat("[LOBBY ENTERED] Current bolt lobby ID value : {0} ", SteamMatchmaking.GetLobbyData(_lobbyID, "boltLobbyId"));
+            _steamLobbyID = (CSteamID)result.m_ulSteamIDLobby;
+            Debug.LogErrorFormat("[LOBBY] Entered lobby with SteamID {0}", _steamLobbyID.ToString());
         }
 
         private void OnLobbyDataUpdated(LobbyDataUpdate_t result)
         {
-            Debug.LogError("[LOBBY DATA] Updated ...");
-
-            try
+            if (!BoltNetwork.IsServer)
             {
-                string boltServerID = SteamMatchmaking.GetLobbyData(_lobbyID, "boltLobbyId");
-                Debug.LogError("[LOBBY DATA] ... ID value received : " + boltServerID);
+                string boltServerID = SteamMatchmaking.GetLobbyData(_steamLobbyID, _lobbyIDParameterName);
+                Debug.LogError("[LOBBY] Bolt server ID updated : " + boltServerID);
 
-                if (!BoltNetwork.IsServer && boltServerID != "")
+                if (boltServerID != "")
                 {
                     Debug.LogError("[BOLT] Starting client ...");
                     BoltLauncher.StartClient();
-                    StartCoroutine(JoinBoltLobby(new Guid(boltServerID)));
+                    try
+                    {
+                        StartCoroutine(JoinBoltLobby(new Guid(boltServerID)));
+                    }
+                    catch (FormatException)
+                    {
+                        Debug.LogError("[ERROR] Error creating Guid for server.");
+                    }
                 }
-            }
-            catch (FormatException e)
-            {
-                Debug.LogError("[ERROR] Error creating Guid for server");
             }
         }
 
