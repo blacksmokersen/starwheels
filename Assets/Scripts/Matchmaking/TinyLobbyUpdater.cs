@@ -12,11 +12,14 @@ namespace SW.Matchmaking
         [Header("Lobby Info")]
         [SerializeField] private LobbyData _lobbyData;
 
-        [Header("UI Elements")]
+        [Header("UI Text Elements")]
         [SerializeField] private TextMeshProUGUI _lookingForGameText;
         [SerializeField] private TextMeshProUGUI _currentGamemodeLobbiesText;
         [SerializeField] private TextMeshProUGUI _timerText;
         [SerializeField] private TextMeshProUGUI _currentPlayerCountText;
+
+        [Header("UI Buttons")]
+        [SerializeField] private GameObject _inviteFriendsButton;
         [SerializeField] private GameObject _startGameButton;
 
         [Header("Settings")]
@@ -141,6 +144,7 @@ namespace SW.Matchmaking
             _lookingForGameText.text = "Looking for a game";
             _currentPlayerCountText.gameObject.SetActive(false);
             _startGameButton.SetActive(false);
+            _inviteFriendsButton.gameObject.SetActive(false);
 
             _timerStarted = true;
         }
@@ -151,8 +155,10 @@ namespace SW.Matchmaking
             _lookingForGameText.gameObject.SetActive(true);
             _lookingForGameText.text = "Looking for players";
             _currentPlayerCountText.gameObject.SetActive(true);
-            _startGameButton.SetActive(BoltNetwork.IsServer);
             _timerText.gameObject.SetActive(BoltNetwork.IsServer);
+
+            _startGameButton.SetActive(BoltNetwork.IsServer);
+            _inviteFriendsButton.gameObject.SetActive(BoltNetwork.IsServer);
 
             _timerStarted = true;
         }

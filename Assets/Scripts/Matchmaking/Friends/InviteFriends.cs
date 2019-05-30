@@ -127,6 +127,11 @@ namespace SW.Matchmaking.Friends
                     }
                 }
             }
+            else
+            {
+                string boltServerID = SteamMatchmaking.GetLobbyData(_steamLobbyID, _lobbyIDParameterName);
+                Debug.LogError("[LOBBY] Succes : Bolt server ID updated : " + boltServerID);
+            }
         }
 
         private IEnumerator JoinBoltLobby(Guid boltServerID)
