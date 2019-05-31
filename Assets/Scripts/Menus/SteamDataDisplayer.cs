@@ -44,7 +44,7 @@ namespace Menu
         {
             int experience = 0;
             SteamUserStats.GetStat(Constants.SteamStats.Experience, out experience);
-            _experience.text = "" + experience.ToString() + " xp";
+            _experience.text = "" + experience.ToString();
         }
 
         private void InitializeMoney()

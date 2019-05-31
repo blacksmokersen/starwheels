@@ -6,6 +6,7 @@ namespace SW.Matchmaking
     public class LobbyToken : IProtocolToken
     {
         public string ServerName;
+        public string Version;
         public string GameMode;
         public string MapName;
         public bool Public;
@@ -15,6 +16,7 @@ namespace SW.Matchmaking
         public void Read(UdpPacket packet)
         {
             ServerName = packet.ReadString();
+            Version = packet.ReadString();
             GameMode = packet.ReadString();
             MapName = packet.ReadString();
             Public = packet.ReadBool();
@@ -25,6 +27,7 @@ namespace SW.Matchmaking
         public void Write(UdpPacket packet)
         {
             packet.WriteString(ServerName);
+            packet.WriteString(Version);
             packet.WriteString(GameMode);
             packet.WriteString(MapName);
             packet.WriteBool(Public);
@@ -35,6 +38,7 @@ namespace SW.Matchmaking
         public LobbyToken BuildData(LobbyData data)
         {
             ServerName = data.ServerName;
+            Version = data.Version;
             GameMode = data.ChosenGamemode;
             MapName = data.ChosenMapName;
             Public = data.Public;
