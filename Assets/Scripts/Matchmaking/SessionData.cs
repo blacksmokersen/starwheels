@@ -1,4 +1,5 @@
-﻿using UdpKit;
+﻿using System;
+using UdpKit;
 using UnityEngine;
 
 namespace SW.Matchmaking
@@ -7,5 +8,6 @@ namespace SW.Matchmaking
     public class SessionData : ScriptableObject
     {
         public UdpSession MySession;
+        public Guid BoltSessionGuid;
     }
 }

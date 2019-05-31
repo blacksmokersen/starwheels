@@ -4,6 +4,7 @@ using UnityEngine.Assertions;
 using Bolt;
 using UdpKit;
 using System.Collections;
+using System;
 
 namespace SW.Matchmaking
 {
@@ -38,9 +39,18 @@ namespace SW.Matchmaking
             _sessionData.MySession = session;
         }
 
+        public override void SessionListUpdated(Map<Guid, UdpSession> sessionList)
+        {
+            if (_sessionData.MySession != null)
+            {
+                _sessionData.BoltSessionGuid = SWMatchmaking.GetBoltSessionID(_sessionData.MySession.Id);
+            }
+        }
+
         public override void BoltShutdownBegin(AddCallback registerDoneCallback)
         {
             _sessionData.MySession = null;
+            _sessionData.BoltSessionGuid = new Guid();
         }
 
         // PUBLIC

@@ -16985,7 +16985,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lobbyData: {fileID: 11400000, guid: 930191bbcbab87e4f98912baee12eddc, type: 2}
   _lobbyPanel: {fileID: 2009003510}
-  OnConnectedAsClient:
+  OnLookingForLobby:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 686222882}
@@ -16997,7 +16997,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
@@ -17017,7 +17017,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lobbyData: {fileID: 11400000, guid: 930191bbcbab87e4f98912baee12eddc, type: 2}
   _sessionData: {fileID: 11400000, guid: 18db2339d332b374498a4622e0fa275e, type: 2}
-  OnConnectedAsServer:
+  OnLobbyCreated:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 686222882}
@@ -17029,7 +17029,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
@@ -17617,7 +17617,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2009003511
 RectTransform:
   m_ObjectHideFlags: 0

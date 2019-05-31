@@ -71,7 +71,10 @@ namespace SW.Matchmaking.Friends
             {
                 if (_sessionData.MySession != null)
                 {
-                    SteamMatchmaking.SetLobbyData(_steamLobbyID, _lobbyIDParameterName, _sessionData.MySession.Id.ToString());
+                    Guid myUDPSessionGuid = _sessionData.MySession.Id;
+                    Debug.Log("My UDP : " + myUDPSessionGuid.ToString());
+                    Debug.Log("My bolt : " + SWMatchmaking.GetBoltSessionID(myUDPSessionGuid).ToString());
+                    SteamMatchmaking.SetLobbyData(_steamLobbyID, _lobbyIDParameterName, SWMatchmaking.GetBoltSessionID(myUDPSessionGuid).ToString());
                     Debug.LogErrorFormat("[LOBBY] Sending Bolt server ID ({0}) to ({1}).", _sessionData.MySession.Id.ToString(), _steamLobbyID.ToString());
                 }
             }
@@ -136,7 +139,7 @@ namespace SW.Matchmaking.Friends
 
         private IEnumerator JoinBoltLobby(Guid boltServerID)
         {
-            while (!(BoltNetwork.IsConnected && BoltNetwork.IsClient))
+            while (!BoltNetwork.IsClient)
             {
                 yield return new WaitForEndOfFrame();
             }
