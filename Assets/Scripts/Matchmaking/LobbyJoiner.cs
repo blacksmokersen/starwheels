@@ -2,8 +2,6 @@
 using UnityEngine;
 using UnityEngine.Events;
 using Bolt;
-using System;
-using UdpKit;
 using UnityEngine.UI;
 
 namespace SW.Matchmaking
@@ -15,7 +13,7 @@ namespace SW.Matchmaking
         [SerializeField] private GameObject _lobbyPanel;
 
         [Header("Events")]
-        public UnityEvent OnConnectedAsClient;
+        public UnityEvent OnLookingForLobby;
 
         [Header("DebugMode")]
         [SerializeField] private ServerDebugMode _serverDebugMode;
@@ -28,21 +26,10 @@ namespace SW.Matchmaking
         {
             if (BoltNetwork.IsClient)
             {
-                Debug.Log("Registering tokens...");
+                Debug.Log("[BOLT] Registering tokens.");
                 BoltNetwork.RegisterTokenClass<Multiplayer.RoomProtocolToken>();
                 BoltNetwork.RegisterTokenClass<LobbyToken>();
             }
-        }
-
-        public override void BoltStartDone()
-        {
-            if (BoltNetwork.IsClient)
-            {
-                OnConnectedAsClient.Invoke();
-                Debug.Log("Bolt now running as client.");
-            }
-
-            StartCoroutine(LobbyCountDebug());
         }
 
         public override void BoltShutdownBegin(AddCallback registerDoneCallback)
@@ -50,12 +37,17 @@ namespace SW.Matchmaking
             StopAllCoroutines();
         }
 
-        public override void SessionListUpdated(Map<Guid, UdpSession> sessionList)
+        // PUBLIC
+
+        public void StartLookingForLobby()
         {
-            Debug.Log("Session count updated : " + sessionList.Count);
+            StartCoroutine(LookForLobby());
         }
 
-        // PUBLIC
+        public void StopLookingForLobby()
+        {
+            StopAllCoroutines();
+        }
 
         public void TryJoiningLobby()
         {
@@ -84,7 +76,7 @@ namespace SW.Matchmaking
         {
             if (!BoltNetwork.IsConnected)
             {
-                BoltLauncher.StartClient();
+                StartCoroutine(WaitForConnectedAsClient());
             }
             else
             {
@@ -113,12 +105,44 @@ namespace SW.Matchmaking
 
         // PRIVATE
 
-        private IEnumerator LobbyCountDebug()
+        private IEnumerator LookForLobby()
         {
             while (Application.isPlaying)
             {
                 yield return new WaitForSeconds(0.5f);
                 FindPublicLobby();
+            }
+        }
+
+        private IEnumerator WaitForConnectedAsClient()
+        {
+            var timer = 0f;
+            bool timerExceedeed = false;
+
+            BoltLauncher.StartClient();
+            while (!BoltNetwork.IsClient && !timerExceedeed)
+            {
+                Debug.Log("Hello");
+                timer += Time.deltaTime;
+                if (timer > 10f)
+                {
+                    timerExceedeed = true;
+                }
+                yield return new WaitForEndOfFrame();
+            }
+
+            if (BoltNetwork.IsClient)
+            {
+                if (OnLookingForLobby != null)
+                {
+                    OnLookingForLobby.Invoke();
+                    Debug.Log("[BOLT] Bolt now running as client.");
+                }
+                StartLookingForLobby();
+            }
+            else if (timerExceedeed)
+            {
+                Debug.LogWarning("[BOLT] Took too long to connect as client.");
             }
         }
     }
