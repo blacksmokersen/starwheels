@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Multiplayer;
 using Bolt;
 
 namespace Items
@@ -10,13 +11,30 @@ namespace Items
         public Collider KartCollider;
         public KartCollisionTrigger KartcollisionTrigger;
 
+        private int framesToRewind = 0;
+
         //BOLT
 
         public override void OnEvent(ItemCollsionLagCompensationEvent evnt)
         {
             if (BoltNetwork.IsServer && evnt.TargetBoltEntity == GetComponentInParent<BoltEntity>())
             {
-                ServerCollisionCheck(evnt.ItemCollsionPosition, evnt.ItemBoltEntity, evnt.TargetBoltEntity, evnt.FramesToRewind, evnt.CollisionDistanceCheck);
+                int ping = SWPing.GetPingAliasedForPlayer(evnt.ItemBoltEntity.GetComponent<Ownership>().OwnerID);
+                if (ping <= 1)
+                    framesToRewind = 0;
+                else if (ping >= 2 && ping <= 20)
+                    framesToRewind = 5;
+                else if (ping >= 21 && ping <= 45)
+                    framesToRewind = 10;
+                else if (ping >= 46 && ping <= 75)
+                    framesToRewind = 15;
+                else if (ping >= 76 && ping <= 125)
+                    framesToRewind = 20;
+                else
+                    framesToRewind = 25;
+
+                Debug.LogError("Player PING : " + ping + "Number of frames to REWIND : " + framesToRewind);
+                ServerCollisionCheck(evnt.ItemCollsionPosition, evnt.ItemBoltEntity, evnt.TargetBoltEntity, framesToRewind, evnt.CollisionDistanceCheck);
             }
         }
 
