@@ -21,9 +21,14 @@ namespace SW.Matchmaking.Friends
 
         // BOLT
 
-        public override void BoltShutdownBegin(AddCallback registerDoneCallback)
+        public override void Disconnected(BoltConnection connection)
         {
-            QuitSteamLobby();
+            if ((int)connection.ConnectionId == SWMatchmaking.GetMyBoltId()) // I am kicked from a game
+            {
+                Debug.Log("Youpi banane");
+                QuitSteamLobby();
+                BoltLauncher.Shutdown();
+            }
         }
 
         // CALLBACKS
