@@ -99,7 +99,7 @@ namespace SW.Matchmaking.Friends
             SteamMatchmaking.GetLobbyChatEntry(_steamLobbyID, (int)result.m_iChatID, out senderID, data, data.Length, out eChatEntryType);
 
             Debug.Log("[STEAM] Received message : " + Encoding.UTF8.GetString(data) + ".");
-            if (Encoding.UTF8.GetString(data).Equals("kickAll"))
+            if (Encoding.UTF8.GetString(data).Equals(_lobbyKickAllFlag))
             {
                 Debug.Log("[STEAM] Received SteamKicked event.");
                 QuitSteamLobby();
@@ -164,7 +164,7 @@ namespace SW.Matchmaking.Friends
 
         private void SendKickEveryoneFlag()
         {
-            SteamMatchmaking.SendLobbyChatMsg(_steamLobbyID, Encoding.ASCII.GetBytes(_lobbyKickAllFlag), _lobbyKickAllFlag.Length + 1);
+            SteamMatchmaking.SendLobbyChatMsg(_steamLobbyID, Encoding.UTF8.GetBytes(_lobbyKickAllFlag), _lobbyKickAllFlag.Length + 1);
             Debug.Log("[STEAM] Kick everyone in SteamLobby.");
         }
 
