@@ -2,6 +2,7 @@
 using UnityEngine;
 using Steamworks;
 using System.Collections;
+using Bolt.Matchmaking;
 
 namespace SW.Matchmaking.Friends
 {
@@ -71,10 +72,8 @@ namespace SW.Matchmaking.Friends
             {
                 if (_sessionData.MySession != null)
                 {
-                    Guid myUDPSessionGuid = _sessionData.MySession.Id;
-                    Debug.Log("My UDP : " + myUDPSessionGuid.ToString());
-                    Debug.Log("My bolt : " + SWMatchmaking.GetBoltSessionID(myUDPSessionGuid).ToString());
-                    SteamMatchmaking.SetLobbyData(_steamLobbyID, _lobbyIDParameterName, SWMatchmaking.GetBoltSessionID(myUDPSessionGuid).ToString());
+                    Debug.Log("My Bolt : " + BoltMatchmaking.CurrentSession.Id.ToString());
+                    SteamMatchmaking.SetLobbyData(_steamLobbyID, _lobbyIDParameterName, BoltMatchmaking.CurrentSession.Id.ToString());
                     Debug.LogErrorFormat("[LOBBY] Sending Bolt server ID ({0}) to ({1}).", _sessionData.MySession.Id.ToString(), _steamLobbyID.ToString());
                 }
             }
