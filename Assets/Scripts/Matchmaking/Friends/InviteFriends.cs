@@ -34,7 +34,6 @@ namespace SW.Matchmaking.Friends
             if (BoltNetwork.IsServer)
             {
                 SendKickEveryoneFlag();
-                QuitSteamLobby();
             }
         }
 
@@ -98,12 +97,17 @@ namespace SW.Matchmaking.Friends
             EChatEntryType eChatEntryType;
             SteamMatchmaking.GetLobbyChatEntry(_steamLobbyID, (int)result.m_iChatID, out senderID, data, data.Length, out eChatEntryType);
 
-            Debug.Log("[STEAM] Received message : " + Encoding.UTF8.GetString(data) + ".");
-            if (Encoding.UTF8.GetString(data).Equals(_lobbyKickAllFlag))
+            Debug.LogFormat("[STEAM] Received message : {0} {1}", Encoding.UTF8.GetString(data, 0, _lobbyKickAllFlag.Length), ".");
+            Debug.Log("[STEAM] Length : " + Encoding.UTF8.GetString(data, 0, _lobbyKickAllFlag.Length).Length + ".");
+            if (Encoding.UTF8.GetString(data, 0, _lobbyKickAllFlag.Length).Equals(_lobbyKickAllFlag))
             {
                 Debug.Log("[STEAM] Received SteamKicked event.");
                 QuitSteamLobby();
-                BoltLauncher.Shutdown();
+
+                if (BoltNetwork.IsClient || BoltNetwork.IsServer)
+                {
+                    BoltLauncher.Shutdown();
+                }
             }
         }
 
