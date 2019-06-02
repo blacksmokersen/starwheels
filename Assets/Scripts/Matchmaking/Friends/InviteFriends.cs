@@ -138,12 +138,13 @@ namespace SW.Matchmaking.Friends
 
         private IEnumerator JoinBoltLobby(Guid boltServerID)
         {
-            while (!BoltNetwork.IsClient)
+            while (!(BoltNetwork.IsClient && BoltNetwork.SessionList.Count > 0))
             {
                 yield return new WaitForEndOfFrame();
             }
             Debug.LogError("[BOLT] Joining lobby !");
-            SWMatchmaking.JoinLobby(boltServerID);
+
+            SWMatchmaking.JoinLobbyWithSessionID(boltServerID);
         }
     }
 }

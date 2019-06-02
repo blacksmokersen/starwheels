@@ -70,6 +70,17 @@ public static class SWMatchmaking
         BoltNetwork.Connect(BoltNetwork.SessionList[id], connectToken);
     }
 
+    public static void JoinLobbyWithSessionID(Guid id, IProtocolToken connectToken = null)
+    {
+        foreach (var session in BoltNetwork.SessionList)
+        {
+            if (session.Value.Id == id)
+            {
+                BoltNetwork.Connect(BoltNetwork.SessionList[session.Key], connectToken);
+            }
+        }
+    }
+
     public static void JoinLobby(UdpSession udpSession, IProtocolToken connectToken = null)
     {
         BoltNetwork.Connect(udpSession, connectToken);
