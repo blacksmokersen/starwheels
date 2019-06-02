@@ -99,6 +99,7 @@ namespace SW.Matchmaking
         public void SetRandomName()
         {
             ServerName = "#"+BoltMatchmaking.CurrentSession.Id;
+            Debug.Log("Set server name : " + ServerName);
         }
     }
 }

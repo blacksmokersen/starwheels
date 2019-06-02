@@ -73,10 +73,8 @@ namespace SW.Matchmaking.Friends
             {
                 if (_sessionData.MySession != null)
                 {
-                    Debug.Log("My Bolt : " + BoltMatchmaking.CurrentSession.Id.ToString());
-
                     SteamMatchmaking.SetLobbyData(_steamLobbyID, _lobbyNameParameterName, _lobbyData.ServerName);
-                    Debug.LogErrorFormat("[LOBBY] Sending Bolt server ID ({0}) to ({1}).", _sessionData.MySession.Id.ToString(), _steamLobbyID.ToString());
+                    Debug.LogErrorFormat("[LOBBY] Sending Bolt server ID ({0}) to ({1}).", _lobbyData.ServerName, _steamLobbyID.ToString());
                 }
             }
         }

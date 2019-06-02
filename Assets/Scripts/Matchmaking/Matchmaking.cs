@@ -75,6 +75,7 @@ public static class SWMatchmaking
         foreach (var session in BoltNetwork.SessionList)
         {
             var lobbyToken = SWMatchmaking.GetLobbyToken(session.Key);
+            Debug.Log("Server name : " + lobbyToken.ServerName);
             if (lobbyToken.ServerName.Equals(serverName))
             {
                 BoltNetwork.Connect(BoltNetwork.SessionList[session.Key], connectToken);
