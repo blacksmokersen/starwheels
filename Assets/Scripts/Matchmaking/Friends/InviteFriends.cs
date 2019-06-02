@@ -2,11 +2,11 @@
 using UnityEngine;
 using Steamworks;
 using System.Collections;
-using Bolt.Matchmaking;
+using Bolt;
 
 namespace SW.Matchmaking.Friends
 {
-    public class InviteFriends : MonoBehaviour
+    public class InviteFriends : GlobalEventListener
     {
         [Header("Session")]
         [SerializeField] private SessionData _sessionData;
@@ -18,6 +18,13 @@ namespace SW.Matchmaking.Friends
         private const string _lobbyNameParameterName = "BoltLobbyID";
         private CSteamID _steamLobbyID;
         private CSteamID _mySteamID;
+
+        // BOLT
+
+        public override void BoltShutdownBegin(AddCallback registerDoneCallback)
+        {
+            QuitSteamLobby();
+        }
 
         // CALLBACKS
 
@@ -77,6 +84,11 @@ namespace SW.Matchmaking.Friends
                     Debug.LogErrorFormat("[LOBBY] Sending Bolt server ID ({0}) to ({1}).", _lobbyData.ServerName, _steamLobbyID.ToString());
                 }
             }
+        }
+
+        public void QuitSteamLobby()
+        {
+            SteamMatchmaking.LeaveLobby(_steamLobbyID);
         }
 
         // PRIVATE
