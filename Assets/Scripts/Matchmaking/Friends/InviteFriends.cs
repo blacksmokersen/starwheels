@@ -3,20 +3,27 @@ using UnityEngine;
 using Steamworks;
 using System.Collections;
 using Bolt;
+using System.Text;
 
 namespace SW.Matchmaking.Friends
 {
+    [DisallowMultipleComponent]
     public class InviteFriends : GlobalEventListener
     {
         [Header("Session")]
-        [SerializeField] private SessionData _sessionData;
         [SerializeField] private LobbyData _lobbyData;
 
         [Header("Group Settings")]
         [SerializeField] private int _maxFriends;
 
+        protected Callback<GameLobbyJoinRequested_t> GameLobbyJoinRequestedCallback;
+        protected Callback<LobbyCreated_t> LobbyCreatedCallback;
+        protected Callback<LobbyEnter_t> LobbyEnteredCallback;
+        protected Callback<LobbyDataUpdate_t> LobbyDataUpdatedCallback;
+        protected Callback<LobbyChatMsg_t> LobbyChatMsgCallback;
+
         private const string _lobbyNameParameterName = "BoltLobbyID";
-        private const string _lobbyKickAllParameterName = "KickAll";
+        private const string _lobbyKickAllFlag = "KickAll";
 
         private CSteamID _steamLobbyID;
 
@@ -26,20 +33,79 @@ namespace SW.Matchmaking.Friends
         {
             if (BoltNetwork.IsServer)
             {
-                KickEveryone();
+                SendKickEveryoneFlag();
                 QuitSteamLobby();
             }
         }
 
         // CALLBACKS
 
-        protected Callback<GameLobbyJoinRequested_t> GameLobbyJoinRequestedCallback;
+        private void OnGameLobbyJoinRequested(GameLobbyJoinRequested_t result)
+        {
+            Debug.LogErrorFormat("[STEAM] Join request from ({0}).", result.m_steamIDLobby.ToString());
+            SteamMatchmaking.JoinLobby(result.m_steamIDLobby);
+        }
 
-        protected Callback<LobbyCreated_t> LobbyCreatedCallback;
+        private void OnLobbyCreated(LobbyCreated_t result)
+        {
+            if (result.m_eResult == EResult.k_EResultOK)
+            {
+                _steamLobbyID = (CSteamID)result.m_ulSteamIDLobby;
+                SetBoltLobbyID();
+                OpenInvitationPopup();
+                Debug.LogError("[STEAM] Lobby created.");
+            }
+            else
+            {
+                Debug.LogWarning("[STEAM] Couldn't create lobby.");
+            }
+        }
 
-        protected Callback<LobbyEnter_t> LobbyEnteredCallback;
+        private void OnLobbyEntered(LobbyEnter_t result)
+        {
+            _steamLobbyID = (CSteamID)result.m_ulSteamIDLobby;
+            Debug.LogErrorFormat("[STEAM] Entered lobby with SteamID {0}", _steamLobbyID.ToString());
+        }
 
-        protected Callback<LobbyDataUpdate_t> LobbyDataUpdatedCallback;
+        private void OnLobbyDataUpdated(LobbyDataUpdate_t result)
+        {
+            if (!BoltNetwork.IsServer)
+            {
+                string serverName = SteamMatchmaking.GetLobbyData(_steamLobbyID, _lobbyNameParameterName);
+                Debug.LogError("[STEAM] Bolt server name updated : " + serverName);
+
+                if (serverName != "")
+                {
+                    if (!BoltNetwork.IsClient)
+                    {
+                        Debug.LogError("[BOLT] Starting client ...");
+                        BoltLauncher.StartClient();
+                    }
+                    StartCoroutine(JoinBoltLobby(serverName));
+                }
+            }
+            else
+            {
+                string boltServerID = SteamMatchmaking.GetLobbyData(_steamLobbyID, _lobbyNameParameterName);
+                Debug.LogError("[STEAM] Bolt server name successfully updated : " + boltServerID);
+            }
+        }
+
+        private void OnLobbyChatMsg(LobbyChatMsg_t result)
+        {
+            byte[] data = new byte[4096];
+            CSteamID senderID;
+            EChatEntryType eChatEntryType;
+            SteamMatchmaking.GetLobbyChatEntry(_steamLobbyID, (int)result.m_iChatID, out senderID, data, data.Length, out eChatEntryType);
+
+            Debug.Log("[STEAM] Received message : " + Encoding.UTF8.GetString(data) + ".");
+            if (Encoding.UTF8.GetString(data).Equals("kickAll"))
+            {
+                Debug.Log("[STEAM] Received SteamKicked event.");
+                QuitSteamLobby();
+                BoltLauncher.Shutdown();
+            }
+        }
 
         // PUBLIC
 
@@ -51,11 +117,13 @@ namespace SW.Matchmaking.Friends
                 LobbyCreatedCallback = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
                 LobbyEnteredCallback = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
                 LobbyDataUpdatedCallback = Callback<LobbyDataUpdate_t>.Create(OnLobbyDataUpdated);
-                Debug.Log("[LOBBY] Callbacks initialization done.");
+                LobbyChatMsgCallback = Callback<LobbyChatMsg_t>.Create(OnLobbyChatMsg);
+
+                Debug.Log("[STEAM] Callbacks initialization done.");
             }
             else
             {
-                Debug.LogWarning("[LOBBY] Could not initialize callbacks since Steam is not initialized.");
+                Debug.LogWarning("[STEAM] Could not initialize callbacks since Steam is not initialized.");
             }
         }
 
@@ -63,7 +131,7 @@ namespace SW.Matchmaking.Friends
         {
             if (SteamManager.Initialized)
             {
-                Debug.LogError("[LOBBY] Initializing lobby creation ... ");
+                Debug.LogError("[STEAM] Initializing lobby creation ... ");
                 SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, _maxFriends);
             }
         }
@@ -72,7 +140,7 @@ namespace SW.Matchmaking.Friends
         {
             if (SteamManager.Initialized)
             {
-                Debug.LogError("[LOBBY] Opening invitation popup.");
+                Debug.LogError("[STEAM] Opening invitation popup.");
                 SteamFriends.ActivateGameOverlayInviteDialog(_steamLobbyID);
             }
         }
@@ -81,92 +149,23 @@ namespace SW.Matchmaking.Friends
         {
             if (BoltNetwork.IsServer)
             {
-                if (_sessionData.MySession != null)
-                {
-                    SteamMatchmaking.SetLobbyData(_steamLobbyID, _lobbyNameParameterName, _lobbyData.ServerName);
-                    Debug.LogErrorFormat("[LOBBY] Sending Bolt server ID ({0}) to ({1}).", _lobbyData.ServerName, _steamLobbyID.ToString());
-                }
+                SteamMatchmaking.SetLobbyData(_steamLobbyID, _lobbyNameParameterName, _lobbyData.ServerName);
+                Debug.LogErrorFormat("[STEAM] Sending Bolt server ID ({0}) to ({1}).", _lobbyData.ServerName, _steamLobbyID.ToString());
             }
         }
 
         public void QuitSteamLobby()
         {
             SteamMatchmaking.LeaveLobby(_steamLobbyID);
+            StopAllCoroutines();
         }
 
         // PRIVATE
 
-        private void KickEveryone()
+        private void SendKickEveryoneFlag()
         {
-            if (BoltNetwork.IsServer)
-            {
-                SteamMatchmaking.SetLobbyData(_steamLobbyID, _lobbyKickAllParameterName, "true");
-                Debug.Log("[STEAM] Kick everyone in SteamLobby.");
-            }
-        }
-
-        private void OnGameLobbyJoinRequested(GameLobbyJoinRequested_t result)
-        {
-            Debug.LogErrorFormat("[LOBBY] Join request from ({0}).", result.m_steamIDLobby.ToString());
-            SteamMatchmaking.JoinLobby(result.m_steamIDLobby);
-        }
-
-        private void OnLobbyCreated(LobbyCreated_t result)
-        {
-            if (result.m_eResult == EResult.k_EResultOK)
-            {
-                _steamLobbyID = (CSteamID)result.m_ulSteamIDLobby;
-                SetBoltLobbyID();
-                OpenInvitationPopup();
-                Debug.LogError("[LOBBY] Lobby created.");
-            }
-            else
-            {
-                Debug.LogWarning("[LOBBY] Couldn't create lobby.");
-            }
-        }
-
-        private void OnLobbyEntered(LobbyEnter_t result)
-        {
-            _steamLobbyID = (CSteamID)result.m_ulSteamIDLobby;
-            Debug.LogErrorFormat("[LOBBY] Entered lobby with SteamID {0}", _steamLobbyID.ToString());
-        }
-
-        private void OnLobbyDataUpdated(LobbyDataUpdate_t result)
-        {
-            if (!BoltNetwork.IsServer)
-            {
-                string serverName = SteamMatchmaking.GetLobbyData(_steamLobbyID, _lobbyNameParameterName);
-                Debug.LogError("[LOBBY] Bolt server ID updated : " + serverName);
-
-                if (serverName != "")
-                {
-                    Debug.LogError("[BOLT] Starting client ...");
-                    BoltLauncher.StartClient();
-                    try
-                    {
-                        StartCoroutine(JoinBoltLobby(serverName));
-                    }
-                    catch (FormatException)
-                    {
-                        Debug.LogError("[ERROR] Error creating Guid for server.");
-                    }
-                }
-
-                string kickAll = SteamMatchmaking.GetLobbyData(_steamLobbyID, _lobbyKickAllParameterName);
-
-                if (kickAll.Equals("true"))
-                {
-                    Debug.Log("[STEAM] Received SteamKicked event.");
-                    QuitSteamLobby();
-                    BoltLauncher.Shutdown();
-                }
-            }
-            else
-            {
-                string boltServerID = SteamMatchmaking.GetLobbyData(_steamLobbyID, _lobbyNameParameterName);
-                Debug.LogError("[LOBBY] Succes : Bolt server ID updated : " + boltServerID);
-            }
+            SteamMatchmaking.SendLobbyChatMsg(_steamLobbyID, Encoding.ASCII.GetBytes(_lobbyKickAllFlag), _lobbyKickAllFlag.Length + 1);
+            Debug.Log("[STEAM] Kick everyone in SteamLobby.");
         }
 
         private IEnumerator JoinBoltLobby(string serverName)
@@ -175,8 +174,7 @@ namespace SW.Matchmaking.Friends
             {
                 yield return new WaitForEndOfFrame();
             }
-            Debug.LogError("[BOLT] Joining lobby !");
-
+            Debug.LogError("[BOLT] Joining lobby ...");
             SWMatchmaking.JoinLobby(serverName);
         }
     }
