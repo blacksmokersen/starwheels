@@ -10,11 +10,12 @@ namespace SW.Matchmaking.Friends
     {
         [Header("Session")]
         [SerializeField] private SessionData _sessionData;
+        [SerializeField] private LobbyData _lobbyData;
 
         [Header("Group Settings")]
         [SerializeField] private int _maxFriends;
 
-        private const string _lobbyIDParameterName = "BoltLobbyID";
+        private const string _lobbyNameParameterName = "BoltLobbyID";
         private CSteamID _steamLobbyID;
         private CSteamID _mySteamID;
 
@@ -73,7 +74,8 @@ namespace SW.Matchmaking.Friends
                 if (_sessionData.MySession != null)
                 {
                     Debug.Log("My Bolt : " + BoltMatchmaking.CurrentSession.Id.ToString());
-                    SteamMatchmaking.SetLobbyData(_steamLobbyID, _lobbyIDParameterName, BoltMatchmaking.CurrentSession.Id.ToString());
+
+                    SteamMatchmaking.SetLobbyData(_steamLobbyID, _lobbyNameParameterName, _lobbyData.ServerName);
                     Debug.LogErrorFormat("[LOBBY] Sending Bolt server ID ({0}) to ({1}).", _sessionData.MySession.Id.ToString(), _steamLobbyID.ToString());
                 }
             }
@@ -112,16 +114,16 @@ namespace SW.Matchmaking.Friends
         {
             if (!BoltNetwork.IsServer)
             {
-                string boltServerID = SteamMatchmaking.GetLobbyData(_steamLobbyID, _lobbyIDParameterName);
-                Debug.LogError("[LOBBY] Bolt server ID updated : " + boltServerID);
+                string serverName = SteamMatchmaking.GetLobbyData(_steamLobbyID, _lobbyNameParameterName);
+                Debug.LogError("[LOBBY] Bolt server ID updated : " + serverName);
 
-                if (boltServerID != "")
+                if (serverName != "")
                 {
                     Debug.LogError("[BOLT] Starting client ...");
                     BoltLauncher.StartClient();
                     try
                     {
-                        StartCoroutine(JoinBoltLobby(new Guid(boltServerID)));
+                        StartCoroutine(JoinBoltLobby(serverName));
                     }
                     catch (FormatException)
                     {
@@ -131,12 +133,12 @@ namespace SW.Matchmaking.Friends
             }
             else
             {
-                string boltServerID = SteamMatchmaking.GetLobbyData(_steamLobbyID, _lobbyIDParameterName);
+                string boltServerID = SteamMatchmaking.GetLobbyData(_steamLobbyID, _lobbyNameParameterName);
                 Debug.LogError("[LOBBY] Succes : Bolt server ID updated : " + boltServerID);
             }
         }
 
-        private IEnumerator JoinBoltLobby(Guid boltServerID)
+        private IEnumerator JoinBoltLobby(string serverName)
         {
             while (!(BoltNetwork.IsClient && BoltNetwork.SessionList.Count > 0))
             {
@@ -144,7 +146,7 @@ namespace SW.Matchmaking.Friends
             }
             Debug.LogError("[BOLT] Joining lobby !");
 
-            SWMatchmaking.JoinLobbyWithSessionID(boltServerID);
+            SWMatchmaking.JoinLobby(serverName);
         }
     }
 }

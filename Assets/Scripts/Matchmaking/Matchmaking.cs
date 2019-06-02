@@ -70,11 +70,12 @@ public static class SWMatchmaking
         BoltNetwork.Connect(BoltNetwork.SessionList[id], connectToken);
     }
 
-    public static void JoinLobbyWithSessionID(Guid id, IProtocolToken connectToken = null)
+    public static void JoinLobby(string serverName, IProtocolToken connectToken = null)
     {
         foreach (var session in BoltNetwork.SessionList)
         {
-            if (session.Value.Id == id)
+            var lobbyToken = SWMatchmaking.GetLobbyToken(session.Key);
+            if (lobbyToken.ServerName.Equals(serverName))
             {
                 BoltNetwork.Connect(BoltNetwork.SessionList[session.Key], connectToken);
             }

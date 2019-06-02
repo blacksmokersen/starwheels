@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Bolt.Matchmaking;
 
 namespace SW.Matchmaking
 {
@@ -97,7 +98,7 @@ namespace SW.Matchmaking
 
         public void SetRandomName()
         {
-            ServerName = "#"+Random.Range(float.MinValue, float.MaxValue);
+            ServerName = "#"+BoltMatchmaking.CurrentSession.Id;
         }
     }
 }
