@@ -16,18 +16,18 @@ namespace SW.Matchmaking.Friends
         [SerializeField] private int _maxFriends;
 
         private const string _lobbyNameParameterName = "BoltLobbyID";
+        private const string _lobbyKickAllParameterName = "KickAll";
+
         private CSteamID _steamLobbyID;
-        private CSteamID _mySteamID;
 
         // BOLT
 
-        public override void Disconnected(BoltConnection connection)
+        public override void BoltShutdownBegin(AddCallback registerDoneCallback)
         {
-            if ((int)connection.ConnectionId == SWMatchmaking.GetMyBoltId()) // I am kicked from a game
+            if (BoltNetwork.IsServer)
             {
-                Debug.Log("Youpi banane");
+                KickEveryone();
                 QuitSteamLobby();
-                BoltLauncher.Shutdown();
             }
         }
 
@@ -52,8 +52,6 @@ namespace SW.Matchmaking.Friends
                 LobbyEnteredCallback = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
                 LobbyDataUpdatedCallback = Callback<LobbyDataUpdate_t>.Create(OnLobbyDataUpdated);
                 Debug.Log("[LOBBY] Callbacks initialization done.");
-
-                _mySteamID = SteamUser.GetSteamID();
             }
             else
             {
@@ -97,6 +95,15 @@ namespace SW.Matchmaking.Friends
         }
 
         // PRIVATE
+
+        private void KickEveryone()
+        {
+            if (BoltNetwork.IsServer)
+            {
+                SteamMatchmaking.SetLobbyData(_steamLobbyID, _lobbyKickAllParameterName, "true");
+                Debug.Log("[STEAM] Kick everyone in SteamLobby.");
+            }
+        }
 
         private void OnGameLobbyJoinRequested(GameLobbyJoinRequested_t result)
         {
@@ -144,6 +151,15 @@ namespace SW.Matchmaking.Friends
                     {
                         Debug.LogError("[ERROR] Error creating Guid for server.");
                     }
+                }
+
+                string kickAll = SteamMatchmaking.GetLobbyData(_steamLobbyID, _lobbyKickAllParameterName);
+
+                if (kickAll.Equals("true"))
+                {
+                    Debug.Log("[STEAM] Received SteamKicked event.");
+                    QuitSteamLobby();
+                    BoltLauncher.Shutdown();
                 }
             }
             else
