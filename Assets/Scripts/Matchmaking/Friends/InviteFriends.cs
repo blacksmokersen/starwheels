@@ -41,7 +41,7 @@ namespace SW.Matchmaking.Friends
 
         private void OnGameLobbyJoinRequested(GameLobbyJoinRequested_t result)
         {
-            Debug.LogErrorFormat("[STEAM] Join request from ({0}).", result.m_steamIDLobby.ToString());
+            Debug.LogFormat("[STEAM] Join request from ({0}).", result.m_steamIDLobby.ToString());
             SteamMatchmaking.JoinLobby(result.m_steamIDLobby);
         }
 
@@ -52,7 +52,7 @@ namespace SW.Matchmaking.Friends
                 _steamLobbyID = (CSteamID)result.m_ulSteamIDLobby;
                 SetBoltLobbyID();
                 OpenInvitationPopup();
-                Debug.LogError("[STEAM] Lobby created.");
+                Debug.Log("[STEAM] Lobby created.");
             }
             else
             {
@@ -63,11 +63,11 @@ namespace SW.Matchmaking.Friends
         private void OnLobbyEntered(LobbyEnter_t result)
         {
             _steamLobbyID = (CSteamID)result.m_ulSteamIDLobby;
-            Debug.LogErrorFormat("[STEAM] Entered lobby with SteamID {0}", _steamLobbyID.ToString());
+            Debug.LogFormat("[STEAM] Entered lobby with SteamID {0}", _steamLobbyID.ToString());
 
             if (!BoltNetwork.IsServer && !BoltNetwork.IsClient)
             {
-                Debug.LogError("[BOLT] Starting client ...");
+                Debug.Log("[BOLT] Starting client ...");
                 BoltLauncher.StartClient();
             }
         }
@@ -77,7 +77,7 @@ namespace SW.Matchmaking.Friends
             if (!BoltNetwork.IsServer)
             {
                 string serverName = SteamMatchmaking.GetLobbyData(_steamLobbyID, _lobbyNameParameterName);
-                Debug.LogError("[STEAM] Bolt server name updated : " + serverName);
+                Debug.Log("[STEAM] Bolt server name updated : " + serverName);
 
                 if (serverName != "")
                 {
@@ -87,7 +87,7 @@ namespace SW.Matchmaking.Friends
             else
             {
                 string boltServerID = SteamMatchmaking.GetLobbyData(_steamLobbyID, _lobbyNameParameterName);
-                Debug.LogError("[STEAM] Bolt server name successfully updated : " + boltServerID);
+                Debug.Log("[STEAM] Bolt server name successfully updated : " + boltServerID);
             }
         }
 
@@ -136,7 +136,7 @@ namespace SW.Matchmaking.Friends
         {
             if (SteamManager.Initialized)
             {
-                Debug.LogError("[STEAM] Initializing lobby creation ... ");
+                Debug.Log("[STEAM] Initializing lobby creation ... ");
                 SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, _maxFriends);
             }
         }
@@ -145,7 +145,7 @@ namespace SW.Matchmaking.Friends
         {
             if (SteamManager.Initialized)
             {
-                Debug.LogError("[STEAM] Opening invitation popup.");
+                Debug.Log("[STEAM] Opening invitation popup.");
                 SteamFriends.ActivateGameOverlayInviteDialog(_steamLobbyID);
             }
         }
@@ -155,7 +155,7 @@ namespace SW.Matchmaking.Friends
             if (BoltNetwork.IsServer)
             {
                 SteamMatchmaking.SetLobbyData(_steamLobbyID, _lobbyNameParameterName, _lobbyData.ServerName);
-                Debug.LogErrorFormat("[STEAM] Sending Bolt server ID ({0}) to ({1}).", _lobbyData.ServerName, _steamLobbyID.ToString());
+                Debug.LogFormat("[STEAM] Sending Bolt server ID ({0}) to ({1}).", _lobbyData.ServerName, _steamLobbyID.ToString());
             }
         }
 
@@ -179,7 +179,7 @@ namespace SW.Matchmaking.Friends
             {
                 yield return new WaitForEndOfFrame();
             }
-            Debug.LogError("[BOLT] Joining lobby ...");
+            Debug.Log("[BOLT] Joining lobby ...");
             SWMatchmaking.JoinLobby(serverName);
         }
     }

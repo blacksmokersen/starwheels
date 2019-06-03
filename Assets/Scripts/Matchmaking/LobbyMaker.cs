@@ -19,8 +19,7 @@ namespace SW.Matchmaking
 
         [Header("DebugMode")]
         [SerializeField] private ServerDebugMode _serverDebugMode;
-
-        [HideInInspector] public bool DebugModEnabled = false;
+        public bool DebugModEnabled = false;
 
         // BOLT
 
@@ -57,6 +56,7 @@ namespace SW.Matchmaking
 
         public void CreateLobby()
         {
+            SWMatchmaking.SetRegion((int)udpkit.platform.photon.PhotonRegion.Regions.BEST_REGION);
             SWMatchmaking.CreateLobby();
             StartCoroutine(WaitForLobbyCreated());
         }
