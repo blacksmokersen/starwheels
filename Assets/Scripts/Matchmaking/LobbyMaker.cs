@@ -2,6 +2,9 @@
 using UnityEngine.Events;
 using UnityEngine.Assertions;
 using Bolt;
+using UdpKit;
+using System.Collections;
+using System;
 
 namespace SW.Matchmaking
 {
@@ -9,9 +12,10 @@ namespace SW.Matchmaking
     {
         [Header("Lobby Info")]
         [SerializeField] private LobbyData _lobbyData;
+        [SerializeField] private SessionData _sessionData;
 
         [Header("Events")]
-        public UnityEvent OnConnectedAsServer;
+        public UnityEvent OnLobbyCreated;
 
         [Header("DebugMode")]
         [SerializeField] private ServerDebugMode _serverDebugMode;
@@ -24,43 +28,58 @@ namespace SW.Matchmaking
         {
             if (BoltNetwork.IsServer)
             {
-                Debug.Log("Registering tokens...");
+                Debug.Log("[BOLT] Registering tokens.");
                 BoltNetwork.RegisterTokenClass<Multiplayer.RoomProtocolToken>();
                 BoltNetwork.RegisterTokenClass<LobbyToken>();
             }
         }
 
-        public override void BoltStartDone()
+        public override void SessionCreated(UdpSession session)
         {
-            if (BoltNetwork.IsServer)
-            {
-                if (DebugModEnabled)
-                {
-                    _lobbyData.ServerName = _serverDebugMode.GetHostServerName();
-                }
-                else
-                {
-                    _lobbyData.SetRandomName();
-                }
-                _lobbyData.CanBeJoined = true;
-                _lobbyData.SetRandomGamemode();
-                _lobbyData.SetRandomMap();
-                SWMatchmaking.SetLobbyData(_lobbyData);
+            _sessionData.MySession = session;
+        }
 
-                OnConnectedAsServer.Invoke();
-                Debug.Log("Bolt now running as server.");
+        public override void SessionListUpdated(Map<Guid, UdpSession> sessionList)
+        {
+            if (_sessionData.MySession != null)
+            {
+                _sessionData.BoltSessionGuid = SWMatchmaking.GetBoltSessionID(_sessionData.MySession.Id);
             }
+        }
+
+        public override void BoltShutdownBegin(AddCallback registerDoneCallback)
+        {
+            _sessionData.MySession = null;
+            _sessionData.BoltSessionGuid = new Guid();
         }
 
         // PUBLIC
 
         public void CreateLobby()
         {
-            VerifyLobbyDataSanity();
             SWMatchmaking.CreateLobby();
+            StartCoroutine(WaitForLobbyCreated());
         }
 
         // PRIVATE
+
+        private void SetLobbyData()
+        {
+            if (DebugModEnabled)
+            {
+                _lobbyData.ServerName = _serverDebugMode.GetHostServerName();
+            }
+            else
+            {
+                _lobbyData.SetRandomName();
+            }
+            _lobbyData.CanBeJoined = true;
+            _lobbyData.SetRandomGamemode();
+            _lobbyData.SetRandomMap();
+
+            VerifyLobbyDataSanity();
+            SWMatchmaking.SetLobbyData(_lobbyData);
+        }
 
         private void VerifyLobbyDataSanity()
         {
@@ -68,6 +87,38 @@ namespace SW.Matchmaking
             Assert.IsNotNull(_lobbyData.ChosenMapName, "MapName cannot be null.");
             Assert.IsNotNull(_lobbyData.ChosenGamemode, "Gamemode cannot be null.");
             Assert.AreNotEqual(_lobbyData.MaxPlayers, 0, "MaxPlayers cannot be equal to 0.");
+        }
+
+
+        private IEnumerator WaitForLobbyCreated()
+        {
+            var timer = 0f;
+            bool timerExceedeed = false;
+
+            while (!BoltNetwork.IsServer && !timerExceedeed)
+            {
+                timer += Time.deltaTime;
+                if (timer > 10f)
+                {
+                    timerExceedeed = true;
+                }
+                yield return new WaitForEndOfFrame();
+            }
+
+            if (BoltNetwork.IsServer)
+            {
+                SetLobbyData();
+                if (OnLobbyCreated != null)
+                {
+                    OnLobbyCreated.Invoke();
+                }
+                Debug.Log("[BOLT] Lobby successfully created.");
+            }
+
+            else if (timerExceedeed)
+            {
+                Debug.LogWarning("[BOLT] Took too long to connect as client.");
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ using SW.Matchmaking;
 using UnityEngine;
 using Bolt;
 using Bolt.Utils;
+using UdpKit;
 
 public static class SWMatchmaking
 {
@@ -69,6 +70,24 @@ public static class SWMatchmaking
         BoltNetwork.Connect(BoltNetwork.SessionList[id], connectToken);
     }
 
+    public static void JoinLobby(string serverName, IProtocolToken connectToken = null)
+    {
+        foreach (var session in BoltNetwork.SessionList)
+        {
+            var lobbyToken = SWMatchmaking.GetLobbyToken(session.Key);
+            Debug.Log("Server name : " + lobbyToken.ServerName);
+            if (lobbyToken.ServerName.Equals(serverName))
+            {
+                BoltNetwork.Connect(BoltNetwork.SessionList[session.Key], connectToken);
+            }
+        }
+    }
+
+    public static void JoinLobby(UdpSession udpSession, IProtocolToken connectToken = null)
+    {
+        BoltNetwork.Connect(udpSession, connectToken);
+    }
+
     public static int GetMyBoltId() // En faire une extension de boltnetwork
     {
         if (BoltNetwork.IsConnected)
@@ -87,6 +106,19 @@ public static class SWMatchmaking
             Debug.LogWarning("Can't get your Bolt ID if you are not connected to Bolt.");
             return -1;
         }
+    }
+
+    public static Guid GetBoltSessionID(Guid udpSessionGuid)
+    {
+        foreach (var session in BoltNetwork.SessionList)
+        {
+            Debug.Log("Session ID : " + session.Value.Id);
+            if (session.Value.Id == udpSessionGuid)
+            {
+                return session.Key;
+            }
+        }
+        return new Guid();
     }
 }
 

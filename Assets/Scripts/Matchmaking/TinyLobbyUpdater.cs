@@ -7,16 +7,20 @@ using TMPro;
 
 namespace SW.Matchmaking
 {
+    [DisallowMultipleComponent]
     public class TinyLobbyUpdater : GlobalEventListener
     {
         [Header("Lobby Info")]
         [SerializeField] private LobbyData _lobbyData;
 
-        [Header("UI Elements")]
+        [Header("UI Text Elements")]
         [SerializeField] private TextMeshProUGUI _lookingForGameText;
         [SerializeField] private TextMeshProUGUI _currentGamemodeLobbiesText;
         [SerializeField] private TextMeshProUGUI _timerText;
         [SerializeField] private TextMeshProUGUI _currentPlayerCountText;
+
+        [Header("UI Buttons")]
+        [SerializeField] private GameObject _inviteFriendsButton;
         [SerializeField] private GameObject _startGameButton;
 
         [Header("Settings")]
@@ -59,6 +63,11 @@ namespace SW.Matchmaking
         }
 
         // BOLT
+
+        public override void SessionConnected(UdpSession session, IProtocolToken token)
+        {
+            gameObject.SetActive(false);
+        }
 
         public override void BoltShutdownBegin(AddCallback registerDoneCallback)
         {
@@ -141,6 +150,7 @@ namespace SW.Matchmaking
             _lookingForGameText.text = "Looking for a game";
             _currentPlayerCountText.gameObject.SetActive(false);
             _startGameButton.SetActive(false);
+            _inviteFriendsButton.gameObject.SetActive(false);
 
             _timerStarted = true;
         }
@@ -151,8 +161,10 @@ namespace SW.Matchmaking
             _lookingForGameText.gameObject.SetActive(true);
             _lookingForGameText.text = "Looking for players";
             _currentPlayerCountText.gameObject.SetActive(true);
-            _startGameButton.SetActive(BoltNetwork.IsServer);
             _timerText.gameObject.SetActive(BoltNetwork.IsServer);
+            UpdateCurrentPlayerCount(1);
+            _startGameButton.SetActive(BoltNetwork.IsServer);
+            _inviteFriendsButton.gameObject.SetActive(BoltNetwork.IsServer);
 
             _timerStarted = true;
         }
