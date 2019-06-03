@@ -79,12 +79,12 @@ namespace Abilities.Jump
                 forceDirection = Vector3.right;
                 direction = Direction.Right;
             }
-            else if (joystickValues.Y > 0.5f)
+            else if (joystickValues.Y > 0.5f || Input.GetButton(Constants.Input.Accelerate))
             {
                 forceDirection = Vector3.forward;
                 direction = Direction.Forward;
             }
-            else if (joystickValues.Y < -0.5f)
+            else if (joystickValues.Y < -0.5f || Input.GetButton(Constants.Input.Decelerate))
             {
                 forceDirection = Vector3.back;
                 direction = Direction.Backward;

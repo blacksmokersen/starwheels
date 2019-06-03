@@ -54,9 +54,13 @@ namespace Abilities
 
         public void MapInputs()
         {
-            if (Enabled && Input.GetButtonDown(Constants.Input.UseAbility))
+            if (Enabled && Input.GetButtonDown(Constants.Input.UseAbility) || Enabled && Input.GetButtonDown(Constants.Input.UseAbilityBackward))
             {
-                Use();
+                Use(Direction.Backward);
+            }
+            else if (Enabled && Input.GetButtonDown(Constants.Input.UseAbilityForward))
+            {
+                Use(Direction.Forward);
             }
         }
 
@@ -78,7 +82,7 @@ namespace Abilities
             return _rb.transform.rotation;
         }
 
-        public void Use()
+        public void Use(Direction direction)
         {
             if (CanUseAbility)
             {
@@ -89,10 +93,10 @@ namespace Abilities
                     var throwable = instantiatedItem.GetComponent<Throwable>();
                     _tpBack = instantiatedItem.GetComponent<TPBackBehaviour>();
                     _tpBack.Kart = transform.root;
-                    if (_throwingDirection.CurrentDirection == Direction.Default)
+                    if (direction == Direction.Backward)
                         _throwableLauncher.Throw(throwable, Direction.Backward);
                     else
-                    _throwableLauncher.Throw(throwable, _throwingDirection.CurrentDirection);
+                    _throwableLauncher.Throw(throwable, Direction.Forward);
                 }
                 else // if (_tpBack.IsEnabled())
                 {
