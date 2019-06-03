@@ -64,6 +64,12 @@ namespace SW.Matchmaking.Friends
         {
             _steamLobbyID = (CSteamID)result.m_ulSteamIDLobby;
             Debug.LogErrorFormat("[STEAM] Entered lobby with SteamID {0}", _steamLobbyID.ToString());
+
+            if (!BoltNetwork.IsServer && !BoltNetwork.IsClient)
+            {
+                Debug.LogError("[BOLT] Starting client ...");
+                BoltLauncher.StartClient();
+            }
         }
 
         private void OnLobbyDataUpdated(LobbyDataUpdate_t result)
@@ -75,11 +81,6 @@ namespace SW.Matchmaking.Friends
 
                 if (serverName != "")
                 {
-                    if (!BoltNetwork.IsClient)
-                    {
-                        Debug.LogError("[BOLT] Starting client ...");
-                        BoltLauncher.StartClient();
-                    }
                     StartCoroutine(JoinBoltLobby(serverName));
                 }
             }
