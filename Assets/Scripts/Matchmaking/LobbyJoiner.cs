@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Bolt;
 using UnityEngine.UI;
+using udpkit.platform.photon;
 
 namespace SW.Matchmaking
 {
@@ -38,6 +39,11 @@ namespace SW.Matchmaking
         }
 
         // PUBLIC
+
+        public void SetRegion(int regionID)
+        {
+            SWMatchmaking.SetRegion(regionID);
+        }
 
         public void StartLookingForLobby()
         {
@@ -126,7 +132,6 @@ namespace SW.Matchmaking
             BoltLauncher.StartClient();
             while (!BoltNetwork.IsClient && !timerExceedeed)
             {
-                Debug.Log("Hello");
                 timer += Time.deltaTime;
                 if (timer > 10f)
                 {

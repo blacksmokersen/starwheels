@@ -5,6 +5,7 @@ using UnityEngine;
 using Bolt;
 using Bolt.Utils;
 using UdpKit;
+using udpkit.platform.photon;
 
 public static class SWMatchmaking
 {
@@ -21,20 +22,22 @@ public static class SWMatchmaking
         }
     }
 
-    public static void SetLobbyData(LobbyData lobbyData)
+    public static Guid GetBoltSessionID(Guid udpSessionGuid)
     {
-        if (BoltNetwork.IsRunning && BoltNetwork.IsServer)
+        foreach (var session in BoltNetwork.SessionList)
         {
-            BoltNetwork.RegisterTokenClass<LobbyToken>();
+            Debug.Log("Session ID : " + session.Value.Id);
+            if (session.Value.Id == udpSessionGuid)
+            {
+                return session.Key;
+            }
+        }
+        return new Guid();
+    }
 
-            LobbyToken token = new LobbyToken().BuildData(lobbyData);
-            BoltNetwork.SetServerInfo(lobbyData.ServerName, token);
-            Debug.Log("Lobby data set.");
-        }
-        else
-        {
-            Debug.LogWarning("Can't set data if Bolt is not running.");
-        }
+    public static int GetCurrentLobbyPlayerCount()
+    {
+        return BoltNetwork.Clients.Count();
     }
 
     public static LobbyToken GetLobbyToken(Guid lobbyID)
@@ -42,9 +45,24 @@ public static class SWMatchmaking
         return (LobbyToken)BoltNetwork.SessionList[lobbyID].GetProtocolToken();
     }
 
-    public static int GetCurrentLobbyPlayerCount()
+    public static int GetMyBoltId() // En faire une extension de boltnetwork
     {
-        return BoltNetwork.Clients.Count();
+        if (BoltNetwork.IsConnected)
+        {
+            if (BoltNetwork.IsServer) // We are the server
+            {
+                return 0;
+            }
+            else // We are a client
+            {
+                return (int)BoltNetwork.Server.ConnectionId;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Can't get your Bolt ID if you are not connected to Bolt.");
+            return -1;
+        }
     }
 
     public static void JoinRandomLobby()
@@ -88,37 +106,36 @@ public static class SWMatchmaking
         BoltNetwork.Connect(udpSession, connectToken);
     }
 
-    public static int GetMyBoltId() // En faire une extension de boltnetwork
+    public static void SetLobbyData(LobbyData lobbyData)
     {
-        if (BoltNetwork.IsConnected)
+        if (BoltNetwork.IsRunning && BoltNetwork.IsServer)
         {
-            if (BoltNetwork.IsServer) // We are the server
-            {
-                return 0;
-            }
-            else // We are a client
-            {
-                return (int)BoltNetwork.Server.ConnectionId;
-            }
+            BoltNetwork.RegisterTokenClass<LobbyToken>();
+
+            LobbyToken token = new LobbyToken().BuildData(lobbyData);
+            BoltNetwork.SetServerInfo(lobbyData.ServerName, token);
+            Debug.Log("Lobby data set.");
         }
         else
         {
-            Debug.LogWarning("Can't get your Bolt ID if you are not connected to Bolt.");
-            return -1;
+            Debug.LogWarning("Can't set data if Bolt is not running.");
         }
     }
 
-    public static Guid GetBoltSessionID(Guid udpSessionGuid)
+    public static void SetRegion(int regionID)
     {
-        foreach (var session in BoltNetwork.SessionList)
+        PhotonRegion region = PhotonRegion.GetRegion((PhotonRegion.Regions)regionID);
+        Debug.Log("[BOLT] New region set : " + region + ".");
+
+        BoltLauncher.SetUdpPlatform(new PhotonPlatform(new PhotonPlatformConfig
         {
-            Debug.Log("Session ID : " + session.Value.Id);
-            if (session.Value.Id == udpSessionGuid)
-            {
-                return session.Key;
-            }
-        }
-        return new Guid();
+            AppId = "580c5d6e-2793-48b2-b0e0-7eb1272407f5",
+            Region = region,
+            RoomCreateTimeout = 10,
+            RoomJoinTimeout = 10,
+            RoomUpdateRate = 1,
+            UsePunchThrough = true
+        }));
     }
 }
 

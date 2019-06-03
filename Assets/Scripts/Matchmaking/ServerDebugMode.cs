@@ -42,8 +42,7 @@ namespace SW.Matchmaking
             _lobyJoiner.DebugModEnabled = !_lobyJoiner.DebugModEnabled;
             _text.SetActive(_lobyMaker.DebugModEnabled);
             _serverNameMatchmakingPanel.SetActive(_lobyMaker.DebugModEnabled);
-
-            //_serverNameQuickMatchPanel.SetActive(_lobyMaker.DebugModEnabled);
+            _serverNameQuickMatchPanel.SetActive(_lobyMaker.DebugModEnabled);
         }
 
         public string GetHostServerName()

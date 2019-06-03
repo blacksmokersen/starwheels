@@ -66,7 +66,7 @@ namespace SW.Matchmaking
 
         public override void SessionConnected(UdpSession session, IProtocolToken token)
         {
-            gameObject.SetActive(false);
+            gameObject.SetActive(true);
         }
 
         public override void BoltShutdownBegin(AddCallback registerDoneCallback)
