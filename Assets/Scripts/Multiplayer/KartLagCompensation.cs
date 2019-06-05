@@ -19,6 +19,8 @@ namespace Items
         {
             if (BoltNetwork.IsServer && evnt.TargetBoltEntity == GetComponentInParent<BoltEntity>())
             {
+                try
+                {
                 int ping = SWPing.GetPingAliasedForPlayer(evnt.ItemBoltEntity.GetComponent<Ownership>().OwnerID);
                 if (ping <= 1)
                     framesToRewind = 0;
@@ -35,6 +37,13 @@ namespace Items
 
                 Debug.LogError("Player PING : " + ping + "Number of frames to REWIND : " + framesToRewind);
                 ServerCollisionCheck(evnt.ItemCollsionPosition, evnt.ItemBoltEntity, evnt.TargetBoltEntity, framesToRewind, evnt.CollisionDistanceCheck);
+                }
+                catch (MissingReferenceException)
+                {
+                    Debug.LogError("Player Ownership not set - Number of frames to REWIND : 0 ");
+                    framesToRewind = 0;
+                    ServerCollisionCheck(evnt.ItemCollsionPosition, evnt.ItemBoltEntity, evnt.TargetBoltEntity, framesToRewind, evnt.CollisionDistanceCheck);
+                }
             }
         }
 
