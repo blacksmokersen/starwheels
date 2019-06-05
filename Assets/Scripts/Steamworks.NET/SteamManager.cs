@@ -130,14 +130,23 @@ public class SteamManager : MonoBehaviour
 
             s_EverInitialized = true;
 
-            if(OnSteamInitialized != null) OnSteamInitialized.Invoke();
+            if (OnSteamInitialized != null)
+            {
+                OnSteamInitialized.Invoke();
+            }
+            if (OnAwakeDone != null)
+            {
+                OnAwakeDone.Invoke();
+            }
         }
         else
         {
+            if (OnAwakeDone != null)
+            {
+                OnAwakeDone.Invoke();
+            }
             gameObject.SetActive(false);
         }
-
-        if (OnAwakeDone != null) OnAwakeDone.Invoke();
     }
 
 	// This should only ever get called on first load and after an Assembly reload, You should never Disable the Steamworks Manager yourself.
