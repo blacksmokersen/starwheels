@@ -61,6 +61,11 @@ namespace Items
 
         public void MapInputs()
         {
+            if (Input.GetButton(Constants.Input.UseAbility))
+                Enabled = false;
+            else
+                Enabled = true;
+
             if (Enabled)
             {
                 if (Input.GetButton(Constants.Input.UseItem) || Input.GetButton(Constants.Input.UseItemBackward) || Input.GetButton(Constants.Input.UseItemForward))
