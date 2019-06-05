@@ -35,7 +35,7 @@ namespace Abilities
 
         public void MapInputs()
         {
-            if (Enabled && Input.GetButtonDown(Constants.Input.UseAbility))
+            if (Enabled && Input.GetButtonDown(Constants.Input.UseAbilityOnJoystick))
             {
                 var xAxis = Input.GetAxis(Constants.Input.TurnAxis);
                 var yAxis = Input.GetAxis(Constants.Input.UpAndDownAxis);

@@ -54,11 +54,11 @@ namespace Abilities
 
         public void MapInputs()
         {
-            if (Enabled && Input.GetButtonDown(Constants.Input.UseAbility) || Enabled && Input.GetButtonDown(Constants.Input.UseAbilityBackward))
+            if (Enabled && Input.GetButtonDown(Constants.Input.UseAbilityOnJoystick) || Enabled && Input.GetButtonDown(Constants.Input.ActivateAbilityKeyboard))
             {
                 Use(Direction.Backward);
             }
-            else if (Enabled && Input.GetButtonDown(Constants.Input.UseAbilityForward))
+            else if (Enabled && Input.GetButtonDown(Constants.Input.ActivateAbilityKeyboard))
             {
                 Use(Direction.Forward);
             }

@@ -112,7 +112,8 @@ namespace Abilities.Jump
 
         public void MapInputs()
         {
-            if (Enabled && Input.GetButtonDown(Constants.Input.UseAbility))
+            if (Enabled && Input.GetButtonDown(Constants.Input.UseAbilityOnJoystick)
+                || Enabled && Input.GetButtonDown(Constants.Input.ActivateAbilityKeyboard))
             {
                 JoystickValues joystickValues = new JoystickValues()
                 {

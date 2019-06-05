@@ -53,17 +53,16 @@ namespace Abilities
         {
             if (CanUseAbility)
             {
-                if (Enabled && Input.GetButtonDown(Constants.Input.UseAbility)
-                    || Enabled && Input.GetButtonDown(Constants.Input.UseAbilityForward)
-                    || Enabled && Input.GetButtonDown(Constants.Input.UseAbilityBackward))
+                if (Enabled && Input.GetButtonDown(Constants.Input.UseAbilityOnJoystick)
+                    || Enabled && Input.GetButtonDown(Constants.Input.ActivateAbilityKeyboard))
                 {
                     _wallPreview.SetActive(true);
                     _enableWallPreview = true;
                     _previewIsEnable = true;
                 }
-                if (Enabled && Input.GetButtonUp(Constants.Input.UseAbility) && _previewIsEnable
-                    || Enabled && Input.GetButtonUp(Constants.Input.UseAbilityBackward) && _previewIsEnable
-                    || Enabled && Input.GetButtonUp(Constants.Input.UseAbilityForward) && _previewIsEnable)
+                if (Enabled && Input.GetButtonUp(Constants.Input.UseAbilityOnJoystick) && _previewIsEnable
+                    || Enabled && Input.GetButtonUp(Constants.Input.UseItemForward) && _previewIsEnable
+                    || Enabled && Input.GetButtonUp(Constants.Input.UseItemBackward) && _previewIsEnable)
                 {
                     InstantiateWall();
                     _previewIsEnable = false;
@@ -82,7 +81,7 @@ namespace Abilities
         {
             var leftJoytstickInput = Input.GetAxis(Constants.Input.UpAndDownAxis);
 
-            if (leftJoytstickInput > 0.5f || Input.GetButton(Constants.Input.UseAbilityForward))
+            if (leftJoytstickInput > 0.5f || Input.GetButton(Constants.Input.UseItemBackward))
                 _wallPreviewRaycastOrigin.transform.localPosition = Vector3.forward * _wallSettings.WallFrontPosition;
             else
                 _wallPreviewRaycastOrigin.transform.localPosition = Vector3.forward * _wallSettings.WallBackPosition;
