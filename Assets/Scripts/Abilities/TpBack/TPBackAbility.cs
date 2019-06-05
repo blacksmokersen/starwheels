@@ -54,14 +54,15 @@ namespace Abilities
 
         public void MapInputs()
         {
-            if (Enabled && Input.GetButtonDown(Constants.Input.UseAbilityOnJoystick) || Enabled && Input.GetButtonDown(Constants.Input.ActivateAbilityKeyboard))
-            {
-                Use(Direction.Backward);
-            }
-            else if (Enabled && Input.GetButtonDown(Constants.Input.ActivateAbilityKeyboard))
-            {
-                Use(Direction.Forward);
-            }
+            if (Enabled && Input.GetButtonDown(Constants.Input.UseAbilityOnJoystick))
+                UseWithJoystick();
+
+            if(_tpBack != null && Input.GetButtonDown(Constants.Input.ActivateAbilityKeyboard))
+                UseWithKeyboard(Direction.Default);
+            else if (Enabled && Input.GetButton(Constants.Input.ActivateAbilityKeyboard) && Input.GetButtonDown(Constants.Input.UseItemForward))
+                UseWithKeyboard(Direction.Backward);
+            else if (Enabled && Input.GetButton(Constants.Input.ActivateAbilityKeyboard) && Input.GetButtonDown(Constants.Input.UseItemBackward))
+                UseWithKeyboard(Direction.Forward);
         }
 
         public new void Reload()
@@ -82,7 +83,31 @@ namespace Abilities
             return _rb.transform.rotation;
         }
 
-        public void Use(Direction direction)
+        public void UseWithJoystick()
+        {
+            if (CanUseAbility)
+            {
+                if (_tpBack == null)
+                {
+                    var instantiatedItem = BoltNetwork.Instantiate(_tPBackSettings.Prefab);
+
+                    var throwable = instantiatedItem.GetComponent<Throwable>();
+                    _tpBack = instantiatedItem.GetComponent<TPBackBehaviour>();
+                    _tpBack.Kart = transform.root;
+                    if (_throwingDirection.CurrentDirection == Direction.Default)
+                        _throwableLauncher.Throw(throwable, Direction.Backward);
+                    else
+                        _throwableLauncher.Throw(throwable, _throwingDirection.CurrentDirection);
+                }
+                else // if (_tpBack.IsEnabled())
+                {
+                    StartCoroutine(Cooldown());
+                    StartCoroutine(BlinkTpBack());
+                }
+            }
+        }
+
+        public void UseWithKeyboard(Direction direction)
         {
             if (CanUseAbility)
             {
@@ -96,7 +121,7 @@ namespace Abilities
                     if (direction == Direction.Backward)
                         _throwableLauncher.Throw(throwable, Direction.Backward);
                     else
-                    _throwableLauncher.Throw(throwable, Direction.Forward);
+                        _throwableLauncher.Throw(throwable, Direction.Forward);
                 }
                 else // if (_tpBack.IsEnabled())
                 {
