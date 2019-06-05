@@ -17,6 +17,13 @@ namespace Items
         [Header("Events")]
         public GameObjectEvent OnOwnershipSet;
 
+        // START
+
+        private void Start()
+        {
+            Debug.LogError("[OWNERSHIP] Start : " + GetComponent<BoltEntity>().NetworkId);
+        }
+
         // PUBLIC
 
         public void Set(PlayerInfo player)
@@ -36,10 +43,11 @@ namespace Items
                 Label = evnt.ItemName;
                 OwnerID = evnt.OwnerID;
                 OwnerNickname = evnt.OwnerNickname;
-                OwnerKartRoot = SWExtensions.KartExtensions.GetKartWithID(OwnerID);
                 Team = evnt.Team.ToTeam();
+                OwnerKartRoot = SWExtensions.KartExtensions.GetKartWithID(OwnerID);
 
                 OnOwnershipSet.Invoke(OwnerKartRoot);
+                Debug.LogError("[OWNERSHIP] ItemThrown event received : "+ GetComponent<BoltEntity>().NetworkId);
             }
         }
     }

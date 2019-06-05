@@ -22,41 +22,43 @@ namespace Multiplayer
         }
 
         public int OwnerID;
-        public BoltEntity KartEntity;
 
         [Header("Events")]
         public StringEvent OnNicknameChanged;
         public TeamEvent OnTeamChanged;
         public IntEvent OnOwnerIDChanged;
 
-        public void Start()
+        private BoltEntity _kartEntity;
+
+        // CORE
+
+        private void Awake()
         {
-            if (KartEntity.isOwner)
-            {
-                Me = this;
-            }
+            _kartEntity = GetComponent<BoltEntity>();
         }
 
         // BOLT
 
         public override void OnEvent(PlayerReady evnt)
         {
-            if (!evnt.Entity.isOwner)
+            if (!evnt.FromSelf)
             {
-                if (evnt.Entity == GetComponent<BoltEntity>()) // This is the new spawned kart
+                if (evnt.Entity == _kartEntity) // This is the new spawned kart
                 {
+                    Debug.LogError("[INFO] New player ready  : " + evnt.Nickname);
                     Nickname = evnt.Nickname;
                     Team = evnt.Team.ToTeam();
                     OwnerID = evnt.PlayerID;
                 }
-                else if (evnt.Entity != GetComponent<BoltEntity>() && KartEntity.isOwner) // This is my kart, I send my info to the new player
+                else if (evnt.Entity != _kartEntity && _kartEntity.IsOwner) // This is my kart, I send my info to the new player
                 {
-                    PlayerInfoEvent playerInfoEvent = PlayerInfoEvent.Create(evnt.RaisedBy); // We target the new player
+                    Debug.LogError("[INFO] Sending my info to : " + evnt.Nickname);
+                    PlayerInfoEvent playerInfoEvent = PlayerInfoEvent.Create(); // We target the new player
                     playerInfoEvent.TargetPlayerID = evnt.PlayerID;
                     playerInfoEvent.Nickname = Nickname;
                     playerInfoEvent.Team = (int)Team;
                     playerInfoEvent.PlayerID = OwnerID;
-                    playerInfoEvent.KartEntity = KartEntity;
+                    playerInfoEvent.KartEntity = _kartEntity;
                     playerInfoEvent.Send();
                 }
             }
@@ -64,8 +66,11 @@ namespace Multiplayer
 
         public override void OnEvent(PlayerInfoEvent evnt)
         {
-            if (evnt.KartEntity == KartEntity && !evnt.KartEntity.isOwner)
+            if (evnt.TargetPlayerID == SWMatchmaking.GetMyBoltId() && // This event is for me
+                evnt.KartEntity == _kartEntity && // This is the targetted kart
+                !evnt.KartEntity.IsOwner) // I don't own this kart
             {
+                Debug.LogError("[INFO] Received info from : " + evnt.Nickname);
                 Nickname = evnt.Nickname;
                 Team = evnt.Team.ToTeam();
                 OwnerID = evnt.PlayerID;

@@ -39,6 +39,7 @@ namespace Common.HUD
             var killerColor = _gameSettings.TeamsListSettings.GetSettings(evnt.KillerTeam.ToTeam()).KillFeedEntryColor;
             entry.SetKillerNameAndColor(evnt.KillerName, killerColor, evnt.KillerName == _playerSettings.Nickname);
             entry.SetItemIcon(_itemListData.GetItemIconUsingName(evnt.Item));
+
             var victimrColor = _gameSettings.TeamsListSettings.GetSettings(evnt.VictimTeam.ToTeam()).KillFeedEntryColor;
             entry.SetVictimNameAndColor(evnt.VictimName, victimrColor, evnt.VictimName == _playerSettings.Nickname);
             entry.transform.localPosition = Vector3.zero;
