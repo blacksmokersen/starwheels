@@ -51,8 +51,6 @@ namespace Multiplayer
                 {
                     _gameStarted.Value = true;
                 }
-
-                Debug.LogErrorFormat("Received ID {0} for team {1}", evnt.TeamEnum, evnt.TeamEnum.ToTeam());
                 InstantiateKart(evnt.SpawnPosition, evnt.SpawnRotation, evnt.TeamEnum.ToTeam(), (RoomProtocolToken)evnt.RoomToken);
             }
         }

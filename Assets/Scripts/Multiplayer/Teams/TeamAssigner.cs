@@ -53,17 +53,14 @@ namespace Multiplayer.Teams
             int leastPlayerCount = int.MaxValue;
             Team availableTeam = Team.Blue;
 
-            Debug.LogError("--------- START");
             foreach (var pair in _teamsPlayers)
             {
                 if (pair.Value.Count < leastPlayerCount)
                 {
-                    Debug.LogErrorFormat("Team {0} has only {1} players", pair.Key, pair.Value.Count);
                     leastPlayerCount = pair.Value.Count;
                     availableTeam = pair.Key;
                 }
             }
-            Debug.LogError("--------- END");
             return availableTeam;
         }
 
@@ -71,7 +68,6 @@ namespace Multiplayer.Teams
         {
             if (!PlayerAlreadyInATeam(playerID) && _teamsPlayers.ContainsKey(team))
             {
-                Debug.LogErrorFormat("Adding {0} to team {1}", playerID, team);
                 _teamsPlayers[team].Add(playerID);
             }
         }
@@ -82,7 +78,6 @@ namespace Multiplayer.Teams
         {
             foreach (var team in _gameSettings.TeamsListSettings.TeamsList)
             {
-                Debug.LogError("Registering Team " + team);
                 _teamsPlayers.Add(team.TeamEnum, new List<int>());
             }
         }
@@ -93,7 +88,6 @@ namespace Multiplayer.Teams
             {
                 if (entry.Value.Contains(playerID))
                 {
-                    Debug.LogFormat("Player {0} already in a team", playerID);
                     return true;
                 }
             }
