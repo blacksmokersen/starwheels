@@ -62,6 +62,8 @@ namespace Multiplayer
                 var serverTeam = _teamAssigner.PickAvailableTeam();
                 AssignSpawn(SWMatchmaking.GetMyBoltId(), serverTeam);
                 _teamAssigner.AddPlayer(serverTeam, SWMatchmaking.GetMyBoltId());
+
+                Debug.LogError("Scene local done");
             }
         }
 
@@ -73,6 +75,8 @@ namespace Multiplayer
                 AssignSpawn((int)connection.ConnectionId, playerTeam);
                 _teamAssigner.AddPlayer(playerTeam, (int)connection.ConnectionId);
                 IncreaseSpawnCount();
+
+                Debug.LogErrorFormat("Scene remote done ID {0} and team {1}", (int) connection.ConnectionId, playerTeam);
             }
         }
 
