@@ -89,7 +89,7 @@ namespace Items
 
         public void UseItem()
         {
-            if (CurrentItemCount > 0 && CurrentItem != null && CanUseItem)
+            if (CurrentItemCount > 0 && CurrentItem != null && CanUseItem && !Input.GetButton(Constants.Input.ActivateAbilityKeyboard))
             {
                 InstantiateItem();
                 SetCount(CurrentItemCount - 1);

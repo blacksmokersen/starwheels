@@ -70,7 +70,7 @@ namespace Abilities
 
         public void MapInputs()
         {
-            if (Enabled && Input.GetButtonDown(Constants.Input.UseAbility))
+            if (Enabled && Input.GetButtonDown(Constants.Input.UseAbilityOnJoystick))
             {
                 if (CanUseAbility)
                     SendCloakEvent();
