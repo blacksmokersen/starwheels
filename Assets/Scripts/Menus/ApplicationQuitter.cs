@@ -2,7 +2,8 @@
 
 namespace Menu
 {
-    public class MainMenu : MonoBehaviour
+    [DisallowMultipleComponent]
+    public class ApplicationQuitter : MonoBehaviour
     {
         // PUBLIC
 

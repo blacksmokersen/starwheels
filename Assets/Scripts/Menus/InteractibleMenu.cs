@@ -5,13 +5,6 @@ using UnityEngine.Events;
 
 namespace Menu
 {
-    [System.Serializable]
-    public class MenuElementOption
-    {
-        public GameObject Element;
-        public bool Activated;
-    }
-
     [DisallowMultipleComponent]
     public class InteractibleMenu : MonoBehaviour
     {
@@ -57,7 +50,11 @@ namespace Menu
             if (_firstItemSelected)
             {
                 _firstItemSelected.Select();
-                OnFocusSet.Invoke();
+
+                if (OnFocusSet != null)
+                {
+                    OnFocusSet.Invoke();
+                }
             }
             else
             {
@@ -67,12 +64,15 @@ namespace Menu
 
         public void ResetElements()
         {
-            Debug.Log("Resetting menu elements.");
             for (int i = 0; i < _elementsToReset.Count; i++)
             {
-                _elementsToReset[i].SetActive(_elementsToResetStatuses[i]);// _elementsToResetStatuses[i]);
+                _elementsToReset[i].SetActive(_elementsToResetStatuses[i]);
             }
-            OnElementsReset.Invoke();
+
+            if (OnElementsReset != null)
+            {
+                OnElementsReset.Invoke();
+            }
         }
 
         public void ShowAndResetElements()

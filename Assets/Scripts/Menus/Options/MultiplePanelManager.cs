@@ -27,6 +27,22 @@ namespace Menu.Options
             }
         }
 
+        public void ShowPanel(GameObject panel)
+        {
+            if (_panels.Contains(panel))
+            {
+                if (!_enableMultiplePanelsOpened)
+                {
+                    HideAllPanels();
+                }
+                panel.SetActive(true);
+            }
+            else
+            {
+                Debug.LogError("This panel is not in the panel list.");
+            }
+        }
+
         // PRIVATE
 
         private void HideAllPanels()
