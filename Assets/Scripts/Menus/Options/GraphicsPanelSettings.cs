@@ -1,22 +1,42 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 namespace Menu.Options
 {
     [DisallowMultipleComponent]
     public class GraphicsPanelSettings : MonoBehaviour
     {
+        [Header("UI Elements")]
+        [SerializeField] private Toggle _fullScreenToggle;
+        [SerializeField] private TMP_Dropdown _resolutionDropdown;
+
+        private const string _fullScreenPrefName = "FullScreenPref";
+        private const string _resolutionPrefName = "ScreenResolutionPref";
+
+        // CORE
+
+        private void Awake()
+        {
+            InitializeUI();
+        }
+
+        private void OnEnable()
+        {
+            InitializeUI();
+        }
+
+        private void OnDisable()
+        {
+            PlayerPrefs.Save(); // Save values when the panel closes
+        }
+
         // PUBLIC
 
-        public void SetFullScreen(float value)
+        public void SetFullScreen(bool b)
         {
-            if (value == 1)
-            {
-                Screen.fullScreen = true;
-            }
-            else
-            {
-                Screen.fullScreen = false;
-            }
+            Screen.fullScreen = b;
+            PlayerPrefs.SetInt(_fullScreenPrefName, b ? 1 : 0);
         }
 
         public void SetScreenResolution(int value)
@@ -35,6 +55,7 @@ namespace Menu.Options
                 default:
                     break;
             }
+            PlayerPrefs.SetInt(_resolutionPrefName, value);
         }
 
         public void SetGraphicQuality(int value)
@@ -53,6 +74,14 @@ namespace Menu.Options
                 default:
                     break;
             }
+        }
+
+        // PRIVATE
+
+        private void InitializeUI()
+        {
+            _fullScreenToggle.isOn = PlayerPrefs.GetInt(_fullScreenPrefName) == 1 ? true : false;
+            _resolutionDropdown.value = PlayerPrefs.GetInt(_resolutionPrefName);
         }
     }
 }

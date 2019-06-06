@@ -9,6 +9,8 @@ namespace Menu
     public class InteractibleMenu : MonoBehaviour
     {
         [Header("Events")]
+        public UnityEvent OnEnabled;
+        public UnityEvent OnDisabled;
         public UnityEvent OnElementsReset;
         public UnityEvent OnFocusSet;
 
@@ -40,6 +42,19 @@ namespace Menu
             if (_setFocusOnEnabled)
             {
                 SetFocus();
+            }
+
+            if (OnEnabled != null)
+            {
+                OnEnabled.Invoke();
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (OnDisabled != null)
+            {
+                OnDisabled.Invoke();
             }
         }
 

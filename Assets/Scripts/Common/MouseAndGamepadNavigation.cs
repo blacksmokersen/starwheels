@@ -9,6 +9,9 @@ namespace Common
     {
         [SerializeField] private EventSystem _eventSystem;
 
+        [Header("Settings")]
+        [SerializeField] private bool _disableCursorOnScene;
+
         private Selectable _lastSelected;
         private bool _gamepadHasFocus = false;
 
@@ -17,6 +20,11 @@ namespace Common
         private void Awake()
         {
             _lastSelected = _eventSystem.firstSelectedGameObject.GetComponent<Selectable>();
+
+            if (_disableCursorOnScene)
+            {
+                Cursor.visible = false;
+            }
         }
 
         private void Update()
