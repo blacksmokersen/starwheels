@@ -133,7 +133,7 @@ namespace Abilities.Jump
                 if (!_hasDoneFirstJump && _groundCondition.Grounded)
                 {
                     FirstJump();
-                    SetOwnerInvincibility();
+                    StartCoroutine(SetOwnerInvincibility());
                     _timeBetweenFirstAndSecondJump = StartCoroutine(TimeBetweenFirstAndSecondJump());
                 }
                 else if (_hasDoneFirstJump && !_groundCondition.Grounded)
@@ -149,8 +149,9 @@ namespace Abilities.Jump
             }
         }
 
-        private void SetOwnerInvincibility()
+        private IEnumerator SetOwnerInvincibility()
         {
+            yield return new WaitForSeconds(_jumpSettings.DelayBeforeInvicibilityDuration);
             _health.SetInvincibilityForXSeconds(_jumpSettings.InvicibilityDuration);
         }
 

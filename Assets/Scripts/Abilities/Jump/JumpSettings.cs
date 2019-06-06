@@ -14,7 +14,8 @@ namespace Abilities
         public float TimeBeforeCancelVelocity;
         public float CancelSmootherDuration;
 
-        [Header("Jump Invicibility Duration")]
+        [Header("Jump Invicibility")]
+        public float DelayBeforeInvicibilityDuration;
         public float InvicibilityDuration;
 
         [Header("Time between First and Second Jump")]
