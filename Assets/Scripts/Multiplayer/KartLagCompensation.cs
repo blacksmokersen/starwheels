@@ -41,8 +41,6 @@ namespace Items
                 catch (MissingReferenceException)
                 {
                     Debug.LogError("Player Ownership not set - Number of frames to REWIND : 0 ");
-                    framesToRewind = 0;
-                    ServerCollisionCheck(evnt.ItemCollsionPosition, evnt.ItemBoltEntity, evnt.TargetBoltEntity, framesToRewind, evnt.CollisionDistanceCheck);
                 }
             }
         }
