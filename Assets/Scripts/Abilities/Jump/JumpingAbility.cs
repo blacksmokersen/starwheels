@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.Events;
 using Common.PhysicsUtils;
-using Engine;
 
 namespace Abilities.Jump
 {
@@ -23,6 +22,7 @@ namespace Abilities.Jump
 
         [Header("Conditions")]
         [SerializeField] private GroundCondition _groundCondition;
+        [SerializeField] private Health.Health _health;
 
         private JumpSettings _jumpSettings;
         private Rigidbody _rb;
@@ -133,6 +133,7 @@ namespace Abilities.Jump
                 if (!_hasDoneFirstJump && _groundCondition.Grounded)
                 {
                     FirstJump();
+                    SetOwnerInvincibility();
                     _timeBetweenFirstAndSecondJump = StartCoroutine(TimeBetweenFirstAndSecondJump());
                 }
                 else if (_hasDoneFirstJump && !_groundCondition.Grounded)
@@ -146,6 +147,11 @@ namespace Abilities.Jump
                     _hasDoneFirstJump = false;
                 }
             }
+        }
+
+        private void SetOwnerInvincibility()
+        {
+            _health.SetInvincibilityForXSeconds(_jumpSettings.InvicibilityDuration);
         }
 
         private IEnumerator TimeBetweenFirstAndSecondJump()
