@@ -3,7 +3,6 @@ using UnityEngine.Events;
 
 namespace Menu
 {
-    [DisallowMultipleComponent]
     public class MenuOpener : MonoBehaviour
     {
         [Header("Settings")]
