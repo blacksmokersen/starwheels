@@ -14,6 +14,14 @@ namespace Menu.Options
 
         // PUBLIC
 
+        public void HideAllPanels()
+        {
+            foreach (var panel in _panels)
+            {
+                panel.SetActive(false);
+            }
+        }
+
         public void ShowPanel(int panelIndex)
         {
             if (!_enableMultiplePanelsOpened)
@@ -40,16 +48,6 @@ namespace Menu.Options
             else
             {
                 Debug.LogError("This panel is not in the panel list.");
-            }
-        }
-
-        // PRIVATE
-
-        private void HideAllPanels()
-        {
-            foreach (var panel in _panels)
-            {
-                panel.SetActive(false);
             }
         }
     }

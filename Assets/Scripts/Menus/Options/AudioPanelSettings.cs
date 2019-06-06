@@ -13,7 +13,7 @@ namespace Menu.Options
 
         // PUBLIC
 
-        public void SetSfxVolume(float value)
+        public void SetSFXVolume(float value)
         {
             audioMixer.SetFloat("MasterSFX", value);
         }
