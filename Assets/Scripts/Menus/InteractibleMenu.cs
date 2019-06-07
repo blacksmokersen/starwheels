@@ -11,8 +11,6 @@ namespace Menu
         [Header("Events")]
         public UnityEvent OnEnabled;
         public UnityEvent OnDisabled;
-        public UnityEvent OnElementsReset;
-        public UnityEvent OnFocusSet;
 
         [Header("Settings")]
         [SerializeField] private Selectable _firstItemSelected;
@@ -65,11 +63,6 @@ namespace Menu
             if (_firstItemSelected)
             {
                 _firstItemSelected.Select();
-
-                if (OnFocusSet != null)
-                {
-                    OnFocusSet.Invoke();
-                }
             }
             else
             {
@@ -82,11 +75,6 @@ namespace Menu
             for (int i = 0; i < _elementsToReset.Count; i++)
             {
                 _elementsToReset[i].SetActive(_elementsToResetStatuses[i]);
-            }
-
-            if (OnElementsReset != null)
-            {
-                OnElementsReset.Invoke();
             }
         }
 

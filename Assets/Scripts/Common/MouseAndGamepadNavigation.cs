@@ -10,7 +10,8 @@ namespace Common
         [SerializeField] private EventSystem _eventSystem;
 
         [Header("Settings")]
-        [SerializeField] private bool _disableCursorOnScene;
+        public bool Enabled;
+        [SerializeField] private bool _disableCursorOnAwake;
 
         private Selectable _lastSelected;
         private bool _gamepadHasFocus = false;
@@ -21,36 +22,37 @@ namespace Common
         {
             _lastSelected = _eventSystem.firstSelectedGameObject.GetComponent<Selectable>();
 
-            if (_disableCursorOnScene)
+            if (_disableCursorOnAwake)
             {
-                Cursor.visible = false;
+                HideCursor();
             }
         }
 
         private void Update()
         {
-            CheckCurrentSelected();
-            CheckGamepadInputs();
-            CheckMouseInputs();
+            if (Enabled)
+            {
+                CheckCurrentSelected();
+                CheckGamepadInputs();
+                CheckMouseInputs();
+            }
         }
 
         // PUBLIC
 
-        public GameObject GameObjectUnderPointer(int pointerId)
+        public void Enable(bool b)
         {
-            /*
-            var lastPointer = _eventSystem.GetLastPointerEventData(pointerId);
-            if (lastPointer != null)
-            {
-                return lastPointer.pointerCurrentRaycast.gameObject;
-            }
-            */
-            return null;
+            Enabled = b;
         }
 
-        public GameObject GameObjectUnderPointer()
+        public void ShowCursor()
         {
-            return GameObjectUnderPointer(PointerInputModule.kMouseLeftId);
+            Cursor.visible = true;
+        }
+
+        public void HideCursor()
+        {
+            Cursor.visible = false;
         }
 
         // PRIVATE
