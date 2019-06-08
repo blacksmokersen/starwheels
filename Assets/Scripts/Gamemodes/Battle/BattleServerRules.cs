@@ -10,7 +10,7 @@ namespace Gamemodes
         [Header("Settings")]
         [SerializeField] private float _secondsSecurityBetweenHits;
 
-        private Dictionary<int, float> _hitSecurity;
+        private Dictionary<int, float> _hitSecurity = new Dictionary<int, float>();
 
         // CORE
 

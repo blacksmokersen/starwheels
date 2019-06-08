@@ -45,14 +45,12 @@ namespace Multiplayer
             {
                 if (evnt.Entity == _kartEntity) // This is the new spawned kart
                 {
-                    Debug.LogError("[INFO] New player ready  : " + evnt.Nickname);
                     Nickname = evnt.Nickname;
                     Team = evnt.Team.ToTeam();
                     OwnerID = evnt.PlayerID;
                 }
                 else if (evnt.Entity != _kartEntity && _kartEntity.IsOwner) // This is my kart, I send my info to the new player
                 {
-                    Debug.LogError("[INFO] Sending my info to : " + evnt.Nickname);
                     PlayerInfoEvent playerInfoEvent = PlayerInfoEvent.Create(); // We target the new player
                     playerInfoEvent.TargetPlayerID = evnt.PlayerID;
                     playerInfoEvent.Nickname = Nickname;
@@ -70,7 +68,6 @@ namespace Multiplayer
                 evnt.KartEntity == _kartEntity && // This is the targetted kart
                 !evnt.KartEntity.IsOwner) // I don't own this kart
             {
-                Debug.LogError("[INFO] Received info from : " + evnt.Nickname);
                 Nickname = evnt.Nickname;
                 Team = evnt.Team.ToTeam();
                 OwnerID = evnt.PlayerID;
