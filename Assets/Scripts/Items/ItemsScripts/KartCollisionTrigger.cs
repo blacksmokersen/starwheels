@@ -16,26 +16,31 @@ namespace Items
         [SerializeField] private float _secondsSecurityBetweenHits;
 
         private Dictionary<int, float> _hitSecurity = new Dictionary<int, float>();
-        private List<int> idsToRemove = new List<int>();
+        private int[] _ids = new int[8];
+        private List<int> _idsToRemove = new List<int>();
 
         // CORE
 
         private void Update()
         {
-            foreach (var key in _hitSecurity.Keys)
-            {
-                _hitSecurity[key] += Time.deltaTime;
+            _hitSecurity.Keys.CopyTo(_ids, 0);
 
-                if (_hitSecurity[key] > _secondsSecurityBetweenHits)
+            foreach (var id in _ids)
+            {
+                _hitSecurity[id] += Time.deltaTime;
+
+                if (_hitSecurity[id] > _secondsSecurityBetweenHits)
                 {
-                    idsToRemove.Add(key);
+                    _idsToRemove.Add(id);
                 }
             }
-            foreach(var id in idsToRemove)
+            foreach (var id in _idsToRemove)
             {
                 _hitSecurity.Remove(id);
             }
-            idsToRemove.Clear();
+
+            _ids = new int[8];
+            _idsToRemove.Clear();
         }
 
         // PUBLIC
@@ -57,6 +62,7 @@ namespace Items
                         {
                             Debug.Log("[HIT] Added to security.");
                             _hitSecurity.Add(itemOwnership.OwnerID, 0f);
+
                             SendPlayerHitEvent(itemOwnership);
                         }
                         DestroyColliderObject(target);
