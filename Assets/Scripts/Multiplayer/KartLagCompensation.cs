@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Multiplayer;
+﻿using UnityEngine;
 using Bolt;
 
 namespace Items
@@ -35,7 +32,6 @@ namespace Items
                 else
                     framesToRewind = 25;
 
-                Debug.LogError("Player PING : " + ping + "Number of frames to REWIND : " + framesToRewind);
                 ServerCollisionCheck(evnt.ItemCollsionPosition, evnt.ItemBoltEntity, evnt.TargetBoltEntity, framesToRewind, evnt.CollisionDistanceCheck);
                 }
                 catch (MissingReferenceException)
@@ -51,10 +47,6 @@ namespace Items
         {
             if (ServerRewindDistCheck(localCollisionPosition, target, framestoRewind) <= collisionDistance)
             {
-
-             //   Debug.LogError("HIT WITH LAG COMPENSATION -- FrameToRewind : " + framestoRewind +
-             //       " -- DISTANCE : " + ServerRewindDistCheck(localCollisionPosition, target, framestoRewind));
-
                 bool alreadySentInformations = false;
 
                 foreach (Transform child in item.transform)
