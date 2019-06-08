@@ -27,11 +27,14 @@ namespace Items
 
             foreach (var id in _ids)
             {
-                _hitSecurity[id] += Time.deltaTime;
-
-                if (_hitSecurity[id] > _secondsSecurityBetweenHits)
+                if (_hitSecurity.ContainsKey(id))
                 {
-                    _idsToRemove.Add(id);
+                    _hitSecurity[id] += Time.deltaTime;
+
+                    if (_hitSecurity[id] > _secondsSecurityBetweenHits)
+                    {
+                        _idsToRemove.Add(id);
+                    }
                 }
             }
             foreach (var id in _idsToRemove)

@@ -18,23 +18,23 @@ namespace Items
             {
                 try
                 {
-                int ping = SWPing.GetPingAliasedForPlayer(evnt.ItemBoltEntity.GetComponent<Ownership>().OwnerID);
-                if (ping <= 1)
-                    framesToRewind = 0;
-                else if (ping >= 2 && ping <= 20)
-                    framesToRewind = 5;
-                else if (ping >= 21 && ping <= 45)
-                    framesToRewind = 10;
-                else if (ping >= 46 && ping <= 75)
-                    framesToRewind = 15;
-                else if (ping >= 76 && ping <= 125)
-                    framesToRewind = 20;
-                else
-                    framesToRewind = 25;
+                    int ping = SWPing.GetPingAliasedForPlayer(evnt.ItemBoltEntity.GetComponent<Ownership>().OwnerID);
+                    if (ping <= 1)
+                        framesToRewind = 0;
+                    else if (ping >= 2 && ping <= 20)
+                        framesToRewind = 5;
+                    else if (ping >= 21 && ping <= 45)
+                        framesToRewind = 10;
+                    else if (ping >= 46 && ping <= 75)
+                        framesToRewind = 15;
+                    else if (ping >= 76 && ping <= 125)
+                        framesToRewind = 20;
+                    else
+                        framesToRewind = 25;
 
-                ServerCollisionCheck(evnt.ItemCollsionPosition, evnt.ItemBoltEntity, evnt.TargetBoltEntity, framesToRewind, evnt.CollisionDistanceCheck);
+                    ServerCollisionCheck(evnt.ItemCollsionPosition, evnt.ItemBoltEntity, evnt.TargetBoltEntity, framesToRewind, evnt.CollisionDistanceCheck);
                 }
-                catch (MissingReferenceException)
+                catch (System.NullReferenceException)
                 {
                     Debug.LogError("Player Ownership not set - Number of frames to REWIND : 0 ");
                 }
