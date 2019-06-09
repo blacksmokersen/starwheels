@@ -52,7 +52,10 @@ namespace Controls
 
         private void MoveCam()
         {
-            _horizontalAxis = Input.GetAxis(Constants.Input.UpAndDownAxis);
+            if (Mathf.Abs(Input.GetAxis(Constants.Input.UpAndDownAxis)) > 0)
+                _horizontalAxis = Input.GetAxis(Constants.Input.UpAndDownAxis);
+            else
+                _horizontalAxis = Input.GetAxis(Constants.Input.IonBeamCameraForwardBackward);
             _verticalAxis = Input.GetAxis(Constants.Input.TurnAxis);
             _ionBeamCamera.IonBeamCameraControls(_horizontalAxis, _verticalAxis);
         }
