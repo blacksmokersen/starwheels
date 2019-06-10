@@ -54,6 +54,7 @@
         public const string UseAbilityOnJoystick = "AbilityOnJoystick";
         public const string ActivateAbilityKeyboard = "KeyboardAbilityActivator";
         public const string EnableKeyboardTurnCamera = "EnableKeyboardTurnCamera";
+        public const string IonBeamCameraForwardBackward = "IonBeamCameraForwardBackward";
         public const string BackCamera = "ClickLeftJoystick";
         public const string TurnCamera = "RightJoystickHorizontal";
         public const string UpAndDownCamera = "RightJoystickVertical";

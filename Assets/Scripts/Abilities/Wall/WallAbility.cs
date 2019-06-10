@@ -61,6 +61,7 @@ namespace Abilities
                     _previewIsEnable = true;
                 }
                 if (Enabled && Input.GetButtonUp(Constants.Input.UseAbilityOnJoystick) && _previewIsEnable
+                    || Enabled && Input.GetButtonUp(Constants.Input.ActivateAbilityKeyboard) && _previewIsEnable
                     || Enabled && Input.GetButtonUp(Constants.Input.UseItemForward) && _previewIsEnable
                     || Enabled && Input.GetButtonUp(Constants.Input.UseItemBackward) && _previewIsEnable)
                 {
@@ -81,7 +82,7 @@ namespace Abilities
         {
             var leftJoytstickInput = Input.GetAxis(Constants.Input.UpAndDownAxis);
 
-            if (leftJoytstickInput > 0.5f || Input.GetButton(Constants.Input.UseItemBackward))
+            if (leftJoytstickInput > 0.5f || Input.GetButton(Constants.Input.UseItemForward))
                 _wallPreviewRaycastOrigin.transform.localPosition = Vector3.forward * _wallSettings.WallFrontPosition;
             else
                 _wallPreviewRaycastOrigin.transform.localPosition = Vector3.forward * _wallSettings.WallBackPosition;

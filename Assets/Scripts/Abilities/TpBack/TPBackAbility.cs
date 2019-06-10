@@ -57,12 +57,15 @@ namespace Abilities
             if (Enabled && Input.GetButtonDown(Constants.Input.UseAbilityOnJoystick))
                 UseWithJoystick();
 
-            if(_tpBack != null && Input.GetButtonDown(Constants.Input.ActivateAbilityKeyboard))
+            if(_tpBack == null && Enabled && Input.GetButtonUp(Constants.Input.ActivateAbilityKeyboard))
                 UseWithKeyboard(Direction.Default);
             else if (Enabled && Input.GetButton(Constants.Input.ActivateAbilityKeyboard) && Input.GetButtonDown(Constants.Input.UseItemForward))
-                UseWithKeyboard(Direction.Backward);
-            else if (Enabled && Input.GetButton(Constants.Input.ActivateAbilityKeyboard) && Input.GetButtonDown(Constants.Input.UseItemBackward))
                 UseWithKeyboard(Direction.Forward);
+            else if (Enabled && Input.GetButton(Constants.Input.ActivateAbilityKeyboard) && Input.GetButtonDown(Constants.Input.UseItemBackward))
+                UseWithKeyboard(Direction.Backward);
+
+            if (_tpBack != null && Input.GetButtonDown(Constants.Input.ActivateAbilityKeyboard))
+                UseWithKeyboard(Direction.Default);
         }
 
         public new void Reload()
@@ -118,10 +121,12 @@ namespace Abilities
                     var throwable = instantiatedItem.GetComponent<Throwable>();
                     _tpBack = instantiatedItem.GetComponent<TPBackBehaviour>();
                     _tpBack.Kart = transform.root;
-                    if (direction == Direction.Backward)
+                    if (direction == Direction.Default)
                         _throwableLauncher.Throw(throwable, Direction.Backward);
-                    else
+                    else if (direction == Direction.Forward)
                         _throwableLauncher.Throw(throwable, Direction.Forward);
+                    else
+                        _throwableLauncher.Throw(throwable, Direction.Backward);
                 }
                 else // if (_tpBack.IsEnabled())
                 {
