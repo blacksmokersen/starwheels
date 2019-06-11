@@ -21,6 +21,7 @@ namespace Common
         private void Awake()
         {
             _lastSelected = _eventSystem.firstSelectedGameObject.GetComponent<Selectable>();
+            HideCursor();
 
             if (_disableCursorOnAwake)
             {
@@ -48,11 +49,13 @@ namespace Common
         public void ShowCursor()
         {
             Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
 
         public void HideCursor()
         {
             Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         // PRIVATE
@@ -73,8 +76,9 @@ namespace Common
         {
             if (!_gamepadHasFocus && (Mathf.Abs(Input.GetAxis(Constants.Input.TurnAxis)) > 0 || Mathf.Abs(Input.GetAxis(Constants.Input.UpAndDownAxis)) > 0))
             {
+                _eventSystem.SetSelectedGameObject(null);
                 _eventSystem.SetSelectedGameObject(_lastSelected.gameObject);
-                Cursor.visible = false;
+                HideCursor();
                 _gamepadHasFocus = true;
             }
         }
@@ -83,7 +87,8 @@ namespace Common
         {
             if (Mathf.Abs(Input.GetAxis("Mouse X")) > 0 || Mathf.Abs(Input.GetAxis("Mouse Y")) > 0)
             {
-                Cursor.visible = true;
+                _eventSystem.SetSelectedGameObject(null);
+                ShowCursor();
                 _gamepadHasFocus = false;
             }
         }
