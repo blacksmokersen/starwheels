@@ -17,7 +17,10 @@ namespace Menu
 
         public override void OnEvent(GameOver evnt)
         {
-            _panel.SetActive(true);
+            if (BoltNetwork.IsServer)
+            {
+                _panel.SetActive(true);
+            }
         }
 
         // PUBLIC
