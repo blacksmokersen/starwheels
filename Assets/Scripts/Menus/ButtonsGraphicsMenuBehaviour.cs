@@ -1,29 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class ButtonsGraphicsMenuBehaviour : MonoBehaviour
 {
-    private Animator _animator;
-
-    //CORE
-
-    private void Awake()
-    {
-        _animator = GetComponent<Animator>();
-    }
+    [SerializeField] private Animator _animator;
 
     //PUBLIC
 
     public void StartMouseEnterAnimation()
     {
+        _animator.ResetTrigger("OnMouseExit");
         _animator.SetTrigger("OnMouseEnter");
     }
 
     public void StartMouseExitAnimation()
     {
+        _animator.ResetTrigger("OnMouseEnter");
         _animator.SetTrigger("OnMouseExit");
     }
 
