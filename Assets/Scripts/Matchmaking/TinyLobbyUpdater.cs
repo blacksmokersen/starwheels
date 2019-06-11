@@ -161,6 +161,7 @@ namespace SW.Matchmaking
             gameObject.SetActive(true);
             _lookingForGameText.gameObject.SetActive(true);
             _lookingForGameText.text = "Looking for players";
+            _currentGamemodeLobbiesText.gameObject.SetActive(false);
             _currentPlayerCountText.gameObject.SetActive(true);
             _timerText.gameObject.SetActive(BoltNetwork.IsServer);
             UpdateCurrentPlayerCount(1);
