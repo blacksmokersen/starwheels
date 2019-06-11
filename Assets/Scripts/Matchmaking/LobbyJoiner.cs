@@ -9,6 +9,9 @@ namespace SW.Matchmaking
 {
     public class LobbyJoiner : GlobalEventListener
     {
+        [Header("Settings")]
+        [SerializeField] private MatchmakingSettings _matchmakingSettings;
+
         [Header("Lobby Info")]
         [SerializeField] private LobbyData _lobbyData;
         [SerializeField] private GameObject _lobbyPanel;
@@ -99,9 +102,10 @@ namespace SW.Matchmaking
                 var lobbyToken = SWMatchmaking.GetLobbyToken(lobby.Key);
                 var lobbyMatchesSelectedServerName = DebugModEnabled && lobbyToken.ServerName == _serverDebugMode.GetClientServerName();
                 var lobbyMatchesSelectedGamemodes = _lobbyData.GamemodePool.Contains(lobbyToken.GameMode);
-                Debug.Log("Id " + lobby.Key.ToString());
+                var lobbyMatchesMatchmakingSettings = lobbyToken.GameStarted == _matchmakingSettings.LookForStartedGames;
 
                 if ((lobbyMatchesSelectedServerName || lobbyMatchesSelectedGamemodes)
+                    && lobbyMatchesMatchmakingSettings
                     && lobbyToken.Public
                     && lobbyToken.CanBeJoined
                     && lobbyToken.Version.Equals(_lobbyData.Version))

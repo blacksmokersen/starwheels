@@ -73,6 +73,7 @@ namespace SW.Matchmaking
             {
                 _lobbyData.SetRandomName();
             }
+            _lobbyData.GameStarted = false;
             _lobbyData.CanBeJoined = true;
             _lobbyData.SetRandomGamemode();
             _lobbyData.SetRandomMap();

@@ -11,6 +11,7 @@ namespace SW.Matchmaking
         public string ServerName;
         public string Version;
         public bool Public;
+        public bool GameStarted = false;
         public bool CanBeJoined = true;
         public int MaxPlayers;
 

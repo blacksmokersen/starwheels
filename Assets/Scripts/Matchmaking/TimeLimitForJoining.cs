@@ -17,6 +17,7 @@ namespace SW.Matchmaking
             if (BoltNetwork.IsServer)
             {
                 _lobbyData.CanBeJoined = true;
+                _lobbyData.GameStarted = true;
                 SWMatchmaking.SetLobbyData(_lobbyData);
 
                 StartCoroutine(SetLobbyPrivateAfterXSeconds(_secondsBeforeLobbyGoesPrivate));

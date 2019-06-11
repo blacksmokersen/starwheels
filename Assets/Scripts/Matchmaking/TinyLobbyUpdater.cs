@@ -66,6 +66,7 @@ namespace SW.Matchmaking
 
         public override void SessionConnected(UdpSession session, IProtocolToken token)
         {
+            Debug.LogError("Session connected.");
             gameObject.SetActive(true);
         }
 
@@ -87,6 +88,7 @@ namespace SW.Matchmaking
                     matchedLobbyCount++;
                 }
             }
+            UpdateCurrentMatchedLobbies(matchedLobbyCount);
         }
 
         public override void Connected(BoltConnection connection)
@@ -232,7 +234,7 @@ namespace SW.Matchmaking
         private void UpdateCurrentMatchedLobbies(int lobbyCount)
         {
             var gamemodes = String.Join("/", _lobbyData.GamemodePool.ToArray());
-            _currentGamemodeLobbiesText.text = lobbyCount + " lobbies found for " + gamemodes;
+            _currentGamemodeLobbiesText.text = lobbyCount + " lobbies found for " + gamemodes + " gamemode(s).";
         }
 
         private void OnApplicationQuit()
