@@ -12,6 +12,7 @@ namespace SW.Matchmaking.Friends
     {
         [Header("Session")]
         [SerializeField] private LobbyData _lobbyData;
+        [SerializeField] private GameObject _tinyLobbyPanel;
 
         [Header("Group Settings")]
         [SerializeField] private int _maxFriends;
@@ -181,6 +182,8 @@ namespace SW.Matchmaking.Friends
             }
             Debug.Log("[BOLT] Joining lobby ...");
             SWMatchmaking.JoinLobby(serverName);
+
+            _tinyLobbyPanel.SetActive(true);
         }
     }
 }

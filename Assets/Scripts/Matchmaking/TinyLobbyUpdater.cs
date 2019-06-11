@@ -66,7 +66,6 @@ namespace SW.Matchmaking
 
         public override void SessionConnected(UdpSession session, IProtocolToken token)
         {
-            Debug.LogError("Session connected.");
             gameObject.SetActive(true);
         }
 
