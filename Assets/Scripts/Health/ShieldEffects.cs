@@ -4,36 +4,25 @@ using Items;
 
 namespace Health
 {
+    [DisallowMultipleComponent]
     public class ShieldEffects : MonoBehaviour
     {
+        public bool CanBeUsed = true;
+
+        [Header("References")]
         [SerializeField] private Health _health;
+        [SerializeField] private GameObject _shieldGraphics;
 
-        public void Activate()
-        {
-            gameObject.SetActive(true);
-        }
+        [Header("Settings")]
+        [SerializeField] private float _secondsShieldActivated;
+        [SerializeField] private float _cooldownSeconds;
 
-        public void ActivateForXSeconds(float x)
-        {
-            Activate();
-            _health.SetInvincibilityForXSeconds(x);
-            StartCoroutine(DeactivateAfterXSecondsRoutine(x));
-        }
+        [Header("Events")]
+        public FloatEvent OnCooldownUpdated;
 
-        public void Deactivate()
-        {
-            gameObject.SetActive(false);
-            _health.UnsetInvincibility();
-            StopAllCoroutines();
-        }
+        private bool _cooldownStarted = false;
 
-        // PRIVATE
-
-        private IEnumerator DeactivateAfterXSecondsRoutine(float x)
-        {
-            yield return new WaitForSeconds(x);
-            Deactivate();
-        }
+        // MONO
 
         private void OnTriggerEnter(Collider other)
         {
@@ -53,7 +42,57 @@ namespace Health
 
         private void OnTriggerStay(Collider other)
         {
-            // TODO OVERCHARGE
+            // USE FOR OVERCHARGE
+        }
+
+        // PUBLIC
+
+        public void Activate()
+        {
+            _shieldGraphics.SetActive(true);
+            _health.SetInvincibilityForXSeconds(_secondsShieldActivated);
+
+            StartCoroutine(DeactivateAfterXSecondsRoutine(_secondsShieldActivated));
+            if (!_cooldownStarted)
+            {
+                StartCoroutine(CooldownRoutine());
+            }
+        }
+
+        public void Deactivate()
+        {
+            _shieldGraphics.SetActive(false);
+            _health.UnsetInvincibility();
+        }
+
+        // PRIVATE
+
+        private IEnumerator DeactivateAfterXSecondsRoutine(float x)
+        {
+            yield return new WaitForSeconds(x);
+            Deactivate();
+        }
+
+        private IEnumerator CooldownRoutine()
+        {
+            CanBeUsed = false;
+            _cooldownStarted = true;
+
+            var secondsElapsed = 0f;
+            while (secondsElapsed < _cooldownSeconds)
+            {
+                if (OnCooldownUpdated != null)
+                {
+                    OnCooldownUpdated.Invoke(secondsElapsed/_cooldownSeconds);
+                }
+
+                yield return new WaitForSeconds(1f);
+                secondsElapsed += 1f;
+            }
+            OnCooldownUpdated.Invoke(1f);
+
+            _cooldownStarted = false;
+            CanBeUsed = true;
         }
     }
 }

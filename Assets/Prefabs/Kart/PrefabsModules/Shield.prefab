@@ -59,6 +59,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe1d5fea279ec024386855d96b293f86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CanBeUsed: 1
+  _health: {fileID: 0}
+  _shieldGraphics: {fileID: 1736821760631427102}
+  _secondsShieldActivated: 1.25
+  _cooldownSeconds: 25
+  OnCooldownUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: FloatEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &7387056084808176848
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,6 +363,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b347b4f110dbed741b9b3e6816ca135c, type: 3}
+--- !u!1 &1736821760631427102 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5927938309792680845, guid: b347b4f110dbed741b9b3e6816ca135c,
+    type: 3}
+  m_PrefabInstance: {fileID: 5358767113681345427}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2235044772460571950 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6150319692568245949, guid: b347b4f110dbed741b9b3e6816ca135c,

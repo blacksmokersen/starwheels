@@ -10,7 +10,10 @@ namespace Items.Merge
         [SerializeField] private bool _enabled = true;
         public bool Enabled
         {
-            get { return _enabled; }
+            get
+            {
+                return _enabled;
+            }
             set
             {
                 _canMerge = value;
@@ -21,6 +24,9 @@ namespace Items.Merge
         [Header("Settings")]
         [Tooltip("Seconds with button pressed before merging the item")]
         [SerializeField] private FloatVariable _secondsBeforeMerging;
+
+        [Header("Shield")]
+        [SerializeField] private Health.ShieldEffects _shield;
 
         [Header("Item Source")]
         [SerializeField] private Inventory _inventory;
@@ -39,7 +45,7 @@ namespace Items.Merge
 
         private void Update()
         {
-            if(entity.isAttached && entity.isOwner)
+            if(entity.IsAttached && entity.IsOwner)
             {
                 MapInputs();
             }
@@ -49,6 +55,15 @@ namespace Items.Merge
 
         public void MapInputs()
         {
+            if (Enabled)
+            {
+                if (Input.GetButton(Constants.Input.MergeItem) && _shield.CanBeUsed)
+                {
+                    GrantBoosts(MergeMode.Shield);
+                }
+            }
+
+            /* KEEP IT JUST IN CASE
             if (Enabled)
             {
                 if (Input.GetButton(Constants.Input.MergeItem))
@@ -68,10 +83,12 @@ namespace Items.Merge
                     _canMerge = true;
                 }
             }
+            */
         }
 
         // PRIVATE
 
+        /* KEEP IT JUST IN CASE
         private void ConsumeItem()
         {
             if (_inventory.CurrentItem != null)
@@ -86,6 +103,7 @@ namespace Items.Merge
                 GrantBoosts(MergeMode.SpeedBoost);
             }
         }
+        */
 
         private void GrantBoosts(MergeMode mode)
         {

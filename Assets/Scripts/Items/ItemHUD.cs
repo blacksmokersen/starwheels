@@ -4,20 +4,21 @@ using TMPro;
 
 namespace Items
 {
+    [DisallowMultipleComponent]
     public class ItemHUD : MonoBehaviour, IObserver
     {
         [Header("Item HUD")]
         [SerializeField] private TextMeshProUGUI _itemCountText;
         [SerializeField] private Image _itemTexture;
 
-        [Header("Merge HUD")]
-        [SerializeField] private GameObject _fullBoostImage;
-        [SerializeField] private GameObject _lowBoostImage;
-        [SerializeField] private GameObject _shieldImage;
+        [Header("Shield HUD")]
+        [SerializeField] private Image _shieldImage;
+        //[SerializeField] private GameObject _fullBoostImage;
+        //[SerializeField] private GameObject _lowBoostImage;
 
         [Header("Initializing State")]
         [SerializeField] private Image _initializingSprite;
-        [SerializeField] private Image _loadingGauge;
+        [SerializeField] private Image _itemLoadingGauge;
 
         private Item _currentItem;
 
@@ -34,10 +35,9 @@ namespace Items
         public void Observe(GameObject kartRoot)
         {
             UpdateLoadingGauge(0);
-            UpdateMergeLogo(0);
             HideInitializingState();
-            HideBoostLogo();
-
+            //UpdateMergeLogo(0);
+            //HideBoostLogo();
 
             var kartInventory = kartRoot.GetComponentInChildren<Inventory>();
             if (kartInventory)
@@ -48,18 +48,24 @@ namespace Items
                 kartInventory.OnItemGet.AddListener(UpdateItem);
                 kartInventory.OnItemUse.AddListener(UpdateItem);
                 kartInventory.OnItemCountChange.AddListener(UpdateItemCount);
-                kartInventory.OnItemCountChange.AddListener(UpdateMergeLogo);
+                //kartInventory.OnItemCountChange.AddListener(UpdateMergeLogo);
             }
 
             var kartLottery = kartRoot.GetComponentInChildren<Lottery.Lottery>();
             if (kartLottery)
             {
                 kartLottery.OnLotteryStart.AddListener(ShowInitializingState);
-                kartLottery.OnLotteryStart.AddListener(ShowBoostLogo);
+                //kartLottery.OnLotteryStart.AddListener(ShowBoostLogo);
                 kartLottery.OnLotteryUpdate.AddListener(UpdateLoadingGauge);
                 kartLottery.OnLotteryStop.AddListener(() => UpdateLoadingGauge(0f));
                 kartLottery.OnLotteryStop.AddListener(HideInitializingState);
-                kartLottery.OnLotteryStop.AddListener(HideBoostLogo);
+                //kartLottery.OnLotteryStop.AddListener(HideBoostLogo);
+            }
+
+            var kartShield = kartRoot.GetComponentInChildren<Health.ShieldEffects>();
+            if (kartShield)
+            {
+                kartShield.OnCooldownUpdated.AddListener(UpdateShieldMask);
             }
         }
 
@@ -101,9 +107,15 @@ namespace Items
 
         private void UpdateLoadingGauge(float percentage)
         {
-            _loadingGauge.fillAmount = percentage;
+            _itemLoadingGauge.fillAmount = percentage;
         }
 
+        private void UpdateShieldMask(float percentage)
+        {
+            _shieldImage.fillAmount = percentage;
+        }
+
+        /*
         private void ShowBoostLogo()
         {
             _fullBoostImage.SetActive(true);
@@ -124,26 +136,7 @@ namespace Items
             {
                 _shieldImage.SetActive(true);
             }
-
-
-            /* OLD FEATURE
-            if(count == 0)
-            {
-                _fullBoostImage.SetActive(false);
-                _lowBoostImage.SetActive(false);
-                _shieldImage.SetActive(false);
-            }
-            else if(count > 0)
-            {
-                _fullBoostImage.SetActive(true);
-                _lowBoostImage.SetActive(false);
-            }
-            else
-            {
-                _fullBoostImage.SetActive(false);
-                _lowBoostImage.SetActive(true);
-            }
-            */
         }
+        */
     }
 }
