@@ -55,7 +55,15 @@ namespace SW.Matchmaking
 
         public string PickRandomGamemodeFromPool()
         {
-            return GamemodePool[Random.Range(0, GamemodePool.Count)];
+            if (GamemodePool.Count > 0)
+            {
+                return GamemodePool[Random.Range(0, GamemodePool.Count)];
+            }
+            else
+            {
+                Debug.LogError("Gamemode Pool is empty ! Can't pick random.");
+                return null;
+            }
         }
 
         public void SetMap(string mapName)
