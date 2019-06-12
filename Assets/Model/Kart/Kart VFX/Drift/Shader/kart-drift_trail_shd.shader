@@ -719,9 +719,9 @@ Shader "BS/SW/kart/drift/trail"
 }
 /*ASEBEGIN
 Version=16103
-1927;1;1906;1050;1101;325.5;1;True;True
-Node;AmplifyShaderEditor.SamplerNode;4;-516.5,-114;Float;True;Property;_Base;Base;0;0;Create;True;0;0;False;0;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.ColorNode;6;-437.5,245;Float;False;Property;_Color;Color;1;0;Create;True;0;0;False;0;0,0,0,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+1927;1;1906;1050;1101;325.5;1;False;False
+Node;AmplifyShaderEditor.SamplerNode;4;-516.5,-114;Float;True;Property;_Base;Base;0;0;Create;True;0;0;False;0;None;5c0a380bbb622e545a26fef04cc676e2;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.ColorNode;6;-437.5,245;Float;False;Property;_Color;Color;1;0;Create;True;0;0;False;0;0,0,0,0;0,0,0,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.VertexColorNode;5;-399.5,78;Float;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RangedFloatNode;8;-373.5,-204;Float;False;Constant;_Float0;Float 0;2;0;Create;True;0;0;False;0;2;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;7;-65.5,-7;Float;False;4;4;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;3;COLOR;0,0,0,0;False;1;COLOR;0
@@ -740,4 +740,4 @@ WireConnection;9;2;6;4
 WireConnection;1;0;7;0
 WireConnection;1;1;9;0
 ASEEND*/
-//CHKSM=5AFF941D65F7604589AE15E7586C6C1922DCFE61
+//CHKSM=AF1679F8282A34062DC03C731295E07E151F63B6

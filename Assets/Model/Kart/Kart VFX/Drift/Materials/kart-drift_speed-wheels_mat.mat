@@ -8,17 +8,23 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: kart-drift_speed-wheels_mat
-  m_Shader: {fileID: 4800000, guid: 5f98fd13e806f2347b9c6c74f379137c, type: 3}
+  m_Shader: {fileID: 4800000, guid: 9a4649ada915dd14391428fdfba97ae7, type: 3}
   m_ShaderKeywords: _ALPHABLEND_ON _COLORADDSUBDIFF_ON _EMISSION _FADING_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
+  stringTagMap:
+    MotionVector: User
+  disabledShaderPasses:
+  - MOTIONVECTORS
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_59D3C135:
+        m_Texture: {fileID: 2800000, guid: 5c0a380bbb622e545a26fef04cc676e2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -56,6 +62,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_2013BFF6: 0.5
     - _BlendOp: 0
     - _BumpScale: 1
     - _CameraFadingEnabled: 0
@@ -92,6 +99,7 @@ Material:
     - _ZWrite: 0
     - _node_3510: 0.04
     m_Colors:
+    - Color_C52D64A9: {r: 1, g: 1, b: 1, a: 1}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorAddSubDiff: {r: 1, g: 0, b: 0, a: 0}
