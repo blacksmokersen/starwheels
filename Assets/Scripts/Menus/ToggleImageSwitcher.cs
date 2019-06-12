@@ -18,12 +18,14 @@ namespace Menu
 
         private void Awake()
         {
-            SetUnselectedImage();
+            SwitchImageAccordingToToggleState(_targetToggle.isOn);
+
+            _targetToggle.onValueChanged.AddListener(SwitchImageAccordingToToggleState);
         }
 
         private void OnEnable()
         {
-            SetUnselectedImage();
+            SwitchImageAccordingToToggleState(_targetToggle.isOn);
         }
 
         // PUBLIC
@@ -56,6 +58,20 @@ namespace Menu
             _onHoverImage.gameObject.SetActive(false);
             _onHoverValidationInputImage.gameObject.SetActive(false);
             _selectedImage.gameObject.SetActive(true);
+        }
+
+        // PRIVATE
+
+        private void SwitchImageAccordingToToggleState(bool toggleIsOn)
+        {
+            if (toggleIsOn)
+            {
+                SetSelectedImage();
+            }
+            else
+            {
+                SetUnselectedImage();
+            }
         }
     }
 }

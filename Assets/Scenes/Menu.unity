@@ -4629,6 +4629,11 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
       objectReference: {fileID: 1866728562}
+    - target: {fileID: 8168004055833919347, guid: 9d23759006417ba4fbd6d9595daf022b,
+        type: 3}
+      propertyPath: m_IsOn
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400598754898639158, guid: 9d23759006417ba4fbd6d9595daf022b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7017,7 +7022,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 4
-    m_SelectOnUp: {fileID: 268140406}
+    m_SelectOnUp: {fileID: 268140405}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
@@ -7489,6 +7494,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 449484085}
     m_Modifications:
+    - target: {fileID: 8883089402361386491, guid: f40d43e0c6e8a19459f1790571545657,
+        type: 3}
+      propertyPath: m_Name
+      value: OptionsPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 8883089402361386491, guid: f40d43e0c6e8a19459f1790571545657,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5690776719882902614, guid: f40d43e0c6e8a19459f1790571545657,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7598,16 +7613,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 180.2998
-      objectReference: {fileID: 0}
-    - target: {fileID: 8883089402361386491, guid: f40d43e0c6e8a19459f1790571545657,
-        type: 3}
-      propertyPath: m_Name
-      value: OptionsPanel
-      objectReference: {fileID: 0}
-    - target: {fileID: 8883089402361386491, guid: f40d43e0c6e8a19459f1790571545657,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3606317040691337801, guid: f40d43e0c6e8a19459f1790571545657,
         type: 3}
@@ -12154,7 +12159,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1047326950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12167,7 +12172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef4bffeda13d7a748973ff9204401c07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SteamEnabled: 1
+  SteamEnabled: 0
   OnSteamInitialized:
     m_PersistentCalls:
       m_Calls: []
@@ -18885,6 +18890,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 2851544314449957877}
+        m_MethodName: Select
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1559881920
@@ -18957,6 +18973,23 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1559881918}
           m_MethodName: StartMouseExitAnimation
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 8
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1559881918}
+          m_MethodName: StartMouseEnterAnimation
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -21872,7 +21905,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.26061523, g: 1, b: 0.11792451, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -22704,7 +22737,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.08220887, g: 1, b: 0, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -22741,7 +22774,7 @@ GameObject:
   - component: {fileID: 1933231541}
   - component: {fileID: 1933231542}
   m_Layer: 5
-  m_Name: MainButtons
+  m_Name: MainPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23725,7 +23758,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lobbyData: {fileID: 11400000, guid: 930191bbcbab87e4f98912baee12eddc, type: 2}
-  _resetTogglesOnInitializing: 0
+  _resetTogglesOnInitializing: 1
 --- !u!114 &2009003515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23779,7 +23812,7 @@ MonoBehaviour:
   _firstItemSelected: {fileID: 2851544314449957877}
   _setFocusOnStart: 0
   _setFocusOnEnabled: 1
-  _resetOnEnabled: 1
+  _resetOnEnabled: 0
   _elementsToReset: []
   _elementsToResetStatuses: 
 --- !u!1 &2028322975
@@ -23885,7 +23918,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44c2fb92b70d4264589a8ee181be8197, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Version: 1.0.7
+  Version: 1.0.8
   _versionText: {fileID: 204733629}
   _lobbyData: {fileID: 11400000, guid: 930191bbcbab87e4f98912baee12eddc, type: 2}
 --- !u!4 &2039992838
