@@ -73,6 +73,7 @@ namespace Multiplayer
 
             _playerSettings.ColorSettings = _gameSettings.TeamsListSettings.GetSettings(team);
 
+            myKart.GetComponentInChildren<Health.Health>().SetInvincibilityForXSeconds(_playerSettings.InvicibilityOnSpawnDuration);
             myKart.transform.position = spawnPosition;
             myKart.transform.rotation = spawnRotation;
             PlayerInfo.Me = myKart.GetComponent<PlayerInfo>();
