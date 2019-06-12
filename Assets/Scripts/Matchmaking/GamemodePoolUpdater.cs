@@ -40,9 +40,12 @@ namespace SW.Matchmaking
             {
                 if (toggle.GetComponent<GamemodeGroupLabel>())
                 {
-                    toggle.onValueChanged.RemoveAllListeners();
-
                     var gameModeName = toggle.GetComponent<GamemodeGroupLabel>().Label.Value;
+
+                    toggle.onValueChanged.RemoveListener((b) =>
+                    {
+                        UpdateGamemodePool(gameModeName, toggle.isOn);
+                    });
 
                     if (_resetTogglesOnInitializing)
                     {

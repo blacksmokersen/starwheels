@@ -13,6 +13,7 @@ namespace Multiplayer
         public int ConnectionID;
         public int KartIndex;
         public int AbilityIndex;
+        public float InvicibilityOnSpawnDuration;
 
         [Header("Events")]
         public UnityEvent OnTeamColorUpdated;

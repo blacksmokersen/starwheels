@@ -7,7 +7,9 @@ namespace SW.DebugUtils
     [RequireComponent(typeof(Inventory))]
     public class ItemSwitcher : EntityBehaviour, IControllable
     {
-        [SerializeField] private bool _enabled = true;
+        [SerializeField] private bool _enabled = false;
+        [SerializeField] private bool _securityEngaged = true;
+
         public bool Enabled
         {
             get { return _enabled; }
@@ -38,7 +40,12 @@ namespace SW.DebugUtils
 
         public void MapInputs()
         {
-            if (Enabled && Input.GetKeyDown(KeyCode.Alpha2))
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.RightAlt) && Input.GetKeyDown(KeyCode.Equals))
+            {
+                _securityEngaged = !_securityEngaged;
+            }
+
+            if (Enabled && !_securityEngaged && Input.GetKeyDown(KeyCode.Alpha2))
             {
                 SwitchToNextItem();
             }

@@ -48,8 +48,6 @@ namespace SW.Matchmaking
             {
                 if (toggle.GetComponent<MapLabel>())
                 {
-                    toggle.onValueChanged.RemoveAllListeners();
-
                     var mapName = toggle.GetComponent<MapLabel>().MapData.MapName;
                     var gameModeNames = toggle.GetComponentsInParent<GamemodeGroupLabel>();
 
@@ -57,6 +55,10 @@ namespace SW.Matchmaking
                     {
                         toggle.isOn = false;
 
+                        toggle.onValueChanged.RemoveListener((b) =>
+                        {
+                            UpdateMapPool(mapName, gamemodeName.Label.Value, toggle.isOn);
+                        });
                         toggle.onValueChanged.AddListener((b) =>
                         {
                             UpdateMapPool(mapName, gamemodeName.Label.Value, toggle.isOn);

@@ -25,6 +25,11 @@ namespace Abilities
 
         public void MapInputs()
         {
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.RightAlt) && Input.GetKeyDown(KeyCode.Equals))
+            {
+                Enabled = !Enabled;
+            }
+
             if (Enabled)
             {
                 if (Input.GetKeyDown(KeyCode.A))// || Input.GetButtonDown("joystick button 6"))
