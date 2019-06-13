@@ -770,7 +770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e13639a753417e47bdfbe9a0508cb3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetKartRenderer: {fileID: 2587995579238026442}
+  _kartSetter: {fileID: 0}
 --- !u!114 &2462402151467452258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -807,32 +807,6 @@ MonoBehaviour:
   _kartNamePlate:
   - {fileID: 0}
   - {fileID: 0}
---- !u!114 &2696274995505788447
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2575527753969952984}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6f39d1eb32f4b44b8aa064500f07f4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  KartMeshLabel: 1
---- !u!114 &3411387356230288842
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2940194854899289171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6f39d1eb32f4b44b8aa064500f07f4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  KartMeshLabel: 2
 --- !u!1 &3160828696173421420
 GameObject:
   m_ObjectHideFlags: 0
@@ -1715,19 +1689,6 @@ Transform:
   m_Father: {fileID: 2021937512439408898}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
---- !u!114 &7486304236513192723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6829610653545247240}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6f39d1eb32f4b44b8aa064500f07f4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  KartMeshLabel: 3
 --- !u!1 &7398887521343223047
 GameObject:
   m_ObjectHideFlags: 0
@@ -2190,6 +2151,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2570249847100649268}
     m_Modifications:
+    - target: {fileID: 1013961600386853355, guid: 39b8918b5ab5dbd4a8f2f6c5200b024e,
+        type: 3}
+      propertyPath: m_Name
+      value: F_Character_Leonie
+      objectReference: {fileID: 0}
     - target: {fileID: 8097489587355139853, guid: 39b8918b5ab5dbd4a8f2f6c5200b024e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2245,11 +2211,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1013961600386853355, guid: 39b8918b5ab5dbd4a8f2f6c5200b024e,
-        type: 3}
-      propertyPath: m_Name
-      value: F_Character_Leonie
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39b8918b5ab5dbd4a8f2f6c5200b024e, type: 3}
 --- !u!1 &24075148712649369 stripped
@@ -2271,6 +2232,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2570249847100649268}
     m_Modifications:
+    - target: {fileID: 3948423045175209277, guid: 81c0726451a24ff439cfc2c49852f834,
+        type: 3}
+      propertyPath: m_Name
+      value: kart-toyoshi
+      objectReference: {fileID: 0}
+    - target: {fileID: 3948423045175209277, guid: 81c0726451a24ff439cfc2c49852f834,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8422386511469628006, guid: 81c0726451a24ff439cfc2c49852f834,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2326,27 +2297,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3948423045175209277, guid: 81c0726451a24ff439cfc2c49852f834,
-        type: 3}
-      propertyPath: m_Name
-      value: kart-toyoshi
-      objectReference: {fileID: 0}
-    - target: {fileID: 3948423045175209277, guid: 81c0726451a24ff439cfc2c49852f834,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81c0726451a24ff439cfc2c49852f834, type: 3}
 --- !u!4 &7702392979627322120 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8422386511469628006, guid: 81c0726451a24ff439cfc2c49852f834,
-    type: 3}
-  m_PrefabInstance: {fileID: 2163476540931072366}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2940194854899289171 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3948423045175209277, guid: 81c0726451a24ff439cfc2c49852f834,
     type: 3}
   m_PrefabInstance: {fileID: 2163476540931072366}
   m_PrefabAsset: {fileID: 0}
@@ -2357,6 +2312,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2570249847100649268}
     m_Modifications:
+    - target: {fileID: 1639576001188359636, guid: 592e649f3c83bee4388d401e7c79e648,
+        type: 3}
+      propertyPath: m_Name
+      value: Effects
+      objectReference: {fileID: 0}
     - target: {fileID: 1645326353430571224, guid: 592e649f3c83bee4388d401e7c79e648,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2412,11 +2372,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1639576001188359636, guid: 592e649f3c83bee4388d401e7c79e648,
-        type: 3}
-      propertyPath: m_Name
-      value: Effects
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 592e649f3c83bee4388d401e7c79e648, type: 3}
 --- !u!4 &2569886416665811206 stripped
@@ -2432,6 +2387,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2570249847100649268}
     m_Modifications:
+    - target: {fileID: 4273089814318322691, guid: 0adee155d75830648b3fbc6d25f9978c,
+        type: 3}
+      propertyPath: m_Name
+      value: kart-storm
+      objectReference: {fileID: 0}
+    - target: {fileID: 4273089814318322691, guid: 0adee155d75830648b3fbc6d25f9978c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8823789486093251070, guid: 0adee155d75830648b3fbc6d25f9978c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2485,16 +2450,6 @@ PrefabInstance:
     - target: {fileID: 8823789486093251070, guid: 0adee155d75830648b3fbc6d25f9978c,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4273089814318322691, guid: 0adee155d75830648b3fbc6d25f9978c,
-        type: 3}
-      propertyPath: m_Name
-      value: kart-storm
-      objectReference: {fileID: 0}
-    - target: {fileID: 4273089814318322691, guid: 0adee155d75830648b3fbc6d25f9978c,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1586429002513581626, guid: 0adee155d75830648b3fbc6d25f9978c,
@@ -2554,12 +2509,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0adee155d75830648b3fbc6d25f9978c, type: 3}
---- !u!1 &6829610653545247240 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4273089814318322691, guid: 0adee155d75830648b3fbc6d25f9978c,
-    type: 3}
-  m_PrefabInstance: {fileID: 7316860928547431947}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2305513112883369973 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8823789486093251070, guid: 0adee155d75830648b3fbc6d25f9978c,
@@ -2573,6 +2522,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2570249847100649268}
     m_Modifications:
+    - target: {fileID: 5256750170891107721, guid: e11f3e8427e39c04696dd3d08a9b47f1,
+        type: 3}
+      propertyPath: m_Name
+      value: DriftTrails
+      objectReference: {fileID: 0}
     - target: {fileID: 5258901623832565389, guid: e11f3e8427e39c04696dd3d08a9b47f1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2628,11 +2582,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5256750170891107721, guid: e11f3e8427e39c04696dd3d08a9b47f1,
-        type: 3}
-      propertyPath: m_Name
-      value: DriftTrails
-      objectReference: {fileID: 0}
     - target: {fileID: 5255988627489180107, guid: e11f3e8427e39c04696dd3d08a9b47f1,
         type: 3}
       propertyPath: m_IsActive
@@ -2659,6 +2608,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2570249847100649268}
     m_Modifications:
+    - target: {fileID: 6592993616886022621, guid: cc752197f6c2550488a167061e4001ee,
+        type: 3}
+      propertyPath: m_Name
+      value: kart-extinction
+      objectReference: {fileID: 0}
     - target: {fileID: 6587233343144010183, guid: cc752197f6c2550488a167061e4001ee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2714,6 +2668,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6569468037536327119, guid: cc752197f6c2550488a167061e4001ee,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6587421420349724331, guid: cc752197f6c2550488a167061e4001ee,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -2729,11 +2688,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 89.98021
       objectReference: {fileID: 0}
-    - target: {fileID: 6592993616886022621, guid: cc752197f6c2550488a167061e4001ee,
-        type: 3}
-      propertyPath: m_Name
-      value: kart-extinction
-      objectReference: {fileID: 0}
     - target: {fileID: 6590334200568473311, guid: cc752197f6c2550488a167061e4001ee,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -2753,11 +2707,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6569468037536327119, guid: cc752197f6c2550488a167061e4001ee,
-        type: 3}
-      propertyPath: m_RenderingLayerMask
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6589946628194787467, guid: cc752197f6c2550488a167061e4001ee,
         type: 3}
@@ -2851,21 +2800,15 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: bb51fbb070182bb4591f5a00ded05be3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc752197f6c2550488a167061e4001ee, type: 3}
---- !u!1 &2575527753969952984 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6592993616886022621, guid: cc752197f6c2550488a167061e4001ee,
-    type: 3}
-  m_PrefabInstance: {fileID: 8701262462929938693}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2570312702712088770 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6587233343144010183, guid: cc752197f6c2550488a167061e4001ee,
     type: 3}
   m_PrefabInstance: {fileID: 8701262462929938693}
   m_PrefabAsset: {fileID: 0}
---- !u!23 &2587995579238026442 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 6569468037536327119, guid: cc752197f6c2550488a167061e4001ee,
+--- !u!1 &2575527753969952984 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6592993616886022621, guid: cc752197f6c2550488a167061e4001ee,
     type: 3}
   m_PrefabInstance: {fileID: 8701262462929938693}
   m_PrefabAsset: {fileID: 0}

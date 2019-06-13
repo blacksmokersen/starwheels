@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using Bolt;
+using SW.Customization;
 
 namespace Multiplayer.Teams
 {
     public class KartColorSetter : EntityBehaviour<IKartState>
     {
-        [SerializeField] private Renderer targetKartRenderer;
+        [Header("Renderer")]
+        [SerializeField] private KartMeshSetter _kartSetter;
 
         private TeamsListSettings _teamsSettings;
 
@@ -20,15 +22,16 @@ namespace Multiplayer.Teams
 
         public override void Attached()
         {
-            state.AddCallback("Team", TeamChanged);
+            state.AddCallback("Team", SetKartTeamColor);
         }
 
-        // PRIVATE
+        // PUBLIC
 
-        private void TeamChanged()
+        public void SetKartTeamColor()
         {
             var newColor = _teamsSettings.GetSettings(state.Team.ToTeam()).KartColor;
-            targetKartRenderer.material.SetColor("_BaseColor", newColor);
+            var renderer = _kartSetter.CurrentKart.GetComponent<KartSkinSettings>().TargetRenderer;
+            renderer.material.SetColor("_BaseColor", newColor);
         }
     }
 }

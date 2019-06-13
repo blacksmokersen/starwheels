@@ -28,7 +28,10 @@ namespace SW.Customization
 
         public override void OnEvent(PlayerReady evnt)
         {
-            SetCharacter(1);
+            if (!evnt.Entity.IsOwner && evnt.Entity == GetComponentInParent<BoltEntity>())
+            {
+                SetCharacter(evnt.CharacterIndex);
+            }
         }
 
         // PUBLIC
@@ -46,6 +49,11 @@ namespace SW.Customization
                     _characters[i].SetActive(false);
                 }
             }
+        }
+
+        public void SetCharacterWithLocalSettings()
+        {
+            SetCharacter(_playerSettings.CharacterIndex);
         }
     }
 }
