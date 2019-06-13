@@ -318,7 +318,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2856984171069483132}
   m_Layer: 0
-  m_Name: Kart_02_Controles
+  m_Name: Kart_Controls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -331,14 +331,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4088967340941775726}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.4174798, z: -0.1775949}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7114041066564334539}
   - {fileID: 1624894991683391213}
   - {fileID: 7048346411253992688}
-  m_Father: {fileID: 8823789486093251070}
+  m_Father: {fileID: 1586429002513581626}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4090882610498216778
@@ -505,7 +505,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8823789486093251070}
   m_Layer: 0
-  m_Name: kart-storm-chaser_mesh
+  m_Name: kart-storm-chaser_pref_graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -518,13 +518,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4273089814318322691}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1586429002513581626}
-  - {fileID: 2856984171069483132}
-  - {fileID: 6869590908026871456}
   - {fileID: 5464720754963940852}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -544,7 +542,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5464720754963940852
 Transform:
   m_ObjectHideFlags: 0
@@ -561,7 +559,7 @@ Transform:
   - {fileID: 4055153288558026010}
   - {fileID: 5538523796287716752}
   m_Father: {fileID: 8823789486093251070}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4778494496289055145
 GameObject:
@@ -729,7 +727,7 @@ GameObject:
   - component: {fileID: 1266862575569631593}
   - component: {fileID: 5991317090692997550}
   m_Layer: 0
-  m_Name: Kart_02_Body
+  m_Name: Kart_Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -745,7 +743,9 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0.4174798, z: 0.1775949}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 6869590908026871456}
+  - {fileID: 2856984171069483132}
   m_Father: {fileID: 8823789486093251070}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -804,7 +804,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6869590908026871456}
   m_Layer: 0
-  m_Name: Kart_02_Emissive
+  m_Name: Kart_Emissive
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -817,14 +817,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7903024148175641215}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.4174798, z: -0.1775949}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3624867746128658997}
   - {fileID: 4409476011438225936}
-  m_Father: {fileID: 8823789486093251070}
-  m_RootOrder: 2
+  m_Father: {fileID: 1586429002513581626}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8609686936246595325
 GameObject:
