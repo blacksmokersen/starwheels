@@ -6653,6 +6653,7 @@ GameObject:
   - component: {fileID: 686222879}
   - component: {fileID: 686222883}
   - component: {fileID: 686222882}
+  - component: {fileID: 686222884}
   - component: {fileID: 686222881}
   - component: {fileID: 686222880}
   m_Layer: 5
@@ -6807,6 +6808,21 @@ MonoBehaviour:
   _resetOnEnabled: 0
   _elementsToReset: []
   _elementsToResetStatuses: 
+--- !u!114 &686222884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686222878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df1c8ba527540d34496132a685ad534a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myPlayerSettings: {fileID: 11400000, guid: d3786b31f0466fb4a97bd3941281e55a, type: 2}
+  _nicknameEntryPrefab: {fileID: 7891956567311530514, guid: b6f20987db3b8634e89d1d079eb8417f,
+    type: 3}
 --- !u!1 &704154349
 GameObject:
   m_ObjectHideFlags: 0
@@ -12244,6 +12260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b553bfd48576b5c40910c1d1fc9a6e36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerSettings: {fileID: 0}
   _lobbyData: {fileID: 11400000, guid: 930191bbcbab87e4f98912baee12eddc, type: 2}
   _tinyLobbyPanel: {fileID: 686222878}
   _maxFriends: 7
@@ -12287,7 +12304,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 339, y: -26.599854}
+  m_AnchoredPosition: {x: 339, y: -26.599792}
   m_SizeDelta: {x: -843.6, y: -202.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1048250193
@@ -22817,6 +22834,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _matchmakingSettings: {fileID: 11400000, guid: 39dcce83b9789a44ea3646f7f0cb6c3e,
     type: 2}
+  _playerSettings: {fileID: 11400000, guid: d3786b31f0466fb4a97bd3941281e55a, type: 2}
   _lobbyData: {fileID: 11400000, guid: 930191bbcbab87e4f98912baee12eddc, type: 2}
   _lobbyPanel: {fileID: 2009003510}
   OnLookingForLobby:
@@ -23705,7 +23723,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 339, y: -19.34497}
+  m_AnchoredPosition: {x: 339, y: -19.34491}
   m_SizeDelta: {x: -843.6, y: -216.61005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2009003512

@@ -4,6 +4,7 @@ using SW.Matchmaking;
 using UnityEngine;
 using Bolt;
 using Bolt.Utils;
+using Bolt.Matchmaking;
 using UdpKit;
 using udpkit.platform.photon;
 

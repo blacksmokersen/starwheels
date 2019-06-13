@@ -2,6 +2,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using Multiplayer;
 using Bolt;
 using TMPro;
 
@@ -64,11 +65,6 @@ namespace SW.Matchmaking
 
         // BOLT
 
-        public override void SessionConnected(UdpSession session, IProtocolToken token)
-        {
-            gameObject.SetActive(true);
-        }
-
         public override void BoltShutdownBegin(AddCallback registerDoneCallback)
         {
             gameObject.SetActive(false);
@@ -106,6 +102,7 @@ namespace SW.Matchmaking
                 lobbyPlayerJoinedEvent.PlayerID = (int)connection.ConnectionId;
                 lobbyPlayerJoinedEvent.Send();
 
+                _lobbyData.PlayersNicknames.Add(((JoinToken)connection.ConnectToken).Nickname);
                 UpdateCurrentPlayerCount(playerCount);
             }
         }
@@ -122,15 +119,6 @@ namespace SW.Matchmaking
 
                 UpdateCurrentPlayerCount(playerCount);
             }
-        }
-
-        public override void OnEvent(LobbyPlayerJoined evnt)
-        {
-            if (BoltNetwork.IsClient)
-            {
-                UpdateCurrentPlayerCount(evnt.LobbyPlayerCount);
-            }
-            Debug.Log("A player joined the lobby.");
         }
 
         public override void OnEvent(LobbyPlayerLeft evnt)
@@ -175,7 +163,7 @@ namespace SW.Matchmaking
         {
             if (BoltNetwork.IsServer)
             {
-                var roomToken = new Multiplayer.RoomProtocolToken() { Gamemode = _lobbyData.ChosenGamemode };
+                var roomToken = new RoomProtocolToken() { Gamemode = _lobbyData.ChosenGamemode };
                 BoltNetwork.LoadScene(_lobbyData.ChosenMapName, roomToken);
             }
             else
@@ -195,6 +183,8 @@ namespace SW.Matchmaking
         private void UpdateCurrentPlayerCount(int playerCount)
         {
             _currentPlayerCountText.text = playerCount + " players";
+            _lobbyData.CurrentPlayers = playerCount;
+            SWMatchmaking.SetLobbyData(_lobbyData);
         }
 
         private void UpdateTimer(float seconds)

@@ -12,7 +12,6 @@ namespace SW.Matchmaking
     {
         [Header("Lobby Info")]
         [SerializeField] private LobbyData _lobbyData;
-        [SerializeField] private SessionData _sessionData;
 
         [Header("Events")]
         public UnityEvent OnLobbyCreated;
@@ -30,26 +29,8 @@ namespace SW.Matchmaking
                 Debug.Log("[BOLT] Registering tokens.");
                 BoltNetwork.RegisterTokenClass<Multiplayer.RoomProtocolToken>();
                 BoltNetwork.RegisterTokenClass<LobbyToken>();
+                BoltNetwork.RegisterTokenClass<JoinToken>();
             }
-        }
-
-        public override void SessionCreated(UdpSession session)
-        {
-            _sessionData.MySession = session;
-        }
-
-        public override void SessionListUpdated(Map<Guid, UdpSession> sessionList)
-        {
-            if (_sessionData.MySession != null)
-            {
-                _sessionData.BoltSessionGuid = SWMatchmaking.GetBoltSessionID(_sessionData.MySession.Id);
-            }
-        }
-
-        public override void BoltShutdownBegin(AddCallback registerDoneCallback)
-        {
-            _sessionData.MySession = null;
-            _sessionData.BoltSessionGuid = new Guid();
         }
 
         // PUBLIC
