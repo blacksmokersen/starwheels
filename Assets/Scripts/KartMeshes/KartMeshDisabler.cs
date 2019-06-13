@@ -1,51 +1,53 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class KartMeshDisabler : MonoBehaviour
+namespace SW.Customization
 {
-    [SerializeField] GameObject[] _kartMeshes;
-    [SerializeField] GameObject[] _kartNamePlate;
-
-    public void EnableKartMeshes(bool enableNameplate)
+    public class KartMeshDisabler : MonoBehaviour
     {
-        if (enableNameplate)
+        [SerializeField] GameObject[] _kartMeshes;
+        [SerializeField] GameObject[] _kartNamePlate;
+
+        public void EnableKartMeshes(bool enableNameplate)
         {
-            foreach (GameObject mesh in _kartNamePlate)
+            if (enableNameplate)
+            {
+                foreach (GameObject mesh in _kartNamePlate)
+                {
+                    mesh.SetActive(true);
+                }
+            }
+            foreach (GameObject mesh in _kartMeshes)
             {
                 mesh.SetActive(true);
             }
         }
-        foreach (GameObject mesh in _kartMeshes)
-        {
-            mesh.SetActive(true);
-        }
-    }
 
-    public void DisableKartMeshes(bool disableNameplate)
-    {
-        if (disableNameplate)
+        public void DisableKartMeshes(bool disableNameplate)
         {
-            foreach (GameObject mesh in _kartNamePlate)
+            if (disableNameplate)
+            {
+                foreach (GameObject mesh in _kartNamePlate)
+                {
+                    mesh.SetActive(false);
+                }
+            }
+            foreach (GameObject mesh in _kartMeshes)
             {
                 mesh.SetActive(false);
             }
         }
-        foreach (GameObject mesh in _kartMeshes)
+
+        public void DisableKartMeshesForXSeconds(float duration)
         {
-            mesh.SetActive(false);
+            StartCoroutine(DisableKartMeshRoutine(duration));
         }
-    }
 
-    public void DisableKartMeshesForXSeconds(float duration)
-    {
-        StartCoroutine(DisableKartMeshRoutine(duration));
-    }
-
-    IEnumerator DisableKartMeshRoutine(float duration)
-    {
-        DisableKartMeshes(true);
-        yield return new WaitForSeconds(duration);
-        EnableKartMeshes(true);
+        IEnumerator DisableKartMeshRoutine(float duration)
+        {
+            DisableKartMeshes(true);
+            yield return new WaitForSeconds(duration);
+            EnableKartMeshes(true);
+        }
     }
 }

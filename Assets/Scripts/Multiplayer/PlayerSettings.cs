@@ -12,6 +12,7 @@ namespace Multiplayer
         public string Nickname;
         public int ConnectionID;
         public int KartIndex;
+        public int CharacterIndex;
         public int AbilityIndex;
         public float InvicibilityOnSpawnDuration;
 

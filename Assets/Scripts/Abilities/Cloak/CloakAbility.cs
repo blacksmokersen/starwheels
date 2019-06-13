@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using Common.HUD;
+using SW.Customization;
 
 namespace Abilities
 {
@@ -81,7 +82,7 @@ namespace Abilities
         {
             _animator.SetTrigger("ActivateCloakEffect");
             _cloakRoutine = StartCoroutine(CloakDuration(_cloakSettings.CloakDuration));
-            StartCoroutine(Cooldown());
+            StartCoroutine(CooldownRoutine());
         }
 
         public void DisableCloak()

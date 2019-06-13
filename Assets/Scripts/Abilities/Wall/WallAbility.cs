@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
-using Common.PhysicsUtils;
-using Bolt;
 
 namespace Abilities
 {
@@ -116,7 +112,7 @@ namespace Abilities
                 _enableWallPreview = false;
                 _wallPreviewRaycastOrigin.transform.localPosition = Vector3.zero;
                 _wallPreview.SetActive(false);
-                StartCoroutine(Cooldown());
+                StartCoroutine(CooldownRoutine());
             }
         }
     }
