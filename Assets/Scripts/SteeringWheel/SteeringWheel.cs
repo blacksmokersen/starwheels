@@ -10,7 +10,9 @@ namespace Steering
         [SerializeField] private bool _enabled = true;
 
         [SerializeField] private Animator _kartGraphicsAnimator;
-        [SerializeField] private Animator _animatorChar;
+        [SerializeField] private Animator[] _charAnimator;
+        private Animator _currentCharAnimator;
+
 
         public bool Enabled
         {
@@ -46,6 +48,17 @@ namespace Steering
         private void Awake()
         {
             _rb = GetComponentInParent<Rigidbody>();
+        }
+
+        private void Start()
+        {
+            foreach (Animator animator in _charAnimator)
+            {
+                if (animator.gameObject.activeSelf)
+                {
+                    _currentCharAnimator = animator;
+                }
+            }
         }
 
         // PUBLIC
@@ -156,9 +169,9 @@ namespace Steering
                 _kartGraphicsAnimator.SetBool("NotTurning", false);
                 _kartGraphicsAnimator.SetBool("TurnLeft", false);
                 _kartGraphicsAnimator.SetBool("TurnRight", true);
-                _animatorChar.SetBool("NotTurning", false);
-                _animatorChar.SetBool("TurnLeft", false);
-                _animatorChar.SetBool("TurnRight", true);
+                _currentCharAnimator.SetBool("NotTurning", false);
+                _currentCharAnimator.SetBool("TurnLeft", false);
+                _currentCharAnimator.SetBool("TurnRight", true);
             }
             else if (turnValue < 0)
             {
@@ -166,9 +179,9 @@ namespace Steering
                 _kartGraphicsAnimator.SetBool("NotTurning", false);
                 _kartGraphicsAnimator.SetBool("TurnRight", false);
                 _kartGraphicsAnimator.SetBool("TurnLeft", true);
-                _animatorChar.SetBool("NotTurning", false);
-                _animatorChar.SetBool("TurnRight", false);
-                _animatorChar.SetBool("TurnLeft", true);
+                _currentCharAnimator.SetBool("NotTurning", false);
+                _currentCharAnimator.SetBool("TurnRight", false);
+                _currentCharAnimator.SetBool("TurnLeft", true);
             }
             else
             {
@@ -176,9 +189,9 @@ namespace Steering
                 _kartGraphicsAnimator.SetBool("NotTurning", true);
                 _kartGraphicsAnimator.SetBool("TurnRight", false);
                 _kartGraphicsAnimator.SetBool("TurnLeft", false);
-                _animatorChar.SetBool("NotTurning", true);
-                _animatorChar.SetBool("TurnRight", false);
-                _animatorChar.SetBool("TurnLeft", false);
+                _currentCharAnimator.SetBool("NotTurning", true);
+                _currentCharAnimator.SetBool("TurnRight", false);
+                _currentCharAnimator.SetBool("TurnLeft", false);
             }
         }
 

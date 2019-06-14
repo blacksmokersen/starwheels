@@ -1,11 +1,27 @@
 ﻿using UnityEngine;
+using Multiplayer;
 
 namespace Abilities.Jump
 {
     public class JumpAnimations : MonoBehaviour
     {
         [SerializeField] private Animator _animator;
-        [SerializeField] private Animator _charAnimator;
+
+        [SerializeField] private Animator[] _charAnimator;
+        private Animator _currentCharAnimator;
+
+        //CORE
+
+        private void Start()
+        {
+            foreach (Animator animator in _charAnimator)
+            {
+                if (animator.gameObject.activeSelf)
+                {
+                    _currentCharAnimator = animator;
+                }
+            }
+        }
 
         // PUBLIC
 
@@ -17,7 +33,7 @@ namespace Abilities.Jump
         public void OnHitGroundAnimation()
         {
             _animator.SetTrigger("HitGround");
-            _charAnimator.SetTrigger("HitGround");
+            _currentCharAnimator.SetTrigger("HitGround");
         }
 
         public void DoubleJumpAnimation(Direction direction)
