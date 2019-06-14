@@ -16,6 +16,7 @@ namespace SW.Customization
 
         [Header("Characters")]
         public GameObject CurrentCharacter;
+        public Animator CurrentCharacterAnimator;
         [SerializeField] private GameObject _character0;
         [SerializeField] private GameObject _character1;
         [SerializeField] private GameObject _character2;
@@ -28,6 +29,11 @@ namespace SW.Customization
         private void Awake()
         {
             _characters = new GameObject[3] { _character0, _character1, _character2 };
+        }
+
+        private void Start()
+        {
+            SetCharacterWithLocalSettings();
         }
 
         // BOLT
@@ -50,9 +56,10 @@ namespace SW.Customization
                 {
                     CurrentCharacter = _characters[i];
                     CurrentCharacter.SetActive(true);
+                    CurrentCharacterAnimator = CurrentCharacter.GetComponent<Animator>();
 
                     _currentIndex = i;
-                    _playerSettings.KartIndex = i;
+                    _playerSettings.CharacterIndex = i;
 
                     if (OnCharacterSwitched != null)
                     {
