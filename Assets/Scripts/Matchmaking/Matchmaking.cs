@@ -138,5 +138,21 @@ public static class SWMatchmaking
             UsePunchThrough = true
         }));
     }
+
+    public static void UpdateLobbyData(LobbyData lobbyData)
+    {
+        if (BoltNetwork.IsRunning && BoltNetwork.IsServer)
+        {
+            BoltNetwork.RegisterTokenClass<LobbyToken>();
+
+            LobbyToken token = new LobbyToken().BuildData(lobbyData);
+            BoltMatchmaking.UpdateSession(token);
+            Debug.Log("Lobby data updated.");
+        }
+        else
+        {
+            Debug.LogWarning("Can't update data if Bolt is not running.");
+        }
+    }
 }
 

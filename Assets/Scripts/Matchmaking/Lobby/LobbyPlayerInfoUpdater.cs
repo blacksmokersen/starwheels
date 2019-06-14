@@ -9,7 +9,7 @@ using TMPro;
 namespace SW.Matchmaking
 {
     [DisallowMultipleComponent]
-    public class LobbyNicknamesUpdater : GlobalEventListener
+    public class LobbyPlayerInfoUpdater : GlobalEventListener
     {
         [Header("Player Information")]
         [SerializeField] private PlayerSettings _myPlayerSettings;
@@ -18,14 +18,26 @@ namespace SW.Matchmaking
         [SerializeField] private LobbyData _lobbyData;
 
         [Header("Prefab")]
-        [SerializeField] private LobbyPlayerInfoEntry _nicknameEntryPrefab;
+        [SerializeField] private GameObject _nicknameEntryPrefab;
 
         [Header("UI Text Elements")]
         [SerializeField] private TextMeshProUGUI _currentPlayerCountText;
 
         private List<LobbyPlayerInfoEntry> _entries = new List<LobbyPlayerInfoEntry>();
+        private bool _sessionCreated = false;
 
         // BOLT
+
+        public override void SessionCreated(UdpSession session)
+        {
+            if (!_sessionCreated)
+            {
+                CreatePlayerEntry(_myPlayerSettings.Nickname);
+                UpdateCurrentPlayerCount(1);
+
+                _sessionCreated = true;
+            }
+        }
 
         public override void SessionConnected(UdpSession session, IProtocolToken token)
         {
@@ -52,7 +64,6 @@ namespace SW.Matchmaking
         {
             CreatePlayerEntry(evnt.PlayerNickname);
             UpdateCurrentPlayerCount(evnt.LobbyPlayerCount);
-            Debug.Log("[LOBBY] A player joined the lobby.");
         }
 
         public override void Disconnected(BoltConnection connection)
@@ -74,7 +85,11 @@ namespace SW.Matchmaking
         {
             RemovePlayerEntry(evnt.PlayerNickname);
             UpdateCurrentPlayerCount(evnt.LobbyPlayerCount);
-            Debug.Log("[LOBBY] A player left the lobby.");
+        }
+
+        public override void BoltShutdownBegin(AddCallback registerDoneCallback)
+        {
+            CleanList();
         }
 
         // PRIVATE
@@ -86,7 +101,7 @@ namespace SW.Matchmaking
             if (BoltNetwork.IsServer)
             {
                 _lobbyData.CurrentPlayers = playerCount;
-                SWMatchmaking.SetLobbyData(_lobbyData);
+                SWMatchmaking.UpdateLobbyData(_lobbyData);
             }
         }
 
@@ -94,8 +109,8 @@ namespace SW.Matchmaking
         {
             if (!NicknameInList(nickname))
             {
-                var entry = Instantiate(_nicknameEntryPrefab, transform, false);
-                entry.GetComponent<LobbyPlayerInfoEntry>().SetNickname(nickname);
+                var entry = Instantiate(_nicknameEntryPrefab, transform, false).GetComponent<LobbyPlayerInfoEntry>();
+                entry.SetNickname(nickname);
 
                 _entries.Add(entry);
                 _lobbyData.PlayersNicknames.Add(nickname);
@@ -121,7 +136,7 @@ namespace SW.Matchmaking
                 _lobbyData.PlayersNicknames.Remove(nickname);
                 var entry = FindEntryForNickname(nickname);
                 _entries.Remove(entry);
-                Destroy(entry);
+                Destroy(entry.gameObject);
             }
             else
             {
@@ -151,6 +166,17 @@ namespace SW.Matchmaking
                 }
             }
             return null;
+        }
+
+        private void CleanList()
+        {
+            foreach (Transform child in transform)
+            {
+                Destroy(child.gameObject);
+            }
+            _entries.Clear();
+            _lobbyData.PlayersNicknames.Clear();
+            _sessionCreated = false;
         }
     }
 }
