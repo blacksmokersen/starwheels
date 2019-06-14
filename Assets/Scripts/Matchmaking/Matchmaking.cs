@@ -4,6 +4,7 @@ using SW.Matchmaking;
 using UnityEngine;
 using Bolt;
 using Bolt.Utils;
+using Bolt.Matchmaking;
 using UdpKit;
 using udpkit.platform.photon;
 
@@ -136,6 +137,22 @@ public static class SWMatchmaking
             RoomUpdateRate = 1,
             UsePunchThrough = true
         }));
+    }
+
+    public static void UpdateLobbyData(LobbyData lobbyData)
+    {
+        if (BoltNetwork.IsRunning && BoltNetwork.IsServer)
+        {
+            BoltNetwork.RegisterTokenClass<LobbyToken>();
+
+            LobbyToken token = new LobbyToken().BuildData(lobbyData);
+            BoltMatchmaking.UpdateSession(token);
+            Debug.Log("Lobby data updated.");
+        }
+        else
+        {
+            Debug.LogWarning("Can't update data if Bolt is not running.");
+        }
     }
 }
 

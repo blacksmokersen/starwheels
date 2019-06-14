@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Bolt;
 using UnityEngine.UI;
-using udpkit.platform.photon;
+using Multiplayer;
 
 namespace SW.Matchmaking
 {
@@ -11,6 +11,7 @@ namespace SW.Matchmaking
     {
         [Header("Settings")]
         [SerializeField] private MatchmakingSettings _matchmakingSettings;
+        [SerializeField] private PlayerSettings _playerSettings;
 
         [Header("Lobby Info")]
         [SerializeField] private LobbyData _lobbyData;
@@ -31,8 +32,9 @@ namespace SW.Matchmaking
             if (BoltNetwork.IsClient)
             {
                 Debug.Log("[BOLT] Registering tokens.");
-                BoltNetwork.RegisterTokenClass<Multiplayer.RoomProtocolToken>();
+                BoltNetwork.RegisterTokenClass<RoomProtocolToken>();
                 BoltNetwork.RegisterTokenClass<LobbyToken>();
+                BoltNetwork.RegisterTokenClass<JoinToken>();
             }
         }
 
@@ -112,7 +114,14 @@ namespace SW.Matchmaking
                 {
                     _lobbyData.SetGamemode(lobbyToken.GameMode);
                     _lobbyData.SetMap(lobbyToken.MapName);
-                    SWMatchmaking.JoinLobby(lobby.Key);
+                    SWMatchmaking.JoinLobby
+                     (
+                        lobby.Key,
+                        new JoinToken()
+                        {
+                            Nickname = _playerSettings.Nickname
+                        }
+                    );
                 }
             }
         }

@@ -102,7 +102,6 @@ namespace Items
         {
             if (!_minePositionFixed)
             {
-                Debug.Log("Stopping mine");
                 GetComponent<Hovering>().Disable();
 
                 var rb = GetComponent<Rigidbody>();

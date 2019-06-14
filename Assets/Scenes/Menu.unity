@@ -6995,6 +6995,7 @@ RectTransform:
   - {fileID: 808572653}
   - {fileID: 1759963741}
   - {fileID: 1801074766}
+  - {fileID: 833132177}
   m_Father: {fileID: 449484085}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7056,7 +7057,6 @@ MonoBehaviour:
   _lookingForGameText: {fileID: 1188417352}
   _currentGamemodeLobbiesText: {fileID: 555723739}
   _timerText: {fileID: 1496719198}
-  _currentPlayerCountText: {fileID: 719195647}
   _inviteFriendsButton: {fileID: 808572652}
   _startGameButton: {fileID: 1759963740}
   _minimumPlayersToAutomaticLaunch: 4
@@ -8091,7 +8091,7 @@ PrefabInstance:
     - target: {fileID: 5690776719882902614, guid: f40d43e0c6e8a19459f1790571545657,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -246.7199
+      value: -246.71973
       objectReference: {fileID: 0}
     - target: {fileID: 5690776719882902614, guid: f40d43e0c6e8a19459f1790571545657,
         type: 3}
@@ -10795,6 +10795,83 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 825013017}
+--- !u!1 &833132176
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 833132177}
+  - component: {fileID: 833132178}
+  - component: {fileID: 833132179}
+  m_Layer: 5
+  m_Name: PlayerList
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &833132177
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833132176}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 686222879}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -35.9, y: 405}
+  m_SizeDelta: {x: 317.7, y: 410.1}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &833132178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833132176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df1c8ba527540d34496132a685ad534a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myPlayerSettings: {fileID: 11400000, guid: d3786b31f0466fb4a97bd3941281e55a, type: 2}
+  _lobbyData: {fileID: 11400000, guid: 930191bbcbab87e4f98912baee12eddc, type: 2}
+  _nicknameEntryPrefab: {fileID: 7891956567311530514, guid: b6f20987db3b8634e89d1d079eb8417f,
+    type: 3}
+  _currentPlayerCountText: {fileID: 719195647}
+--- !u!114 &833132179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833132176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1297475563, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 6
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
 --- !u!1001 &846179415
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12911,6 +12988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b553bfd48576b5c40910c1d1fc9a6e36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerSettings: {fileID: 0}
   _lobbyData: {fileID: 11400000, guid: 930191bbcbab87e4f98912baee12eddc, type: 2}
   _tinyLobbyPanel: {fileID: 686222878}
   _maxFriends: 7
@@ -12954,7 +13032,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 339, y: -26.599854}
+  m_AnchoredPosition: {x: 339, y: -26.59961}
   m_SizeDelta: {x: -843.6, y: -202.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1048250193
@@ -24657,6 +24735,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _matchmakingSettings: {fileID: 11400000, guid: 39dcce83b9789a44ea3646f7f0cb6c3e,
     type: 2}
+  _playerSettings: {fileID: 11400000, guid: d3786b31f0466fb4a97bd3941281e55a, type: 2}
   _lobbyData: {fileID: 11400000, guid: 930191bbcbab87e4f98912baee12eddc, type: 2}
   _lobbyPanel: {fileID: 2009003510}
   OnLookingForLobby:
@@ -24690,7 +24769,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lobbyData: {fileID: 11400000, guid: 930191bbcbab87e4f98912baee12eddc, type: 2}
-  _sessionData: {fileID: 11400000, guid: 18db2339d332b374498a4622e0fa275e, type: 2}
   OnLobbyCreated:
     m_PersistentCalls:
       m_Calls:
@@ -25545,7 +25623,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 339, y: -19.34497}
+  m_AnchoredPosition: {x: 339, y: -19.344727}
   m_SizeDelta: {x: -843.6, y: -216.61005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2009003512

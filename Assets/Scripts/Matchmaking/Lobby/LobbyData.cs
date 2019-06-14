@@ -14,6 +14,8 @@ namespace SW.Matchmaking
         public bool GameStarted = false;
         public bool CanBeJoined = true;
         public int MaxPlayers;
+        public int CurrentPlayers;
+        public List<string> PlayersNicknames = new List<string>();
 
         [Header("Gamemode Info")]
         public List<string> GamemodePool;

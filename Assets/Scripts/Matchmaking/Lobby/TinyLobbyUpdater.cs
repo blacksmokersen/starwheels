@@ -2,6 +2,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using Multiplayer;
 using Bolt;
 using TMPro;
 
@@ -17,7 +18,6 @@ namespace SW.Matchmaking
         [SerializeField] private TextMeshProUGUI _lookingForGameText;
         [SerializeField] private TextMeshProUGUI _currentGamemodeLobbiesText;
         [SerializeField] private TextMeshProUGUI _timerText;
-        [SerializeField] private TextMeshProUGUI _currentPlayerCountText;
 
         [Header("UI Buttons")]
         [SerializeField] private GameObject _inviteFriendsButton;
@@ -64,11 +64,6 @@ namespace SW.Matchmaking
 
         // BOLT
 
-        public override void SessionConnected(UdpSession session, IProtocolToken token)
-        {
-            gameObject.SetActive(true);
-        }
-
         public override void BoltShutdownBegin(AddCallback registerDoneCallback)
         {
             gameObject.SetActive(false);
@@ -97,49 +92,6 @@ namespace SW.Matchmaking
                 SetLookingForPlayers();
                 ResetTimer();
             }
-
-            if (BoltNetwork.IsServer)
-            {
-                var playerCount = 1 + SWMatchmaking.GetCurrentLobbyPlayerCount();
-                LobbyPlayerJoined lobbyPlayerJoinedEvent = LobbyPlayerJoined.Create();
-                lobbyPlayerJoinedEvent.LobbyPlayerCount = playerCount;
-                lobbyPlayerJoinedEvent.PlayerID = (int)connection.ConnectionId;
-                lobbyPlayerJoinedEvent.Send();
-
-                UpdateCurrentPlayerCount(playerCount);
-            }
-        }
-
-        public override void Disconnected(BoltConnection connection)
-        {
-            if (BoltNetwork.IsServer)
-            {
-                var playerCount = SWMatchmaking.GetCurrentLobbyPlayerCount();
-                LobbyPlayerLeft lobbyPlayerLeftEvent = LobbyPlayerLeft.Create();
-                lobbyPlayerLeftEvent.LobbyPlayerCount = playerCount;
-                lobbyPlayerLeftEvent.PlayerID = (int)connection.ConnectionId;
-                lobbyPlayerLeftEvent.Send();
-
-                UpdateCurrentPlayerCount(playerCount);
-            }
-        }
-
-        public override void OnEvent(LobbyPlayerJoined evnt)
-        {
-            if (BoltNetwork.IsClient)
-            {
-                UpdateCurrentPlayerCount(evnt.LobbyPlayerCount);
-            }
-            Debug.Log("A player joined the lobby.");
-        }
-
-        public override void OnEvent(LobbyPlayerLeft evnt)
-        {
-            if (BoltNetwork.IsClient)
-            {
-                UpdateCurrentPlayerCount(evnt.LobbyPlayerCount);
-            }
-            Debug.Log("A player disconnected from the lobby.");
         }
 
         // PUBLIC
@@ -149,7 +101,7 @@ namespace SW.Matchmaking
             gameObject.SetActive(true);
             _lookingForGameText.gameObject.SetActive(true);
             _lookingForGameText.text = "Looking for a game";
-            _currentPlayerCountText.gameObject.SetActive(false);
+            //_currentPlayerCountText.gameObject.SetActive(false);
             _startGameButton.SetActive(false);
             _inviteFriendsButton.gameObject.SetActive(false);
 
@@ -162,9 +114,9 @@ namespace SW.Matchmaking
             _lookingForGameText.gameObject.SetActive(true);
             _lookingForGameText.text = "Looking for players";
             _currentGamemodeLobbiesText.gameObject.SetActive(false);
-            _currentPlayerCountText.gameObject.SetActive(true);
+            //_currentPlayerCountText.gameObject.SetActive(true);
             _timerText.gameObject.SetActive(BoltNetwork.IsServer);
-            UpdateCurrentPlayerCount(1);
+            //UpdateCurrentPlayerCount(1);
             _startGameButton.SetActive(BoltNetwork.IsServer);
             _inviteFriendsButton.gameObject.SetActive(BoltNetwork.IsServer);
 
@@ -175,7 +127,7 @@ namespace SW.Matchmaking
         {
             if (BoltNetwork.IsServer)
             {
-                var roomToken = new Multiplayer.RoomProtocolToken() { Gamemode = _lobbyData.ChosenGamemode };
+                var roomToken = new RoomProtocolToken() { Gamemode = _lobbyData.ChosenGamemode };
                 BoltNetwork.LoadScene(_lobbyData.ChosenMapName, roomToken);
             }
             else
@@ -191,11 +143,6 @@ namespace SW.Matchmaking
         }
 
         // PRIVATE
-
-        private void UpdateCurrentPlayerCount(int playerCount)
-        {
-            _currentPlayerCountText.text = playerCount + " players";
-        }
 
         private void UpdateTimer(float seconds)
         {

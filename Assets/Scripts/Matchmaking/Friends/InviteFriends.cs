@@ -4,12 +4,16 @@ using Steamworks;
 using System.Collections;
 using Bolt;
 using System.Text;
+using Multiplayer;
 
 namespace SW.Matchmaking.Friends
 {
     [DisallowMultipleComponent]
     public class InviteFriends : GlobalEventListener
     {
+        [Header("Settings")]
+        [SerializeField] private PlayerSettings _playerSettings;
+
         [Header("Session")]
         [SerializeField] private LobbyData _lobbyData;
         [SerializeField] private GameObject _tinyLobbyPanel;
@@ -181,7 +185,10 @@ namespace SW.Matchmaking.Friends
                 yield return new WaitForEndOfFrame();
             }
             Debug.Log("[BOLT] Joining lobby ...");
-            SWMatchmaking.JoinLobby(serverName);
+            SWMatchmaking.JoinLobby(serverName, new JoinToken()
+            {
+                Nickname = _playerSettings.Nickname
+            });
 
             _tinyLobbyPanel.SetActive(true);
         }
