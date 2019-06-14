@@ -3178,6 +3178,12 @@ MonoBehaviour:
   m_Script: {fileID: 2109663825, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &355806126 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8379891343943302961, guid: 25439d494ba238246bc09325e9dcbfd0,
+    type: 3}
+  m_PrefabInstance: {fileID: 594118994}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &365636537
 GameObject:
   m_ObjectHideFlags: 0
@@ -3547,12 +3553,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 404181615}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58589732971244c4fa0c874a24cc1808, type: 3}
+  m_Script: {fileID: 11500000, guid: de0c617f8eee90042b09fbd984e40149, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _jumpingAbility: {fileID: 0}
-  _tpBackAbility: {fileID: 0}
-  _wallAbility: {fileID: 0}
+  _playerSettings: {fileID: 11400000, guid: d3786b31f0466fb4a97bd3941281e55a, type: 2}
+  _wallAbilityPreview: {fileID: 1644671350}
+  _jumpingAbilityPreview: {fileID: 1071638206}
+  _tpBackAbilityPreview: {fileID: 355806126}
 --- !u!1 &404646914
 GameObject:
   m_ObjectHideFlags: 0
@@ -6210,6 +6217,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainMenuGraphics
       objectReference: {fileID: 0}
+    - target: {fileID: 8379891343943302961, guid: 25439d494ba238246bc09325e9dcbfd0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7580250645596497125, guid: 25439d494ba238246bc09325e9dcbfd0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6319,6 +6331,11 @@ PrefabInstance:
         type: 3}
       propertyPath: OnKartSwitched.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: '#4286f4'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1305653195214958592, guid: 25439d494ba238246bc09325e9dcbfd0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25439d494ba238246bc09325e9dcbfd0, type: 3}
@@ -7526,7 +7543,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 404181617}
-        m_MethodName: SetNextAbilityIndex
+        m_MethodName: SetNextAbility
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13525,6 +13542,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1050915618}
   m_CullTransparentMesh: 0
+--- !u!1 &1071638206 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1305653195214958592, guid: 25439d494ba238246bc09325e9dcbfd0,
+    type: 3}
+  m_PrefabInstance: {fileID: 594118994}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1078514549 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2669479625715945143, guid: 9d23759006417ba4fbd6d9595daf022b,
@@ -14061,7 +14084,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 404181617}
-        m_MethodName: SetPreviousAbilityIndex
+        m_MethodName: SetPreviousAbility
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -20943,6 +20966,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1846898356}
+        m_MethodName: Select
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!222 &1615768796
@@ -21508,6 +21542,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1637367602}
   m_CullTransparentMesh: 0
+--- !u!1 &1644671350 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2254770950451681713, guid: 25439d494ba238246bc09325e9dcbfd0,
+    type: 3}
+  m_PrefabInstance: {fileID: 594118994}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1644678505
 GameObject:
   m_ObjectHideFlags: 0

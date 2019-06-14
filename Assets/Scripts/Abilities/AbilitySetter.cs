@@ -6,6 +6,7 @@ namespace Abilities
     [DisallowMultipleComponent]
     public class AbilitySetter : MonoBehaviour
     {
+        [Header("Abilities")]
         [SerializeField] private GameObject _wallAbility;
         [SerializeField] private GameObject _jumpingAbility;
         [SerializeField] private GameObject _tpBackAbility;
@@ -52,21 +53,6 @@ namespace Abilities
             else
                 Debug.LogError("Could not find current ability.");
             return null;
-        }
-
-        public void SetAbilityIndex(int index)
-        {
-            _playerSettings.AbilityIndex = index;
-        }
-
-        public void SetNextAbilityIndex()
-        {
-            _playerSettings.AbilityIndex = (_playerSettings.AbilityIndex + 1) % 3;
-        }
-
-        public void SetPreviousAbilityIndex()
-        {
-            _playerSettings.AbilityIndex = (_playerSettings.AbilityIndex + 2) % 3;
         }
     }
 }
