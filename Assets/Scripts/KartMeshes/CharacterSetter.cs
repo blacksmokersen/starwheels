@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using Bolt;
 using Multiplayer;
 
@@ -7,15 +8,20 @@ namespace SW.Customization
     [DisallowMultipleComponent]
     public class CharacterSetter : GlobalEventListener
     {
+        [Header("Events")]
+        public UnityEvent OnCharacterSwitched;
+
         [Header("Settings")]
         [SerializeField] private PlayerSettings _playerSettings;
 
-        [Header("Meshes")]
+        [Header("Characters")]
+        public GameObject CurrentCharacter;
         [SerializeField] private GameObject _character0;
         [SerializeField] private GameObject _character1;
         [SerializeField] private GameObject _character2;
 
         private GameObject[] _characters;
+        private int _currentIndex;
 
         // CORE
 
@@ -42,13 +48,32 @@ namespace SW.Customization
             {
                 if (i == index)
                 {
-                    _characters[i].SetActive(true);
+                    CurrentCharacter = _characters[i];
+                    CurrentCharacter.SetActive(true);
+
+                    _currentIndex = i;
+                    _playerSettings.KartIndex = i;
+
+                    if (OnCharacterSwitched != null)
+                    {
+                        OnCharacterSwitched.Invoke();
+                    }
                 }
                 else
                 {
                     _characters[i].SetActive(false);
                 }
             }
+        }
+
+        public void SetNextCharacter()
+        {
+            SetCharacter((_currentIndex + 1) % _characters.Length);
+        }
+
+        public void SetPreviousCharacter()
+        {
+            SetCharacter((_currentIndex - 1 + _characters.Length) % _characters.Length);
         }
 
         public void SetCharacterWithLocalSettings()

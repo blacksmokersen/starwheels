@@ -3506,6 +3506,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 389810752}
   m_CullTransparentMesh: 0
+--- !u!1 &391148077 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 646955735711152681, guid: 25439d494ba238246bc09325e9dcbfd0,
+    type: 3}
+  m_PrefabInstance: {fileID: 594118994}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &404181615
 GameObject:
   m_ObjectHideFlags: 0
@@ -8027,16 +8033,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 449484085}
     m_Modifications:
-    - target: {fileID: 8883089402361386491, guid: f40d43e0c6e8a19459f1790571545657,
-        type: 3}
-      propertyPath: m_Name
-      value: OptionsPanel
-      objectReference: {fileID: 0}
-    - target: {fileID: 8883089402361386491, guid: f40d43e0c6e8a19459f1790571545657,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5690776719882902614, guid: f40d43e0c6e8a19459f1790571545657,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8146,6 +8142,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 180.2998
+      objectReference: {fileID: 0}
+    - target: {fileID: 8883089402361386491, guid: f40d43e0c6e8a19459f1790571545657,
+        type: 3}
+      propertyPath: m_Name
+      value: OptionsPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 8883089402361386491, guid: f40d43e0c6e8a19459f1790571545657,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3606317040691337801, guid: f40d43e0c6e8a19459f1790571545657,
         type: 3}
@@ -10392,8 +10398,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1566081058}
-        m_MethodName: SetPreviousKart
+      - m_Target: {fileID: 1566081063}
+        m_MethodName: SetPreviousCharacter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13446,6 +13452,12 @@ MonoBehaviour:
   m_Script: {fileID: 2109663825, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1048635001 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2823160582175450354, guid: 25439d494ba238246bc09325e9dcbfd0,
+    type: 3}
+  m_PrefabInstance: {fileID: 594118994}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1050915618
 GameObject:
   m_ObjectHideFlags: 0
@@ -20476,6 +20488,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af859b835fcb68c4ab6ca40269d0873f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1566081063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566081056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d99c37d2c611b6b4faa6bb6230841c02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnCharacterSwitched:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  _playerSettings: {fileID: 11400000, guid: d3786b31f0466fb4a97bd3941281e55a, type: 2}
+  CurrentCharacter: {fileID: 2131844183}
+  _character0: {fileID: 2131844183}
+  _character1: {fileID: 391148077}
+  _character2: {fileID: 1048635001}
 --- !u!1 &1581395876
 GameObject:
   m_ObjectHideFlags: 0
@@ -26105,8 +26139,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1566081058}
-        m_MethodName: SetNextKart
+      - m_Target: {fileID: 1566081063}
+        m_MethodName: SetNextCharacter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -26287,6 +26321,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2113609116}
   m_CullTransparentMesh: 0
+--- !u!1 &2131844183 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6834108341031007859, guid: 25439d494ba238246bc09325e9dcbfd0,
+    type: 3}
+  m_PrefabInstance: {fileID: 594118994}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2138798283
 GameObject:
   m_ObjectHideFlags: 0
