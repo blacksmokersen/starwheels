@@ -3,11 +3,12 @@ using Multiplayer;
 
 namespace Abilities
 {
+    [DisallowMultipleComponent]
     public class AbilitySetter : MonoBehaviour
     {
+        [SerializeField] private GameObject _wallAbility;
         [SerializeField] private GameObject _jumpingAbility;
         [SerializeField] private GameObject _tpBackAbility;
-        [SerializeField] private GameObject _wallAbility;
 
         private GameObject[] _abilities;
         private PlayerSettings _playerSettings;
@@ -19,7 +20,7 @@ namespace Abilities
             _playerSettings = Resources.Load<PlayerSettings>(Constants.Resources.PlayerSettings);
             _playerSettings.OnAbilityIndexUpdated.AddListener(UpdateAbility);
 
-            _abilities = new GameObject[3] { _jumpingAbility, _tpBackAbility, _wallAbility };
+            _abilities = new GameObject[3] { _wallAbility , _jumpingAbility, _tpBackAbility, };
             SetAbility(_playerSettings.AbilityIndex);
         }
 
@@ -31,13 +32,9 @@ namespace Abilities
 
             for (int i = 0; i < _abilities.Length; i++)
             {
-                if (i == _playerSettings.AbilityIndex)
+                if (_abilities[i] != null)
                 {
-                    _abilities[i].SetActive(true);
-                }
-                else
-                {
-                    _abilities[i].SetActive(false);
+                    _abilities[i].SetActive(i == index);
                 }
             }
         }
@@ -55,6 +52,21 @@ namespace Abilities
             else
                 Debug.LogError("Could not find current ability.");
             return null;
+        }
+
+        public void SetAbilityIndex(int index)
+        {
+            _playerSettings.AbilityIndex = index;
+        }
+
+        public void SetNextAbilityIndex()
+        {
+            _playerSettings.AbilityIndex = (_playerSettings.AbilityIndex + 1) % 3;
+        }
+
+        public void SetPreviousAbilityIndex()
+        {
+            _playerSettings.AbilityIndex = (_playerSettings.AbilityIndex + 2) % 3;
         }
     }
 }

@@ -21,12 +21,18 @@ namespace SW.Customization
         [SerializeField] private GameObject _kartMesh2;
 
         private GameObject[] _karts;
+        private int _currentIndex;
 
         // CORE
 
         private void Awake()
         {
             _karts = new GameObject[3] { _kartMesh0, _kartMesh1, _kartMesh2 };
+        }
+
+        private void Start()
+        {
+            SetKartWithLocalSettings();
         }
 
         // BOLT
@@ -50,6 +56,9 @@ namespace SW.Customization
                     CurrentKart = _karts[i];
                     CurrentKart.SetActive(true);
 
+                    _currentIndex = i;
+                    _playerSettings.KartIndex = i;
+
                     if (OnKartSwitched != null)
                     {
                         OnKartSwitched.Invoke();
@@ -60,6 +69,16 @@ namespace SW.Customization
                     _karts[i].SetActive(false);
                 }
             }
+        }
+
+        public void SetNextKart()
+        {
+            SetKart((_currentIndex + 1) % _karts.Length);
+        }
+
+        public void SetPreviousKart()
+        {
+            SetKart((_currentIndex - 1 +_karts.Length ) % _karts.Length);
         }
 
         [ContextMenu("Switch Kart")]

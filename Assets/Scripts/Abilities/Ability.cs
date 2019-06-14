@@ -58,7 +58,8 @@ namespace Abilities
             var cooldownSeconds = abilitySettings.CooldownDuration;
             if (_playerSettings.KartIndex == _playerSettings.AbilityIndex)
             {
-                cooldownSeconds -= 1f;
+                cooldownSeconds -= 4f;
+                Debug.Log("[ABILITY] CD Reduced.");
             }
             OnResetCoolDownAnimation(cooldownSeconds);
             yield return new WaitForSeconds(0.1f);

@@ -33,5 +33,13 @@ namespace Multiplayer.Teams
             var renderer = _kartSetter.CurrentKart.GetComponent<KartSkinSettings>().TargetRenderer;
             renderer.material.SetColor("_BaseColor", newColor);
         }
+
+        public void SetKartColor(string hex)
+        {
+            var color = new Color();
+            ColorUtility.TryParseHtmlString(hex, out color);
+            var renderer = _kartSetter.CurrentKart.GetComponent<KartSkinSettings>().TargetRenderer;
+            renderer.material.SetColor("_BaseColor", color);
+        }
     }
 }
