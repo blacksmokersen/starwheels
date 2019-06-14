@@ -104,7 +104,7 @@ namespace Abilities
                 }
                 else // if (_tpBack.IsEnabled())
                 {
-                    StartCoroutine(Cooldown());
+                    StartCoroutine(CooldownRoutine());
                     StartCoroutine(BlinkTpBack());
                 }
             }
@@ -130,7 +130,7 @@ namespace Abilities
                 }
                 else // if (_tpBack.IsEnabled())
                 {
-                    StartCoroutine(Cooldown());
+                    StartCoroutine(CooldownRoutine());
                     StartCoroutine(BlinkTpBack());
                 }
             }

@@ -4639,7 +4639,7 @@ ParticleSystem:
 --- !u!199 &1215022395924486341
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -9337,7 +9337,7 @@ ParticleSystem:
 --- !u!199 &1215181441797944887
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -9686,6 +9686,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CanUseAbility: 1
   abilitySettings: {fileID: 11400000, guid: e9d85ae3c27e1dc46a352d8fe5690014, type: 2}
+  _playerSettings: {fileID: 11400000, guid: d3786b31f0466fb4a97bd3941281e55a, type: 2}
   _particleSystem: {fileID: 1214233133429201413}
   OnAbilityReload:
     m_PersistentCalls:
@@ -9763,7 +9764,13 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  OnHitGround:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   _groundCondition: {fileID: 0}
+  _health: {fileID: 0}
 --- !u!114 &1409458185864437551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9777,6 +9784,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 0}
+  _charAnimator: {fileID: 0}
 --- !u!1 &1305723497778173141
 GameObject:
   m_ObjectHideFlags: 0
@@ -14463,7 +14471,7 @@ ParticleSystem:
 --- !u!199 &1215102659509116645
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

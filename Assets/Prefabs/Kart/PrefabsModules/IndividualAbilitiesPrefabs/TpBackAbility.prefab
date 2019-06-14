@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CanUseAbility: 1
   abilitySettings: {fileID: 11400000, guid: 8c4f4b84f4fd8d940918d0b0bde965d5, type: 2}
+  _playerSettings: {fileID: 11400000, guid: d3786b31f0466fb4a97bd3941281e55a, type: 2}
   _particleSystem: {fileID: 5342639366632923153}
   OnAbilityReload:
     m_PersistentCalls:
@@ -66,9 +67,17 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  _enabled: 1
+  OnBlinkActivated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   _throwableLauncher: {fileID: 0}
+  _throwingDirection: {fileID: 0}
   _useTpBackSound: {fileID: 5315018802511343439}
   _kartMeshes: {fileID: 0}
+  _health: {fileID: 0}
 --- !u!1 &5251411192648879441
 GameObject:
   m_ObjectHideFlags: 0
@@ -4708,7 +4717,7 @@ ParticleSystem:
 --- !u!199 &5341963138493340761
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

@@ -143,7 +143,7 @@ namespace Abilities.Jump
                     {
                         StopCoroutine(_timeBetweenFirstAndSecondJump);
                     }
-                    StartCoroutine(Cooldown());
+                    StartCoroutine(CooldownRoutine());
                     _hasDoneFirstJump = false;
                 }
             }
@@ -158,7 +158,7 @@ namespace Abilities.Jump
         private IEnumerator TimeBetweenFirstAndSecondJump()
         {
             yield return new WaitForSeconds(_jumpSettings.MaxTimeBetweenFirstAndSecondJump);
-            StartCoroutine(Cooldown());
+            StartCoroutine(CooldownRoutine());
         }
 
         private IEnumerator CancelJumpVelocity(Vector3 velocityToCancel)

@@ -2,14 +2,16 @@
 using UnityEngine;
 using UnityEngine.Events;
 using Bolt;
+using Multiplayer;
 
 namespace Abilities
 {
     public class Ability : EntityBehaviour<IKartState>
     {
-        [Header("Ability Settings")]
+        [Header("Settings")]
         public bool CanUseAbility = true;
         [SerializeField] protected AbilitySettings abilitySettings;
+        [SerializeField] protected PlayerSettings _playerSettings;
 
         [Header("Reload Effects")]
         [SerializeField] private ParticleSystem _particleSystem;
@@ -36,36 +38,33 @@ namespace Abilities
             OnAbilityReload.Invoke();
         }
 
-        // PROTECTED
-
-        protected IEnumerator Cooldown()
-        {
-
-            OnResetCoolDownAnimation(abilitySettings.CooldownDuration);
-            yield return new WaitForSeconds(0.1f);
-
-            /*
-            CanUseAbility = false;
-            yield return new WaitForSeconds(abilitySettings.CooldownDuration);
-            CanUseAbility = true;
-            OnAbilityReload.Invoke();
-            ReloadEffects();
-            */
-        }
-
-        public void OnResetCoolDownAnimation(float cooldownDuration)
+        public void OnResetCoolDownAnimation(float cooldownSeconds)
         {
             CanUseAbility = false;
             AbilityCooldownAnimationsEventsManager cooldownAnimationsEventsManager = FindObjectOfType<AbilityCooldownAnimationsEventsManager>();
-            cooldownAnimationsEventsManager.TriggerCooldownResetAnimation(cooldownDuration);
+            cooldownAnimationsEventsManager.TriggerCooldownResetAnimation(cooldownSeconds);
         }
+
         public void OnCooldownCompleteAnimation()
         {
             CanUseAbility = true;
             OnAbilityReload.Invoke();
         }
 
-            protected void ReloadEffects()
+        // PROTECTED
+
+        protected IEnumerator CooldownRoutine()
+        {
+            var cooldownSeconds = abilitySettings.CooldownDuration;
+            if (_playerSettings.KartIndex == _playerSettings.AbilityIndex)
+            {
+                cooldownSeconds -= 1f;
+            }
+            OnResetCoolDownAnimation(cooldownSeconds);
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        protected void ReloadEffects()
         {
             _particleSystem.Emit(abilitySettings.ReloadParticleNumber);
         }
