@@ -9,6 +9,7 @@ namespace Items
     {
         [Header("Item HUD")]
         [SerializeField] private TextMeshProUGUI _itemCountText;
+        [SerializeField] private TextMeshProUGUI _itemName;
         [SerializeField] private Image _itemTexture;
 
         [Header("Shield HUD")]
@@ -74,12 +75,14 @@ namespace Items
             if (item == null)
             {
                 _itemTexture.sprite = null;
+                _itemName.text = null;
                 _itemTexture.enabled = false;
                 _currentItem = null;
             }
             else
             {
                 _itemTexture.sprite = item.InventoryTexture;
+                _itemName.text = item.name;
                 _itemTexture.enabled = true;
                 if (_currentItem == null)
                 {
