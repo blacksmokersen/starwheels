@@ -3,6 +3,7 @@ using UnityEngine;
 using Items;
 using ThrowingSystem;
 using UnityEngine.Events;
+using SW.Customization;
 
 namespace Abilities
 {
@@ -24,7 +25,7 @@ namespace Abilities
 
         [Header("Effects")]
         [SerializeField] private AudioSource _useTpBackSound;
-        [SerializeField] private GameObject _kartMeshes;
+        [SerializeField] private KartMeshDisabler _kartMeshDisabler;
 
         [Header("Invicibility")]
         [SerializeField] private Health.Health _health;
@@ -71,7 +72,7 @@ namespace Abilities
         public new void Reload()
         {
             CanUseAbility = true;
-            _kartMeshes.SetActive(true);
+          //  _kartMeshDisabler.EnableKartMeshes(true);
             _health.UnsetInvincibility();
 
             if (_tpBack)
@@ -141,10 +142,10 @@ namespace Abilities
         private IEnumerator BlinkTpBack()
         {
             OnBlinkActivated.Invoke();
-            _kartMeshes.SetActive(false);
+            _kartMeshDisabler.DisableKartMeshes(true);
             _health.SetInvincibility();
             yield return new WaitForSeconds(0.25f);
-            _kartMeshes.SetActive(true);
+            _kartMeshDisabler.EnableKartMeshes(true);
             _health.UnsetInvincibility();
             SWExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useTpBackSound);
             if (_tpBack != null)

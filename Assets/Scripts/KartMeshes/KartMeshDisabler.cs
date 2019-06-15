@@ -1,12 +1,23 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace SW.Customization
 {
     public class KartMeshDisabler : MonoBehaviour
     {
-        [SerializeField] GameObject[] _kartMeshes;
         [SerializeField] GameObject[] _kartNamePlate;
+
+        private List<GameObject> _currentKartGraphics;
+
+        //CORE
+
+        private void Awake()
+        {
+            _currentKartGraphics = new List<GameObject>();
+        }
+
+        //PUBLIC
 
         public void EnableKartMeshes(bool enableNameplate)
         {
@@ -17,14 +28,17 @@ namespace SW.Customization
                     mesh.SetActive(true);
                 }
             }
-            foreach (GameObject mesh in _kartMeshes)
+            foreach (GameObject child in _currentKartGraphics)
             {
-                mesh.SetActive(true);
+                child.gameObject.SetActive(true);
             }
+            ClearCurrentKartGraphics();
         }
 
         public void DisableKartMeshes(bool disableNameplate)
         {
+            var i = 0;
+
             if (disableNameplate)
             {
                 foreach (GameObject mesh in _kartNamePlate)
@@ -32,15 +46,27 @@ namespace SW.Customization
                     mesh.SetActive(false);
                 }
             }
-            foreach (GameObject mesh in _kartMeshes)
+            foreach (Transform child in transform)
             {
-                mesh.SetActive(false);
+                if (child.gameObject.activeSelf)
+                {
+                    _currentKartGraphics.Add(child.gameObject);
+                    child.gameObject.SetActive(false);
+                    i++;
+                }
             }
         }
 
         public void DisableKartMeshesForXSeconds(float duration)
         {
             StartCoroutine(DisableKartMeshRoutine(duration));
+        }
+
+        //PRIVATE
+
+        private void ClearCurrentKartGraphics()
+        {
+            _currentKartGraphics.Clear();
         }
 
         IEnumerator DisableKartMeshRoutine(float duration)
