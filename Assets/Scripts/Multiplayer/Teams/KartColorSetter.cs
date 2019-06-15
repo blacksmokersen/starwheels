@@ -4,6 +4,7 @@ using SW.Customization;
 
 namespace Multiplayer.Teams
 {
+    [DisallowMultipleComponent]
     public class KartColorSetter : EntityBehaviour<IKartState>
     {
         [Header("Renderer")]
@@ -22,16 +23,35 @@ namespace Multiplayer.Teams
 
         public override void Attached()
         {
-            state.AddCallback("Team", SetKartTeamColor);
+            state.AddCallback("Team", SetKartTeamColorAccordingToState);
         }
 
         // PUBLIC
 
-        public void SetKartTeamColor()
+        public void SetKartTeamColorAccordingToState()
         {
-            var newColor = _teamsSettings.GetSettings(state.Team.ToTeam()).KartColor;
-            var renderer = _kartSetter.CurrentKart.GetComponent<KartSkinSettings>().TargetRenderer;
-            renderer.material.SetColor("_BaseColor", newColor);
+            if (entity.IsAttached)
+            {
+                SetKartTeamColor(state.Team.ToTeam());
+            }
+            else
+            {
+                Debug.LogError("Can't set team color according to state if entity is not attached.");
+            }
+        }
+
+        public void SetKartTeamColor(Team team)
+        {
+            if (_teamsSettings != null)
+            {
+                var newColor = _teamsSettings.GetSettings(team).KartColor;
+                var renderer = _kartSetter.CurrentKart.GetComponent<KartSkinSettings>().TargetRenderer;
+                renderer.material.SetColor("_BaseColor", newColor);
+            }
+            else
+            {
+                Debug.LogError("TeamSettings was null. Couldn't set color.");
+            }
         }
 
         public void SetKartColor(string hex)
