@@ -8,8 +8,12 @@ namespace SW.Customization
     [DisallowMultipleComponent]
     public class CharacterSetter : GlobalEventListener
     {
+        [Header("Entity")]
+        [SerializeField] private BoltEntity _entity;
+
         [Header("Events")]
         public UnityEvent OnCharacterSwitched;
+        public IntEvent OnCharacterIndexUpdated;
 
         [Header("Settings")]
         [SerializeField] private PlayerSettings _playerSettings;
@@ -29,18 +33,38 @@ namespace SW.Customization
         private void Awake()
         {
             _characters = new GameObject[3] { _character0, _character1, _character2 };
+            for (int i = 0; i < _characters.Length; i++)
+            {
+                if (_characters[i] == CurrentCharacter)
+                {
+                    _currentIndex = i;
+                }
+            }
         }
 
         private void Start()
         {
-            SetCharacterWithLocalSettings();
+            if (_entity && _entity.IsOwner)
+            {
+                SetCharacterWithLocalSettings();
+            }
         }
 
         // BOLT
 
         public override void OnEvent(PlayerReady evnt)
         {
-            if (!evnt.Entity.IsOwner && evnt.Entity == GetComponentInParent<BoltEntity>())
+            if (!evnt.Entity.IsOwner && evnt.Entity == _entity)
+            {
+                SetCharacter(evnt.CharacterIndex);
+            }
+        }
+
+        public override void OnEvent(PlayerInfoEvent evnt)
+        {
+            if (evnt.TargetPlayerID == SWMatchmaking.GetMyBoltId() && // This event is for me
+                evnt.KartEntity == _entity && // This is the targetted kart
+                !evnt.KartEntity.IsOwner) // I don't own this kart
             {
                 SetCharacter(evnt.CharacterIndex);
             }
@@ -59,7 +83,6 @@ namespace SW.Customization
                     CurrentCharacterAnimator = CurrentCharacter.GetComponent<Animator>();
 
                     _currentIndex = i;
-                    _playerSettings.CharacterIndex = i;
 
                     if (OnCharacterSwitched != null)
                     {
@@ -86,6 +109,26 @@ namespace SW.Customization
         public void SetCharacterWithLocalSettings()
         {
             SetCharacter(_playerSettings.CharacterIndex);
+        }
+
+        public void SetCharacterIndexSettings(int index)
+        {
+            _playerSettings.CharacterIndex = index;
+
+            if (OnCharacterIndexUpdated != null)
+            {
+                OnCharacterIndexUpdated.Invoke(index);
+            }
+        }
+
+        public void SetNextCharacterIndex()
+        {
+            SetCharacterIndexSettings((_playerSettings.CharacterIndex + 1) % _characters.Length);
+        }
+
+        public void SetPreviousCharacterIndex()
+        {
+            SetCharacterIndexSettings((_playerSettings.CharacterIndex - 1 + _characters.Length) % _characters.Length);
         }
     }
 }

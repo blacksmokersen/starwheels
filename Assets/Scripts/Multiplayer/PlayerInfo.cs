@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 using Bolt;
+using Multiplayer;
 
 namespace Multiplayer
 {
     public class PlayerInfo : GlobalEventListener
     {
+        [Header("Settings")]
+        [SerializeField] private PlayerSettings _playerSettings;
+
         public static PlayerInfo Me;
 
         private string _nickName;
@@ -56,6 +60,8 @@ namespace Multiplayer
                     playerInfoEvent.Nickname = Nickname;
                     playerInfoEvent.Team = (int)Team;
                     playerInfoEvent.PlayerID = OwnerID;
+                    playerInfoEvent.KartIndex = _playerSettings.KartIndex;
+                    playerInfoEvent.CharacterIndex = _playerSettings.CharacterIndex;
                     playerInfoEvent.KartEntity = _kartEntity;
                     playerInfoEvent.Send();
                 }
