@@ -8,8 +8,12 @@ namespace SW.Customization
     [DisallowMultipleComponent]
     public class KartMeshSetter : GlobalEventListener
     {
+        [Header("Entity")]
+        [SerializeField] private BoltEntity _entity;
+
         [Header("Events")]
         public UnityEvent OnKartSwitched;
+        public IntEvent OnKartIndexUpdated;
 
         [Header("Settings")]
         [SerializeField] private PlayerSettings _playerSettings;
@@ -28,18 +32,38 @@ namespace SW.Customization
         private void Awake()
         {
             _karts = new GameObject[3] { _kartMesh0, _kartMesh1, _kartMesh2 };
+            for (int i = 0; i < _karts.Length; i++)
+            {
+                if (_karts[i] == CurrentKart)
+                {
+                    _currentIndex = i;
+                }
+            }
         }
 
         private void Start()
         {
-            SetKartWithLocalSettings();
+            if (_entity && _entity.IsOwner)
+            {
+                SetKartWithLocalSettings();
+            }
         }
 
         // BOLT
 
         public override void OnEvent(PlayerReady evnt)
         {
-            if (!evnt.Entity.IsOwner && evnt.Entity == GetComponentInParent<BoltEntity>())
+            if (!evnt.Entity.IsOwner && evnt.Entity == _entity)
+            {
+                SetKart(evnt.KartIndex);
+            }
+        }
+
+        public override void OnEvent(PlayerInfoEvent evnt)
+        {
+            if (evnt.TargetPlayerID == SWMatchmaking.GetMyBoltId() && // This event is for me
+                evnt.KartEntity == _entity && // This is the targetted kart
+                !evnt.KartEntity.IsOwner) // I don't own this kart
             {
                 SetKart(evnt.KartIndex);
             }
@@ -57,7 +81,6 @@ namespace SW.Customization
                     CurrentKart.SetActive(true);
 
                     _currentIndex = i;
-                    _playerSettings.KartIndex = i;
 
                     if (OnKartSwitched != null)
                     {
@@ -81,10 +104,29 @@ namespace SW.Customization
             SetKart((_currentIndex - 1 +_karts.Length ) % _karts.Length);
         }
 
-        [ContextMenu("Switch Kart")]
         public void SetKartWithLocalSettings()
         {
             SetKart(_playerSettings.KartIndex);
+        }
+
+        public void SetKartIndexSettings(int index)
+        {
+            _playerSettings.KartIndex = index;
+
+            if (OnKartIndexUpdated != null)
+            {
+                OnKartIndexUpdated.Invoke(index);
+            }
+        }
+
+        public void SetNextKartIndex()
+        {
+            SetKartIndexSettings((_playerSettings.KartIndex + 1) % _karts.Length);
+        }
+
+        public void SetPreviousKartIndex()
+        {
+            SetKartIndexSettings((_playerSettings.KartIndex - 1 + _karts.Length) % _karts.Length);
         }
     }
 }
