@@ -42,7 +42,7 @@ namespace Multiplayer.Teams
 
         public void SetKartTeamColor(Team team)
         {
-            if (_teamsSettings != null)
+            if (_teamsSettings != null && team != Team.None)
             {
                 var newColor = _teamsSettings.GetSettings(team).KartColor;
                 var renderer = _kartSetter.CurrentKart.GetComponent<KartSkinSettings>().TargetRenderer;
