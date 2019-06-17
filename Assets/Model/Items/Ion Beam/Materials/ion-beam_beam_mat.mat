@@ -8,17 +8,23 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ion-beam_beam_mat
-  m_Shader: {fileID: 4800000, guid: 2e4939e493bb44b4fad7ae1a06986f0e, type: 3}
+  m_Shader: {fileID: 4800000, guid: e2ebc5ca5da9e094884c12714ccfc009, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
+  stringTagMap:
+    MotionVector: User
+  disabledShaderPasses:
+  - MOTIONVECTORS
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_E7EDD76B:
+        m_Texture: {fileID: 2800000, guid: 494fc169631961b4785aade7284e05ed, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Base:
         m_Texture: {fileID: 2800000, guid: 494fc169631961b4785aade7284e05ed, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -44,6 +50,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_2E37A661: 0.1
+    - Vector1_7E65C095: 0.25
+    - Vector1_C0E7517C: 1.75
     - _Center: 0
     - _FadeCenter: 0
     - _Fresnel: 1.76
@@ -57,5 +66,6 @@ Material:
     - _node_9287: 0
     - _speed: 0.17
     m_Colors:
+    - Color_DDD0FD08: {r: 5.5094337, g: 2.8171315, b: 0.12993945, a: 1}
     - _Color: {r: 5.5094337, g: 2.8171315, b: 0.12993945, a: 1}
     - _node_3040: {r: 0.5, g: 0.5, b: 0.5, a: 1}
