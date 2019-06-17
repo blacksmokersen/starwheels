@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharacterMeshLabel: 1
+  CharacterName: <b>Leonie</b>
 --- !u!1 &324195814693838372
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,11 +804,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab6f77d3df2e28d4daad68ac0b5a5623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _kartMeshes:
-  - {fileID: 2575527753969952984}
-  - {fileID: 2575088853567992300}
-  - {fileID: 363922856104603507}
-  - {fileID: 24075148712649369}
   _kartNamePlate:
   - {fileID: 0}
   - {fileID: 0}
@@ -823,6 +819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af859b835fcb68c4ab6ca40269d0873f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _entity: {fileID: 0}
   OnKartSwitched:
     m_PersistentCalls:
       m_Calls:
@@ -839,6 +836,10 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  OnKartIndexUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: IntEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   _playerSettings: {fileID: 11400000, guid: d3786b31f0466fb4a97bd3941281e55a, type: 2}
   CurrentKart: {fileID: 2575527753969952984}
   _kartMesh0: {fileID: 6829610653545247240}
@@ -856,13 +857,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d99c37d2c611b6b4faa6bb6230841c02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _entity: {fileID: 0}
   OnCharacterSwitched:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  OnCharacterIndexUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: IntEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   _playerSettings: {fileID: 11400000, guid: d3786b31f0466fb4a97bd3941281e55a, type: 2}
   CurrentCharacter: {fileID: 24075148712649369}
+  CurrentCharacterAnimator: {fileID: 0}
   _character0: {fileID: 24075148712649369}
   _character1: {fileID: 6230830946761289411}
   _character2: {fileID: 8768447988284698648}
@@ -879,6 +886,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Index: 2
+  KartName: <b>Extinction</b>
+  PassiveDescription: '[Translocator]  Reduced cooldown by 1s.'
   TargetRenderer: {fileID: 2587995579238026442}
 --- !u!114 &1753180001807905593
 MonoBehaviour:
@@ -893,6 +902,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Index: 1
+  KartName: <b>Toyoshi</b>
+  PassiveDescription: '[Jump] Reduced cooldown by 1s.'
   TargetRenderer: {fileID: 4163631546383257995}
 --- !u!1 &3160828696173421420
 GameObject:
@@ -1680,6 +1691,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharacterMeshLabel: 2
+  CharacterName: <b>Aconit</b>
 --- !u!1 &6504471695174891338
 GameObject:
   m_ObjectHideFlags: 0
@@ -1802,6 +1814,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Index: 0
+  KartName: <b>Storm</b>
+  PassiveDescription: '[Wall] Reduced cooldown by 1s.'
   TargetRenderer: {fileID: 3940606900545685413}
 --- !u!1 &7398887521343223047
 GameObject:
@@ -2117,6 +2131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharacterMeshLabel: 3
+  CharacterName: <b>Will</b>
 --- !u!1 &8938258531719187441
 GameObject:
   m_ObjectHideFlags: 0
@@ -2340,15 +2355,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39b8918b5ab5dbd4a8f2f6c5200b024e, type: 3}
---- !u!1 &24075148712649369 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1013961600386853355, guid: 39b8918b5ab5dbd4a8f2f6c5200b024e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1029029137028696946}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9090471235126916223 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8097489587355139853, guid: 39b8918b5ab5dbd4a8f2f6c5200b024e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1029029137028696946}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &24075148712649369 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1013961600386853355, guid: 39b8918b5ab5dbd4a8f2f6c5200b024e,
     type: 3}
   m_PrefabInstance: {fileID: 1029029137028696946}
   m_PrefabAsset: {fileID: 0}
@@ -2436,15 +2451,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52d3c41a9c885e848bf89c087c177e0d, type: 3}
---- !u!1 &6230830946761289411 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6379121338061927681, guid: 52d3c41a9c885e848bf89c087c177e0d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1080699760198556610}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6230830946760798947 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6379121338061957409, guid: 52d3c41a9c885e848bf89c087c177e0d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1080699760198556610}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6230830946761289411 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6379121338061927681, guid: 52d3c41a9c885e848bf89c087c177e0d,
     type: 3}
   m_PrefabInstance: {fileID: 1080699760198556610}
   m_PrefabAsset: {fileID: 0}
@@ -2522,6 +2537,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81c0726451a24ff439cfc2c49852f834, type: 3}
+--- !u!1 &2940194854899289171 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3948423045175209277, guid: 81c0726451a24ff439cfc2c49852f834,
+    type: 3}
+  m_PrefabInstance: {fileID: 2163476540931072366}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7702392979627322120 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8422386511469628006, guid: 81c0726451a24ff439cfc2c49852f834,
@@ -2534,12 +2555,6 @@ MeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 2163476540931072366}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2940194854899289171 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3948423045175209277, guid: 81c0726451a24ff439cfc2c49852f834,
-    type: 3}
-  m_PrefabInstance: {fileID: 2163476540931072366}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3854885075676492254
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2547,6 +2562,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2570249847100649268}
     m_Modifications:
+    - target: {fileID: 1639576001188359636, guid: 592e649f3c83bee4388d401e7c79e648,
+        type: 3}
+      propertyPath: m_Name
+      value: Effects
+      objectReference: {fileID: 0}
     - target: {fileID: 1645326353430571224, guid: 592e649f3c83bee4388d401e7c79e648,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2602,11 +2622,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1639576001188359636, guid: 592e649f3c83bee4388d401e7c79e648,
-        type: 3}
-      propertyPath: m_Name
-      value: Effects
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 592e649f3c83bee4388d401e7c79e648, type: 3}
 --- !u!4 &2569886416665811206 stripped
@@ -2622,6 +2637,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2570249847100649268}
     m_Modifications:
+    - target: {fileID: 5485306887111917156, guid: 9ac17e1b16575bf4687a7cc1f4143f09,
+        type: 3}
+      propertyPath: m_Name
+      value: char-Will
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485306887111917156, guid: 9ac17e1b16575bf4687a7cc1f4143f09,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3947923967564217337, guid: 9ac17e1b16575bf4687a7cc1f4143f09,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2677,16 +2702,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5485306887111917156, guid: 9ac17e1b16575bf4687a7cc1f4143f09,
-        type: 3}
-      propertyPath: m_Name
-      value: char-Will
-      objectReference: {fileID: 0}
-    - target: {fileID: 5485306887111917156, guid: 9ac17e1b16575bf4687a7cc1f4143f09,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8247222292614734551, guid: 9ac17e1b16575bf4687a7cc1f4143f09,
         type: 3}
       propertyPath: m_Controller
@@ -2699,15 +2714,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ac17e1b16575bf4687a7cc1f4143f09, type: 3}
---- !u!4 &250414458971092357 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3947923967564217337, guid: 9ac17e1b16575bf4687a7cc1f4143f09,
-    type: 3}
-  m_PrefabInstance: {fileID: 3868716813806046844}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8768447988284698648 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5485306887111917156, guid: 9ac17e1b16575bf4687a7cc1f4143f09,
+    type: 3}
+  m_PrefabInstance: {fileID: 3868716813806046844}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &250414458971092357 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3947923967564217337, guid: 9ac17e1b16575bf4687a7cc1f4143f09,
     type: 3}
   m_PrefabInstance: {fileID: 3868716813806046844}
   m_PrefabAsset: {fileID: 0}
@@ -2718,6 +2733,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2570249847100649268}
     m_Modifications:
+    - target: {fileID: 4273089814318322691, guid: 0adee155d75830648b3fbc6d25f9978c,
+        type: 3}
+      propertyPath: m_Name
+      value: kart-storm
+      objectReference: {fileID: 0}
+    - target: {fileID: 4273089814318322691, guid: 0adee155d75830648b3fbc6d25f9978c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8823789486093251070, guid: 0adee155d75830648b3fbc6d25f9978c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2771,16 +2796,6 @@ PrefabInstance:
     - target: {fileID: 8823789486093251070, guid: 0adee155d75830648b3fbc6d25f9978c,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4273089814318322691, guid: 0adee155d75830648b3fbc6d25f9978c,
-        type: 3}
-      propertyPath: m_Name
-      value: kart-storm
-      objectReference: {fileID: 0}
-    - target: {fileID: 4273089814318322691, guid: 0adee155d75830648b3fbc6d25f9978c,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1586429002513581626, guid: 0adee155d75830648b3fbc6d25f9978c,
@@ -2865,6 +2880,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2570249847100649268}
     m_Modifications:
+    - target: {fileID: 5256750170891107721, guid: e11f3e8427e39c04696dd3d08a9b47f1,
+        type: 3}
+      propertyPath: m_Name
+      value: DriftTrails
+      objectReference: {fileID: 0}
     - target: {fileID: 5258901623832565389, guid: e11f3e8427e39c04696dd3d08a9b47f1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2920,11 +2940,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5256750170891107721, guid: e11f3e8427e39c04696dd3d08a9b47f1,
-        type: 3}
-      propertyPath: m_Name
-      value: DriftTrails
-      objectReference: {fileID: 0}
     - target: {fileID: 5255988627489180107, guid: e11f3e8427e39c04696dd3d08a9b47f1,
         type: 3}
       propertyPath: m_IsActive
@@ -2932,12 +2947,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e11f3e8427e39c04696dd3d08a9b47f1, type: 3}
---- !u!1 &2575088853567992300 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5256750170891107721, guid: e11f3e8427e39c04696dd3d08a9b47f1,
-    type: 3}
-  m_PrefabInstance: {fileID: 7732460412738522213}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2572796663115487976 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5258901623832565389, guid: e11f3e8427e39c04696dd3d08a9b47f1,
@@ -2951,6 +2960,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2570249847100649268}
     m_Modifications:
+    - target: {fileID: 6592993616886022621, guid: cc752197f6c2550488a167061e4001ee,
+        type: 3}
+      propertyPath: m_Name
+      value: kart-extinction
+      objectReference: {fileID: 0}
+    - target: {fileID: 6592993616886022621, guid: cc752197f6c2550488a167061e4001ee,
+        type: 3}
+      propertyPath: m_Name
+      value: kart-extinction
+      objectReference: {fileID: 0}
     - target: {fileID: 6587233343144010183, guid: cc752197f6c2550488a167061e4001ee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3005,16 +3024,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6592993616886022621, guid: cc752197f6c2550488a167061e4001ee,
-        type: 3}
-      propertyPath: m_Name
-      value: kart-extinction
-      objectReference: {fileID: 0}
-    - target: {fileID: 6592993616886022621, guid: cc752197f6c2550488a167061e4001ee,
-        type: 3}
-      propertyPath: m_Name
-      value: kart-extinction
       objectReference: {fileID: 0}
     - target: {fileID: 6569468037536327119, guid: cc752197f6c2550488a167061e4001ee,
         type: 3}
@@ -3148,6 +3157,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: bb51fbb070182bb4591f5a00ded05be3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc752197f6c2550488a167061e4001ee, type: 3}
+--- !u!1 &2575527753969952984 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6592993616886022621, guid: cc752197f6c2550488a167061e4001ee,
+    type: 3}
+  m_PrefabInstance: {fileID: 8701262462929938693}
+  m_PrefabAsset: {fileID: 0}
 --- !u!23 &2587995579238026442 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 6569468037536327119, guid: cc752197f6c2550488a167061e4001ee,
@@ -3157,12 +3172,6 @@ MeshRenderer:
 --- !u!4 &2570312702712088770 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6587233343144010183, guid: cc752197f6c2550488a167061e4001ee,
-    type: 3}
-  m_PrefabInstance: {fileID: 8701262462929938693}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2575527753969952984 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6592993616886022621, guid: cc752197f6c2550488a167061e4001ee,
     type: 3}
   m_PrefabInstance: {fileID: 8701262462929938693}
   m_PrefabAsset: {fileID: 0}

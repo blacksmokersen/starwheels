@@ -7,6 +7,8 @@ namespace SW.Customization
     {
         [Header("Settings")]
         public int Index;
+        public string KartName;
+        public string PassiveDescription;
         public Renderer TargetRenderer;
     }
 }

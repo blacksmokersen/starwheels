@@ -11,20 +11,31 @@ namespace SW.Abilities
 
         [Header("Previews")]
         [SerializeField] private GameObject _wallAbilityPreview;
+        [SerializeField] private string _wallAbilityDescription;
         [SerializeField] private GameObject _jumpingAbilityPreview;
+        [SerializeField] private string _jumpAbilityDescription;
         [SerializeField] private GameObject _tpBackAbilityPreview;
+        [SerializeField] private string _tpBackAbilityDescription;
 
         private GameObject[] _abilityPreviews;
+        private string[] _abilityDescriptions;
 
         // CORE
 
         private void Awake()
         {
-            _abilityPreviews = new GameObject[3] { _wallAbilityPreview, _jumpingAbilityPreview, _tpBackAbilityPreview, };
+            _abilityPreviews = new GameObject[3] { _wallAbilityPreview, _jumpingAbilityPreview, _tpBackAbilityPreview };
+            _abilityDescriptions = new string[3] { _wallAbilityDescription, _jumpAbilityDescription, _tpBackAbilityDescription };
+
             SetAbilityIndexAndPreview(_playerSettings.AbilityIndex);
         }
 
         // PUBLIC
+
+        public string GetCurrentAbilityDescription()
+        {
+            return _abilityDescriptions[_playerSettings.AbilityIndex];
+        }
 
         public void SetAbilityIndexAndPreview(int index)
         {
