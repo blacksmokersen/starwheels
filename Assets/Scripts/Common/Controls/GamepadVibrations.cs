@@ -4,8 +4,31 @@ using XInputDotNetPure;
 
 namespace Common.Controls
 {
+    [DisallowMultipleComponent]
     public class GamepadVibrations : MonoBehaviour
     {
+        // MONO
+
+        private void OnEnable()
+        {
+            ResetVibration();
+        }
+
+        private void OnDisable()
+        {
+            ResetVibration();
+        }
+
+        private void OnApplicationQuit()
+        {
+            ResetVibration();
+        }
+
+        private void OnDestroy()
+        {
+            ResetVibration();
+        }
+
         // PUBLIC
 
         public void ResetVibration()
@@ -34,11 +57,6 @@ namespace Common.Controls
         {
             GamePad.SetVibration(0, vibrationPower, vibrationPower);
             yield return new WaitForSeconds(duration);
-            ResetVibration();
-        }
-
-        private void OnApplicationQuit()
-        {
             ResetVibration();
         }
     }

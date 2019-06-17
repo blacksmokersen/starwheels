@@ -9,6 +9,7 @@ namespace Health
     {
         [Header("Events")]
         public UnityEvent OnPlayerHit;
+        public UnityEvent IWasHit;
 
         // BOLT
 
@@ -17,14 +18,22 @@ namespace Health
             var kartEntity = GetComponentInParent<BoltEntity>();
             if (kartEntity == evnt.VictimEntity)
             {
-                if(OnPlayerHit != null) OnPlayerHit.Invoke();
+                if (OnPlayerHit != null)
+                {
+                    OnPlayerHit.Invoke();
+                }
+
+                if (kartEntity.IsOwner && IWasHit != null)
+                {
+                    IWasHit.Invoke();
+                }
             }
         }
 
         public override void OnEvent(DestroyEntity evnt)
         {
             if (evnt.Entity != null
-                && evnt.Entity.isOwner)
+                && evnt.Entity.IsOwner)
             {
                 BoltNetwork.Destroy(evnt.Entity);
             }

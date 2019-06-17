@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace KartPhysics
 {
@@ -10,6 +11,9 @@ namespace KartPhysics
         [SerializeField] private bool _smoothCollisionWithGround = false;
         [Tooltip("Value of 1f is really boucy, 0f means no smoothing.")]
         [SerializeField] private float _smoothFactor = 1f;
+
+        [Header("Events")]
+        public UnityEvent OnCollision;
 
         private Coroutine _stuckCoroutine;
         private bool _isStuck = false;
@@ -29,6 +33,11 @@ namespace KartPhysics
                 _stuckCoroutine = StartCoroutine(StuckPrevention());
                 _rb.constraints = RigidbodyConstraints.FreezeRotationY;
                 BounceOut(collision);
+
+                if (OnCollision != null)
+                {
+                    OnCollision.Invoke();
+                }
             }
         }
 
