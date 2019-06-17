@@ -34,6 +34,7 @@ namespace SW.Matchmaking
 
         private bool _timerStarted = false;
         private float _timer = 0.0f;
+        private bool _createGamePanelOpen = false;
 
         // MONO
 
@@ -51,6 +52,7 @@ namespace SW.Matchmaking
         {
             base.OnEnable();
             ResetTimer();
+            _createGamePanelOpen = false;
 
             if (BoltNetwork.IsServer)
             {
@@ -168,9 +170,10 @@ namespace SW.Matchmaking
                     OnAutomaticLaunch.Invoke();
                 }
             }
-            else if (BoltNetwork.IsClient && _timer > _secondsBeforeCreatingGame)
+            else if (BoltNetwork.IsClient && _timer > _secondsBeforeCreatingGame && !_createGamePanelOpen)
             {
-                ResetTimer();
+                _createGamePanelOpen = true;
+
                 if (OnNoLobbyFound != null)
                 {
                     OnNoLobbyFound.Invoke();
