@@ -192,6 +192,11 @@ public class SteamManager : MonoBehaviour
 		// Run Steam client callbacks
 		SteamAPI.RunCallbacks();
 	}
+
+    public void Shutdown()
+    {
+        SteamAPI.Shutdown();
+    }
 }
 
 #endif // !DISABLESTEAMWORKS
