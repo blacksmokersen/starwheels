@@ -82,7 +82,7 @@ namespace Items
             else
             {
                 _itemTexture.sprite = item.InventoryTexture;
-                _itemName.text = item.name;
+                _itemName.text = item.Name;
                 _itemTexture.enabled = true;
                 if (_currentItem == null)
                 {

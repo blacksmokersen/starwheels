@@ -9,6 +9,7 @@ namespace Multiplayer
      * Finds the SpawnCaller on the map (which is not on the kart) and calls for respawn
      *
      */
+     [DisallowMultipleComponent]
     public class SpawnAsker : EntityBehaviour
     {
         [Header("Is Active (Debug)")]
@@ -30,7 +31,7 @@ namespace Multiplayer
 
         public void AskForSpawn()
         {
-            if (entity.isOwner && Enabled) // Only owner should be able to call for his spawn
+            if (entity.IsOwner && Enabled) // Only owner should be able to call for his spawn
             {
                 var spawnCaller = FindObjectOfType<SpawnCaller>();
                 if (spawnCaller != null)
