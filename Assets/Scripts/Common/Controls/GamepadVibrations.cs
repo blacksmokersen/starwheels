@@ -31,21 +31,25 @@ namespace Common.Controls
 
         // PUBLIC
 
+        [ContextMenu("Reset Vibration")]
         public void ResetVibration()
         {
             GamePad.SetVibration(0, 0, 0);
         }
 
+        [ContextMenu("Small Vibration")]
         public void SmallVibration()
         {
             StartCoroutine(Vibrate(0.1f, 0.5f));
         }
 
+        [ContextMenu("Medium Vibration")]
         public void MediumVibration()
         {
             StartCoroutine(Vibrate(0.3f, 0.6f));
         }
 
+        [ContextMenu("Strong Vibration")]
         public void StrongVibration()
         {
             StartCoroutine(Vibrate(0.5f, 1f));

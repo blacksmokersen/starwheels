@@ -27,7 +27,7 @@ namespace SW.Abilities
             _abilityPreviews = new GameObject[3] { _wallAbilityPreview, _jumpingAbilityPreview, _tpBackAbilityPreview };
             _abilityDescriptions = new string[3] { _wallAbilityDescription, _jumpAbilityDescription, _tpBackAbilityDescription };
 
-            SetAbilityIndexAndPreview(_playerSettings.AbilityIndex);
+            InitializeIndex();
         }
 
         // PUBLIC
@@ -62,6 +62,19 @@ namespace SW.Abilities
         public void SetPreviousAbility()
         {
             SetAbilityIndexAndPreview((_playerSettings.AbilityIndex + 2) % 3);
+        }
+
+        // PRIVATE
+
+        private void InitializeIndex()
+        {
+            for (int i = 0; i < _abilityPreviews.Length; i++)
+            {
+                if (_abilityPreviews[i].activeInHierarchy)
+                {
+                    _playerSettings.AbilityIndex = i;
+                }
+            }
         }
     }
 }
