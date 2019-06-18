@@ -107,7 +107,7 @@ namespace SW.Matchmaking
                 var lobbyMatchesMatchmakingSettings = lobbyToken.GameStarted == _matchmakingSettings.LookForStartedGames;
 
                 if ((lobbyMatchesSelectedServerName || lobbyMatchesSelectedGamemodes)
-                    && lobbyMatchesMatchmakingSettings
+                    //&& lobbyMatchesMatchmakingSettings
                     && lobbyToken.Public
                     && lobbyToken.CanBeJoined
                     && lobbyToken.Version.Equals(_lobbyData.Version))
