@@ -20,7 +20,6 @@ public class LayeredAudioPlayer : GlobalEventListener
     {
         _layersToStart = new List<AudioSource>();
         _layersToStop = new List<AudioSource>();
-        _baseLayerAudioSource.Play();
     }
 
     private void Update()
@@ -47,8 +46,6 @@ public class LayeredAudioPlayer : GlobalEventListener
                 _searchingforBaseLayerToEnd = false;
             }
         }
-        if (!_baseLayerAudioSource.isPlaying)
-            _baseLayerAudioSource.Play();
     }
 
     //BOLT

@@ -67,6 +67,7 @@ namespace Items
             if (kartShield)
             {
                 kartShield.OnCooldownUpdated.AddListener(UpdateShieldMask);
+                UpdateShieldMask(1f);
             }
         }
 

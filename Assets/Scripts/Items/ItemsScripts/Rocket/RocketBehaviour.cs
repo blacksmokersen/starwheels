@@ -54,6 +54,13 @@ namespace Items
             }
         }
 
+        // BOLT
+
+        public override void Attached()
+        {
+            DestroyObject(6f);
+        }
+
         // PUBLIC
 
         public void FindTarget()
