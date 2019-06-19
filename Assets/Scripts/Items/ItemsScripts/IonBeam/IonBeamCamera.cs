@@ -116,7 +116,10 @@ namespace CameraUtils
 
             foreach (GameObject GoToIgnore in TaggedGameobjectsToIgnore)
             {
-                GoToIgnore.GetComponent<Renderer>().enabled = state;
+                foreach (var renderer in GoToIgnore.GetComponentsInChildren<Renderer>())
+                {
+                    renderer.enabled = state;
+                }
             }
         }
     }
