@@ -12,7 +12,8 @@ namespace Items
         GoldDisk,
         Laser,
         Kart,
-        ItemDestroyer
+        ItemDestroyer,
+        Overcharge
     }
 
     [CreateAssetMenu(menuName ="Item/ItemCollision")]
@@ -33,6 +34,7 @@ namespace Items
         public bool Laser;
         public bool Kart;
         public bool ItemDestroyer;
+        public bool Overcharge;
 
         public bool ShouldBeDestroyed(ItemCollision itemCollision)
         {
@@ -69,6 +71,10 @@ namespace Items
                 return true;
             }
             else if (itemCollision.ItemName == ItemCollisionName.ItemDestroyer && ItemDestroyer)
+            {
+                return true;
+            }
+            else if (itemCollision.ItemName == ItemCollisionName.Overcharge && Overcharge)
             {
                 return true;
             }
