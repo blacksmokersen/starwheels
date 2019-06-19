@@ -24,8 +24,8 @@ namespace Engine
         public void UpdateSpeedmeter(float speed)
         {
             speed = Mathf.Abs(speed);
-            _speedBar.fillAmount = speed / 50;
-            _speedText.text = "" + (int) speed * 2;
+            _speedBar.fillAmount = speed / 35;
+            _speedText.text = "" + (int) speed * 4;
         }
 
         // PRIVATE
