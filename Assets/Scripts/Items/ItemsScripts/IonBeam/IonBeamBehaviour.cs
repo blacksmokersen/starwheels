@@ -50,7 +50,10 @@ namespace Items
                         EnableIonInputs();
                         break;
                     case 2:
-                        LaunchImmediateIonBeamBackwards(_ionBeamOwnership.transform.position);
+                        _ionBeamCam.GetIonBeamBehaviour(this);
+                        _ionBeamCam.IonBeamCameraBehaviour(true);
+                        EnableIonInputs();
+                       // LaunchImmediateIonBeamBackwards(_ionBeamOwnership.transform.position);
                         break;
                 }
             }
