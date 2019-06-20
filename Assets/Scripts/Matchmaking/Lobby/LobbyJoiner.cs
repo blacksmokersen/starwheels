@@ -50,9 +50,9 @@ namespace SW.Matchmaking
             SWMatchmaking.SetRegion(regionID);
         }
 
-        public void StartLookingForLobby()
+        public void StartLookingForGame()
         {
-            StartCoroutine(LookForLobby());
+            StartCoroutine(LookForGame());
         }
 
         public void StopLookingForLobby()
@@ -60,7 +60,7 @@ namespace SW.Matchmaking
             StopAllCoroutines();
         }
 
-        public void TryJoiningLobby()
+        public void TryJoiningGame()
         {
             bool canJoinLobby = false;
             foreach (var toggle in _lobbyPanel.GetComponentsInChildren<Toggle>())
@@ -95,7 +95,7 @@ namespace SW.Matchmaking
             }
         }
 
-        public void FindPublicLobby()
+        public void FindGame()
         {
             var lobbyList = BoltNetwork.SessionList;
 
@@ -104,10 +104,10 @@ namespace SW.Matchmaking
                 var lobbyToken = SWMatchmaking.GetLobbyToken(lobby.Key);
                 var lobbyMatchesSelectedServerName = DebugModEnabled && lobbyToken.ServerName == _serverDebugMode.GetClientServerName();
                 var lobbyMatchesSelectedGamemodes = _lobbyData.GamemodePool.Contains(lobbyToken.GameMode);
-                var lobbyMatchesMatchmakingSettings = lobbyToken.GameStarted == _matchmakingSettings.LookForStartedGames;
+                var lobbyMatchesMatchmakingSettings = (!lobbyToken.GameStarted || lobbyToken.GameStarted == _matchmakingSettings.LookForStartedGames);
 
                 if ((lobbyMatchesSelectedServerName || lobbyMatchesSelectedGamemodes)
-                    //&& lobbyMatchesMatchmakingSettings
+                    && lobbyMatchesMatchmakingSettings
                     && lobbyToken.Public
                     && lobbyToken.CanBeJoined
                     && lobbyToken.Version.Equals(_lobbyData.Version))
@@ -128,12 +128,23 @@ namespace SW.Matchmaking
 
         // PRIVATE
 
-        private IEnumerator LookForLobby()
+        private IEnumerator LookForGame()
         {
+            _matchmakingSettings.LookForStartedGames = false;
+            float step = 0.5f;
+            var timer = 0f;
+
             while (Application.isPlaying)
             {
-                yield return new WaitForSeconds(0.5f);
-                FindPublicLobby();
+                FindGame();
+
+                yield return new WaitForSeconds(step);
+                timer += step;
+
+                if (timer > 10f)
+                {
+                    _matchmakingSettings.LookForStartedGames = true;
+                }
             }
         }
 
@@ -160,7 +171,7 @@ namespace SW.Matchmaking
                     OnLookingForLobby.Invoke();
                     Debug.Log("[BOLT] Bolt now running as client.");
                 }
-                StartLookingForLobby();
+                StartLookingForGame();
             }
             else if (timerExceedeed)
             {
