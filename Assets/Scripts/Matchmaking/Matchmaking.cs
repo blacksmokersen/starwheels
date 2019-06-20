@@ -23,6 +23,18 @@ public static class SWMatchmaking
         }
     }
 
+    public static bool ConnectedToHost()
+    {
+        if (BoltNetwork.IsClient)
+        {
+            return BoltNetwork.IsConnected;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
     public static Guid GetBoltSessionID(Guid udpSessionGuid)
     {
         foreach (var session in BoltNetwork.SessionList)

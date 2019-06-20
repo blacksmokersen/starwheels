@@ -103,7 +103,6 @@ namespace SW.Matchmaking
             gameObject.SetActive(true);
             _lookingForGameText.gameObject.SetActive(true);
             _lookingForGameText.text = "Looking for a game";
-            //_currentPlayerCountText.gameObject.SetActive(false);
             _startGameButton.SetActive(false);
             _inviteFriendsButton.gameObject.SetActive(false);
 
@@ -116,13 +115,11 @@ namespace SW.Matchmaking
             _lookingForGameText.gameObject.SetActive(true);
             _lookingForGameText.text = "Looking for players";
             _currentGamemodeLobbiesText.gameObject.SetActive(false);
-            //_currentPlayerCountText.gameObject.SetActive(true);
             _timerText.gameObject.SetActive(BoltNetwork.IsServer);
-            //UpdateCurrentPlayerCount(1);
             _startGameButton.SetActive(BoltNetwork.IsServer);
             _inviteFriendsButton.gameObject.SetActive(BoltNetwork.IsServer);
 
-            _timerStarted = true;
+            ResetTimer();
         }
 
         public void LaunchGame()

@@ -8,6 +8,13 @@ namespace Menu
     [DisallowMultipleComponent]
     public class GameQuitter : GlobalEventListener
     {
+        // CORE
+
+        private void Awake()
+        {
+            StartCoroutine(ServerConnectionCheckRoutine());
+        }
+
         // BOLT
 
         public override void BoltShutdownBegin(AddCallback registerDoneCallback)
@@ -48,6 +55,17 @@ namespace Menu
         private void SendAllToMenuEvent()
         {
             AllPlayersToMenu.Create().Send();
+        }
+
+        private IEnumerator ServerConnectionCheckRoutine()
+        {
+            var connectedToHost = true;
+            while (connectedToHost)
+            {
+                connectedToHost = SWMatchmaking.ConnectedToHost();
+                yield return new WaitForSeconds(1f);
+            }
+            SceneManager.LoadScene("Menu");
         }
 
         private IEnumerator HostDisconectLastSecurity()
