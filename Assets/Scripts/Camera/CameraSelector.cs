@@ -11,11 +11,14 @@ namespace CameraUtils
         [SerializeField] private Camera _mapCamera;
         [SerializeField] private Camera _freeCamera;
         [SerializeField] private CountdownSettings _countdownSettings;
+        [SerializeField] private float _timeBeforeForcingPlayerCam;
 
         //CORE
 
         private void Start()
         {
+            StartCoroutine(ForcePlayerCamera());
+
             if (BoltNetwork.IsConnected)
             {
                 if (!_countdownSettings.Countdown)
@@ -102,7 +105,6 @@ namespace CameraUtils
             {
                 ShowPlayerCamera();
             }
-
             if (Input.GetKeyDown(KeyCode.Keypad8))
             {
                 ShowMapCamera();
@@ -111,6 +113,12 @@ namespace CameraUtils
             {
                 ShowFreeCamera();
             }
+        }
+
+        private IEnumerator ForcePlayerCamera()
+        {
+            yield return new WaitForSeconds(_timeBeforeForcingPlayerCam);
+            ShowPlayerCamera();
         }
     }
 }
