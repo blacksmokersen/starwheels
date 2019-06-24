@@ -45,7 +45,8 @@ namespace Multiplayer
 
         public override void OnEvent(PlayerSpawn evnt)
         {
-            if(evnt.ConnectionID == SWMatchmaking.GetMyBoltId())
+            Debug.LogError("[RESPAWN] Received spawn event");
+            if (evnt.ConnectionID == SWMatchmaking.GetMyBoltId())
             {
                 if (_gameStarted.Value == false && evnt.GameStarted == true)
                 {

@@ -87,6 +87,7 @@ namespace Health
 
         private void UpdateCurrentHealth()
         {
+            Debug.LogError("[HEALTH] Current health : " + state.Health);
             if (entity.isAttached)
             {
                 CurrentHealth = state.Health;
