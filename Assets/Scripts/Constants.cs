@@ -58,7 +58,7 @@
         public const string BackCamera = "ClickRightJoystick";
         public const string TurnCamera = "RightJoystickHorizontal";
         public const string UpAndDownCamera = "RightJoystickVertical";
-        public const string ResetCamera = "ClickLeftJoystick";
+        public const string TauntInput = "ClickLeftJoystick";
         public const string EscapeMenu = "Escape";
         public const string SwitchCamToNextPlayer = "SwitchCamToNextPlayer";
         public const string Select = "Select";
