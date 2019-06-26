@@ -55,10 +55,10 @@
         public const string ActivateAbilityKeyboard = "KeyboardAbilityActivator";
         public const string EnableKeyboardTurnCamera = "EnableKeyboardTurnCamera";
         public const string IonBeamCameraForwardBackward = "IonBeamCameraForwardBackward";
-        public const string BackCamera = "ClickLeftJoystick";
+        public const string BackCamera = "ClickRightJoystick";
         public const string TurnCamera = "RightJoystickHorizontal";
         public const string UpAndDownCamera = "RightJoystickVertical";
-        public const string ResetCamera = "ClickRightJoystick";
+        public const string ResetCamera = "ClickLeftJoystick";
         public const string EscapeMenu = "Escape";
         public const string SwitchCamToNextPlayer = "SwitchCamToNextPlayer";
         public const string Select = "Select";

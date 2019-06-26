@@ -57,8 +57,8 @@ namespace CameraUtils
                 else
                     _orbiter.m_XAxis.m_InputAxisName = "Mouse X";
 
-                if (Input.GetButtonDown(Constants.Input.ResetCamera))
-                    CameraReset();
+               // if (Input.GetButtonDown(Constants.Input.ResetCamera))
+               //     CameraReset();
 
                 if (Input.GetButton(Constants.Input.EnableKeyboardTurnCamera))
                     ClampXMaxAngle(1, 1);
