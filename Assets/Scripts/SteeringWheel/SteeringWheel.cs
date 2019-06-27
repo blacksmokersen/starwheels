@@ -103,6 +103,9 @@ namespace Steering
                 SetTurnState(turnValue);
                 turnValue = InversedTurnValue(turnValue);
 
+                if (_engine.CurrentSpeed > Settings.MinimumSpeedToSlowOnTurn)
+                    TurnSlowDown(turnValue);
+
                 // TurnSpeed Limiter
                 var ActualTurnTorque = Settings.TurnTorque;
 
