@@ -14,6 +14,8 @@ namespace SW.DebugUtils
             set { _enabled = value; }
         }
 
+        [SerializeField] private bool _securityEngaged = true;
+
         [Header("Karts")]
         [SerializeField] private BoltEntity _dummyPrefab;
 
@@ -40,7 +42,12 @@ namespace SW.DebugUtils
 
         public void MapInputs()
         {
-            if (Enabled)
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.RightAlt) && Input.GetKeyDown(KeyCode.Equals))
+            {
+                _securityEngaged = !_securityEngaged;
+            }
+
+            if (Enabled && !_securityEngaged)
             {
                 if (Input.GetKeyDown(KeyCode.Alpha3))
                 {
