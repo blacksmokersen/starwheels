@@ -7,6 +7,7 @@ using Multiplayer;
 
 namespace SW.Matchmaking
 {
+    [DisallowMultipleComponent]
     public class LobbyJoiner : GlobalEventListener
     {
         [Header("Settings")]
@@ -19,9 +20,6 @@ namespace SW.Matchmaking
 
         [Header("Events")]
         public UnityEvent OnLookingForLobby;
-
-        [Header("DebugMode")]
-        [SerializeField] private ServerDebugMode _serverDebugMode;
 
         [HideInInspector] public bool DebugModEnabled = false;
 
@@ -72,7 +70,7 @@ namespace SW.Matchmaking
                 }
             }
 
-            if (canJoinLobby)
+            if (canJoinLobby || _matchmakingSettings.LookForPrivateGames)
             {
                 _lobbyPanel.SetActive(false);
                 ConnectAsClient();
@@ -102,8 +100,8 @@ namespace SW.Matchmaking
             foreach (var lobby in lobbyList)
             {
                 var lobbyToken = SWMatchmaking.GetLobbyToken(lobby.Key);
-                var lobbyMatchesSelectedServerName = DebugModEnabled && lobbyToken.ServerName == _serverDebugMode.GetClientServerName();
-                var lobbyMatchesSelectedGamemodes = _lobbyData.GamemodePool.Contains(lobbyToken.GameMode);
+                var lobbyMatchesSelectedServerName = _matchmakingSettings.LookForPrivateGames && lobbyToken.ServerName == _matchmakingSettings.PrivateGameName;
+                var lobbyMatchesSelectedGamemodes = !_matchmakingSettings.LookForPrivateGames && _lobbyData.GamemodePool.Contains(lobbyToken.GameMode);
                 var lobbyMatchesMatchmakingSettings = (!lobbyToken.GameStarted || lobbyToken.GameStarted == _matchmakingSettings.LookForStartedGames);
 
                 if ((lobbyMatchesSelectedServerName || lobbyMatchesSelectedGamemodes)
