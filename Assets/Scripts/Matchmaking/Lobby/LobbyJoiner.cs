@@ -100,13 +100,14 @@ namespace SW.Matchmaking
             foreach (var lobby in lobbyList)
             {
                 var lobbyToken = SWMatchmaking.GetLobbyToken(lobby.Key);
+                Debug.Log("[LOBBY] Name : " + lobbyToken.ServerName);
                 var lobbyMatchesSelectedServerName = _matchmakingSettings.LookForPrivateGames && lobbyToken.ServerName == _matchmakingSettings.PrivateGameName;
+                Debug.Log("[LOBBY] Matched : " + lobbyMatchesSelectedServerName);
                 var lobbyMatchesSelectedGamemodes = !_matchmakingSettings.LookForPrivateGames && _lobbyData.GamemodePool.Contains(lobbyToken.GameMode);
                 var lobbyMatchesMatchmakingSettings = (!lobbyToken.GameStarted || lobbyToken.GameStarted == _matchmakingSettings.LookForStartedGames);
 
                 if ((lobbyMatchesSelectedServerName || lobbyMatchesSelectedGamemodes)
                     && lobbyMatchesMatchmakingSettings
-                    && lobbyToken.Public
                     && lobbyToken.CanBeJoined
                     && lobbyToken.Version.Equals(_lobbyData.Version))
                 {
