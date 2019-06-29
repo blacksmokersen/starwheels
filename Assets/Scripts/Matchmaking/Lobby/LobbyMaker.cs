@@ -46,11 +46,7 @@ namespace SW.Matchmaking
 
         private void SetLobbyData()
         {
-            if (DebugModEnabled)
-            {
-                _lobbyData.ServerName = _serverDebugMode.GetHostServerName();
-            }
-            else
+            if (_lobbyData.Public)
             {
                 _lobbyData.SetRandomName();
             }
