@@ -36,7 +36,6 @@ namespace Items
         {
             if (_lerping && _target)
             {
-                Debug.Log("Lerping");
                 _mineRoot.transform.position = Vector3.Lerp(transform.position, _target.transform.position, _speed);
                 SpeedIncrease();
             }
