@@ -2,6 +2,7 @@
 using UnityEngine;
 using Bolt;
 using Multiplayer;
+using Items;
 
 
 namespace Audio
@@ -10,6 +11,9 @@ namespace Audio
     {
         [Header("Entity")]
         [SerializeField] private BoltEntity _entity;
+
+        [Header("PlayerInfo")]
+        [SerializeField] private PlayerInfo _playerInfo;
 
         [Header("Settings")]
         [SerializeField] private PlayerSettings _playerSettings;
@@ -55,9 +59,7 @@ namespace Audio
 
         private void Awake()
         {
-
-            SetVoicelinesWithLocalSettings();
-
+            _playerInfo = GetComponentInParent<PlayerInfo>();
         }
 
         private void Start()
@@ -69,6 +71,20 @@ namespace Audio
         }
 
         //BOLT
+
+        public override void OnEvent(PlayerHit evnt)
+        {
+            /* Useless right now because of the insta destruction of the kart
+            if (evnt.VictimEntity.IsOwner && evnt.VictimEntity == _entity)
+            {
+                PlayRandomHurtVoice();
+            }
+            */
+            if (evnt.KillerID == _playerInfo.OwnerID  && _entity.IsOwner )
+            {
+                PlayRandomHitVoice();
+            }
+        }
 
         public override void OnEvent(PlayerReady evnt)
         {
@@ -108,9 +124,6 @@ namespace Audio
             CurrentHitVoicelines = _currentCharacterVoicelines[0];
             CurrentHurtVoicelines = _currentCharacterVoicelines[1];
             CurrentSelectedVoicelines = _currentCharacterVoicelines[2];
-
-            PlayRandomHitVoice();
-
         }
 
         public void PlayRandomHitVoice()
