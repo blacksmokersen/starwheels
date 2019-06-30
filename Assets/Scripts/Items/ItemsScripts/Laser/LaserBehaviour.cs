@@ -10,7 +10,7 @@ namespace Items
         [SerializeField] private GameObject _laserFront;
         [SerializeField] private GameObject _laserBack;
 
-        private MeshRenderer _laserRenderer;
+        private LineRenderer _laserRenderer;
         private Collider _laserCollider;
         private MeshCollider _laserColliderBack;
 
@@ -31,7 +31,7 @@ namespace Items
                     _laserFront.SetActive(true);
                    // GetComponent<BoltHitboxBody>().proximity = _laserFront.GetComponentInChildren<BoltHitbox>();
                   //  GetComponent<BoltHitboxBody>().hitboxes[0] = _laserFront.GetComponentInChildren<BoltHitbox>();
-                    _laserRenderer = _laserFront.GetComponentInChildren<MeshRenderer>();
+                    _laserRenderer = _laserFront.GetComponentInChildren<LineRenderer>();
                     _laserCollider = _laserFront.GetComponentInChildren<CapsuleCollider>();
                     _laserBack.SetActive(false);
                     break;
@@ -39,7 +39,7 @@ namespace Items
                     _laserBack.SetActive(true);
                   //  GetComponent<BoltHitboxBody>().proximity = _laserBack.GetComponentInChildren<BoltHitbox>();
                  //   GetComponent<BoltHitboxBody>().hitboxes[0] = _laserBack.GetComponentInChildren<BoltHitbox>();
-                    _laserRenderer = _laserBack.GetComponentInChildren<MeshRenderer>();
+                    _laserRenderer = _laserBack.GetComponentInChildren<LineRenderer>();
                     _laserCollider = _laserBack.GetComponentInChildren<SphereCollider>();
                     _laserFront.SetActive(false);
                     break;
