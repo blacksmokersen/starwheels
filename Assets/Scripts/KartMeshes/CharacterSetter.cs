@@ -44,10 +44,10 @@ namespace SW.Customization
 
         private void Start()
         {
-            if (_entity && _entity.IsOwner)
-            {
+            if (_entity == null)  // Entity is null on Menu
                 SetCharacterWithLocalSettings();
-            }
+            if (_entity && _entity.IsOwner)
+                SetCharacterWithLocalSettings();
         }
 
         // BOLT

@@ -43,10 +43,10 @@ namespace SW.Customization
 
         private void Start()
         {
-            if (_entity && _entity.IsOwner)
-            {
+            if (_entity == null)  // Entity is null on Menu
                 SetKartWithLocalSettings();
-            }
+            if (_entity && _entity.IsOwner)
+                SetKartWithLocalSettings();
         }
 
         // BOLT
@@ -101,7 +101,7 @@ namespace SW.Customization
 
         public void SetPreviousKart()
         {
-            SetKart((_currentIndex - 1 +_karts.Length ) % _karts.Length);
+            SetKart((_currentIndex - 1 + _karts.Length) % _karts.Length);
         }
 
         public void SetKartWithLocalSettings()
