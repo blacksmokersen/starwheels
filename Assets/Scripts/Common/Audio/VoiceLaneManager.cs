@@ -30,22 +30,26 @@ namespace Audio
         private Queue<AudioClip> _lastPlayedHitClips = new Queue<AudioClip>();
         private Queue<AudioClip> _lastPlayedHurtClips = new Queue<AudioClip>();
         private Queue<AudioClip> _lastPlayedSelectedClips = new Queue<AudioClip>();
+        private Queue<AudioClip> _lastPlayedBoostClips = new Queue<AudioClip>();
 
 
         [Header("Leonie")]
         [SerializeField] private List<AudioClip> leonieHitAudioClips = new List<AudioClip>();
         [SerializeField] private List<AudioClip> leonieHurtAudioClips = new List<AudioClip>();
         [SerializeField] private List<AudioClip> leonieSelectedAudioClips = new List<AudioClip>();
+        [SerializeField] private List<AudioClip> leonieBoostAudioClips = new List<AudioClip>();
 
         [Header("Aconit")]
         [SerializeField] private List<AudioClip> aconitHitAudioClips = new List<AudioClip>();
         [SerializeField] private List<AudioClip> aconitHurtAudioClips = new List<AudioClip>();
         [SerializeField] private List<AudioClip> aconitSelectedAudioClips = new List<AudioClip>();
+        [SerializeField] private List<AudioClip> aconitBoostAudioClips = new List<AudioClip>();
 
         [Header("Will")]
         [SerializeField] private List<AudioClip> willHitAudioClips = new List<AudioClip>();
         [SerializeField] private List<AudioClip> willHurtAudioClips = new List<AudioClip>();
         [SerializeField] private List<AudioClip> willSelectedAudioClips = new List<AudioClip>();
+        [SerializeField] private List<AudioClip> willBoostAudioClips = new List<AudioClip>();
 
 
 
@@ -54,6 +58,7 @@ namespace Audio
         private List<AudioClip> CurrentHitVoicelines;
         private List<AudioClip> CurrentHurtVoicelines;
         private List<AudioClip> CurrentSelectedVoicelines;
+        private List<AudioClip> CurrentBoostVoicelines;
 
         // CORE
 
@@ -80,7 +85,7 @@ namespace Audio
                 PlayRandomHurtVoice();
             }
             */
-            if (evnt.KillerID == _playerInfo.OwnerID  && _entity.IsOwner )
+            if (evnt.KillerID == _playerInfo.OwnerID && _entity.IsOwner)
             {
                 PlayRandomHitVoice();
             }
@@ -115,15 +120,29 @@ namespace Audio
         public void SetVoicelines(int index)
         {
             if (_playerSettings.CharacterIndex == 0)
-                _currentCharacterVoicelines = new List<AudioClip>[3] { leonieHitAudioClips, leonieHurtAudioClips, leonieSelectedAudioClips };
+                _currentCharacterVoicelines = new List<AudioClip>[4] { leonieHitAudioClips, leonieHurtAudioClips, leonieSelectedAudioClips, leonieBoostAudioClips };
             else if (_playerSettings.CharacterIndex == 1)
-                _currentCharacterVoicelines = new List<AudioClip>[3] { aconitHitAudioClips, aconitHurtAudioClips, aconitSelectedAudioClips };
+                _currentCharacterVoicelines = new List<AudioClip>[4] { aconitHitAudioClips, aconitHurtAudioClips, aconitSelectedAudioClips, aconitBoostAudioClips };
             else if (_playerSettings.CharacterIndex == 2)
-                _currentCharacterVoicelines = new List<AudioClip>[3] { willHitAudioClips, willHurtAudioClips, willSelectedAudioClips };
+                _currentCharacterVoicelines = new List<AudioClip>[4] { willHitAudioClips, willHurtAudioClips, willSelectedAudioClips, willBoostAudioClips };
 
             CurrentHitVoicelines = _currentCharacterVoicelines[0];
             CurrentHurtVoicelines = _currentCharacterVoicelines[1];
             CurrentSelectedVoicelines = _currentCharacterVoicelines[2];
+            CurrentBoostVoicelines = _currentCharacterVoicelines[3];
+        }
+
+        public void PlayRandomBoostVoice()
+        {
+            if (_lastPlayedBoostClips.Count > rememberTheLastXClips)
+            {
+                CurrentBoostVoicelines.Add(_lastPlayedBoostClips.Dequeue());
+            }
+            var clipToPlay = CurrentBoostVoicelines[Random.Range(0, CurrentBoostVoicelines.Count)];
+            CurrentBoostVoicelines.Remove(clipToPlay);
+            voiceLaneSource.clip = clipToPlay;
+            _lastPlayedBoostClips.Enqueue(clipToPlay);
+            voiceLaneSource.Play();
         }
 
         public void PlayRandomHitVoice()
