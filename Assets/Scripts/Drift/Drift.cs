@@ -145,6 +145,7 @@ namespace Drift
             if (DriftState == DriftState.Red && HasRequiredSpeed())
             {
                 OnDriftBoostStart.Invoke();
+                StartCoroutine(BoostDuration());
                 ResetDrift();
             }
             else
@@ -326,6 +327,12 @@ namespace Drift
         {
             yield return new WaitForSeconds(Settings.TimeBetweenDrifts);
             _driftedLongEnough = true;
+        }
+
+        private IEnumerator BoostDuration()
+        {
+            yield return new WaitForSeconds(Settings.BoostEffectDuration);
+            OnDriftBoostEnd.Invoke();
         }
 
         #endregion

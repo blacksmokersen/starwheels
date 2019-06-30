@@ -12,6 +12,7 @@ namespace Drift
         public float MaxInteriorAngle = 400f;
         public float MaxExteriorAngle = 40f;
         [Range(0, 2)] public float BoostPowerImpulse;
+        public float BoostEffectDuration;
 
         [Header("Time")]
         [Range(0, 10)] public float TimeBetweenDrifts;
