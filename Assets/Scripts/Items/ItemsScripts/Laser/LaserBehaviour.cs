@@ -66,14 +66,14 @@ namespace Items
 
         private IEnumerator LaserDuration(float duration)
         {
+            yield return new WaitForSeconds(_laserSettings.CollisionDuration);
+            if (_laserCollider)
+                _laserCollider.enabled = false;
             yield return new WaitForSeconds(_laserSettings.FlashDuration);
             if (_laserRenderer)
                 _laserRenderer.enabled = false;
            // if (_laserColliderBack)
            //     _laserColliderBack.enabled = false;
-            yield return new WaitForSeconds(_laserSettings.CollisionDuration);
-            if (_laserCollider)
-                _laserCollider.enabled = false;
             yield return new WaitForSeconds(duration);
             DestroyEntity destroyEntityEvent = DestroyEntity.Create();
             destroyEntityEvent.Entity = entity;

@@ -72,7 +72,8 @@ namespace Health
         private IEnumerator DeactivateAfterXSecondsRoutine(float x)
         {
             yield return new WaitForSeconds(x);
-            OnShieldBreak.Invoke();
+            if (_shieldGraphics.activeSelf)
+                OnShieldBreak.Invoke();
             Deactivate();
         }
 
@@ -86,7 +87,7 @@ namespace Health
             {
                 if (OnCooldownUpdated != null)
                 {
-                    OnCooldownUpdated.Invoke(secondsElapsed/_cooldownSeconds);
+                    OnCooldownUpdated.Invoke(secondsElapsed / _cooldownSeconds);
                 }
 
                 yield return new WaitForSeconds(1f);
