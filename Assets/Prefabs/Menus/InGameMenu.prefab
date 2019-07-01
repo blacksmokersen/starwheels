@@ -4989,7 +4989,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6027965244933653588
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5038,9 +5038,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2afb6b8188f2b414ab542f5fe53895ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WinnerTeam: 0
+  OnGameReset:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnGameEnd:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: TeamEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnGameStart:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   _redScoreInput: {fileID: 8613042644149820485}
   _blueScoreInput: {fileID: 1711781641249552510}
-  _playerInfo: {fileID: 0}
 --- !u!1 &5824969462184136443
 GameObject:
   m_ObjectHideFlags: 0

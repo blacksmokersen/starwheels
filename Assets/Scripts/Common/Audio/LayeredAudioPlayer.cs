@@ -36,7 +36,6 @@ public class LayeredAudioPlayer : GlobalEventListener
 
     public override void OnEvent(ScoreIncreased evnt)
     {
-        Debug.Log(evnt.Score);
         if (evnt.Score == 7)
         {
             PlaySpecificLayerWhenBaseLayerEnd(0);
