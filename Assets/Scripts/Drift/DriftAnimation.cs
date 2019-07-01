@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
+using SW.Customization;
 
 namespace Drift
 {
     public class DriftAnimation : Bolt.EntityBehaviour<IKartState>
     {
         [SerializeField] private Animator _animator;
-        [SerializeField] private Animator _animatorChar;
+
+        [Header("CharacterSetter")]
+        [SerializeField] private CharacterSetter _characterSetter;
 
         public void LeftDriftAnimation()
         {
@@ -13,7 +16,7 @@ namespace Drift
             {
               //  state.DriftLeft = true;
                 _animator.SetBool("DriftLeft", true);
-                _animatorChar.SetBool("DriftLeft", true);
+                _characterSetter.CurrentCharacterAnimator.SetBool("DriftLeft", true);
             }
         }
 
@@ -23,7 +26,7 @@ namespace Drift
             {
               //  state.DriftRight = true;
                 _animator.SetBool("DriftRight", true);
-                _animatorChar.SetBool("DriftRight", true);
+                _characterSetter.CurrentCharacterAnimator.SetBool("DriftRight", true);
             }
         }
 
@@ -33,10 +36,18 @@ namespace Drift
             {
                 //state.DriftLeft = false;
                 _animator.SetBool("DriftLeft", false);
-                _animatorChar.SetBool("DriftLeft", false);
+                _characterSetter.CurrentCharacterAnimator.SetBool("DriftLeft", false);
               //  state.DriftRight = false;
                 _animator.SetBool("DriftRight", false);
-                _animatorChar.SetBool("DriftRight", false);
+                _characterSetter.CurrentCharacterAnimator.SetBool("DriftRight", false);
+            }
+        }
+
+        public void BoostDriftAnimation()
+        {
+            if (entity.isAttached)
+            {
+                _characterSetter.CurrentCharacterAnimator.SetTrigger("HelloAnimation");
             }
         }
     }
