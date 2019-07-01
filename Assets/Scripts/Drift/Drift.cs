@@ -102,7 +102,7 @@ namespace Drift
 
         public void DriftTurns(float turnValue)
         {
-            if (!_groundCondition.Grounded)
+            if (IsDrifting() && !_groundCondition.Grounded)
             {
                 StopDrift();
             }
