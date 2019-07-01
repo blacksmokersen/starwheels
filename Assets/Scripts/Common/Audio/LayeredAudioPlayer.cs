@@ -24,27 +24,11 @@ public class LayeredAudioPlayer : GlobalEventListener
 
     private void Update()
     {
-        /*
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-            PlaySpecificLayerWhenBaseLayerEnd(0);
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-            PlaySpecificLayerWhenBaseLayerEnd(1);
-        if (Input.GetKeyDown(KeyCode.Alpha8))
-            RemoveSpecificLayerWhenBaseLayerEnd(0);
-        if (Input.GetKeyDown(KeyCode.Alpha9))
-            RemoveSpecificLayerWhenBaseLayerEnd(1);
-            */
-
-
-        if (_baseLayerAudioSource.time >= _baseLayerAudioSource.clip.length)
+        if (_baseLayerAudioSource.time <= 1f && _searchingforBaseLayerToEnd/*_baseLayerAudioSource.clip.length*/)
         {
             OnBaseLayerEnd();
-
-            if (_searchingforBaseLayerToEnd)
-            {
-                LayersSetter();
-                _searchingforBaseLayerToEnd = false;
-            }
+            LayersSetter();
+            _searchingforBaseLayerToEnd = false;
         }
     }
 
@@ -52,7 +36,8 @@ public class LayeredAudioPlayer : GlobalEventListener
 
     public override void OnEvent(ScoreIncreased evnt)
     {
-        if(evnt.Score == 7)
+        Debug.Log(evnt.Score);
+        if (evnt.Score == 7)
         {
             PlaySpecificLayerWhenBaseLayerEnd(0);
         }
@@ -60,7 +45,7 @@ public class LayeredAudioPlayer : GlobalEventListener
         {
             PlaySpecificLayerWhenBaseLayerEnd(1);
         }
-        if(evnt.Score == 13)
+        if (evnt.Score == 13)
         {
             RemoveSpecificLayerWhenBaseLayerEnd(0);
             RemoveSpecificLayerWhenBaseLayerEnd(1);

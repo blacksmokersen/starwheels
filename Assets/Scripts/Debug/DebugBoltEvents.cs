@@ -1,14 +1,18 @@
 ﻿using UnityEngine;
 using Multiplayer.Teams;
+using Multiplayer;
+using Gamemodes;
 using TMPro;
 
 namespace SW.DebugUtils
 {
-    public class DebugBoltEvents : MonoBehaviour
+    public class DebugBoltEvents : GamemodeBase
     {
         [Header("UI Elements")]
         [SerializeField] private TMP_InputField _redScoreInput;
         [SerializeField] private TMP_InputField _blueScoreInput;
+
+        private PlayerInfo _playerInfo;
 
         public void TriggerGameOverEvent()
         {
@@ -58,6 +62,21 @@ namespace SW.DebugUtils
             PlayerQuit playerQuitEvent = PlayerQuit.Create();
             playerQuitEvent.PlayerID = SWMatchmaking.GetMyBoltId();
             playerQuitEvent.Send();
+        }
+
+        public void IncreaseScore()
+        {
+            _playerInfo = FindObjectOfType<PlayerInfo>();
+            IncreaseScore(_playerInfo.Team, 1);
+            SendScoreIncreasedEvent(_playerInfo.Team);
+        //    CheckScore();
+            /*
+            PlayerStatUpdate playerKillCountUpdate = PlayerStatUpdate.Create();
+            playerKillCountUpdate.StatName = Constants.PlayerStats.KillCountName;
+            playerKillCountUpdate.PlayerID = _playerInfo.OwnerID;
+            playerKillCountUpdate.StatValue ++;
+            playerKillCountUpdate.Send();
+            */
         }
     }
 }
