@@ -19,8 +19,8 @@ namespace Health
         [SerializeField] private float _cooldownSeconds;
 
         [Header("Events")]
-        public FloatEvent OnCooldownUpdated;
         public UnityEvent OnShieldBreak;
+        public FloatEvent OnCooldownUpdated;
 
         private bool _cooldownStarted = false;
 
