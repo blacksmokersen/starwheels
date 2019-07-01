@@ -668,6 +668,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
         type: 3}
+      propertyPath: OnDriftBoostStart.m_PersistentCalls.m_Calls.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653101991238628743, guid: ea5d94e313ff1d74baa52652e41faac4,
+        type: 3}
       propertyPath: OnDriftEnd.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 6060815092689482078}
@@ -4393,65 +4398,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 24075148712649369, guid: a9ab5d84ad79c684495aed3cd1ca099c,
+    - target: {fileID: 6230830946761289411, guid: a9ab5d84ad79c684495aed3cd1ca099c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6230830946761289411, guid: a9ab5d84ad79c684495aed3cd1ca099c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8768447988284698648, guid: a9ab5d84ad79c684495aed3cd1ca099c,
         type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6230830946761289411, guid: a9ab5d84ad79c684495aed3cd1ca099c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6230830946761289411, guid: a9ab5d84ad79c684495aed3cd1ca099c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4573106326842978501, guid: a9ab5d84ad79c684495aed3cd1ca099c,
-        type: 3}
-      propertyPath: OnKartIndexUpdated.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4573106326842978501, guid: a9ab5d84ad79c684495aed3cd1ca099c,
-        type: 3}
-      propertyPath: _entity
-      value: 
-      objectReference: {fileID: 3339}
-    - target: {fileID: 4573106326842978501, guid: a9ab5d84ad79c684495aed3cd1ca099c,
-        type: 3}
-      propertyPath: OnKartIndexUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4573106326842978501, guid: a9ab5d84ad79c684495aed3cd1ca099c,
-        type: 3}
-      propertyPath: OnKartIndexUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4573106326842978501, guid: a9ab5d84ad79c684495aed3cd1ca099c,
-        type: 3}
-      propertyPath: OnKartIndexUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 5280060399981998883}
-    - target: {fileID: 4573106326842978501, guid: a9ab5d84ad79c684495aed3cd1ca099c,
-        type: 3}
-      propertyPath: OnKartIndexUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetKartWithLocalSettings
-      objectReference: {fileID: 0}
-    - target: {fileID: 4573106326842978501, guid: a9ab5d84ad79c684495aed3cd1ca099c,
-        type: 3}
-      propertyPath: OnKartIndexUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4573106326842978501, guid: a9ab5d84ad79c684495aed3cd1ca099c,
-        type: 3}
-      propertyPath: OnKartSwitched.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetKartTeamColorAccordingToState
       objectReference: {fileID: 0}
     - target: {fileID: 1579032588537334821, guid: a9ab5d84ad79c684495aed3cd1ca099c,
         type: 3}
@@ -4511,11 +4471,66 @@ PrefabInstance:
       propertyPath: _kartNamePlate.Array.data[1]
       value: 
       objectReference: {fileID: 1367074612760220}
+    - target: {fileID: 24075148712649369, guid: a9ab5d84ad79c684495aed3cd1ca099c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4573106326842978501, guid: a9ab5d84ad79c684495aed3cd1ca099c,
+        type: 3}
+      propertyPath: OnKartIndexUpdated.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4573106326842978501, guid: a9ab5d84ad79c684495aed3cd1ca099c,
+        type: 3}
+      propertyPath: _entity
+      value: 
+      objectReference: {fileID: 3339}
+    - target: {fileID: 4573106326842978501, guid: a9ab5d84ad79c684495aed3cd1ca099c,
+        type: 3}
+      propertyPath: OnKartIndexUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4573106326842978501, guid: a9ab5d84ad79c684495aed3cd1ca099c,
+        type: 3}
+      propertyPath: OnKartIndexUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4573106326842978501, guid: a9ab5d84ad79c684495aed3cd1ca099c,
+        type: 3}
+      propertyPath: OnKartIndexUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5280060399981998883}
+    - target: {fileID: 4573106326842978501, guid: a9ab5d84ad79c684495aed3cd1ca099c,
+        type: 3}
+      propertyPath: OnKartIndexUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetKartWithLocalSettings
+      objectReference: {fileID: 0}
+    - target: {fileID: 4573106326842978501, guid: a9ab5d84ad79c684495aed3cd1ca099c,
+        type: 3}
+      propertyPath: OnKartIndexUpdated.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4573106326842978501, guid: a9ab5d84ad79c684495aed3cd1ca099c,
+        type: 3}
+      propertyPath: OnKartSwitched.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetKartTeamColorAccordingToState
+      objectReference: {fileID: 0}
     - target: {fileID: 2575220953240687998, guid: a9ab5d84ad79c684495aed3cd1ca099c,
         type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2573008464023669134, guid: a9ab5d84ad79c684495aed3cd1ca099c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.013
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587995579238026442, guid: a9ab5d84ad79c684495aed3cd1ca099c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: bb51fbb070182bb4591f5a00ded05be3, type: 2}
     - target: {fileID: 2231830154558130897, guid: a9ab5d84ad79c684495aed3cd1ca099c,
         type: 3}
       propertyPath: _groundTrails.Array.size
@@ -4536,16 +4551,6 @@ PrefabInstance:
       propertyPath: _groundTrails.Array.data[4]
       value: 
       objectReference: {fileID: 6372193165356081337}
-    - target: {fileID: 2573008464023669134, guid: a9ab5d84ad79c684495aed3cd1ca099c,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.013
-      objectReference: {fileID: 0}
-    - target: {fileID: 2587995579238026442, guid: a9ab5d84ad79c684495aed3cd1ca099c,
-        type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: bb51fbb070182bb4591f5a00ded05be3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9ab5d84ad79c684495aed3cd1ca099c, type: 3}
 --- !u!1 &407322381477687561 stripped
