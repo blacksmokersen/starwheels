@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using Items;
 
 namespace Health
@@ -19,6 +20,7 @@ namespace Health
 
         [Header("Events")]
         public FloatEvent OnCooldownUpdated;
+        public UnityEvent OnShieldBreak;
 
         private bool _cooldownStarted = false;
 
@@ -70,6 +72,7 @@ namespace Health
         private IEnumerator DeactivateAfterXSecondsRoutine(float x)
         {
             yield return new WaitForSeconds(x);
+            OnShieldBreak.Invoke();
             Deactivate();
         }
 
