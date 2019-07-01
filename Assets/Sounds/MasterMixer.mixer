@@ -129,6 +129,7 @@ AudioMixerController:
     - 459c32a6a2d69b84b9d0af06f021083a
     - 3ef3e7da5d6dce441b8dbf5d65269c5c
     - 350c892dfc178284a8154699d0456da4
+    - 86b3c55f762ecd34788cbf4c31da84ec
     name: Basic
   - guids:
     - 1dbe3fe0fbe138142a13759dbddd78a6
@@ -650,6 +651,7 @@ AudioMixerGroupController:
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: f341542700067cd4f97425746dec583c
   m_Children:
+  - {fileID: 243286923432327352}
   - {fileID: 243111186660080740}
   - {fileID: 243990917193891912}
   m_Volume: 1ed4584762c776040b1168815346a821
@@ -897,6 +899,24 @@ AudioMixerGroupController:
   m_Pitch: 37c5ae5fd73eaa2409ec4e3e54d43928
   m_Effects:
   - {fileID: 244744514208625862}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!243 &243286923432327352
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Leonie
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 86b3c55f762ecd34788cbf4c31da84ec
+  m_Children: []
+  m_Volume: 91269e03cc4b38848af127d7af75ee35
+  m_Pitch: 5662855a57f152d41a50f4083aaf9901
+  m_Effects:
+  - {fileID: 244291758248140908}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
@@ -2662,6 +2682,20 @@ AudioMixerEffectController:
   m_EffectID: 5bc7f9f9a08185f46a3da7fc7627449f
   m_EffectName: Attenuation
   m_MixLevel: 4fa9e386a4bb66f4980abb20c0e58807
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &244291758248140908
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Attenuation
+  m_EffectID: 331eb5b605b13554592373b6343fc72c
+  m_EffectName: Attenuation
+  m_MixLevel: 8d5c34b54f74d8d4bbd52e758547383d
   m_Parameters: []
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
