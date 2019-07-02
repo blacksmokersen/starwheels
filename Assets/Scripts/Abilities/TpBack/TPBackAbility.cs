@@ -17,7 +17,9 @@ namespace Abilities
         }
 
         [Header("Unity Events")]
+        public UnityEvent OnDislocatorLaunched;
         public UnityEvent OnBlinkActivated;
+        public UnityEvent OnDislocatorDestroyed;
 
         [Header("Launcher")]
         [SerializeField] private ThrowableLauncher _throwableLauncher;
@@ -29,6 +31,9 @@ namespace Abilities
 
         [Header("Invicibility")]
         [SerializeField] private Health.Health _health;
+
+        [HideInInspector] public bool IsDislocatorVisible;
+        [HideInInspector] public Transform DislocatorTransform;
 
         private TPBackSettings _tPBackSettings;
         private ParticleSystem _reloadEffect;
@@ -94,7 +99,9 @@ namespace Abilities
                 if (_tpBack == null)
                 {
                     var instantiatedItem = BoltNetwork.Instantiate(_tPBackSettings.Prefab);
-
+                    OnDislocatorLaunched.Invoke();
+                    IsDislocatorVisible = true;
+                    DislocatorTransform = instantiatedItem.transform;
                     var throwable = instantiatedItem.GetComponent<Throwable>();
                     _tpBack = instantiatedItem.GetComponent<TPBackBehaviour>();
                     _tpBack.Kart = transform.root;
@@ -118,7 +125,9 @@ namespace Abilities
                 if (_tpBack == null)
                 {
                     var instantiatedItem = BoltNetwork.Instantiate(_tPBackSettings.Prefab);
-
+                    OnDislocatorLaunched.Invoke();
+                    IsDislocatorVisible = true;
+                    DislocatorTransform = instantiatedItem.transform;
                     var throwable = instantiatedItem.GetComponent<Throwable>();
                     _tpBack = instantiatedItem.GetComponent<TPBackBehaviour>();
                     _tpBack.Kart = transform.root;
@@ -142,6 +151,7 @@ namespace Abilities
         private IEnumerator BlinkTpBack()
         {
             OnBlinkActivated.Invoke();
+            IsDislocatorVisible = false;
             _kartMeshDisabler.DisableKartMeshes(true);
             _health.SetInvincibility();
             yield return new WaitForSeconds(0.25f);

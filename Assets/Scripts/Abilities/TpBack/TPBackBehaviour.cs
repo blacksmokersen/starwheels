@@ -58,6 +58,7 @@ namespace Items
             if (Vector3.Distance(Kart.position, transform.position) > MaxDistance)
             {
                 StopCoroutine(AliveDuration());
+                Kart.GetComponentInChildren<Abilities.TPBackAbility>().OnDislocatorDestroyed.Invoke();
                 Destroy(gameObject);
             }
         }
@@ -77,6 +78,7 @@ namespace Items
         private IEnumerator AliveDuration()
         {
             yield return new WaitForSeconds(AliveTime);
+            Kart.GetComponentInChildren<Abilities.TPBackAbility>().OnDislocatorDestroyed.Invoke();
             Destroy(gameObject);
         }
 
