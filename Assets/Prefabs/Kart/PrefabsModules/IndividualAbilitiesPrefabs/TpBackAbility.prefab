@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 460986235687444262}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.001, z: -0.02}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.005, y: 0.005, z: 0.01}
   m_Children: []
   m_Father: {fileID: 1643109499645686489}
   m_RootOrder: 0
@@ -57,7 +57,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7bae2c6b2315fd14283edcadd7a3eb7a, type: 2}
+  - {fileID: 2100000, guid: bf5038ebb5d960446b27dcc86b61e71d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -200,7 +200,7 @@ MonoBehaviour:
   _kartMeshDisabler: {fileID: 0}
   _health: {fileID: 0}
   IsDislocatorVisible: 0
-  DislocatorTransform: {fileID: 0}
+  Dislocator: {fileID: 0}
 --- !u!1 &5251411192648879441
 GameObject:
   m_ObjectHideFlags: 0
@@ -5098,12 +5098,12 @@ GameObject:
   - component: {fileID: 1643109499645686489}
   - component: {fileID: 2651782973284735604}
   m_Layer: 0
-  m_Name: ArrowTotem
+  m_Name: ArrowDisclocator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1643109499645686489
 Transform:
   m_ObjectHideFlags: 0
@@ -5131,36 +5131,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 145cba6562ec8f6439101b40f44e90bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CanUseAbility: 1
-  abilitySettings: {fileID: 0}
-  _playerSettings: {fileID: 0}
-  _particleSystem: {fileID: 0}
-  OnAbilityReload:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  _enabled: 1
-  OnDislocatorLaunched:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnBlinkActivated:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnDislocatorDestroyed:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  _throwableLauncher: {fileID: 0}
-  _throwingDirection: {fileID: 0}
-  _useTpBackSound: {fileID: 0}
-  _kartMeshDisabler: {fileID: 0}
-  _health: {fileID: 0}
-  IsDislocatorVisible: 0
-  DislocatorTransform: {fileID: 0}
   _arrowTotem: {fileID: 2337919141592931641}

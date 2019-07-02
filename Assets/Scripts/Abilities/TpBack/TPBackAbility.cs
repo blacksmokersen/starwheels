@@ -33,7 +33,7 @@ namespace Abilities
         [SerializeField] private Health.Health _health;
 
         [HideInInspector] public bool IsDislocatorVisible;
-        [HideInInspector] public Transform DislocatorTransform;
+        [HideInInspector] public GameObject Dislocator;
 
         private TPBackSettings _tPBackSettings;
         private ParticleSystem _reloadEffect;
@@ -99,9 +99,9 @@ namespace Abilities
                 if (_tpBack == null)
                 {
                     var instantiatedItem = BoltNetwork.Instantiate(_tPBackSettings.Prefab);
+                    Dislocator = instantiatedItem;
                     OnDislocatorLaunched.Invoke();
                     IsDislocatorVisible = true;
-                    DislocatorTransform = instantiatedItem.transform;
                     var throwable = instantiatedItem.GetComponent<Throwable>();
                     _tpBack = instantiatedItem.GetComponent<TPBackBehaviour>();
                     _tpBack.Kart = transform.root;
@@ -125,9 +125,9 @@ namespace Abilities
                 if (_tpBack == null)
                 {
                     var instantiatedItem = BoltNetwork.Instantiate(_tPBackSettings.Prefab);
+                    Dislocator = instantiatedItem;
                     OnDislocatorLaunched.Invoke();
                     IsDislocatorVisible = true;
-                    DislocatorTransform = instantiatedItem.transform;
                     var throwable = instantiatedItem.GetComponent<Throwable>();
                     _tpBack = instantiatedItem.GetComponent<TPBackBehaviour>();
                     _tpBack.Kart = transform.root;

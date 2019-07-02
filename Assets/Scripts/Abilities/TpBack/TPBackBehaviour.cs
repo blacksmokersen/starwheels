@@ -24,6 +24,7 @@ namespace Items
         public UnityEvent OnTpBackActivated;
         public UnityEvent OnTpBackIdle;
 
+        [HideInInspector] public float ActualDistance;
         private bool _canBeEnabled = false;
         private bool _enabled = false;
 
@@ -55,7 +56,8 @@ namespace Items
 
         private void CheckForMaxDistance()
         {
-            if (Vector3.Distance(Kart.position, transform.position) > MaxDistance)
+            ActualDistance = Vector3.Distance(Kart.position, transform.position);
+            if (ActualDistance > MaxDistance)
             {
                 StopCoroutine(AliveDuration());
                 Kart.GetComponentInChildren<Abilities.TPBackAbility>().OnDislocatorDestroyed.Invoke();
