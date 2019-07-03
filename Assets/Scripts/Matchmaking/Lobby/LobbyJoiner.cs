@@ -103,7 +103,7 @@ namespace SW.Matchmaking
                 Debug.Log("[LOBBY] Name : " + lobbyToken.ServerName);
                 var lobbyMatchesSelectedServerName = _matchmakingSettings.LookForPrivateGames && lobbyToken.ServerName == _matchmakingSettings.PrivateGameName;
                 Debug.Log("[LOBBY] Matched : " + lobbyMatchesSelectedServerName);
-                var lobbyMatchesSelectedGamemodes = !_matchmakingSettings.LookForPrivateGames && _lobbyData.GamemodePool.Contains(lobbyToken.GameMode);
+                var lobbyMatchesSelectedGamemodes = !_matchmakingSettings.LookForPrivateGames && lobbyToken.Public && _lobbyData.GamemodePool.Contains(lobbyToken.GameMode);
                 var lobbyMatchesMatchmakingSettings = (!lobbyToken.GameStarted || lobbyToken.GameStarted == _matchmakingSettings.LookForStartedGames);
 
                 if ((lobbyMatchesSelectedServerName || lobbyMatchesSelectedGamemodes)
