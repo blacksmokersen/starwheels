@@ -53,7 +53,10 @@ namespace SW.Matchmaking
 
                     foreach (var gamemodeName in gameModeNames)
                     {
-                        toggle.isOn = false;
+                        if (toggle.isOn)
+                        {
+                            UpdateMapPool(mapName, gamemodeName.Label.Value, true);
+                        }
 
                         toggle.onValueChanged.RemoveListener((b) =>
                         {
