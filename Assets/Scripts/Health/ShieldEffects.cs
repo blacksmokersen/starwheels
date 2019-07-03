@@ -2,15 +2,17 @@
 using UnityEngine;
 using UnityEngine.Events;
 using Items;
+using Bolt;
 
 namespace Health
 {
     [DisallowMultipleComponent]
-    public class ShieldEffects : MonoBehaviour
+    public class ShieldEffects : GlobalEventListener
     {
         public bool CanBeUsed = true;
 
         [Header("References")]
+        [SerializeField] private BoltEntity _entity;
         [SerializeField] private Health _health;
         [SerializeField] private GameObject _shieldGraphics;
         [SerializeField] private Collider _shieldCollider;
@@ -37,6 +39,9 @@ namespace Health
 
                     if (itemCollisionTrigger.ItemCollision.HitsPlayer) // It is an item that damages the player
                     {
+                        ShieldBreak shieldBreakEvent = ShieldBreak.Create();
+                        shieldBreakEvent.Entity = _entity;
+                        shieldBreakEvent.Send();
                         StartCoroutine(DeactivateAfterXSecondsRoutine(.1f));
                     }
                 }
@@ -48,9 +53,19 @@ namespace Health
             // USE FOR OVERCHARGE
         }
 
-        // PUBLIC
+        //BOLT
 
-        public void Activate()
+        public override void OnEvent(ShieldBreak evnt)
+        {
+            if(BoltNetwork.IsClient && evnt.Entity == _entity)
+            {
+                StartCoroutine(DeactivateAfterXSecondsRoutine(.1f));
+            }
+        }
+
+            // PUBLIC
+
+            public void Activate()
         {
             _shieldCollider.enabled = true;
             _shieldGraphics.SetActive(true);
