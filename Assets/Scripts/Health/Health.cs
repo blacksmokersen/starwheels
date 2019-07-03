@@ -66,11 +66,13 @@ namespace Health
 
         public void SetInvincibility()
         {
+            Debug.Log("[INVINCIBILITY] Setting");
             IsInvincible = true;
         }
 
         public void UnsetInvincibility()
         {
+            Debug.Log("[INVINCIBILITY] Unsetting");
             IsInvincible = false;
         }
 
@@ -95,6 +97,7 @@ namespace Health
 
         private IEnumerator InvicibilityTime(float x)
         {
+            Debug.Log("[INVINCIBILITY] Timer");
             IsInvincible = true;
             OnInvincibilityDuration.Invoke(x);
             yield return new WaitForSeconds(x);

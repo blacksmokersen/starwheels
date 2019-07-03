@@ -13,6 +13,7 @@ namespace Health
         [Header("References")]
         [SerializeField] private Health _health;
         [SerializeField] private GameObject _shieldGraphics;
+        [SerializeField] private Collider _shieldCollider;
 
         [Header("Settings")]
         [SerializeField] private float _secondsShieldActivated;
@@ -51,6 +52,7 @@ namespace Health
 
         public void Activate()
         {
+            _shieldCollider.enabled = true;
             _shieldGraphics.SetActive(true);
             _health.SetInvincibilityForXSeconds(_secondsShieldActivated);
 
@@ -63,6 +65,7 @@ namespace Health
 
         public void Deactivate()
         {
+            _shieldCollider.enabled = false;
             _shieldGraphics.SetActive(false);
             _health.UnsetInvincibility();
         }

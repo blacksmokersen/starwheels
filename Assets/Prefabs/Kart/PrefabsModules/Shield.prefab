@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7388642628944569500}
-  - component: {fileID: 308613230204579416}
   - component: {fileID: 8364508883363500364}
+  - component: {fileID: 729691377797652171}
   m_Layer: 0
   m_Name: Shield
   m_TagString: Untagged
@@ -35,19 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &308613230204579416
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7386370902367455742}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 2
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8364508883363500364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,6 +50,7 @@ MonoBehaviour:
   CanBeUsed: 1
   _health: {fileID: 0}
   _shieldGraphics: {fileID: 1736821760631427102}
+  _shieldCollider: {fileID: 729691377797652171}
   _secondsShieldActivated: 1.25
   _cooldownSeconds: 25
   OnShieldBreak:
@@ -96,6 +84,19 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: FloatEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!135 &729691377797652171
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7386370902367455742}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7387056084808176848
 GameObject:
   m_ObjectHideFlags: 0
