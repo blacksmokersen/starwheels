@@ -142,9 +142,9 @@ namespace Items
             {
                 IKartState victimKartState;
                 BoltEntity victimEntity = other.GetComponentInParent<BoltEntity>();
-                if(victimEntity.TryFindState<IKartState>(out victimKartState))
+                if (victimEntity.TryFindState<IKartState>(out victimKartState))
                 {
-                    if(victimKartState.Team != (int)_ownership.Team)
+                    if (victimKartState.Team != (int)_ownership.Team)
                     {
                         _kartsInRange.Add(other.gameObject);
                         _kartsInRangeTimer.Add(other.gameObject, 0f);
@@ -166,18 +166,21 @@ namespace Items
         {
             IKartState victimKartState;
             BoltEntity victimEntity = other.GetComponentInParent<BoltEntity>();
-            if(victimEntity.TryFindState<IKartState>(out victimKartState))
+            if (victimEntity.TryFindState<IKartState>(out victimKartState))
             {
-                PlayerHit playerHitEvent = PlayerHit.Create();
-                playerHitEvent.KillerID = _ownership.OwnerID;
-                playerHitEvent.KillerName = _ownership.OwnerNickname;
-                playerHitEvent.KillerTeam = (int) _ownership.Team;
-                playerHitEvent.Item = _ownership.Label;
-                playerHitEvent.VictimEntity = victimEntity;
-                playerHitEvent.VictimID = victimKartState.OwnerID;
-                playerHitEvent.VictimName = victimEntity.GetComponent<PlayerInfo>().Nickname;
-                playerHitEvent.VictimTeam = (int) victimKartState.Team;
-                playerHitEvent.Send();
+                if (!victimEntity.gameObject.GetComponentInChildren<Health.Health>().IsInvincible)
+                {
+                    PlayerHit playerHitEvent = PlayerHit.Create();
+                    playerHitEvent.KillerID = _ownership.OwnerID;
+                    playerHitEvent.KillerName = _ownership.OwnerNickname;
+                    playerHitEvent.KillerTeam = (int)_ownership.Team;
+                    playerHitEvent.Item = _ownership.Label;
+                    playerHitEvent.VictimEntity = victimEntity;
+                    playerHitEvent.VictimID = victimKartState.OwnerID;
+                    playerHitEvent.VictimName = victimEntity.GetComponent<PlayerInfo>().Nickname;
+                    playerHitEvent.VictimTeam = (int)victimKartState.Team;
+                    playerHitEvent.Send();
+                }
             }
             else
             {
