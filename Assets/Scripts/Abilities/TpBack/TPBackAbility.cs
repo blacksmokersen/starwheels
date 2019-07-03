@@ -74,17 +74,10 @@ namespace Abilities
                 UseWithKeyboard(Direction.Default);
         }
 
+
         public new void Reload()
         {
             CanUseAbility = true;
-          //  _kartMeshDisabler.EnableKartMeshes(true);
-            _health.UnsetInvincibility();
-
-            if (_tpBack)
-            {
-                SWExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useTpBackSound);
-                Destroy(_tpBack.gameObject);
-            }
         }
 
         public Quaternion GetKartRotation()
@@ -157,7 +150,7 @@ namespace Abilities
             yield return new WaitForSeconds(0.25f);
             _kartMeshDisabler.EnableKartMeshes(true);
             _health.UnsetInvincibility();
-            SWExtensions.AudioExtensions.PlayClipObjectAndDestroy(_useTpBackSound);
+            _useTpBackSound.Play();
             if (_tpBack != null)
             {
                 var y = _tpBack.transform.position.y + _tPBackSettings.IncreasedYPositionOnTP;
