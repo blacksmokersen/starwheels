@@ -4,7 +4,7 @@ using UnityEngine;
 using Bolt;
 using Multiplayer;
 using Multiplayer.Teams;
-using UnityEngine.Experimental.Rendering.HDPipeline;
+//using UnityEngine.Experimental.Rendering.HDPipeline;
 
 namespace Items
 {
@@ -14,7 +14,7 @@ namespace Items
         [SerializeField] private List<MeshRenderer> _meshRenderers;
         [SerializeField] private List<Light> _lights;
         [SerializeField] private List<TrailRenderer> _trails;
-        [SerializeField] private List<DecalProjectorComponent> _decals;
+      //  [SerializeField] private List<DecalProjectorComponent> _decals;
 
         private TeamColorSettings _colorSettings;
 
@@ -52,16 +52,18 @@ namespace Items
                 trail.startColor = _colorSettings.ItemsColor;
             }
 
+            /*
             foreach (var decal in _decals)
             {
-                /*
+
                 //Material material = new Shader(Shader.Find("HDRenderPipelin/Unlit"));
                 var newMat = new Material(decal.m_Material);
                 decal.m_Material = newMat;
                 //decal.m_Material.color = _colorSettings.ItemsColor;
                 decal.m_Material.SetColor("_BaseColor",_colorSettings.ItemsColor);
-                */
+
             }
+            */
         }
     }
 }
