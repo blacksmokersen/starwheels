@@ -8,9 +8,9 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ion-beam_ground-burned_mat
-  m_Shader: {fileID: 4800000, guid: 1d64af84bdc970c4fae0c1e06dd95b73, type: 3}
-  m_ShaderKeywords: _ALBEDOCONTRIBUTION _COLORMAP
-  m_LightmapFlags: 5
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: _ALBEDOCONTRIBUTION _COLORMAP _EMISSION
+  m_LightmapFlags: 1
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -29,6 +29,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 30d5ddc4e0436ed41a2ac685e775b14a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Burn:
         m_Texture: {fileID: 2800000, guid: 18438efb2767da14aaed1c4a4778dd7f, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -39,6 +43,22 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _BurnedTexture:
         m_Texture: {fileID: 2800000, guid: 30d5ddc4e0436ed41a2ac685e775b14a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FalloffTex:
@@ -57,11 +77,27 @@ Material:
         m_Texture: {fileID: 2800000, guid: 31cafcc7840963f43ab15238af6cc7eb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MaskMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -73,29 +109,45 @@ Material:
     - _AORemapMax: 1
     - _AORemapMin: 0
     - _AlbedoMode: 1
+    - _BumpScale: 1
     - _BurnedDispertion: 10
+    - _Cutoff: 0.5
     - _DecalBlend: 1
     - _DecalMaskMapBlueScale: 1
     - _DecalMeshDepthBias: 0
     - _DecalStencilRef: 8
     - _DecalStencilWriteMask: 8
+    - _DetailNormalMapScale: 1
     - _DrawOrder: 0
+    - _DstBlend: 0
     - _Float0: 2.61
     - _Float1: 10
     - _Float2: 1.08
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
     - _HdrpVersion: 2
     - _MaskBlendMode: 4
     - _MaskBlendSrc: 1
     - _MaskmapAO: 0
     - _MaskmapMetal: 0
     - _MaskmapSmoothness: 1
+    - _Metallic: 0
     - _MetallicScale: 1
+    - _Mode: 0
     - _NormalBlendSrc: 0
+    - _OcclusionStrength: 1
     - _Opa: 1
     - _Opaci: 1
     - _Opacity: 0
+    - _Parallax: 0.02
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Burn: {r: 2.9960785, g: 1.2569294, b: 0.627451, a: 1}
@@ -104,3 +156,4 @@ Material:
     - _Color0: {r: 0.7647059, g: 0.7131563, b: 0.7019608, a: 1}
     - _Color1: {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 0}
     - _ColorFire: {r: 2.9960785, g: 1.2569294, b: 0.627451, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
