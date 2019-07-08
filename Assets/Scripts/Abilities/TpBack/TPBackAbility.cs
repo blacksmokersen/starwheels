@@ -139,6 +139,11 @@ namespace Abilities
             }
         }
 
+        public void PlayTpBackSound()
+        {
+            _useTpBackSound.Play();
+        }
+
         // PRIVATE
 
         private IEnumerator BlinkTpBack()
@@ -150,7 +155,7 @@ namespace Abilities
             yield return new WaitForSeconds(0.25f);
             _kartMeshDisabler.EnableKartMeshes(true);
             _health.UnsetInvincibility();
-            _useTpBackSound.Play();
+            PlayTpBackSound();
             if (_tpBack != null)
             {
                 var y = _tpBack.transform.position.y + _tPBackSettings.IncreasedYPositionOnTP;
