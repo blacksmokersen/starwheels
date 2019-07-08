@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: pipe_water_mat
-  m_Shader: {fileID: 4800000, guid: 21907f83517f70042b755194093ea77b, type: 3}
+  m_Shader: {fileID: 4800000, guid: 667bd0d7c730ad94cb9f98b7cc1bcaf0, type: 3}
   m_ShaderKeywords: _BLENDMODE_ALPHA _BLENDMODE_PRESERVE_SPECULAR_LIGHTING _ENABLE_FOG_ON_TRANSPARENT
     _NORMALMAP_TANGENT_SPACE _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 4
@@ -118,6 +118,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Water:
+        m_Texture: {fileID: 2800000, guid: 6a6921b4060c40942a5459388016c99c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_22A37435: -0.6
     - Vector1_7EF09487: 1
@@ -192,6 +200,8 @@ Material:
     - _LinkDetailsWithBase: 1
     - _MaterialID: 1
     - _Metallic: 0
+    - _MoveSharpness: 3.47
+    - _MoveVisibility: 0.5
     - _NormalMapSpace: 0
     - _NormalScale: 1
     - _PPDLodThreshold: 5
@@ -210,6 +220,7 @@ Material:
     - _SmoothnessRemapMin: 0
     - _SpecularAAScreenSpaceVariance: 0.1
     - _SpecularAAThreshold: 0.2
+    - _Speed: 0.5
     - _SrcBlend: 1
     - _StencilRef: 2
     - _StencilRefMV: 128
@@ -236,6 +247,7 @@ Material:
     - _ZTestGBuffer: 4
     - _ZTestModeDistortion: 4
     - _ZWrite: 0
+    - __dirty: 0
     m_Colors:
     - Color_80A0D6BD: {r: 0.4079298, g: 0.44109267, b: 0.9716981, a: 0.7254902}
     - Color_AB2E332B: {r: 0.40792984, g: 0.4410927, b: 0.9716981, a: 0.7254902}
@@ -245,6 +257,8 @@ Material:
     - _BaseColor: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 0, g: 0, b: 0, a: 0}
+    - _ColorBase: {r: 0, g: 0.28913927, b: 1, a: 1}
+    - _ColorMove: {r: 0.44028127, g: 0.47010905, b: 0.9622642, a: 1}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 1}

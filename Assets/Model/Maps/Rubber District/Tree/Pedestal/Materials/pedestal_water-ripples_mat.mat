@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: pedestal_water-ripples_mat
-  m_Shader: {fileID: 4800000, guid: d820f50d1b8644e42ba8295b41110ccb, type: 3}
+  m_Shader: {fileID: 4800000, guid: c4a04e5e92f3c3440aeb92255657266f, type: 3}
   m_ShaderKeywords: _ALPHATEST_ON _BLENDMODE_ALPHA _BLENDMODE_PRESERVE_SPECULAR_LIGHTING
     _DOUBLESIDED_ON _ENABLE_FOG_ON_TRANSPARENT _NORMALMAP_TANGENT_SPACE _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 4
@@ -33,6 +33,10 @@ Material:
     - Texture2D_EF252BDB:
         m_Texture: {fileID: 2800000, guid: 36506a394b21ced40bc01c32d77dc1c1, type: 3}
         m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Alpha:
+        m_Texture: {fileID: 2800000, guid: 36506a394b21ced40bc01c32d77dc1c1, type: 3}
+        m_Scale: {x: 1, y: 2.8}
         m_Offset: {x: 0, y: 0}
     - _AnisotropyMap:
         m_Texture: {fileID: 0}
@@ -115,6 +119,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TransmittanceColorMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -208,6 +216,7 @@ Material:
     - _SmoothnessRemapMin: 0
     - _SpecularAAScreenSpaceVariance: 0.1
     - _SpecularAAThreshold: 0.2
+    - _Speed: 0.5
     - _SrcBlend: 1
     - _StencilRef: 2
     - _StencilRefMV: 128
@@ -233,11 +242,12 @@ Material:
     - _ZTestGBuffer: 3
     - _ZTestModeDistortion: 4
     - _ZWrite: 0
+    - __dirty: 0
     m_Colors:
     - Color_3D096BCE: {r: 0.16470581, g: 0.76554394, b: 1, a: 0.7607843}
     - Color_B7BE7B5A: {r: 0.003648994, g: 0.6960708, b: 0.7735849, a: 1}
     - Vector2_5F2B8131: {r: 1, g: 1, b: 0, a: 0}
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 0.6784314}
+    - _BaseColor: {r: 0, g: 0.6226806, b: 1, a: 0.6784314}
     - _Color: {r: 1, g: 1, b: 1, a: 0.6784314}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
