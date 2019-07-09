@@ -202,8 +202,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5884988996005528262}
   - component: {fileID: 6191984002853110640}
-  - component: {fileID: 7828119231575017367}
-  - component: {fileID: 7954092954356809305}
   m_Layer: 0
   m_Name: Spot Light
   m_TagString: Untagged
@@ -233,12 +231,13 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 383008338579379349}
   m_Enabled: 1
-  serializedVersion: 8
+  serializedVersion: 9
   m_Type: 0
   m_Color: {r: 0.90787077, g: 0.9245283, b: 0.763172, a: 1}
   m_Intensity: 7.957747
   m_Range: 3.3
   m_SpotAngle: 60
+  m_InnerSpotAngle: 45.074013
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -248,6 +247,24 @@ Light:
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
@@ -255,108 +272,17 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &7828119231575017367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 383008338579379349}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 3
-  m_Version: 3
-  directionalIntensity: 3.1415927
-  punctualIntensity: 600
-  areaIntensity: 200
-  enableSpotReflector: 0
-  luxAtDistance: 1
-  m_InnerSpotPercent: 0
-  lightDimmer: 1
-  m_VolumetricDimmer: 1
-  lightUnit: 0
-  sunDiskSize: 1
-  sunHaloSize: 0.1
-  fadeDistance: 10000
-  affectDiffuse: 1
-  affectSpecular: 1
-  nonLightmappedOnly: 0
-  lightTypeExtent: 0
-  spotLightShape: 0
-  shapeWidth: 0.5
-  shapeHeight: 0.5
-  aspectRatio: 1
-  shapeRadius: 0
-  maxSmoothness: 0.99
-  applyRangeAttenuation: 1
-  useOldInspector: 0
-  useVolumetric: 0
-  featuresFoldout: 1
-  showAdditionalSettings: 0
-  displayLightIntensity: 100
-  displayAreaLightEmissiveMesh: 0
-  lightLayers: 1
-  shadowNearPlane: 0.1
-  shadowSoftness: 0.5
-  blockerSampleCount: 24
-  filterSampleCount: 16
-  minFilterSize: 0.00001
---- !u!114 &7954092954356809305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 383008338579379349}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6c2871f720b2af4e9210febdac74517, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Version: 1
-  shadowResolution: 512
-  shadowDimmer: 1
-  volumetricShadowDimmer: 1
-  shadowFadeDistance: 10000
-  contactShadows: 0
-  viewBiasMin: 0.2
-  viewBiasMax: 100
-  viewBiasScale: 1
-  normalBiasMin: 0.5
-  normalBiasMax: 0.5
-  normalBiasScale: 1
-  sampleBiasScale: 0
-  edgeLeakFixup: 1
-  edgeToleranceNormal: 1
-  edgeTolerance: 1
-  shadowCascadeCount: 4
-  shadowCascadeRatios:
-  - 0.05
-  - 0.2
-  - 0.3
-  shadowCascadeBorders:
-  - 0.2
-  - 0.2
-  - 0.2
-  - 0.2
-  shadowAlgorithm: 0
-  shadowVariant: 0
-  shadowPrecision: 0
-  shadowData:
-    format: 0
-    data: 
-  shadowDatas: []
 --- !u!1 &425815916646938129
 GameObject:
   m_ObjectHideFlags: 0
@@ -2709,9 +2635,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81c0726451a24ff439cfc2c49852f834, type: 3}
---- !u!23 &4163631546383257995 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 2868237328887754981, guid: 81c0726451a24ff439cfc2c49852f834,
+--- !u!1 &2940194854899289171 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3948423045175209277, guid: 81c0726451a24ff439cfc2c49852f834,
     type: 3}
   m_PrefabInstance: {fileID: 2163476540931072366}
   m_PrefabAsset: {fileID: 0}
@@ -2721,9 +2647,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2163476540931072366}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2940194854899289171 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3948423045175209277, guid: 81c0726451a24ff439cfc2c49852f834,
+--- !u!23 &4163631546383257995 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2868237328887754981, guid: 81c0726451a24ff439cfc2c49852f834,
     type: 3}
   m_PrefabInstance: {fileID: 2163476540931072366}
   m_PrefabAsset: {fileID: 0}
@@ -2734,11 +2660,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2570249847100649268}
     m_Modifications:
-    - target: {fileID: 1639576001188359636, guid: 592e649f3c83bee4388d401e7c79e648,
-        type: 3}
-      propertyPath: m_Name
-      value: Effects
-      objectReference: {fileID: 0}
     - target: {fileID: 1645326353430571224, guid: 592e649f3c83bee4388d401e7c79e648,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2794,6 +2715,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1639576001188359636, guid: 592e649f3c83bee4388d401e7c79e648,
+        type: 3}
+      propertyPath: m_Name
+      value: Effects
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 592e649f3c83bee4388d401e7c79e648, type: 3}
 --- !u!4 &2569886416665811206 stripped
@@ -2809,16 +2735,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2570249847100649268}
     m_Modifications:
-    - target: {fileID: 5485306887111917156, guid: 9ac17e1b16575bf4687a7cc1f4143f09,
-        type: 3}
-      propertyPath: m_Name
-      value: char-Will
-      objectReference: {fileID: 0}
-    - target: {fileID: 5485306887111917156, guid: 9ac17e1b16575bf4687a7cc1f4143f09,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3947923967564217337, guid: 9ac17e1b16575bf4687a7cc1f4143f09,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2874,6 +2790,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5485306887111917156, guid: 9ac17e1b16575bf4687a7cc1f4143f09,
+        type: 3}
+      propertyPath: m_Name
+      value: char-Will
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485306887111917156, guid: 9ac17e1b16575bf4687a7cc1f4143f09,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8247222292614734551, guid: 9ac17e1b16575bf4687a7cc1f4143f09,
         type: 3}
       propertyPath: m_Controller
@@ -2905,16 +2831,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2570249847100649268}
     m_Modifications:
-    - target: {fileID: 4273089814318322691, guid: 0adee155d75830648b3fbc6d25f9978c,
-        type: 3}
-      propertyPath: m_Name
-      value: kart-storm
-      objectReference: {fileID: 0}
-    - target: {fileID: 4273089814318322691, guid: 0adee155d75830648b3fbc6d25f9978c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8823789486093251070, guid: 0adee155d75830648b3fbc6d25f9978c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2968,6 +2884,16 @@ PrefabInstance:
     - target: {fileID: 8823789486093251070, guid: 0adee155d75830648b3fbc6d25f9978c,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4273089814318322691, guid: 0adee155d75830648b3fbc6d25f9978c,
+        type: 3}
+      propertyPath: m_Name
+      value: kart-storm
+      objectReference: {fileID: 0}
+    - target: {fileID: 4273089814318322691, guid: 0adee155d75830648b3fbc6d25f9978c,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1586429002513581626, guid: 0adee155d75830648b3fbc6d25f9978c,
@@ -3027,6 +2953,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0adee155d75830648b3fbc6d25f9978c, type: 3}
+--- !u!1 &6829610653545247240 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4273089814318322691, guid: 0adee155d75830648b3fbc6d25f9978c,
+    type: 3}
+  m_PrefabInstance: {fileID: 7316860928547431947}
+  m_PrefabAsset: {fileID: 0}
 --- !u!23 &3940606900545685413 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 5991317090692997550, guid: 0adee155d75830648b3fbc6d25f9978c,
@@ -3039,12 +2971,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7316860928547431947}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6829610653545247240 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4273089814318322691, guid: 0adee155d75830648b3fbc6d25f9978c,
-    type: 3}
-  m_PrefabInstance: {fileID: 7316860928547431947}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7732460412738522213
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3052,11 +2978,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2570249847100649268}
     m_Modifications:
-    - target: {fileID: 5256750170891107721, guid: e11f3e8427e39c04696dd3d08a9b47f1,
-        type: 3}
-      propertyPath: m_Name
-      value: DriftTrails
-      objectReference: {fileID: 0}
     - target: {fileID: 5258901623832565389, guid: e11f3e8427e39c04696dd3d08a9b47f1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3112,6 +3033,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5256750170891107721, guid: e11f3e8427e39c04696dd3d08a9b47f1,
+        type: 3}
+      propertyPath: m_Name
+      value: DriftTrails
+      objectReference: {fileID: 0}
     - target: {fileID: 5255988627489180107, guid: e11f3e8427e39c04696dd3d08a9b47f1,
         type: 3}
       propertyPath: m_IsActive
@@ -3132,16 +3058,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2570249847100649268}
     m_Modifications:
-    - target: {fileID: 6592993616886022621, guid: cc752197f6c2550488a167061e4001ee,
-        type: 3}
-      propertyPath: m_Name
-      value: kart-extinction
-      objectReference: {fileID: 0}
-    - target: {fileID: 6592993616886022621, guid: cc752197f6c2550488a167061e4001ee,
-        type: 3}
-      propertyPath: m_Name
-      value: kart-extinction
-      objectReference: {fileID: 0}
     - target: {fileID: 6587233343144010183, guid: cc752197f6c2550488a167061e4001ee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3197,6 +3113,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6592993616886022621, guid: cc752197f6c2550488a167061e4001ee,
+        type: 3}
+      propertyPath: m_Name
+      value: kart-extinction
+      objectReference: {fileID: 0}
+    - target: {fileID: 6592993616886022621, guid: cc752197f6c2550488a167061e4001ee,
+        type: 3}
+      propertyPath: m_Name
+      value: kart-extinction
+      objectReference: {fileID: 0}
+    - target: {fileID: 6569468037536327119, guid: cc752197f6c2550488a167061e4001ee,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6587421420349724331, guid: cc752197f6c2550488a167061e4001ee,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -3231,11 +3162,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6569468037536327119, guid: cc752197f6c2550488a167061e4001ee,
-        type: 3}
-      propertyPath: m_RenderingLayerMask
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6589946628194787467, guid: cc752197f6c2550488a167061e4001ee,
         type: 3}
@@ -3329,15 +3255,15 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: bb51fbb070182bb4591f5a00ded05be3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc752197f6c2550488a167061e4001ee, type: 3}
---- !u!1 &2575527753969952984 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6592993616886022621, guid: cc752197f6c2550488a167061e4001ee,
-    type: 3}
-  m_PrefabInstance: {fileID: 8701262462929938693}
-  m_PrefabAsset: {fileID: 0}
 --- !u!23 &2587995579238026442 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 6569468037536327119, guid: cc752197f6c2550488a167061e4001ee,
+    type: 3}
+  m_PrefabInstance: {fileID: 8701262462929938693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2575527753969952984 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6592993616886022621, guid: cc752197f6c2550488a167061e4001ee,
     type: 3}
   m_PrefabInstance: {fileID: 8701262462929938693}
   m_PrefabAsset: {fileID: 0}
@@ -3354,16 +3280,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2570249847100649268}
     m_Modifications:
-    - target: {fileID: 1942351149404138758, guid: d22562b820268f341be25d77a52fc750,
-        type: 3}
-      propertyPath: m_Name
-      value: drift-activation_pref
-      objectReference: {fileID: 0}
-    - target: {fileID: 1942351149404138758, guid: d22562b820268f341be25d77a52fc750,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3137936858683279132, guid: d22562b820268f341be25d77a52fc750,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3417,6 +3333,16 @@ PrefabInstance:
     - target: {fileID: 3137936858683279132, guid: d22562b820268f341be25d77a52fc750,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1942351149404138758, guid: d22562b820268f341be25d77a52fc750,
+        type: 3}
+      propertyPath: m_Name
+      value: drift-activation_pref
+      objectReference: {fileID: 0}
+    - target: {fileID: 1942351149404138758, guid: d22562b820268f341be25d77a52fc750,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
