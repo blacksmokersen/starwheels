@@ -62,6 +62,9 @@ namespace Items
                 case 2:
                     StartCoroutine(MineStopRoutine(SecondBeforeStoppingBackward));
                     break;
+                case 3:
+                    StartCoroutine(MineStopRoutine(SecondBeforeStoppingBackward));
+                    break;
                 case 10:
                     DestroyObject(0.1f);
                     break;

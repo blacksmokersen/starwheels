@@ -22,15 +22,15 @@ namespace Items
                     if (ping <= 1)
                         framesToRewind = 0;
                     else if (ping >= 2 && ping <= 20)
-                        framesToRewind = 5;
+                        framesToRewind = 3; //Initial settings : 5
                     else if (ping >= 21 && ping <= 45)
-                        framesToRewind = 10;
+                        framesToRewind = 7; //Initial settings : 10
                     else if (ping >= 46 && ping <= 75)
-                        framesToRewind = 15;
+                        framesToRewind = 13; //Initial settings : 15
                     else if (ping >= 76 && ping <= 125)
-                        framesToRewind = 20;
+                        framesToRewind = 15; //Initial settings : 20
                     else
-                        framesToRewind = 25;
+                        framesToRewind = 20; //Initial settings : 25
 
                     ServerCollisionCheck(evnt.ItemCollsionPosition, evnt.ItemBoltEntity, evnt.TargetBoltEntity, framesToRewind, evnt.CollisionDistanceCheck);
                 }

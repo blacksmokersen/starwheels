@@ -22,6 +22,9 @@ namespace ThrowingSystem
     public class Throwable : EntityBehaviour<IThrowableState>
     {
         public ThrowableType ThrowableType;
+        public Direction DefaultThrowingDirection;
+        public Direction ForwardInputThrowingDirection;
+        public Direction BackwardInputThrowingDirection;
         public Size ThrowableSize;
         public FloatVariable Speed;
 

@@ -125,6 +125,8 @@ namespace Items
             int usableMode;
             if (_throwingDirection.LastDirectionUp == Direction.Backward)
                 usableMode = 2;
+            else if (_throwingDirection.LastDirectionUp == Direction.Default)
+                usableMode = 3;
             else
                 usableMode = 1;
             if (IsWallDetected)
@@ -148,7 +150,12 @@ namespace Items
             var throwable = instantiatedItem.GetComponent<Throwable>();
             if (throwable)
             {
-                _projectileLauncher.Throw(throwable, _throwingDirection.LastDirectionUp);
+                if (_throwingDirection.LastDirectionUp == Direction.Default)
+                    _projectileLauncher.Throw(throwable, throwable.DefaultThrowingDirection);
+                else if (_throwingDirection.LastDirectionUp == Direction.Forward)
+                    _projectileLauncher.Throw(throwable, throwable.ForwardInputThrowingDirection);
+                else
+                    _projectileLauncher.Throw(throwable, throwable.BackwardInputThrowingDirection);
             }
 
             /*
