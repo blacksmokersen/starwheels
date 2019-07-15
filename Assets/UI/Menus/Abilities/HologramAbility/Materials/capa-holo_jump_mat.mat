@@ -8,12 +8,12 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: capa-holo_jump_mat
-  m_Shader: {fileID: 4800000, guid: 2b17d97a1b88d9e4ba657cac637e6600, type: 3}
+  m_Shader: {fileID: 4800000, guid: 21a34e2a7f351db4b9cbc5418c6c41a0, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap:
     MotionVector: User
   disabledShaderPasses:
@@ -29,12 +29,28 @@ Material:
         m_Texture: {fileID: 2800000, guid: b762cb4a626382546a03e71fe37896b8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _BaseColor:
+        m_Texture: {fileID: 2800000, guid: b762cb4a626382546a03e71fe37896b8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Holograme:
+        m_Texture: {fileID: 2800000, guid: a7f05b6d2b6b5134b985ad0e878c759f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_1E53E96: 1
     - Vector1_C1250E2F: 0.3
     - Vector1_C14AF21B: 0.05
     - Vector1_E8F7319C: 6
+    - _Opacitybase: 0.25
+    - _PaternePower: 2
+    - _Speed: 0.15
     m_Colors:
     - Color_6A1ECF9D: {r: 0, g: 2.1740067, b: 2.828427, a: 0.48235294}
     - Vector2_BE0E5934: {r: 1, g: 0.2, b: 0, a: 0}
+    - _Color: {r: 0, g: 1.9607843, b: 2, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
