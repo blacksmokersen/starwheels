@@ -13,7 +13,7 @@ Shader "Map/Rubber District/Road/Barrier"
 	
 	SubShader
 	{
-		Tags { "RenderType"="Transparent" }
+		Tags { "RenderType"="Opaque" }
 		LOD 100
 		CGINCLUDE
 		#pragma target 3.0
@@ -97,7 +97,7 @@ Shader "Map/Rubber District/Road/Barrier"
 }
 /*ASEBEGIN
 Version=16103
-0;654;1433;347;6686.473;1043.558;6.871806;True;True
+0;654;1326;347;4542.756;685.2438;4.934406;True;True
 Node;AmplifyShaderEditor.TextureCoordinatesNode;11;-2365,-251;Float;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;-0.5,-0.5;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.LengthOpNode;13;-2034,-261;Float;True;1;0;FLOAT2;0,0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;17;-1910,31;Float;False;Property;_Gradiant;Gradiant;1;0;Create;True;0;0;False;0;1;3.79;0;0;0;1;FLOAT;0
@@ -110,7 +110,7 @@ Node;AmplifyShaderEditor.ColorNode;5;-799,-237;Float;False;Property;_OuterColor;
 Node;AmplifyShaderEditor.SamplerNode;2;-812,170;Float;True;Property;_Texture;Texture;0;0;Create;True;0;0;False;0;None;002f4f7fb6d949a47a2508f8e7c38597;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.LerpOp;3;-511,-96;Float;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;1;-257,28;Float;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;0;0,0;Float;False;True;2;Float;ASEMaterialInspector;0;1;Map/Rubber District/Road/Barrier;0770190933193b94aaa3065e307002fa;0;0;Unlit;2;True;4;1;False;-1;1;False;-1;4;1;False;-1;1;False;-1;True;0;False;-1;0;False;-1;True;False;True;2;False;-1;True;True;True;True;True;0;False;-1;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;RenderType=Transparent=RenderType;True;2;0;False;False;False;False;False;False;False;False;False;False;False;0;;0;0;Standard;0;2;0;FLOAT4;0,0,0,0;False;1;FLOAT3;0,0,0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;0;0,0;Float;False;True;2;Float;ASEMaterialInspector;0;1;Map/Rubber District/Road/Barrier;0770190933193b94aaa3065e307002fa;0;0;Unlit;2;True;4;1;False;-1;1;False;-1;4;1;False;-1;1;False;-1;True;0;False;-1;0;False;-1;True;False;True;2;False;-1;True;True;True;True;True;0;False;-1;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;RenderType=Opaque=RenderType;True;2;0;False;False;False;False;False;False;False;False;False;False;False;0;;0;0;Standard;0;2;0;FLOAT4;0,0,0,0;False;1;FLOAT3;0,0,0;False;0
 WireConnection;13;0;11;0
 WireConnection;15;0;13;0
 WireConnection;15;1;17;0
@@ -125,4 +125,4 @@ WireConnection;1;0;3;0
 WireConnection;1;1;2;0
 WireConnection;0;0;1;0
 ASEEND*/
-//CHKSM=28A60490DFBFD6B3825BD9BE618FAE6634276774
+//CHKSM=F2C070F272819060A289F30DBB07D6C338FB491B
