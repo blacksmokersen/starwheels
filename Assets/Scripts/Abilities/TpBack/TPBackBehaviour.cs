@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using Bolt;
 
 namespace Items
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class TPBackBehaviour : MonoBehaviour
+    public class TPBackBehaviour : GlobalEventListener
     {
         [Header("Owner")]
-        [HideInInspector]public Transform Kart;
+        [HideInInspector] public Transform Kart;
         public Quaternion KartRotation;
 
         [Header("TPBack parameters")]
@@ -42,6 +43,20 @@ namespace Items
             if (Kart != null)
             {
                 CheckForMaxDistance();
+            }
+        }
+
+        //BOLT
+
+        public override void OnEvent(PlayerHit evnt)
+        {
+            if (GetComponent<BoltEntity>().IsOwner)
+            {
+                if (evnt.VictimID == Kart.GetComponent<Multiplayer.PlayerInfo>().OwnerID)
+                {
+                    Kart.GetComponentInChildren<Abilities.TPBackAbility>().OnDislocatorDestroyed.Invoke();
+                    Destroy(gameObject);
+                }
             }
         }
 

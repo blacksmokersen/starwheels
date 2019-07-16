@@ -52,9 +52,29 @@ namespace SW.DebugUtils
 
         public void TriggerPlayerHitEvent()
         {
+
+            GameObject kart = SWExtensions.KartExtensions.GetKartWithID(SWMatchmaking.GetMyBoltId());
+
             PlayerHit playerHitEvent = PlayerHit.Create();
-            playerHitEvent.VictimEntity = SWExtensions.KartExtensions.GetKartWithID(SWMatchmaking.GetMyBoltId()).GetComponent<BoltEntity>();
+            playerHitEvent.VictimEntity = kart.GetComponent<BoltEntity>();
+
+            playerHitEvent.KillerID = kart.GetComponent<PlayerInfo>().OwnerID;
+            playerHitEvent.KillerName = kart.GetComponent<PlayerInfo>().name;
+            playerHitEvent.KillerTeam = (int)kart.GetComponent<PlayerInfo>().Team;
+         //   playerHitEvent.Item = _ownership.Label;
+            playerHitEvent.VictimID = kart.GetComponent<PlayerInfo>().OwnerID;
+            playerHitEvent.VictimName = kart.GetComponent<PlayerInfo>().name;
+            playerHitEvent.VictimTeam = (int)kart.GetComponent<PlayerInfo>().Team;
+
+
+
+
             playerHitEvent.Send();
+
+
+
+
+
         }
 
         public void TriggerPlayerQuitEvent()
