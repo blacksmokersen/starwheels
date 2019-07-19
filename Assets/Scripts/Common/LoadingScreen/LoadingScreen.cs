@@ -21,25 +21,41 @@ public class LoadingScreen : GlobalEventListener
 
     //CORE
 
-    private void Start()
+    private void Awake()
     {
-        StartLoadingGameScene(_lobbyData.ChosenMapName);
+        if (!BoltNetwork.IsConnected) // Used for In-Editor tests
+        {
+            gameObject.SetActive(false);
+        }
     }
 
+    private void Start()
+    {
+      //  SceneManager.LoadScene("LoadingScene", LoadSceneMode.Additive);
+      //  StartLoadingGameScene(_lobbyData.ChosenMapName);
+    }
+
+    /*
     private void Update()
     {
         if (_playersAreReady)
         {
-
+            SceneManager.UnloadSceneAsync("LoadingScene");
+            _playersAreReady = false;
+           // StartGame();
         }
     }
-
+    */
 
     //BOLT
 
-    public override void OnEvent(PlayerReady evnt)
+    public override void OnEvent(OnAllPlayersInGame evnt)
     {
-        _playersAreReady = true;
+        Debug.LogError("OnAllPlayersInGame INVOKE");
+        gameObject.SetActive(false);
+
+       // SceneManager.UnloadSceneAsync("LoadingScene");
+        // _playersAreReady = true;
     }
 
 
@@ -48,13 +64,30 @@ public class LoadingScreen : GlobalEventListener
 
     public void StartLoadingGameScene(string sceneName)
     {
-        SceneToLoad = sceneName;
-        StartCoroutine(LoadGameScene());
+       // SceneToLoad = sceneName;
+      //  StartCoroutine(StartGameIn(3));
+      //  StartCoroutine(LoadGameScene());
     }
 
 
     //PRIVATE
 
+    private void StartGame()
+    {
+        var roomToken = new RoomProtocolToken() { Gamemode = _lobbyData.ChosenGamemode };
+        BoltNetwork.LoadScene(_lobbyData.ChosenMapName, roomToken);
+    }
+
+
+        private IEnumerator StartGameIn(float timer)
+    {
+        yield return new WaitForSeconds(timer);
+
+        var roomToken = new RoomProtocolToken() { Gamemode = _lobbyData.ChosenGamemode };
+
+        BoltNetwork.LoadScene(_lobbyData.ChosenMapName, roomToken);
+
+    }
 
     private IEnumerator LoadGameScene()
     {
@@ -65,15 +98,31 @@ public class LoadingScreen : GlobalEventListener
 
         while (!asyncLoad.isDone)
         {
+            Debug.Log("1");
+            if (asyncLoad.progress >= 0.9f)
+            {
+              //  asyncLoad.allowSceneActivation = true;
+                if (BoltNetwork.IsServer)
+                {
+                    Debug.Log("2");
+                    _playersAreReady = true;
+                    /*
+                    var roomToken = new RoomProtocolToken() { Gamemode = _lobbyData.ChosenGamemode };
+                    BoltNetwork.LoadScene(_lobbyData.ChosenMapName, roomToken);
+                    */
+                }
+                Debug.Log("3");
+            }
             yield return null;
         }
-
+        Debug.Log("4");
+        /*
         if (BoltNetwork.IsServer)
         {
             var roomToken = new RoomProtocolToken() { Gamemode = _lobbyData.ChosenGamemode };
             BoltNetwork.LoadScene(_lobbyData.ChosenMapName, roomToken);
         }
-
+        */
 
         /*
         if (asyncLoad.isDone && _playersAreReady)

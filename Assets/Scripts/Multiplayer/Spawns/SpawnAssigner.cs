@@ -56,7 +56,7 @@ namespace Multiplayer
                 InitializeSpawns();
 
                 RoomInfoToken = (RoomProtocolToken)token;
-                _playersCount = RoomInfoToken.PlayersCount;
+                _playersCount = RoomInfoToken.PlayersCount; //////////////////////////
 
                 // Instantiate server kart
                 var serverTeam = _teamAssigner.PickAvailableTeam();
@@ -191,14 +191,17 @@ namespace Multiplayer
 
         private void IncreaseSpawnCount()
         {
+            Debug.LogError(RoomInfoToken.PlayersCount); // Toujours 0
             _spawnsAssigned++;
-            if (_spawnsAssigned >= _playersCount)
+            if (_spawnsAssigned >= _lobbySettings.CurrentPlayers  /*_playersCount*/)   //////////////////////////
             {
                 _gameIsReady = true;
             }
 
             if (_gameIsReady)
             {
+                OnAllPlayersInGame onAllPlayersInGame = OnAllPlayersInGame.Create();
+                onAllPlayersInGame.Send();
                 StartCoroutine(CountdownCoroutine());
             }
         }
