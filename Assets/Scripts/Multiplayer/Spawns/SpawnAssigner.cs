@@ -56,6 +56,12 @@ namespace Multiplayer
                 InitializeSpawns();
 
                 RoomInfoToken = (RoomProtocolToken)token;
+
+
+                Debug.LogError(RoomInfoToken.RoomInfo);
+                Debug.LogError(RoomInfoToken.Gamemode);
+                Debug.LogError(RoomInfoToken.PlayersCount);
+
                 _playersCount = RoomInfoToken.PlayersCount; //////////////////////////
 
                 // Instantiate server kart
@@ -191,9 +197,9 @@ namespace Multiplayer
 
         private void IncreaseSpawnCount()
         {
-            Debug.LogError(RoomInfoToken.PlayersCount); // Toujours 0
+         //   Debug.LogError(RoomInfoToken.PlayersCount); // Toujours 0
             _spawnsAssigned++;
-            if (_spawnsAssigned >= _lobbySettings.CurrentPlayers  /*_playersCount*/)   //////////////////////////
+            if (_spawnsAssigned >= _playersCount)   //////////////////////////
             {
                 _gameIsReady = true;
             }

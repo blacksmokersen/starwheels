@@ -74,7 +74,7 @@ public class LoadingScreen : GlobalEventListener
 
     private void StartGame()
     {
-        var roomToken = new RoomProtocolToken() { Gamemode = _lobbyData.ChosenGamemode };
+        var roomToken = new RoomProtocolToken() { Gamemode = _lobbyData.ChosenGamemode, PlayersCount = _lobbyData.CurrentPlayers};
         BoltNetwork.LoadScene(_lobbyData.ChosenMapName, roomToken);
     }
 
@@ -83,7 +83,7 @@ public class LoadingScreen : GlobalEventListener
     {
         yield return new WaitForSeconds(timer);
 
-        var roomToken = new RoomProtocolToken() { Gamemode = _lobbyData.ChosenGamemode };
+        var roomToken = new RoomProtocolToken() { Gamemode = _lobbyData.ChosenGamemode, PlayersCount = _lobbyData.CurrentPlayers };
 
         BoltNetwork.LoadScene(_lobbyData.ChosenMapName, roomToken);
 
