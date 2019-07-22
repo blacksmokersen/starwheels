@@ -34,6 +34,12 @@ public class CanvasDisabler : GlobalEventListener
 
     //BOLT
 
+    public override void OnEvent(OnAllPlayersInGame evnt)
+    {
+        if (evnt.IsGameAlreadyStarted)
+            SwitchDisabler();
+    }
+
     public override void OnEvent(LobbyCountdown evnt)
     {
         if (evnt.Time == 3)

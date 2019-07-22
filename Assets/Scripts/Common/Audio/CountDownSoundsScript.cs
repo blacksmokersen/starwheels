@@ -11,6 +11,16 @@ public class CountDownSoundsScript : GlobalEventListener
 
     private bool _alreadyLaunched = false;
 
+
+    public override void OnEvent(OnAllPlayersInGame evnt)
+    {
+        if (evnt.IsGameAlreadyStarted)
+        {
+            _numberCooldown.Play();
+            _alreadyLaunched = true;
+        }
+    }
+
     public override void OnEvent(LobbyCountdown evnt)
     {
         if (!_alreadyLaunched)

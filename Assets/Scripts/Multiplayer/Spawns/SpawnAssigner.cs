@@ -139,7 +139,7 @@ namespace Multiplayer
             playerSpawn.SpawnPosition = spawn.transform.position;
             playerSpawn.SpawnRotation = spawn.transform.rotation;
             playerSpawn.RoomToken = RoomInfoToken;
-            playerSpawn.TeamEnum = (int) team;
+            playerSpawn.TeamEnum = (int)team;
             playerSpawn.GameStarted = _gameIsStarted;
             playerSpawn.Send();
 
@@ -185,7 +185,7 @@ namespace Multiplayer
                 }
             }
 
-            if(validSpawns.Count > 0)
+            if (validSpawns.Count > 0)
             {
                 return validSpawns[Random.Range(0, validSpawns.Count)];
             }
@@ -197,7 +197,7 @@ namespace Multiplayer
 
         private void IncreaseSpawnCount()
         {
-         //   Debug.LogError(RoomInfoToken.PlayersCount); // Toujours 0
+            //   Debug.LogError(RoomInfoToken.PlayersCount); // Toujours 0
             _spawnsAssigned++;
             if (_spawnsAssigned >= _playersCount)   //////////////////////////
             {
@@ -207,8 +207,15 @@ namespace Multiplayer
             if (_gameIsReady)
             {
                 OnAllPlayersInGame onAllPlayersInGame = OnAllPlayersInGame.Create();
+                if (_gameIsStarted)
+                    onAllPlayersInGame.IsGameAlreadyStarted = true;
+                else
+                    onAllPlayersInGame.IsGameAlreadyStarted = false;
+
                 onAllPlayersInGame.Send();
-                StartCoroutine(CountdownCoroutine());
+
+                if (!_gameIsStarted)
+                    StartCoroutine(CountdownCoroutine());
             }
         }
 

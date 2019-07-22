@@ -29,13 +29,14 @@ namespace Multiplayer
             if (OnGameReady != null)
             {
                 OnGameReady.Invoke();
+            Debug.LogError("GAME START");
             }
             _gameStartedVariable.Value = true;
         }
 
         public override void OnEvent(LobbyCountdown evnt)
         {
-            //Debug.Log("Starts in " + evnt.Time);
+         //   Debug.LogError("Starts in " + evnt.Time);
         }
     }
 }

@@ -60,6 +60,12 @@ namespace CameraUtils
 
         //BOLT
 
+        public override void OnEvent(OnAllPlayersInGame evnt)
+        {
+            if (evnt.IsGameAlreadyStarted)
+                ShowPlayerCamera();
+        }
+
         public override void OnEvent(LobbyCountdown evnt)
         {
             if (evnt.Time == 3)
