@@ -13,6 +13,7 @@ public class LoadingScreen : GlobalEventListener
     [HideInInspector] public string SceneToLoad;
 
     [SerializeField] private LobbyData _lobbyData;
+    [SerializeField] private GameObject _inGameMenu;
 
     private bool _playersAreReady = false;
 
@@ -26,6 +27,7 @@ public class LoadingScreen : GlobalEventListener
         if (!BoltNetwork.IsConnected) // Used for In-Editor tests
         {
             gameObject.SetActive(false);
+            _inGameMenu.SetActive(true);
         }
     }
 
@@ -52,6 +54,7 @@ public class LoadingScreen : GlobalEventListener
     public override void OnEvent(OnAllPlayersInGame evnt)
     {
         Debug.LogError("OnAllPlayersInGame INVOKE");
+        _inGameMenu.SetActive(true);
         gameObject.SetActive(false);
 
        // SceneManager.UnloadSceneAsync("LoadingScene");
