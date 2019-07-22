@@ -29,14 +29,15 @@ namespace Multiplayer
             if (OnGameReady != null)
             {
                 OnGameReady.Invoke();
-            Debug.LogError("GAME START");
+                Debug.LogError("GAME START");
             }
             _gameStartedVariable.Value = true;
         }
 
         public override void OnEvent(LobbyCountdown evnt)
         {
-         //   Debug.LogError("Starts in " + evnt.Time);
+            if (BoltNetwork.IsServer)
+                Debug.LogError("Starts in " + evnt.Time);
         }
     }
 }

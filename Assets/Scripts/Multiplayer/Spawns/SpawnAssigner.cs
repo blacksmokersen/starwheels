@@ -197,9 +197,8 @@ namespace Multiplayer
 
         private void IncreaseSpawnCount()
         {
-            //   Debug.LogError(RoomInfoToken.PlayersCount); // Toujours 0
             _spawnsAssigned++;
-            if (_spawnsAssigned >= _playersCount)   //////////////////////////
+            if (_spawnsAssigned >= _playersCount)
             {
                 _gameIsReady = true;
             }

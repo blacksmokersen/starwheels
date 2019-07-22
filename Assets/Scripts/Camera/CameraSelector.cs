@@ -68,7 +68,7 @@ namespace CameraUtils
 
         public override void OnEvent(LobbyCountdown evnt)
         {
-            if (evnt.Time == 3)
+            if (evnt.Time == 5)
             {
                 ShowPlayerCamera();
             }

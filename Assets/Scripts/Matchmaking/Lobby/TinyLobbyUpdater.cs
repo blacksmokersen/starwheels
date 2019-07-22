@@ -126,6 +126,7 @@ namespace SW.Matchmaking
         {
             if (BoltNetwork.IsServer)
             {
+                _lobbyData.CurrentPlayers = SWMatchmaking.GetCurrentLobbyPlayerCount();
                 var roomToken = new RoomProtocolToken() { Gamemode = _lobbyData.ChosenGamemode, PlayersCount = _lobbyData.CurrentPlayers, RoomInfo =  "test2" };
                 BoltNetwork.LoadScene(_lobbyData.ChosenMapName, roomToken);
             }
