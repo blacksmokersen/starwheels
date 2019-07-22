@@ -42,7 +42,7 @@ public class CanvasDisabler : GlobalEventListener
 
     public override void OnEvent(LobbyCountdown evnt)
     {
-        if (evnt.Time == 3)
+        if (evnt.Time == 5)
         {
             SwitchDisabler();
         }
