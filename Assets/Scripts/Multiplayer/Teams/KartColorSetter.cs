@@ -32,6 +32,7 @@ namespace Multiplayer.Teams
         {
             if (entity.IsAttached)
             {
+                Debug.LogError(state.Team.ToTeam() + "  :    00000  :  " + GetComponentInParent<BoltEntity>().NetworkId);
                 SetKartTeamColor(state.Team.ToTeam());
             }
             else
@@ -46,10 +47,12 @@ namespace Multiplayer.Teams
             {
                 var newColor = _teamsSettings.GetSettings(team).KartColor;
                 var renderer = _kartSetter.CurrentKart.GetComponent<KartSkinSettings>().TargetRenderer;
-                renderer.material.SetColor("_BaseColor", newColor);
+                renderer.material.SetColor("_Color", newColor);
             }
             else
             {
+                Debug.LogError(_teamsSettings);
+                Debug.LogError(team);
                 Debug.LogError("TeamSettings was null. Couldn't set color.");
             }
         }
@@ -59,7 +62,7 @@ namespace Multiplayer.Teams
             var color = new Color();
             ColorUtility.TryParseHtmlString(hex, out color);
             var renderer = _kartSetter.CurrentKart.GetComponent<KartSkinSettings>().TargetRenderer;
-            renderer.material.SetColor("_BaseColor", color);
+            renderer.material.SetColor("_Color", color);
         }
     }
 }
