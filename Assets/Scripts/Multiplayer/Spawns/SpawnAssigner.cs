@@ -57,12 +57,9 @@ namespace Multiplayer
 
                 RoomInfoToken = (RoomProtocolToken)token;
 
+                Debug.LogError("RoomInfo : " + RoomInfoToken.RoomInfo + "   Gamemode : " + RoomInfoToken.Gamemode + "   PlayersCount : " + RoomInfoToken.PlayersCount);
 
-                Debug.LogError(RoomInfoToken.RoomInfo);
-                Debug.LogError(RoomInfoToken.Gamemode);
-                Debug.LogError(RoomInfoToken.PlayersCount);
-
-                _playersCount = RoomInfoToken.PlayersCount; //////////////////////////
+                _playersCount = RoomInfoToken.PlayersCount;
 
                 // Instantiate server kart
                 var serverTeam = _teamAssigner.PickAvailableTeam();

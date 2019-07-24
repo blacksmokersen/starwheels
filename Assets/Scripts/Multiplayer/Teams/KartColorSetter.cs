@@ -32,7 +32,6 @@ namespace Multiplayer.Teams
         {
             if (entity.IsAttached)
             {
-                Debug.LogError(state.Team.ToTeam() + "  :    00000  :  " + GetComponentInParent<BoltEntity>().NetworkId);
                 SetKartTeamColor(state.Team.ToTeam());
             }
             else
@@ -51,9 +50,7 @@ namespace Multiplayer.Teams
             }
             else
             {
-                Debug.LogError(_teamsSettings);
-                Debug.LogError(team);
-                Debug.LogError("TeamSettings was null. Couldn't set color.");
+                Debug.LogError("Team = None or TeamSettings was null. Couldn't set color.");
             }
         }
 
