@@ -4,6 +4,7 @@ using Bolt;
 public class LoadingScreen : GlobalEventListener
 {
     [SerializeField] private GameObject _inGameMenu;
+    [SerializeField] private GameObject _mapCamera;
 
     private bool _playersAreReady = false;
 
@@ -23,6 +24,7 @@ public class LoadingScreen : GlobalEventListener
     public override void OnEvent(OnAllPlayersInGame evnt)
     {
         Debug.LogError("OnAllPlayersInGame INVOKE");
+        _mapCamera.GetComponent<Animator>().enabled = true;
         _inGameMenu.SetActive(true);
         gameObject.SetActive(false);
     }

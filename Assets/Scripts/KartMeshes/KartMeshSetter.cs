@@ -53,6 +53,7 @@ namespace SW.Customization
 
         public override void OnEvent(PlayerReady evnt)
         {
+            Debug.LogError(evnt.KartIndex + "111");
             if (!evnt.Entity.IsOwner && evnt.Entity == _entity)
             {
                 SetKart(evnt.KartIndex);
@@ -61,6 +62,7 @@ namespace SW.Customization
 
         public override void OnEvent(PlayerInfoEvent evnt)
         {
+            Debug.LogError(evnt.KartIndex + "222");
             if (evnt.TargetPlayerID == SWMatchmaking.GetMyBoltId() && // This event is for me
                 evnt.KartEntity == _entity && // This is the targetted kart
                 !evnt.KartEntity.IsOwner) // I don't own this kart
