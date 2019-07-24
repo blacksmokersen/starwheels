@@ -60,7 +60,7 @@ public class CanvasDisabler : GlobalEventListener
 
     private IEnumerator ForcePlayerHUD()
     {
-        yield return new WaitForSeconds(15);
+        yield return new WaitForSeconds(30);
         GetComponent<Canvas>().enabled = true;
     }
 }
