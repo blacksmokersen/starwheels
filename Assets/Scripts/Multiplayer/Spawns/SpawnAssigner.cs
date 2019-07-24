@@ -56,7 +56,13 @@ namespace Multiplayer
                 InitializeSpawns();
 
                 RoomInfoToken = (RoomProtocolToken)token;
-                _playersCount = RoomInfoToken.PlayersCount;
+
+
+                Debug.LogError(RoomInfoToken.RoomInfo);
+                Debug.LogError(RoomInfoToken.Gamemode);
+                Debug.LogError(RoomInfoToken.PlayersCount);
+
+                _playersCount = RoomInfoToken.PlayersCount; //////////////////////////
 
                 // Instantiate server kart
                 var serverTeam = _teamAssigner.PickAvailableTeam();
@@ -133,7 +139,7 @@ namespace Multiplayer
             playerSpawn.SpawnPosition = spawn.transform.position;
             playerSpawn.SpawnRotation = spawn.transform.rotation;
             playerSpawn.RoomToken = RoomInfoToken;
-            playerSpawn.TeamEnum = (int) team;
+            playerSpawn.TeamEnum = (int)team;
             playerSpawn.GameStarted = _gameIsStarted;
             playerSpawn.Send();
 
@@ -179,7 +185,7 @@ namespace Multiplayer
                 }
             }
 
-            if(validSpawns.Count > 0)
+            if (validSpawns.Count > 0)
             {
                 return validSpawns[Random.Range(0, validSpawns.Count)];
             }
@@ -199,7 +205,16 @@ namespace Multiplayer
 
             if (_gameIsReady)
             {
-                StartCoroutine(CountdownCoroutine());
+                OnAllPlayersInGame onAllPlayersInGame = OnAllPlayersInGame.Create();
+                if (_gameIsStarted)
+                    onAllPlayersInGame.IsGameAlreadyStarted = true;
+                else
+                    onAllPlayersInGame.IsGameAlreadyStarted = false;
+
+                onAllPlayersInGame.Send();
+
+                if (!_gameIsStarted)
+                    StartCoroutine(CountdownCoroutine());
             }
         }
 

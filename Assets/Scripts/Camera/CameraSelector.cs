@@ -13,6 +13,8 @@ namespace CameraUtils
         [SerializeField] private CountdownSettings _countdownSettings;
         [SerializeField] private float _timeBeforeForcingPlayerCam;
 
+        private bool _kartEngineDisabled = false;
+
         //CORE
 
         private void Start()
@@ -60,9 +62,15 @@ namespace CameraUtils
 
         //BOLT
 
+        public override void OnEvent(OnAllPlayersInGame evnt)
+        {
+            if (evnt.IsGameAlreadyStarted)
+                ShowPlayerCamera();
+        }
+
         public override void OnEvent(LobbyCountdown evnt)
         {
-            if (evnt.Time == 3)
+            if (evnt.Time == 5)
             {
                 ShowPlayerCamera();
             }
@@ -76,7 +84,11 @@ namespace CameraUtils
             _freeCamera.enabled = false;
             _kartCamera.enabled = true;
             _freeCamera.GetComponent<FreeCamera>().Enabled = false;
-            _freeCamera.GetComponent<FreeCamera>().EnableKartControls();
+            if (_kartEngineDisabled)
+            {
+                _freeCamera.GetComponent<FreeCamera>().EnableKartControls();
+                _kartEngineDisabled = false;
+            }
         }
 
         private void ShowMapCamera()
@@ -86,6 +98,7 @@ namespace CameraUtils
             _freeCamera.enabled = false;
             _freeCamera.GetComponent<FreeCamera>().Enabled = false;
             _freeCamera.GetComponent<FreeCamera>().DisableKartControls();
+            _kartEngineDisabled = true;
         }
 
         private void ShowFreeCamera()
@@ -95,6 +108,7 @@ namespace CameraUtils
             _freeCamera.enabled = true;
             _freeCamera.GetComponent<FreeCamera>().Enabled = true;
             _freeCamera.GetComponent<FreeCamera>().DisableKartControls();
+            _kartEngineDisabled = true;
         }
 
         //DEBUG

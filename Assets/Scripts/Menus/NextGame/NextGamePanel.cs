@@ -34,7 +34,8 @@ namespace Menu
                 var token = new Multiplayer.RoomProtocolToken()
                 {
                     Gamemode = _lobbyData.ChosenGamemode,
-                    PlayersCount = SWMatchmaking.GetCurrentLobbyPlayerCount()
+                    PlayersCount = SWMatchmaking.GetCurrentLobbyPlayerCount(),
+                    RoomInfo = "test"
                 };
                 BoltNetwork.LoadScene(_lobbyData.ChosenMapName, token);
             }

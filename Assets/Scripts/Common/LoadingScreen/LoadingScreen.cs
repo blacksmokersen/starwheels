@@ -1,96 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 using Bolt;
-using SW.Matchmaking;
-using Multiplayer;
 
 public class LoadingScreen : GlobalEventListener
 {
-
-
-    [HideInInspector] public string SceneToLoad;
-
-    [SerializeField] private LobbyData _lobbyData;
+    [SerializeField] private GameObject _inGameMenu;
+    [SerializeField] private GameObject _mapCamera;
 
     private bool _playersAreReady = false;
 
-
-
-
     //CORE
 
-    private void Start()
+    private void Awake()
     {
-        StartLoadingGameScene(_lobbyData.ChosenMapName);
-    }
-
-    private void Update()
-    {
-        if (_playersAreReady)
+        if (!BoltNetwork.IsConnected) // Used for In-Editor tests
         {
-
+            gameObject.SetActive(false);
+            _inGameMenu.SetActive(true);
         }
     }
-
 
     //BOLT
 
-    public override void OnEvent(PlayerReady evnt)
+    public override void OnEvent(OnAllPlayersInGame evnt)
     {
-        _playersAreReady = true;
-    }
-
-
-    //PUBLIC
-
-
-    public void StartLoadingGameScene(string sceneName)
-    {
-        SceneToLoad = sceneName;
-        StartCoroutine(LoadGameScene());
-    }
-
-
-    //PRIVATE
-
-
-    private IEnumerator LoadGameScene()
-    {
-        Debug.Log("Starting MainMenu load.");
-
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(SceneToLoad, LoadSceneMode.Additive);
-        asyncLoad.allowSceneActivation = false;
-
-        while (!asyncLoad.isDone)
-        {
-            yield return null;
-        }
-
-        if (BoltNetwork.IsServer)
-        {
-            var roomToken = new RoomProtocolToken() { Gamemode = _lobbyData.ChosenGamemode };
-            BoltNetwork.LoadScene(_lobbyData.ChosenMapName, roomToken);
-        }
-
-
-        /*
-        if (asyncLoad.isDone && _playersAreReady)
-        {
-            asyncLoad.allowSceneActivation = true;
-        }
-        */
-
-        /*
-        while (!asyncLoad.isDone)
-        {
-            if (_loadMainMenu)
-            {
-                asyncLoad.allowSceneActivation = true;
-            }
-            yield return null;
-            */
+        Debug.LogError("OnAllPlayersInGame INVOKE");
+        _mapCamera.GetComponent<Animator>().enabled = true;
+        _inGameMenu.SetActive(true);
+        gameObject.SetActive(false);
     }
 }
 
