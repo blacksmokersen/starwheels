@@ -116,6 +116,21 @@ namespace SWExtensions
             return teamKarts;
         }
 
+        public static List<GameObject> GetKartsWithTeam(Team team)
+        {
+            var teamKarts = new List<GameObject>();
+            var allKarts = GameObject.FindGameObjectsWithTag(Constants.Tag.Kart);
+            foreach (GameObject kart in allKarts)
+            {
+                var kartPlayer = kart.GetComponent<PlayerInfo>();
+                if (kartPlayer.Team == team)
+                {
+                    teamKarts.Add(kart);
+                }
+            }
+            return teamKarts;
+        }
+
         public static GameObject GetNextTeamKart(this PlayerInfo playerSettings, GameObject currentTeamKart)
         {
             var teamKarts = playerSettings.GetTeamKarts();

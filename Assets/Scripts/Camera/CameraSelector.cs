@@ -76,9 +76,17 @@ namespace CameraUtils
             }
         }
 
-        //PRIVATE
+        public override void OnEvent(GameOver evnt)
+        {
+            _mapCamera.enabled = false;
+            _freeCamera.enabled = false;
+            _kartCamera.enabled = false;
+            _freeCamera.GetComponent<FreeCamera>().Enabled = false;
+            _freeCamera.GetComponent<FreeCamera>().DisableKartControls();
+        }
+            //PRIVATE
 
-        private void ShowPlayerCamera()
+            private void ShowPlayerCamera()
         {
             _mapCamera.enabled = false;
             _freeCamera.enabled = false;
