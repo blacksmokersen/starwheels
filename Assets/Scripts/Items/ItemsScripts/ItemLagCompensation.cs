@@ -10,6 +10,8 @@ namespace Items
         [SerializeField] private float _collisionDistanceCheck;
         private BoltHitboxBody boltHitboxBody;
 
+        //CORE
+
         protected void OnTriggerEnter(Collider other)
         {
             if (BoltNetwork.IsClient && entity.isAttached && entity.isOwner)
@@ -50,6 +52,18 @@ namespace Items
                     }
                 }
             }
+        }
+
+        //PUBLIC
+
+        public void SetCollisionDistanceCheck(float value)
+        {
+            _collisionDistanceCheck = value;
+        }
+
+        public float GetCollisionDistanceCheck()
+        {
+            return _collisionDistanceCheck;
         }
     }
 }
