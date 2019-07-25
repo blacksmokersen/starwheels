@@ -24,12 +24,14 @@ namespace Items
         private float _speed = 0.05f;
         private bool _lerping = false;
         private GameObject _target;
+        private MineBehaviour _mineBehaviour;
 
         // CORE
 
         private void Awake()
         {
             _ownership = GetComponentInParent<Ownership>();
+            _mineBehaviour = GetComponentInParent<MineBehaviour>();
         }
 
         private void Update()
@@ -48,7 +50,8 @@ namespace Items
                 var playerEntity = other.GetComponentInParent<BoltEntity>();
                 if (playerEntity.isAttached && entity.isAttached && playerEntity.GetState<IKartState>().Team != (int)_ownership.Team)
                 {
-                    StartLerpingTowardTarget(other.gameObject);
+                    if (!_mineBehaviour.MinePositionFixed)
+                        StartLerpingTowardTarget(other.gameObject);
                 }
             }
         }
@@ -66,7 +69,7 @@ namespace Items
 
         private void SpeedIncrease()
         {
-            _speed = Mathf.Clamp((_speed * _speedMultiplicator.Value),0 , _speedCap);
+            _speed = Mathf.Clamp((_speed * _speedMultiplicator.Value), 0, _speedCap);
         }
 
         private IEnumerator WaitBeforeLerping()

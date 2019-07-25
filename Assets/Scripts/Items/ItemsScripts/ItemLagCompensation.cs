@@ -23,6 +23,7 @@ namespace Items
 
                     foreach (BoltHitbox hitbox in boltHitboxBody.hitboxes)
                     {
+                      //  Debug.LogError("ITEMSLAGCHECKEVENT");
                         ItemCollsionLagCompensationEvent itemsLagCheckEvent = ItemCollsionLagCompensationEvent.Create();
                         itemsLagCheckEvent.ItemBoltEntity = GetComponentInParent<BoltEntity>();
                         itemsLagCheckEvent.TargetBoltEntity = other.GetComponentInParent<BoltEntity>();

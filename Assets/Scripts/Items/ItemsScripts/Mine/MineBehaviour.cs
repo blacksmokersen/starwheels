@@ -26,7 +26,7 @@ namespace Items
         [Header("Triggers To Activate")]
         [SerializeField] private List<Collider> _triggers;
 
-        private bool _minePositionFixed = false;
+        [HideInInspector] public bool MinePositionFixed = false;
 
         // CORE
 
@@ -103,7 +103,7 @@ namespace Items
 
         private void StopMine()
         {
-            if (!_minePositionFixed)
+            if (!MinePositionFixed)
             {
                 GetComponent<Hovering>().Disable();
 
@@ -115,7 +115,7 @@ namespace Items
                 _animator.SetTrigger("Stop");
                 PlayIdleSound();
 
-                _minePositionFixed = true;
+                MinePositionFixed = true;
             }
         }
 
