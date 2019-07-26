@@ -16,6 +16,8 @@ namespace Menu.InGameScores
         [SerializeField] private TextMeshProUGUI _deathCount;
         [SerializeField] private Image _abilityLogo;
 
+        [SerializeField] private Sprite[] _allAbilitiesSprites;
+
         // PUBLIC
 
         public void UpdateNickname(string nickname)
@@ -39,7 +41,7 @@ namespace Menu.InGameScores
 
         public void UpdateAbilityLogo(int index)
         {
-
+            _abilityLogo.sprite = _allAbilitiesSprites[index];
         }
     }
 }

@@ -27,6 +27,7 @@ namespace Menu.InGameScores
         [Header("Events")]
         public DoubleIntEvent OnPlayerKillCountUpdated;
         public DoubleIntEvent OnPlayerDeathCountUpdated;
+        public DoubleIntEvent OnPlayerAbilityUpdated;
 
         // BOLT SPECIFIC EVENTS
 
@@ -97,6 +98,10 @@ namespace Menu.InGameScores
             {
                 UpdatePlayerKillCount(evnt.PlayerID, evnt.StatValue);
             }
+            if (evnt.StatName == Constants.PlayerStats.Ability)
+            {
+                UpdatePlayerAbility(evnt.PlayerID, evnt.StatValue);
+            }
         }
 
         // PUBLIC
@@ -124,6 +129,11 @@ namespace Menu.InGameScores
         public void UpdatePlayerDeathCount(int id, int count)
         {
             OnPlayerDeathCountUpdated.Invoke(id, count);
+        }
+
+        public void UpdatePlayerAbility(int id, int abilityIndex)
+        {
+            OnPlayerAbilityUpdated.Invoke(id, abilityIndex);
         }
 
         // PRIVATE
