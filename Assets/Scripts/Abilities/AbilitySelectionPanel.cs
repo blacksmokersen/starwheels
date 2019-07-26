@@ -56,10 +56,9 @@ namespace Abilities
                     _playerSettings.AbilityIndex = abilityIndex;
                     _playerSettings.OnAbilityIndexUpdated.Invoke();
 
-                    PlayerStatUpdate playerAbilityUpdate = PlayerStatUpdate.Create();
-                    playerAbilityUpdate.StatName = Constants.PlayerStats.Ability;
+                    OnUpdateAbility playerAbilityUpdate = OnUpdateAbility.Create();
                     playerAbilityUpdate.PlayerID = SWMatchmaking.GetMyBoltId();
-                    playerAbilityUpdate.StatValue = _playerSettings.AbilityIndex;
+                    playerAbilityUpdate.AbilityIndex = _playerSettings.AbilityIndex;
                     playerAbilityUpdate.Send();
                 }
 
@@ -74,10 +73,9 @@ namespace Abilities
                 _playerSettings.AbilityIndex = abilityIndex;
                 _playerSettings.OnAbilityIndexUpdated.Invoke();
 
-                PlayerStatUpdate playerAbilityUpdate = PlayerStatUpdate.Create();
-                playerAbilityUpdate.StatName = Constants.PlayerStats.Ability;
+                OnUpdateAbility playerAbilityUpdate = OnUpdateAbility.Create();
                 playerAbilityUpdate.PlayerID = SWMatchmaking.GetMyBoltId();
-                playerAbilityUpdate.StatValue = _playerSettings.AbilityIndex;
+                playerAbilityUpdate.AbilityIndex = _playerSettings.AbilityIndex;
                 playerAbilityUpdate.Send();
             }
 

@@ -88,6 +88,18 @@ namespace Menu.InGameScores
             }
         }
 
+        public override void OnEvent(OnUpdateAbility evnt)
+        {
+            if (BoltNetwork.IsServer)
+            {
+                PlayerStatUpdate playerAbilityUpdate = PlayerStatUpdate.Create();
+                playerAbilityUpdate.StatName = Constants.PlayerStats.Ability;
+                playerAbilityUpdate.PlayerID = evnt.PlayerID;
+                playerAbilityUpdate.StatValue = evnt.AbilityIndex;
+                playerAbilityUpdate.Send();
+            }
+        }
+
         public override void OnEvent(PlayerStatUpdate evnt)
         {
             if (evnt.StatName == Constants.PlayerStats.DeathCountName)
