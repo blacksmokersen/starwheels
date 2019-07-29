@@ -38,6 +38,7 @@ namespace Menu.InGameScores
                 {
                     entry.UpdateKillCount(evnt.KillCount);
                     entry.UpdateDeathCount(evnt.DeathCount);
+                    entry.UpdateTeamColor(evnt.Team.ToTeam());
                 }
             }
         }
@@ -60,6 +61,7 @@ namespace Menu.InGameScores
             {
                 var entry = Instantiate(_playerPrefab);
                 entry.UpdateNickname(nickname);
+                entry.UpdateTeamColor(team);
 
                 if (!TeamScoreEntries.ContainsKey(team))
                 {
