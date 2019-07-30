@@ -124,11 +124,17 @@ namespace Items
             var instantiatedItem = BoltNetwork.Instantiate(CurrentItem.ItemPrefab, transform.position + transform.forward, transform.rotation);
             int usableMode;
             if (_throwingDirection.LastDirectionUp == Direction.Backward)
+            {
                 usableMode = 2;
+            }
             else if (_throwingDirection.LastDirectionUp == Direction.Default)
-                usableMode = 3;
-            else
+            {
                 usableMode = 1;
+            }
+            else
+            {
+                usableMode = 1;
+            }
             if (IsWallDetected)
                 usableMode = 10;
 
@@ -158,7 +164,7 @@ namespace Items
                     _projectileLauncher.Throw(throwable, throwable.BackwardInputThrowingDirection);
             }
 
-
+            /*
             var usable = instantiatedItem.GetComponent<MultiModeUsable>();
             if (usable && throwable == null)
             {
@@ -171,7 +177,7 @@ namespace Items
                     usable.SetMode(1);
                 }
             }
-
+            */
 
             itemThrownEvent.Send();
         }
