@@ -12,6 +12,7 @@
     {
         public const string DeathCountName = "DeathCount";
         public const string KillCountName = "KillCount";
+        public const string Ability = "Ability";
     }
 
     // Layers

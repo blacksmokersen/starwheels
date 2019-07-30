@@ -158,9 +158,9 @@ namespace Items
                     _projectileLauncher.Throw(throwable, throwable.BackwardInputThrowingDirection);
             }
 
-            /*
+
             var usable = instantiatedItem.GetComponent<MultiModeUsable>();
-            if (usable)
+            if (usable && throwable == null)
             {
                 if (_throwingDirection.LastDirectionUp == Direction.Backward)
                 {
@@ -171,7 +171,7 @@ namespace Items
                     usable.SetMode(1);
                 }
             }
-            */
+
 
             itemThrownEvent.Send();
         }

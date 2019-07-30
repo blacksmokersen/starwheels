@@ -11,12 +11,35 @@ namespace Menu.InGameScores
         [SerializeField] private int _maxNameLength;
 
         [Header("UI Elements")]
+        [SerializeField] private TextMeshProUGUI _rank;
+        [SerializeField] private Image _avatar;
         [SerializeField] private TextMeshProUGUI _nickname;
+        [SerializeField] private Image _teamColor;
+        [SerializeField] private Image _abilityLogo;
         [SerializeField] private TextMeshProUGUI _killCount;
         [SerializeField] private TextMeshProUGUI _deathCount;
-        [SerializeField] private Image _abilityLogo;
+
+        [SerializeField] private Sprite[] _allAbilitiesSprites;
+
+        private GameSettings _gameSettings;
+
+        //CORE
+
+        private void Awake()
+        {
+            _gameSettings = Resources.Load<GameSettings>(Constants.Resources.GameSettings);
+        }
 
         // PUBLIC
+
+        public void UpdateRank(int rank)
+        {
+            _rank.text = "" + rank;
+        }
+        public void UpdateAvatar(string nickname)
+        {
+          //  _avatar.sprite = ; PAR STEAM
+        }
 
         public void UpdateNickname(string nickname)
         {
@@ -27,6 +50,16 @@ namespace Menu.InGameScores
             _nickname.text = nickname;
         }
 
+        public void UpdateTeamColor(Team team)
+        {
+            _teamColor.color = _gameSettings.TeamsListSettings.GetSettings(team).KillFeedEntryColor;
+        }
+
+        public void UpdateAbilityLogo(int index)
+        {
+            _abilityLogo.sprite = _allAbilitiesSprites[index];
+        }
+
         public void UpdateKillCount(int killCount)
         {
             _killCount.text = "" + killCount;
@@ -35,11 +68,6 @@ namespace Menu.InGameScores
         public void UpdateDeathCount(int deathCount)
         {
             _deathCount.text = "" + deathCount;
-        }
-
-        public void UpdateAbilityLogo(int index)
-        {
-
         }
     }
 }

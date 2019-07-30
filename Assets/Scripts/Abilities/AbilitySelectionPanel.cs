@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using Multiplayer;
 using TMPro;
+using Bolt;
+using SW.Matchmaking;
 
 namespace Abilities
 {
@@ -53,6 +55,11 @@ namespace Abilities
                 {
                     _playerSettings.AbilityIndex = abilityIndex;
                     _playerSettings.OnAbilityIndexUpdated.Invoke();
+
+                    OnUpdateAbility playerAbilityUpdate = OnUpdateAbility.Create();
+                    playerAbilityUpdate.PlayerID = SWMatchmaking.GetMyBoltId();
+                    playerAbilityUpdate.AbilityIndex = _playerSettings.AbilityIndex;
+                    playerAbilityUpdate.Send();
                 }
 
                 toggle.onValueChanged.AddListener((b) => UpdateAbilityIndex(abilityIndex, b));
@@ -65,6 +72,11 @@ namespace Abilities
             {
                 _playerSettings.AbilityIndex = abilityIndex;
                 _playerSettings.OnAbilityIndexUpdated.Invoke();
+
+                OnUpdateAbility playerAbilityUpdate = OnUpdateAbility.Create();
+                playerAbilityUpdate.PlayerID = SWMatchmaking.GetMyBoltId();
+                playerAbilityUpdate.AbilityIndex = _playerSettings.AbilityIndex;
+                playerAbilityUpdate.Send();
             }
 
             HidePanel();
