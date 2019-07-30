@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
+using System.Collections;
 using Bolt;
 
 public class LoadingScreen : GlobalEventListener
 {
+    [Header("Settings")]
+    [SerializeField] private float _loadingMinDuration;
+
+    [Header("UI Elements")]
     [SerializeField] private GameObject _inGameMenu;
     [SerializeField] private GameObject _mapCamera;
 
@@ -24,6 +29,12 @@ public class LoadingScreen : GlobalEventListener
     public override void OnEvent(OnAllPlayersInGame evnt)
     {
         Debug.LogError("OnAllPlayersInGame INVOKE");
+        StartCoroutine(LoadingMinimumUpTime(_loadingMinDuration));
+    }
+
+    private IEnumerator LoadingMinimumUpTime(float duration)
+    {
+        yield return new WaitForSeconds(duration);
         _mapCamera.GetComponent<Animator>().enabled = true;
         _inGameMenu.SetActive(true);
         gameObject.SetActive(false);
