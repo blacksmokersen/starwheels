@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Steamworks;
 
 namespace Menu.InGameScores
 {
@@ -36,9 +37,13 @@ namespace Menu.InGameScores
         {
             _rank.text = "" + rank;
         }
-        public void UpdateAvatar(string nickname)
+
+        public void UpdateAvatar(int userID)
         {
-          //  _avatar.sprite = ; PAR STEAM
+            Rect rect = new Rect(0, 0, 184, 184);
+            Vector2 pivot = new Vector2(.5f, .5f);
+            Texture2D avatarTexture = SWExtensions.SteamExtensions.GetSteamAvatarTexture((CSteamID)(ulong)userID);
+            _avatar.sprite = Sprite.Create(avatarTexture, rect, pivot);
         }
 
         public void UpdateNickname(string nickname)

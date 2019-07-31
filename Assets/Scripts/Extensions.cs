@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Multiplayer;
+using Steamworks;
 
 namespace SWExtensions
 {
@@ -12,6 +13,35 @@ namespace SWExtensions
             byte[] bytes = new byte[16];
             BitConverter.GetBytes(value).CopyTo(bytes, 0);
             return new Guid(bytes);
+        }
+    }
+
+    public static class SteamExtensions
+    {
+        public static Texture2D GetSteamAvatarTexture(CSteamID userID)
+        {
+            int FriendAvatar = SteamFriends.GetSmallFriendAvatar(userID);
+            uint imageWidth;
+            uint imageHeight;
+            bool success = SteamUtils.GetImageSize(FriendAvatar, out imageWidth, out imageHeight);
+
+            if (success && imageWidth > 0 && imageHeight > 0)
+            {
+                byte[] Image = new byte[imageWidth * imageHeight * 4];
+                Texture2D returnTexture = new Texture2D((int)imageWidth, (int)imageHeight, TextureFormat.RGBA32, false, true);
+                success = SteamUtils.GetImageRGBA(FriendAvatar, Image, (int)(imageWidth * imageHeight * 4));
+                if (success)
+                {
+                    returnTexture.LoadRawTextureData(Image);
+                    returnTexture.Apply();
+                }
+                return returnTexture;
+            }
+            else
+            {
+                Debug.LogError("Couldn't get avatar.");
+                return new Texture2D(0, 0);
+            }
         }
     }
 

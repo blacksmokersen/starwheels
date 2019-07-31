@@ -25,7 +25,7 @@ namespace Menu.InGameScores
         {
             if (!PlayerScoreEntries.ContainsKey(evnt.PlayerID))
             {
-                CreateEntryForPlayer(evnt.PlayerID, evnt.Nickname, evnt.Team.ToTeam());
+                CreateEntryForPlayer(evnt.PlayerID, evnt.Nickname, evnt.Team.ToTeam(), evnt.SteamID);
             }
         }
 
@@ -33,7 +33,7 @@ namespace Menu.InGameScores
         {
             if (evnt.TargetPlayerID == SWMatchmaking.GetMyBoltId())
             {
-                var entry = CreateEntryForPlayer(evnt.PlayerID, evnt.Name, evnt.Team.ToTeam());
+                var entry = CreateEntryForPlayer(evnt.PlayerID, evnt.Name, evnt.Team.ToTeam(), evnt.SteamID);
                 if (entry)
                 {
                     entry.UpdateKillCount(evnt.KillCount);
@@ -55,13 +55,14 @@ namespace Menu.InGameScores
 
         // PUBLIC
 
-        public PlayerInGameScoresEntry CreateEntryForPlayer(int id, string nickname, Team team)
+        public PlayerInGameScoresEntry CreateEntryForPlayer(int id, string nickname, Team team, int steamID)
         {
             if (!PlayerScoreEntries.ContainsKey(id))
             {
                 var entry = Instantiate(_playerPrefab);
                 entry.UpdateNickname(nickname);
                 entry.UpdateTeamColor(team);
+                entry.UpdateAvatar(steamID);
 
                 if (!TeamScoreEntries.ContainsKey(team))
                 {
