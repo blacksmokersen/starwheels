@@ -10,6 +10,7 @@ public class LoadingScreen : GlobalEventListener
     [Header("UI Elements")]
     [SerializeField] private GameObject _inGameMenu;
     [SerializeField] private GameObject _mapCamera;
+    [SerializeField] private GameObject _abilityPickPanel;
 
     private bool _playersAreReady = false;
 
@@ -22,6 +23,8 @@ public class LoadingScreen : GlobalEventListener
             gameObject.SetActive(false);
             _inGameMenu.SetActive(true);
         }
+        else
+            _abilityPickPanel.SetActive(false);
     }
 
     //BOLT
@@ -29,6 +32,7 @@ public class LoadingScreen : GlobalEventListener
     public override void OnEvent(OnAllPlayersInGame evnt)
     {
         Debug.LogError("OnAllPlayersInGame INVOKE");
+        _inGameMenu.SetActive(true);
         StartCoroutine(LoadingMinimumUpTime(_loadingMinDuration));
     }
 
@@ -36,7 +40,7 @@ public class LoadingScreen : GlobalEventListener
     {
         yield return new WaitForSeconds(duration);
         _mapCamera.GetComponent<Animator>().enabled = true;
-        _inGameMenu.SetActive(true);
+        _abilityPickPanel.SetActive(true);
         gameObject.SetActive(false);
     }
 }
