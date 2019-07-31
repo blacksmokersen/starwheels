@@ -2,12 +2,15 @@
 using UnityEngine.UI;
 using TMPro;
 using Steamworks;
+using SWExtensions;
 
 namespace Menu.InGameScores
 {
     [DisallowMultipleComponent]
     public class PlayerInGameScoresEntry : MonoBehaviour
     {
+        [HideInInspector] public int SteamID = -1;
+
         [Header("Settings")]
         [SerializeField] private int _maxNameLength;
 
@@ -23,12 +26,18 @@ namespace Menu.InGameScores
         [SerializeField] private Sprite[] _allAbilitiesSprites;
 
         private GameSettings _gameSettings;
+        private Callback<AvatarImageLoaded_t> _avatarLoadedCallback;
 
         //CORE
 
         private void Awake()
         {
             _gameSettings = Resources.Load<GameSettings>(Constants.Resources.GameSettings);
+            if (SteamManager.Initialized)
+            {
+                Debug.Log("LOOOOOOOl");
+                _avatarLoadedCallback = Callback<AvatarImageLoaded_t>.Create(OnAvatarLoaded);
+            }
         }
 
         // PUBLIC
@@ -38,12 +47,15 @@ namespace Menu.InGameScores
             _rank.text = "" + rank;
         }
 
-        public void UpdateAvatar(int userID)
+        public void UpdateAvatar(int userAvatar)
         {
-            Rect rect = new Rect(0, 0, 184, 184);
-            Vector2 pivot = new Vector2(.5f, .5f);
-            Texture2D avatarTexture = SWExtensions.SteamExtensions.GetSteamAvatarTexture((CSteamID)(ulong)userID);
-            _avatar.sprite = Sprite.Create(avatarTexture, rect, pivot);
+            if (userAvatar > 0)
+            {
+                Rect rect = new Rect(0, 0, 184, 184);
+                Vector2 pivot = new Vector2(.5f, .5f);
+                Texture2D avatarTexture = SteamExtensions.GetSteamImageAsTexture2D(userAvatar);
+                _avatar.sprite = Sprite.Create(avatarTexture, rect, pivot);
+            }
         }
 
         public void UpdateNickname(string nickname)
@@ -73,6 +85,16 @@ namespace Menu.InGameScores
         public void UpdateDeathCount(int deathCount)
         {
             _deathCount.text = "" + deathCount;
+        }
+
+        private void OnAvatarLoaded(AvatarImageLoaded_t result)
+        {
+            Debug.Log("Avatar was loaded for user : " + result.m_steamID);
+            if ((int)(ulong)result.m_steamID == SteamID)
+            {
+                Debug.Log("Hello");
+                UpdateAvatar(result.m_iImage);
+            }
         }
     }
 }

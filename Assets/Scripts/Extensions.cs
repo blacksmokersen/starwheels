@@ -18,30 +18,25 @@ namespace SWExtensions
 
     public static class SteamExtensions
     {
-        public static Texture2D GetSteamAvatarTexture(CSteamID userID)
+        public static Texture2D GetSteamImageAsTexture2D(int iImage)
         {
-            int FriendAvatar = SteamFriends.GetSmallFriendAvatar(userID);
-            uint imageWidth;
-            uint imageHeight;
-            bool success = SteamUtils.GetImageSize(FriendAvatar, out imageWidth, out imageHeight);
+            Texture2D resultingTexture = null;
+            uint imageWidth, imageHeight;
 
-            if (success && imageWidth > 0 && imageHeight > 0)
+            var imageIsValid = SteamUtils.GetImageSize(iImage, out imageWidth, out imageHeight);
+            if (imageIsValid)
             {
-                byte[] Image = new byte[imageWidth * imageHeight * 4];
-                Texture2D returnTexture = new Texture2D((int)imageWidth, (int)imageHeight, TextureFormat.RGBA32, false, true);
-                success = SteamUtils.GetImageRGBA(FriendAvatar, Image, (int)(imageWidth * imageHeight * 4));
-                if (success)
+                byte[] image = new byte[imageWidth * imageHeight * 4];
+
+                imageIsValid = SteamUtils.GetImageRGBA(iImage, image, (int)(imageWidth * imageHeight * 4));
+                if (imageIsValid)
                 {
-                    returnTexture.LoadRawTextureData(Image);
-                    returnTexture.Apply();
+                    resultingTexture = new Texture2D((int)imageWidth, (int)imageHeight, TextureFormat.RGBA32, false, true);
+                    resultingTexture.LoadRawTextureData(image);
+                    resultingTexture.Apply();
                 }
-                return returnTexture;
             }
-            else
-            {
-                Debug.LogError("Couldn't get avatar.");
-                return new Texture2D(0, 0);
-            }
+            return resultingTexture;
         }
     }
 

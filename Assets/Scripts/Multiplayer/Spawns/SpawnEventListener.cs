@@ -86,6 +86,7 @@ namespace Multiplayer
             PlayerReady playerReadyEvent = PlayerReady.Create();
             playerReadyEvent.Nickname = _playerSettings.Nickname;
             playerReadyEvent.PlayerID = SWMatchmaking.GetMyBoltId();
+            playerReadyEvent.SteamID = (int)(ulong) Steamworks.SteamUser.GetSteamID();
             playerReadyEvent.Team = (int) team;
             playerReadyEvent.KartIndex = _playerSettings.KartIndex;
             playerReadyEvent.CharacterIndex = _playerSettings.CharacterIndex;

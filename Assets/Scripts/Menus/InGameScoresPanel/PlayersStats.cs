@@ -155,10 +155,11 @@ namespace Menu.InGameScores
             foreach (var playerStat in AllPlayersStats)
             {
                 PlayerAllStats playerAllStats = PlayerAllStats.Create();
+                playerAllStats.PlayerID = playerStat.Key;
+                playerAllStats.SteamID = (int)(ulong)Steamworks.SteamUser.GetSteamID();
                 playerAllStats.Name = playerStat.Value.Name;
                 playerAllStats.Team = (int) playerStat.Value.Team;
                 playerAllStats.TargetPlayerID = playerID;
-                playerAllStats.PlayerID = playerStat.Key;
                 playerAllStats.KillCount = playerStat.Value.KillCount;
                 playerAllStats.DeathCount = playerStat.Value.DeathCount;
                 playerAllStats.Send();
