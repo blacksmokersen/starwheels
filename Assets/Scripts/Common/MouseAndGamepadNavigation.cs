@@ -21,11 +21,15 @@ namespace Common
         private void Awake()
         {
             _lastSelected = _eventSystem.firstSelectedGameObject.GetComponent<Selectable>();
-            HideCursor();
+            CenterCursor();
 
             if (_disableCursorOnAwake)
             {
                 HideCursor();
+            }
+            else //if cursor is visible, set it at the center
+            {
+                CenterCursor();
             }
         }
 
@@ -50,6 +54,15 @@ namespace Common
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+        }
+
+        public void CenterCursor()
+        {
+
+            //Set cursor at center of the screen
+            Vector3 mousePos = Input.mousePosition;
+            mousePos.x -= Screen.width / 2;
+            mousePos.y -= Screen.height / 2;
         }
 
         public void HideCursor()
@@ -78,7 +91,10 @@ namespace Common
             {
                 _eventSystem.SetSelectedGameObject(null);
                 _eventSystem.SetSelectedGameObject(_lastSelected.gameObject);
-                HideCursor();
+                if (Cursor.visible)
+                {
+                    HideCursor();
+                }
                 _gamepadHasFocus = true;
             }
         }
@@ -87,8 +103,13 @@ namespace Common
         {
             if (Mathf.Abs(Input.GetAxis("Mouse X")) > 0 || Mathf.Abs(Input.GetAxis("Mouse Y")) > 0)
             {
-                _eventSystem.SetSelectedGameObject(null);
-                ShowCursor();
+                //_eventSystem.SetSelectedGameObject(null);
+
+                if (!Cursor.visible)
+                {
+                    ShowCursor();
+                    CenterCursor();
+                }
                 _gamepadHasFocus = false;
             }
         }
