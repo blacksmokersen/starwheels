@@ -16,20 +16,39 @@ namespace Common
         private Selectable _lastSelected;
         private bool _gamepadHasFocus = false;
 
+        private bool PS4_Controller;
+        private bool Xbox_One_Controller;
+
         // CORE
 
         private void Awake()
         {
             _lastSelected = _eventSystem.firstSelectedGameObject.GetComponent<Selectable>();
-            CenterCursor();
 
             if (_disableCursorOnAwake)
             {
                 HideCursor();
             }
-            else //if cursor is visible, set it at the center
+        }
+
+        private void DetectStickController()
+        {
+            string[] names = Input.GetJoystickNames();
+            for (int x = 0; x < names.Length; x++)
             {
-                CenterCursor();
+                if (names[x].Length == 19)
+                {
+                    print("PS4 CONTROLLER IS CONNECTED");
+                    PS4_Controller = true;
+                    Xbox_One_Controller = false;
+                }
+                if (names[x].Length == 33)
+                {
+                    //set a controller bool to true
+                    PS4_Controller = false;
+                    Xbox_One_Controller = true;
+
+                }
             }
         }
 
@@ -54,15 +73,6 @@ namespace Common
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-        }
-
-        public void CenterCursor()
-        {
-
-            //Set cursor at center of the screen
-            Vector3 mousePos = Input.mousePosition;
-            mousePos.x -= Screen.width / 2;
-            mousePos.y -= Screen.height / 2;
         }
 
         public void HideCursor()
@@ -108,9 +118,11 @@ namespace Common
                 if (!Cursor.visible)
                 {
                     ShowCursor();
-                    CenterCursor();
                 }
-                _gamepadHasFocus = false;
+                if (_gamepadHasFocus)
+                {
+                    _gamepadHasFocus = false;
+                }
             }
         }
     }
