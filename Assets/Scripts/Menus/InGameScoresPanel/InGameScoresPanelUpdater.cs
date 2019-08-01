@@ -3,6 +3,7 @@ using UnityEngine;
 using Bolt;
 using UnityEngine.UI;
 using Steamworks;
+using System;
 
 namespace Menu.InGameScores
 {
@@ -19,17 +20,6 @@ namespace Menu.InGameScores
         [Header("Prefabs")]
         [SerializeField] private TeamInGameScoresEntry _teamPrefab;
         [SerializeField] private PlayerInGameScoresEntry _playerPrefab;
-
-        private Callback<AvatarImageLoaded_t> _avatarLoadedCallback;
-
-        private void Awake()
-        {
-            if (SteamManager.Initialized)
-            {
-                Debug.Log("LOOOOOOOl");
-                _avatarLoadedCallback = Callback<AvatarImageLoaded_t>.Create(OnAvatarLoaded);
-            }
-        }
 
         // BOLT
 
@@ -67,13 +57,13 @@ namespace Menu.InGameScores
 
         // PUBLIC
 
-        public PlayerInGameScoresEntry CreateEntryForPlayer(int id, string nickname, Team team, int steamID)
+        public PlayerInGameScoresEntry CreateEntryForPlayer(int id, string nickname, Team team, string steamID)
         {
             if (!PlayerScoreEntries.ContainsKey(id))
             {
                 var entry = Instantiate(_playerPrefab);
-                entry.SteamID = steamID;
-                entry.UpdateAvatar(SteamFriends.GetLargeFriendAvatar((CSteamID)(ulong)steamID));
+                entry.SteamID = new CSteamID() { m_SteamID = Convert.ToUInt64(steamID) };
+                entry.UpdateAvatar(entry.SteamID);
                 entry.UpdateNickname(nickname);
                 entry.UpdateTeamColor(team);
 
@@ -157,29 +147,6 @@ namespace Menu.InGameScores
         }
 
         // PRIVATE
-
-        private PlayerInGameScoresEntry GetEntry(int steamID)
-        {
-            foreach (var value in PlayerScoreEntries.Values)
-            {
-                if (value.SteamID == steamID)
-                {
-                    return value;
-                }
-            }
-            return null;
-        }
-
-        private void OnAvatarLoaded(AvatarImageLoaded_t result)
-        {
-            Debug.Log("Avatar was loaded for user : " + result.m_steamID);
-            var entry = GetEntry((int)(ulong)result.m_steamID);
-            if (entry)
-            {
-                Debug.Log("Found the entry");
-                entry.UpdateAvatar(result.m_iImage);
-            }
-        }
 
         private bool ParentHasOnlyOneChild(Transform parent)
         {

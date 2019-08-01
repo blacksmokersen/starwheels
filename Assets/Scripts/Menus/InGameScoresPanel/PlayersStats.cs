@@ -156,7 +156,7 @@ namespace Menu.InGameScores
             {
                 PlayerAllStats playerAllStats = PlayerAllStats.Create();
                 playerAllStats.PlayerID = playerStat.Key;
-                playerAllStats.SteamID = (int)(ulong)Steamworks.SteamUser.GetSteamID();
+                playerAllStats.SteamID = "" + Steamworks.SteamUser.GetSteamID().m_SteamID;
                 playerAllStats.Name = playerStat.Value.Name;
                 playerAllStats.Team = (int) playerStat.Value.Team;
                 playerAllStats.TargetPlayerID = playerID;

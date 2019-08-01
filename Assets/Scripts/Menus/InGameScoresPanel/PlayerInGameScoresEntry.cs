@@ -9,14 +9,15 @@ namespace Menu.InGameScores
     [DisallowMultipleComponent]
     public class PlayerInGameScoresEntry : MonoBehaviour
     {
-        [HideInInspector] public int SteamID = -1;
+        [HideInInspector] public CSteamID SteamID;
 
         [Header("Settings")]
         [SerializeField] private int _maxNameLength;
 
         [Header("UI Elements")]
         [SerializeField] private TextMeshProUGUI _rank;
-        [SerializeField] private Image _avatar;
+        [SerializeField] private Image _avatarPlaceholder;
+        [SerializeField] private Image _avatarImage;
         [SerializeField] private TextMeshProUGUI _nickname;
         [SerializeField] private Image _teamColor;
         [SerializeField] private Image _abilityLogo;
@@ -26,6 +27,8 @@ namespace Menu.InGameScores
         [SerializeField] private Sprite[] _allAbilitiesSprites;
 
         private GameSettings _gameSettings;
+
+        private int _avatar = -1;
         private Callback<AvatarImageLoaded_t> _avatarLoadedCallback;
 
         //CORE
@@ -35,7 +38,6 @@ namespace Menu.InGameScores
             _gameSettings = Resources.Load<GameSettings>(Constants.Resources.GameSettings);
             if (SteamManager.Initialized)
             {
-                Debug.Log("LOOOOOOOl");
                 _avatarLoadedCallback = Callback<AvatarImageLoaded_t>.Create(OnAvatarLoaded);
             }
         }
@@ -47,14 +49,13 @@ namespace Menu.InGameScores
             _rank.text = "" + rank;
         }
 
-        public void UpdateAvatar(int userAvatar)
+        public void UpdateAvatar(CSteamID steamUserID)
         {
-            if (userAvatar > 0)
+            _avatar = SteamFriends.GetLargeFriendAvatar(steamUserID);
+            Debug.Log("Avatar : " + _avatar);
+            if (_avatar > 0)
             {
-                Rect rect = new Rect(0, 0, 184, 184);
-                Vector2 pivot = new Vector2(.5f, .5f);
-                Texture2D avatarTexture = SteamExtensions.GetSteamImageAsTexture2D(userAvatar);
-                _avatar.sprite = Sprite.Create(avatarTexture, rect, pivot);
+                SetAvatarImage(_avatar);
             }
         }
 
@@ -87,13 +88,26 @@ namespace Menu.InGameScores
             _deathCount.text = "" + deathCount;
         }
 
+        // PRIVATE
+
+        private void SetAvatarImage(int iImage)
+        {
+            _avatarPlaceholder.gameObject.SetActive(false);
+            _avatarImage.gameObject.SetActive(true);
+
+            Rect rect = new Rect(0, 0, 184, 184);
+            Vector2 pivot = new Vector2(.5f, .5f);
+            Texture2D avatarTexture = SteamExtensions.GetSteamImageAsTexture2D(iImage);
+            _avatarImage.sprite = Sprite.Create(avatarTexture, rect, pivot);
+        }
+
         private void OnAvatarLoaded(AvatarImageLoaded_t result)
         {
             Debug.Log("Avatar was loaded for user : " + result.m_steamID);
-            if ((int)(ulong)result.m_steamID == SteamID)
+            if (result.m_steamID == SteamID)
             {
                 Debug.Log("Hello");
-                UpdateAvatar(result.m_iImage);
+                SetAvatarImage(result.m_iImage);
             }
         }
     }
