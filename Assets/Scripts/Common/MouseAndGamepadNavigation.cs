@@ -11,43 +11,43 @@ namespace Common
 
         [Header("Settings")]
         public bool Enabled;
+        [SerializeField] private bool _autoDisableCursorIFStickConnected;
         [SerializeField] private bool _disableCursorOnAwake;
 
         private Selectable _lastSelected;
         private bool _gamepadHasFocus = false;
 
-        private bool PS4_Controller;
-        private bool Xbox_One_Controller;
+        [SerializeField]
+        public enum _Controller { None, Xbox, PS4};
+        public _Controller ControllerConnected = _Controller.None;
 
         // CORE
 
         private void Awake()
         {
+            DetectStickController();
+
             _lastSelected = _eventSystem.firstSelectedGameObject.GetComponent<Selectable>();
 
-            if (_disableCursorOnAwake)
+            if (_disableCursorOnAwake || (_autoDisableCursorIFStickConnected && ControllerConnected != _Controller.None))
             {
                 HideCursor();
             }
         }
 
-        private void DetectStickController()
+        public void DetectStickController()
         {
             string[] names = Input.GetJoystickNames();
             for (int x = 0; x < names.Length; x++)
             {
                 if (names[x].Length == 19)
                 {
-                    print("PS4 CONTROLLER IS CONNECTED");
-                    PS4_Controller = true;
-                    Xbox_One_Controller = false;
+
+                    ControllerConnected = _Controller.PS4;
                 }
                 if (names[x].Length == 33)
                 {
-                    //set a controller bool to true
-                    PS4_Controller = false;
-                    Xbox_One_Controller = true;
-
+                    ControllerConnected = _Controller.Xbox;
                 }
             }
         }

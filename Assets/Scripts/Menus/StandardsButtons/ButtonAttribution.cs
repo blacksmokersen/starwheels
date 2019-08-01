@@ -11,6 +11,7 @@ namespace Menu.Options
         private MultiplePanelManager _manager;
 
         [SerializeField] private TextMeshProUGUI _textField;
+        [SerializeField] private Animator _buttonAnime;
 
         public void Attribution(int ID, string Text, MultiplePanelManager panel)
         {
@@ -22,7 +23,33 @@ namespace Menu.Options
 
         public void SetAction()
         {
-            _manager.ButonAction(_IDButton);
+            _manager.ButtonAction(_IDButton);
+        }
+
+        public void ActualizePosition()
+        {
+            _manager.OnMouseActualization(_IDButton);
+        }
+
+        public void HighlightButton(bool value)
+        {
+            if (value)
+            {
+                _buttonAnime.ResetTrigger("OnMouseExit");
+                _buttonAnime.ResetTrigger("OnClick");
+                _buttonAnime.SetTrigger("OnMouseEnter");
+            }
+            else
+            {
+                _buttonAnime.ResetTrigger("OnMouseEnter");
+                _buttonAnime.SetTrigger("OnMouseExit");
+            }
+        }
+
+        public void ValidationEffect()
+        {
+            _buttonAnime.ResetTrigger("OnMouseEnter");
+            _buttonAnime.SetTrigger("OnClick");
         }
     }
 }
