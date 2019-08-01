@@ -10,6 +10,8 @@ public class DriftSound : MonoBehaviour {
     public AudioSource Drift;
     public AudioSource BoostDrift;
     public AudioSource EndDrift;
+    public AudioSource BlueDrift;
+    public AudioSource RedDrift;
 
     public void PlayStartDrift()
     {
@@ -34,5 +36,15 @@ public class DriftSound : MonoBehaviour {
     public void StopDrift()
     {
         Drift.Stop();
+    }
+
+    public void PlayBlueDrift()
+    {
+        BlueDrift.Play();
+    }
+
+    public void PlayRedDrift()
+    {
+        RedDrift.Play();
     }
 }
