@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
@@ -21,6 +22,8 @@ namespace Common
         public enum _Controller { None, Xbox, PS4};
         public _Controller ControllerConnected = _Controller.None;
 
+        public UnityEvent DefaultControllerConnectedEvent;
+
         // CORE
 
         private void Awake()
@@ -42,12 +45,19 @@ namespace Common
             {
                 if (names[x].Length == 19)
                 {
-
                     ControllerConnected = _Controller.PS4;
                 }
                 if (names[x].Length == 33)
                 {
                     ControllerConnected = _Controller.Xbox;
+                }
+            }
+
+            if (ControllerConnected != _Controller.None)
+            {
+                if (DefaultControllerConnectedEvent != null)
+                {
+                    DefaultControllerConnectedEvent.Invoke();
                 }
             }
         }
