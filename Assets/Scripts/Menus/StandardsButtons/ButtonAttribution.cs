@@ -35,7 +35,6 @@ namespace Menu.Options
 
         public void HighlightButton(bool value)
         {
-            Debug.Log(gameObject.name + " : " + value);
             if (value == true)
             {
                 _buttonAnime.ResetTrigger("OnMouseExit");
@@ -44,7 +43,6 @@ namespace Menu.Options
             }
             else 
             {
-                Debug.Log(gameObject.name);
                 _buttonAnime.ResetTrigger("OnMouseEnter");
                 _buttonAnime.SetTrigger("OnMouseExit");
             }
