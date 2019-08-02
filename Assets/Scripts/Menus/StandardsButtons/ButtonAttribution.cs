@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 namespace Menu.Options
@@ -8,12 +9,13 @@ namespace Menu.Options
     public class ButtonAttribution : MonoBehaviour
     {
         private int _IDButton;
-        private MultiplePanelManager _manager;
+        private MenuGeneration _manager;
 
         [SerializeField] private TextMeshProUGUI _textField;
         [SerializeField] private Animator _buttonAnime;
+        [SerializeField] private Button _buttonSystem;
 
-        public void Attribution(int ID, string Text, MultiplePanelManager panel)
+        public void Attribution(int ID, string Text, MenuGeneration panel)
         {
             _textField.text = Text;
 
@@ -33,14 +35,16 @@ namespace Menu.Options
 
         public void HighlightButton(bool value)
         {
-            if (value)
+            Debug.Log(gameObject.name + " : " + value);
+            if (value == true)
             {
                 _buttonAnime.ResetTrigger("OnMouseExit");
                 _buttonAnime.ResetTrigger("OnClick");
                 _buttonAnime.SetTrigger("OnMouseEnter");
             }
-            else
+            else 
             {
+                Debug.Log(gameObject.name);
                 _buttonAnime.ResetTrigger("OnMouseEnter");
                 _buttonAnime.SetTrigger("OnMouseExit");
             }
@@ -50,6 +54,11 @@ namespace Menu.Options
         {
             _buttonAnime.ResetTrigger("OnMouseEnter");
             _buttonAnime.SetTrigger("OnClick");
+        }
+
+        public void EnableButtonInteraction(bool value)
+        {
+            _buttonSystem.interactable = value;
         }
     }
 }
