@@ -279,9 +279,9 @@ namespace Engine
 
             if (_groundCondition && !_groundCondition.Grounded) return rb;
 
-
             _curveAccVelocityValue = Settings.AccelerationCurveVelocity.Evaluate(_curveTime);
             rb.AddRelativeForce(Vector3.forward * value * _curveAccVelocityValue, ForceMode.Force);
+
             if (_boostModeActivated.Value)
             {
                 rb.AddRelativeForce(Vector3.forward * value * _boostModeValue.Value, ForceMode.Force);
