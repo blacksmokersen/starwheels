@@ -278,7 +278,6 @@ namespace Engine
 
 
             if (_groundCondition && !_groundCondition.Grounded) return rb;
-            OnVelocityChange.Invoke(CurrentSpeed);
 
             _curveAccVelocityValue = Settings.AccelerationCurveVelocity.Evaluate(_curveTime);
             rb.AddRelativeForce(Vector3.forward * value * _curveAccVelocityValue, ForceMode.Force);
@@ -344,8 +343,6 @@ namespace Engine
 
         private Rigidbody Decelerate(float value, Rigidbody rb)
         {
-            OnVelocityChange.Invoke(CurrentSpeed);
-
             if (_groundCondition && !_groundCondition.Grounded) return rb;
             rb.AddRelativeForce(Vector3.back * value * Settings.BackSpeedForce / Settings.DecelerationFactor, ForceMode.Force);
             return rb;
