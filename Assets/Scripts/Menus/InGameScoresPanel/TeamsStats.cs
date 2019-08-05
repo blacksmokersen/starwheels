@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using Bolt;
 
 namespace Menu.InGameScores
@@ -12,6 +11,7 @@ namespace Menu.InGameScores
         public int DeathCount = 0;
     }
 
+    [DisallowMultipleComponent]
     public class TeamsStats : GlobalEventListener
     {
         public Dictionary<Team, TeamStats> AllTeamsStats = new Dictionary<Team, TeamStats>();
@@ -20,9 +20,35 @@ namespace Menu.InGameScores
         public TeamIntEvent OnTeamKillCountUpdated;
         public TeamIntEvent OnTeamDeathCountUpdated;
 
-        // BOLT
+        [Header("References")]
+        [SerializeField] private PlayersStats _playersStats;
 
-                // Possibilité de faire un event séparé TeamStatUpdate de la même façon que PlayerStatUpdate
+        // BOLT SPECIFIC EVENTS
+
+        public override void OnEvent(PlayerReady evnt)
+        {
+            if (!AllTeamsStats.ContainsKey(evnt.Team.ToTeam()))
+            {
+                CreateEntryForTeam(evnt.Team.ToTeam());
+            }
+            else
+            {
+                Debug.Log("Could not add the player stats entry since it already exists.");
+            }
+        }
+
+        public override void Disconnected(BoltConnection connection)
+        {
+            if (AllTeamsStats.ContainsKey(Team.Any))
+            {
+                // TODO
+            }
+            else
+            {
+                Debug.Log("Could not remove the player stats entry since his ID was not found.");
+            }
+        }
+
 
         // PUBLIC
 
@@ -73,6 +99,34 @@ namespace Menu.InGameScores
                 AllTeamsStats[team].KillCount = killCount;
                 OnTeamKillCountUpdated.Invoke(team, killCount);
             }
+        }
+
+        // PRIVATE
+
+        private int GetTeamDeathCount(Team team)
+        {
+            int teamDeathCount = 0;
+            foreach (var pair in _playersStats.AllPlayersStats)
+            {
+                if (pair.Value.Team == team)
+                {
+                    teamDeathCount += pair.Value.DeathCount;
+                }
+            }
+            return teamDeathCount;
+        }
+
+        private int GetTeamKillCount(Team team)
+        {
+            int teamKillCount = 0;
+            foreach(var pair in _playersStats.AllPlayersStats)
+            {
+                if (pair.Value.Team == team)
+                {
+                    teamKillCount += pair.Value.KillCount;
+                }
+            }
+            return teamKillCount;
         }
     }
 }

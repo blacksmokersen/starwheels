@@ -23,6 +23,7 @@ namespace Menu.InGameScores
 
         [Header("Stats")]
         [SerializeField] private PlayersStats _playersStats;
+        [SerializeField] private TeamsStats _teamsStats;
 
         // BOLT
 
@@ -121,7 +122,8 @@ namespace Menu.InGameScores
             if (PlayerScoreEntries.ContainsKey(id))
             {
                 PlayerScoreEntries[id].UpdateKillCount(killCount);
-                UpdatePlayerEntryRank(id, PlayerScoreEntries[id]);
+                var team = _playersStats.AllPlayersStats[id].Team;
+                UpdateTeamEntryRank(team, TeamScoreEntries[team]);
             }
             else
             {
@@ -153,22 +155,25 @@ namespace Menu.InGameScores
             }
         }
 
-        // PRIVATE
-
-        private void UpdatePlayerEntryRank(int playerID, PlayerInGameScoresEntry entry)
+        public void UpdatePlayerEntryRank(int playerID, PlayerInGameScoresEntry entry)
         {
             var rank = _playersStats.GetPlayerRank(playerID);
-            Debug.Log("Game object name : " + entry.name);
 
             _displayer.ShowPanel();
             entry.transform.SetSiblingIndex(rank - 1);
             _displayer.HidePanel();
         }
 
-        private void UpdateTeamEntryRank(Team team, TeamInGameScoresEntry entry)
+        public void UpdateTeamEntryRank(Team team, TeamInGameScoresEntry entry)
         {
+            var rank = _teamsStats.GetTeamRank(team);
 
+            _displayer.ShowPanel();
+            entry.transform.SetSiblingIndex(rank - 1);
+            _displayer.HidePanel();
         }
+
+        // PRIVATE
 
         private bool ParentHasOnlyOneChild(Transform parent)
         {

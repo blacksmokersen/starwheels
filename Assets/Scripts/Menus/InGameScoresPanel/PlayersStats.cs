@@ -137,7 +137,7 @@ namespace Menu.InGameScores
             {
                 if (pair.Key != id && playerStats.KillCount > pair.Value.KillCount)
                 {
-                    rank = Mathf.Max(1, rank - 1);
+                    rank = Mathf.Max(1, rank);
                 }
             }
             Debug.LogError("New rank : " + rank);
