@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
 
@@ -8,55 +9,87 @@ namespace Menu.Options
 {
     public class ButtonAttribution : MonoBehaviour
     {
-        private int _IDButton;
-        private MenuGeneration _manager;
+        [SerializeField] private int _IDButton;
+        [SerializeField] private MenuGeneration _managerGeneration;
+        [SerializeField] private MenuNavigation _managerNavigation;
 
         [SerializeField] private TextMeshProUGUI _textField;
         [SerializeField] private Animator _buttonAnime;
         [SerializeField] private Button _buttonSystem;
+
+        public UnityEvent OnEvent;
+        public UnityEvent OffEvent;
 
         public void Attribution(int ID, string Text, MenuGeneration panel)
         {
             _textField.text = Text;
 
             _IDButton = ID;
-            _manager = panel;
+            _managerGeneration = panel;
         }
 
         public void SetAction()
         {
-            _manager.ButtonAction(_IDButton);
+            if (_managerGeneration)
+            {
+                _managerGeneration.ButtonAction(_IDButton);
+            }
+            else if (_managerNavigation)
+            {
+                _managerNavigation.ButtonAction(_IDButton);
+            }
         }
 
         public void ActualizePosition()
         {
-            _manager.OnMouseActualization(_IDButton);
+            if (_managerGeneration)
+            {
+                _managerGeneration.OnMouseActualization(_IDButton);
+            }
+            else if (_managerNavigation)
+            {
+                _managerNavigation.OnMouseActualization(_IDButton);
+            }
         }
 
         public void HighlightButton(bool value)
         {
-            if (value == true)
+            if (_buttonAnime)
             {
-                _buttonAnime.ResetTrigger("OnMouseExit");
                 _buttonAnime.ResetTrigger("OnClick");
-                _buttonAnime.SetTrigger("OnMouseEnter");
+                _buttonAnime.SetBool("CursorOn", value);
             }
-            else 
+
+            if (value)
             {
-                _buttonAnime.ResetTrigger("OnMouseEnter");
-                _buttonAnime.SetTrigger("OnMouseExit");
+                if (OnEvent != null)
+                {
+                    OnEvent.Invoke();
+                }
+            }
+            else
+            {
+                if (OffEvent != null)
+                {
+                    OffEvent.Invoke();
+                }
             }
         }
 
         public void ValidationEffect()
         {
-            _buttonAnime.ResetTrigger("OnMouseEnter");
-            _buttonAnime.SetTrigger("OnClick");
+            if (_buttonAnime)
+            {
+                _buttonAnime.SetTrigger("OnClick");
+            }
         }
 
         public void EnableButtonInteraction(bool value)
         {
-            _buttonSystem.interactable = value;
+            if (_buttonSystem != null)
+            {
+                _buttonSystem.interactable = value;
+            }
         }
     }
 }

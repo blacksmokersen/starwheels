@@ -87,8 +87,8 @@ namespace Common
 
         public void HideCursor()
         {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            //Cursor.visible = false;
+            //Cursor.lockState = CursorLockMode.Locked;
         }
 
         // PRIVATE

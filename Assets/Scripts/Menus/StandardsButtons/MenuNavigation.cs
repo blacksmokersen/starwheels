@@ -5,50 +5,26 @@ using UnityEngine.Events;
 
 namespace Menu.Options
 {
-    public class MenuGeneration : MonoBehaviour
+    public class MenuNavigation : MonoBehaviour
     {
-        [Header("Settings")]
-        [SerializeField] private bool _allowAutoMapping; // change options configuration if stick is connected on start of scene
+        [SerializeField] private ButtonAttribution[] _buttons;
 
-        [Header("Buttons Generation")]
-        [SerializeField] private bool _horizontalMenu;
-        [SerializeField] private GameObject _buttonPrefab;
-        private ButtonAttribution[] _buttons;
-        [SerializeField] private string _buttonName = "button";
-
-        [SerializeField] private float _scaleFactor = 1;
-
-        [SerializeField] private string[] _buttonNames;
-        [SerializeField] private UnityEvent[] _buttonEvents;
-
-        [SerializeField] private float _verticalDecalage = 100.0f;
-        [SerializeField] private float _horizontalDecalage = 12.0f;
-
-        [SerializeField] private Transform _menuPanel;
-
-        [Header("References")]
-        [SerializeField] private Common.MouseAndGamepadNavigation _navigation;
-
-        [Header("Menu Interactions")]
-        public int MenuPosition = 0;
-        private int _previousMenuPos;
-        [SerializeField] private bool _controllerInteraction = true;
-        [SerializeField] float _triggerMoveCooldownDuration = 0.2f;
-        private float _triggerMoveCooldown;
-
-        [SerializeField] private bool _canMove = true;
+        public UnityEvent ValidationEvent;
+        public UnityEvent[] _buttonEvents;
         [SerializeField] private UnityEvent _OnButtonChangeEvent;
         [SerializeField] private UnityEvent _B_ButtonChangeEvent;
 
-        private void Awake()
-        {
-            ButtonsAttribution();
-        }
+        [SerializeField] private bool _controllerInteraction = true;
+        [SerializeField] private bool _canMove = true;
+        [SerializeField] private bool _horizontalMenu;
 
-        private void Start()
-        {
-            ResetMenu();
-        }
+        [SerializeField] private float _triggerMoveCooldownDuration = 0.2f;
+        private float _triggerMoveCooldown;
+
+        public int MenuPosition = 0;
+        private int _previousMenuPos;
+
+        // MONO
 
         private void OnEnable()
         {
@@ -83,22 +59,8 @@ namespace Menu.Options
             }
         }
 
-        // PRIVATE
+        //NAVIGATION
 
-        private void ButtonsAttribution()
-        {
-            _buttons = new ButtonAttribution[_buttonNames.Length];
-
-            for (int i = 0; i < _buttonNames.Length; i++)
-            {
-                _buttons[i] = Instantiate(_buttonPrefab, new Vector2(_menuPanel.position.x + i * _horizontalDecalage, _menuPanel.position.y - i * _verticalDecalage), _menuPanel.rotation, _menuPanel).GetComponent<ButtonAttribution>();
-                _buttons[i].Attribution(i, _buttonNames[i], this);
-                _buttons[i].gameObject.name = _buttonName + i;
-                _buttons[i].gameObject.transform.localScale = new Vector2(_scaleFactor, _scaleFactor);
-            }
-        }
-
-        #region manual menu progression
         public void EnableManualProgression(bool value)
         {
             _controllerInteraction = value;
@@ -199,7 +161,7 @@ namespace Menu.Options
         {
             if (_previousMenuPos != MenuPosition)
             {
-               _buttons[_previousMenuPos].HighlightButton(false);
+                _buttons[_previousMenuPos].HighlightButton(false);
             }
             _buttons[MenuPosition].HighlightButton(true);
         }
@@ -253,9 +215,6 @@ namespace Menu.Options
                 }
             }
         }
-        #endregion
-
-        // PUBLIC
 
         public void ButtonAction(int IDButton)
         {
