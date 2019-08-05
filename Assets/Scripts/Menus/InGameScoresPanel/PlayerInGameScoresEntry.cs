@@ -51,11 +51,14 @@ namespace Menu.InGameScores
 
         public void UpdateAvatar(CSteamID steamUserID)
         {
-            _avatar = SteamFriends.GetLargeFriendAvatar(steamUserID);
-            Debug.Log("Avatar : " + _avatar);
-            if (_avatar > 0)
+            if (SteamManager.Initialized)
             {
-                SetAvatarImage(_avatar);
+                _avatar = SteamFriends.GetLargeFriendAvatar(steamUserID);
+                Debug.Log("Avatar : " + _avatar);
+                if (_avatar > 0)
+                {
+                    SetAvatarImage(_avatar);
+                }
             }
         }
 

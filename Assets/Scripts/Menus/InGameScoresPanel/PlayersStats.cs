@@ -112,7 +112,7 @@ namespace Menu.InGameScores
             }
             if (evnt.StatName == Constants.PlayerStats.Ability)
             {
-                UpdatePlayerAbility(evnt.PlayerID, evnt.StatValue);
+                //UpdatePlayerAbility(evnt.PlayerID, evnt.StatValue);
             }
         }
 
@@ -126,6 +126,22 @@ namespace Menu.InGameScores
                 Team = team
             };
             AllPlayersStats.Add(id, newStats);
+        }
+
+        public int GetPlayerRank(int id)
+        {
+            var rank = AllPlayersStats.Count;
+            var playerStats = AllPlayersStats[id];
+
+            foreach (var pair in AllPlayersStats)
+            {
+                if (pair.Key != id && playerStats.KillCount > pair.Value.KillCount)
+                {
+                    rank = Mathf.Max(1, rank - 1);
+                }
+            }
+            Debug.LogError("New rank : " + rank);
+            return rank;
         }
 
         public void RemoveEntryForPlayerID(int id)

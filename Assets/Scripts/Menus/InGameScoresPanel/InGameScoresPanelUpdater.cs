@@ -14,12 +14,15 @@ namespace Menu.InGameScores
         public Dictionary<int, PlayerInGameScoresEntry> PlayerScoreEntries = new Dictionary<int, PlayerInGameScoresEntry>();
 
         [Header("UI Elements")]
-        [SerializeField] private RectTransform _rootPanel;
+        [SerializeField] private InGameScoresPanelDisplayer _displayer;
         [SerializeField] private Transform _teamEntriesParent;
 
         [Header("Prefabs")]
         [SerializeField] private TeamInGameScoresEntry _teamPrefab;
         [SerializeField] private PlayerInGameScoresEntry _playerPrefab;
+
+        [Header("Stats")]
+        [SerializeField] private PlayersStats _playersStats;
 
         // BOLT
 
@@ -62,7 +65,10 @@ namespace Menu.InGameScores
             if (!PlayerScoreEntries.ContainsKey(id))
             {
                 var entry = Instantiate(_playerPrefab);
-                entry.SteamID = new CSteamID() { m_SteamID = Convert.ToUInt64(steamID) };
+                if (SteamManager.Initialized)
+                {
+                    entry.SteamID = new CSteamID() { m_SteamID = Convert.ToUInt64(steamID) };
+                }
                 entry.UpdateAvatar(entry.SteamID);
                 entry.UpdateNickname(nickname);
                 entry.UpdateTeamColor(team);
@@ -115,6 +121,7 @@ namespace Menu.InGameScores
             if (PlayerScoreEntries.ContainsKey(id))
             {
                 PlayerScoreEntries[id].UpdateKillCount(killCount);
+                UpdatePlayerEntryRank(id, PlayerScoreEntries[id]);
             }
             else
             {
@@ -147,6 +154,21 @@ namespace Menu.InGameScores
         }
 
         // PRIVATE
+
+        private void UpdatePlayerEntryRank(int playerID, PlayerInGameScoresEntry entry)
+        {
+            var rank = _playersStats.GetPlayerRank(playerID);
+            Debug.Log("Game object name : " + entry.name);
+
+            _displayer.ShowPanel();
+            entry.transform.SetSiblingIndex(rank - 1);
+            _displayer.HidePanel();
+        }
+
+        private void UpdateTeamEntryRank(Team team, TeamInGameScoresEntry entry)
+        {
+
+        }
 
         private bool ParentHasOnlyOneChild(Transform parent)
         {
