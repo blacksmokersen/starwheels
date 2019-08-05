@@ -14,6 +14,7 @@ namespace Common.PhysicsUtils
         //  [SerializeField] private ClampSpeedSettings _clampSpeedSettings;
         [SerializeField] private ClampSpeed _clampSpeed;
         [SerializeField] private Rigidbody _rb;
+        [SerializeField] private GameObject _boostEffects;
 
         [Header("KartSpecific Boost Dependencies")]
         [SerializeField] private EngineBehaviour _engine;
@@ -69,6 +70,7 @@ namespace Common.PhysicsUtils
         public void StopAllCurrentCustomBoost()
         {
             StopAllCoroutines();
+            _boostEffects.SetActive(false);
             _clampSpeed.CurrentClampSpeed = _clampSpeed.BaseClampSpeed;
         }
 
@@ -81,6 +83,11 @@ namespace Common.PhysicsUtils
             var _currentTimer = 0f;
             while (_currentTimer < 0.5f)
             {
+                if (transform.InverseTransformDirection(_rb.velocity).z >= 20)
+                    _boostEffects.SetActive(true);
+                else
+                    _boostEffects.SetActive(false);
+
                 _rb.AddRelativeForce(Vector3.forward * boostPower, ForceMode.Force);
                 _currentTimer += Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
@@ -98,6 +105,11 @@ namespace Common.PhysicsUtils
             var _currentTimer = 0f;
             while (_currentTimer < duration)
             {
+                if (transform.InverseTransformDirection(_rb.velocity).z >= 20)
+                    _boostEffects.SetActive(true);
+                else
+                    _boostEffects.SetActive(false);
+
                 _rb.AddRelativeForce(Vector3.forward * boostPercentageMultiplicator, ForceMode.VelocityChange);
                 _currentTimer += Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
@@ -128,6 +140,7 @@ namespace Common.PhysicsUtils
                 yield return new WaitForSeconds(stepDuration);
                 i++;
             }
+            _boostEffects.SetActive(false);
         }
     }
 }
