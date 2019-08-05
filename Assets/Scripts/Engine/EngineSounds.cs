@@ -10,14 +10,16 @@ namespace Engine
         [SerializeField] private float minimumEnginePitch;
         [SerializeField] private float maximumEnginePitch;
 
+      //  [SerializeField] private float _basePitch;
+
         private void Awake()
         {
             PlayMotorFullSound();
         }
 
-        public void SetMotorFullPitch(float pitch)
+        public void SetMotorFullPitch(float speed)
         {
-            var resultingPitch = (minimumEnginePitch + maximumEnginePitch * pitch) / 27;
+            var resultingPitch = (minimumEnginePitch + maximumEnginePitch * speed) / 27;
 
             if (resultingPitch > 0)
             {
@@ -25,8 +27,9 @@ namespace Engine
             }
             else
             {
-              //  Debug.LogError("Pitch cannot be negative or null.");
-                MotorFullSource.pitch = 0.5f;
+                //  Debug.LogError("Pitch cannot be negative or null.");
+                MotorFullSource.pitch = Mathf.Abs(resultingPitch);
+             //   MotorFullSource.pitch = 0.5f;
             }
         }
 
