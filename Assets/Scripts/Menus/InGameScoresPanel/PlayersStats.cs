@@ -24,10 +24,14 @@ namespace Menu.InGameScores
     {
         public Dictionary<int, PlayerStats> AllPlayersStats = new Dictionary<int, PlayerStats>();
 
-        [Header("Events")]
+        [Header("Player Events")]
         public DoubleIntEvent OnPlayerKillCountUpdated;
         public DoubleIntEvent OnPlayerDeathCountUpdated;
         public DoubleIntEvent OnPlayerAbilityUpdated;
+
+        [Header("Team Events")]
+        public TeamEvent OnTeamMemberKillCountUpdated;
+        public TeamEvent OnTeamMemberDeathCountUpdated;
 
         // BOLT SPECIFIC EVENTS
 
@@ -71,21 +75,19 @@ namespace Menu.InGameScores
             {
                 if (evnt.VictimID != evnt.KillerID)
                 {
-                    AllPlayersStats[evnt.KillerID].KillCount += 1;
                     PlayerStatUpdate playerKillCountUpdate = PlayerStatUpdate.Create();
                     playerKillCountUpdate.StatName = Constants.PlayerStats.KillCountName;
                     playerKillCountUpdate.PlayerID = evnt.KillerID;
                     playerKillCountUpdate.Team = evnt.KillerTeam;
-                    playerKillCountUpdate.StatValue = AllPlayersStats[evnt.KillerID].KillCount;
+                    playerKillCountUpdate.StatValue = AllPlayersStats[evnt.KillerID].KillCount + 1;
                     playerKillCountUpdate.Send();
                 }
 
-                AllPlayersStats[evnt.VictimID].DeathCount += 1;
                 PlayerStatUpdate playerDeathCountUpdate = PlayerStatUpdate.Create();
                 playerDeathCountUpdate.StatName = Constants.PlayerStats.DeathCountName;
                 playerDeathCountUpdate.PlayerID = evnt.VictimID;
                 playerDeathCountUpdate.Team = evnt.VictimTeam;
-                playerDeathCountUpdate.StatValue = AllPlayersStats[evnt.VictimID].DeathCount;
+                playerDeathCountUpdate.StatValue = AllPlayersStats[evnt.VictimID].DeathCount + 1;
                 playerDeathCountUpdate.Send();
             }
         }
@@ -153,12 +155,18 @@ namespace Menu.InGameScores
 
         public void UpdatePlayerKillCount(int id, int count)
         {
+            AllPlayersStats[id].KillCount = count;
+
             OnPlayerKillCountUpdated.Invoke(id, count);
+            OnTeamMemberKillCountUpdated.Invoke(AllPlayersStats[id].Team);
         }
 
         public void UpdatePlayerDeathCount(int id, int count)
         {
+            AllPlayersStats[id].DeathCount = count;
+
             OnPlayerDeathCountUpdated.Invoke(id, count);
+            OnTeamMemberDeathCountUpdated.Invoke(AllPlayersStats[id].Team);
         }
 
         public void UpdatePlayerAbility(int id, int abilityIndex)

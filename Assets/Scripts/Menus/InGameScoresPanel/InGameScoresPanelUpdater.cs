@@ -123,7 +123,6 @@ namespace Menu.InGameScores
             {
                 PlayerScoreEntries[id].UpdateKillCount(killCount);
                 var team = _playersStats.AllPlayersStats[id].Team;
-                UpdateTeamEntryRank(team, TeamScoreEntries[team]);
             }
             else
             {
@@ -155,21 +154,21 @@ namespace Menu.InGameScores
             }
         }
 
-        public void UpdatePlayerEntryRank(int playerID, PlayerInGameScoresEntry entry)
+        public void UpdatePlayerEntryRank(int playerID)
         {
             var rank = _playersStats.GetPlayerRank(playerID);
 
             _displayer.ShowPanel();
-            entry.transform.SetSiblingIndex(rank - 1);
+            PlayerScoreEntries[playerID].transform.SetSiblingIndex(rank - 1);
             _displayer.HidePanel();
         }
 
-        public void UpdateTeamEntryRank(Team team, TeamInGameScoresEntry entry)
+        public void UpdateTeamEntryRank(Team team)
         {
             var rank = _teamsStats.GetTeamRank(team);
 
             _displayer.ShowPanel();
-            entry.transform.SetSiblingIndex(rank);
+            TeamScoreEntries[team].transform.SetSiblingIndex(rank);
             _displayer.HidePanel();
             Debug.LogError("Updating team entry rank to " + rank);
         }

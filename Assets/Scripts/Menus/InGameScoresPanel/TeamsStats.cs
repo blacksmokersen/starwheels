@@ -17,8 +17,8 @@ namespace Menu.InGameScores
         public Dictionary<Team, TeamStats> AllTeamsStats = new Dictionary<Team, TeamStats>();
 
         [Header("Events")]
-        public TeamIntEvent OnTeamKillCountUpdated;
-        public TeamIntEvent OnTeamDeathCountUpdated;
+        public TeamEvent OnTeamKillCountUpdated;
+        public TeamEvent OnTeamDeathCountUpdated;
 
         [Header("References")]
         [SerializeField] private PlayersStats _playersStats;
@@ -102,7 +102,11 @@ namespace Menu.InGameScores
             {
                 var deathCount = GetTeamDeathCount(team);
                 AllTeamsStats[team].DeathCount = deathCount;
-                OnTeamDeathCountUpdated.Invoke(team, deathCount);
+
+                if (OnTeamDeathCountUpdated != null)
+                {
+                    OnTeamDeathCountUpdated.Invoke(team);
+                }
             }
         }
 
@@ -112,7 +116,11 @@ namespace Menu.InGameScores
             {
                 var killCount = GetTeamKillCount(team);
                 AllTeamsStats[team].KillCount = killCount;
-                OnTeamKillCountUpdated.Invoke(team, killCount);
+
+                if (OnTeamKillCountUpdated != null)
+                {
+                    OnTeamKillCountUpdated.Invoke(team);
+                }
             }
         }
 
