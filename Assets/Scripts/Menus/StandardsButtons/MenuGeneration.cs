@@ -39,6 +39,7 @@ namespace Menu.Options
         [SerializeField] private bool _canMove = true;
         [SerializeField] private UnityEvent _OnButtonChangeEvent;
         [SerializeField] private UnityEvent _B_ButtonChangeEvent;
+        public UnityEvent ValidationEvent;
 
         private void Awake()
         {
@@ -56,9 +57,8 @@ namespace Menu.Options
             {
                 if (_buttons[0])
                 {
-                    _buttons[0].HighlightButton(true);
+                    ResetMenu();
                 }
-                ResetMenu();
             }
         }
 
@@ -107,7 +107,8 @@ namespace Menu.Options
         private void ResetMenu()
         {
             _controllerInteraction = true;
-            SetMenuPosition(0); // highlight the first button
+            MenuPosition = 0;
+            _buttons[0].HighlightButton(true); // highlight the first button
             _canMove = true;
             _triggerMoveCooldown = _triggerMoveCooldownDuration; // cooldown inputs initialization
         }
@@ -193,6 +194,11 @@ namespace Menu.Options
             {
                 _buttons[_previousMenuPos].HighlightButton(false);
             }
+
+            if (_OnButtonChangeEvent != null)
+            {
+                _OnButtonChangeEvent.Invoke();
+            }
         }
 
         private void ActualizePosition()
@@ -251,6 +257,11 @@ namespace Menu.Options
                 {
                     _buttonEvents[MenuPosition].Invoke();
                 }
+
+                if (ValidationEvent != null)
+                {
+                    ValidationEvent.Invoke();
+                }
             }
         }
         #endregion
@@ -264,6 +275,11 @@ namespace Menu.Options
                 if (_buttonEvents[IDButton] != null)
                 {
                     _buttonEvents[IDButton].Invoke();
+                }
+
+                if (ValidationEvent != null)
+                {
+                    ValidationEvent.Invoke();
                 }
             }
         }

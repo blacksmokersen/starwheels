@@ -32,9 +32,8 @@ namespace Menu.Options
             {
                 if (_buttons[0])
                 {
-                    _buttons[0].HighlightButton(true);
+                    ResetMenu();
                 }
-                ResetMenu();
             }
         }
 
@@ -69,7 +68,8 @@ namespace Menu.Options
         private void ResetMenu()
         {
             _controllerInteraction = true;
-            SetMenuPosition(0); // highlight the first button
+            MenuPosition = 0;
+            _buttons[0].HighlightButton(true); // highlight the first button
             _canMove = true;
             _triggerMoveCooldown = _triggerMoveCooldownDuration; // cooldown inputs initialization
         }
@@ -155,6 +155,11 @@ namespace Menu.Options
             {
                 _buttons[_previousMenuPos].HighlightButton(false);
             }
+
+            if (_OnButtonChangeEvent != null)
+            {
+                _OnButtonChangeEvent.Invoke();
+            }
         }
 
         private void ActualizePosition()
@@ -213,6 +218,11 @@ namespace Menu.Options
                 {
                     _buttonEvents[MenuPosition].Invoke();
                 }
+
+                if (ValidationEvent != null)
+                {
+                    ValidationEvent.Invoke();
+                }
             }
         }
 
@@ -223,6 +233,11 @@ namespace Menu.Options
                 if (_buttonEvents[IDButton] != null)
                 {
                     _buttonEvents[IDButton].Invoke();
+                }
+
+                if (ValidationEvent != null)
+                {
+                    ValidationEvent.Invoke();
                 }
             }
         }
