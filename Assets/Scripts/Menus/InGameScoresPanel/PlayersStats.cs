@@ -75,6 +75,7 @@ namespace Menu.InGameScores
                     PlayerStatUpdate playerKillCountUpdate = PlayerStatUpdate.Create();
                     playerKillCountUpdate.StatName = Constants.PlayerStats.KillCountName;
                     playerKillCountUpdate.PlayerID = evnt.KillerID;
+                    playerKillCountUpdate.Team = evnt.KillerTeam;
                     playerKillCountUpdate.StatValue = AllPlayersStats[evnt.KillerID].KillCount;
                     playerKillCountUpdate.Send();
                 }
@@ -83,6 +84,7 @@ namespace Menu.InGameScores
                 PlayerStatUpdate playerDeathCountUpdate = PlayerStatUpdate.Create();
                 playerDeathCountUpdate.StatName = Constants.PlayerStats.DeathCountName;
                 playerDeathCountUpdate.PlayerID = evnt.VictimID;
+                playerDeathCountUpdate.Team = evnt.VictimTeam;
                 playerDeathCountUpdate.StatValue = AllPlayersStats[evnt.VictimID].DeathCount;
                 playerDeathCountUpdate.Send();
             }

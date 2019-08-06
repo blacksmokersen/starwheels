@@ -49,6 +49,19 @@ namespace Menu.InGameScores
             }
         }
 
+        // GAMEPLAY EVENTS
+
+        public override void OnEvent(PlayerStatUpdate evnt)
+        {
+            if (evnt.StatName == Constants.PlayerStats.DeathCountName)
+            {
+                UpdateTeamDeathCount(evnt.Team.ToTeam());
+            }
+            else if (evnt.StatName == Constants.PlayerStats.KillCountName)
+            {
+                UpdateTeamKillCount(evnt.Team.ToTeam());
+            }
+        }
 
         // PUBLIC
 
@@ -83,19 +96,21 @@ namespace Menu.InGameScores
             AllTeamsStats.Remove(team);
         }
 
-        public void UpdateTeamDeathCount(Team team, int deathCount)
+        public void UpdateTeamDeathCount(Team team)
         {
             if (AllTeamsStats.ContainsKey(team))
             {
+                var deathCount = GetTeamDeathCount(team);
                 AllTeamsStats[team].DeathCount = deathCount;
                 OnTeamDeathCountUpdated.Invoke(team, deathCount);
             }
         }
 
-        public void UpdateTeamKillCount(Team team, int killCount)
+        public void UpdateTeamKillCount(Team team)
         {
             if (AllTeamsStats.ContainsKey(team))
             {
+                var killCount = GetTeamKillCount(team);
                 AllTeamsStats[team].KillCount = killCount;
                 OnTeamKillCountUpdated.Invoke(team, killCount);
             }
@@ -126,6 +141,7 @@ namespace Menu.InGameScores
                     teamKillCount += pair.Value.KillCount;
                 }
             }
+            Debug.Log("Team kill count : " + teamKillCount);
             return teamKillCount;
         }
     }

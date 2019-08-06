@@ -169,8 +169,9 @@ namespace Menu.InGameScores
             var rank = _teamsStats.GetTeamRank(team);
 
             _displayer.ShowPanel();
-            entry.transform.SetSiblingIndex(rank - 1);
+            entry.transform.SetSiblingIndex(rank);
             _displayer.HidePanel();
+            Debug.LogError("Updating team entry rank to " + rank);
         }
 
         // PRIVATE
