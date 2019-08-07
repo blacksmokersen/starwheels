@@ -116,7 +116,7 @@ namespace Menu.InGameScores
             }
             if (evnt.StatName == Constants.PlayerStats.Ability)
             {
-                //UpdatePlayerAbility(evnt.PlayerID, evnt.StatValue);
+                UpdatePlayerAbility(evnt.PlayerID, evnt.StatValue);
             }
         }
 
@@ -144,7 +144,6 @@ namespace Menu.InGameScores
                     rank = Mathf.Max(1, rank);
                 }
             }
-            Debug.LogError("New rank : " + rank);
             return rank;
         }
 

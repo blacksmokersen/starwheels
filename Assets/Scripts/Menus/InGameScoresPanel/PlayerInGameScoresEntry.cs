@@ -54,7 +54,6 @@ namespace Menu.InGameScores
             if (SteamManager.Initialized)
             {
                 _avatar = SteamFriends.GetLargeFriendAvatar(steamUserID);
-                Debug.Log("Avatar : " + _avatar);
                 if (_avatar > 0)
                 {
                     SetAvatarImage(_avatar);
@@ -106,10 +105,8 @@ namespace Menu.InGameScores
 
         private void OnAvatarLoaded(AvatarImageLoaded_t result)
         {
-            Debug.Log("Avatar was loaded for user : " + result.m_steamID);
             if (result.m_steamID == SteamID)
             {
-                Debug.Log("Hello");
                 SetAvatarImage(result.m_iImage);
             }
         }
