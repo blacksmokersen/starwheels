@@ -32,6 +32,7 @@ namespace Menu.InGameScores
             if (!PlayerScoreEntries.ContainsKey(evnt.PlayerID))
             {
                 CreateEntryForPlayer(evnt.PlayerID, evnt.Nickname, evnt.Team.ToTeam(), evnt.SteamID);
+                UpdateAllTeamsEntryRanks();
             }
         }
 
@@ -46,17 +47,20 @@ namespace Menu.InGameScores
                     entry.UpdateDeathCount(evnt.DeathCount);
                     entry.UpdateTeamColor(evnt.Team.ToTeam());
                 }
+                UpdateAllTeamsEntryRanks();
             }
         }
 
         public override void OnEvent(PlayerQuit evnt)
         {
             DestroyEntryForPlayer(evnt.PlayerID);
+            UpdateAllTeamsEntryRanks();
         }
 
         public override void Disconnected(BoltConnection connection)
         {
             DestroyEntryForPlayer((int)connection.ConnectionId);
+            UpdateAllTeamsEntryRanks();
         }
 
         // PUBLIC
@@ -175,7 +179,14 @@ namespace Menu.InGameScores
             TeamScoreEntries[team].transform.SetSiblingIndex(rank);
             TeamScoreEntries[team].UpdateRankText(rank);
             _displayer.HidePanel();
-            Debug.LogError("Updating team entry rank to " + rank);
+        }
+
+        public void UpdateAllTeamsEntryRanks()
+        {
+            foreach (var pair in TeamScoreEntries)
+            {
+                UpdateTeamEntryRank(pair.Key);
+            }
         }
 
         // PRIVATE

@@ -79,13 +79,16 @@ namespace Menu.InGameScores
         public int GetTeamRank(Team team)
         {
             var rank = AllTeamsStats.Count;
-            var playerStats = AllTeamsStats[team];
-
-            foreach (var pair in AllTeamsStats)
+            if (AllTeamsStats.ContainsKey(team))
             {
-                if (pair.Key != team && playerStats.KillCount > pair.Value.KillCount)
+                var playerStats = AllTeamsStats[team];
+
+                foreach (var pair in AllTeamsStats)
                 {
-                    rank = Mathf.Max(1, rank - 1);
+                    if (pair.Key != team && playerStats.KillCount > pair.Value.KillCount)
+                    {
+                        rank = Mathf.Max(1, rank - 1);
+                    }
                 }
             }
             return rank;
@@ -149,7 +152,6 @@ namespace Menu.InGameScores
                     teamKillCount += pair.Value.KillCount;
                 }
             }
-            Debug.Log("Team kill count : " + teamKillCount);
             return teamKillCount;
         }
     }
