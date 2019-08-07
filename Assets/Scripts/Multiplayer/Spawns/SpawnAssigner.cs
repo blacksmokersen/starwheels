@@ -57,7 +57,7 @@ namespace Multiplayer
 
                 RoomInfoToken = (RoomProtocolToken)token;
 
-                Debug.LogError("RoomInfo : " + RoomInfoToken.RoomInfo + "   Gamemode : " + RoomInfoToken.Gamemode + "   PlayersCount : " + RoomInfoToken.PlayersCount);
+                //Debug.LogError("RoomInfo : " + RoomInfoToken.RoomInfo + "   Gamemode : " + RoomInfoToken.Gamemode + "   PlayersCount : " + RoomInfoToken.PlayersCount);
 
                 _playersCount = RoomInfoToken.PlayersCount;
 

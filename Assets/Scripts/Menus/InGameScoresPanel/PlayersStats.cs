@@ -24,10 +24,14 @@ namespace Menu.InGameScores
     {
         public Dictionary<int, PlayerStats> AllPlayersStats = new Dictionary<int, PlayerStats>();
 
-        [Header("Events")]
+        [Header("Player Events")]
         public DoubleIntEvent OnPlayerKillCountUpdated;
         public DoubleIntEvent OnPlayerDeathCountUpdated;
         public DoubleIntEvent OnPlayerAbilityUpdated;
+
+        [Header("Team Events")]
+        public TeamEvent OnTeamMemberKillCountUpdated;
+        public TeamEvent OnTeamMemberDeathCountUpdated;
 
         // BOLT SPECIFIC EVENTS
 
@@ -71,19 +75,19 @@ namespace Menu.InGameScores
             {
                 if (evnt.VictimID != evnt.KillerID)
                 {
-                    AllPlayersStats[evnt.KillerID].KillCount += 1;
                     PlayerStatUpdate playerKillCountUpdate = PlayerStatUpdate.Create();
                     playerKillCountUpdate.StatName = Constants.PlayerStats.KillCountName;
                     playerKillCountUpdate.PlayerID = evnt.KillerID;
-                    playerKillCountUpdate.StatValue = AllPlayersStats[evnt.KillerID].KillCount;
+                    playerKillCountUpdate.Team = evnt.KillerTeam;
+                    playerKillCountUpdate.StatValue = AllPlayersStats[evnt.KillerID].KillCount + 1;
                     playerKillCountUpdate.Send();
                 }
 
-                AllPlayersStats[evnt.VictimID].DeathCount += 1;
                 PlayerStatUpdate playerDeathCountUpdate = PlayerStatUpdate.Create();
                 playerDeathCountUpdate.StatName = Constants.PlayerStats.DeathCountName;
                 playerDeathCountUpdate.PlayerID = evnt.VictimID;
-                playerDeathCountUpdate.StatValue = AllPlayersStats[evnt.VictimID].DeathCount;
+                playerDeathCountUpdate.Team = evnt.VictimTeam;
+                playerDeathCountUpdate.StatValue = AllPlayersStats[evnt.VictimID].DeathCount + 1;
                 playerDeathCountUpdate.Send();
             }
         }
@@ -128,6 +132,21 @@ namespace Menu.InGameScores
             AllPlayersStats.Add(id, newStats);
         }
 
+        public int GetPlayerRank(int id)
+        {
+            var rank = AllPlayersStats.Count;
+            var playerStats = AllPlayersStats[id];
+
+            foreach (var pair in AllPlayersStats)
+            {
+                if (pair.Key != id && playerStats.KillCount > pair.Value.KillCount)
+                {
+                    rank = Mathf.Max(1, rank);
+                }
+            }
+            return rank;
+        }
+
         public void RemoveEntryForPlayerID(int id)
         {
             AllPlayersStats.Remove(id);
@@ -135,12 +154,18 @@ namespace Menu.InGameScores
 
         public void UpdatePlayerKillCount(int id, int count)
         {
+            AllPlayersStats[id].KillCount = count;
+
             OnPlayerKillCountUpdated.Invoke(id, count);
+            OnTeamMemberKillCountUpdated.Invoke(AllPlayersStats[id].Team);
         }
 
         public void UpdatePlayerDeathCount(int id, int count)
         {
+            AllPlayersStats[id].DeathCount = count;
+
             OnPlayerDeathCountUpdated.Invoke(id, count);
+            OnTeamMemberDeathCountUpdated.Invoke(AllPlayersStats[id].Team);
         }
 
         public void UpdatePlayerAbility(int id, int abilityIndex)
@@ -155,10 +180,11 @@ namespace Menu.InGameScores
             foreach (var playerStat in AllPlayersStats)
             {
                 PlayerAllStats playerAllStats = PlayerAllStats.Create();
+                playerAllStats.PlayerID = playerStat.Key;
+                playerAllStats.SteamID = "" + Steamworks.SteamUser.GetSteamID().m_SteamID;
                 playerAllStats.Name = playerStat.Value.Name;
                 playerAllStats.Team = (int) playerStat.Value.Team;
                 playerAllStats.TargetPlayerID = playerID;
-                playerAllStats.PlayerID = playerStat.Key;
                 playerAllStats.KillCount = playerStat.Value.KillCount;
                 playerAllStats.DeathCount = playerStat.Value.DeathCount;
                 playerAllStats.Send();

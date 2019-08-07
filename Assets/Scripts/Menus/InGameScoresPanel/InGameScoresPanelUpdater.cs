@@ -2,6 +2,8 @@
 using UnityEngine;
 using Bolt;
 using UnityEngine.UI;
+using Steamworks;
+using System;
 
 namespace Menu.InGameScores
 {
@@ -12,12 +14,16 @@ namespace Menu.InGameScores
         public Dictionary<int, PlayerInGameScoresEntry> PlayerScoreEntries = new Dictionary<int, PlayerInGameScoresEntry>();
 
         [Header("UI Elements")]
-        [SerializeField] private RectTransform _rootPanel;
+        [SerializeField] private InGameScoresPanelDisplayer _displayer;
         [SerializeField] private Transform _teamEntriesParent;
 
         [Header("Prefabs")]
         [SerializeField] private TeamInGameScoresEntry _teamPrefab;
         [SerializeField] private PlayerInGameScoresEntry _playerPrefab;
+
+        [Header("Stats")]
+        [SerializeField] private PlayersStats _playersStats;
+        [SerializeField] private TeamsStats _teamsStats;
 
         // BOLT
 
@@ -25,7 +31,8 @@ namespace Menu.InGameScores
         {
             if (!PlayerScoreEntries.ContainsKey(evnt.PlayerID))
             {
-                CreateEntryForPlayer(evnt.PlayerID, evnt.Nickname, evnt.Team.ToTeam());
+                CreateEntryForPlayer(evnt.PlayerID, evnt.Nickname, evnt.Team.ToTeam(), evnt.SteamID);
+                UpdateAllTeamsEntryRanks();
             }
         }
 
@@ -33,33 +40,41 @@ namespace Menu.InGameScores
         {
             if (evnt.TargetPlayerID == SWMatchmaking.GetMyBoltId())
             {
-                var entry = CreateEntryForPlayer(evnt.PlayerID, evnt.Name, evnt.Team.ToTeam());
+                var entry = CreateEntryForPlayer(evnt.PlayerID, evnt.Name, evnt.Team.ToTeam(), evnt.SteamID);
                 if (entry)
                 {
                     entry.UpdateKillCount(evnt.KillCount);
                     entry.UpdateDeathCount(evnt.DeathCount);
                     entry.UpdateTeamColor(evnt.Team.ToTeam());
                 }
+                UpdateAllTeamsEntryRanks();
             }
         }
 
         public override void OnEvent(PlayerQuit evnt)
         {
             DestroyEntryForPlayer(evnt.PlayerID);
+            UpdateAllTeamsEntryRanks();
         }
 
         public override void Disconnected(BoltConnection connection)
         {
             DestroyEntryForPlayer((int)connection.ConnectionId);
+            UpdateAllTeamsEntryRanks();
         }
 
         // PUBLIC
 
-        public PlayerInGameScoresEntry CreateEntryForPlayer(int id, string nickname, Team team)
+        public PlayerInGameScoresEntry CreateEntryForPlayer(int id, string nickname, Team team, string steamID)
         {
             if (!PlayerScoreEntries.ContainsKey(id))
             {
                 var entry = Instantiate(_playerPrefab);
+                if (SteamManager.Initialized)
+                {
+                    entry.SteamID = new CSteamID() { m_SteamID = Convert.ToUInt64(steamID) };
+                }
+                entry.UpdateAvatar(entry.SteamID);
                 entry.UpdateNickname(nickname);
                 entry.UpdateTeamColor(team);
 
@@ -70,10 +85,13 @@ namespace Menu.InGameScores
                     teamEntry.SetTeam(team);
                     teamEntry.SetColorAccordingToTeam();
                     TeamScoreEntries.Add(team, teamEntry);
+                    teamEntry.UpdateRankText(TeamScoreEntries.Count);
                 }
-                entry.transform.SetParent(TeamScoreEntries[team].gameObject.transform, false);
+                entry.transform.SetParent(TeamScoreEntries[team].GetComponentInChildren<VerticalLayoutGroup>().transform, false);
 
                 PlayerScoreEntries.Add(id, entry);
+                //entry.UpdateRank(PlayerScoreEntries.Count);
+
                 return entry;
             }
             else
@@ -111,6 +129,7 @@ namespace Menu.InGameScores
             if (PlayerScoreEntries.ContainsKey(id))
             {
                 PlayerScoreEntries[id].UpdateKillCount(killCount);
+                var team = _playersStats.AllPlayersStats[id].Team;
             }
             else
             {
@@ -139,6 +158,34 @@ namespace Menu.InGameScores
             else
             {
                 Debug.LogError("Provided ID could not be found in the players scores entries.");
+            }
+        }
+
+        public void UpdatePlayerEntryRank(int playerID)
+        {
+            var rank = _playersStats.GetPlayerRank(playerID);
+
+            _displayer.ShowPanel();
+            //PlayerScoreEntries[playerID].transform.SetSiblingIndex(rank - 1);
+            PlayerScoreEntries[playerID].UpdateRankText(rank);
+            _displayer.HidePanel();
+        }
+
+        public void UpdateTeamEntryRank(Team team)
+        {
+            var rank = _teamsStats.GetTeamRank(team);
+
+            _displayer.ShowPanel();
+            TeamScoreEntries[team].transform.SetSiblingIndex(rank);
+            TeamScoreEntries[team].UpdateRankText(rank);
+            _displayer.HidePanel();
+        }
+
+        public void UpdateAllTeamsEntryRanks()
+        {
+            foreach (var pair in TeamScoreEntries)
+            {
+                UpdateTeamEntryRank(pair.Key);
             }
         }
 

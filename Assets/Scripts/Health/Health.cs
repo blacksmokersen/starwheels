@@ -97,7 +97,7 @@ namespace Health
 
         private IEnumerator InvicibilityTime(float x)
         {
-            Debug.Log("[INVINCIBILITY] Timer");
+            //Debug.Log("[INVINCIBILITY] Timer");
             IsInvincible = true;
             OnInvincibilityDuration.Invoke(x);
             yield return new WaitForSeconds(x);

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using Multiplayer.Teams;
+using TMPro;
 
 namespace Menu.InGameScores
 {
@@ -11,6 +11,7 @@ namespace Menu.InGameScores
 
         [Header("UI Elements")]
         [SerializeField] private Image _backgroundImage;
+        [SerializeField] private TextMeshProUGUI _rankText;
 
         private GameSettings _gameSettings;
 
@@ -31,6 +32,11 @@ namespace Menu.InGameScores
         public void SetColorAccordingToTeam()
         {
             _backgroundImage.color = _gameSettings.TeamsListSettings.GetSettings(Team).KillFeedEntryColor;
+        }
+
+        public void UpdateRankText(int rank)
+        {
+            _rankText.text = "" + rank;
         }
     }
 }

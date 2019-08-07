@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Bolt;
 using Photon;
-
+using Steamworks;
 
 namespace Multiplayer
 {
@@ -86,6 +86,10 @@ namespace Multiplayer
             PlayerReady playerReadyEvent = PlayerReady.Create();
             playerReadyEvent.Nickname = _playerSettings.Nickname;
             playerReadyEvent.PlayerID = SWMatchmaking.GetMyBoltId();
+            if (SteamManager.Initialized)
+            {
+                playerReadyEvent.SteamID = "" + SteamUser.GetSteamID().m_SteamID;
+            }
             playerReadyEvent.Team = (int) team;
             playerReadyEvent.KartIndex = _playerSettings.KartIndex;
             playerReadyEvent.CharacterIndex = _playerSettings.CharacterIndex;
