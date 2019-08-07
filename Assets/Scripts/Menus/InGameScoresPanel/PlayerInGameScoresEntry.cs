@@ -44,7 +44,7 @@ namespace Menu.InGameScores
 
         // PUBLIC
 
-        public void UpdateRank(int rank)
+        public void UpdateRankText(int rank)
         {
             _rank.text = "" + rank;
         }

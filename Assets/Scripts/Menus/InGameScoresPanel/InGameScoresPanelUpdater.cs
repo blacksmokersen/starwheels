@@ -81,10 +81,13 @@ namespace Menu.InGameScores
                     teamEntry.SetTeam(team);
                     teamEntry.SetColorAccordingToTeam();
                     TeamScoreEntries.Add(team, teamEntry);
+                    teamEntry.UpdateRankText(TeamScoreEntries.Count);
                 }
-                entry.transform.SetParent(TeamScoreEntries[team].gameObject.transform, false);
+                entry.transform.SetParent(TeamScoreEntries[team].GetComponentInChildren<VerticalLayoutGroup>().transform, false);
 
                 PlayerScoreEntries.Add(id, entry);
+                //entry.UpdateRank(PlayerScoreEntries.Count);
+
                 return entry;
             }
             else
@@ -159,7 +162,8 @@ namespace Menu.InGameScores
             var rank = _playersStats.GetPlayerRank(playerID);
 
             _displayer.ShowPanel();
-            PlayerScoreEntries[playerID].transform.SetSiblingIndex(rank - 1);
+            //PlayerScoreEntries[playerID].transform.SetSiblingIndex(rank - 1);
+            PlayerScoreEntries[playerID].UpdateRankText(rank);
             _displayer.HidePanel();
         }
 
@@ -169,6 +173,7 @@ namespace Menu.InGameScores
 
             _displayer.ShowPanel();
             TeamScoreEntries[team].transform.SetSiblingIndex(rank);
+            TeamScoreEntries[team].UpdateRankText(rank);
             _displayer.HidePanel();
             Debug.LogError("Updating team entry rank to " + rank);
         }
