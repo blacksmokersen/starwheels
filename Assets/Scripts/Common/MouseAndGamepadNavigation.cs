@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
@@ -11,25 +12,53 @@ namespace Common
 
         [Header("Settings")]
         public bool Enabled;
+        [SerializeField] private bool _autoDisableCursorIFStickConnected;
         [SerializeField] private bool _disableCursorOnAwake;
 
         private Selectable _lastSelected;
         private bool _gamepadHasFocus = false;
 
+        [SerializeField]
+        public enum _Controller { None, Xbox, PS4};
+        public _Controller ControllerConnected = _Controller.None;
+
+        public UnityEvent DefaultControllerConnectedEvent;
+
         // CORE
 
         private void Awake()
         {
-            _lastSelected = _eventSystem.firstSelectedGameObject.GetComponent<Selectable>();
-            CenterCursor();
+            DetectStickController();
 
-            if (_disableCursorOnAwake)
+            _lastSelected = _eventSystem.firstSelectedGameObject.GetComponent<Selectable>();
+
+            if (_disableCursorOnAwake || (_autoDisableCursorIFStickConnected && ControllerConnected != _Controller.None))
             {
                 HideCursor();
             }
-            else //if cursor is visible, set it at the center
+        }
+
+        public void DetectStickController()
+        {
+            string[] names = Input.GetJoystickNames();
+            for (int x = 0; x < names.Length; x++)
             {
-                CenterCursor();
+                if (names[x].Length == 19)
+                {
+                    ControllerConnected = _Controller.PS4;
+                }
+                if (names[x].Length == 33)
+                {
+                    ControllerConnected = _Controller.Xbox;
+                }
+            }
+
+            if (ControllerConnected != _Controller.None)
+            {
+                if (DefaultControllerConnectedEvent != null)
+                {
+                    DefaultControllerConnectedEvent.Invoke();
+                }
             }
         }
 
@@ -56,19 +85,10 @@ namespace Common
             Cursor.lockState = CursorLockMode.None;
         }
 
-        public void CenterCursor()
-        {
-
-            //Set cursor at center of the screen
-            Vector3 mousePos = Input.mousePosition;
-            mousePos.x -= Screen.width / 2;
-            mousePos.y -= Screen.height / 2;
-        }
-
         public void HideCursor()
         {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            //Cursor.visible = false;
+            //Cursor.lockState = CursorLockMode.Locked;
         }
 
         // PRIVATE
@@ -108,9 +128,11 @@ namespace Common
                 if (!Cursor.visible)
                 {
                     ShowCursor();
-                    CenterCursor();
                 }
-                _gamepadHasFocus = false;
+                if (_gamepadHasFocus)
+                {
+                    _gamepadHasFocus = false;
+                }
             }
         }
     }

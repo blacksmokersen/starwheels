@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
+using TMPro;
 
 namespace Menu.Options
 {
@@ -11,8 +14,8 @@ namespace Menu.Options
 
         [Header("Settings")]
         [SerializeField] private bool _enableMultiplePanelsOpened;
+        [SerializeField] private bool _allowAutoMapping; // change options configuration if stick is connected on start of scene
 
-        // PUBLIC
 
         public void HideAllPanels()
         {

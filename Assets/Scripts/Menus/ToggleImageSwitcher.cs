@@ -35,8 +35,8 @@ namespace Menu
             if (!_targetToggle.isOn)
             {
                 _unselectedImage.gameObject.SetActive(true);
-                _onHoverImage.gameObject.SetActive(false);
-                _onHoverValidationInputImage.gameObject.SetActive(false);
+                //_onHoverImage.gameObject.SetActive(false);
+                //_onHoverValidationInputImage.gameObject.SetActive(false);
                 _selectedImage.gameObject.SetActive(false);
             }
         }
@@ -46,8 +46,8 @@ namespace Menu
             if (!_targetToggle.isOn)
             {
                 _unselectedImage.gameObject.SetActive(false);
-                _onHoverImage.gameObject.SetActive(true);
-                _onHoverValidationInputImage.gameObject.SetActive(true);
+                //_onHoverImage.gameObject.SetActive(true);
+                //_onHoverValidationInputImage.gameObject.SetActive(true);
                 _selectedImage.gameObject.SetActive(false);
             }
         }
@@ -55,8 +55,8 @@ namespace Menu
         public void SetSelectedImage()
         {
             _unselectedImage.gameObject.SetActive(false);
-            _onHoverImage.gameObject.SetActive(false);
-            _onHoverValidationInputImage.gameObject.SetActive(false);
+            //_onHoverImage.gameObject.SetActive(false);
+            //_onHoverValidationInputImage.gameObject.SetActive(false);
             _selectedImage.gameObject.SetActive(true);
         }
 
