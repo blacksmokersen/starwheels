@@ -43,7 +43,7 @@ namespace Engine
                 MotorFullSource.pitch = Mathf.Abs(resultingPitch);
             }
 
-            if (Input.GetButtonDown(Constants.Input.Accelerate))
+            if (Input.GetAxis(Constants.Input.Accelerate) >=0.8)
             {
                 if (!_routineAlreadyStarted)
                 {
@@ -52,7 +52,7 @@ namespace Engine
                 }
             }
 
-            if (Input.GetButtonUp(Constants.Input.Accelerate))
+            if (Input.GetAxis(Constants.Input.Accelerate) <= 0.5)
             {
                 _routineAlreadyStarted = false;
                 EngineStepsReset();

@@ -26,6 +26,7 @@ namespace Multiplayer
         private int _playersCount = -1;
         private bool _gameIsReady = false;
         private bool _gameIsStarted = false;
+        private bool _countdownRoutineIsStarted = false;
 
         // CORE
 
@@ -210,15 +211,18 @@ namespace Multiplayer
 
                 onAllPlayersInGame.Send();
 
-                if (!_gameIsStarted)
+                if (!_gameIsStarted && !_countdownRoutineIsStarted)
+                {
                     StartCoroutine(CountdownCoroutine());
+                    _countdownRoutineIsStarted = true;
+                }
             }
         }
 
         private IEnumerator CountdownCoroutine()
         {
-            float remainingTime = _countdownSettings.Timer;
-            int floorTime = Mathf.FloorToInt(remainingTime);
+            int remainingTime = _countdownSettings.Timer;
+           // int floorTime = Mathf.FloorToInt(remainingTime);
 
             LobbyCountdown countdownEvent;
 
@@ -226,6 +230,14 @@ namespace Multiplayer
             {
                 while (remainingTime > 0)
                 {
+                    yield return new WaitForSeconds(1);
+                    remainingTime--;
+
+                    countdownEvent = LobbyCountdown.Create();
+                    countdownEvent.Time = remainingTime;
+                    countdownEvent.Send();
+
+                    /*
                     remainingTime -= Time.deltaTime;
                     int newFloorTime = Mathf.FloorToInt(remainingTime);
 
@@ -238,6 +250,7 @@ namespace Multiplayer
                         countdownEvent.Send();
                     }
                     yield return null;
+                    */
                 }
             }
 

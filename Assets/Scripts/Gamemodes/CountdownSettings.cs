@@ -4,5 +4,5 @@
 public class CountdownSettings : ScriptableObject
 {
     public bool Countdown;
-    public float Timer;
+    public int Timer;
 }
