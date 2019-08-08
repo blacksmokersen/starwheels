@@ -139,10 +139,7 @@ namespace Menu.Options
             //Exit (ESCAPE || B)
             if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))
             {
-                if (_B_ButtonChangeEvent != null)
-                {
-                    _B_ButtonChangeEvent.Invoke();
-                }
+                ReturnEvent();
             }
         }
 
@@ -248,6 +245,22 @@ namespace Menu.Options
             foreach (ButtonAttribution _button in _buttons)
             {
                 _button.EnableButtonInteraction(value);
+            }
+        }
+
+        public void ReturnEvent()
+        {
+            if (_B_ButtonChangeEvent != null)
+            {
+                _B_ButtonChangeEvent.Invoke();
+            }
+        }
+
+        public void ClosePanel(bool value)
+        {
+            if (value == true)
+            {
+                gameObject.SetActive(false);
             }
         }
     }
