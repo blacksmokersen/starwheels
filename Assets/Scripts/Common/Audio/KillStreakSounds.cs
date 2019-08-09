@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Bolt;
 
-public class EventsSoundManager : GlobalEventListener
+public class KillStreakSounds : GlobalEventListener
 {
     [SerializeField] private AudioClip[] _killStreakAudioclips;
 
