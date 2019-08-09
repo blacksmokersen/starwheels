@@ -10,18 +10,17 @@ namespace Gamemodes
     {
         [SerializeField] private GameObject _display;
         [SerializeField] private GameObject _displayCamera;
+        [SerializeField] private Transform _kartPosition;
 
         public override void OnEvent(GameOver evnt)
         {
             _display.SetActive(true);
             _displayCamera.SetActive(true);
 
-            if (BoltNetwork.IsServer)
+            foreach (GameObject kart in SWExtensions.KartExtensions.GetKartsWithTeam((Team)evnt.WinningTeam))
             {
-                foreach (GameObject kart in SWExtensions.KartExtensions.GetKartsWithTeam((Team)evnt.WinningTeam))
-                {
-                    kart.gameObject.transform.position = new Vector3(_display.transform.position.x, _display.transform.position.y + 2, _display.transform.position.z);
-                }
+                kart.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                kart.gameObject.transform.position = _kartPosition.position;
             }
         }
     }
