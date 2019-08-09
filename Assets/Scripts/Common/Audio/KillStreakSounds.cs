@@ -5,10 +5,12 @@ using Bolt;
 
 public class KillStreakSounds : GlobalEventListener
 {
+    [SerializeField] private float _killStreakTimer;
     [SerializeField] private AudioClip[] _killStreakAudioclips;
 
     private AudioSource _audioSource;
     private Dictionary<int, int> PlayerCumulativeScoreEntries = new Dictionary<int, int>();
+    private Dictionary<int, float> PlayerTimer = new Dictionary<int, float>();
     private bool _isFirstBloodOccured = false;
 
     //CORE
@@ -30,7 +32,9 @@ public class KillStreakSounds : GlobalEventListener
         }
 
         if (PlayerCumulativeScoreEntries.ContainsKey(evnt.VictimID))
-            PlayerCumulativeScoreEntries.Remove(evnt.VictimID);
+        {
+            RemoveFromAllDictionnaries(evnt.VictimID);
+        }
 
         if (PlayerCumulativeScoreEntries.ContainsKey(evnt.KillerID))
         {
@@ -38,15 +42,27 @@ public class KillStreakSounds : GlobalEventListener
             CheckCumulativeScore(evnt.KillerID);
         }
         else
+        {
             PlayerCumulativeScoreEntries.Add(evnt.KillerID, 1);
+            PlayerTimer.Add(evnt.KillerID, Time.time);
+        }
     }
 
     //PRIVATE
 
     private void CheckCumulativeScore(int playerEntry)
     {
-        if (PlayerCumulativeScoreEntries[playerEntry] >= 2)
+        if (PlayerCumulativeScoreEntries[playerEntry] >= 2 && Time.time - PlayerTimer[playerEntry] <= _killStreakTimer)
+        {
+            //  Debug.LogError("Set new Time - LastHit Was : " + (Time.time - PlayerTimer[playerEntry]));
             PlayCumulativeAudioClip(PlayerCumulativeScoreEntries[playerEntry] - 2);
+            PlayerTimer[playerEntry] = Time.time;
+        }
+        else if(Time.time - PlayerTimer[playerEntry] > _killStreakTimer)
+        {
+         //   Debug.LogError("RemoveFromDictionaries - LastHit Was : " + (Time.time - PlayerTimer[playerEntry]));
+            RemoveFromAllDictionnaries(playerEntry);
+        }
     }
 
     private void AddCumulativeScore(int playerEntry)
@@ -59,5 +75,11 @@ public class KillStreakSounds : GlobalEventListener
     {
         _audioSource.clip = _killStreakAudioclips[cumulativeScore];
         _audioSource.Play();
+    }
+
+    private void RemoveFromAllDictionnaries(int playerEntry)
+    {
+        PlayerCumulativeScoreEntries.Remove(playerEntry);
+        PlayerTimer.Remove(playerEntry);
     }
 }
