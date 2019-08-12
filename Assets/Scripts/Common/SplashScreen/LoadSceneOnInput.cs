@@ -25,7 +25,7 @@ namespace Common.SplashScreen
         private bool _epilepsiePanelShowing = true;
         private bool _canSkipEpilepsiePanel = false;
 
-        private bool _loadMainMenu = true; //TEMPORARY - set to false when videoclip is fixed
+        private bool _loadMainMenu = false;
 
         // CORE
 

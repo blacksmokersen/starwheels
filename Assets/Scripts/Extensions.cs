@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Multiplayer;
+using Steamworks;
 
 namespace SWExtensions
 {
@@ -12,6 +13,30 @@ namespace SWExtensions
             byte[] bytes = new byte[16];
             BitConverter.GetBytes(value).CopyTo(bytes, 0);
             return new Guid(bytes);
+        }
+    }
+
+    public static class SteamExtensions
+    {
+        public static Texture2D GetSteamImageAsTexture2D(int iImage)
+        {
+            Texture2D resultingTexture = null;
+            uint imageWidth, imageHeight;
+
+            var imageIsValid = SteamUtils.GetImageSize(iImage, out imageWidth, out imageHeight);
+            if (imageIsValid)
+            {
+                byte[] image = new byte[imageWidth * imageHeight * 4];
+
+                imageIsValid = SteamUtils.GetImageRGBA(iImage, image, (int)(imageWidth * imageHeight * 4));
+                if (imageIsValid)
+                {
+                    resultingTexture = new Texture2D((int)imageWidth, (int)imageHeight, TextureFormat.RGBA32, false, true);
+                    resultingTexture.LoadRawTextureData(image);
+                    resultingTexture.Apply();
+                }
+            }
+            return resultingTexture;
         }
     }
 

@@ -31,7 +31,6 @@ public class LoadingScreen : GlobalEventListener
 
     public override void OnEvent(OnAllPlayersInGame evnt)
     {
-        Debug.LogError("OnAllPlayersInGame INVOKE");
         _inGameMenu.SetActive(true);
         StartCoroutine(LoadingMinimumUpTime(_loadingMinDuration));
     }

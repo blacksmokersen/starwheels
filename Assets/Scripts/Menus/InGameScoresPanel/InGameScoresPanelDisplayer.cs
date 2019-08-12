@@ -48,9 +48,7 @@ namespace Menu.InGameScores
             }
         }
 
-        // PRIVATE
-
-        private void ShowPanel()
+        public void ShowPanel()
         {
             _panel.SetActive(true);
             foreach (var rect in GetComponentsInChildren<RectTransform>())
@@ -59,10 +57,12 @@ namespace Menu.InGameScores
             }
         }
 
-        private void HidePanel()
+        public void HidePanel()
         {
             _panel.SetActive(false);
         }
+
+        // PRIVATE
 
         private IEnumerator ActivateAfterXSecondsRoutine(float x)
         {

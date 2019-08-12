@@ -36,7 +36,7 @@ namespace Multiplayer.Teams
             }
             else
             {
-                Debug.LogError("Can't set team color according to state if entity is not attached.");
+                Debug.LogWarning("Can't set team color according to state if entity is not attached.");
             }
         }
 
@@ -50,7 +50,7 @@ namespace Multiplayer.Teams
             }
             else
             {
-                Debug.LogError("Team = None or TeamSettings was null. Couldn't set color.");
+                Debug.LogWarning("Team = None or TeamSettings was null. Couldn't set color.");
             }
         }
 
