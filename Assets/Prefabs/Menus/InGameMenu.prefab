@@ -282,7 +282,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _eventSystem: {fileID: 5396736213530218042}
   Enabled: 0
+  _autoDisableCursorIFStickConnected: 0
   _disableCursorOnAwake: 1
+  ControllerConnected: 0
+  DefaultControllerConnectedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &7487595972702664414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,6 +307,7 @@ MonoBehaviour:
   - {fileID: 5020831528474308323}
   - {fileID: 5173782826549885475}
   _enableMultiplePanelsOpened: 0
+  _allowAutoMapping: 0
 --- !u!114 &3067581046224442456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10657,7 +10665,7 @@ PrefabInstance:
     - target: {fileID: 8021536408804363097, guid: 52fc87ef2c55b194db19397f5d162340,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4747863412183488219, guid: 52fc87ef2c55b194db19397f5d162340,
         type: 3}
@@ -11607,7 +11615,8 @@ PrefabInstance:
       propertyPath: m_Spacing
       value: -18.39
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2506674868568047424, guid: f40d43e0c6e8a19459f1790571545657, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f40d43e0c6e8a19459f1790571545657, type: 3}
 --- !u!224 &8075853900825864014 stripped
 RectTransform:
