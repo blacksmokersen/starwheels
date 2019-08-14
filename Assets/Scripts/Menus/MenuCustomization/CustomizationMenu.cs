@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Menu.Options
 {
@@ -14,6 +15,12 @@ namespace Menu.Options
             {
                 _VCam.SetActive(false);
             }
+        }
+
+        public void OpenVcam(GameObject _Vcam)
+        {
+            DisableVCams();
+            _Vcam.SetActive(true);
         }
     }
 }

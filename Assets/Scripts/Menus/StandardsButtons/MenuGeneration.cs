@@ -14,7 +14,6 @@ namespace Menu.Options
         [SerializeField] private bool _horizontalMenu;
         [SerializeField] private GameObject _buttonPrefab;
         private ButtonAttribution[] _buttons;
-        [SerializeField] private string _buttonName = "button";
 
         [SerializeField] private float _scaleFactor = 1;
 
@@ -93,7 +92,7 @@ namespace Menu.Options
             {
                 _buttons[i] = Instantiate(_buttonPrefab, new Vector2(_menuPanel.position.x + i * _horizontalDecalage, _menuPanel.position.y - i * _verticalDecalage), _menuPanel.rotation, _menuPanel).GetComponent<ButtonAttribution>();
                 _buttons[i].Attribution(i, _buttonNames[i], this);
-                _buttons[i].gameObject.name = _buttonName + i;
+                _buttons[i].gameObject.name = _buttonNames[i];
                 _buttons[i].gameObject.transform.localScale = new Vector2(_scaleFactor, _scaleFactor);
             }
         }

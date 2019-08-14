@@ -75,6 +75,7 @@ namespace Menu
             for (int i = 0; i < _elementsToReset.Count; i++)
             {
                 _elementsToReset[i].SetActive(_elementsToResetStatuses[i]);
+                Debug.Log(_elementsToReset[i] + " " + _elementsToResetStatuses[i]);
             }
         }
 
