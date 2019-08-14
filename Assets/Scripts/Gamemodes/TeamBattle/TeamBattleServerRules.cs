@@ -22,14 +22,33 @@ namespace Gamemodes
 
         //PRIVATE
 
-        public void SetAlivePlayers()
+        public void RefreshAlivePlayers()
         {
+            _alivePlayers.Clear();
             foreach (int player in _teamBattlePlayersObserver.GetAlivePlayers())
             {
                 if (!_alivePlayers.ContainsKey(player))
                 {
-                    AddPlayerEntry(player, KartExtensions.GetMyKart().GetComponent<PlayerInfo>().Team);
+                    AddPlayerEntry(player, KartExtensions.GetKartWithID(player).GetComponent<PlayerInfo>().Team);
                 }
+            }
+            CheckWiningCondition();
+        }
+
+        public void CheckWiningCondition()
+        {
+            int blueTeamNumbers = 0;
+            int redTeamNumbers = 0;
+            foreach (int player in _alivePlayers.Keys)
+            {
+                if(_alivePlayers[player] == Team.Blue)
+                    blueTeamNumbers++;
+                else if(_alivePlayers[player] == Team.Red)
+                    redTeamNumbers++;
+            }
+            if(blueTeamNumbers == 0 || redTeamNumbers == 0)
+            {
+                //GAME OVER
             }
         }
 
