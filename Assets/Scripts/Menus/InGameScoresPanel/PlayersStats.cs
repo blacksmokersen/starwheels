@@ -14,6 +14,12 @@ namespace Menu.InGameScores
         public int KillCount = 0;
         public int DeathCount = 0;
 
+        // TEAM BATTLE
+
+        public int LifeCount = 0;
+        public float JailMaxDuration = 0;
+        public int RescueFriendsCount = 0;
+
         // TOTEM
         public int IndividualGoals = 0;
         public int Passes = 0;
