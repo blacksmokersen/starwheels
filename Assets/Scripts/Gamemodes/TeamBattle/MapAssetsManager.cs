@@ -4,15 +4,7 @@ using UnityEngine;
 
 public class MapAssetsManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private GameObject[] _TeamBattleAssetsToEnable;
+    [SerializeField] private GameObject[] _BaseMapAssetsToDisable;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

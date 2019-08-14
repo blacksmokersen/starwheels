@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class TeamBattlePlayersObserver : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private Dictionary<int, int> _playersLifeCount = new Dictionary<int, int>();
+
+    //PUBLIC
+
+    public void SetPlayerLifeCount(int playerID, int lifeCount)
     {
-        
+        _playersLifeCount.Add(playerID, lifeCount);
     }
 
-    // Update is called once per frame
-    void Update()
+    public List<int> GetAlivePlayers()
     {
-        
+        List<int> alivePlayers = new List<int>();
+
+        foreach (int player in _playersLifeCount.Keys)
+        {
+            if(_playersLifeCount[player] >= 1)
+            {
+                alivePlayers.Add(player);
+            }
+        }
+        return alivePlayers;
     }
 }

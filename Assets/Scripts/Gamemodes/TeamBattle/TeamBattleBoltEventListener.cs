@@ -1,18 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Bolt;
+using Gamemodes;
 
-public class TeamBattleBoltEventListener : MonoBehaviour
+public class TeamBattleBoltEventListener : GlobalEventListener
 {
-    // Start is called before the first frame update
-    void Start()
+    private TeamBattleServerRules _teamBattleServerRules;
+
+    //CORE
+
+    private void Awake()
     {
-        
+        _teamBattleServerRules = GetComponent<TeamBattleServerRules>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
