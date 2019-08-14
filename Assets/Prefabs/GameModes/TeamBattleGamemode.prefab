@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 4408123776750297105}
   - component: {fileID: 4240115283408683635}
   - component: {fileID: 7736276042698636454}
+  - component: {fileID: 5812540986322776697}
+  - component: {fileID: 590328738487459869}
   m_Layer: 0
   m_Name: TeamBattleGamemode
   m_TagString: Untagged
@@ -46,6 +48,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dcbf8fcb3de4794fa5645f7f4b2b0c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WinnerTeam: 0
+  OnGameReset:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnGameEnd:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: TeamEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnGameStart:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  _teamBattleSettings: {fileID: 11400000, guid: d029d6f9d9605e245a75fc3e3619bd76,
+    type: 2}
 --- !u!114 &4408123776750297105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,6 +89,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f782e1c105666b443932de3878e58f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _onAllPlayerInGame:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &7736276042698636454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,3 +106,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85c2011326a46ec4cb8b0b90628c5001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _TeamBattleAssetsToEnable: []
+  _BaseMapAssetsToDisable: []
+--- !u!114 &5812540986322776697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3187979152429252962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d771b602b595fe468b93420683dfc84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quitLevel: {fileID: 0}
+  resetLevel: {fileID: 0}
+--- !u!114 &590328738487459869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3187979152429252962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab26b7bdabcf3ab429a9921c28a2a0c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnPlayerQuit:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: IntEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null

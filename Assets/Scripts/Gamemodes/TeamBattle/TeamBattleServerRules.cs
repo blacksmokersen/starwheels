@@ -8,6 +8,8 @@ namespace Gamemodes
 {
     public class TeamBattleServerRules : GamemodeBase
     {
+        [SerializeField] private TeamBattleSettings _teamBattleSettings;
+
         private Dictionary<int, Coroutine> _jailCoroutines = new Dictionary<int, Coroutine>();
         private Dictionary<int, Team> _alivePlayers = new Dictionary<int, Team>();
 
