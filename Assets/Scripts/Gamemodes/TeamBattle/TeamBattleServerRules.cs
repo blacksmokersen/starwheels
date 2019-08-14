@@ -22,7 +22,7 @@ namespace Gamemodes
             _teamBattlePlayersObserver = GetComponent<TeamBattlePlayersObserver>();
         }
 
-        //PRIVATE
+        //PUBLIC
 
         public void RefreshAlivePlayers()
         {
@@ -48,9 +48,13 @@ namespace Gamemodes
                 else if(_alivePlayers[player] == Team.Red)
                     redTeamNumbers++;
             }
-            if(blueTeamNumbers == 0 || redTeamNumbers == 0)
+            if(blueTeamNumbers == 0)
             {
-                //GAME OVER
+                SendWinningTeamEvent(Team.Red);
+            }
+            else if (redTeamNumbers == 0)
+            {
+                SendWinningTeamEvent(Team.Blue);
             }
         }
 
@@ -63,9 +67,5 @@ namespace Gamemodes
         {
             _alivePlayers.Remove(playerID);
         }
-
-
-
-
     }
 }

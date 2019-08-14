@@ -28,6 +28,17 @@ public class TeamBattlePlayersObserver : MonoBehaviour
         }
     }
 
+    public void CheckAllKarts()
+    {
+        foreach (int player in _playersLifeCount.Keys)
+        {
+            if (KartExtensions.GetKartWithID(player) == null)
+            {
+                _playersLifeCount.Remove(player);
+            }
+        }
+    }
+
     public void AddPlayerLifeCount(int playerID, int lifeCount)
     {
         _playersLifeCount.Add(playerID, lifeCount);
