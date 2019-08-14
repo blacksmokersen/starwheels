@@ -1,10 +1,29 @@
-﻿namespace Gamemodes
+﻿using UnityEngine;
+
+namespace Gamemodes
 {
     public class BattleServerRules : GamemodeBase
     {
         public IntVariable MaxScore;
 
+        private GameSettings _gameSettings;
+
+        // CORE
+
+        private void Awake()
+        {
+            _gameSettings = Resources.Load<GameSettings>(Constants.Resources.GameSettings);
+        }
+
         // BOLT
+
+        public override void OnEvent(OnAllPlayersInGame evnt)
+        {
+            if (_gameSettings.Gamemode == Constants.Gamemodes.Battle)
+            {
+                this.gameObject.SetActive(false);
+            }
+        }
 
         public override void OnEvent(PlayerHit evnt)
         {

@@ -15,11 +15,24 @@ namespace Gamemodes
 
         private TeamBattlePlayersObserver _teamBattlePlayersObserver;
 
+        private GameSettings _gameSettings;
+
         //CORE
 
         private void Awake()
         {
+            _gameSettings = Resources.Load<GameSettings>(Constants.Resources.GameSettings);
             _teamBattlePlayersObserver = GetComponent<TeamBattlePlayersObserver>();
+        }
+
+        // BOLT
+
+        public override void OnEvent(OnAllPlayersInGame evnt)
+        {
+            if (_gameSettings.Gamemode == Constants.Gamemodes.FFA)
+            {
+                this.gameObject.SetActive(false);
+            }
         }
 
         //PUBLIC
