@@ -22,6 +22,18 @@ namespace Gamemodes
             _teamBattlePlayersObserver = GetComponent<TeamBattlePlayersObserver>();
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Keypad1))
+            {
+                RefreshAlivePlayers();
+                foreach (int player in _alivePlayers.Keys)
+                {
+                    Debug.LogError("Player ID : " + player + " Team : " + _alivePlayers[player]);
+                }
+            }
+        }
+
         //PUBLIC
 
         public void RefreshAlivePlayers()

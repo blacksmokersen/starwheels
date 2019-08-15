@@ -25,38 +25,22 @@ public class TeamBattlePlayersObserver : GlobalEventListener
         {
             foreach (int player in _playersLifeCount.Keys)
             {
-                Debug.LogError("Player ID : " + player + " PlayerLifeCount" + _playersLifeCount[player]);
+                Debug.LogError("Player ID : " + player + " PlayerLifeCount : " + _playersLifeCount[player]);
             }
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            DecreasePlayerHealth(2);
         }
     }
 
 
     //PUBLIC
 
-    public void SetPlayersList(PlayerInfoEvent evnt)
+    public void DecreasePlayerHealth(int playerID)
     {
-        if (BoltNetwork.IsServer)
-        {
-            if (!_playersLifeCount.ContainsKey(evnt.PlayerID))
-            {
-                _playersLifeCount.Add(evnt.PlayerID, 5);
-            }
-        }
-    }
-
-    public void CheckAllKarts()
-    {
-        if (BoltNetwork.IsServer)
-        {
-            foreach (int player in _playersLifeCount.Keys)
-            {
-                if (KartExtensions.GetKartWithID(player) == null)
-                {
-                    _playersLifeCount.Remove(player);
-                    Debug.LogError("REMOVED : " + player);
-                }
-            }
-        }
+        _playersLifeCount[playerID] --;
+        Debug.LogError("Decreased : " + playerID + " PlayerLifeCount");
     }
 
     public void AddObservedPlayer(int playerID)
@@ -78,6 +62,21 @@ public class TeamBattlePlayersObserver : GlobalEventListener
             {
                 Debug.LogError("REMOVED : " + playerID);
                 _playersLifeCount.Remove(playerID);
+            }
+        }
+    }
+
+    public void CheckAllKarts()
+    {
+        if (BoltNetwork.IsServer)
+        {
+            foreach (int player in _playersLifeCount.Keys)
+            {
+                if (KartExtensions.GetKartWithID(player) == null)
+                {
+                    _playersLifeCount.Remove(player);
+                    Debug.LogError("REMOVED : " + player);
+                }
             }
         }
     }
