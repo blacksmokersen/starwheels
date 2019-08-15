@@ -39,15 +39,18 @@ namespace Gamemodes
 
         public void RefreshAlivePlayers()
         {
-            _alivePlayers.Clear();
-            foreach (int player in _teamBattlePlayersObserver.GetAlivePlayers())
+            if (BoltNetwork.IsServer)
             {
-                if (!_alivePlayers.ContainsKey(player))
+                _alivePlayers.Clear();
+                foreach (int player in _teamBattlePlayersObserver.GetAlivePlayers())
                 {
-                    AddPlayerEntry(player, KartExtensions.GetKartWithID(player).GetComponent<PlayerInfo>().Team);
+                    if (!_alivePlayers.ContainsKey(player))
+                    {
+                        AddPlayerEntry(player, KartExtensions.GetKartWithID(player).GetComponent<PlayerInfo>().Team);
+                    }
                 }
+                CheckWiningCondition();
             }
-            CheckWiningCondition();
         }
 
         public void CheckWiningCondition()

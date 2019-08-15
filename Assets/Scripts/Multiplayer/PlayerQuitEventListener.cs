@@ -23,6 +23,7 @@ namespace Multiplayer
         {
             if (OnPlayerQuit != null)
             {
+                Debug.LogError("A player has left the game. Sent PlayerQuit event.");
                 OnPlayerQuit.Invoke(evnt.PlayerID);
             }
         }

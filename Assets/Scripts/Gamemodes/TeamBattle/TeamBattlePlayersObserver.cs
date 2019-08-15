@@ -4,8 +4,9 @@ using UnityEngine;
 using SWExtensions;
 using Multiplayer;
 using Gamemodes;
+using Bolt;
 
-public class TeamBattlePlayersObserver : MonoBehaviour
+public class TeamBattlePlayersObserver : GlobalEventListener
 {
     private TeamBattleServerRules _teamBattleServerRules;
 
@@ -18,37 +19,76 @@ public class TeamBattlePlayersObserver : MonoBehaviour
         _teamBattleServerRules = GetComponent<TeamBattleServerRules>();
     }
 
-    //PUBLIC
-
-    public void SetAllKarts()
+    private void Update()
     {
-        foreach (GameObject player in KartExtensions.GetAllKarts())
+        if (Input.GetKeyDown(KeyCode.Keypad0))
         {
-            _playersLifeCount.Add(player.GetComponent<PlayerInfo>().OwnerID, 5);
-        }
-    }
-
-    public void CheckAllKarts()
-    {
-        foreach (int player in _playersLifeCount.Keys)
-        {
-            if (KartExtensions.GetKartWithID(player) == null)
+            foreach (int player in _playersLifeCount.Keys)
             {
-                _playersLifeCount.Remove(player);
+                Debug.LogError("Player ID : " + player);
             }
         }
     }
 
-    public void AddPlayerLifeCount(int playerID, int lifeCount)
+
+    //PUBLIC
+
+    public override void OnEvent(PlayerInfoEvent evnt)
+    {
+        if (BoltNetwork.IsServer)
+        {
+            if (!_playersLifeCount.ContainsKey(evnt.PlayerID))
+            {
+                _playersLifeCount.Add(evnt.PlayerID, 5);
+            }
+        }
+    }
+
+
+
+    public void SetAllKarts()
+    {
+        /*
+        if (BoltNetwork.IsServer)
+        {
+            foreach (GameObject player in KartExtensions.GetAllKarts())
+            {
+                _playersLifeCount.Add(player.GetComponent<PlayerInfo>().OwnerID, 5);
+            }
+            Debug.LogError("Set All Karts ");
+        }
+        */
+    }
+
+    public void CheckAllKarts()
+    {
+        if (BoltNetwork.IsServer)
+        {
+            foreach (int player in _playersLifeCount.Keys)
+            {
+                if (KartExtensions.GetKartWithID(player) == null)
+                {
+                    _playersLifeCount.Remove(player);
+                    Debug.LogError("REMOVED : " + player);
+                }
+            }
+        }
+    }
+
+    public void AddObservedPlayer(int playerID, int lifeCount)
     {
         _playersLifeCount.Add(playerID, lifeCount);
     }
 
-    public void RemovePlayerLifeCount(int playerID, int lifeCount)
+    public void RemoveObservedPlayer(int playerID)
     {
-        if (_playersLifeCount.ContainsKey(playerID))
+        if (BoltNetwork.IsServer)
         {
-            _playersLifeCount.Remove(playerID);
+            if (_playersLifeCount.ContainsKey(playerID))
+            {
+                Debug.LogError("REMOVED : " + playerID);
+                _playersLifeCount.Remove(playerID);
+            }
         }
     }
 

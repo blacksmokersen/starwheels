@@ -8,7 +8,7 @@ using Gamemodes;
 public class TeamBattleBoltEventListener : GlobalEventListener
 {
     [SerializeField] private UnityEvent _onAllPlayerInGame;
-    [SerializeField] private UnityEvent<int> _onPlayerHit;
+    [SerializeField] private IntEvent _onPlayerHit;
 
     private TeamBattleServerRules _teamBattleServerRules;
 
