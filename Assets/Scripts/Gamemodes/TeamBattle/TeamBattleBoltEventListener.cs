@@ -7,6 +7,7 @@ using Gamemodes;
 
 public class TeamBattleBoltEventListener : GlobalEventListener
 {
+    [SerializeField] private IntEvent _onPlayerInfoEvent;
     [SerializeField] private UnityEvent _onAllPlayerInGame;
     [SerializeField] private IntEvent _onPlayerHit;
 
@@ -17,6 +18,11 @@ public class TeamBattleBoltEventListener : GlobalEventListener
     private void Awake()
     {
         _teamBattleServerRules = GetComponent<TeamBattleServerRules>();
+    }
+
+    public override void OnEvent(PlayerInfoEvent evnt)
+    {
+        _onPlayerInfoEvent.Invoke(evnt.PlayerID);
     }
 
     public override void OnEvent(OnAllPlayersInGame evnt)

@@ -63,8 +63,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  _teamBattleSettings: {fileID: 11400000, guid: d029d6f9d9605e245a75fc3e3619bd76,
-    type: 2}
+  TeamBattleSettings: {fileID: 11400000, guid: d029d6f9d9605e245a75fc3e3619bd76, type: 2}
 --- !u!114 &4408123776750297105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,12 +88,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f782e1c105666b443932de3878e58f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _onAllPlayerInGame:
+  _onPlayerInfoEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4408123776750297105}
-        m_MethodName: SetAllKarts
-        m_Mode: 1
+        m_MethodName: AddObservedPlayer
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -103,8 +102,16 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+    m_TypeName: IntEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  _onAllPlayerInGame:
+    m_PersistentCalls:
+      m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  _onPlayerHit:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: IntEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &7736276042698636454
 MonoBehaviour:
   m_ObjectHideFlags: 0

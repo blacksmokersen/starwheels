@@ -25,7 +25,7 @@ public class TeamBattlePlayersObserver : GlobalEventListener
         {
             foreach (int player in _playersLifeCount.Keys)
             {
-                Debug.LogError("Player ID : " + player);
+                Debug.LogError("Player ID : " + player + " PlayerLifeCount" + _playersLifeCount[player]);
             }
         }
     }
@@ -33,7 +33,7 @@ public class TeamBattlePlayersObserver : GlobalEventListener
 
     //PUBLIC
 
-    public override void OnEvent(PlayerInfoEvent evnt)
+    public void SetPlayersList(PlayerInfoEvent evnt)
     {
         if (BoltNetwork.IsServer)
         {
@@ -42,22 +42,6 @@ public class TeamBattlePlayersObserver : GlobalEventListener
                 _playersLifeCount.Add(evnt.PlayerID, 5);
             }
         }
-    }
-
-
-
-    public void SetAllKarts()
-    {
-        /*
-        if (BoltNetwork.IsServer)
-        {
-            foreach (GameObject player in KartExtensions.GetAllKarts())
-            {
-                _playersLifeCount.Add(player.GetComponent<PlayerInfo>().OwnerID, 5);
-            }
-            Debug.LogError("Set All Karts ");
-        }
-        */
     }
 
     public void CheckAllKarts()
@@ -75,9 +59,15 @@ public class TeamBattlePlayersObserver : GlobalEventListener
         }
     }
 
-    public void AddObservedPlayer(int playerID, int lifeCount)
+    public void AddObservedPlayer(int playerID)
     {
-        _playersLifeCount.Add(playerID, lifeCount);
+        if (BoltNetwork.IsServer)
+        {
+            if (!_playersLifeCount.ContainsKey(playerID))
+            {
+                _playersLifeCount.Add(playerID, _teamBattleServerRules.TeamBattleSettings.LifeCountPerPlayers);
+            }
+        }
     }
 
     public void RemoveObservedPlayer(int playerID)
