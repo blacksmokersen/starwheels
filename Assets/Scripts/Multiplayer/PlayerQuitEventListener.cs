@@ -7,6 +7,7 @@ namespace Multiplayer
     {
         [Header("Events")]
         public IntEvent OnPlayerQuit;
+        public IntEvent OnPlayerJoin;
 
         public override void Disconnected(BoltConnection connection)
         {
@@ -17,6 +18,11 @@ namespace Multiplayer
                 playerQuitEvent.Send();
                 Debug.Log("A player has left the game. Sent PlayerQuit event.");
             }
+        }
+
+        public override void Connected(BoltConnection connection)
+        {
+            OnPlayerJoin.Invoke((int)connection.ConnectionId);
         }
 
         public override void OnEvent(PlayerQuit evnt)

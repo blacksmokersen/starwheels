@@ -34,7 +34,6 @@ public class TeamBattlePlayersObserver : GlobalEventListener
         }
     }
 
-
     //PUBLIC
 
     public void DecreasePlayerHealth(int playerID)
@@ -49,6 +48,7 @@ public class TeamBattlePlayersObserver : GlobalEventListener
         {
             if (!_playersLifeCount.ContainsKey(playerID))
             {
+                Debug.LogError("Observe Player : " + playerID);
                 _playersLifeCount.Add(playerID, _teamBattleServerRules.TeamBattleSettings.LifeCountPerPlayers);
             }
         }
@@ -60,7 +60,7 @@ public class TeamBattlePlayersObserver : GlobalEventListener
         {
             if (_playersLifeCount.ContainsKey(playerID))
             {
-                Debug.LogError("REMOVED : " + playerID);
+                Debug.LogError("REMOVED Player : " + playerID);
                 _playersLifeCount.Remove(playerID);
             }
         }
