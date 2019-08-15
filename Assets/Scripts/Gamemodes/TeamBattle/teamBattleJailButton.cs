@@ -1,18 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Multiplayer;
 
 public class teamBattleJailButton : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Team _jailButtonTeam;
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider player)
     {
-        
+        if (player.GetComponent<PlayerInfo>().Team != _jailButtonTeam)
+        {
+            // lancer bolt event
+        }
     }
 }
