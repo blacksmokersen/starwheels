@@ -68,6 +68,8 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   TeamBattleSettings: {fileID: 11400000, guid: d029d6f9d9605e245a75fc3e3619bd76, type: 2}
+  _redTeamJailPosition: {fileID: 0}
+  _blueTeamJailPosition: {fileID: 0}
 --- !u!114 &4408123776750297105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,6 +140,36 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: IntEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  _onPlayerForcedToJail:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5664402321509981063}
+        m_MethodName: SendPlayerToJail
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: IntEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  _onJailButtonPushed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4408123776750297105}
+        m_MethodName: FreePlayersFromJail
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &7736276042698636454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,7 +184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _redJailDoor: {fileID: 2269040416906999289}
   _blueJailDoor: {fileID: 2269040417852785593}
-  _redButton: {fileID: 0}
+  _redButton: {fileID: 2269040416906999289}
   _blueButton: {fileID: 7145819866547159697}
   _TeamBattleAssetsToEnable: []
   _BaseMapAssetsToDisable: []

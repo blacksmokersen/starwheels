@@ -10,6 +10,9 @@ namespace Gamemodes
     {
         public TeamBattleSettings TeamBattleSettings;
 
+        [SerializeField] Transform _redTeamJailPosition;
+        [SerializeField] Transform _blueTeamJailPosition;
+
         private Dictionary<int, Coroutine> _jailCoroutines = new Dictionary<int, Coroutine>();
         private Dictionary<int, Team> _alivePlayers = new Dictionary<int, Team>();
 
@@ -58,12 +61,12 @@ namespace Gamemodes
             int redTeamNumbers = 0;
             foreach (int player in _alivePlayers.Keys)
             {
-                if(_alivePlayers[player] == Team.Blue)
+                if (_alivePlayers[player] == Team.Blue)
                     blueTeamNumbers++;
-                else if(_alivePlayers[player] == Team.Red)
+                else if (_alivePlayers[player] == Team.Red)
                     redTeamNumbers++;
             }
-            if(blueTeamNumbers == 0)
+            if (blueTeamNumbers == 0)
             {
                 SendWinningTeamEvent(Team.Red);
             }
@@ -81,6 +84,22 @@ namespace Gamemodes
         public void RemovePlayerEntry(int playerID)
         {
             _alivePlayers.Remove(playerID);
+        }
+
+        public void SendPlayerToJail(int playerID)
+        {
+            GameObject kart = KartExtensions.GetKartWithID(playerID);
+
+            if (kart.GetComponent<PlayerInfo>().Team == Team.Red)
+            {
+                kart.transform.position = _blueTeamJailPosition.position;
+                Debug.LogError("Forced player to jail RED : " + playerID);
+            }
+            else if (kart.GetComponent<PlayerInfo>().Team == Team.Blue)
+            {
+                kart.transform.position = _redTeamJailPosition.position;
+                Debug.LogError("Forced player to jail BLUE: " + playerID);
+            }
         }
     }
 }

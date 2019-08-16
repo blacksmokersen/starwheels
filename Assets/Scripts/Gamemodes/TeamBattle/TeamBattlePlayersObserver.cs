@@ -11,6 +11,7 @@ public class TeamBattlePlayersObserver : GlobalEventListener
     private TeamBattleServerRules _teamBattleServerRules;
 
     private Dictionary<int, int> _playersLifeCount = new Dictionary<int, int>();
+    private Dictionary<int, Team> _playersInJail = new Dictionary<int, Team>();
 
     //CORE
 
@@ -25,12 +26,24 @@ public class TeamBattlePlayersObserver : GlobalEventListener
         {
             foreach (int player in _playersLifeCount.Keys)
             {
-                Debug.LogError("Player ID : " + player + " PlayerLifeCount : " + _playersLifeCount[player]);
+                Debug.LogError("- Player ID : " + player + " - PlayerLifeCount : " + _playersLifeCount[player]);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            foreach (int player in _playersInJail.Keys)
+            {
+                Debug.LogError("- Player ID : " + player + " - Team : " + _playersInJail[player]);
             }
         }
         if (Input.GetKeyDown(KeyCode.Keypad3))
         {
-            DecreasePlayerHealth(2);
+            DecreasePlayerHealth(0);
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad4))
+        {
+            AddObservedPlayer(0);
+            CheckPlayerHealth(0);
         }
     }
 
@@ -38,8 +51,12 @@ public class TeamBattlePlayersObserver : GlobalEventListener
 
     public void DecreasePlayerHealth(int playerID)
     {
-        _playersLifeCount[playerID] --;
-        Debug.LogError("Decreased : " + playerID + " PlayerLifeCount");
+        if (BoltNetwork.IsServer)
+        {
+            _playersLifeCount[playerID]--;
+            Debug.LogError("Decreased : " + playerID + " PlayerLifeCount");
+            CheckPlayerHealth(playerID);
+        }
     }
 
     public void AddObservedPlayer(int playerID)
@@ -87,11 +104,53 @@ public class TeamBattlePlayersObserver : GlobalEventListener
 
         foreach (int player in _playersLifeCount.Keys)
         {
-            if (_playersLifeCount[player] >= 1)
+            if (_playersInJail.ContainsKey(player))
+            {
+                Debug.LogError(player + " Is in Jail");
+            }
+            else if (_playersLifeCount[player] >= 0)
             {
                 alivePlayers.Add(player);
             }
         }
         return alivePlayers;
+    }
+
+    public void FreePlayersFromJail(string jailTeam)
+    {
+        foreach (int player in _playersInJail.Keys)
+        {
+            if (_playersInJail[player].ToString() != jailTeam)
+            {
+                _playersInJail.Remove(player);
+            }
+        }
+    }
+
+    //PRIVATE
+
+    private void CheckPlayerHealth(int playerID)
+    {
+        if (BoltNetwork.IsServer)
+        {
+            if (_playersLifeCount[playerID] == 0)
+            {
+                if (!_playersInJail.ContainsKey(playerID))
+                {
+                    Debug.LogError("SEND JAIL EVENT : " + playerID);
+                    _playersInJail.Add(playerID, KartExtensions.GetKartWithID(playerID).GetComponent<PlayerInfo>().Team);
+
+                    KartForcedToJail kartForcedtoJailEvent = KartForcedToJail.Create();
+                    kartForcedtoJailEvent.PlayerID = playerID;
+                    kartForcedtoJailEvent.Team = KartExtensions.GetKartWithID(playerID).GetComponent<PlayerInfo>().Team.ToString();
+                    kartForcedtoJailEvent.Send();
+                }
+            }
+            else if (_playersLifeCount[playerID] == -1)
+            {
+                //DestroyPlayer
+                RemoveObservedPlayer(playerID);
+            }
+        }
     }
 }

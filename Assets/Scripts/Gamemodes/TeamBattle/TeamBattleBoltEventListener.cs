@@ -10,6 +10,8 @@ public class TeamBattleBoltEventListener : GlobalEventListener
     [SerializeField] private IntEvent _onPlayerInfoEvent;
     [SerializeField] private UnityEvent _onAllPlayerInGame;
     [SerializeField] private IntEvent _onPlayerHit;
+    [SerializeField] private IntEvent _onPlayerForcedToJail;
+    [SerializeField] private StringEvent _onJailButtonPushed;
 
     private TeamBattleServerRules _teamBattleServerRules;
 
@@ -33,5 +35,15 @@ public class TeamBattleBoltEventListener : GlobalEventListener
     public override void OnEvent(PlayerHit evnt)
     {
         _onPlayerHit.Invoke(evnt.VictimID);
+    }
+
+    public override void OnEvent(KartForcedToJail evnt)
+    {
+        _onPlayerForcedToJail.Invoke(evnt.PlayerID);
+    }
+
+    public override void OnEvent(JailButtonPushed evnt)
+    {
+        _onJailButtonPushed.Invoke(evnt.Team);
     }
 }

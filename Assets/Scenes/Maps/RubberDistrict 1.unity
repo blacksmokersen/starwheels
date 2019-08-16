@@ -3855,6 +3855,16 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 189.74
       objectReference: {fileID: 0}
+    - target: {fileID: 3669363935473720095, guid: 64c6c95c4cca0b3478f571dd6d2423dd,
+        type: 3}
+      propertyPath: _redTeamJailPosition
+      value: 
+      objectReference: {fileID: 741064743}
+    - target: {fileID: 3669363935473720095, guid: 64c6c95c4cca0b3478f571dd6d2423dd,
+        type: 3}
+      propertyPath: _blueTeamJailPosition
+      value: 
+      objectReference: {fileID: 317805546}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64c6c95c4cca0b3478f571dd6d2423dd, type: 3}
 --- !u!4 &89241460 stripped
@@ -5277,7 +5287,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1817624
+  m_Name: pb_Mesh-119932
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5547,6 +5557,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Team: 1
+--- !u!1 &317805545
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 317805546}
+  m_Layer: 0
+  m_Name: BlueJailSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &317805546
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317805545}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -204.91, y: 10.6, z: 1.37}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1074360195849115249}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!4 &319808616 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4994627475318056, guid: 4e3c110c1ba0d76448bdc730c7f82b39,
@@ -5722,7 +5762,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1817028
+  m_Name: pb_Mesh-119336
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6578,7 +6618,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1816668
+  m_Name: pb_Mesh-118976
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6966,7 +7006,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1821858
+  m_Name: pb_Mesh-124166
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10752,7 +10792,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1818808
+  m_Name: pb_Mesh-121116
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10909,6 +10949,36 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &741064742
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 741064743}
+  m_Layer: 0
+  m_Name: RedJailSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &741064743
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741064742}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 204.96, y: 9.25, z: -1.81}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1074360195849115249}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!4 &750683856 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4994627475318056, guid: 4e3c110c1ba0d76448bdc730c7f82b39,
@@ -16809,7 +16879,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1819430
+  m_Name: pb_Mesh-121738
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -23838,7 +23908,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1816214
+  m_Name: pb_Mesh-118522
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -25732,7 +25802,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1820620
+  m_Name: pb_Mesh-122928
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -27142,6 +27212,8 @@ Transform:
   - {fileID: 1074360194207827365}
   - {fileID: 1846633577}
   - {fileID: 595536306}
+  - {fileID: 741064743}
+  - {fileID: 317805546}
   m_Father: {fileID: 501192362}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
