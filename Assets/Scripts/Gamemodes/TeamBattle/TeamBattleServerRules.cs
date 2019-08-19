@@ -13,6 +13,8 @@ namespace Gamemodes
         [SerializeField] Transform _redTeamJailPosition;
         [SerializeField] Transform _blueTeamJailPosition;
 
+        [SerializeField] Transform _deathStoragePosition;
+
         private Dictionary<int, Coroutine> _jailCoroutines = new Dictionary<int, Coroutine>();
         private Dictionary<int, Team> _alivePlayers = new Dictionary<int, Team>();
 
@@ -37,7 +39,15 @@ namespace Gamemodes
             }
             if (Input.GetKeyDown(KeyCode.Keypad5))
             {
-                SendPlayerToJail(KartExtensions.GetMyKart().GetComponent<PlayerInfo>().OwnerID);
+                GameObject playerKart = KartExtensions.GetMyKart();
+
+                PermanentDeath permanentdeath = PermanentDeath.Create();
+                permanentdeath.PlayerEntity = playerKart.GetComponent<BoltEntity>();
+                permanentdeath.TimeBeforeDeath = 0;
+                permanentdeath.PlayerID = playerKart.GetComponent<PlayerInfo>().OwnerID;
+                permanentdeath.PlayerTeam = playerKart.GetComponent<PlayerInfo>().Team.ToString();
+                permanentdeath.PlayerTeam = playerKart.GetComponent<PlayerInfo>().Nickname;
+                permanentdeath.Send();
             }
         }
 
@@ -106,6 +116,15 @@ namespace Gamemodes
                 kart.transform.rotation = _redTeamJailPosition.rotation;
                 Debug.LogError("Forced player to jail RED: " + playerID);
             }
+        }
+
+        public void SendPlayerToDeathStorage(int playerID)
+        {
+            GameObject kart = KartExtensions.GetKartWithID(playerID);
+
+            kart.transform.position = _deathStoragePosition.position;
+            kart.transform.rotation = _deathStoragePosition.rotation;
+            Debug.LogError("Forced player to death storage : " + playerID);
         }
     }
 }

@@ -68,6 +68,12 @@ namespace CameraUtils
                 ShowPlayerCamera();
         }
 
+        public override void OnEvent(PermanentDeath evnt)
+        {
+            if (evnt.PlayerEntity.IsOwner)
+                ShowFreeCamera();
+        }
+
         public override void OnEvent(LobbyCountdown evnt)
         {
             if (evnt.Time == 5)
@@ -84,9 +90,9 @@ namespace CameraUtils
             _freeCamera.GetComponent<FreeCamera>().Enabled = false;
             _freeCamera.GetComponent<FreeCamera>().DisableKartControls();
         }
-            //PRIVATE
+        //PRIVATE
 
-            private void ShowPlayerCamera()
+        private void ShowPlayerCamera()
         {
             _mapCamera.enabled = false;
             _freeCamera.enabled = false;

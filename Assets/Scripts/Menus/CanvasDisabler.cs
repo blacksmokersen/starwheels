@@ -48,6 +48,12 @@ public class CanvasDisabler : GlobalEventListener
         }
     }
 
+    public override void OnEvent(PermanentDeath evnt)
+    {
+        if (evnt.PlayerEntity.IsOwner)
+            SwitchDisabler();
+    }
+
     //PUBLIC
 
     public void SwitchDisabler()

@@ -148,8 +148,17 @@ public class TeamBattlePlayersObserver : GlobalEventListener
             }
             else if (_playersLifeCount[playerID] == -1)
             {
-                //DestroyPlayer
                 RemoveObservedPlayer(playerID);
+
+                GameObject playerKart = KartExtensions.GetKartWithID(playerID);
+
+                PermanentDeath permanentdeath = PermanentDeath.Create();
+                permanentdeath.PlayerEntity = playerKart.GetComponent<BoltEntity>();
+                permanentdeath.TimeBeforeDeath = 0;
+                permanentdeath.PlayerID = playerID;
+                permanentdeath.PlayerTeam = playerKart.GetComponent<PlayerInfo>().Team.ToString();
+                permanentdeath.PlayerTeam = playerKart.GetComponent<PlayerInfo>().Nickname;
+                permanentdeath.Send();
             }
         }
     }
