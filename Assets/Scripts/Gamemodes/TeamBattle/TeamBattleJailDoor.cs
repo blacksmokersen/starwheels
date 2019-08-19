@@ -14,7 +14,7 @@ public class TeamBattleJailDoor : GlobalEventListener
 
     private void Awake()
     {
-        _doorAnimator = GetComponent<Animator>();
+        _doorAnimator = GetComponentInParent<Animator>();
     }
 
     //BOLT
@@ -32,7 +32,7 @@ public class TeamBattleJailDoor : GlobalEventListener
     private IEnumerator OpenDoor()
     {
         _doorAnimator.SetTrigger("OpenDoor");
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(10);
         _doorAnimator.SetTrigger("CloseDoor");
     }
 }
