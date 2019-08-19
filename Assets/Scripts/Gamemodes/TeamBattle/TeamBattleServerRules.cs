@@ -35,6 +35,10 @@ namespace Gamemodes
                     Debug.LogError("Player ID : " + player + " Team : " + _alivePlayers[player]);
                 }
             }
+            if (Input.GetKeyDown(KeyCode.Keypad5))
+            {
+                SendPlayerToJail(KartExtensions.GetMyKart().GetComponent<PlayerInfo>().OwnerID);
+            }
         }
 
         //PUBLIC
@@ -93,12 +97,14 @@ namespace Gamemodes
             if (kart.GetComponent<PlayerInfo>().Team == Team.Red)
             {
                 kart.transform.position = _blueTeamJailPosition.position;
-                Debug.LogError("Forced player to jail RED : " + playerID);
+                kart.transform.rotation = _blueTeamJailPosition.rotation;
+                Debug.LogError("Forced player to jail BLUE : " + playerID);
             }
             else if (kart.GetComponent<PlayerInfo>().Team == Team.Blue)
             {
                 kart.transform.position = _redTeamJailPosition.position;
-                Debug.LogError("Forced player to jail BLUE: " + playerID);
+                kart.transform.rotation = _redTeamJailPosition.rotation;
+                Debug.LogError("Forced player to jail RED: " + playerID);
             }
         }
     }
