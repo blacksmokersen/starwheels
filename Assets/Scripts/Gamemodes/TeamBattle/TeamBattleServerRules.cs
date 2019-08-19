@@ -103,6 +103,8 @@ namespace Gamemodes
         public void SendPlayerToJail(int playerID)
         {
             GameObject kart = KartExtensions.GetKartWithID(playerID);
+            kart.GetComponentInChildren<Health.Health>().StopHealthCoroutines();
+            kart.GetComponentInChildren<Health.Health>().SetInvincibility();
 
             if (kart.GetComponent<PlayerInfo>().Team == Team.Red)
             {

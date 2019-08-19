@@ -123,6 +123,8 @@ public class TeamBattlePlayersObserver : GlobalEventListener
             if (_playersInJail[player].ToString() != jailTeam)
             {
                 _playersInJail.Remove(player);
+                GameObject kart = KartExtensions.GetKartWithID(player);
+                kart.GetComponentInChildren<Health.Health>().UnsetInvincibility();
             }
         }
     }
