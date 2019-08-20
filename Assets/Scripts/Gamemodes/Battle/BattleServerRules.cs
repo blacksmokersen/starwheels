@@ -1,4 +1,6 @@
-﻿namespace Gamemodes
+﻿using UnityEngine;
+
+namespace Gamemodes
 {
     public class BattleServerRules : GamemodeBase
     {

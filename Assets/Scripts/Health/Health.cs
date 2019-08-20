@@ -76,6 +76,11 @@ namespace Health
             IsInvincible = false;
         }
 
+        public void StopHealthCoroutines()
+        {
+            StopAllCoroutines();
+        }
+
         // PRIVATE
 
         private void CheckIfIsDead()

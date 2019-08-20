@@ -29,7 +29,6 @@ namespace Multiplayer
             if (OnGameReady != null)
             {
                 OnGameReady.Invoke();
-                Debug.LogError("GAME START");
             }
             _gameStartedVariable.Value = true;
         }
