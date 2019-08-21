@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using TMPro;
 
 namespace Menu.Options
@@ -8,7 +9,7 @@ namespace Menu.Options
     public class GraphicsManipulations : MonoBehaviour
     {
         [Header("Graphics Quality")]
-        private int _CurrentGraphicQuality;
+        private int _CurrentGraphicResolution;
         [SerializeField] private TextMeshProUGUI _qualityText;
 
         [Header("Resolution")]
@@ -17,34 +18,50 @@ namespace Menu.Options
 
         [Header("FullScreen")]
         [SerializeField] private TextMeshProUGUI _screenModeText;
-        private bool _isFullScreen;
+        private bool _isFullScreen = true;
+
+        [Header("Shadows Quality")]
+        [SerializeField] private TextMeshProUGUI _shadowsResolutionText;
+        private int _currentShadowsResolution;
+
+        [Header("Anti Aliasing")]
+        [SerializeField] private TextMeshProUGUI _antiAliasingText;
+        private int[] _antiAliasingLevels = new int[4] { 0, 2, 4, 8 };
+        [SerializeField] private string[] _antiAliasingNames = new string[4] { "Disabled", "2x Multi Sampling", "4x Multi Sampling", "8x Multi Sampling" };
+        private int _currentAntiAliasing;
+
+        [Header("Events")]
+        public UnityEvent OnChangeEvent;
 
         private void Awake()
         {
-            InitializeQuality();
-            InitializeScreenMode();
-            InitializeResolutions();
+            ResetParameters();
         }
 
         #region Quality
         public void InitializeQuality()
         {
-            _CurrentGraphicQuality = QualitySettings.GetQualityLevel();
+            _CurrentGraphicResolution = QualitySettings.GetQualityLevel();
             SetQuality();
         }
 
         public void ChangeQuality(int value)
         {
-            _CurrentGraphicQuality += value;
+            _CurrentGraphicResolution += value;
 
-            if (_CurrentGraphicQuality >= QualitySettings.names.Length)
+            if (_CurrentGraphicResolution >= QualitySettings.names.Length)
             {
-                _CurrentGraphicQuality = 0;
+                _CurrentGraphicResolution = 0;
 
             }
-            else if (_CurrentGraphicQuality < 0)
+            else if (_CurrentGraphicResolution < 0)
             {
-                _CurrentGraphicQuality = QualitySettings.names.Length - 1;
+                _CurrentGraphicResolution = QualitySettings.names.Length - 1;
+            }
+
+            if (OnChangeEvent != null)
+            {
+                OnChangeEvent.Invoke();
             }
 
             SetQuality();
@@ -52,10 +69,9 @@ namespace Menu.Options
 
         public void SetQuality()
         {
-            QualitySettings.SetQualityLevel(_CurrentGraphicQuality);
             if (_qualityText) // Displaying
             {
-                _qualityText.text = QualitySettings.names[_CurrentGraphicQuality];
+                _qualityText.text = QualitySettings.names[_CurrentGraphicResolution];
             }
         }
         #endregion
@@ -68,12 +84,10 @@ namespace Menu.Options
             {
                 if (Screen.resolutions[i].height == Screen.currentResolution.height && Screen.resolutions[i].width == Screen.currentResolution.width)
                 {
-                    Debug.Log("FindedResolution");
                     _currentResolution = i;
                     i = Screen.resolutions.Length;
                 }
             }
-
             SetResolution();
         }
 
@@ -90,16 +104,15 @@ namespace Menu.Options
             {
                 _currentResolution = Screen.resolutions.Length - 1;
             }
+            if (OnChangeEvent != null)
+            {
+                OnChangeEvent.Invoke();
+            }
             SetResolution();
         }
 
         public void SetResolution()
         {
-            if (Screen.resolutions[_currentResolution].height != Screen.currentResolution.height && Screen.resolutions[_currentResolution].width != Screen.currentResolution.width)
-            {
-                Screen.SetResolution(Screen.resolutions[_currentResolution].width, Screen.resolutions[_currentResolution].height, _isFullScreen);
-            }
-
             if (_resolutionText)
             {
                 _resolutionText.text = Screen.resolutions[_currentResolution].width + " " + Screen.resolutions[_currentResolution].height;
@@ -118,10 +131,6 @@ namespace Menu.Options
         public void SetFullScreen(bool value)
         {
             _isFullScreen = value;
-            if (_isFullScreen != Screen.fullScreen)
-            {
-                Screen.fullScreen = value;
-            }
 
             if (_screenModeText)
             {
@@ -139,8 +148,129 @@ namespace Menu.Options
 
         public void ChangeScreenMode()
         {
+            if (OnChangeEvent != null)
+            {
+                OnChangeEvent.Invoke();
+            }
+
             SetFullScreen(!_isFullScreen);
         }
         #endregion
+
+        #region ShadowsQuality
+        public void InitializeShadowsResolution()
+        {
+            _currentShadowsResolution = (int)QualitySettings.shadowResolution;
+            SetShadowsResolution();
+        }
+
+        public void ChangeShadowsResolution(int value)
+        {
+            _currentShadowsResolution += value;
+
+            if (_currentShadowsResolution >= 4)
+            {
+                _currentShadowsResolution = 0;
+            }
+            else if (_currentShadowsResolution < 0)
+            {
+                _currentShadowsResolution = 3;
+            }
+
+            if (OnChangeEvent != null)
+            {
+                OnChangeEvent.Invoke();
+            }
+
+            SetShadowsResolution();
+        }
+
+        public void SetShadowsResolution()
+        {
+            if (_shadowsResolutionText) // Displaying
+            {
+                _shadowsResolutionText.text = ((ShadowResolution)_currentShadowsResolution).ToString();
+            }
+        }
+
+        #endregion
+
+        #region Alliasing
+        public void InitializeAntiAliasing()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (_antiAliasingLevels[i] == QualitySettings.antiAliasing)
+                {
+                    _currentAntiAliasing = i;
+                }
+            }
+
+            SetAntiAliasing();
+        }
+
+        public void ChangeAntiAliasing(int value)
+        {
+            _currentAntiAliasing += value;
+
+            if (_currentAntiAliasing >= 4)
+            {
+                _currentAntiAliasing = 0;
+            }
+            else if (_currentAntiAliasing < 0)
+            {
+                _currentAntiAliasing = 3;
+            }
+
+            if (OnChangeEvent != null)
+            {
+                OnChangeEvent.Invoke();
+            }
+
+            SetAntiAliasing();
+        }
+
+        public void SetAntiAliasing()
+        {
+            if (_antiAliasingText) // Displaying
+            {
+                _antiAliasingText.text = _antiAliasingNames[_currentAntiAliasing];
+            }
+        }
+        #endregion
+
+        public void Validation()
+        {
+            QualitySettings.SetQualityLevel(_CurrentGraphicResolution);
+
+            if (Screen.resolutions[_currentResolution].height != Screen.currentResolution.height && Screen.resolutions[_currentResolution].width != Screen.currentResolution.width)
+            {
+                Screen.SetResolution(Screen.resolutions[_currentResolution].width, Screen.resolutions[_currentResolution].height, _isFullScreen);
+            }
+
+            if (_isFullScreen != Screen.fullScreen)
+            {
+                Screen.fullScreen = _isFullScreen;
+            }
+
+            if (_currentShadowsResolution != (int)QualitySettings.shadowResolution)
+            {
+                QualitySettings.shadowResolution = ((ShadowResolution)_currentShadowsResolution);
+            }
+
+            if (_antiAliasingLevels[_currentAntiAliasing] != QualitySettings.antiAliasing)
+            {
+                QualitySettings.antiAliasing = _antiAliasingLevels[_currentAntiAliasing];
+            }
+        }
+
+        public void ResetParameters()
+        {
+            InitializeQuality();
+            InitializeScreenMode();
+            InitializeResolutions();
+            InitializeShadowsResolution();
+            InitializeAntiAliasing();
+        }
     }
 }
