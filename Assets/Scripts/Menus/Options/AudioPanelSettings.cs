@@ -21,7 +21,7 @@ namespace Menu.Options
         private const string _masterMixerName = "Master";
         private const string _masterSFXMixerName = "MasterSFX";
         private const string _masterMusicMixerName = "MasterMusic";
-        private const string _masterMenuSoundsMixerName = "MenuSound";
+        private const string _masterMenuSoundsMixerName = "MenuSounds";
         private const string _masterVoiceLinesMixerName = "VoiceLines";
         private const string _masterAdvertMixerName = "VoiceLinesGameModes";
 
@@ -59,6 +59,7 @@ namespace Menu.Options
 
         public void SetHUDVolume(float value)
         {
+            Debug.Log(value);
             _audioMixer.SetFloat(_masterMenuSoundsMixerName, value);
             PlayerPrefs.SetFloat(_masterMenuSoundsMixerName, value);
         }
