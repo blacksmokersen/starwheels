@@ -26,7 +26,10 @@ namespace SW.Matchmaking.Friends
         private void SetReference()
         {
             _friendsButton.onClick.RemoveAllListeners();
-            _friendsButton.onClick.AddListener(FindObjectOfType<InviteFriends>().CreateSteamFriendsLobby);
+            if (SteamManager.Initialized)
+            {
+                _friendsButton.onClick.AddListener(FindObjectOfType<InviteFriends>().CreateSteamFriendsLobby);
+            }
         }
     }
 }
