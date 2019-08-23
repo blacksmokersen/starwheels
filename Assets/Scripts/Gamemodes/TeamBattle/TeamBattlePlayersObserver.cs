@@ -83,6 +83,20 @@ public class TeamBattlePlayersObserver : GlobalEventListener
         }
     }
 
+    public void RefreshAllKartsInGame()
+    {
+        if (BoltNetwork.IsServer)
+        {
+            _playersLifeCount.Clear();
+            foreach (GameObject player in SWExtensions.KartExtensions.GetAllKarts())
+            {
+                int playerID = player.GetComponent<PlayerInfo>().OwnerID;
+                _playersLifeCount.Add(playerID, _teamBattleServerRules.TeamBattleSettings.LifeCountPerPlayers);
+                Debug.LogError("Observe Player With RefreshAllKartsInGame : " + playerID);
+            }
+        }
+    }
+
     public void CheckAllKarts()
     {
         if (BoltNetwork.IsServer)

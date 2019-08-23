@@ -13,6 +13,7 @@ public class TeamBattleBoltEventListener : GlobalEventListener
     [SerializeField] private IntEvent _onPlayerForcedToJail;
     [SerializeField] private StringEvent _onJailButtonPushed;
     [SerializeField] private IntEvent _onPlayerPermaDeath;
+    [SerializeField] private UnityEvent _onLobbyCountdownEnd;
 
     private TeamBattleServerRules _teamBattleServerRules;
 
@@ -31,6 +32,14 @@ public class TeamBattleBoltEventListener : GlobalEventListener
     public override void OnEvent(OnAllPlayersInGame evnt)
     {
         _onAllPlayerInGame.Invoke();
+    }
+
+    public override void OnEvent(LobbyCountdown evnt)
+    {
+        if (evnt.Time == 0)
+        {
+            _onLobbyCountdownEnd.Invoke();
+        }
     }
 
     public override void OnEvent(PlayerHit evnt)
