@@ -33,6 +33,9 @@ namespace Menu.Options
         [Header("Events")]
         public UnityEvent OnChangeEvent;
 
+        private const string _fullScreenPrefName = "FullScreenPref";
+        private const string _resolutionPrefName = "ScreenResolutionPref";
+
         private void Awake()
         {
             ResetParameters();
@@ -243,15 +246,12 @@ namespace Menu.Options
         {
             QualitySettings.SetQualityLevel(_CurrentGraphicResolution);
 
-            if (Screen.resolutions[_currentResolution].height != Screen.currentResolution.height && Screen.resolutions[_currentResolution].width != Screen.currentResolution.width)
+            if ((Screen.resolutions[_currentResolution].height != Screen.currentResolution.height && Screen.resolutions[_currentResolution].width != Screen.currentResolution.width) || (Screen.fullScreen != _isFullScreen))
             {
                 Screen.SetResolution(Screen.resolutions[_currentResolution].width, Screen.resolutions[_currentResolution].height, _isFullScreen);
+                PlayerPrefs.SetInt(_fullScreenPrefName, _isFullScreen ? 1 : 0);
             }
 
-            if (_isFullScreen != Screen.fullScreen)
-            {
-                Screen.fullScreen = _isFullScreen;
-            }
 
             if (_currentShadowsResolution != (int)QualitySettings.shadowResolution)
             {
