@@ -23,6 +23,15 @@ namespace Menu
             }
         }
 
+        public override void OnEvent(UpdateNextGameMode evnt)
+        {
+            if (BoltNetwork.IsClient)
+            {
+                _lobbyData.SetGamemode(evnt.NextGameMode);
+                Debug.LogError("UPDATE GAMEMODE TO : " + evnt.NextGameMode);
+            }
+        }
+
         // PUBLIC
 
         public void StartNextGame()
@@ -50,6 +59,10 @@ namespace Menu
         public void SetNextGamemode(string nextGamemode)
         {
             _lobbyData.SetGamemode(nextGamemode);
+
+            UpdateNextGameMode updateNextGameMode = UpdateNextGameMode.Create();
+            updateNextGameMode.NextGameMode = nextGamemode;
+            updateNextGameMode.Send();
         }
 
         public void SetNextMap(string nextMap)
