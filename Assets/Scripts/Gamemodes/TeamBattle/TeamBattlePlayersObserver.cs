@@ -130,16 +130,33 @@ public class TeamBattlePlayersObserver : GlobalEventListener
         return alivePlayers;
     }
 
+    public void AddPlayerToClientJailList(int playerID)
+    {
+        if (BoltNetwork.IsClient)
+        {
+            _playersInJail.Add(playerID, KartExtensions.GetKartWithID(playerID).GetComponent<PlayerInfo>().Team);
+        }
+    }
+
     public void FreePlayersFromJail(string jailTeam)
     {
+        var playerToRemoveFromList = new List<int>();
+
         foreach (int player in _playersInJail.Keys)
         {
             if (_playersInJail[player].ToString() != jailTeam)
             {
-                _playersInJail.Remove(player);
                 GameObject kart = KartExtensions.GetKartWithID(player);
+                kart.GetComponentInChildren<Health.Health>().StopHealthCoroutines();
                 kart.GetComponentInChildren<Health.Health>().UnsetInvincibility();
+                kart.GetComponent<Common.ControllableDisabler>().StopAllCoroutines();
+                kart.GetComponent<Common.ControllableDisabler>().EnableAllInChildren();
+                playerToRemoveFromList.Add(player);
             }
+        }
+        foreach (int player in playerToRemoveFromList)
+        {
+            _playersInJail.Remove(player);
         }
     }
 
