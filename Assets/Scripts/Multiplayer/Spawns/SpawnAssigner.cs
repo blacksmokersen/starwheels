@@ -17,8 +17,10 @@ namespace Multiplayer
 
         public RoomProtocolToken RoomInfoToken;
 
-        private List<TeamSpawn> _initialSpawns = new List<TeamSpawn>();
-        private List<TeamSpawn> _respawns = new List<TeamSpawn>();
+       // private List<TeamSpawn> _initialSpawns = new List<TeamSpawn>();
+        private Dictionary<TeamSpawn, Team> _initialSpawns = new Dictionary<TeamSpawn, Team>();
+        private Dictionary<TeamSpawn, Team> _respawns = new Dictionary<TeamSpawn, Team>();
+      //  private List<TeamSpawn> _respawns = new List<TeamSpawn>();
         private GameObject _serverSpawn;
         private TeamAssigner _teamAssigner;
 
@@ -115,8 +117,16 @@ namespace Multiplayer
         private void InitializeSpawns()
         {
             var spawns = FindObjectsOfType<TeamSpawn>();
-            _initialSpawns = new List<TeamSpawn>(spawns);
-            _respawns = new List<TeamSpawn>(spawns);
+
+            foreach (TeamSpawn teamSpawns in spawns)
+            {
+                _initialSpawns.Add(teamSpawns, teamSpawns.Team);
+            }
+
+            foreach (TeamSpawn teamSpawns in spawns)
+            {
+                _respawns.Add(teamSpawns, teamSpawns.Team);
+            }
         }
 
         private void AssignSpawn(int connectionID, Team team, bool respawn = false)
@@ -171,15 +181,15 @@ namespace Multiplayer
             }
         }
 
-        private GameObject GetRandomSpawnFromList(Team team, List<TeamSpawn> spawnList)
+        private GameObject GetRandomSpawnFromList(Team team, Dictionary<TeamSpawn, Team> spawnList)
         {
             var validSpawns = new List<GameObject>();
 
             foreach (var spawn in spawnList)
             {
-                if (spawn.Team == team)
+                if (spawn.Value == team)
                 {
-                    validSpawns.Add(spawn.gameObject);
+                    validSpawns.Add(spawn.Key.gameObject);
                 }
             }
 
