@@ -29,8 +29,8 @@ namespace SW.Matchmaking
         private List<string> _serverSidePlayerNicknameList = new List<string>();
         private bool _sessionCreated = false;
 
-        private Dictionary<string, string> _redTeamList = new Dictionary<string, string>();
-        private Dictionary<string, string> _blueTeamList = new Dictionary<string, string>();
+        private Dictionary<string, int> _redTeamList = new Dictionary<string, int>();
+        private Dictionary<string, int> _blueTeamList = new Dictionary<string, int>();
 
         // BOLT
         public override void SessionCreated(UdpSession session)
@@ -45,11 +45,18 @@ namespace SW.Matchmaking
 
         public override void Connected(BoltConnection connection)
         {
+            /*
+            foreach (LobbyPlayerInfoEntry entry in GetComponentsInChildren<LobbyPlayerInfoEntry>())
+            {
+                entry.ActivateTeamButton(joinToken.Nickname);
+            }
+            */
             if (BoltNetwork.IsServer)
             {
                 var joinToken = (JoinToken)connection.ConnectToken;
                 _serverSidePlayerNicknameList.Add(joinToken.Nickname);
                 SendNicknameListToAllPlayers();
+                SendTeamListToAllPlayers();
             }
         }
 
@@ -59,7 +66,9 @@ namespace SW.Matchmaking
             {
                 var leaveToken = (JoinToken)connection.ConnectToken;
                 _serverSidePlayerNicknameList.Remove(leaveToken.Nickname);
+                RemoveEntryFromTeamLists(leaveToken.Nickname);
                 SendNicknameListToAllPlayers();
+                SendTeamListToAllPlayers();
             }
         }
 
@@ -85,13 +94,86 @@ namespace SW.Matchmaking
         {
             if (BoltNetwork.IsServer)
             {
+                var team = 0;
+
+                if(_blueTeamList.ContainsKey(evnt.PlayerNickname))
+                {
+                    _blueTeamList.Remove(evnt.PlayerNickname);
+                }
+                else if (_redTeamList.ContainsKey(evnt.PlayerNickname))
+                {
+                    _redTeamList.Remove(evnt.PlayerNickname);
+                }
+
+
                 if (_lobbyData.ChosenGamemode == Constants.Gamemodes.FFA)
                 {
                     CycleThroughTeams(evnt.PlayerNickname, evnt.PlayerActualTeam);
                 }
                 else if (_lobbyData.ChosenGamemode == Constants.Gamemodes.Battle)
                 {
+                    if (evnt.PlayerActualTeam.ToTeam() != Team.Blue)
+                    {
+                        if (_blueTeamList.Count <= 2)
+                        {
+                            _blueTeamList.Add(evnt.PlayerNickname, 2);
+                            team = 2;
+                        }
+                        else
+                        {
+                            _redTeamList.Add(evnt.PlayerNickname, 3);
+                            team = 3;
+                        }
 
+                    }
+                    else if (evnt.PlayerActualTeam.ToTeam() != Team.Red)
+                    {
+                        if (_redTeamList.Count <= 2)
+                        {
+                            _redTeamList.Add(evnt.PlayerNickname, 3);
+                            team = 3;
+                        }
+                        else
+                        {
+                            _blueTeamList.Add(evnt.PlayerNickname, 2);
+                            team = 2;
+                        }
+                    }
+
+
+                    UpdateTeamColorInLobby updateTeamColorInLobby = UpdateTeamColorInLobby.Create();
+                    updateTeamColorInLobby.PlayerNickname = evnt.PlayerNickname;
+                    updateTeamColorInLobby.PlayerTeamColor = team;
+                    updateTeamColorInLobby.Send();
+
+
+
+                    /*
+
+                        if (evnt.PlayerActualTeam.ToTeam() == Team.Blue)
+                    {
+                        if (_blueTeamList.Count <= 3)
+                        {
+                            _blueTeamList.Add(evnt.PlayerNickname, Team.Blue);
+                        }
+                        else
+                        {
+                            _redTeamList.Add(evnt.PlayerNickname, Team.Red);
+                        }
+                    }
+                    else
+                    {
+                        if (_redTeamList.Count <= 3)
+                        {
+                            _redTeamList.Add(evnt.PlayerNickname, Team.Red);
+                        }
+                        else
+                        {
+                            _blueTeamList.Add(evnt.PlayerNickname, Team.Blue);
+                        }
+                    }
+
+                */
                 }
                 else if (_lobbyData.ChosenGamemode == Constants.Gamemodes.Totem)
                 {
@@ -108,7 +190,7 @@ namespace SW.Matchmaking
         {
             if (_myPlayerSettings.Nickname == evnt.PlayerNickname)
             {
-                Debug.LogError("SET TEAM TO : " + evnt.PlayerTeamColor);
+              //  Debug.LogError("SET TEAM TO : " + evnt.PlayerTeamColor);
                 // _myPlayerSettings.Team == evnt.PlayerTeamColor;
             }
         }
@@ -125,10 +207,21 @@ namespace SW.Matchmaking
 
         //PRIVATE
 
+        private void RemoveEntryFromTeamLists(string playerNickname)
+        {
+            if (_blueTeamList.ContainsKey(playerNickname))
+            {
+                _blueTeamList.Remove(playerNickname);
+            }
+            else if (_redTeamList.ContainsKey(playerNickname))
+            {
+                _redTeamList.Remove(playerNickname);
+            }
+        }
 
         private void CycleThroughTeams(string nickname, int team)
         {
-            if(team == 11 || team == 0)
+            if (team == 11 || team == 0)
             {
                 team = 1;
             }
@@ -159,6 +252,26 @@ namespace SW.Matchmaking
                 lobbyPlayerJoinedEvent.Send();
             }
         }
+
+        private void SendTeamListToAllPlayers()
+        {
+            foreach (string nickname in _blueTeamList.Keys)
+            {
+                UpdateTeamColorInLobby updateTeamColorInLobby = UpdateTeamColorInLobby.Create();
+                updateTeamColorInLobby.PlayerNickname = nickname;
+                updateTeamColorInLobby.PlayerTeamColor = _blueTeamList[nickname];
+                updateTeamColorInLobby.Send();
+            }
+            foreach (string nickname in _redTeamList.Keys)
+            {
+                UpdateTeamColorInLobby updateTeamColorInLobby = UpdateTeamColorInLobby.Create();
+                updateTeamColorInLobby.PlayerNickname = nickname;
+                updateTeamColorInLobby.PlayerTeamColor = _redTeamList[nickname];
+                updateTeamColorInLobby.Send();
+            }
+        }
+
+
 
         private void SendResetListEvent()
         {

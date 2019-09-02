@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using Bolt;
 using Multiplayer.Teams;
+using Multiplayer;
 
 namespace SW.Matchmaking
 {
@@ -13,9 +14,13 @@ namespace SW.Matchmaking
         public string Nickname;
         public int Team;
 
+        [Header("Player Information")]
+        [SerializeField] private PlayerSettings _myPlayerSettings;
+
         [Header("UI Elements")]
         [SerializeField] private TextMeshProUGUI _nicknameText;
         [SerializeField] private Image _teamColorImage;
+        [SerializeField] private Button _teamColorButton;
 
         [Header("Ressources")]
         [SerializeField] private GamemodesTeamsListSettings _gamemodesTeamsListSettings;
@@ -28,6 +33,11 @@ namespace SW.Matchmaking
             Team = 0;
         }
 
+
+        private void Start()
+        {
+            ActivateTeamButton(_myPlayerSettings.Nickname);
+        }
         //BOLT
 
         public override void OnEvent(UpdateTeamColorInLobby evnt)
@@ -38,6 +48,14 @@ namespace SW.Matchmaking
 
         // PUBLIC
 
+        public void ActivateTeamButton(string nickname)
+        {
+            if(nickname == Nickname)
+            {
+                _teamColorButton.GetComponent<Button>().interactable = true;
+            }
+        }
+
         public void SetNickname(string nickname)
         {
             Nickname = nickname;
@@ -46,7 +64,7 @@ namespace SW.Matchmaking
 
         public void ChangeTeamColorRequest()
         {
-            Debug.LogError("COLOR REQUEST");
+            // Debug.LogError("COLOR REQUEST");
             TeamColorChangeRequest teamColorChangeRequest = TeamColorChangeRequest.Create();
             teamColorChangeRequest.PlayerNickname = Nickname;
 
