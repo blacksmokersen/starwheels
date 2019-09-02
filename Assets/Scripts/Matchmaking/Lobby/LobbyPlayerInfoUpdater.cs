@@ -5,6 +5,7 @@ using Bolt;
 using UdpKit;
 using Bolt.Utils;
 using TMPro;
+using Multiplayer.Teams;
 
 namespace SW.Matchmaking
 {
@@ -16,6 +17,7 @@ namespace SW.Matchmaking
 
         [Header("Lobby Information")]
         [SerializeField] private LobbyData _lobbyData;
+        [SerializeField] private TeamsListSettings _completeTeamList;
 
         [Header("Prefab")]
         [SerializeField] private GameObject _nicknameEntryPrefab;
@@ -26,6 +28,9 @@ namespace SW.Matchmaking
         private List<LobbyPlayerInfoEntry> _entries = new List<LobbyPlayerInfoEntry>();
         private List<string> _serverSidePlayerNicknameList = new List<string>();
         private bool _sessionCreated = false;
+
+        private Dictionary<string, string> _redTeamList = new Dictionary<string, string>();
+        private Dictionary<string, string> _blueTeamList = new Dictionary<string, string>();
 
         // BOLT
         public override void SessionCreated(UdpSession session)
@@ -76,6 +81,38 @@ namespace SW.Matchmaking
             CleanList();
         }
 
+        public override void OnEvent(TeamColorChangeRequest evnt)
+        {
+            if (BoltNetwork.IsServer)
+            {
+                if (_lobbyData.ChosenGamemode == Constants.Gamemodes.FFA)
+                {
+                    CycleThroughTeams(evnt.PlayerNickname, evnt.PlayerActualTeam);
+                }
+                else if (_lobbyData.ChosenGamemode == Constants.Gamemodes.Battle)
+                {
+
+                }
+                else if (_lobbyData.ChosenGamemode == Constants.Gamemodes.Totem)
+                {
+
+                }
+                else
+                {
+                    Debug.LogError("No chosen gamemode");
+                }
+            }
+        }
+
+        public override void OnEvent(UpdateTeamColorInLobby evnt)
+        {
+            if (_myPlayerSettings.Nickname == evnt.PlayerNickname)
+            {
+                Debug.LogError("SET TEAM TO : " + evnt.PlayerTeamColor);
+                // _myPlayerSettings.Team == evnt.PlayerTeamColor;
+            }
+        }
+
         //PUBLIC
 
         public void ResetServerList()
@@ -87,6 +124,27 @@ namespace SW.Matchmaking
         }
 
         //PRIVATE
+
+
+        private void CycleThroughTeams(string nickname, int team)
+        {
+            if(team == 11 || team == 0)
+            {
+                team = 1;
+            }
+            team += 1;
+            if (team == 1)
+            {
+                team += 1;
+            }
+
+            UpdateTeamColorInLobby updateTeamColorInLobby = UpdateTeamColorInLobby.Create();
+            updateTeamColorInLobby.PlayerNickname = nickname;
+            updateTeamColorInLobby.PlayerTeamColor = team;
+            updateTeamColorInLobby.Send();
+        }
+
+
 
         private void SendNicknameListToAllPlayers()
         {
