@@ -18,10 +18,10 @@ namespace Multiplayer
 
         public RoomProtocolToken RoomInfoToken;
 
-       // private List<TeamSpawn> _initialSpawns = new List<TeamSpawn>();
+        // private List<TeamSpawn> _initialSpawns = new List<TeamSpawn>();
         private Dictionary<TeamSpawn, Team> _initialSpawns = new Dictionary<TeamSpawn, Team>();
         private Dictionary<TeamSpawn, Team> _respawns = new Dictionary<TeamSpawn, Team>();
-      //  private List<TeamSpawn> _respawns = new List<TeamSpawn>();
+        //  private List<TeamSpawn> _respawns = new List<TeamSpawn>();
         private GameObject _serverSpawn;
         private TeamAssigner _teamAssigner;
 
@@ -67,11 +67,21 @@ namespace Multiplayer
 
                 // Instantiate server kart
 
+                var serverTeam = Team.None;
 
+                if (_playerSettings.Team == Team.None)
+                {
+                    Debug.LogError("AS NO TEAM");
+                    serverTeam = _teamAssigner.PickAvailableTeam();
+                }
+                else
+                {
+                    Debug.LogError("AS TEAM");
+                    serverTeam = _playerSettings.Team;
+                }
 
-              //  var serverTeam = _teamAssigner.PickAvailableTeam();//////////////////////////////////////////////////////////
+                //  var serverTeam = _teamAssigner.PickAvailableTeam();//////////////////////////////////////////////////////////
 
-                var serverTeam = _playerSettings.Team;
 
                 AssignSpawn(SWMatchmaking.GetMyBoltId(), serverTeam);
                 _teamAssigner.AddPlayer(serverTeam, SWMatchmaking.GetMyBoltId());
@@ -85,19 +95,28 @@ namespace Multiplayer
                 Team playerTeam = Team.None;
                 var joinToken = (JoinToken)connection.ConnectToken;
 
+
                 if (_lobbySettings.PlayersTeamDictionary.ContainsKey(joinToken.Nickname))
                 {
-                     playerTeam = _lobbySettings.PlayersTeamDictionary[joinToken.Nickname].ToTeam();
+                    Debug.LogError("CORRESPONDANCE ON PLAYER : " + joinToken.Nickname);
+                    playerTeam = _lobbySettings.PlayersTeamDictionary[joinToken.Nickname].ToTeam();
                 }
                 else
                 {
-                     playerTeam = _teamAssigner.PickAvailableTeam();
+                    playerTeam = _teamAssigner.PickAvailableTeam();
                     Debug.Log("NO CORRESPONDANCE ON PLAYER : " + joinToken.Nickname);
                 }
 
+
+                //   playerTeam = _teamAssigner.PickAvailableTeam();
+
+                Debug.Log("1 : " + joinToken.Nickname);
                 AssignSpawn((int)connection.ConnectionId, playerTeam);
+                Debug.Log("2 : " + joinToken.Nickname);
                 _teamAssigner.AddPlayer(playerTeam, (int)connection.ConnectionId);
+                Debug.Log("3 : " + joinToken.Nickname);
                 IncreaseSpawnCount();
+                Debug.Log("4 : " + joinToken.Nickname);
             }
 
         }
@@ -106,6 +125,7 @@ namespace Multiplayer
         {
             if (BoltNetwork.IsServer)
             {
+                Debug.LogError("RESPAWN REQUEST");
                 AssignSpawn(evnt.ConnectionID, evnt.Team.ToTeam(), true);
             }
         }
@@ -125,6 +145,8 @@ namespace Multiplayer
             if (BoltNetwork.IsServer)
             {
                 _playersCount--;
+                var leaveToken = (JoinToken)connection.ConnectToken;
+                _lobbySettings.PlayersTeamDictionary.Remove(leaveToken.Nickname);
             }
         }
 
@@ -152,6 +174,8 @@ namespace Multiplayer
         private void AssignSpawn(int connectionID, Team team, bool respawn = false)
         {
             GameObject spawn;
+
+            Debug.LogError("Id : " + connectionID + " TEAM  : " + team);
 
             if (respawn)
             {
@@ -252,7 +276,7 @@ namespace Multiplayer
         private IEnumerator CountdownCoroutine()
         {
             int remainingTime = _countdownSettings.Timer;
-           // int floorTime = Mathf.FloorToInt(remainingTime);
+            // int floorTime = Mathf.FloorToInt(remainingTime);
 
             LobbyCountdown countdownEvent;
 
