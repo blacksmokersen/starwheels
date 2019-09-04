@@ -1,6 +1,7 @@
 ﻿using UdpKit;
 using System;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.Events;
 using Multiplayer;
 using Bolt;
@@ -18,6 +19,7 @@ namespace SW.Matchmaking
         [SerializeField] private TextMeshProUGUI _lookingForGameText;
         [SerializeField] private TextMeshProUGUI _currentGamemodeLobbiesText;
         [SerializeField] private TextMeshProUGUI _timerText;
+        [SerializeField] private TextMeshProUGUI _gameLaunchedDisplay;
 
         [Header("UI Buttons")]
         [SerializeField] private GameObject _inviteFriendsButton;
@@ -31,6 +33,7 @@ namespace SW.Matchmaking
         [Header("Events")]
         public UnityEvent OnAutomaticLaunch;
         public UnityEvent OnNoLobbyFound;
+        public UnityEvent OnGameLaunched;
 
         private bool _timerStarted = false;
         private float _timer = 0.0f;
@@ -96,6 +99,14 @@ namespace SW.Matchmaking
             }
         }
 
+        public override void OnEvent(LaunchGameEvent evnt)
+        {
+            if (BoltNetwork.IsServer)
+            {
+                StartCoroutine(LaunchGameRoutine(evnt.CountDown));
+            }
+        }
+
         // PUBLIC
 
         public void SetLookingForGame()
@@ -126,14 +137,15 @@ namespace SW.Matchmaking
         {
             if (BoltNetwork.IsServer)
             {
-                _lobbyData.CurrentPlayers = SWMatchmaking.GetCurrentLobbyPlayerCount() + 1; // +1 is for the Host
-                var roomToken = new RoomProtocolToken() { Gamemode = _lobbyData.ChosenGamemode, PlayersCount = _lobbyData.CurrentPlayers, RoomInfo =  "test2" };
-                BoltNetwork.LoadScene(_lobbyData.ChosenMapName, roomToken);
+                LaunchGameEvent launchGameEvent = LaunchGameEvent.Create();
+                launchGameEvent.CountDown = 3;
+                launchGameEvent.Send();
             }
             else
             {
                 Debug.LogWarning("Can't launch game if you are not the server.");
             }
+            OnGameLaunched.Invoke();
         }
 
         public void QuitLobby()
@@ -160,7 +172,7 @@ namespace SW.Matchmaking
 
         private void CheckTimer()
         {
-            if (BoltNetwork.IsServer && _timer > _secondsBeforeLaunchingGame && (1+SWMatchmaking.GetCurrentLobbyPlayerCount()) >= _minimumPlayersToAutomaticLaunch)
+            if (BoltNetwork.IsServer && _timer > _secondsBeforeLaunchingGame && (1 + SWMatchmaking.GetCurrentLobbyPlayerCount()) >= _minimumPlayersToAutomaticLaunch)
             {
                 ResetTimer();
                 if (OnAutomaticLaunch != null)
@@ -188,6 +200,15 @@ namespace SW.Matchmaking
         private void OnApplicationQuit()
         {
             QuitLobby();
+        }
+
+        private IEnumerator LaunchGameRoutine(int countdown)
+        {
+            yield return new WaitForSeconds(countdown);
+
+            _lobbyData.CurrentPlayers = SWMatchmaking.GetCurrentLobbyPlayerCount() + 1; // +1 is for the Host
+            var roomToken = new RoomProtocolToken() { Gamemode = _lobbyData.ChosenGamemode, PlayersCount = _lobbyData.CurrentPlayers, RoomInfo = "test2" };
+            BoltNetwork.LoadScene(_lobbyData.ChosenMapName, roomToken);
         }
     }
 }

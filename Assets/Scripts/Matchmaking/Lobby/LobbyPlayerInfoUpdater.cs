@@ -45,6 +45,7 @@ namespace SW.Matchmaking
         }
 
         // BOLT
+
         public override void SessionCreated(UdpSession session)
         {
             if (!_sessionCreated)
@@ -224,11 +225,27 @@ namespace SW.Matchmaking
 
         //PUBLIC
 
+        public void GenerateRandomTeamForNoTeamPlayers()
+        {
+            foreach (string entry in _serverSidePlayerNicknameList)
+            {
+                if (!_lobbyData.PlayersTeamDictionary.ContainsKey(entry))
+                {
+                    TeamColorChangeRequest teamColorChangeRequest = TeamColorChangeRequest.Create();
+                    teamColorChangeRequest.PlayerNickname = entry;
+                    teamColorChangeRequest.PlayerActualTeam = 0;
+                    teamColorChangeRequest.Send();
+                    Debug.LogError("RANDOM TEAM GENERATED");
+                }
+            }
+        }
+
         public void ResetServerList()
         {
             if (BoltNetwork.IsServer)
             {
                 _serverSidePlayerNicknameList.Clear();
+                _lobbyData.PlayersTeamDictionary.Clear();
             }
         }
 
@@ -312,6 +329,10 @@ namespace SW.Matchmaking
             if (!NicknameInList(nickname))
             {
                 var entry = Instantiate(_nicknameEntryPrefab, transform, false).GetComponent<LobbyPlayerInfoEntry>();
+                if (_lobbyData.ChosenGamemode != Constants.Gamemodes.Battle)
+                {
+                    entry.GetComponent<LobbyPlayerInfoEntry>().DisableAllTeamButtons();
+                }
                 entry.SetNickname(nickname);
 
                 _entries.Add(entry);

@@ -21,6 +21,7 @@ namespace SW.Matchmaking
         [SerializeField] private TextMeshProUGUI _nicknameText;
         [SerializeField] private Image _teamColorImage;
         [SerializeField] private Button _teamColorButton;
+        [SerializeField] private GameObject _button;
 
         [Header("Ressources")]
         [SerializeField] private GamemodesTeamsListSettings _gamemodesTeamsListSettings;
@@ -36,7 +37,7 @@ namespace SW.Matchmaking
         private void Start()
         {
             ActivateTeamButton(_myPlayerSettings.Nickname);
-          //  ChangeTeamColorRequest();
+            //  ChangeTeamColorRequest();
         }
         //BOLT
 
@@ -46,7 +47,20 @@ namespace SW.Matchmaking
             SetTeamColorDisplay(evnt.PlayerNickname, evnt.PlayerTeamColor.ToTeam());
         }
 
+        public override void OnEvent(LaunchGameEvent evnt)
+        {
+            if (_teamColorImage.color == Color.grey)
+            {
+                ChangeTeamColorRequest();
+            }
+        }
+
         // PUBLIC
+
+        public void DisableAllTeamButtons()
+        {
+            _button.SetActive(false);
+        }
 
         public void ActivateTeamButton(string nickname)
         {

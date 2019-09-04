@@ -66,22 +66,28 @@ namespace Multiplayer
                 _playersCount = RoomInfoToken.PlayersCount;
 
                 // Instantiate server kart
-
                 var serverTeam = Team.None;
 
-                if (_playerSettings.Team == Team.None)
+
+                if (_lobbySettings.GameSettings.Gamemode == "Battle")
                 {
-                    Debug.LogError("AS NO TEAM");
-                    serverTeam = _teamAssigner.PickAvailableTeam();
+                    Debug.LogError("BATTLE GAMEMODE");
+                    serverTeam = Team.None;
+
+                    if (_playerSettings.Team == Team.None)
+                    {
+                        serverTeam = _teamAssigner.PickAvailableTeam();
+                    }
+                    else
+                    {
+                        serverTeam = _playerSettings.Team;
+                    }
                 }
                 else
                 {
-                    Debug.LogError("AS TEAM");
-                    serverTeam = _playerSettings.Team;
+                    Debug.LogError("FFA GAMEMODE");
+                    serverTeam = _teamAssigner.PickAvailableTeam();
                 }
-
-                //  var serverTeam = _teamAssigner.PickAvailableTeam();//////////////////////////////////////////////////////////
-
 
                 AssignSpawn(SWMatchmaking.GetMyBoltId(), serverTeam);
                 _teamAssigner.AddPlayer(serverTeam, SWMatchmaking.GetMyBoltId());
@@ -95,28 +101,28 @@ namespace Multiplayer
                 Team playerTeam = Team.None;
                 var joinToken = (JoinToken)connection.ConnectToken;
 
-
-                if (_lobbySettings.PlayersTeamDictionary.ContainsKey(joinToken.Nickname))
+                if (_lobbySettings.GameSettings.Gamemode == "Battle")
                 {
-                    Debug.LogError("CORRESPONDANCE ON PLAYER : " + joinToken.Nickname);
-                    playerTeam = _lobbySettings.PlayersTeamDictionary[joinToken.Nickname].ToTeam();
+                    if (_lobbySettings.PlayersTeamDictionary.ContainsKey(joinToken.Nickname))
+                    {
+                        Debug.LogError("CORRESPONDANCE ON PLAYER : " + joinToken.Nickname);
+                        playerTeam = _lobbySettings.PlayersTeamDictionary[joinToken.Nickname].ToTeam();
+                    }
+                    else
+                    {
+                        playerTeam = _teamAssigner.PickAvailableTeam();
+                        Debug.LogError("NO CORRESPONDANCE ON PLAYER : " + joinToken.Nickname);
+                    }
                 }
                 else
                 {
                     playerTeam = _teamAssigner.PickAvailableTeam();
-                    Debug.Log("NO CORRESPONDANCE ON PLAYER : " + joinToken.Nickname);
                 }
 
 
-                //   playerTeam = _teamAssigner.PickAvailableTeam();
-
-                Debug.Log("1 : " + joinToken.Nickname);
                 AssignSpawn((int)connection.ConnectionId, playerTeam);
-                Debug.Log("2 : " + joinToken.Nickname);
                 _teamAssigner.AddPlayer(playerTeam, (int)connection.ConnectionId);
-                Debug.Log("3 : " + joinToken.Nickname);
                 IncreaseSpawnCount();
-                Debug.Log("4 : " + joinToken.Nickname);
             }
 
         }
@@ -125,7 +131,6 @@ namespace Multiplayer
         {
             if (BoltNetwork.IsServer)
             {
-                Debug.LogError("RESPAWN REQUEST");
                 AssignSpawn(evnt.ConnectionID, evnt.Team.ToTeam(), true);
             }
         }
