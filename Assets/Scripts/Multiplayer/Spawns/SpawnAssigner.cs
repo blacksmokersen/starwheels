@@ -46,7 +46,7 @@ namespace Multiplayer
         {
             if (Input.GetKeyDown(KeyCode.V))
             {
-                foreach(int playerID in _playerBindedInitialSpawns.Keys)
+                foreach (int playerID in _playerBindedInitialSpawns.Keys)
                 {
                     Debug.LogError("PLAYER : " + playerID + " IS BINDED TO SPAWN : " + _playerBindedInitialSpawns[playerID]);
                 }
@@ -120,8 +120,16 @@ namespace Multiplayer
                 {
                     if (_lobbySettings.PlayersTeamDictionary.ContainsKey(joinToken.Nickname))
                     {
-                        Debug.LogError("CORRESPONDANCE ON PLAYER : " + joinToken.Nickname);
-                        playerTeam = _lobbySettings.PlayersTeamDictionary[joinToken.Nickname].ToTeam();
+                        if (_lobbySettings.PlayersTeamDictionary[joinToken.Nickname] == 0)
+                        {
+                            Debug.LogError("CORRESPONDANCE ON PLAYER : " + joinToken.Nickname + "NO TEAM, BINDING TEAM..." );
+                            playerTeam = _teamAssigner.PickAvailableTeam();
+                        }
+                        else
+                        {
+                            Debug.LogError("CORRESPONDANCE ON PLAYER : " + joinToken.Nickname);
+                            playerTeam = _lobbySettings.PlayersTeamDictionary[joinToken.Nickname].ToTeam();
+                        }
                     }
                     else
                     {
@@ -174,7 +182,7 @@ namespace Multiplayer
 
         // PUBLIC
 
-         public void RemoveBindedSpawn(int playerID)
+        public void RemoveBindedSpawn(int playerID)
         {
             _playerBindedInitialSpawns.Remove(playerID);
         }
@@ -250,18 +258,6 @@ namespace Multiplayer
             }
         }
 
-        private GameObject BindSpawnToPlayer(Team team, Dictionary<string, TeamSpawn> spawnList)
-        {
-            var bindedSpawn = this.gameObject;
-
-
-
-
-
-            return bindedSpawn;
-        }
-
-
         private GameObject GetRandomSpawnFromList(int playerID, Team team, Dictionary<TeamSpawn, Team> spawnList)
         {
             if (_playerBindedInitialSpawns.ContainsKey(playerID))
@@ -282,7 +278,7 @@ namespace Multiplayer
             if (validSpawns.Count > 0)
             {
                 var validSpawn = validSpawns[Random.Range(0, validSpawns.Count)];
-                _playerBindedInitialSpawns.Add(playerID,validSpawn);
+                _playerBindedInitialSpawns.Add(playerID, validSpawn);
                 return validSpawn;
             }
             else
