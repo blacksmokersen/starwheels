@@ -111,23 +111,30 @@ namespace SW.Matchmaking
             {
                 var team = 0;
 
-                if (_blueTeamList.ContainsKey(evnt.PlayerNickname))
-                {
-                    _blueTeamList.Remove(evnt.PlayerNickname);
-                }
-                else if (_redTeamList.ContainsKey(evnt.PlayerNickname))
-                {
-                    _redTeamList.Remove(evnt.PlayerNickname);
-                }
 
 
                 if (_lobbyData.ChosenGamemode == Constants.Gamemodes.FFA)
                 {
-                    CycleThroughTeams(evnt.PlayerNickname, evnt.PlayerActualTeam);
+                    // CycleThroughTeams(evnt.PlayerNickname, evnt.PlayerActualTeam);
                 }
                 else if (_lobbyData.ChosenGamemode == Constants.Gamemodes.Battle)
                 {
-                    if (evnt.PlayerActualTeam.ToTeam() != Team.Blue)
+
+
+                    if (_blueTeamList.ContainsKey(evnt.PlayerNickname))
+                    {
+                        _blueTeamList.Remove(evnt.PlayerNickname);
+                    }
+                    else if (_redTeamList.ContainsKey(evnt.PlayerNickname))
+                    {
+                        _redTeamList.Remove(evnt.PlayerNickname);
+                    }
+
+                    if (evnt.PlayerActualTeam.ToTeam() == Team.Red)
+                    {
+                        team = 0;
+                    }
+                    else if (evnt.PlayerActualTeam.ToTeam() != Team.Blue)
                     {
                         if (_blueTeamList.Count <= 2)
                         {
@@ -139,7 +146,6 @@ namespace SW.Matchmaking
                             _redTeamList.Add(evnt.PlayerNickname, 3);
                             team = 3;
                         }
-
                     }
                     else if (evnt.PlayerActualTeam.ToTeam() != Team.Red)
                     {
@@ -155,17 +161,6 @@ namespace SW.Matchmaking
                         }
                     }
 
-                    if (_lobbyData.PlayersTeamDictionary.ContainsKey(evnt.PlayerNickname))
-                    {
-                        _lobbyData.PlayersTeamDictionary[evnt.PlayerNickname] = team;
-                    }
-
-                    /*
-                    if (_myPlayerSettings.Nickname == evnt.PlayerNickname)
-                    {
-                        _myPlayerSettings.Team = evnt.PlayerActualTeam.ToTeam();
-                    }
-                    */
 
                     UpdateTeamColorInLobby updateTeamColorInLobby = UpdateTeamColorInLobby.Create();
                     updateTeamColorInLobby.PlayerNickname = evnt.PlayerNickname;
@@ -173,32 +168,6 @@ namespace SW.Matchmaking
                     updateTeamColorInLobby.Send();
 
 
-                    /*
-
-                        if (evnt.PlayerActualTeam.ToTeam() == Team.Blue)
-                    {
-                        if (_blueTeamList.Count <= 3)
-                        {
-                            _blueTeamList.Add(evnt.PlayerNickname, Team.Blue);
-                        }
-                        else
-                        {
-                            _redTeamList.Add(evnt.PlayerNickname, Team.Red);
-                        }
-                    }
-                    else
-                    {
-                        if (_redTeamList.Count <= 3)
-                        {
-                            _redTeamList.Add(evnt.PlayerNickname, Team.Red);
-                        }
-                        else
-                        {
-                            _blueTeamList.Add(evnt.PlayerNickname, Team.Blue);
-                        }
-                    }
-
-                */
                 }
                 else if (_lobbyData.ChosenGamemode == Constants.Gamemodes.Totem)
                 {
@@ -213,13 +182,17 @@ namespace SW.Matchmaking
 
         public override void OnEvent(UpdateTeamColorInLobby evnt)
         {
+            if (BoltNetwork.IsServer)
+            {
+                if (_lobbyData.PlayersTeamDictionary.ContainsKey(evnt.PlayerNickname))
+                {
+                    _lobbyData.PlayersTeamDictionary[evnt.PlayerNickname] = evnt.PlayerTeamColor;
+                }
+            }
+
             if (_myPlayerSettings.Nickname == evnt.PlayerNickname)
             {
                 _myPlayerSettings.Team = evnt.PlayerTeamColor.ToTeam();
-
-
-                //  Debug.LogError("SET TEAM TO : " + evnt.PlayerTeamColor);
-                // _myPlayerSettings.Team == evnt.PlayerTeamColor;
             }
         }
 
@@ -314,8 +287,6 @@ namespace SW.Matchmaking
                 updateTeamColorInLobby.Send();
             }
         }
-
-
 
         private void SendResetListEvent()
         {

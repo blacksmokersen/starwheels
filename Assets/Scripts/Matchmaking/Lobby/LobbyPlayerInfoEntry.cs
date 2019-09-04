@@ -107,7 +107,11 @@ namespace SW.Matchmaking
                 {
                     foreach (TeamColorSettings teamColor in teamList.TeamsList)
                     {
-                        if (team.ToString() == teamColor.TeamName)
+                        if (Team == 0)
+                        {
+                            _teamColorImage.color = Color.grey;
+                        }
+                        else if (team.ToString() == teamColor.TeamName)
                         {
                             _teamColorImage.color = teamColor.MenuColor;
                         }
