@@ -8109,6 +8109,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: -14.527
       objectReference: {fileID: 0}
+    - target: {fileID: 1985520316130294356, guid: 25439d494ba238246bc09325e9dcbfd0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25439d494ba238246bc09325e9dcbfd0, type: 3}
 --- !u!1 &594118995 stripped
@@ -21438,7 +21443,6 @@ MonoBehaviour:
   _buttonNames:
   - CHARACTER
   - KART
-  - ABILITY
   - BACK
   _buttonEvents:
   - m_PersistentCalls:
@@ -21526,54 +21530,6 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1230808764}
         m_MethodName: SetKartInfo
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1230808767}
-        m_MethodName: ShowPanel
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 404181615}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1230808766}
-        m_MethodName: OpenVcam
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 594118995}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 972657632}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1230808764}
-        m_MethodName: SetAbilityInfo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
