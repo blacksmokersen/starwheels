@@ -33,10 +33,10 @@ namespace SW.Matchmaking
             Team = 0;
         }
 
-
         private void Start()
         {
             ActivateTeamButton(_myPlayerSettings.Nickname);
+          //  ChangeTeamColorRequest();
         }
         //BOLT
 
@@ -50,7 +50,7 @@ namespace SW.Matchmaking
 
         public void ActivateTeamButton(string nickname)
         {
-            if(nickname == Nickname)
+            if (nickname == Nickname)
             {
                 _teamColorButton.GetComponent<Button>().interactable = true;
             }

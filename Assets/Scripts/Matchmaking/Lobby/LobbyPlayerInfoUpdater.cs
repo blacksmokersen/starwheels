@@ -32,12 +32,25 @@ namespace SW.Matchmaking
         private Dictionary<string, int> _redTeamList = new Dictionary<string, int>();
         private Dictionary<string, int> _blueTeamList = new Dictionary<string, int>();
 
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                foreach (string nick in _lobbyData.PlayersTeamDictionary.Keys)
+                {
+                    Debug.LogError(nick + " TEAM IS : " + _lobbyData.PlayersTeamDictionary[nick]);
+                }
+            }
+        }
+
         // BOLT
         public override void SessionCreated(UdpSession session)
         {
             if (!_sessionCreated)
             {
                 _serverSidePlayerNicknameList.Add(_myPlayerSettings.Nickname);
+                _lobbyData.PlayersTeamDictionary.Add(_myPlayerSettings.Nickname, 0);
                 SendNicknameListToAllPlayers();
                 _sessionCreated = true;
             }
@@ -55,6 +68,7 @@ namespace SW.Matchmaking
             {
                 var joinToken = (JoinToken)connection.ConnectToken;
                 _serverSidePlayerNicknameList.Add(joinToken.Nickname);
+                _lobbyData.PlayersTeamDictionary.Add(joinToken.Nickname, 0);
                 SendNicknameListToAllPlayers();
                 SendTeamListToAllPlayers();
             }
@@ -96,7 +110,7 @@ namespace SW.Matchmaking
             {
                 var team = 0;
 
-                if(_blueTeamList.ContainsKey(evnt.PlayerNickname))
+                if (_blueTeamList.ContainsKey(evnt.PlayerNickname))
                 {
                     _blueTeamList.Remove(evnt.PlayerNickname);
                 }
@@ -140,12 +154,22 @@ namespace SW.Matchmaking
                         }
                     }
 
+                    if (_lobbyData.PlayersTeamDictionary.ContainsKey(evnt.PlayerNickname))
+                    {
+                        _lobbyData.PlayersTeamDictionary[evnt.PlayerNickname] = team;
+                    }
+
+                    /*
+                    if (_myPlayerSettings.Nickname == evnt.PlayerNickname)
+                    {
+                        _myPlayerSettings.Team = evnt.PlayerActualTeam.ToTeam();
+                    }
+                    */
 
                     UpdateTeamColorInLobby updateTeamColorInLobby = UpdateTeamColorInLobby.Create();
                     updateTeamColorInLobby.PlayerNickname = evnt.PlayerNickname;
                     updateTeamColorInLobby.PlayerTeamColor = team;
                     updateTeamColorInLobby.Send();
-
 
 
                     /*
@@ -190,7 +214,10 @@ namespace SW.Matchmaking
         {
             if (_myPlayerSettings.Nickname == evnt.PlayerNickname)
             {
-              //  Debug.LogError("SET TEAM TO : " + evnt.PlayerTeamColor);
+                _myPlayerSettings.Team = evnt.PlayerTeamColor.ToTeam();
+
+
+                //  Debug.LogError("SET TEAM TO : " + evnt.PlayerTeamColor);
                 // _myPlayerSettings.Team == evnt.PlayerTeamColor;
             }
         }

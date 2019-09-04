@@ -14,6 +14,7 @@ namespace Multiplayer
         [Header("Settings")]
         [SerializeField] private CountdownSettings _countdownSettings;
         [SerializeField] private LobbyData _lobbySettings;
+        [SerializeField] private PlayerSettings _playerSettings;
 
         public RoomProtocolToken RoomInfoToken;
 
@@ -65,7 +66,13 @@ namespace Multiplayer
                 _playersCount = RoomInfoToken.PlayersCount;
 
                 // Instantiate server kart
-                var serverTeam = _teamAssigner.PickAvailableTeam();
+
+
+
+              //  var serverTeam = _teamAssigner.PickAvailableTeam();//////////////////////////////////////////////////////////
+
+                var serverTeam = _playerSettings.Team;
+
                 AssignSpawn(SWMatchmaking.GetMyBoltId(), serverTeam);
                 _teamAssigner.AddPlayer(serverTeam, SWMatchmaking.GetMyBoltId());
             }
@@ -75,11 +82,24 @@ namespace Multiplayer
         {
             if (BoltNetwork.IsServer)
             {
-                Team playerTeam = _teamAssigner.PickAvailableTeam();
+                Team playerTeam = Team.None;
+                var joinToken = (JoinToken)connection.ConnectToken;
+
+                if (_lobbySettings.PlayersTeamDictionary.ContainsKey(joinToken.Nickname))
+                {
+                     playerTeam = _lobbySettings.PlayersTeamDictionary[joinToken.Nickname].ToTeam();
+                }
+                else
+                {
+                     playerTeam = _teamAssigner.PickAvailableTeam();
+                    Debug.Log("NO CORRESPONDANCE ON PLAYER : " + joinToken.Nickname);
+                }
+
                 AssignSpawn((int)connection.ConnectionId, playerTeam);
                 _teamAssigner.AddPlayer(playerTeam, (int)connection.ConnectionId);
                 IncreaseSpawnCount();
             }
+
         }
 
         public override void OnEvent(RespawnRequest evnt)
