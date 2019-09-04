@@ -22,6 +22,10 @@ namespace Multiplayer
         private Dictionary<TeamSpawn, Team> _initialSpawns = new Dictionary<TeamSpawn, Team>();
         private Dictionary<TeamSpawn, Team> _respawns = new Dictionary<TeamSpawn, Team>();
         //  private List<TeamSpawn> _respawns = new List<TeamSpawn>();
+
+        private Dictionary<int, GameObject> _playerBindedInitialSpawns = new Dictionary<int, GameObject>();
+        private Dictionary<string, TeamSpawn> _playerBindedRespawns = new Dictionary<string, TeamSpawn>();
+
         private GameObject _serverSpawn;
         private TeamAssigner _teamAssigner;
 
@@ -36,6 +40,17 @@ namespace Multiplayer
         private void Awake()
         {
             _teamAssigner = GetComponent<TeamAssigner>();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.V))
+            {
+                foreach(int playerID in _playerBindedInitialSpawns.Keys)
+                {
+                    Debug.LogError("PLAYER : " + playerID + " IS BINDED TO SPAWN : " + _playerBindedInitialSpawns[playerID]);
+                }
+            }
         }
 
         // BOLT
@@ -159,6 +174,11 @@ namespace Multiplayer
 
         // PUBLIC
 
+         public void RemoveBindedSpawn(int playerID)
+        {
+            _playerBindedInitialSpawns.Remove(playerID);
+        }
+
         // PRIVATE
 
         private void InitializeSpawns()
@@ -184,11 +204,11 @@ namespace Multiplayer
 
             if (respawn)
             {
-                spawn = GetRespawnPosition(team);
+                spawn = GetRespawnPosition(team, connectionID);
             }
             else
             {
-                spawn = GetInitialSpawnPosition(team);
+                spawn = GetInitialSpawnPosition(team, connectionID);
             }
 
             PlayerSpawn playerSpawn = PlayerSpawn.Create();
@@ -206,37 +226,54 @@ namespace Multiplayer
             }
         }
 
-        private GameObject GetInitialSpawnPosition(Team team)
+        private GameObject GetInitialSpawnPosition(Team team, int playerID)
         {
             if (_lobbySettings.ChosenGamemode == Constants.Gamemodes.FFA)
             {
-                return GetRandomSpawnFromList(Team.Any, _initialSpawns);
+                return GetRandomSpawnFromList(playerID, Team.Any, _initialSpawns);
             }
             else
             {
-                return GetRandomSpawnFromList(team, _initialSpawns);
+                return GetRandomSpawnFromList(playerID, team, _initialSpawns);
             }
         }
 
-        private GameObject GetRespawnPosition(Team team)
+        private GameObject GetRespawnPosition(Team team, int playerID)
         {
             if (_lobbySettings.ChosenGamemode == Constants.Gamemodes.FFA)
             {
-                return GetRandomSpawnFromList(Team.Any, _respawns);
+                return GetRandomSpawnFromList(playerID, Team.Any, _respawns);
             }
             else
             {
-                return GetRandomSpawnFromList(team, _respawns);
+                return GetRandomSpawnFromList(playerID, team, _respawns);
             }
         }
 
-        private GameObject GetRandomSpawnFromList(Team team, Dictionary<TeamSpawn, Team> spawnList)
+        private GameObject BindSpawnToPlayer(Team team, Dictionary<string, TeamSpawn> spawnList)
         {
+            var bindedSpawn = this.gameObject;
+
+
+
+
+
+            return bindedSpawn;
+        }
+
+
+        private GameObject GetRandomSpawnFromList(int playerID, Team team, Dictionary<TeamSpawn, Team> spawnList)
+        {
+            if (_playerBindedInitialSpawns.ContainsKey(playerID))
+            {
+                return _playerBindedInitialSpawns[playerID];
+            }
+
             var validSpawns = new List<GameObject>();
 
             foreach (var spawn in spawnList)
             {
-                if (spawn.Value == team)
+                if (spawn.Value == team && !_playerBindedInitialSpawns.ContainsValue(spawn.Key.gameObject))
                 {
                     validSpawns.Add(spawn.Key.gameObject);
                 }
@@ -244,7 +281,9 @@ namespace Multiplayer
 
             if (validSpawns.Count > 0)
             {
-                return validSpawns[Random.Range(0, validSpawns.Count)];
+                var validSpawn = validSpawns[Random.Range(0, validSpawns.Count)];
+                _playerBindedInitialSpawns.Add(playerID,validSpawn);
+                return validSpawn;
             }
             else
             {
