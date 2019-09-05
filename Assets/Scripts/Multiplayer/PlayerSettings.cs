@@ -10,6 +10,7 @@ namespace Multiplayer
         [Header("Player Information")]
         public TeamColorSettings ColorSettings;
         public string Nickname;
+        public Team Team;
         public int ConnectionID;
         public int KartIndex;
         public int CharacterIndex;

@@ -16,6 +16,7 @@ namespace SW.Matchmaking
         public int MaxPlayers;
         public int CurrentPlayers;
         public List<string> PlayersNicknames = new List<string>();
+        public Dictionary<string, int> PlayersTeamDictionary = new Dictionary<string,int>();
 
         [Header("Gamemode Info")]
         public List<string> GamemodePool;

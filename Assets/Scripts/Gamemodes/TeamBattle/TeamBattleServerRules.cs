@@ -31,7 +31,7 @@ namespace Gamemodes
         {
             if (Input.GetKeyDown(KeyCode.Keypad1))
             {
-                RefreshAlivePlayers();
+             //   RefreshAlivePlayers();
                 foreach (int player in _alivePlayers.Keys)
                 {
                     Debug.LogError("Player ID : " + player + " Team : " + _alivePlayers[player]);
@@ -129,6 +129,17 @@ namespace Gamemodes
             kart.transform.position = _deathStoragePosition.position;
             kart.transform.rotation = _deathStoragePosition.rotation;
             Debug.LogError("Forced player to death storage : " + playerID);
+        }
+
+        public void DelayedRefreshAlivePlayers()
+        {
+            StartCoroutine(DelayedRefreshAlivePlayersRoutine());
+        }
+
+        public IEnumerator DelayedRefreshAlivePlayersRoutine()
+        {
+            yield return new WaitForSeconds(1f);
+            RefreshAlivePlayers();
         }
     }
 }
