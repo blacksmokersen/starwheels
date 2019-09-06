@@ -19,6 +19,7 @@ namespace Gamemodes
         private Dictionary<int, Team> _alivePlayers = new Dictionary<int, Team>();
 
         private TeamBattlePlayersObserver _teamBattlePlayersObserver;
+        private bool _gameStarted = false;
 
         //CORE
 
@@ -31,7 +32,7 @@ namespace Gamemodes
         {
             if (Input.GetKeyDown(KeyCode.Keypad1))
             {
-             //   RefreshAlivePlayers();
+                //   RefreshAlivePlayers();
                 foreach (int player in _alivePlayers.Keys)
                 {
                     Debug.LogError("Player ID : " + player + " Team : " + _alivePlayers[player]);
@@ -65,7 +66,18 @@ namespace Gamemodes
                         AddPlayerEntry(player, KartExtensions.GetKartWithID(player).GetComponent<PlayerInfo>().Team);
                     }
                 }
-                CheckWiningCondition();
+                if (_gameStarted)
+                {
+                    CheckWiningCondition();
+                }
+            }
+        }
+
+        public void StartGame()
+        {
+            if (BoltNetwork.IsServer)
+            {
+                _gameStarted = true;
             }
         }
 
