@@ -81,6 +81,7 @@ namespace SW.Matchmaking
             {
                 var leaveToken = (JoinToken)connection.ConnectToken;
                 _serverSidePlayerNicknameList.Remove(leaveToken.Nickname);
+                _lobbyData.PlayersTeamDictionary.Remove(leaveToken.Nickname);
                 RemoveEntryFromTeamLists(leaveToken.Nickname);
                 SendNicknameListToAllPlayers();
                 SendTeamListToAllPlayers();
