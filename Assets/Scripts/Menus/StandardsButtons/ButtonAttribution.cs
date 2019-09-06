@@ -19,6 +19,15 @@ namespace Menu.Options
 
         public UnityEvent OnEvent;
         public UnityEvent OffEvent;
+        public UnityEvent OpenInitEvent;
+
+        private void OnEnable()
+        {
+            if (OpenInitEvent != null)
+            {
+                OpenInitEvent.Invoke();
+            }
+        }
 
         public void Attribution(int ID, string Text, MenuGeneration panel)
         {

@@ -119,16 +119,17 @@ namespace Menu.Options
                 {
                     if (Input.GetAxis("Horizontal") > 0 || Input.GetAxis("HorizontalArrows") > 0)
                     {
-                        ChangeMenuPosition(-1);
+                        ChangeMenuPosition(1);
                         _canMove = false;
                     }
                     if (Input.GetAxis("Horizontal") < 0 || Input.GetAxis("HorizontalArrows") < 0)
                     {
-                        ChangeMenuPosition(1);
+                        ChangeMenuPosition(-1);
                         _canMove = false;
                     }
                 }
             }
+
 
             //Validation (Enter || A)
             if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.JoystickButton0))
@@ -204,7 +205,7 @@ namespace Menu.Options
             {
                 MenuPosition = value;
             }
-            ActualizePosition();
+            ActualizePosition();   
         }
 
         private void ButtonValidation()
