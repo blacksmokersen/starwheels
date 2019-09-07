@@ -41,7 +41,7 @@ namespace Items.Lottery
         {
             if(Enabled && Input.GetButtonDown(Constants.Input.UseItem) && LotteryStarted && _lotteryTimer > 2f)
             {
-                _shortenLottery = true;
+                //_shortenLottery = true;
             }
         }
 
