@@ -13,8 +13,6 @@ namespace Gamemodes
         [SerializeField] private List<GameObject> _displays = new List<GameObject>();
         [SerializeField] private List<Transform> _standPositions = new List<Transform>();
 
-        // private Dictionary<string, Transform> _respawns = new Dictionary<string, Transform>();
-
         public override void OnEvent(GameOver evnt)
         {
             foreach (GameObject display in _displays)
@@ -28,6 +26,7 @@ namespace Gamemodes
             {
                 kart.gameObject.GetComponent<Rigidbody>().isKinematic = true;
                 kart.gameObject.transform.position = _standPositions[standNumber].position;
+                kart.gameObject.transform.rotation = _standPositions[standNumber].rotation;
                 standNumber++;
             }
         }
