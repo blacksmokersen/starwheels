@@ -5,6 +5,7 @@ using UnityEngine.Video;
 
 namespace Common.SplashScreen
 {
+    [DisallowMultipleComponent]
     public class LoadSceneOnInput : MonoBehaviour
     {
         [SerializeField] private string _nextSceneName;
@@ -94,7 +95,6 @@ namespace Common.SplashScreen
             TriggerEpilepsiePanelFadeIn();
             yield return new WaitForSeconds(1f);
 
-
             var timer = 0f;
             while (_epilepsiePanelShowing)
             {
@@ -110,7 +110,6 @@ namespace Common.SplashScreen
                     break;
                 }
             }
-            Debug.Log("Finished showing epilepsie panel.");
 
             TriggerEpilepsiePanelFadeOut();
             yield return new WaitForSeconds(1.5f);
@@ -129,8 +128,8 @@ namespace Common.SplashScreen
 
         private IEnumerator LoadMenuScene()
         {
-            Debug.Log("Starting MainMenu load.");
-
+            yield return new WaitForSeconds(.5f); // Delay to avoid a bug
+            
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(_nextSceneName, LoadSceneMode.Single);
             asyncLoad.allowSceneActivation = false;
 
