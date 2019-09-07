@@ -138,6 +138,11 @@ namespace Gamemodes
         {
             GameObject kart = KartExtensions.GetKartWithID(playerID);
 
+            kart.GetComponentInChildren<Health.Health>().StopHealthCoroutines();
+            kart.GetComponentInChildren<Health.Health>().SetInvincibility();
+            kart.GetComponent<Common.ControllableDisabler>().StopAllCoroutines();
+            kart.GetComponent<Common.ControllableDisabler>().DisableAllInChildren();
+
             kart.transform.position = _deathStoragePosition.position;
             kart.transform.rotation = _deathStoragePosition.rotation;
             Debug.LogError("Forced player to death storage : " + playerID);
