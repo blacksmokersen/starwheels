@@ -49,6 +49,36 @@ public class TeamBattlePlayersObserver : GlobalEventListener
 
     //PUBLIC
 
+    public void SendInfoToDisplayOnHUD(int playerID)
+    {
+        if (BoltNetwork.IsServer)
+        {
+            GameObject playerKart = KartExtensions.GetKartWithID(playerID);
+
+            ShareTeamBattlePortraitInfos shareTeamBattlePortraitInfos = ShareTeamBattlePortraitInfos.Create();
+            shareTeamBattlePortraitInfos.playerID = playerID;
+            shareTeamBattlePortraitInfos.LifeCount = _playersLifeCount[playerID];
+
+            if (_playersInJail.ContainsKey(playerID))
+            {
+                shareTeamBattlePortraitInfos.IsInJail = true;
+            }
+            else
+            {
+                shareTeamBattlePortraitInfos.IsInJail = false;
+            }
+            if (_playersLifeCount[playerID] == -1)
+            {
+                shareTeamBattlePortraitInfos.IsDead = true;
+            }
+            else
+            {
+                shareTeamBattlePortraitInfos.IsDead = false;
+            }
+            shareTeamBattlePortraitInfos.Send();
+        }
+    }
+
     public void DecreasePlayerHealth(int playerID)
     {
         if (BoltNetwork.IsServer)
@@ -151,6 +181,9 @@ public class TeamBattlePlayersObserver : GlobalEventListener
                 kart.GetComponentInChildren<Health.Health>().UnsetInvincibility();
                 kart.GetComponent<Common.ControllableDisabler>().StopAllCoroutines();
                 kart.GetComponent<Common.ControllableDisabler>().EnableAllInChildren();
+
+                SendInfoToDisplayOnHUD(kart.GetComponent<PlayerInfo>().OwnerID);
+
                 playerToRemoveFromList.Add(player);
             }
         }
@@ -192,6 +225,16 @@ public class TeamBattlePlayersObserver : GlobalEventListener
                 permanentdeath.PlayerTeam = playerKart.GetComponent<PlayerInfo>().Team.ToString();
                 permanentdeath.PlayerTeam = playerKart.GetComponent<PlayerInfo>().Nickname;
                 permanentdeath.Send();
+
+                ShareTeamBattlePortraitInfos shareTeamBattlePortraitInfos = ShareTeamBattlePortraitInfos.Create();
+                shareTeamBattlePortraitInfos.playerID = playerID;
+                shareTeamBattlePortraitInfos.LifeCount = 0;
+                shareTeamBattlePortraitInfos.IsDead = true;
+                shareTeamBattlePortraitInfos.Send();
+            }
+            if (_playersLifeCount.ContainsKey(playerID))
+            {
+                SendInfoToDisplayOnHUD(playerID);
             }
         }
     }

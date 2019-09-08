@@ -26,7 +26,7 @@ namespace Common.SplashScreen
         private bool _epilepsiePanelShowing = true;
         private bool _canSkipEpilepsiePanel = false;
 
-        private bool _loadMainMenu = false;
+        private bool _loadMainMenu = true;
 
         // CORE
 
@@ -129,7 +129,7 @@ namespace Common.SplashScreen
         private IEnumerator LoadMenuScene()
         {
             yield return new WaitForSeconds(.5f); // Delay to avoid a bug
-            
+
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(_nextSceneName, LoadSceneMode.Single);
             asyncLoad.allowSceneActivation = false;
 
