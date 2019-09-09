@@ -9,6 +9,7 @@ namespace Gamemodes
     public class TeamBattleServerRules : GamemodeBase
     {
         public TeamBattleSettings TeamBattleSettings;
+        [SerializeField] private GameObject _teamBattlePortraitManager;
 
         [SerializeField] Transform _redTeamJailPosition;
         [SerializeField] Transform _blueTeamJailPosition;
@@ -26,6 +27,11 @@ namespace Gamemodes
         private void Awake()
         {
             _teamBattlePlayersObserver = GetComponent<TeamBattlePlayersObserver>();
+        }
+
+        private void Start()
+        {
+            _teamBattlePortraitManager.SetActive(true);
         }
 
         private void Update()
