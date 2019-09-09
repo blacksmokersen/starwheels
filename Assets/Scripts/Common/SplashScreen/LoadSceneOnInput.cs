@@ -38,7 +38,7 @@ namespace Common.SplashScreen
 
         private void Start()
         {
-            StartCoroutine(LoadMenuScene());
+            // StartCoroutine(LoadMenuScene());
         }
 
         private void Update()
@@ -113,7 +113,8 @@ namespace Common.SplashScreen
 
             TriggerEpilepsiePanelFadeOut();
             yield return new WaitForSeconds(1.5f);
-            _loadMainMenu = true;
+            //_loadMainMenu = true;
+            SceneManager.LoadScene(_nextSceneName, LoadSceneMode.Single);
         }
 
         private void TriggerEpilepsiePanelFadeIn()
