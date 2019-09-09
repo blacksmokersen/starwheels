@@ -13,6 +13,7 @@ public class TeamBattlePortraitsManager : GlobalEventListener
 
     //BOLT
 
+    /*
     public override void OnEvent(LobbyCountdown evnt)
     {
         if (evnt.Time == 0)
@@ -36,27 +37,40 @@ public class TeamBattlePortraitsManager : GlobalEventListener
             }
         }
     }
+    */
 
     public override void OnEvent(ShareTeamBattlePortraitInfos evnt)
     {
-        foreach (GameObject portrait in _portraitsList)
+        if (evnt.RemovePlayer)
         {
-            var teamBattlePortraits = portrait.GetComponent<TeamBattlePortraits>();
-            if (teamBattlePortraits.PlayerBindedID == evnt.playerID)
+            RemovePortrait(evnt.playerID);
+        }
+        else if (evnt.AddPlayer || !_bindedPlayersID.Contains(evnt.playerID))
+        {
+            AddPortrait(evnt.playerID);
+        }
+        else
+        {
+            foreach (GameObject portrait in _portraitsList)
             {
-                teamBattlePortraits.LifeCount = evnt.LifeCount;
-                teamBattlePortraits.SetLifeDisplay(evnt.LifeCount.ToString());
-                if (evnt.IsInJail)
+                var teamBattlePortraits = portrait.GetComponent<TeamBattlePortraits>();
+                if (teamBattlePortraits.PlayerBindedID == evnt.playerID)
                 {
-                    teamBattlePortraits.Jail(true);
-                }
-                else
-                {
-                    teamBattlePortraits.Jail(false);
-                }
-                if (evnt.IsDead)
-                {
-                    teamBattlePortraits.Kill();
+                    teamBattlePortraits.LifeCount = evnt.LifeCount;
+                    teamBattlePortraits.SetLifeDisplay(evnt.LifeCount.ToString());
+
+                    if (evnt.IsDead)
+                    {
+                        teamBattlePortraits.Kill();
+                    }
+                    else if (evnt.IsInJail)
+                    {
+                        teamBattlePortraits.Jail(true);
+                    }
+                    else
+                    {
+                        teamBattlePortraits.Jail(false);
+                    }
                 }
             }
         }
@@ -85,7 +99,9 @@ public class TeamBattlePortraitsManager : GlobalEventListener
         foreach (GameObject portrait in _portraitsList)
         {
             var teamBattlePortraits = portrait.GetComponent<TeamBattlePortraits>();
-            if (teamBattlePortraits.PortraitTeam == playerInfo.Team && teamBattlePortraits.IsAlreadyBinded == false && !_bindedPlayersID.Contains(playerInfo.OwnerID))
+            if (teamBattlePortraits.PortraitTeam == playerInfo.Team
+                && teamBattlePortraits.IsAlreadyBinded == false
+                && !_bindedPlayersID.Contains(playerInfo.OwnerID))
             {
                 teamBattlePortraits.PlayerBindedID = playerInfo.OwnerID;
                 teamBattlePortraits.Jail(false);
