@@ -5,6 +5,7 @@ using SWExtensions;
 using Multiplayer;
 using Gamemodes;
 using Bolt;
+using Controls;
 
 public class TeamBattlePlayersObserver : GlobalEventListener
 {
@@ -179,8 +180,8 @@ public class TeamBattlePlayersObserver : GlobalEventListener
                 GameObject kart = KartExtensions.GetKartWithID(player);
                 kart.GetComponentInChildren<Health.Health>().StopHealthCoroutines();
                 kart.GetComponentInChildren<Health.Health>().UnsetInvincibility();
-                kart.GetComponent<Common.ControllableDisabler>().StopAllCoroutines();
-                kart.GetComponent<Common.ControllableDisabler>().EnableAllInChildren();
+                kart.GetComponentInChildren<KartInputManager>().EnableKartInputsInGame();
+                
 
                 SendInfoToDisplayOnHUD(kart.GetComponent<PlayerInfo>().OwnerID);
 
