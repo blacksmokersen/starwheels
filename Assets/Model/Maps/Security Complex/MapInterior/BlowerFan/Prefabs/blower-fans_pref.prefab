@@ -1,81 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!95 &1829478609222878386
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8199110485266730525}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4292f56910fa52247af28138c61ed0bf, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!95 &3093167373060761185
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7471585288894659592}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4292f56910fa52247af28138c61ed0bf, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!95 &8334073886434983409
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 394233484904019749}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4292f56910fa52247af28138c61ed0bf, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!95 &7911885395642309638
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1131100217174669367}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4292f56910fa52247af28138c61ed0bf, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4164609182106037043
 GameObject:
   m_ObjectHideFlags: 0
@@ -85,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7776400231338978273}
+  - component: {fileID: -8261248289670795349}
   m_Layer: 0
   m_Name: blower-fans_pref
   m_TagString: Untagged
@@ -114,6 +39,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &-8261248289670795349
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4164609182106037043}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4292f56910fa52247af28138c61ed0bf, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &116431892416348250
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -125,11 +69,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: blower-fan_blue-team_pref
-      objectReference: {fileID: 0}
-    - target: {fileID: 8094289850641010247, guid: 2e977cdc1e74d7148ace2034e77594b3,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5048509220129291348, guid: 2e977cdc1e74d7148ace2034e77594b3,
         type: 3}
@@ -186,14 +125,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7305636113446217692, guid: 2e977cdc1e74d7148ace2034e77594b3,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e977cdc1e74d7148ace2034e77594b3, type: 3}
---- !u!1 &8199110485266730525 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8094289850641010247, guid: 2e977cdc1e74d7148ace2034e77594b3,
-    type: 3}
-  m_PrefabInstance: {fileID: 116431892416348250}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5157270642807536654 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5048509220129291348, guid: 2e977cdc1e74d7148ace2034e77594b3,
@@ -211,16 +149,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: blower-fan_pref
-      objectReference: {fileID: 0}
-    - target: {fileID: 7145442692783500991, guid: 16e9b4245fa79324295a3488b56b9bc6,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7145442692783500991, guid: 16e9b4245fa79324295a3488b56b9bc6,
-        type: 3}
-      propertyPath: m_TagString
-      value: ToDisableOnJailGamemode
       objectReference: {fileID: 0}
     - target: {fileID: 6157247101208337580, guid: 16e9b4245fa79324295a3488b56b9bc6,
         type: 3}
@@ -297,16 +225,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: blower-fan_blue-team_pref (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 8094289850641010247, guid: 2e977cdc1e74d7148ace2034e77594b3,
-        type: 3}
-      propertyPath: m_TagString
-      value: ToEnableOnJailGamemode
-      objectReference: {fileID: 0}
-    - target: {fileID: 8094289850641010247, guid: 2e977cdc1e74d7148ace2034e77594b3,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5048509220129291348, guid: 2e977cdc1e74d7148ace2034e77594b3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -362,19 +280,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5048509220129291348, guid: 2e977cdc1e74d7148ace2034e77594b3,
+    - target: {fileID: 7305636113446217692, guid: 2e977cdc1e74d7148ace2034e77594b3,
         type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
+      propertyPath: m_Controller
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e977cdc1e74d7148ace2034e77594b3, type: 3}
---- !u!1 &7471585288894659592 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8094289850641010247, guid: 2e977cdc1e74d7148ace2034e77594b3,
-    type: 3}
-  m_PrefabInstance: {fileID: 1721736803697324623}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5902880881312222747 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5048509220129291348, guid: 2e977cdc1e74d7148ace2034e77594b3,
@@ -392,11 +304,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: blower-fan_red-team_pref
-      objectReference: {fileID: 0}
-    - target: {fileID: 2419146798121788394, guid: 41f1d50dc7fc4b14da245c524d43c2f7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1714130840759587321, guid: 41f1d50dc7fc4b14da245c524d43c2f7,
         type: 3}
@@ -453,14 +360,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3793418329682168433, guid: 41f1d50dc7fc4b14da245c524d43c2f7,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41f1d50dc7fc4b14da245c524d43c2f7, type: 3}
---- !u!1 &394233484904019749 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2419146798121788394, guid: 41f1d50dc7fc4b14da245c524d43c2f7,
-    type: 3}
-  m_PrefabInstance: {fileID: 2659956629240681679}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3685000700222391606 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1714130840759587321, guid: 41f1d50dc7fc4b14da245c524d43c2f7,
@@ -478,16 +384,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: blower-fan_red-team_pref (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 2419146798121788394, guid: 41f1d50dc7fc4b14da245c524d43c2f7,
-        type: 3}
-      propertyPath: m_TagString
-      value: ToEnableOnJailGamemode
-      objectReference: {fileID: 0}
-    - target: {fileID: 2419146798121788394, guid: 41f1d50dc7fc4b14da245c524d43c2f7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1714130840759587321, guid: 41f1d50dc7fc4b14da245c524d43c2f7,
         type: 3}
@@ -544,14 +440,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3793418329682168433, guid: 41f1d50dc7fc4b14da245c524d43c2f7,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41f1d50dc7fc4b14da245c524d43c2f7, type: 3}
---- !u!1 &1131100217174669367 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2419146798121788394, guid: 41f1d50dc7fc4b14da245c524d43c2f7,
-    type: 3}
-  m_PrefabInstance: {fileID: 3323921049946594269}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4172902261540178468 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1714130840759587321, guid: 41f1d50dc7fc4b14da245c524d43c2f7,
@@ -569,16 +464,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: blower-fan_pref
-      objectReference: {fileID: 0}
-    - target: {fileID: 7145442692783500991, guid: 16e9b4245fa79324295a3488b56b9bc6,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7145442692783500991, guid: 16e9b4245fa79324295a3488b56b9bc6,
-        type: 3}
-      propertyPath: m_TagString
-      value: ToDisableOnJailGamemode
       objectReference: {fileID: 0}
     - target: {fileID: 6157247101208337580, guid: 16e9b4245fa79324295a3488b56b9bc6,
         type: 3}
@@ -655,16 +540,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: blower-fan_pref
       objectReference: {fileID: 0}
-    - target: {fileID: 7145442692783500991, guid: 16e9b4245fa79324295a3488b56b9bc6,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7145442692783500991, guid: 16e9b4245fa79324295a3488b56b9bc6,
-        type: 3}
-      propertyPath: m_TagString
-      value: ToDisableOnJailGamemode
-      objectReference: {fileID: 0}
     - target: {fileID: 6157247101208337580, guid: 16e9b4245fa79324295a3488b56b9bc6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -739,16 +614,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: blower-fan_pref
-      objectReference: {fileID: 0}
-    - target: {fileID: 7145442692783500991, guid: 16e9b4245fa79324295a3488b56b9bc6,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7145442692783500991, guid: 16e9b4245fa79324295a3488b56b9bc6,
-        type: 3}
-      propertyPath: m_TagString
-      value: ToDisableOnJailGamemode
       objectReference: {fileID: 0}
     - target: {fileID: 6157247101208337580, guid: 16e9b4245fa79324295a3488b56b9bc6,
         type: 3}
