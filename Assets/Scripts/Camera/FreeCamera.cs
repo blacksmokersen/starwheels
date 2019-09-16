@@ -22,6 +22,8 @@ namespace CameraUtils
         [SerializeField] private float _rotateXSpeed;
         [SerializeField] private float _forwardSpeed;
         [SerializeField] private float _backwardSpeed;
+        [SerializeField] private float _maximalDistance = 150.0f;
+        [SerializeField] private float _maximalHeigh = 50.0f;
 
         private GameObject _kart;
 
@@ -49,7 +51,7 @@ namespace CameraUtils
                 {
                     if (Input.GetKeyDown(KeyCode.Q))
                     {
-                        transform.eulerAngles += new Vector3(0, - _rotateXSpeed, 0);
+                        transform.eulerAngles += new Vector3(0, -_rotateXSpeed, 0);
                     }
                     if (Input.GetKeyDown(KeyCode.D))
                     {
@@ -110,6 +112,29 @@ namespace CameraUtils
                             transform.Translate(Vector3.down * _verticalSpeed);
                         }
                     }
+                }
+
+                if (transform.position.x < -_maximalDistance)
+                {
+                    transform.position = new Vector3(-_maximalDistance, transform.position.y, transform.position.z);
+                }
+                else if (transform.position.x > _maximalDistance)
+                {
+                    transform.position = new Vector3(_maximalDistance, transform.position.y, transform.position.z);
+                }
+
+                if (transform.position.z < -_maximalDistance)
+                {
+                    transform.position = new Vector3(transform.position.x, transform.position.y, -_maximalDistance);
+                }
+                else if (transform.position.z > _maximalDistance)
+                {
+                    transform.position = new Vector3(transform.position.x, transform.position.y, _maximalDistance);
+                }
+
+                if (transform.position.y > _maximalHeigh)
+                {
+                    transform.position = new Vector3(transform.position.x, _maximalHeigh, transform.position.z);
                 }
             }
         }
