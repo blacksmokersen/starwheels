@@ -24,6 +24,8 @@ namespace CameraUtils
         [SerializeField] private float _backwardSpeed;
         [SerializeField] private float _maximalDistance = 150.0f;
         [SerializeField] private float _maximalHeigh = 50.0f;
+        [SerializeField] private float _rayDist = 1.0f;
+        [SerializeField] private LayerMask _rayMask;
 
         private GameObject _kart;
 
@@ -134,7 +136,7 @@ namespace CameraUtils
 
                 if (transform.position.y > _maximalHeigh)
                 {
-                    transform.position = new Vector3(transform.position.x, _maximalHeigh, transform.position.z);
+                    transform.position = new Vector3(transform.position.x, _maximalHeigh, transform.position.z );
                 }
             }
         }
@@ -146,6 +148,20 @@ namespace CameraUtils
         public void EnableKartControls()
         {
             _kart.GetComponentInChildren<EngineBehaviour>().Enabled = true;
+        }
+
+        private bool testForObstacles(Vector3 _direction) // return true if obstacle
+        {
+            RaycastHit _hit;
+            if (Physics.Raycast(transform.position, _direction, out _hit, _rayDist, _rayMask ))
+            {
+                if (_hit.collider == null)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
