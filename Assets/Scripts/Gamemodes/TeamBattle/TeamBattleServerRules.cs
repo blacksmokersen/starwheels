@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Controls;
 using UnityEngine;
 using SWExtensions;
 using Multiplayer;
@@ -123,9 +124,7 @@ namespace Gamemodes
             GameObject kart = KartExtensions.GetKartWithID(playerID);
             kart.GetComponentInChildren<Health.Health>().StopHealthCoroutines();
             kart.GetComponentInChildren<Health.Health>().SetInvincibility();
-            kart.GetComponent<Common.ControllableDisabler>().StopAllCoroutines();
-            kart.GetComponent<Common.ControllableDisabler>().DisableAllInChildren();
-
+            kart.GetComponentInChildren<KartInputManager>().DisableKartInputsInGame();
             if (kart.GetComponent<PlayerInfo>().Team == Team.Red)
             {
                 kart.transform.position = _blueTeamJailPosition.position;
