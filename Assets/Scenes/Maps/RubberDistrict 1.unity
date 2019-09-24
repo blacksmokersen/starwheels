@@ -7094,6 +7094,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FreeCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 1971602742415832128, guid: b8e023153941c294bbdb2b013a0ef2fc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 1971602742415833020, guid: b8e023153941c294bbdb2b013a0ef2fc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7102,7 +7107,7 @@ PrefabInstance:
     - target: {fileID: 1971602742415833020, guid: b8e023153941c294bbdb2b013a0ef2fc,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 34.4
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 1971602742415833020, guid: b8e023153941c294bbdb2b013a0ef2fc,
         type: 3}
@@ -7149,6 +7154,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1971602742415833018, guid: b8e023153941c294bbdb2b013a0ef2fc,
+        type: 3}
+      propertyPath: _enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971602742415833018, guid: b8e023153941c294bbdb2b013a0ef2fc,
+        type: 3}
+      propertyPath: _maximalHeigh
+      value: 70
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1971602742415832129, guid: b8e023153941c294bbdb2b013a0ef2fc, type: 3}
     - {fileID: 1971602742415833021, guid: b8e023153941c294bbdb2b013a0ef2fc, type: 3}
@@ -7165,6 +7180,25 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 546718314}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &546718317 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1971602742415832128, guid: b8e023153941c294bbdb2b013a0ef2fc,
+    type: 3}
+  m_PrefabInstance: {fileID: 546718314}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &546718318
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546718317}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &556116231 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4994627475318056, guid: 4e3c110c1ba0d76448bdc730c7f82b39,

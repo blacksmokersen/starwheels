@@ -63,6 +63,7 @@
         public const string EscapeMenu = "Escape";
         public const string SwitchCamToNextPlayer = "SwitchCamToNextPlayer";
         public const string Select = "Select";
+        public const string Triggers = "StickTiggers";
     }
 
     // Scenes
