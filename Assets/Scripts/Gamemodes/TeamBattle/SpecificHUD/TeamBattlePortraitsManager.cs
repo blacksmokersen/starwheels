@@ -53,11 +53,11 @@ public class TeamBattlePortraitsManager : GlobalEventListener
         {
             foreach (GameObject portrait in _portraitsList)
             {
-                var teamBattlePortraits = portrait.GetComponent<TeamBattlePortraits>();
+                var teamBattlePortraits = portrait.GetComponent<TeamBattlePortrait>();
                 if (teamBattlePortraits.PlayerBindedID == evnt.playerID)
                 {
                     teamBattlePortraits.LifeCount = evnt.LifeCount;
-                    teamBattlePortraits.SetLifeDisplay(evnt.LifeCount.ToString());
+                    teamBattlePortraits.SetLifeDisplay(evnt.LifeCount);
 
                     if (evnt.IsDead)
                     {
@@ -82,7 +82,7 @@ public class TeamBattlePortraitsManager : GlobalEventListener
     {
         foreach (GameObject portrait in _portraitsList)
         {
-            var teamBattlePortraits = portrait.GetComponent<TeamBattlePortraits>();
+            var teamBattlePortraits = portrait.GetComponent<TeamBattlePortrait>();
             if (teamBattlePortraits.PlayerBindedID == playerID)
             {
                 teamBattlePortraits.PlayerBindedID = 0;
@@ -98,7 +98,7 @@ public class TeamBattlePortraitsManager : GlobalEventListener
         var playerInfo = SWExtensions.KartExtensions.GetKartWithID(playerID).GetComponent<PlayerInfo>();
         foreach (GameObject portrait in _portraitsList)
         {
-            var teamBattlePortraits = portrait.GetComponent<TeamBattlePortraits>();
+            var teamBattlePortraits = portrait.GetComponent<TeamBattlePortrait>();
             if (teamBattlePortraits.PortraitTeam == playerInfo.Team
                 && teamBattlePortraits.IsAlreadyBinded == false
                 && !_bindedPlayersID.Contains(playerInfo.OwnerID))
