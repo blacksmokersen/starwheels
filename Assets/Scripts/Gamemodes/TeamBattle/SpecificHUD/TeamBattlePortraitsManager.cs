@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Bolt;
 using Multiplayer;
+using Steamworks;
+using System;
 
 public class TeamBattlePortraitsManager : GlobalEventListener
 {
@@ -103,6 +105,14 @@ public class TeamBattlePortraitsManager : GlobalEventListener
                 && teamBattlePortraits.IsAlreadyBinded == false
                 && !_bindedPlayersID.Contains(playerInfo.OwnerID))
             {
+                var steamID = "" + SteamUser.GetSteamID().m_SteamID;
+
+                if (SteamManager.Initialized)
+                {
+                    teamBattlePortraits.SteamID = new CSteamID() { m_SteamID = Convert.ToUInt64(steamID) };
+                    teamBattlePortraits.UpdateAvatar(teamBattlePortraits.SteamID);
+                }
+
                 teamBattlePortraits.PlayerBindedID = playerInfo.OwnerID;
                 teamBattlePortraits.Jail(false);
                 teamBattlePortraits.IsAlreadyBinded = true;
