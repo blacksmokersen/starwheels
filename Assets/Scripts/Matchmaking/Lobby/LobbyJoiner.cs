@@ -105,11 +105,13 @@ namespace SW.Matchmaking
                 Debug.Log("[LOBBY] Matched : " + lobbyMatchesSelectedServerName);
                 var lobbyMatchesSelectedGamemodes = !_matchmakingSettings.LookForPrivateGames && lobbyToken.Public && _lobbyData.GamemodePool.Contains(lobbyToken.GameMode);
                 var lobbyMatchesMatchmakingSettings = (!lobbyToken.GameStarted || lobbyToken.GameStarted == _matchmakingSettings.LookForStartedGames);
+                var isBattleAndStarted = lobbyToken.GameMode == Constants.Gamemodes.Battle && lobbyToken.GameStarted;
 
                 if ((lobbyMatchesSelectedServerName || lobbyMatchesSelectedGamemodes)
                     && lobbyMatchesMatchmakingSettings
                     && lobbyToken.CanBeJoined
-                    && lobbyToken.Version.Equals(_lobbyData.Version))
+                    && lobbyToken.Version.Equals(_lobbyData.Version)
+                    && !isBattleAndStarted)
                 {
                     _lobbyData.SetGamemode(lobbyToken.GameMode);
                     _lobbyData.SetMap(lobbyToken.MapName);
