@@ -105,7 +105,7 @@ public class TeamBattlePlayersObserver : GlobalEventListener
                 Debug.LogError("Observe Player : " + playerID);
                 _playersLifeCount.Add(playerID, _teamBattleServerRules.TeamBattleSettings.LifeCountPerPlayers);
 
-                 StartCoroutine(DelayedSendInfoToDisplayOnHUD());
+                StartCoroutine(DelayedSendInfoToDisplayOnHUD());
                 // SendInfoToDisplayOnHUD();
                 /*
                 ShareTeamBattlePortraitInfos shareTeamBattlePortraitInfos = ShareTeamBattlePortraitInfos.Create();
@@ -118,21 +118,20 @@ public class TeamBattlePlayersObserver : GlobalEventListener
         }
     }
 
-    public void RemoveObservedPlayer(int playerID, bool isDead)
+    public void RemoveObservedPlayer(int playerID)
     {
         if (BoltNetwork.IsServer)
         {
             if (_playersLifeCount.ContainsKey(playerID))
             {
-                Debug.LogError("REMOVED Player : " + playerID);
-                _playersLifeCount.Remove(playerID);
-
-                if (isDead)
+                if (_playersLifeCount[playerID] == -1)
                 {
                     SendInfoToDisplayOnHUD();
+                    _playersLifeCount.Remove(playerID);
                 }
                 else
                 {
+                    _playersLifeCount.Remove(playerID);
                     ShareTeamBattlePortraitInfos shareTeamBattlePortraitInfos = ShareTeamBattlePortraitInfos.Create();
                     shareTeamBattlePortraitInfos.playerID = playerID;
                     shareTeamBattlePortraitInfos.RemovePlayer = true;
@@ -210,7 +209,7 @@ public class TeamBattlePlayersObserver : GlobalEventListener
                 kart.GetComponentInChildren<Health.Health>().StopHealthCoroutines();
                 kart.GetComponentInChildren<Health.Health>().UnsetInvincibility();
                 kart.GetComponentInChildren<KartInputManager>().EnableKartInputsInGame();
-                
+
 
                 playerToRemoveFromList.Add(player);
             }
@@ -243,7 +242,7 @@ public class TeamBattlePlayersObserver : GlobalEventListener
             }
             else if (_playersLifeCount[playerID] == -1)
             {
-                RemoveObservedPlayer(playerID,true);
+                RemoveObservedPlayer(playerID);
 
                 GameObject playerKart = KartExtensions.GetKartWithID(playerID);
 
