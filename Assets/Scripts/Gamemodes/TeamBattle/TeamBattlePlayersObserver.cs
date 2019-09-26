@@ -24,6 +24,21 @@ public class TeamBattlePlayersObserver : GlobalEventListener
         _teamBattleServerRules = GetComponent<TeamBattleServerRules>();
     }
 
+    private void Start()
+    {
+        var hostID = SWExtensions.KartExtensions.GetMyKart().GetComponent<PlayerInfo>().OwnerID;
+        if (SteamManager.Initialized)
+        {
+            var steamID = "" + SteamUser.GetSteamID().m_SteamID;
+
+            if (!_playerSteamID.ContainsKey(hostID))
+            {
+                Debug.LogError("STEAM ID PlayerAllStats : " + hostID + "  " + steamID);
+                _playerSteamID.Add(hostID, steamID);
+            }
+        }
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Keypad0))
@@ -55,11 +70,27 @@ public class TeamBattlePlayersObserver : GlobalEventListener
 
     public override void OnEvent(PlayerReady evnt)
     {
-        Debug.LogError("PLAYERREADY");
-        if (!_playerSteamID.ContainsKey(evnt.PlayerID))
+        if (BoltNetwork.IsServer)
         {
-            Debug.LogError("STEAM ID PlayerAllStats : " + evnt.SteamID);
-            _playerSteamID.Add(evnt.PlayerID, evnt.SteamID);
+            Debug.LogError("PLAYERREADY");
+            if (!_playerSteamID.ContainsKey(evnt.PlayerID))
+            {
+                Debug.LogError("STEAM ID PlayerAllStats : " + evnt.SteamID);
+                _playerSteamID.Add(evnt.PlayerID, evnt.SteamID);
+            }
+        }
+    }
+
+    public override void OnEvent(PlayerAllStats evnt)
+    {
+        if (BoltNetwork.IsServer)
+        {
+            Debug.LogError("PLAYERREADY");
+            if (!_playerSteamID.ContainsKey(evnt.PlayerID))
+            {
+                Debug.LogError("STEAM ID PlayerAllStats : " + evnt.SteamID);
+                _playerSteamID.Add(evnt.PlayerID, evnt.SteamID);
+            }
         }
     }
 
