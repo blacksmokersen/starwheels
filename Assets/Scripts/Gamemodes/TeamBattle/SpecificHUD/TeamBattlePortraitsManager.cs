@@ -42,9 +42,28 @@ public class TeamBattlePortraitsManager : GlobalEventListener
     }
     */
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            foreach (int player in _playerSteamID.Keys)
+            {
+                Debug.LogError("- Player ID : " + player + " - PlayerSteamID : " + _playerSteamID[player]);
+            }
+        }
+    }
+
     public override void OnEvent(PlayerReady evnt)
     {
-        Debug.LogError("STEAM ID PlayerAllStats : " + evnt.SteamID);
+        if (!_playerSteamID.ContainsKey(evnt.PlayerID))
+        {
+            Debug.LogError("STEAM ID PlayerAllStats : " + evnt.SteamID);
+            _playerSteamID.Add(evnt.PlayerID, evnt.SteamID);
+        }
+    }
+
+    public override void OnEvent(PlayerAllStats evnt)
+    {
         if (!_playerSteamID.ContainsKey(evnt.PlayerID))
         {
             Debug.LogError("STEAM ID PlayerAllStats : " + evnt.SteamID);
