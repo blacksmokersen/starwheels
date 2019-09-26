@@ -42,6 +42,8 @@ public class TeamBattlePortraitsManager : GlobalEventListener
     }
     */
 
+        /*
+         *
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.J))
@@ -62,6 +64,9 @@ public class TeamBattlePortraitsManager : GlobalEventListener
         }
     }
 
+        */
+
+        /*
     public override void OnEvent(PlayerAllStats evnt)
     {
         if (!_playerSteamID.ContainsKey(evnt.PlayerID))
@@ -85,7 +90,7 @@ public class TeamBattlePortraitsManager : GlobalEventListener
             }
         }
     }
-
+    */
 
     /*
     public override void OnEvent(LobbyCountdown evnt)
@@ -111,7 +116,7 @@ public class TeamBattlePortraitsManager : GlobalEventListener
         }
         else if (evnt.AddPlayer || !_bindedPlayersID.Contains(evnt.playerID))
         {
-            AddPortrait(evnt.playerID);
+            AddPortrait(evnt.playerID,evnt.SteamID);
         }
         else
         {
@@ -157,7 +162,7 @@ public class TeamBattlePortraitsManager : GlobalEventListener
         }
     }
 
-    public void AddPortrait(int playerID)
+    public void AddPortrait(int playerID, string steamID)
     {
         var playerInfo = SWExtensions.KartExtensions.GetKartWithID(playerID).GetComponent<PlayerInfo>();
         foreach (GameObject portrait in _portraitsList)
@@ -169,11 +174,11 @@ public class TeamBattlePortraitsManager : GlobalEventListener
             {
                 if (SteamManager.Initialized)
                 {
-                    if (_playerSteamID.ContainsKey(playerID))
-                    {
-                        teamBattlePortraits.SteamID = new CSteamID() { m_SteamID = Convert.ToUInt64(_playerSteamID[playerID]) };
+                //    if (_playerSteamID.ContainsKey(playerID))
+                //    {
+                        teamBattlePortraits.SteamID = new CSteamID() { m_SteamID = Convert.ToUInt64(steamID) };
                         teamBattlePortraits.UpdateAvatar(teamBattlePortraits.SteamID);
-                    }
+                 //   }
                 }
 
                 teamBattlePortraits.PlayerBindedID = playerInfo.OwnerID;

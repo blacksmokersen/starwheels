@@ -6,6 +6,7 @@ using Multiplayer;
 using Gamemodes;
 using Bolt;
 using Controls;
+using Steamworks;
 
 public class TeamBattlePlayersObserver : GlobalEventListener
 {
@@ -14,6 +15,7 @@ public class TeamBattlePlayersObserver : GlobalEventListener
     private Dictionary<int, int> _playersLifeCount = new Dictionary<int, int>();
     private Dictionary<int, Team> _playersInJail = new Dictionary<int, Team>();
     private Dictionary<int, Team> _deadPlayers = new Dictionary<int, Team>();
+    private Dictionary<int, string> _playerSteamID = new Dictionary<int, string>();
 
     //CORE
 
@@ -49,6 +51,18 @@ public class TeamBattlePlayersObserver : GlobalEventListener
         }
     }
 
+    //BOLT
+
+    public override void OnEvent(PlayerReady evnt)
+    {
+        Debug.LogError("PLAYERREADY");
+        if (!_playerSteamID.ContainsKey(evnt.PlayerID))
+        {
+            Debug.LogError("STEAM ID PlayerAllStats : " + evnt.SteamID);
+            _playerSteamID.Add(evnt.PlayerID, evnt.SteamID);
+        }
+    }
+
     //PUBLIC
 
     public void SendInfoToDisplayOnHUD()
@@ -63,6 +77,10 @@ public class TeamBattlePlayersObserver : GlobalEventListener
                 shareTeamBattlePortraitInfos.playerID = playerID;
                 shareTeamBattlePortraitInfos.LifeCount = _playersLifeCount[playerID];
 
+                if (SteamManager.Initialized)
+                {
+                    shareTeamBattlePortraitInfos.SteamID = _playerSteamID[playerID];
+                }
                 if (_playersInJail.ContainsKey(playerID))
                 {
                     shareTeamBattlePortraitInfos.IsInJail = true;
