@@ -12,6 +12,7 @@ public class TeamBattlePortraitsManager : GlobalEventListener
 
     [SerializeField] private List<int> _bindedPlayersID = new List<int>();
 
+    private Dictionary<int, string> _playerSteamID = new Dictionary<int, string>();
 
     //BOLT
 
@@ -40,6 +41,48 @@ public class TeamBattlePortraitsManager : GlobalEventListener
         }
     }
     */
+
+    public override void OnEvent(PlayerReady evnt)
+    {
+        Debug.LogError("STEAM ID PlayerAllStats : " + evnt.SteamID);
+        if (!_playerSteamID.ContainsKey(evnt.PlayerID))
+        {
+            Debug.LogError("STEAM ID PlayerAllStats : " + evnt.SteamID);
+            _playerSteamID.Add(evnt.PlayerID, evnt.SteamID);
+        }
+    }
+
+    private void Start()
+    {
+        var serverID = SWExtensions.KartExtensions.GetMyKart().GetComponent<PlayerInfo>().OwnerID;
+        if (SteamManager.Initialized)
+        {
+            var steamID = "" + SteamUser.GetSteamID().m_SteamID;
+
+            if (!_playerSteamID.ContainsKey(serverID))
+            {
+                Debug.LogError("STEAM ID PlayerAllStats : " + serverID + "  " + steamID);
+                _playerSteamID.Add(serverID, steamID);
+            }
+        }
+    }
+
+
+    /*
+    public override void OnEvent(LobbyCountdown evnt)
+    {
+        if (BoltNetwork.IsServer && evnt.Time == 5)
+        {
+            var serverID = SWExtensions.KartExtensions.GetMyKart().GetComponent<PlayerInfo>().OwnerID;
+            if (!_playerSteamID.ContainsKey(serverID))
+            {
+                Debug.LogError("STEAM ID PlayerAllStats : " + serverID);
+                _playerSteamID.Add(serverID, "" + SteamUser.GetSteamID().m_SteamID);
+            }
+        }
+    }
+    */
+
 
     public override void OnEvent(ShareTeamBattlePortraitInfos evnt)
     {
@@ -105,12 +148,13 @@ public class TeamBattlePortraitsManager : GlobalEventListener
                 && teamBattlePortraits.IsAlreadyBinded == false
                 && !_bindedPlayersID.Contains(playerInfo.OwnerID))
             {
-                var steamID = "" + SteamUser.GetSteamID().m_SteamID;
-
                 if (SteamManager.Initialized)
                 {
-                    teamBattlePortraits.SteamID = new CSteamID() { m_SteamID = Convert.ToUInt64(steamID) };
-                    teamBattlePortraits.UpdateAvatar(teamBattlePortraits.SteamID);
+                    if (_playerSteamID.ContainsKey(playerID))
+                    {
+                        teamBattlePortraits.SteamID = new CSteamID() { m_SteamID = Convert.ToUInt64(_playerSteamID[playerID]) };
+                        teamBattlePortraits.UpdateAvatar(teamBattlePortraits.SteamID);
+                    }
                 }
 
                 teamBattlePortraits.PlayerBindedID = playerInfo.OwnerID;
