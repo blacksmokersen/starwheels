@@ -30,7 +30,7 @@ public class TeamBattlePortrait : GlobalEventListener
     {
         if (SteamManager.Initialized)
         {
-         //   _avatarLoadedCallback = Callback<AvatarImageLoaded_t>.Create(OnAvatarLoaded);
+            //   _avatarLoadedCallback = Callback<AvatarImageLoaded_t>.Create(OnAvatarLoaded);
         }
     }
 
@@ -54,7 +54,7 @@ public class TeamBattlePortrait : GlobalEventListener
 
     private void SetAvatarImage(int iImage)
     {
-      //  _avatarPlaceholder.gameObject.SetActive(false);
+        //  _avatarPlaceholder.gameObject.SetActive(false);
         _avatarImage.gameObject.SetActive(true);
 
         Rect rect = new Rect(0, 0, 184, 184);
@@ -75,7 +75,10 @@ public class TeamBattlePortrait : GlobalEventListener
 
     public void SetLifeDisplay(int lifeCount)
     {
-        _life.sprite = _lifesprites[lifeCount];
+        if (LifeCount >= 0)
+        {
+            _life.sprite = _lifesprites[lifeCount];
+        }
     }
 
     public void Jail(bool value)
