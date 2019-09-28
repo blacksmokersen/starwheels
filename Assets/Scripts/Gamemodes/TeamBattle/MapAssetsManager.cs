@@ -11,10 +11,15 @@ public class MapAssetsManager : MonoBehaviour
     [SerializeField] private GameObject _blueButton;
 
     [SerializeField] private GameObject[] _TeamBattleAssetsToEnable;
-    [SerializeField] private GameObject[] _BaseMapAssetsToDisable;
+    private GameObject[] _BaseMapAssetsToDisable;
 
     private void Start()
     {
+        foreach (GameObject go in _TeamBattleAssetsToEnable)
+        {
+            go.SetActive(true);
+        }
+
         if (GameObject.FindGameObjectsWithTag("ToDisableOnJailGamemode") != null)
             _BaseMapAssetsToDisable = GameObject.FindGameObjectsWithTag("ToDisableOnJailGamemode");
 

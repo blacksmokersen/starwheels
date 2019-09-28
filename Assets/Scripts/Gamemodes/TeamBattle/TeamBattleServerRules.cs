@@ -77,7 +77,7 @@ namespace Gamemodes
                 }
                 if (_gameStarted)
                 {
-                    CheckWiningCondition();
+                   // CheckWiningCondition();
                 }
             }
         }
