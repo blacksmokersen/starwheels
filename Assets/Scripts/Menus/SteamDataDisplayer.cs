@@ -1,30 +1,33 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Steamworks;
+using SWExtensions;
 
 namespace Menu
 {
     public class SteamDataDisplayer : MonoBehaviour
     {
         [Header("UI Elements")]
+        [SerializeField] private Image _playerProfilePicturePlaceHolder;
         [SerializeField] private Image _playerProfilePicture;
         [SerializeField] private TextMeshProUGUI _playerName;
         [SerializeField] private TextMeshProUGUI _experience;
-        [SerializeField] private TextMeshProUGUI _money;
+        
+        private int _avatar = -1;
+        private Callback<AvatarImageLoaded_t> _avatarLoadedCallback;
 
-        // CORE
+        //CORE
 
         private void Start()
         {
             if (SteamManager.Initialized)
             {
+                _avatarLoadedCallback = Callback<AvatarImageLoaded_t>.Create(OnAvatarLoaded);
+                
                 InitializeProfilePicture();
                 InitializeName();
                 InitializeExperience();
-                //InitializeMoney();
             }
         }
 
@@ -32,7 +35,11 @@ namespace Menu
 
         private void InitializeProfilePicture()
         {
-            StartCoroutine(FetchAvatar());
+            _avatar = SteamFriends.GetLargeFriendAvatar(SteamUser.GetSteamID());
+            if (_avatar > 0)
+            {
+                SetAvatarImage(_avatar);
+            }
         }
 
         private void InitializeName()
@@ -47,47 +54,20 @@ namespace Menu
             _experience.text = "" + experience.ToString();
         }
 
-        private void InitializeMoney()
+        private void SetAvatarImage(int iImage)
         {
-            int money;
-            SteamUserStats.GetStat(Constants.SteamStats.Money, out money);
-            _money.text = "" + money.ToString() + " $";
+            _playerProfilePicturePlaceHolder.gameObject.SetActive(false);
+            _playerProfilePicture.gameObject.SetActive(true);
+
+            Rect rect = new Rect(0, 0, 184, 184);
+            Vector2 pivot = new Vector2(.5f, .5f);
+            Texture2D avatarTexture = SteamExtensions.GetSteamImageAsTexture2D(iImage);
+            _playerProfilePicture.sprite = Sprite.Create(avatarTexture, rect, pivot);
         }
 
-        private IEnumerator FetchAvatar()
+        private void OnAvatarLoaded(AvatarImageLoaded_t result)
         {
-            var avatarInt = SteamFriends.GetLargeFriendAvatar(SteamUser.GetSteamID());
-
-            while (avatarInt == -1)
-            {
-                yield return null;
-            }
-
-            if (avatarInt > 0)
-            {
-                Debug.Log("Found avatar.");
-                uint width, height;
-                SteamUtils.GetImageSize(avatarInt, out width, out height);
-
-                byte[] avatarStream = new byte[4 * (int)width * (int)height];
-                if (width > 0 && height > 0)
-                {
-                    SteamUtils.GetImageRGBA(avatarInt, avatarStream, 4 * (int)width * (int)height);
-                }
-
-                Texture2D downloadedAvatar = new Texture2D((int)width, (int)height, TextureFormat.RGBA32, false);
-                downloadedAvatar.LoadRawTextureData(avatarStream);
-                downloadedAvatar.Apply();
-
-                Rect rect = new Rect(0, 0, 184, 184);
-                Vector2 pivot = new Vector2(.5f, .5f);
-                _playerProfilePicture.sprite = Sprite.Create(downloadedAvatar, rect, pivot);
-                Debug.Log("Updated avatar.");
-            }
-            else
-            {
-                Debug.LogWarning("Couldn't fetch player avatar.");
-            }
+            SetAvatarImage(result.m_iImage);
         }
     }
 }

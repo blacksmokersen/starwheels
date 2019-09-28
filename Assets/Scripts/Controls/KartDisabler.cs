@@ -1,17 +1,22 @@
 ﻿using UnityEngine;
 using Common;
+using Gamemodes;
 using SWExtensions;
 
 namespace Controls
 {
     public class KartDisabler : MonoBehaviour
     {
+        public bool HasInGameControl = true;
+        
         [Header("Settings")]
         [SerializeField] private bool _disableKartOnEnabled;
         [SerializeField] private bool _enableKartOnDisabled;
+        
+        [Header("References")]
         [SerializeField] private BoolVariable _gameStarted;
 
-        private ControllableDisabler _disabler;
+        private KartInputManager _kartInputManager;
 
         // CORE
 
@@ -35,36 +40,36 @@ namespace Controls
 
         public void Enable()
         {
-            if (_disabler == null)
+            if (_kartInputManager == null)
             {
-                FindDisabler();
+                FindInputManager();
             }
-            if (_disabler && _gameStarted.Value)
+            if (_kartInputManager && _gameStarted.Value && HasInGameControl)
             {
-                _disabler.EnableAllInChildren();
+                _kartInputManager.EnableKartInputsAfterMenu();
             }
         }
 
         public void Disable()
         {
-            if (_disabler == null)
+            if (_kartInputManager == null)
             {
-                FindDisabler();
+                FindInputManager();
             }
-            if (_disabler && _gameStarted.Value)
+            if (_kartInputManager && _gameStarted.Value)
             {
-                _disabler.DisableAllInChildren();
+                _kartInputManager.DisableKartInputsForMenu();
             }
         }
 
         // PRIVATE
 
-        private void FindDisabler()
+        private void FindInputManager()
         {
             var myKart = KartExtensions.GetMyKart();
             if (myKart)
             {
-                _disabler = myKart.GetComponent<ControllableDisabler>();
+                _kartInputManager = myKart.GetComponentInChildren<KartInputManager>();
             }
         }
     }

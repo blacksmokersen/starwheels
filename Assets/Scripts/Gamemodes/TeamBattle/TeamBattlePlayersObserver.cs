@@ -5,6 +5,8 @@ using SWExtensions;
 using Multiplayer;
 using Gamemodes;
 using Bolt;
+using Controls;
+using Steamworks;
 
 public class TeamBattlePlayersObserver : GlobalEventListener
 {
@@ -12,12 +14,29 @@ public class TeamBattlePlayersObserver : GlobalEventListener
 
     private Dictionary<int, int> _playersLifeCount = new Dictionary<int, int>();
     private Dictionary<int, Team> _playersInJail = new Dictionary<int, Team>();
+    private Dictionary<int, Team> _deadPlayers = new Dictionary<int, Team>();
+    private Dictionary<int, string> _playerSteamID = new Dictionary<int, string>();
 
     //CORE
 
     private void Awake()
     {
         _teamBattleServerRules = GetComponent<TeamBattleServerRules>();
+    }
+
+    private void Start()
+    {
+        var hostID = SWExtensions.KartExtensions.GetMyKart().GetComponent<PlayerInfo>().OwnerID;
+        if (SteamManager.Initialized)
+        {
+            var steamID = "" + SteamUser.GetSteamID().m_SteamID;
+
+            if (!_playerSteamID.ContainsKey(hostID))
+            {
+                Debug.LogError("STEAM ID PlayerAllStats : " + hostID + "  " + steamID);
+                _playerSteamID.Add(hostID, steamID);
+            }
+        }
     }
 
     private void Update()
@@ -47,35 +66,72 @@ public class TeamBattlePlayersObserver : GlobalEventListener
         }
     }
 
-    //PUBLIC
+    //BOLT
 
-    public void SendInfoToDisplayOnHUD(int playerID)
+    public override void OnEvent(PlayerReady evnt)
     {
         if (BoltNetwork.IsServer)
         {
-            GameObject playerKart = KartExtensions.GetKartWithID(playerID);
-
-            ShareTeamBattlePortraitInfos shareTeamBattlePortraitInfos = ShareTeamBattlePortraitInfos.Create();
-            shareTeamBattlePortraitInfos.playerID = playerID;
-            shareTeamBattlePortraitInfos.LifeCount = _playersLifeCount[playerID];
-
-            if (_playersInJail.ContainsKey(playerID))
+            Debug.LogError("PLAYERREADY");
+            if (!_playerSteamID.ContainsKey(evnt.PlayerID))
             {
-                shareTeamBattlePortraitInfos.IsInJail = true;
+                Debug.LogError("STEAM ID PlayerAllStats : " + evnt.SteamID);
+                _playerSteamID.Add(evnt.PlayerID, evnt.SteamID);
             }
-            else
+        }
+    }
+
+    public override void OnEvent(PlayerAllStats evnt)
+    {
+        if (BoltNetwork.IsServer)
+        {
+            Debug.LogError("PLAYERREADY");
+            if (!_playerSteamID.ContainsKey(evnt.PlayerID))
             {
-                shareTeamBattlePortraitInfos.IsInJail = false;
+                Debug.LogError("STEAM ID PlayerAllStats : " + evnt.SteamID);
+                _playerSteamID.Add(evnt.PlayerID, evnt.SteamID);
             }
-            if (_playersLifeCount[playerID] == -1)
+        }
+    }
+
+    //PUBLIC
+
+    public void SendInfoToDisplayOnHUD()
+    {
+        if (BoltNetwork.IsServer)
+        {
+            foreach (int playerID in _playersLifeCount.Keys)
             {
+                GameObject playerKart = KartExtensions.GetKartWithID(playerID);
+
+                ShareTeamBattlePortraitInfos shareTeamBattlePortraitInfos = ShareTeamBattlePortraitInfos.Create();
+                shareTeamBattlePortraitInfos.playerID = playerID;
+                shareTeamBattlePortraitInfos.LifeCount = _playersLifeCount[playerID];
+
+                if (SteamManager.Initialized)
+                {
+                    shareTeamBattlePortraitInfos.SteamID = _playerSteamID[playerID];
+                }
+                if (_playersInJail.ContainsKey(playerID))
+                {
+                    shareTeamBattlePortraitInfos.IsInJail = true;
+                }
+                else
+                {
+                    shareTeamBattlePortraitInfos.IsInJail = false;
+                }
+                shareTeamBattlePortraitInfos.Send();
+            }
+
+            foreach (int playerID in _deadPlayers.Keys)
+            {
+                ShareTeamBattlePortraitInfos shareTeamBattlePortraitInfos = ShareTeamBattlePortraitInfos.Create();
+                shareTeamBattlePortraitInfos.playerID = playerID;
+                shareTeamBattlePortraitInfos.LifeCount = 0;
                 shareTeamBattlePortraitInfos.IsDead = true;
+                shareTeamBattlePortraitInfos.Send();
+                Debug.LogError("KILLL REQUEST");
             }
-            else
-            {
-                shareTeamBattlePortraitInfos.IsDead = false;
-            }
-            shareTeamBattlePortraitInfos.Send();
         }
     }
 
@@ -97,6 +153,16 @@ public class TeamBattlePlayersObserver : GlobalEventListener
             {
                 Debug.LogError("Observe Player : " + playerID);
                 _playersLifeCount.Add(playerID, _teamBattleServerRules.TeamBattleSettings.LifeCountPerPlayers);
+
+                StartCoroutine(DelayedSendInfoToDisplayOnHUD());
+                // SendInfoToDisplayOnHUD();
+                /*
+                ShareTeamBattlePortraitInfos shareTeamBattlePortraitInfos = ShareTeamBattlePortraitInfos.Create();
+                shareTeamBattlePortraitInfos.playerID = playerID;
+                shareTeamBattlePortraitInfos.LifeCount = 5;
+                shareTeamBattlePortraitInfos.AddPlayer = true;
+                shareTeamBattlePortraitInfos.Send();
+                */
             }
         }
     }
@@ -107,8 +173,19 @@ public class TeamBattlePlayersObserver : GlobalEventListener
         {
             if (_playersLifeCount.ContainsKey(playerID))
             {
-                Debug.LogError("REMOVED Player : " + playerID);
-                _playersLifeCount.Remove(playerID);
+                if (_playersLifeCount[playerID] == -1)
+                {
+                    SendInfoToDisplayOnHUD();
+                    _playersLifeCount.Remove(playerID);
+                }
+                else
+                {
+                    _playersLifeCount.Remove(playerID);
+                    ShareTeamBattlePortraitInfos shareTeamBattlePortraitInfos = ShareTeamBattlePortraitInfos.Create();
+                    shareTeamBattlePortraitInfos.playerID = playerID;
+                    shareTeamBattlePortraitInfos.RemovePlayer = true;
+                    shareTeamBattlePortraitInfos.Send();
+                }
             }
         }
     }
@@ -123,6 +200,7 @@ public class TeamBattlePlayersObserver : GlobalEventListener
                 int playerID = player.GetComponent<PlayerInfo>().OwnerID;
                 _playersLifeCount.Add(playerID, _teamBattleServerRules.TeamBattleSettings.LifeCountPerPlayers);
                 Debug.LogError("Observe Player With RefreshAllKartsInGame : " + playerID);
+                SendInfoToDisplayOnHUD();
             }
         }
     }
@@ -179,10 +257,8 @@ public class TeamBattlePlayersObserver : GlobalEventListener
                 GameObject kart = KartExtensions.GetKartWithID(player);
                 kart.GetComponentInChildren<Health.Health>().StopHealthCoroutines();
                 kart.GetComponentInChildren<Health.Health>().UnsetInvincibility();
-                kart.GetComponent<Common.ControllableDisabler>().StopAllCoroutines();
-                kart.GetComponent<Common.ControllableDisabler>().EnableAllInChildren();
+                kart.GetComponentInChildren<KartInputManager>().EnableKartInputsInGame();
 
-                SendInfoToDisplayOnHUD(kart.GetComponent<PlayerInfo>().OwnerID);
 
                 playerToRemoveFromList.Add(player);
             }
@@ -190,6 +266,7 @@ public class TeamBattlePlayersObserver : GlobalEventListener
         foreach (int player in playerToRemoveFromList)
         {
             _playersInJail.Remove(player);
+            SendInfoToDisplayOnHUD();
         }
     }
 
@@ -226,16 +303,25 @@ public class TeamBattlePlayersObserver : GlobalEventListener
                 permanentdeath.PlayerTeam = playerKart.GetComponent<PlayerInfo>().Nickname;
                 permanentdeath.Send();
 
+                _deadPlayers.Add(playerID, playerKart.GetComponent<PlayerInfo>().Team);
+                /*
                 ShareTeamBattlePortraitInfos shareTeamBattlePortraitInfos = ShareTeamBattlePortraitInfos.Create();
                 shareTeamBattlePortraitInfos.playerID = playerID;
                 shareTeamBattlePortraitInfos.LifeCount = 0;
                 shareTeamBattlePortraitInfos.IsDead = true;
                 shareTeamBattlePortraitInfos.Send();
+                */
             }
-            if (_playersLifeCount.ContainsKey(playerID))
-            {
-                SendInfoToDisplayOnHUD(playerID);
-            }
+            //   if (_playersLifeCount.ContainsKey(playerID))
+            //  {
+            SendInfoToDisplayOnHUD();
+            //   }
         }
+    }
+
+    private IEnumerator DelayedSendInfoToDisplayOnHUD()
+    {
+        yield return new WaitForSeconds(5);
+        SendInfoToDisplayOnHUD();
     }
 }

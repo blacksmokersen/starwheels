@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Bolt;
 using Multiplayer;
+using Steamworks;
+using System;
 
 public class TeamBattlePortraitsManager : GlobalEventListener
 {
@@ -10,9 +12,11 @@ public class TeamBattlePortraitsManager : GlobalEventListener
 
     [SerializeField] private List<int> _bindedPlayersID = new List<int>();
 
+    private Dictionary<int, string> _playerSteamID = new Dictionary<int, string>();
 
     //BOLT
 
+    /*
     public override void OnEvent(LobbyCountdown evnt)
     {
         if (evnt.Time == 0)
@@ -36,27 +40,106 @@ public class TeamBattlePortraitsManager : GlobalEventListener
             }
         }
     }
+    */
+
+        /*
+         *
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            foreach (int player in _playerSteamID.Keys)
+            {
+                Debug.LogError("- Player ID : " + player + " - PlayerSteamID : " + _playerSteamID[player]);
+            }
+        }
+    }
+
+    public override void OnEvent(PlayerReady evnt)
+    {
+        if (!_playerSteamID.ContainsKey(evnt.PlayerID))
+        {
+            Debug.LogError("STEAM ID PlayerAllStats : " + evnt.SteamID);
+            _playerSteamID.Add(evnt.PlayerID, evnt.SteamID);
+        }
+    }
+
+        */
+
+        /*
+    public override void OnEvent(PlayerAllStats evnt)
+    {
+        if (!_playerSteamID.ContainsKey(evnt.PlayerID))
+        {
+            Debug.LogError("STEAM ID PlayerAllStats : " + evnt.SteamID);
+            _playerSteamID.Add(evnt.PlayerID, evnt.SteamID);
+        }
+    }
+
+    private void Start()
+    {
+        var serverID = SWExtensions.KartExtensions.GetMyKart().GetComponent<PlayerInfo>().OwnerID;
+        if (SteamManager.Initialized)
+        {
+            var steamID = "" + SteamUser.GetSteamID().m_SteamID;
+
+            if (!_playerSteamID.ContainsKey(serverID))
+            {
+                Debug.LogError("STEAM ID PlayerAllStats : " + serverID + "  " + steamID);
+                _playerSteamID.Add(serverID, steamID);
+            }
+        }
+    }
+    */
+
+    /*
+    public override void OnEvent(LobbyCountdown evnt)
+    {
+        if (BoltNetwork.IsServer && evnt.Time == 5)
+        {
+            var serverID = SWExtensions.KartExtensions.GetMyKart().GetComponent<PlayerInfo>().OwnerID;
+            if (!_playerSteamID.ContainsKey(serverID))
+            {
+                Debug.LogError("STEAM ID PlayerAllStats : " + serverID);
+                _playerSteamID.Add(serverID, "" + SteamUser.GetSteamID().m_SteamID);
+            }
+        }
+    }
+    */
+
 
     public override void OnEvent(ShareTeamBattlePortraitInfos evnt)
     {
-        foreach (GameObject portrait in _portraitsList)
+        if (evnt.RemovePlayer)
         {
-            var teamBattlePortraits = portrait.GetComponent<TeamBattlePortraits>();
-            if (teamBattlePortraits.PlayerBindedID == evnt.playerID)
+            RemovePortrait(evnt.playerID);
+        }
+        else if (evnt.AddPlayer || !_bindedPlayersID.Contains(evnt.playerID))
+        {
+            AddPortrait(evnt.playerID,evnt.SteamID);
+        }
+        else
+        {
+            foreach (GameObject portrait in _portraitsList)
             {
-                teamBattlePortraits.LifeCount = evnt.LifeCount;
-                teamBattlePortraits.SetLifeDisplay(evnt.LifeCount.ToString());
-                if (evnt.IsInJail)
+                var teamBattlePortraits = portrait.GetComponent<TeamBattlePortrait>();
+                if (teamBattlePortraits.PlayerBindedID == evnt.playerID)
                 {
-                    teamBattlePortraits.Jail(true);
-                }
-                else
-                {
-                    teamBattlePortraits.Jail(false);
-                }
-                if (evnt.IsDead)
-                {
-                    teamBattlePortraits.Kill();
+                    teamBattlePortraits.LifeCount = evnt.LifeCount;
+                    teamBattlePortraits.SetLifeDisplay(evnt.LifeCount);
+
+                    if (evnt.IsDead)
+                    {
+                        teamBattlePortraits.Kill();
+                    }
+                    else if (evnt.IsInJail)
+                    {
+                        teamBattlePortraits.Jail(true);
+                    }
+                    else
+                    {
+                        teamBattlePortraits.Jail(false);
+                    }
                 }
             }
         }
@@ -68,7 +151,7 @@ public class TeamBattlePortraitsManager : GlobalEventListener
     {
         foreach (GameObject portrait in _portraitsList)
         {
-            var teamBattlePortraits = portrait.GetComponent<TeamBattlePortraits>();
+            var teamBattlePortraits = portrait.GetComponent<TeamBattlePortrait>();
             if (teamBattlePortraits.PlayerBindedID == playerID)
             {
                 teamBattlePortraits.PlayerBindedID = 0;
@@ -79,14 +162,25 @@ public class TeamBattlePortraitsManager : GlobalEventListener
         }
     }
 
-    public void AddPortrait(int playerID)
+    public void AddPortrait(int playerID, string steamID)
     {
         var playerInfo = SWExtensions.KartExtensions.GetKartWithID(playerID).GetComponent<PlayerInfo>();
         foreach (GameObject portrait in _portraitsList)
         {
-            var teamBattlePortraits = portrait.GetComponent<TeamBattlePortraits>();
-            if (teamBattlePortraits.PortraitTeam == playerInfo.Team && teamBattlePortraits.IsAlreadyBinded == false && !_bindedPlayersID.Contains(playerInfo.OwnerID))
+            var teamBattlePortraits = portrait.GetComponent<TeamBattlePortrait>();
+            if (teamBattlePortraits.PortraitTeam == playerInfo.Team
+                && teamBattlePortraits.IsAlreadyBinded == false
+                && !_bindedPlayersID.Contains(playerInfo.OwnerID))
             {
+                if (SteamManager.Initialized)
+                {
+                //    if (_playerSteamID.ContainsKey(playerID))
+                //    {
+                        teamBattlePortraits.SteamID = new CSteamID() { m_SteamID = Convert.ToUInt64(steamID) };
+                        teamBattlePortraits.UpdateAvatar(teamBattlePortraits.SteamID);
+                 //   }
+                }
+
                 teamBattlePortraits.PlayerBindedID = playerInfo.OwnerID;
                 teamBattlePortraits.Jail(false);
                 teamBattlePortraits.IsAlreadyBinded = true;
