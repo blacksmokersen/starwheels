@@ -11,6 +11,7 @@ namespace Gamemodes
     {
         public TeamBattleSettings TeamBattleSettings;
         [SerializeField] private GameObject _teamBattlePortraitManager;
+        [SerializeField] private GameObject _teamBattleLifeDisplay;
 
         [SerializeField] Transform _redTeamJailPosition;
         [SerializeField] Transform _blueTeamJailPosition;
@@ -33,6 +34,7 @@ namespace Gamemodes
         private void Start()
         {
             _teamBattlePortraitManager.SetActive(true);
+            _teamBattleLifeDisplay.SetActive(true);
         }
 
         private void Update()
