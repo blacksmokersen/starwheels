@@ -137,7 +137,11 @@ namespace SW.Matchmaking
                     }
                     else if (evnt.PlayerActualTeam.ToTeam() != Team.Blue)
                     {
-                        if (_blueTeamList.Count <= 2)
+                        if (_blueTeamList.Count >= 1 && _redTeamList.Count == 0)
+                        {
+                            _redTeamList.Add(evnt.PlayerNickname, 3);
+                        }
+                        else if (_blueTeamList.Count <= 2)
                         {
                             _blueTeamList.Add(evnt.PlayerNickname, 2);
                             team = 2;
