@@ -9,6 +9,9 @@ namespace Gamemodes
 {
     public class TeamBattleServerRules : GamemodeBase
     {
+        [Header("Disable Win Condition")]
+        public bool DisableWinCondition;
+
         public TeamBattleSettings TeamBattleSettings;
         [SerializeField] private GameObject _teamBattlePortraitManager;
         [SerializeField] private GameObject _teamBattleLifeDisplay;
@@ -77,7 +80,8 @@ namespace Gamemodes
                 }
                 if (_gameStarted)
                 {
-                    CheckWiningCondition();
+                    if (!DisableWinCondition)
+                        CheckWiningCondition();
                 }
             }
         }
