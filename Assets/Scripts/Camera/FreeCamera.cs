@@ -24,6 +24,7 @@ namespace CameraUtils
         [SerializeField] private float _backwardSpeed;
         [SerializeField] private float _maximalDistance = 150.0f;
         [SerializeField] private float _maximalHeigh = 50.0f;
+        [SerializeField] private float _minimalHeigh = 50.0f;
         [SerializeField] private float _rayDist = 1.0f;
         [SerializeField] private LayerMask _rayMask;
 
@@ -73,27 +74,27 @@ namespace CameraUtils
                 {
                     transform.Translate(Vector3.forward * Input.GetAxis(Constants.Input.UpAndDownAxis) * _forwardSpeed);
                     transform.Translate(Vector3.right * Input.GetAxis(Constants.Input.TurnAxis) * _horizontalSpeed);
-                    //transform.Translate(Vector3.up * Input.GetAxis(Constants.Input.Accelerate) * _verticalSpeed);
-                    transform.Translate(Vector3.down * Input.GetAxis(Constants.Input.Triggers) * _verticalSpeed);
+                    transform.Translate(Vector3.up * Input.GetAxis(Constants.Input.StickTiggersUp) * _verticalSpeed);
+                    transform.Translate(Vector3.down * Input.GetAxis(Constants.Input.StickTiggersDown) * _verticalSpeed);
 
                     if (Input.GetAxis(Constants.Input.UpAndDownAxis) == 0)
                     {
-                        if (Input.GetKeyDown(KeyCode.Z))
+                        if (Input.GetKey(KeyCode.Z))
                         {
                             transform.Translate(Vector3.forward * _forwardSpeed);
                         }
-                        if (Input.GetKeyDown(KeyCode.S))
+                        if (Input.GetKey(KeyCode.S))
                         {
                             transform.Translate(Vector3.back * _forwardSpeed);
                         }
                     }
                     if (Input.GetAxis(Constants.Input.TurnAxis) == 0)
                     {
-                        if (Input.GetKeyDown(KeyCode.A))
+                        if (Input.GetKey(KeyCode.A))
                         {
                             transform.Translate(Vector3.left * _forwardSpeed);
                         }
-                        if (Input.GetKeyDown(KeyCode.E))
+                        if (Input.GetKey(KeyCode.E))
                         {
                             transform.Translate(Vector3.right * _forwardSpeed);
                         }
@@ -101,7 +102,7 @@ namespace CameraUtils
 
                     if (Input.GetAxis(Constants.Input.Accelerate) == 0)
                     {
-                        if (Input.GetKeyDown(KeyCode.Space))
+                        if (Input.GetKey(KeyCode.Space))
                         {
                             transform.Translate(Vector3.up * _verticalSpeed);
                         }
@@ -109,7 +110,7 @@ namespace CameraUtils
 
                     if (Input.GetAxis(Constants.Input.Decelerate) == 0)
                     {
-                        if (Input.GetKeyDown(KeyCode.LeftShift))
+                        if (Input.GetKey(KeyCode.LeftShift))
                         {
                             transform.Translate(Vector3.down * _verticalSpeed);
                         }
@@ -137,6 +138,10 @@ namespace CameraUtils
                 if (transform.position.y > _maximalHeigh)
                 {
                     transform.position = new Vector3(transform.position.x, _maximalHeigh, transform.position.z );
+                }
+                else if (transform.position.y < -_minimalHeigh)
+                {
+                    transform.position = new Vector3(transform.position.x, -_minimalHeigh, transform.position.z);
                 }
             }
         }
