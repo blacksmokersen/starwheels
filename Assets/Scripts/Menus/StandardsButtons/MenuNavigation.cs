@@ -119,12 +119,12 @@ namespace Menu.Options
                 {
                     if (Input.GetAxis("Horizontal") > 0 || Input.GetAxis("HorizontalArrows") > 0)
                     {
-                        ChangeMenuPosition(-1);
+                        ChangeMenuPosition(1);
                         _canMove = false;
                     }
                     if (Input.GetAxis("Horizontal") < 0 || Input.GetAxis("HorizontalArrows") < 0)
                     {
-                        ChangeMenuPosition(1);
+                        ChangeMenuPosition(-1);
                         _canMove = false;
                     }
                 }
