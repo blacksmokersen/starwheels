@@ -30,7 +30,7 @@ public class TeamBattlePortrait : GlobalEventListener
     {
         if (SteamManager.Initialized)
         {
-            //   _avatarLoadedCallback = Callback<AvatarImageLoaded_t>.Create(OnAvatarLoaded);
+            _avatarLoadedCallback = Callback<AvatarImageLoaded_t>.Create(OnAvatarLoaded);
         }
     }
 
@@ -63,7 +63,7 @@ public class TeamBattlePortrait : GlobalEventListener
         _avatarImage.sprite = Sprite.Create(avatarTexture, rect, pivot);
     }
 
-    /*
+
     private void OnAvatarLoaded(AvatarImageLoaded_t result)
     {
         if (result.m_steamID == SteamID)
@@ -71,7 +71,6 @@ public class TeamBattlePortrait : GlobalEventListener
             SetAvatarImage(result.m_iImage);
         }
     }
-    */
 
     public void SetLifeDisplay(int lifeCount)
     {
