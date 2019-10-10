@@ -57,7 +57,10 @@ public class TeamBattlePlayersObserver : GlobalEventListener
         }
         if (Input.GetKeyDown(KeyCode.Keypad3))
         {
-            DecreasePlayerHealth(0);
+            foreach (int player in _playerSteamID.Keys)
+            {
+                Debug.LogError("- Player ID : " + player + " - PlayerSteamID : " + _playerSteamID[player]);
+            }
         }
         if (Input.GetKeyDown(KeyCode.Keypad4))
         {
