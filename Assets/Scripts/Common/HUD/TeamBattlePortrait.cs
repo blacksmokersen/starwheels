@@ -24,26 +24,18 @@ public class TeamBattlePortrait : GlobalEventListener
     [SerializeField] private Sprite[] _lifesprites;
 
     private int _avatar = -1;
-    private Callback<AvatarImageLoaded_t> _avatarLoadedCallback;
+   // private Callback<AvatarImageLoaded_t> _avatarLoadedCallback;
 
     private void Awake()
     {
+        /*
         if (SteamManager.Initialized)
         {
             _avatarLoadedCallback = Callback<AvatarImageLoaded_t>.Create(OnAvatarLoaded);
         }
+        */
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Keypad2))
-        {
-            //  Debug.LogError("PLAYER ID : " + PlayerBindedID + " PLAYER STEAMID : " + SteamID);
-            //  StartCoroutine(refreshAvatars());
-            Debug.LogError(_avatar);
-            SetAvatarImage(_avatar);
-        }
-    }
 
     private void Start()
     {
@@ -51,12 +43,27 @@ public class TeamBattlePortrait : GlobalEventListener
         StartCoroutine(refreshAvatars());
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad2))
+        {
+              Debug.LogError("PLAYER ID : " + PlayerBindedID + " PLAYER STEAMID : " + SteamID);
+              StartCoroutine(refreshAvatars());
+            /*
+            Debug.LogError(_avatar);
+            SetAvatarImage(_avatar);
+            */
+        }
+    }
+
+
+
     public void UpdateAvatar(CSteamID steamUserID)
     {
         Debug.LogError("STEAM ID : " + steamUserID);
         if (SteamManager.Initialized)
         {
-            _avatar = SteamFriends.GetSmallFriendAvatar(steamUserID);
+            _avatar = SteamFriends.GetLargeFriendAvatar(steamUserID);
             if (_avatar > 0)
             {
                 Debug.LogError("SET AVATAR : " + _avatar);
@@ -76,7 +83,7 @@ public class TeamBattlePortrait : GlobalEventListener
         _avatarImage.sprite = Sprite.Create(avatarTexture, rect, pivot);
     }
 
-
+    /*
     private void OnAvatarLoaded(AvatarImageLoaded_t result)
     {
         if (result.m_steamID == SteamID)
@@ -84,6 +91,7 @@ public class TeamBattlePortrait : GlobalEventListener
             SetAvatarImage(result.m_iImage);
         }
     }
+    */
 
     public void SetLifeDisplay(int lifeCount)
     {
