@@ -38,7 +38,7 @@ public class TeamBattlePortrait : GlobalEventListener
     {
         if (Input.GetKeyDown(KeyCode.Keypad2))
         {
-            Debug.LogError(SteamID);
+            Debug.LogError("PLAYER ID : " + PlayerBindedID + " PLAYER STEAMID : " +SteamID);
         }
     }
 
