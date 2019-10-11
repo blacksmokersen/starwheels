@@ -64,8 +64,11 @@ public class TeamBattlePlayersObserver : GlobalEventListener
         }
         if (Input.GetKeyDown(KeyCode.Keypad4))
         {
-            AddObservedPlayer(0);
-            CheckPlayerHealth(0);
+            if (BoltNetwork.IsServer)
+            {
+                SendInfoToDisplayOnHUD();
+                Debug.LogError("SendInfoToDisplayOnHUD");
+            }
         }
     }
 
