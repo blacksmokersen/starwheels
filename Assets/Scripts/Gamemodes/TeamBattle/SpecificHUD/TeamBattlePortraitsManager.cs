@@ -177,7 +177,7 @@ public class TeamBattlePortraitsManager : GlobalEventListener
                 //    if (_playerSteamID.ContainsKey(playerID))
                 //    {
                         teamBattlePortraits.SteamID = new CSteamID() { m_SteamID = Convert.ToUInt64(steamID) };
-                        teamBattlePortraits.UpdateAvatar(teamBattlePortraits.SteamID);
+                      //  teamBattlePortraits.UpdateAvatar(teamBattlePortraits.SteamID);
                  //   }
                 }
 
