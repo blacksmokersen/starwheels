@@ -48,6 +48,7 @@ public class TeamBattlePlayersObserver : GlobalEventListener
                 Debug.LogError("- Player ID : " + player + " - PlayerLifeCount : " + _playersLifeCount[player]);
             }
         }
+        /*
         if (Input.GetKeyDown(KeyCode.Keypad2))
         {
             foreach (int player in _playersInJail.Keys)
@@ -55,6 +56,7 @@ public class TeamBattlePlayersObserver : GlobalEventListener
                 Debug.LogError("- Player ID : " + player + " - Team : " + _playersInJail[player]);
             }
         }
+        */
         if (Input.GetKeyDown(KeyCode.Keypad3))
         {
             foreach (int player in _playerSteamID.Keys)

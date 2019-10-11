@@ -34,6 +34,14 @@ public class TeamBattlePortrait : GlobalEventListener
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            Debug.LogError(SteamID);
+        }
+    }
+
     private void Start()
     {
         _life.sprite = _lifesprites[5];
