@@ -38,8 +38,10 @@ public class TeamBattlePortrait : GlobalEventListener
     {
         if (Input.GetKeyDown(KeyCode.Keypad2))
         {
-            Debug.LogError("PLAYER ID : " + PlayerBindedID + " PLAYER STEAMID : " + SteamID);
-            StartCoroutine(refreshAvatars());
+            //  Debug.LogError("PLAYER ID : " + PlayerBindedID + " PLAYER STEAMID : " + SteamID);
+            //  StartCoroutine(refreshAvatars());
+            Debug.LogError(_avatar);
+            SetAvatarImage(_avatar);
         }
     }
 
@@ -54,9 +56,10 @@ public class TeamBattlePortrait : GlobalEventListener
         Debug.LogError("STEAM ID : " + steamUserID);
         if (SteamManager.Initialized)
         {
-            _avatar = SteamFriends.GetLargeFriendAvatar(steamUserID);
+            _avatar = SteamFriends.GetSmallFriendAvatar(steamUserID);
             if (_avatar > 0)
             {
+                Debug.LogError("SET AVATAR : " + _avatar);
                 SetAvatarImage(_avatar);
             }
         }
@@ -111,8 +114,8 @@ public class TeamBattlePortrait : GlobalEventListener
     private IEnumerator refreshAvatars()
     {
         yield return new WaitForSeconds(3);
-        UpdateAvatar(SteamID);
         Debug.LogError(_avatar);
+        UpdateAvatar(SteamID);
     }
 
 
