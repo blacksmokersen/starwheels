@@ -38,13 +38,15 @@ public class TeamBattlePortrait : GlobalEventListener
     {
         if (Input.GetKeyDown(KeyCode.Keypad2))
         {
-            Debug.LogError("PLAYER ID : " + PlayerBindedID + " PLAYER STEAMID : " +SteamID);
+            Debug.LogError("PLAYER ID : " + PlayerBindedID + " PLAYER STEAMID : " + SteamID);
+            StartCoroutine(refreshAvatars());
         }
     }
 
     private void Start()
     {
         _life.sprite = _lifesprites[5];
+        StartCoroutine(refreshAvatars());
     }
 
     public void UpdateAvatar(CSteamID steamUserID)
@@ -105,4 +107,13 @@ public class TeamBattlePortrait : GlobalEventListener
     {
         _dead.SetActive(true);
     }
+
+    private IEnumerator refreshAvatars()
+    {
+        yield return new WaitForSeconds(3);
+        UpdateAvatar(SteamID);
+        Debug.LogError(_avatar);
+    }
+
+
 }
