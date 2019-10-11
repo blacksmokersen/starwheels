@@ -55,10 +55,6 @@ public class TeamBattlePlayersObserver : GlobalEventListener
                 Debug.LogError("- Player ID : " + player + " - Team : " + _playersInJail[player]);
             }
         }
-        if (Input.GetKeyDown(KeyCode.Keypad3))
-        {
-            DecreasePlayerHealth(0);
-        }
         if (Input.GetKeyDown(KeyCode.Keypad4))
         {
             AddObservedPlayer(0);

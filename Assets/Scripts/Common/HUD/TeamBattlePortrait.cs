@@ -52,6 +52,14 @@ public class TeamBattlePortrait : GlobalEventListener
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            Debug.LogError("- Player ID : " + PlayerBindedID + " - SteamID : " + PlayerBindedID + " AVATAR : " + _avatar);
+        }
+    }
+
     private void SetAvatarImage(int iImage)
     {
         //  _avatarPlaceholder.gameObject.SetActive(false);
