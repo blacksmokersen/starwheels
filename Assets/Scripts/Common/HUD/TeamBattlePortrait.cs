@@ -42,24 +42,24 @@ public class TeamBattlePortrait : GlobalEventListener
 
     IEnumerator  UpdateAvatar()
     {
-        Debug.LogError(_avatar + "  1 STEAM ID : " + SteamID);
+      //  Debug.LogError(_avatar + "  1 STEAM ID : " + SteamID);
         if (SteamManager.Initialized)
         {
             yield return new WaitForSeconds(1);
 
             SteamFriends.RequestUserInformation(SteamID, false);
-            Debug.LogError(_avatar + "  2 STEAM ID : " + SteamID);
+        //    Debug.LogError(_avatar + "  2 STEAM ID : " + SteamID);
 
             yield return new WaitForSeconds(1);
 
             _avatar = SteamFriends.GetLargeFriendAvatar(SteamID);
-            Debug.LogError(_avatar + "  3 STEAM ID : " + SteamID);
+         //   Debug.LogError(_avatar + "  3 STEAM ID : " + SteamID);
             yield return new WaitForSeconds(1);
-            Debug.LogError(_avatar + "  4 STEAM ID : " + SteamID);
+         //   Debug.LogError(_avatar + "  4 STEAM ID : " + SteamID);
             if (_avatar > 0)
             {
                 SetAvatarImage(_avatar);
-                Debug.LogError(_avatar + "  5 STEAM ID : " + SteamID);
+          //      Debug.LogError(_avatar + "  5 STEAM ID : " + SteamID);
             }
         }
     }
