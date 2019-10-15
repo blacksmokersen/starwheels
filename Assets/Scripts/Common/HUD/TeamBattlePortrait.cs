@@ -30,7 +30,7 @@ public class TeamBattlePortrait : GlobalEventListener
     {
         if (SteamManager.Initialized)
         {
-            //   _avatarLoadedCallback = Callback<AvatarImageLoaded_t>.Create(OnAvatarLoaded);
+            _avatarLoadedCallback = Callback<AvatarImageLoaded_t>.Create(OnAvatarLoaded);
         }
     }
 
@@ -40,26 +40,28 @@ public class TeamBattlePortrait : GlobalEventListener
         StartCoroutine(UpdateAvatar());
     }
 
-    IEnumerator  UpdateAvatar()
+    IEnumerator UpdateAvatar()
     {
-      //  Debug.LogError(_avatar + "  1 STEAM ID : " + SteamID);
         if (SteamManager.Initialized)
         {
-            yield return new WaitForSeconds(1);
-
             SteamFriends.RequestUserInformation(SteamID, false);
-        //    Debug.LogError(_avatar + "  2 STEAM ID : " + SteamID);
 
-            yield return new WaitForSeconds(1);
-
+            yield return new WaitForSeconds(0.5f);
             _avatar = SteamFriends.GetLargeFriendAvatar(SteamID);
-         //   Debug.LogError(_avatar + "  3 STEAM ID : " + SteamID);
-            yield return new WaitForSeconds(1);
-         //   Debug.LogError(_avatar + "  4 STEAM ID : " + SteamID);
+            yield return new WaitForSeconds(0.5f);
             if (_avatar > 0)
             {
                 SetAvatarImage(_avatar);
-          //      Debug.LogError(_avatar + "  5 STEAM ID : " + SteamID);
+            }
+
+            //DoubleAppel
+
+            yield return new WaitForSeconds(2f);
+            _avatar = SteamFriends.GetLargeFriendAvatar(SteamID);
+            yield return new WaitForSeconds(0.5f);
+            if (_avatar > 0)
+            {
+                SetAvatarImage(_avatar);
             }
         }
     }
@@ -83,7 +85,6 @@ public class TeamBattlePortrait : GlobalEventListener
         _avatarImage.sprite = Sprite.Create(avatarTexture, rect, pivot);
     }
 
-    /*
     private void OnAvatarLoaded(AvatarImageLoaded_t result)
     {
         if (result.m_steamID == SteamID)
@@ -91,7 +92,6 @@ public class TeamBattlePortrait : GlobalEventListener
             SetAvatarImage(result.m_iImage);
         }
     }
-    */
 
     public void SetLifeDisplay(int lifeCount)
     {
@@ -111,7 +111,6 @@ public class TeamBattlePortrait : GlobalEventListener
         {
             _jailed.SetActive(false);
         }
-
     }
 
     public void Kill()
