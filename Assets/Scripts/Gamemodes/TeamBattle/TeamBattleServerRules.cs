@@ -44,14 +44,22 @@ namespace Gamemodes
         {
             if (Input.GetKeyDown(KeyCode.Keypad1))
             {
-                //   RefreshAlivePlayers();
+                /*
                 foreach (int player in _alivePlayers.Keys)
                 {
                     Debug.LogError("Player ID : " + player + " Team : " + _alivePlayers[player]);
                 }
+                */
+
+                JailButtonPushed jailButtonPushed = JailButtonPushed.Create();
+                jailButtonPushed.Team = "Red";
+                jailButtonPushed.Send();
             }
             if (Input.GetKeyDown(KeyCode.Keypad5))
             {
+                GameObject playerKart = KartExtensions.GetMyKart();
+                SendPlayerToJail(playerKart.GetComponent<PlayerInfo>().OwnerID);
+                /*
                 GameObject playerKart = KartExtensions.GetMyKart();
 
                 PermanentDeath permanentdeath = PermanentDeath.Create();
@@ -61,6 +69,7 @@ namespace Gamemodes
                 permanentdeath.PlayerTeam = playerKart.GetComponent<PlayerInfo>().Team.ToString();
                 permanentdeath.PlayerTeam = playerKart.GetComponent<PlayerInfo>().Nickname;
                 permanentdeath.Send();
+                */
             }
         }
 
