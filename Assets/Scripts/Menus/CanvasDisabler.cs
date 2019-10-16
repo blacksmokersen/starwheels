@@ -51,7 +51,7 @@ public class CanvasDisabler : GlobalEventListener
     public override void OnEvent(PermanentDeath evnt)
     {
         if (evnt.PlayerEntity.IsOwner)
-            SwitchDisabler();
+            GetComponent<Canvas>().enabled = false;
     }
 
     //PUBLIC
