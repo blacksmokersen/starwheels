@@ -57,8 +57,13 @@ public class TeamBattlePlayersObserver : GlobalEventListener
         }
         if (Input.GetKeyDown(KeyCode.Keypad4))
         {
+            DecreasePlayerHealth(SWExtensions.KartExtensions.GetMyKart().GetComponent<PlayerInfo>().OwnerID);
+
+
+            /*
             AddObservedPlayer(0);
             CheckPlayerHealth(0);
+            */
         }
     }
 
