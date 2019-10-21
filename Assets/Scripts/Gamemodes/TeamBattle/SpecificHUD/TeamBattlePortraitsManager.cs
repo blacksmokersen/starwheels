@@ -114,7 +114,7 @@ public class TeamBattlePortraitsManager : GlobalEventListener
         {
             RemovePortrait(evnt.playerID);
         }
-        else if (evnt.AddPlayer || !_bindedPlayersID.Contains(evnt.playerID))
+        else if (evnt.AddPlayer && !_bindedPlayersID.Contains(evnt.playerID))
         {
             AddPortrait(evnt.playerID,evnt.SteamID);
         }
