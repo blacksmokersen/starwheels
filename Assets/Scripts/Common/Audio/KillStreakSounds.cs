@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Bolt;
+using TMPro;
 
 public class KillStreakSounds : GlobalEventListener
 {
     [SerializeField] private float _killStreakTimer;
     [SerializeField] private AudioClip[] _killStreakAudioclips;
+    [SerializeField] private GameObject[] _killStreakVisuals;
 
     private AudioSource _audioSource;
     private Dictionary<int, int> PlayerCumulativeScoreEntries = new Dictionary<int, int>();
@@ -28,6 +30,11 @@ public class KillStreakSounds : GlobalEventListener
         {
             _audioSource.clip = _killStreakAudioclips[6];
             _audioSource.Play();
+
+            _killStreakVisuals[6].GetComponentInChildren<TextMeshProUGUI>().text = evnt.KillerName;
+
+            _killStreakVisuals[6].SetActive(true);
+            DisableEventsVisuals(_killStreakVisuals[6], 3);
             _isFirstBloodOccured = true;
         }
 
@@ -39,7 +46,7 @@ public class KillStreakSounds : GlobalEventListener
         if (PlayerCumulativeScoreEntries.ContainsKey(evnt.KillerID))
         {
             AddCumulativeScore(evnt.KillerID);
-            CheckCumulativeScore(evnt.KillerID);
+            CheckCumulativeScore(evnt.KillerID, evnt.KillerName);
         }
         else
         {
@@ -50,12 +57,12 @@ public class KillStreakSounds : GlobalEventListener
 
     //PRIVATE
 
-    private void CheckCumulativeScore(int playerEntry)
+    private void CheckCumulativeScore(int playerEntry, string playerNickname)
     {
         if (PlayerCumulativeScoreEntries[playerEntry] >= 2 && Time.time - PlayerTimer[playerEntry] <= _killStreakTimer)
         {
             //  Debug.LogError("Set new Time - LastHit Was : " + (Time.time - PlayerTimer[playerEntry]));
-            PlayCumulativeAudioClip(PlayerCumulativeScoreEntries[playerEntry] - 2);
+            PlayCumulativeAudioClip(PlayerCumulativeScoreEntries[playerEntry] - 2, playerNickname);
             PlayerTimer[playerEntry] = Time.time;
         }
         else if(Time.time - PlayerTimer[playerEntry] > _killStreakTimer)
@@ -71,15 +78,29 @@ public class KillStreakSounds : GlobalEventListener
             PlayerCumulativeScoreEntries[playerEntry] += 1;
     }
 
-    private void PlayCumulativeAudioClip(int cumulativeScore)
+    private void PlayCumulativeAudioClip(int cumulativeScore, string playerNickname)
     {
         _audioSource.clip = _killStreakAudioclips[cumulativeScore];
         _audioSource.Play();
+
+        foreach(GameObject go in _killStreakVisuals)
+        {
+            go.SetActive(false);
+        }
+        _killStreakVisuals[cumulativeScore].GetComponentInChildren<TextMeshProUGUI>().text = playerNickname;
+        _killStreakVisuals[cumulativeScore].SetActive(true);
+        DisableEventsVisuals(_killStreakVisuals[cumulativeScore], 3);
     }
 
     private void RemoveFromAllDictionnaries(int playerEntry)
     {
         PlayerCumulativeScoreEntries.Remove(playerEntry);
         PlayerTimer.Remove(playerEntry);
+    }
+
+    private IEnumerator DisableEventsVisuals(GameObject countdownGameobject, float timer)
+    {
+        yield return new WaitForSeconds(timer);
+        countdownGameobject.SetActive(false);
     }
 }
