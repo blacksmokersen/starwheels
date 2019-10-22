@@ -2514,7 +2514,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &237716266746863245
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2548,6 +2548,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _CountdownText: {fileID: 8007690759260085659}
+  _CountDown3: {fileID: 0}
+  _CountDown2: {fileID: 0}
+  _CountDown1: {fileID: 0}
+  _CountDownGO: {fileID: 0}
 --- !u!1 &2444967064168305695
 GameObject:
   m_ObjectHideFlags: 0
@@ -9193,6 +9197,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4584195154547584454}
     m_Modifications:
+    - target: {fileID: 2901331654066902671, guid: d34333d6d3089f04aa828d92cf1e4123,
+        type: 3}
+      propertyPath: m_Name
+      value: MapEntry
+      objectReference: {fileID: 0}
     - target: {fileID: 1181464142582746333, guid: d34333d6d3089f04aa828d92cf1e4123,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9298,11 +9307,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 2901331654066902671, guid: d34333d6d3089f04aa828d92cf1e4123,
-        type: 3}
-      propertyPath: m_Name
-      value: MapEntry
-      objectReference: {fileID: 0}
     - target: {fileID: 3253484262590627381, guid: d34333d6d3089f04aa828d92cf1e4123,
         type: 3}
       propertyPath: _choicesMap.Array.data[0].ChoicePanel
@@ -9360,21 +9364,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameModeEntry
       objectReference: {fileID: 0}
-    - target: {fileID: 1086955582044891351, guid: 53d0974cbb0d32541b10224b50bf2d3b,
-        type: 3}
-      propertyPath: _choicesMap.Array.data[0].ChoicePanel
-      value: 
-      objectReference: {fileID: 5934746381490569716}
-    - target: {fileID: 1086955582044891351, guid: 53d0974cbb0d32541b10224b50bf2d3b,
-        type: 3}
-      propertyPath: OnOptionChosen.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 3293308316707497806}
-    - target: {fileID: 1086955582044891351, guid: 53d0974cbb0d32541b10224b50bf2d3b,
-        type: 3}
-      propertyPath: OnOptionChosen.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 3027783885468095160}
     - target: {fileID: 3627211370063321663, guid: 53d0974cbb0d32541b10224b50bf2d3b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9480,6 +9469,21 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1086955582044891351, guid: 53d0974cbb0d32541b10224b50bf2d3b,
+        type: 3}
+      propertyPath: _choicesMap.Array.data[0].ChoicePanel
+      value: 
+      objectReference: {fileID: 5934746381490569716}
+    - target: {fileID: 1086955582044891351, guid: 53d0974cbb0d32541b10224b50bf2d3b,
+        type: 3}
+      propertyPath: OnOptionChosen.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3293308316707497806}
+    - target: {fileID: 1086955582044891351, guid: 53d0974cbb0d32541b10224b50bf2d3b,
+        type: 3}
+      propertyPath: OnOptionChosen.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 3027783885468095160}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53d0974cbb0d32541b10224b50bf2d3b, type: 3}
 --- !u!224 &4065742724845246331 stripped
@@ -9495,11 +9499,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6766786549476509968}
     m_Modifications:
-    - target: {fileID: 703256077007773947, guid: 459d529826462c145bdf7e502f5ef03b,
-        type: 3}
-      propertyPath: m_Group
-      value: 
-      objectReference: {fileID: 5309559418661951085}
     - target: {fileID: 2842760848207658361, guid: 459d529826462c145bdf7e502f5ef03b,
         type: 3}
       propertyPath: m_Name
@@ -9610,6 +9609,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 703256077007773947, guid: 459d529826462c145bdf7e502f5ef03b,
+        type: 3}
+      propertyPath: m_Group
+      value: 
+      objectReference: {fileID: 5309559418661951085}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 459d529826462c145bdf7e502f5ef03b, type: 3}
 --- !u!224 &9193946162494932862 stripped
@@ -9625,6 +9629,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3302327077063395531}
     m_Modifications:
+    - target: {fileID: 5988193009794287906, guid: 01cce867cfb3c40459ee5b6f3174d017,
+        type: 3}
+      propertyPath: m_Name
+      value: SkinBChoiceEntry
+      objectReference: {fileID: 0}
     - target: {fileID: 1904505197993575024, guid: 01cce867cfb3c40459ee5b6f3174d017,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9730,11 +9739,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 5988193009794287906, guid: 01cce867cfb3c40459ee5b6f3174d017,
-        type: 3}
-      propertyPath: m_Name
-      value: SkinBChoiceEntry
-      objectReference: {fileID: 0}
     - target: {fileID: 9055509132008019104, guid: 01cce867cfb3c40459ee5b6f3174d017,
         type: 3}
       propertyPath: m_Group
@@ -9755,6 +9759,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4584195154547584454}
     m_Modifications:
+    - target: {fileID: 4503652669935633618, guid: d53c5ec7add34124a9c709d6ddd11324,
+        type: 3}
+      propertyPath: m_Name
+      value: NextGameEntry
+      objectReference: {fileID: 0}
     - target: {fileID: 479297568270999168, guid: d53c5ec7add34124a9c709d6ddd11324,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9865,11 +9874,6 @@ PrefabInstance:
       propertyPath: OnOptionChosen.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 3027783885468095160}
-    - target: {fileID: 4503652669935633618, guid: d53c5ec7add34124a9c709d6ddd11324,
-        type: 3}
-      propertyPath: m_Name
-      value: NextGameEntry
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d53c5ec7add34124a9c709d6ddd11324, type: 3}
 --- !u!114 &2409783068647281032 stripped
@@ -10058,11 +10062,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: DMChoiceEntry
       objectReference: {fileID: 0}
-    - target: {fileID: 2710457837855482390, guid: c1f22d76771b2f24aabb91418be4b2b9,
-        type: 3}
-      propertyPath: m_Group
-      value: 
-      objectReference: {fileID: 5309559418661951085}
     - target: {fileID: 4780839260509091014, guid: c1f22d76771b2f24aabb91418be4b2b9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10168,6 +10167,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2710457837855482390, guid: c1f22d76771b2f24aabb91418be4b2b9,
+        type: 3}
+      propertyPath: m_Group
+      value: 
+      objectReference: {fileID: 5309559418661951085}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1f22d76771b2f24aabb91418be4b2b9, type: 3}
 --- !u!224 &6386526602033565567 stripped
@@ -10195,21 +10199,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4584195154547584454}
     m_Modifications:
-    - target: {fileID: 1363051975673366838, guid: aac76d7e7b59067468c2ebd301787bae,
-        type: 3}
-      propertyPath: _choicesMap.Array.data[0].ChoicePanel
-      value: 
-      objectReference: {fileID: 2520888510014038404}
-    - target: {fileID: 1363051975673366838, guid: aac76d7e7b59067468c2ebd301787bae,
-        type: 3}
-      propertyPath: OnOptionChosen.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 3027783885468095160}
-    - target: {fileID: 1363051975673366838, guid: aac76d7e7b59067468c2ebd301787bae,
-        type: 3}
-      propertyPath: OnOptionChosen.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 2409783068647281032}
     - target: {fileID: 1697755880125063564, guid: aac76d7e7b59067468c2ebd301787bae,
         type: 3}
       propertyPath: m_Name
@@ -10320,6 +10309,21 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1363051975673366838, guid: aac76d7e7b59067468c2ebd301787bae,
+        type: 3}
+      propertyPath: _choicesMap.Array.data[0].ChoicePanel
+      value: 
+      objectReference: {fileID: 2520888510014038404}
+    - target: {fileID: 1363051975673366838, guid: aac76d7e7b59067468c2ebd301787bae,
+        type: 3}
+      propertyPath: OnOptionChosen.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3027783885468095160}
+    - target: {fileID: 1363051975673366838, guid: aac76d7e7b59067468c2ebd301787bae,
+        type: 3}
+      propertyPath: OnOptionChosen.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 2409783068647281032}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aac76d7e7b59067468c2ebd301787bae, type: 3}
 --- !u!114 &914330315722603462 stripped
@@ -11628,11 +11632,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: DistrictChoiceEntry
       objectReference: {fileID: 0}
-    - target: {fileID: 2501011171310847201, guid: 3ad6d041f9178f446852ce7c8207b9f9,
-        type: 3}
-      propertyPath: m_Group
-      value: 
-      objectReference: {fileID: 5309559418661951085}
     - target: {fileID: 5003754925737005617, guid: 3ad6d041f9178f446852ce7c8207b9f9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11738,6 +11737,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2501011171310847201, guid: 3ad6d041f9178f446852ce7c8207b9f9,
+        type: 3}
+      propertyPath: m_Group
+      value: 
+      objectReference: {fileID: 5309559418661951085}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ad6d041f9178f446852ce7c8207b9f9, type: 3}
 --- !u!224 &1323482826504329251 stripped
@@ -11753,6 +11757,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8562263179998038320}
     m_Modifications:
+    - target: {fileID: 6078782380583493206, guid: d617d98b64548444abaec12b23409f91,
+        type: 3}
+      propertyPath: m_Name
+      value: ComplexChoiceEntry
+      objectReference: {fileID: 0}
     - target: {fileID: 2101018207448716548, guid: d617d98b64548444abaec12b23409f91,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11858,11 +11867,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6078782380583493206, guid: d617d98b64548444abaec12b23409f91,
-        type: 3}
-      propertyPath: m_Name
-      value: ComplexChoiceEntry
-      objectReference: {fileID: 0}
     - target: {fileID: 8857973662640620500, guid: d617d98b64548444abaec12b23409f91,
         type: 3}
       propertyPath: m_Group
@@ -11883,6 +11887,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5462023631277124942}
     m_Modifications:
+    - target: {fileID: 2232543419850705475, guid: 451b231868d668c4c8ae248736f69e54,
+        type: 3}
+      propertyPath: m_Name
+      value: SelectionMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446346068778353026, guid: 451b231868d668c4c8ae248736f69e54,
+        type: 3}
+      propertyPath: m_Name
+      value: Jump
+      objectReference: {fileID: 0}
     - target: {fileID: 7630762205224513606, guid: 451b231868d668c4c8ae248736f69e54,
         type: 3}
       propertyPath: m_Navigation.m_Mode
@@ -11899,46 +11913,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3893455731170591756}
     - target: {fileID: 7630762205224513606, guid: 451b231868d668c4c8ae248736f69e54,
-        type: 3}
-      propertyPath: m_Group
-      value: 
-      objectReference: {fileID: 5309559418661951085}
-    - target: {fileID: 6253296580193059031, guid: 451b231868d668c4c8ae248736f69e54,
-        type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6253296580193059031, guid: 451b231868d668c4c8ae248736f69e54,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnLeft
-      value: 
-      objectReference: {fileID: 3893455731170591756}
-    - target: {fileID: 6253296580193059031, guid: 451b231868d668c4c8ae248736f69e54,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnRight
-      value: 
-      objectReference: {fileID: 659091850191751262}
-    - target: {fileID: 6253296580193059031, guid: 451b231868d668c4c8ae248736f69e54,
-        type: 3}
-      propertyPath: m_Group
-      value: 
-      objectReference: {fileID: 5309559418661951085}
-    - target: {fileID: 6253296579626351636, guid: 451b231868d668c4c8ae248736f69e54,
-        type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6253296579626351636, guid: 451b231868d668c4c8ae248736f69e54,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnLeft
-      value: 
-      objectReference: {fileID: 659091850191751262}
-    - target: {fileID: 6253296579626351636, guid: 451b231868d668c4c8ae248736f69e54,
-        type: 3}
-      propertyPath: m_Navigation.m_SelectOnRight
-      value: 
-      objectReference: {fileID: 3893455730471631055}
-    - target: {fileID: 6253296579626351636, guid: 451b231868d668c4c8ae248736f69e54,
         type: 3}
       propertyPath: m_Group
       value: 
@@ -12048,16 +12022,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 4446346068778353026, guid: 451b231868d668c4c8ae248736f69e54,
-        type: 3}
-      propertyPath: m_Name
-      value: Jump
-      objectReference: {fileID: 0}
-    - target: {fileID: 2232543419850705475, guid: 451b231868d668c4c8ae248736f69e54,
-        type: 3}
-      propertyPath: m_Name
-      value: SelectionMenu
-      objectReference: {fileID: 0}
     - target: {fileID: 7633376289897949700, guid: 451b231868d668c4c8ae248736f69e54,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -12068,6 +12032,46 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 330.7
       objectReference: {fileID: 0}
+    - target: {fileID: 6253296580193059031, guid: 451b231868d668c4c8ae248736f69e54,
+        type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6253296580193059031, guid: 451b231868d668c4c8ae248736f69e54,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 3893455731170591756}
+    - target: {fileID: 6253296580193059031, guid: 451b231868d668c4c8ae248736f69e54,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 659091850191751262}
+    - target: {fileID: 6253296580193059031, guid: 451b231868d668c4c8ae248736f69e54,
+        type: 3}
+      propertyPath: m_Group
+      value: 
+      objectReference: {fileID: 5309559418661951085}
+    - target: {fileID: 6253296579626351636, guid: 451b231868d668c4c8ae248736f69e54,
+        type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6253296579626351636, guid: 451b231868d668c4c8ae248736f69e54,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 659091850191751262}
+    - target: {fileID: 6253296579626351636, guid: 451b231868d668c4c8ae248736f69e54,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 3893455730471631055}
+    - target: {fileID: 6253296579626351636, guid: 451b231868d668c4c8ae248736f69e54,
+        type: 3}
+      propertyPath: m_Group
+      value: 
+      objectReference: {fileID: 5309559418661951085}
     - target: {fileID: 6251830376750193301, guid: 451b231868d668c4c8ae248736f69e54,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -12482,6 +12486,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7670925374498383870}
     m_Modifications:
+    - target: {fileID: 6078782380583493206, guid: d617d98b64548444abaec12b23409f91,
+        type: 3}
+      propertyPath: m_Name
+      value: ComplexChoiceEntry
+      objectReference: {fileID: 0}
     - target: {fileID: 2101018207448716548, guid: d617d98b64548444abaec12b23409f91,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12587,11 +12596,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6078782380583493206, guid: d617d98b64548444abaec12b23409f91,
-        type: 3}
-      propertyPath: m_Name
-      value: ComplexChoiceEntry
-      objectReference: {fileID: 0}
     - target: {fileID: 8857973662640620500, guid: d617d98b64548444abaec12b23409f91,
         type: 3}
       propertyPath: m_Group
@@ -12617,11 +12621,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SkinAChoiceEntry
       objectReference: {fileID: 0}
-    - target: {fileID: 3388538226423069003, guid: 8c7400ed22d5e7c47a93dc5363454030,
-        type: 3}
-      propertyPath: m_Group
-      value: 
-      objectReference: {fileID: 5309559418661951085}
     - target: {fileID: 5243044701445648283, guid: 8c7400ed22d5e7c47a93dc5363454030,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12727,6 +12726,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3388538226423069003, guid: 8c7400ed22d5e7c47a93dc5363454030,
+        type: 3}
+      propertyPath: m_Group
+      value: 
+      objectReference: {fileID: 5309559418661951085}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c7400ed22d5e7c47a93dc5363454030, type: 3}
 --- !u!224 &2349931473623023948 stripped
@@ -12747,11 +12751,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: DistrictChoiceEntry
       objectReference: {fileID: 0}
-    - target: {fileID: 2501011171310847201, guid: 3ad6d041f9178f446852ce7c8207b9f9,
-        type: 3}
-      propertyPath: m_Group
-      value: 
-      objectReference: {fileID: 5309559418661951085}
     - target: {fileID: 5003754925737005617, guid: 3ad6d041f9178f446852ce7c8207b9f9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12857,6 +12856,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2501011171310847201, guid: 3ad6d041f9178f446852ce7c8207b9f9,
+        type: 3}
+      propertyPath: m_Group
+      value: 
+      objectReference: {fileID: 5309559418661951085}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ad6d041f9178f446852ce7c8207b9f9, type: 3}
 --- !u!224 &3224960940086744460 stripped
@@ -12872,6 +12876,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6766786549476509968}
     m_Modifications:
+    - target: {fileID: 5877214608085352992, guid: 8d9887a455917494cbca6d3eb88efffc,
+        type: 3}
+      propertyPath: m_Name
+      value: TotemChoiceEntry
+      objectReference: {fileID: 0}
     - target: {fileID: 1793685269437008242, guid: 8d9887a455917494cbca6d3eb88efffc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12976,11 +12985,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5877214608085352992, guid: 8d9887a455917494cbca6d3eb88efffc,
-        type: 3}
-      propertyPath: m_Name
-      value: TotemChoiceEntry
       objectReference: {fileID: 0}
     - target: {fileID: 9160879983748112290, guid: 8d9887a455917494cbca6d3eb88efffc,
         type: 3}
