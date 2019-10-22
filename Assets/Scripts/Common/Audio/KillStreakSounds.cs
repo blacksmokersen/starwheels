@@ -3,12 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using Bolt;
 using TMPro;
+using SWExtensions;
+using Multiplayer;
 
 public class KillStreakSounds : GlobalEventListener
 {
     [SerializeField] private float _killStreakTimer;
     [SerializeField] private AudioClip[] _killStreakAudioclips;
     [SerializeField] private GameObject[] _killStreakVisuals;
+
+    [SerializeField] private GameObject _threeKillsRemainingVisual;
+    [SerializeField] private GameObject _isPutInJailVisual;
+    [SerializeField] private GameObject _blueJailOpenVisual;
+    [SerializeField] private GameObject _redJailOpenVisual;
 
     private AudioSource _audioSource;
     private Dictionary<int, int> PlayerCumulativeScoreEntries = new Dictionary<int, int>();
@@ -53,6 +60,39 @@ public class KillStreakSounds : GlobalEventListener
             PlayerCumulativeScoreEntries.Add(evnt.KillerID, 1);
             PlayerTimer.Add(evnt.KillerID, Time.time);
         }
+    }
+
+    public override void OnEvent(ScoreIncreased evnt)
+    {
+        if (evnt.Score == 13)
+        {
+            _threeKillsRemainingVisual.SetActive(true);
+            DisableEventsVisuals(_threeKillsRemainingVisual, 3);
+        }
+    }
+        public override void OnEvent(JailButtonPushed evnt)
+    {
+        if(evnt.Team == "Blue")
+        {
+            _blueJailOpenVisual.SetActive(true);
+            DisableEventsVisuals(_blueJailOpenVisual, 3);
+        }
+        else
+        {
+            _redJailOpenVisual.SetActive(true);
+            DisableEventsVisuals(_redJailOpenVisual, 3);
+        }
+    }
+
+    public override void OnEvent(KartForcedToJail evnt)
+    {
+        _isPutInJailVisual.SetActive(false);
+
+        GameObject kart = KartExtensions.GetKartWithID(evnt.PlayerID);
+        _isPutInJailVisual.GetComponentInChildren<TextMeshProUGUI>().text = kart.GetComponent<PlayerInfo>().Nickname;
+
+        _isPutInJailVisual.SetActive(true);
+        DisableEventsVisuals(_redJailOpenVisual, 3);
     }
 
     //PRIVATE
