@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3292007168337276753}
   - component: {fileID: 162707990212340262}
+  - component: {fileID: 200522235}
   m_Layer: 8
   m_Name: socle-plateform_prefab
-  m_TagString: Untagged
+  m_TagString: ToDisableOnJailGamemode
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,6 +54,25 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300008, guid: 707b259c94281144cb54d4c0deabb3c6, type: 3}
+--- !u!95 &200522235
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3292007168337769329}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a8cff3e883928bc4395a5536c57a64d8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &78784698654470045
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -223,7 +243,7 @@ PrefabInstance:
     - target: {fileID: 564780679707057148, guid: cc9994b3c8feb624d8713d61343511b8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 27
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 564780679707057148, guid: cc9994b3c8feb624d8713d61343511b8,
         type: 3}
@@ -268,26 +288,6 @@ PrefabInstance:
     - target: {fileID: 564780679707057148, guid: cc9994b3c8feb624d8713d61343511b8,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1814996481746939825, guid: cc9994b3c8feb624d8713d61343511b8,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1814996481746939825, guid: cc9994b3c8feb624d8713d61343511b8,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -9.96
-      objectReference: {fileID: 0}
-    - target: {fileID: 1814996481746939825, guid: cc9994b3c8feb624d8713d61343511b8,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1814996481746939825, guid: cc9994b3c8feb624d8713d61343511b8,
-        type: 3}
-      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
