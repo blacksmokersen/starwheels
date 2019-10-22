@@ -41,7 +41,7 @@ public class KillStreakSounds : GlobalEventListener
             _killStreakVisuals[6].GetComponentInChildren<TextMeshProUGUI>().text = evnt.KillerName;
 
             _killStreakVisuals[6].SetActive(true);
-            DisableEventsVisuals(_killStreakVisuals[6], 3);
+            StartCoroutine(DisableEventsVisuals(_killStreakVisuals[6], 3));
             _isFirstBloodOccured = true;
         }
 
@@ -67,7 +67,7 @@ public class KillStreakSounds : GlobalEventListener
         if (evnt.Score == 13)
         {
             _threeKillsRemainingVisual.SetActive(true);
-            DisableEventsVisuals(_threeKillsRemainingVisual, 3);
+            StartCoroutine(DisableEventsVisuals(_threeKillsRemainingVisual, 3));
         }
     }
         public override void OnEvent(JailButtonPushed evnt)
@@ -75,12 +75,12 @@ public class KillStreakSounds : GlobalEventListener
         if(evnt.Team == "Blue")
         {
             _blueJailOpenVisual.SetActive(true);
-            DisableEventsVisuals(_blueJailOpenVisual, 3);
+            StartCoroutine(DisableEventsVisuals(_blueJailOpenVisual, 3));
         }
         else
         {
             _redJailOpenVisual.SetActive(true);
-            DisableEventsVisuals(_redJailOpenVisual, 3);
+            StartCoroutine(DisableEventsVisuals(_redJailOpenVisual, 3));
         }
     }
 
@@ -92,7 +92,7 @@ public class KillStreakSounds : GlobalEventListener
         _isPutInJailVisual.GetComponentInChildren<TextMeshProUGUI>().text = kart.GetComponent<PlayerInfo>().Nickname;
 
         _isPutInJailVisual.SetActive(true);
-        DisableEventsVisuals(_redJailOpenVisual, 3);
+        StartCoroutine(DisableEventsVisuals(_redJailOpenVisual, 3));
     }
 
     //PRIVATE
@@ -129,7 +129,7 @@ public class KillStreakSounds : GlobalEventListener
         }
         _killStreakVisuals[cumulativeScore].GetComponentInChildren<TextMeshProUGUI>().text = playerNickname;
         _killStreakVisuals[cumulativeScore].SetActive(true);
-        DisableEventsVisuals(_killStreakVisuals[cumulativeScore], 3);
+        StartCoroutine(DisableEventsVisuals(_killStreakVisuals[cumulativeScore], 3));
     }
 
     private void RemoveFromAllDictionnaries(int playerEntry)

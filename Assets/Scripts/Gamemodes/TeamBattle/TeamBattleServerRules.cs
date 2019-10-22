@@ -37,7 +37,7 @@ namespace Gamemodes
         private void Start()
         {
             _teamBattlePortraitManager.SetActive(true);
-            _teamBattleLifeDisplay.SetActive(true);
+          //  _teamBattleLifeDisplay.SetActive(true);
         }
 
         private void Update()

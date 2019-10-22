@@ -18,22 +18,22 @@ public class CountDownDisplayer : GlobalEventListener
         if (evnt.Time == 3)
         {
             _CountDown3.SetActive(true);
-            DisableCountDown(_CountDown3,1.1f);
+            StartCoroutine(DisableCountDown(_CountDown3,1.1f));
         }
         if (evnt.Time == 2)
         {
             _CountDown2.SetActive(true);
-            DisableCountDown(_CountDown2, 1.1f);
+            StartCoroutine(DisableCountDown(_CountDown2, 1.1f));
         }
         if (evnt.Time == 1)
         {
             _CountDown1.SetActive(true);
-            DisableCountDown(_CountDown1, 1.1f);
+            StartCoroutine(DisableCountDown(_CountDown1, 1.1f));
         }
         if (evnt.Time == 0)
         {
             _CountDownGO.SetActive(true);
-            DisableCountDown(_CountDownGO, 1.1f);
+            StartCoroutine(DisableCountDown(_CountDownGO, 1.1f));
         }
 
         /*
