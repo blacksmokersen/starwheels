@@ -40,16 +40,17 @@ namespace Gamemodes
           //  _teamBattleLifeDisplay.SetActive(true);
         }
 
+        /*
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Keypad1))
             {
-                /*
-                foreach (int player in _alivePlayers.Keys)
-                {
-                    Debug.LogError("Player ID : " + player + " Team : " + _alivePlayers[player]);
-                }
-                */
+
+                //foreach (int player in _alivePlayers.Keys)
+                //{
+                //   Debug.LogError("Player ID : " + player + " Team : " + _alivePlayers[player]);
+                //}
+
 
                 JailButtonPushed jailButtonPushed = JailButtonPushed.Create();
                 jailButtonPushed.Team = "Red";
@@ -59,19 +60,19 @@ namespace Gamemodes
             {
                 GameObject playerKart = KartExtensions.GetMyKart();
                 SendPlayerToJail(playerKart.GetComponent<PlayerInfo>().OwnerID);
-                /*
-                GameObject playerKart = KartExtensions.GetMyKart();
 
-                PermanentDeath permanentdeath = PermanentDeath.Create();
-                permanentdeath.PlayerEntity = playerKart.GetComponent<BoltEntity>();
-                permanentdeath.TimeBeforeDeath = 0;
-                permanentdeath.PlayerID = playerKart.GetComponent<PlayerInfo>().OwnerID;
-                permanentdeath.PlayerTeam = playerKart.GetComponent<PlayerInfo>().Team.ToString();
-                permanentdeath.PlayerTeam = playerKart.GetComponent<PlayerInfo>().Nickname;
-                permanentdeath.Send();
-                */
+                //GameObject playerKart = KartExtensions.GetMyKart();
+                //PermanentDeath permanentdeath = PermanentDeath.Create();
+                //permanentdeath.PlayerEntity = playerKart.GetComponent<BoltEntity>();
+                //permanentdeath.TimeBeforeDeath = 0;
+                //permanentdeath.PlayerID = playerKart.GetComponent<PlayerInfo>().OwnerID;
+                //permanentdeath.PlayerTeam = playerKart.GetComponent<PlayerInfo>().Team.ToString();
+                //permanentdeath.PlayerTeam = playerKart.GetComponent<PlayerInfo>().Nickname;
+                //permanentdeath.Send();
+
             }
         }
+        */
 
         //PUBLIC
 
@@ -144,13 +145,13 @@ namespace Gamemodes
             {
                 kart.transform.position = _blueTeamJailPosition.position;
                 kart.transform.rotation = _blueTeamJailPosition.rotation;
-                Debug.LogError("Forced player to jail BLUE : " + playerID);
+                //Debug.LogError("Forced player to jail BLUE : " + playerID);
             }
             else if (kart.GetComponent<PlayerInfo>().Team == Team.Blue)
             {
                 kart.transform.position = _redTeamJailPosition.position;
                 kart.transform.rotation = _redTeamJailPosition.rotation;
-                Debug.LogError("Forced player to jail RED: " + playerID);
+                //Debug.LogError("Forced player to jail RED: " + playerID);
             }
         }
 
@@ -165,7 +166,7 @@ namespace Gamemodes
 
             kart.transform.position = _deathStoragePosition.position;
             kart.transform.rotation = _deathStoragePosition.rotation;
-            Debug.LogError("Forced player to death storage : " + playerID);
+            //Debug.LogError("Forced player to death storage : " + playerID);
         }
 
         public void DelayedRefreshAlivePlayers()

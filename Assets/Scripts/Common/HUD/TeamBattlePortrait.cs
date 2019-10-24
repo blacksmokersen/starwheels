@@ -66,6 +66,7 @@ public class TeamBattlePortrait : GlobalEventListener
         }
     }
 
+    /*
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Keypad3))
@@ -73,6 +74,7 @@ public class TeamBattlePortrait : GlobalEventListener
             Debug.LogError("- Player ID : " + PlayerBindedID + " - SteamID : " + SteamID + " AVATAR : " + _avatar);
         }
     }
+    */
 
     private void SetAvatarImage(int iImage)
     {

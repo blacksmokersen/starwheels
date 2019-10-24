@@ -33,12 +33,13 @@ public class TeamBattlePlayersObserver : GlobalEventListener
 
             if (!_playerSteamID.ContainsKey(hostID))
             {
-                Debug.LogError("STEAM ID PlayerAllStats : " + hostID + "  " + steamID);
+              //  Debug.LogError("STEAM ID PlayerAllStats : " + hostID + "  " + steamID);
                 _playerSteamID.Add(hostID, steamID);
             }
         }
     }
 
+    /*
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Keypad0))
@@ -58,25 +59,19 @@ public class TeamBattlePlayersObserver : GlobalEventListener
         if (Input.GetKeyDown(KeyCode.Keypad4))
         {
             DecreasePlayerHealth(SWExtensions.KartExtensions.GetMyKart().GetComponent<PlayerInfo>().OwnerID);
-
-
-            /*
-            AddObservedPlayer(0);
-            CheckPlayerHealth(0);
-            */
         }
     }
-
+    */
     //BOLT
 
     public override void OnEvent(PlayerReady evnt)
     {
         if (BoltNetwork.IsServer)
         {
-            Debug.LogError("PLAYERREADY");
+           // Debug.LogError("PLAYERREADY");
             if (!_playerSteamID.ContainsKey(evnt.PlayerID))
             {
-                Debug.LogError("STEAM ID PlayerAllStats : " + evnt.SteamID);
+                //Debug.LogError("STEAM ID PlayerAllStats : " + evnt.SteamID);
                 _playerSteamID.Add(evnt.PlayerID, evnt.SteamID);
             }
         }
@@ -86,10 +81,10 @@ public class TeamBattlePlayersObserver : GlobalEventListener
     {
         if (BoltNetwork.IsServer)
         {
-            Debug.LogError("PLAYERREADY");
+            //Debug.LogError("PLAYERREADY");
             if (!_playerSteamID.ContainsKey(evnt.PlayerID))
             {
-                Debug.LogError("STEAM ID PlayerAllStats : " + evnt.SteamID);
+                //Debug.LogError("STEAM ID PlayerAllStats : " + evnt.SteamID);
                 _playerSteamID.Add(evnt.PlayerID, evnt.SteamID);
             }
         }
@@ -131,7 +126,7 @@ public class TeamBattlePlayersObserver : GlobalEventListener
                 shareTeamBattlePortraitInfos.LifeCount = 0;
                 shareTeamBattlePortraitInfos.IsDead = true;
                 shareTeamBattlePortraitInfos.Send();
-                Debug.LogError("KILLL REQUEST");
+                //Debug.LogError("KILLL REQUEST");
             }
         }
     }
@@ -141,7 +136,7 @@ public class TeamBattlePlayersObserver : GlobalEventListener
         if (BoltNetwork.IsServer)
         {
             _playersLifeCount[playerID]--;
-            Debug.LogError("Decreased : " + playerID + " PlayerLifeCount");
+            //Debug.LogError("Decreased : " + playerID + " PlayerLifeCount");
             CheckPlayerHealth(playerID);
         }
     }
@@ -152,7 +147,7 @@ public class TeamBattlePlayersObserver : GlobalEventListener
         {
             if (!_playersLifeCount.ContainsKey(playerID))
             {
-                Debug.LogError("Observe Player : " + playerID);
+                //Debug.LogError("Observe Player : " + playerID);
                 _playersLifeCount.Add(playerID, _teamBattleServerRules.TeamBattleSettings.LifeCountPerPlayers);
 
                 StartCoroutine(DelayedSendInfoToDisplayOnHUD());
@@ -200,7 +195,7 @@ public class TeamBattlePlayersObserver : GlobalEventListener
             {
                 int playerID = player.GetComponent<PlayerInfo>().OwnerID;
                 _playersLifeCount.Add(playerID, _teamBattleServerRules.TeamBattleSettings.LifeCountPerPlayers);
-                Debug.LogError("Observe Player With RefreshAllKartsInGame : " + playerID);
+                //Debug.LogError("Observe Player With RefreshAllKartsInGame : " + playerID);
                 SendInfoToDisplayOnHUD();
             }
         }
@@ -215,7 +210,7 @@ public class TeamBattlePlayersObserver : GlobalEventListener
                 if (KartExtensions.GetKartWithID(player) == null)
                 {
                     _playersLifeCount.Remove(player);
-                    Debug.LogError("REMOVED : " + player);
+                    //Debug.LogError("REMOVED : " + player);
                 }
             }
         }
@@ -229,7 +224,7 @@ public class TeamBattlePlayersObserver : GlobalEventListener
         {
             if (_playersInJail.ContainsKey(player))
             {
-                Debug.LogError(player + " Is in Jail");
+                //Debug.LogError(player + " Is in Jail");
             }
             else if (_playersLifeCount[player] >= 0)
             {
@@ -281,7 +276,7 @@ public class TeamBattlePlayersObserver : GlobalEventListener
             {
                 if (!_playersInJail.ContainsKey(playerID))
                 {
-                    Debug.LogError("SEND JAIL EVENT : " + playerID);
+                    //Debug.LogError("SEND JAIL EVENT : " + playerID);
                     _playersInJail.Add(playerID, KartExtensions.GetKartWithID(playerID).GetComponent<PlayerInfo>().Team);
 
                     KartForcedToJail kartForcedtoJailEvent = KartForcedToJail.Create();
