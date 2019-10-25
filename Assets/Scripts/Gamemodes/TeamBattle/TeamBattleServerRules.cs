@@ -145,12 +145,14 @@ namespace Gamemodes
             {
                 kart.transform.position = _blueTeamJailPosition.position;
                 kart.transform.rotation = _blueTeamJailPosition.rotation;
+                kart.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 //Debug.LogError("Forced player to jail BLUE : " + playerID);
             }
             else if (kart.GetComponent<PlayerInfo>().Team == Team.Blue)
             {
                 kart.transform.position = _redTeamJailPosition.position;
                 kart.transform.rotation = _redTeamJailPosition.rotation;
+                kart.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 //Debug.LogError("Forced player to jail RED: " + playerID);
             }
         }

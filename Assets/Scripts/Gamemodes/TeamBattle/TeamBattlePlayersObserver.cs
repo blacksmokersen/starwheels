@@ -62,6 +62,7 @@ public class TeamBattlePlayersObserver : GlobalEventListener
         }
     }
     */
+
     //BOLT
 
     public override void OnEvent(PlayerReady evnt)
