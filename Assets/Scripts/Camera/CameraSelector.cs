@@ -127,6 +127,7 @@ namespace CameraUtils
 
         //DEBUG
 
+        /*
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Keypad7))
@@ -142,7 +143,7 @@ namespace CameraUtils
                 ShowFreeCamera();
             }
         }
-
+        */
         private IEnumerator ForcePlayerCamera()
         {
             yield return new WaitForSeconds(_timeBeforeForcingPlayerCam);
